@@ -102,6 +102,30 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 					</div>
 				</div>
 			</div>
+            <div class="col-lg-3 item">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Coupon</div>
+                    <div class="panel-body">
+                        <ol class="list-unstyled">
+                            <li><a href="<?=Yii::$app->urlManager->createUrl(['coupon/coupon-event'])?>">Coupon Event</a></li>
+                            <li><a href="<?=Yii::$app->urlManager->createUrl(['coupon/coupon-code'])?>">Coupon Code</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 item">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">Payment</div>
+                    <div class="panel-body">
+                        <ol class="list-unstyled">
+                            <li><a href="<?=Yii::$app->urlManager->createUrl(['ec/ec-payment-method'])?>">Payment method</a></li>
+                            <li><a href="<?=Yii::$app->urlManager->createUrl(['ec/ec-package'])?>">Package</a></li>
+                            <li><a href="<?=Yii::$app->urlManager->createUrl(['ec/ec-charge'])?>">Charge</a></li>
+                            <li><a href="<?=Yii::$app->urlManager->createUrl(['ec/ec-balance'])?>">Balance</a></li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
 			<?php
 			$permissionName = !empty(Yii::$app->setting->get('aclAdmin')) ? Yii::$app->setting->get('aclAdmin') : 'Admin';
 			if (Yii::$app->user->can($permissionName)) {

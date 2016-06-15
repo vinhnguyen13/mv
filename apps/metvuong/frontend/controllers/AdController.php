@@ -39,6 +39,8 @@ use vsoft\ad\models\AdBuildingProject;
 use frontend\models\AdProductSearch;
 use yii\db\ActiveRecord;
 use frontend\models\Elastic;
+use frontend\models\MapSearch;
+use yii\db\Query;
 
 class AdController extends Controller
 {
@@ -191,37 +193,58 @@ class AdController extends Controller
     }
     
     public function actionIndex() {
-		$this->view->params['body'] = [
+    	$this->view->params['menuBuy'] = true;
+    	$this->view->params['menuRent'] = false;
+    	
+    	return $this->listing(AdProduct::TYPE_FOR_SELL);
+    }
+    
+    public function actionIndex1() {
+		$this->view->title = Yii::t('meta', 'nha-dat-ban');
+    	$this->view->params['menuBuy'] = true;
+    	$this->view->params['menuRent'] = false;
+    	
+    	return $this->listing(AdProduct::TYPE_FOR_SELL);
+    }
+    
+    public function actionIndex2() {
+		$this->view->title = Yii::t('meta', 'nha-dat-cho-thue');
+    	$this->view->params['menuBuy'] = false;
+    	$this->view->params['menuRent'] = true;
+    	
+    	return $this->listing(AdProduct::TYPE_FOR_RENT);
+    }
+    
+    public function listing($type) {
+    	$mapSearch = new MapSearch();
+    	
+    	$mapSearch->type = $type;
+    	
+    	$this->view->params['body'] = [
 			'class' => 'ad-listing'
 		];
+    		 
 		if($type = Yii::$app->request->get('type')) {
-			$this->view->params['menuBuy'] = (!empty($type) && $type==1) ? true : false;
-			$this->view->params['menuRent'] = (!empty($type) && $type==2) ? true : false;
+			$this->view->params['menuBuy'] = ($type==1) ? true : false;
+			$this->view->params['menuRent'] = ($type==2) ? true : false;
 		}
-		
-		$model = new AdProductSearch();
-		$query = $model->search(Yii::$app->request->get());
-		$query->addSelect('ad_product.updated_at, ad_product.category_id, ad_product.type, ad_images.file_name, ad_images.folder');
-		$query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
-		$query->groupBy('ad_product.id');
-		
-		$countQuery = clone $query;
-		$pages = new Pagination(['totalCount' => $countQuery->count()]);
-		$pages->setPageSize(Yii::$app->params['listingLimit']);
-			
-		$products = $query->with(['city', 'district', 'ward', 'street'])->offset($pages->offset)->limit($pages->limit)->all();
-		
-		if(Yii::$app->request->isAjax) {
-			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-			
-			$categories = AdCategory::find ()->indexBy ( 'id' )->asArray ( true )->all ();
-			
-			return ['items' => $this->renderPartial('_partials/list', ['products' => $products, 'categories' => $categories]), 'total' => intval($pages->totalCount)];
-		} else {
-			$model->fetchValues();
-			
-			return $this->render('index', ['searchModel' => $model, 'pages' => $pages, 'products' => $products]);
+    		 
+		$query = $mapSearch->search(Yii::$app->request->get());
+    	
+		if($mapSearch->rect && $mapSearch->rm) {
+			$rect = explode(',', $mapSearch->rect);
+    	
+			$query->andWhere(['>=', 'ad_product.lat', $rect[0]]);
+			$query->andWhere(['<=', 'ad_product.lat', $rect[2]]);
+			$query->andWhere(['>=', 'ad_product.lng', $rect[1]]);
+			$query->andWhere(['<=', 'ad_product.lng', $rect[3]]);
 		}
+    		 
+		$list = $mapSearch->getList($query);
+    		 
+		$mapSearch->fetchValues();
+    		 
+		return $this->render('index', ['searchModel' => $mapSearch, 'list' => $list]);
     }
     
     public function actionSavedListing() {
@@ -250,36 +273,50 @@ class AdController extends Controller
     	}
     }
     
+    public function actionDetail1($id) {
+    	$this->view->params['menuBuy'] = true;
+    	$this->view->params['menuRent'] = false;
+    		
+		return $this->detail($id);
+    }
+    
+    public function actionDetail2($id) {
+    	$this->view->params['menuBuy'] = false;
+    	$this->view->params['menuRent'] = true;
+    	
+    	return $this->detail($id);
+    }
+    
     public function actionDetail($id) {
-
+    	return $this->detail($id);
+    }
+    
+    public function detail($id) {
+    
     	$product = AdProduct::findOne($id);
-        try{
-			if($type = $product->type) {
-				$this->view->params['menuBuy'] = (!empty($type) && $type==1) ? true : false;
-				$this->view->params['menuRent'] = (!empty($type) && $type==2) ? true : false;
-			}
-            if(Yii::$app->user->id != $product->user_id) {
-//                if(isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
-//                    Tracking::find()->productVisitor(Yii::$app->user->id, $id, time());
-//                }
-				UserActivity::me()->saveActivity(UserActivity::ACTION_AD_CLICK, [
-					'owner' => Yii::$app->user->id,
-					'product' => $product->id,
-					'buddy' => $product->user_id
-				], $product->id);
-            }
-        } catch(Exception $ex){
-
-        }
-        
-        return $this->render('detail', ['product' => $product]);
-        
-// 		if(Yii::$app->request->isAjax){
-// 			return $this->renderAjax('_partials/detail', ['product' => $product]);
-// 		}else{
-// 			return $this->render('detail', ['product' => $product]);
-// 		}
-
+    	try{
+    		if(Yii::$app->user->id != $product->user_id) {
+    			//                if(isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
+    			//                    Tracking::find()->productVisitor(Yii::$app->user->id, $id, time());
+    			//                }
+    			UserActivity::me()->saveActivity(UserActivity::ACTION_AD_CLICK, [
+    					'owner' => Yii::$app->user->id,
+    					'product' => $product->id,
+    					'buddy' => $product->user_id
+    			], $product->id);
+    		}
+    	} catch(Exception $ex){
+    
+    	}
+    
+    	return $this->render('detail', ['product' => $product]);
+    
+    	// 		if(Yii::$app->request->isAjax){
+    	// 			return $this->renderAjax('_partials/detail', ['product' => $product]);
+    	// 		}else{
+    	// 			return $this->render('detail', ['product' => $product]);
+    	// 		}
+    
     }
 
     /**
@@ -293,6 +330,7 @@ class AdController extends Controller
 
     
     public function actionPost() {
+		$this->view->title = Yii::t('meta', 'dang-tin');
 		$this->view->params['menuSell'] = true;
 //     	if(Yii::$app->mobileDetect->isMobile()) {
 //     		return $this->postMobile();
@@ -786,7 +824,7 @@ class AdController extends Controller
 			'_source' => ['full_name']
     	];
     	
-    	$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/project_building/_search');
+    	$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['countTotal'] . '/project_building/_search');
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

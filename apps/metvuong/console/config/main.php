@@ -18,6 +18,9 @@ return [
         '@common' => dirname(dirname(__DIR__)) . '/common',
         '@keltstr/simplehtmldom' => dirname(dirname(__DIR__)) . '/common/myvendor/keltstr/simplehtmldom',
         '@linslin/yii2/curl' => dirname(dirname(__DIR__)) . '/common/myvendor/linslin/yii2-curl',
+        '@funson86' => dirname(dirname(__DIR__)) . '/common/myvendor/funson86',
+        '@funson86/cms' => dirname(dirname(__DIR__)) . '/common/myvendor/funson86/yii2-cms',
+        '@funson86/setting' => dirname(dirname(__DIR__)) . '/common/myvendor/funson86/yii2-setting',
         '@vsoft' => dirname(dirname(__DIR__)) . '/common/myvendor/vsoft',
     ),
     'controllerMap' => [
@@ -25,7 +28,37 @@ return [
             'class' => 'console\controllers\CrawlerController'
         ],
     ],
+    'modules' => [
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'enableConfirmation' => false,
+            'confirmWithin' => 21600,
+            'cost' => 12,
+            'admins' => ['superadmin'],
+            'modelMap' => [
+                'User' => 'frontend\models\User',
+                'Account' => 'frontend\models\Account',
+                'Profile' => 'frontend\models\Profile',
+            ],
+            'controllerMap' => [
+                'security' => 'frontend\controllers\SecurityController',
+                'registration' => 'frontend\controllers\RegistrationController',
+            ],
+            'urlRules' => [
+//                '<id:\d+>'                               => 'profile/show',
+//                '<action:(login|logout)>'                => 'security/<action>',
+//                '<action:(register|resend)>'             => 'registration/<action>',
+//                'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
+//                'forgot'                                 => 'recovery/request',
+//                'recover/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'recovery/reset',
+//                'settings/<action:\w+>'                  => 'settings/<action>'
+            ]
+        ],
+    ],
     'components' => [
+        'user' => [
+            'class' => 'frontend\models\User',
+        ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'baseUrl' => 'http://metvuong.com/',
@@ -76,6 +109,51 @@ return [
                     'levels' => ['error', 'warning'],
                 ],
             ],
+        ],
+        'setting' => [
+            'class' => 'funson86\setting\Setting',
+        ],
+        'cache' => [
+            'class' => 'yii\caching\FileCache',
+        ],
+        'i18n' => [
+            'translations' => [
+                '*' => [
+                    'class' => 'yii\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'en', /** with this language, is not translate **/
+                    'sourceMessageTable' => '{{%language_source}}',
+                    'messageTable' => '{{%language_translate}}',
+                    'cachingDuration' => 86400,
+                    'enableCaching' => true,
+                ],
+                'user*' => [
+                    'class' => 'yii\i18n\DbMessageSource',
+                    'db' => 'db',
+                    'sourceLanguage' => 'en', /** with this language, is not translate **/
+                    'sourceMessageTable' => '{{%language_source}}',
+                    'messageTable' => '{{%language_translate}}',
+                    'cachingDuration' => 86400,
+                    'enableCaching' => true,
+                ],
+                'url' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@frontend/messages',
+//                    'sourceLanguage' => 'vi-VN',
+                    'fileMap' => [
+                        'url' => 'url.php',
+                        'app/error' => 'error.php',
+                    ],
+                ],
+                'meta' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@frontend/messages',
+                    'fileMap' => [
+                        'url' => 'meta.php',
+                        'app/error' => 'error.php',
+                    ],
+                ],
+            ]
         ],
     ],
     'params' => $params,

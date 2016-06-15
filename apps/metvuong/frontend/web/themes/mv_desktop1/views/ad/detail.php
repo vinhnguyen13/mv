@@ -12,7 +12,10 @@ use vsoft\ad\models\AdProductAdditionInfo;
 use yii\helpers\ArrayHelper;
 use vsoft\ad\models\AdFacility;
 
-	$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
+	if(!Yii::$app->request->isAjax) {
+		$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
+	}
+	
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
 	$this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
 
@@ -20,6 +23,13 @@ use vsoft\ad\models\AdFacility;
     $categories = \vsoft\ad\models\AdCategory::getDb()->cache(function(){
         return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
     });
+
+	if($product->type == AdProduct::TYPE_FOR_SELL){
+		$this->title = Yii::t('meta', 'nha-dat-ban').', '.$product->city->name.', '.trim("{$product->district->pre} {$product->district->name}").', '.ucfirst(Yii::t('ad', $categories[$product->category_id]['name']));
+	}elseif($product->type == AdProduct::TYPE_FOR_RENT){
+		$this->title = Yii::t('meta', 'nha-dat-cho-thue').', '.$product->city->name.', '.trim("{$product->district->pre} {$product->district->name}").', '.ucfirst(Yii::t('ad', $categories[$product->category_id]['name']));
+	}
+
 	$types = AdProduct::getAdTypes();
 
     $user_id = $product->user_id;
@@ -119,7 +129,7 @@ Yii::t('ad', 'Television');
 						<div class="swiper-slide">
 							<div class="img-show">
 								<div>
-									<img src="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" alt="<?=$address?>">
+									<img src="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" alt="<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) . ' - ' . $address?>">
 								</div>
 							</div>
 						</div>

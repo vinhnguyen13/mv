@@ -7,10 +7,14 @@
 
 namespace console\models;
 
+use dektrium\user\helpers\Password;
 use frontend\components\Mailer;
 use frontend\models\Token;
 use frontend\models\User;
+use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdProduct;
+use vsoft\coupon\models\CouponCode;
+use vsoft\express\components\AdImageHelper;
 use Yii;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
@@ -18,36 +22,28 @@ use yii\helpers\Html;
 
 class Metvuong extends Component
 {
+    public static function sendMailContact($code=null){
+        $contacts = AdContactInfo::getDb()->cache(function(){
+            return AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
+                ->where('email is not null')
+                ->groupBy('email')->orderBy('count(product_id) desc')->limit(100)->all();
+        });
 
-    public static function sendMailContact(){
-//        $contacts = AdContactInfo::getDb()->cache(function(){
-//            $sql = "SELECT email, count(product_id) as total, group_concat(product_id) as list_id
-//                    FROM metvuong_dev.ad_contact_info where email is not null group by email order by count(product_id) desc limit 2";
-//            return AdContactInfo::getDb()->createCommand($sql)->queryAll();
-//        });
-        $contacts = [
-//            [
-//                'email' => 'nhut.love@live.com',
-//                'total' => 6,
-//                'list_id' => '501,503,516,517,518,520'
-//            ],
-            [
-                'email' => 'nhuttranm@gmail.com',
-                'total' => 2,
-                'list_id' => '521,522'
-            ]
-        ];
         if(count($contacts) > 0) {
+            $count_code = CouponCode::getDb()->cache(function() use($code){
+                return CouponCode::find()->where('code = :c',[':c' => $code])->count('code');
+            });
+            if($count_code == 0)
+                $code = null;
+
             foreach ($contacts as $contact) {
                 $email = trim($contact["email"]);
-                $user = User::getDb()->cache(function () use ($email) {
-                    return User::find()->where(['email' => $email])->one();
-                });
-
-//                if (count($user) > 0 && ($user->updated_at > $user->created_at)) {
-//                    continue;
-//                } else {
-                if(true){
+                $email = mb_strtolower($email);
+                // check user exists or create new user
+                $user = $contact->createUserInfo();
+                if (count($user) > 0 && ($user->updated_at > $user->created_at)) {
+                    continue;
+                } else {
                     $token = Token::find()->where(['user_id' => $user->id])->one();
                     if(count($token) <= 0){
                         /** @var Token $token */
@@ -85,7 +81,8 @@ class Metvuong extends Component
                         'username' => $user->username,
                         'token' => $token,
                         'product_list' => $product_list,
-                        'rest_total' => $rest_total
+                        'rest_total' => $rest_total,
+                        'code' => $code
                     ];
 
                     $subjectEmail = "Thông báo tin đăng từ metvuong.com";
@@ -99,6 +96,36 @@ class Metvuong extends Component
             }
         } else
             print_r("No contact info");
+    }
+
+    public static function DownloadImage($link, $uploaded_at)
+    {
+        $helper = new AdImageHelper();
+        $uploaded_at = empty($uploaded_at) ? time() : $uploaded_at;
+        $folderColumn = $helper->getAbsoluteUploadFolderPath($uploaded_at);
+        $folder = Yii::getAlias('@store'). DIRECTORY_SEPARATOR . $folderColumn;
+        if (!is_dir($folder)) {
+            mkdir($folder, 0777, true);
+        }
+        if (!empty($link)) {
+            $ext = explode('.', $link);
+            $length = count($ext) - 1;
+            $fileName = uniqid() . '.' . $ext[$length];
+            $filePath = $folder . DIRECTORY_SEPARATOR . $fileName;
+            $content = file_get_contents($link);
+            file_put_contents($filePath, $content);
+
+            foreach ($helper::$sizes as $size) {
+                $sub_folder = $folder . DIRECTORY_SEPARATOR . $helper::makeFolderName($size);
+                if (!is_dir($sub_folder)) {
+                    mkdir($sub_folder, 0777, true);
+                }
+                $sub_filePath = $sub_folder . DIRECTORY_SEPARATOR . $fileName;
+                file_put_contents($sub_filePath, $content);
+            }
+            return [$fileName, $folderColumn];
+        }
+        return null;
     }
 
 }

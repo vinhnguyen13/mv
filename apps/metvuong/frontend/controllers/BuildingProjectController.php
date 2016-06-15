@@ -26,6 +26,7 @@ class BuildingProjectController extends Controller
     }
 
 	function actionIndex() {
+        $this->view->title = Yii::t('meta', 'du-an');
         $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)
             ->andWhere('`city_id` is not null')
             ->orderBy(['hot_project' => SORT_DESC, 'district_id' => SORT_ASC, 'city_id'=> SORT_ASC, 'id' => SORT_DESC]);
@@ -118,7 +119,7 @@ class BuildingProjectController extends Controller
                 'size' => 20
             ];
 
-            $ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/project_building/_search');
+            $ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['countTotal'] . '/project_building/_search');
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

@@ -17,25 +17,29 @@ use yii\helpers\Url;
 				</ul>
 			</div>
 		</div>
-		<div class="infor-address">
-			<p><?=Yii::t('general', 'MetVuong Address')?></p>
+		<div class="license">
 			<p><?=Yii::t('general', 'Copyright {year} {domain}', ['year'=>2016, 'domain'=>'MetVuong.com'])?></p>
+			<p><?=Yii::t('general', 'By granting the Department of Planning and Investment of Ho Chi Minh City, Date 05.19.2016')?></p>
+			<p><?=Yii::t('general', 'Permission No. 0313814871 - ® Copying information from this website should be included the tag “metvuong.com”')?></p>
+			<p><?=Yii::t('general', 'Developed by MetVuong LTD. Company')?></p>
 		</div>
 	</div>
 	<div class="dt-footer clearfix container">
 		<a href="#" class="logo-footer pull-left wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo-white.png' ?>" alt=""></a>
 		<div class="pull-right">
-			<ul class="clearfix">
+			<ul class="pull-right">
 				<li><a href="<?=Url::to(['site/page', 'view'=>'about'])?>"><?=Yii::t('general', 'About Us')?></a></li>
 				<li><a href="<?=Url::to(['site/page', 'view'=>'faq'])?>"><?=Yii::t('general', 'FAQs')?></a></li>
 				<li><a href="<?=Url::to(['site/page', 'view'=>'terms'])?>"><?=Yii::t('general', 'Terms and Conditions')?></a></li>
 				<li><a href="<?=Url::to(['site/page', 'view'=>'interestRate'])?>"><?=Yii::t('general', 'Interest rate')?></a></li>
 			</ul>
-			<p><?=Yii::t('general', 'Copyright {year} {domain}', ['year'=>2016, 'domain'=>'MetVuong.com'])?></p>
+			<div class="clearfix"></div>
+			<div class="license">
+				<p><?=Yii::t('general', 'Copyright {year} {domain}', ['year'=>2016, 'domain'=>'MetVuong.com'])?></p>
+				<p><?=Yii::t('general', 'By granting the Department of Planning and Investment of Ho Chi Minh City, Date 05.19.2016')?></p>
+				<p><?=Yii::t('general', 'Permission No. 0313814871 - ® Copying information from this website should be included the tag “metvuong.com”')?></p>
+				<p><?=Yii::t('general', 'Developed by MetVuong LTD. Company')?></p>
+			</div>
 		</div>
-	</div>
-	<div class="license container">
-		<p><?=Yii::t('general', 'Permission No. 0313814871 - ® Copying information from this website should be included the tag “metvuong.com”')?></p>
-		<p><?=Yii::t('general', 'Developed by MetVuong LTD. Company')?></p>
 	</div>
 </footer>

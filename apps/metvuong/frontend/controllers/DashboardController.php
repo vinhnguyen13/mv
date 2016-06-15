@@ -9,7 +9,11 @@ use frontend\models\Tracking;
 use frontend\models\User;
 use frontend\models\ProfileForm;
 use frontend\models\UserActivity;
+use vsoft\coupon\models\CouponCode;
+use vsoft\coupon\models\CouponHistory;
+use vsoft\ec\models\EcTransactionHistory;
 use vsoft\express\components\ImageHelper;
+use vsoft\news\models\Status;
 use vsoft\tracking\models\base\AdProductFinder;
 use vsoft\tracking\models\base\AdProductVisitor;
 use Yii;
@@ -194,54 +198,25 @@ class DashboardController extends Controller
             $dateTo = new \DateTime($t);
             $to = $dateTo->getTimestamp();
 
-            if($view == "_partials/finder") {
+            if($view == "finders") {
                 $data = Chart::find()->getDataFinder($id, $from, $to);
                 $infoData = empty($data) ? null : $data["infoData"];
-                $finders = empty($infoData["finders"]) ? null : $infoData["finders"];
-                $html = "";
-                if(count($finders) > 0)
-                    foreach($finders as $key_finder => $finder) {
-                        $classPopupUser = 'popup_enable';
-                        if($key_finder == Yii::$app->user->identity->getUsername())
-                            $classPopupUser = '';
-                        $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$finder["email"].'" data-ava="'.Url::to($finder['avatar'], true).'">'.
-                                    '<img src="'.$finder['avatar'].'"> '.$key_finder.'</a>'.
-                                    '<span class="pull-right">'.$finder['count'].'</span></li>';
-                        $html .= $li;
-                    }
-                return $html;
-            } else if ($view == "_partials/visitor"){
+                $favourites = empty($infoData["finders"]) ? null : $infoData["finders"];
+                $html = "<li>finders</li>";
+            } else if ($view == "visitors"){
                 $data = Chart::find()->getDataVisitor($id, $from, $to);
                 $infoData = empty($data) ? null : $data["infoData"];
-                $visitors = empty($infoData["visitors"]) ? null : $infoData["visitors"];
-                $html = "";
-                if(count($visitors) > 0)
-                    foreach ($visitors as $key_visitor => $val_visitor) {
-                        $classPopupUser = 'popup_enable';
-                        if($key_visitor == Yii::$app->user->identity->getUsername())
-                            $classPopupUser = '';
-                        $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$val_visitor["email"].'" data-ava="'.Url::to($val_visitor['avatar'], true).'">'.
-                            '<img src="'.$val_visitor['avatar'].'"> '.$key_visitor.'</a>'.
-                            '<span class="pull-right">'.$val_visitor['count'].'</span></li>';
-                        $html .= $li;
-                    }
-                return $html;
-            } else if ($view == "_partials/saved"){
+                $favourites = empty($infoData["visitors"]) ? null : $infoData["visitors"];
+            } else if ($view == "saved"){
                 $data = Chart::find()->getDataSaved($id, $from, $to);
                 $infoData = empty($data) ? null : $data["infoData"];
                 $favourites = empty($infoData["saved"]) ? null : $infoData["saved"];
-                $html = "";
-                if(count($favourites) > 0) {
-                    foreach ($favourites as $key => $val) {
-                        $classPopupUser = 'popup_enable';
-                        $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$val["email"].'" data-ava="'.Url::to($val['avatar'], true).'">'.
-                            '<img src="'.$val['avatar'].'"> '.$key.'</a>'.
-                            '<span class="pull-right">'.$val['count'].'</span></li>';
-                        $html .= $li;
-                    }
-                }
-                return $html;
+            }else if ($view == "shares"){
+                $data = Chart::find()->getDataShare($id, $from, $to);
+                $infoData = empty($data) ? null : $data["infoData"];
+                $favourites = empty($infoData["shares"]) ? null : $infoData["shares"];
             }
+            return $this->renderAjax('chart/_partials/listContact',['view'=>$view, 'favourites'=>$favourites ]);
         }
         return false;
     }
@@ -377,5 +352,53 @@ class DashboardController extends Controller
         return false;
     }
 
+    // Check use code coupon
+    public function actionPayWithCoupon($code)
+    {
+        $this->checkAccess();
+        $res = CouponHistory::checkCoupon($code);
+        echo "<pre>";
+        print_r($res);
+        echo "<pre>";
+        exit();
+    }
+
+    public function actionPayment()
+    {
+        $this->checkAccess();
+        $this->view->params = ['noFooter' => true, 'menuPayment' => true, 'isDashboard' => true];
+        $query = EcTransactionHistory::find()->where('user_id = :_uid',[':_uid' => Yii::$app->user->id]);
+        $count = $query->count();
+        $pagination = new Pagination(['totalCount' => $count]);
+        $pagination->defaultPageSize = 10;
+        $transactions = $query->offset($pagination->offset)->limit($pagination->limit)
+            ->orderBy(['id' => SORT_DESC])->all();
+        return $this->render('payment/index', ['transactions' => $transactions, 'pagination' => $pagination]);
+    }
+
+    public function actionCreateTransaction()
+    {
+        $this->checkAccess();
+        $user_id = Yii::$app->user->id;
+        $objs = [501,503,516,517,518,520,521,522];
+        $obj_id = array_rand(array_flip($objs), 1);
+        $obj_type = EcTransactionHistory::OBJECT_TYPE_PRODUCT;
+        $amount = array_rand(array_flip([100,200,500,10,20,50]), 1);
+
+//        $act_types = array_keys(EcTransactionHistory::getActionType());
+        $action_type = 1;//array_rand(array_flip($act_types), 1);
+
+        $act_details = array_keys(EcTransactionHistory::getActionDetail());
+        $action_detail= array_rand(array_flip($act_details), 1);
+        if($action_detail == 3) {
+            $obj_id = $user_id;
+            $obj_type = 3;
+        }
+        $status = 1;
+
+        $transaction = EcTransactionHistory::createTransaction($user_id, $obj_id, $obj_type, $amount, $action_type, $action_detail, null, $status, 'json');
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        return ['result' => EcTransactionHistory::getObjectType($transaction->object_type)." ".Yii::t('ec', 'Transaction').EcTransactionHistory::getTransactionStatus($transaction->status) ];
+    }
 
 }

@@ -142,7 +142,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                     <?php
                     if(count($reviews) <= 0){ ?>
                         <li>
-                            <p><?=Yii::t('profile', 'Review not found.')?></p>
+                            <i><?=Yii::t('profile', 'Review not found.')?></i>
                         </li>
                     <?php } else { echo $this->render('/member/_partials/review', ['reviews' => $reviews]); } ?>
                     </ul>

@@ -199,7 +199,7 @@ class AdProduct extends AP
 
 	public function urlDetail($scheme = false)
 	{
-		return Url::to(['/ad/detail', 'id' => $this->id, 'slug' => \common\components\Slug::me()->slugify($this->getAddress($this->show_home_no))], $scheme);
+		return Url::to(['/ad/detail' . $this->type, 'id' => $this->id, 'slug' => \common\components\Slug::me()->slugify($this->getAddress($this->show_home_no))], $scheme);
 	}
 
     public function getExpired(){
@@ -253,7 +253,7 @@ class AdProduct extends AP
 	public static function updateElasticCounter($type, $id, $totalType, $increase = true) {
 		$sign = $increase ? '+' : '-';
 		$script = '{"script" : "ctx._source.' . $totalType . $sign . '=1"}';
-		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/term/$type/$id/_update");
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/" . \Yii::$app->params['indexName']['countTotal'] . "/$type/$id/_update");
 			
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $script);

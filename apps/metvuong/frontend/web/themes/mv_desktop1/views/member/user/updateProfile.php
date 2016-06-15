@@ -201,6 +201,15 @@ Yii::t('time','week');
                     </div>
                 </div>
             </section>
+            <section class="lang">
+                <div class="title-update-tt">
+                    NGÔN NGỮ        
+                </div>
+                <div class="mgT-15">
+                    <a href="<?=Url::current(['language-change'=>'en-US'])?>" class="d-ib mgR-10"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-en.png' ?>" alt=""></a>
+                    <a href="<?=Url::current(['language-change'=>'vi-VN'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-vn.png' ?>" alt=""></a>
+                </div>
+            </section>
         </div>
     </div>
 </div>

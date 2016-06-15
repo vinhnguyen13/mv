@@ -61,7 +61,9 @@ class CrawlerController extends Controller
         BatdongsanV2::find()->updateAddressByProject();
     }
 
-    public function actionCopytomain($price=0, $build='build=false')
+    // price = 1 get products have price  > 0
+    // build = true build elastic
+    public function actionCopytomain($price=1, $build='build=false')
     {
         BatdongsanV2::find()->copyToMainDb($price, $build);
     }

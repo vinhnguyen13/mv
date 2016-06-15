@@ -324,6 +324,16 @@ use vsoft\ad\models\AdImages;
 							</div>
 						</div>
 					</div>
+					<div class="group-frm type-tin-dang fs-14">
+						<div class="title-frm">Chọn hình thức tin đăng</div>
+						<p class="mgB-10">Mã tin đăng: <strong class="mgL-10">MV05979</strong></p>
+                        <p>Số Keys của bạn không đủ để đăng tin. Vui lòng <a href="#" class="add-gold color-cd text-decor">nạp thêm Keys</a>.</p>
+						<div class="ajax-loading-inner">
+							<div class="w-100 mgT-10 inner-ajax">
+								<?=$this->render('/payment/package/index')?>
+							</div>
+						</div>
+					</div>
 					<div class="error-hint form-group col-xs-12 mgT-30" style="display: none;"><?= Yii::t('ad', 'Có lỗi xảy ra, vui lòng kiểm tra lại các trường bên trên') ?></div>
 					<div class="text-right col-xs-12 pdT-50">
 						<button id="preview" type="button" class="btn-common"><?= Yii::t('ad', 'Preview') ?> <span class="icon-mv"><span class="icon-angle-right"></span></span></button>
@@ -525,5 +535,9 @@ use vsoft\ad\models\AdImages;
 <script>
 	$(document).ready(function () {
 		$('.checkbox-ui').checkbox_ui();
+		$('.add-gold').on('click', function (e) {
+			e.preventDefault();
+			$('.ajax-loading-inner').toggle();
+		});
 	});
 </script>

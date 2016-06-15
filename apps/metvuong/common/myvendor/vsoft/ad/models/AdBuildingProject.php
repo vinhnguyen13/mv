@@ -204,7 +204,23 @@ class AdBuildingProject extends ABP
 	public function getContractors() {
 		return $this->hasMany(AdContractor::className(), ['id' => 'contractor_id'])->viaTable('ad_contractor_building_project', ['building_project_id' => 'id']);
 	}
-	
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getCity()
+	{
+		return $this->hasOne(AdCity::className(), ['id' => 'city_id']);
+	}
+
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getDistrict()
+	{
+		return $this->hasOne(AdDistrict::className(), ['id' => 'district_id']);
+	}
+
 	public function saveMultiple($data, $relationModels, $field) {
 		$postIds = $data[$field] ? $data[$field] : [];
 		$ids = ArrayHelper::getColumn($this->$field, 'id');

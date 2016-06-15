@@ -54,7 +54,7 @@ class NewsController extends Controller
         $news = $query->offset($pagination->offset)
             ->limit($pagination->limit)
             ->asArray()->all();
-        $this->view->title = Yii::t('news','News');
+        $this->view->title = Yii::t('meta', 'tin-tuc');
         return $this->render('index',['news' => $news, 'pagination' => $pagination]);
     }
 
@@ -64,7 +64,7 @@ class NewsController extends Controller
 //        $user_id = $detail->created_by;
 //        $author = Profile::findOne($user_id);
 //        $catalog = CmsCatalog::findOne($detail->catalog_id);
-        $detail = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.content', 'cms_show.created_at','cms_show.catalog_id', 'cms_show.click', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
+        $detail = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.content', 'cms_show.seo_title','cms_show.seo_keywords','cms_show.seo_description', 'cms_show.created_at','cms_show.catalog_id', 'cms_show.click', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
             ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_show.id = :id', [':id' => $id])
             ->andWhere('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
@@ -81,7 +81,7 @@ class NewsController extends Controller
 
     public function actionList($cat_id)
     {
-        $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
+        $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.seo_title','cms_show.seo_keywords','cms_show.seo_description', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
             ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
@@ -96,7 +96,7 @@ class NewsController extends Controller
             ->limit($pagination->limit)
             ->asArray()->all();
         if($count > 0){
-            $this->view->title = $news[0]["cat_title"];
+            $this->view->title = Yii::t('general', 'News').', '. Yii::t('news', trim($news[0]["cat_title"]));
         }
         else {
             $catalog = CmsCatalog::findOne($cat_id);

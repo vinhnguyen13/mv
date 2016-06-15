@@ -124,8 +124,8 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                         <?php }?>
                     </div>
                     <div class="text-center mgT-40">
-                        <a class="btn-common mgR-10" href="<?=Url::to(['ad/index', 'project_building_id'=>$model->id, 'type'=>1])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Buy')?></a>
-                        <a class="btn-common" href="<?=Url::to(['ad/index', 'project_building_id'=>$model->id, 'type'=>2])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Rent')?></a>
+                        <a class="btn-common mgR-10" href="<?=Url::to(['ad/index1', 'project_building_id'=>$model->id])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Buy')?></a>
+                        <a class="btn-common" href="<?=Url::to(['ad/index2', 'project_building_id'=>$model->id])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Rent')?></a>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3 col-right sidebar-col">

@@ -8,10 +8,10 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 
 $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
 $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'status' => \vsoft\news\models\Status::STATUS_ACTIVE]);
-Yii::t('news', 'Real Estate');
-Yii::t('news', 'Financial & Banking');
-Yii::t('news', 'Business');
-Yii::t('news', 'Economy');
+//Yii::t('news', 'Real Estate');
+//Yii::t('news', 'Financial & Banking');
+//Yii::t('news', 'Business');
+//Yii::t('news', 'Economy');
 ?>
 <div class="title-fixed-wrap container">
     <div class="page-news">
@@ -44,6 +44,7 @@ Yii::t('news', 'Economy');
                     </li>
                     <?php } ?>
                 </ul>
+
 
                 <nav class="text-center">
                 <?php

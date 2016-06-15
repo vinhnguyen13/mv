@@ -5,6 +5,14 @@ use yii\helpers\Url;
     <div class="container">
         <div class="menuUser">
             <ul class="clearfix">
+                <li><a href="<?= Url::to(['member/update-profile', 'username' => Yii::$app->user->identity->getUsername()]) ?>"
+                       class="<?= !empty($this->params['menuUpdateProfile']) ? 'active' : ''; ?>">
+                        <div>
+                            <span class="icon-mv"><span class="icon-settings"></span></span>
+                        </div>
+                        <?= Yii::t('user', 'Profile') ?>
+                    </a>
+                </li>
                 <li>
                     <a href="<?= Url::to(['/dashboard/ad', 'username' => Yii::$app->user->identity->getUsername()]) ?>"
                        class="<?= !empty($this->params['menuDashboard']) ? 'active' : ''; ?>">
@@ -12,6 +20,12 @@ use yii\helpers\Url;
                             <span class="icon-mv"><span class="icon-barometer"></span></span>
                         </div>
                         <?= Yii::t('ad', 'Dashboard') ?>
+                    </a>
+                </li>
+                <li>
+                    <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>">
+                        <div><span class="icon-mv"><span class="icon-coin-dollar"></span></span></div>
+                        Giao dịch
                     </a>
                 </li>
                 <li>
@@ -37,12 +51,10 @@ use yii\helpers\Url;
                         </div><?= Yii::t('chat', 'Chat') ?>
                     </a>
                 </li>
-                <li><a href="<?= Url::to(['member/update-profile', 'username' => Yii::$app->user->identity->getUsername()]) ?>"
-                       class="<?= !empty($this->params['menuUpdateProfile']) ? 'active' : ''; ?>">
-                        <div>
-                            <span class="icon-mv"><span class="icon-settings"></span></span>
-                        </div>
-                        <?= Yii::t('user', 'Setting') ?>
+                <li>
+                    <a data-method="post" href="<?=Url::to(['/member/logout'])?>">
+                        <div><span class="icon-mv"><span class="icon-sign-out"></span></span></div>
+                        <?=Yii::t('user', 'Log Out')?>
                     </a>
                 </li>
             </ul>

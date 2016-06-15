@@ -8,7 +8,9 @@ use frontend\models\SignupForm;
 use funson86\cms\models\Status;
 use vsoft\news\models\CmsShow;
 use Yii;
+use yii\base\Exception;
 use yii\base\InvalidParamException;
+use yii\base\UserException;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
@@ -21,6 +23,7 @@ use vsoft\ad\models\AdWard;
 use vsoft\ad\models\AdStreet;
 use yii\helpers\ArrayHelper;
 use vsoft\ad\models\AdBuildingProject;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use vsoft\ad\models\AdCategory;
@@ -94,9 +97,58 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+		$this->view->title = Yii::t('meta', 'homepage');
         Yii::$app->meta->add(Yii::$app->request->absoluteUrl);
         return $this->render('index');
     }
+
+	public function actionError2()
+	{
+		if (($exception = Yii::$app->getErrorHandler()->exception) === null) {
+			// action has been invoked not from error handler, but by direct route, so we display '404 Not Found'
+			$exception = new HttpException(404, Yii::t('yii', 'Page not found.'));
+		}
+
+		if ($exception instanceof HttpException) {
+			$code = $exception->statusCode;
+		} else {
+			$code = $exception->getCode();
+		}
+		if ($exception instanceof Exception) {
+			$name = $exception->getName();
+		} else {
+			$name = Yii::t('yii', 'Error');
+		}
+		if ($code) {
+			$name .= " (#$code)";
+		}
+
+		if ($exception instanceof UserException) {
+			$message = $exception->getMessage();
+		} else {
+			$message = Yii::t('yii', 'An internal server error occurred.');
+		}
+		if(!empty($exception->statusCode) && $exception->statusCode == 404){
+			$pathInfo = Yii::$app->request->pathInfo;
+			if(!empty($pathInfo)){
+				$c = explode("/", $pathInfo);
+				if(!empty($c[0]) && in_array($c[0], Yii::$app->bootstrap['MVBootstrap']['supportedLanguages'])){
+					$url = '/'.str_replace($c[0], '', $pathInfo);
+					$this->redirect(Url::to([$url]));
+					Yii::$app->end();
+				}
+			}
+		}
+		if (Yii::$app->getRequest()->getIsAjax()) {
+			return "$name: $message";
+		} else {
+			return $this->render('error', [
+				'name' => $name,
+				'message' => $message,
+				'exception' => $exception,
+			]);
+		}
+	}
 
 	public function actionFeatureListings()
 	{
@@ -310,79 +362,36 @@ class SiteController extends Controller
 		fwrite ( $file, $content );
 		fclose ( $file );
 	}
-	public function actionSearch() {
-    	$v = \Yii::$app->request->get('v');
-    	
-    	if(Yii::$app->request->isAjax) {
-    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    		$response = [];
-    		
-    		if(StringHelper::startsWith(strtolower($v), 'mv')) {
-    			$id = str_replace('mv', '', strtolower($v));
-    			$product = AdProduct::findOne($id);
-    			
-    			if($product) {
-    				$response['address'] = $product->address;
-    				$response['url'] = $product->urlDetail();
-    			}
-    		} else {
-	    		$v = Elastic::transform($v);
-	    		 
-	    		$params = [
-					'query' => [
-						'match_phrase_prefix' => [
-							'search_field' => [
-	    						'query' => $v,
-	    						'max_expansions' => 100
-	    					]
-						],
-	    			],
-	    			'sort' => [
-	    				'total_sell' => [
-	    					'order' => 'desc',
-	    					'mode'	=> 'sum'
-						],
-	    				'total_rent' => [
-	    					'order' => 'desc',
-	    					'mode'	=> 'sum'
-						],
-					],
-	    			'_source' => ['full_name', AdProduct::TYPE_FOR_SELL_TOTAL, AdProduct::TYPE_FOR_RENT_TOTAL]
-	    		];
-	    		 
-	    		$ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/term/_search');
-	    		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-	    		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-	    		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-	    		 
-	    		$result = json_decode(curl_exec($ch), true);
-	    		 
-	    		foreach ($result['hits']['hits'] as $k => $hit) {
-	    			$response[$k] = $hit['_source'];
-	    			$response[$k]['url_sale'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_SELL, 's' => 1]);
-	    			$response[$k]['url_rent'] = Url::to(['/ad/index', $hit['_type'] . '_id' => $hit['_id'], 'type' => AdProduct::TYPE_FOR_RENT, 's' => 1]);
-	    		}
-	    		
-	    		if(!$response && is_numeric($v)) {
-	    			$product = AdProduct::findOne($v);
-	    			 
-	    			if($product) {
-	    				$response['address'] = $product->address;
-	    				$response['url'] = $product->urlDetail();
-	    			}
-	    		}
-    		}
-    		
-    		return $response;
-    	} else {
-    		$id = str_replace('mv', '', strtolower($v));
-    		$product = AdProduct::findOne($id);
-    		
-    		if($product) {
-    			return $this->redirect($product->urlDetail());
-    		} else {
-    			return $this->redirect(Url::to(['/ad/index']));
-    		}
-    	}
-    }
+
+	public function actionAvg() {
+		if(Yii::$app->request->isAjax){
+			Yii::$app->response->format = 'json';
+			$category = Yii::$app->request->post('category');
+			if(!empty($category)){
+				$where[] = "category_id = $category";
+			}
+			$city = Yii::$app->request->post('city', 1);
+			if(!empty($city)){
+				$where[] = "city_id = $city";
+			}
+			$district = Yii::$app->request->post('district');
+			if(!empty($district)){
+				$where[] = "district_id = $district";
+			}
+			$wards = Yii::$app->request->post('wards');
+			if(!empty($wards)){
+				$where[] = "ward_id = $wards";
+			}
+			$streets = Yii::$app->request->post('streets');
+			if(!empty($streets)){
+				$where[] = "street_id = $streets";
+			}
+			$sql = "SELECT SUM(price) as sum, COUNT(*) as total FROM ad_product";
+			if(!empty($where)){
+				$sql .= " WHERE ".implode(' AND ', $where);
+			}
+			$result = Yii::$app->db->createCommand($sql)->queryOne();
+			return $result;
+		}
+	}
 }

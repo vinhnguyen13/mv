@@ -2,10 +2,22 @@
 namespace console\controllers;
 
 use console\models\Metvuong;
+use vsoft\ad\models\AdImages;
 use yii\console\Controller;
 use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\AdBuildingProject;
 
 class ProductController extends Controller {
+	
+	public function actionCheckLatLng() {
+		$projects = AdBuildingProject::find()->asArray(true)->all();
+		$command = \Yii::$app->db->createCommand();
+		
+		foreach ($projects as $project) {
+			$command->update(AdProduct::tableName(), ['lat' => $project['lat'], 'lng' => $project['lng']], 'project_building_id = ' . $project['id'])->execute();
+		}
+	}
+	
 	public function actionCheckExpired() {
 		$now = time();
 		$products = AdProduct::find()->where("`end_date` < $now AND `is_expired` = 0")->limit(1000)->asArray(true)->all();
@@ -59,11 +71,49 @@ class ProductController extends Controller {
         }
     }
 
-    // Marketing contact send mail
-    public function actionSendMailContact(){
-        Metvuong::sendMailContact();
+    public $code;
+    public function options()
+    {
+        return ['code'];
+    }
+    public function optionAliases()
+    {
+        return ['code' => 'code'];
     }
 
+    /*
+        Marketing contact send mail: php yii product/send-mail-contact -code=123456
+    */
+    public function actionSendMailContact(){
+        Metvuong::sendMailContact($this->code);
+    }
 
+    public function actionDownloadImage()
+    {
+        $images = \Yii::$app->db->cache( function() {
+            return AdImages::find()->where('folder = :f', [':f' => ''])->orWhere(['folder' => null])->limit(1000)->all();
+        });
+        if(count($images) > 0){
+            $no = 0;
+            foreach ($images as $image) {
+                $result = Metvuong::DownloadImage($image->file_name, $image->uploaded_at);
+                if(!empty($result)){
+                    $image->file_name = $result[0];
+                    $image->folder = $result[1];
+                    $image->update(false);
+                }
+                if($no > 0 && $no % 100 == 0) {
+                    print_r(PHP_EOL);
+                    print_r("Updated {$no} images...");
+                    print_r(PHP_EOL);
+                }
+                $no++;
+                sleep(1);
+            }
+            print_r(PHP_EOL);
+            print_r("Updated {$no} images...");
+            print_r(PHP_EOL);
+        }
+    }
 
 }

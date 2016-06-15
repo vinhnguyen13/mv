@@ -31,14 +31,15 @@ class NewsWidget extends Widget
         $cat_id = $this->category[$view];
         $limit = $this->limit;
         $offset = 0;
-        $order_by = ['id' => SORT_DESC];
-        if($view == "hotnews")
-            $order_by = ['click' => SORT_DESC, 'id' => SORT_DESC];
+        $order_by = ['updated_at' => SORT_DESC];
 
         $news = CmsShow::find()->where(['IN', 'language_id', [Yii::$app->language]]);
 
         if($cat_id > 0)
             $news->andWhere('catalog_id = :catId',[':catId' => $cat_id]);
+
+        if($view == "hotnews")
+            $news->andWhere('hot_news = :h',[':h' => 1]);
 
         $result = $news->limit($limit)->offset($offset)->orderBy($order_by)->all();
 

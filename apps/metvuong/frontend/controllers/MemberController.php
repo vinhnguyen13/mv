@@ -12,6 +12,7 @@ use frontend\models\Token;
 use frontend\models\User;
 use frontend\models\UserLocation;
 use frontend\models\UserReview;
+use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdProduct;
 use vsoft\express\components\StringHelper;
 use Yii;
@@ -20,6 +21,7 @@ use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
+use yii\mongodb\Session;
 use yii\web\BadRequestHttpException;
 use frontend\components\Controller;
 use yii\web\Cookie;
@@ -167,13 +169,40 @@ class MemberController extends Controller
     public function actionConfirmLogin($id, $code)
     {
         $token = Token::find()->where(['MD5(CONCAT(user_id, code))' => $id, 'code' => $code, 'type' => Token::TYPE_CRAWL_USER_EMAIL])->one();
-        $user = $token->user;
-        $loginStatus = Yii::$app->getUser()->login($user, 0);
-        if($loginStatus)
-            $token->updateAttributes([
-                'code'   => Yii::$app->security->generateRandomString(),
-            ]);
-        $this->redirect(Url::to(['member/profile', 'username' => $user->username], true));
+        $countToken = count($token);
+        if($countToken > 0) {
+            $user = $token->user;
+            if (count($user) > 0) {
+                $loginStatus = Yii::$app->getUser()->login($user, 0);
+                if ($loginStatus) {
+                    $token->updateAttributes([
+                        'code' => Yii::$app->security->generateRandomString(),
+                    ]);
+                    $user_id = $user->id;
+                    $email = $user->email;
+                    $contacts = AdContactInfo::getDb()->cache(function () use ($email) {
+                        $sql = "SELECT group_concat(product_id) as list_id FROM ad_contact_info where email = '{$email}'";
+                        return AdContactInfo::getDb()->createCommand($sql)->queryAll();
+                    });
+
+                    if (count($contacts) && isset($contacts[0]["list_id"])) {
+                        $list_id = $contacts[0]["list_id"];
+                        $update_sql = "UPDATE `ad_product` SET `user_id`={$user_id} WHERE id IN ({$list_id})";
+                        AdProduct::getDb()->createCommand($update_sql)->execute();
+                    }
+
+                    $new_token = new Token();
+                    $new_token->user_id = $user->id;
+                    $new_token->code = Yii::$app->security->generateRandomString();
+                    $new_token->type = Token::TYPE_RECOVERY;
+                    $new_token->created_at = time();
+                    $new_token->save();
+
+                    return $this->redirect(Url::to(['member/reset-password', 'id' => md5($user_id . $new_token->code), 'code' => $new_token->code], true));
+                }
+            }
+        }
+        return $this->redirect(Url::home(true));
     }
 
     /**
@@ -245,7 +274,12 @@ class MemberController extends Controller
             $model->validate();
             if (!$model->hasErrors()) {
                 if(($msg = $model->resetPassword($token)) !== false){
-                    return ['statusCode'=>200, 'parameters'=>['msg'=>$msg]];
+                    if(count($token) > 0) {
+                        $user = $token->user;
+                        Yii::$app->getUser()->login($user, 0);
+                    }
+                    $redirect = Url::to(['member/profile', 'username' => $user->username], true);
+                    return ['statusCode'=>200, 'parameters'=>['msg'=>$msg], 'redirect' => $redirect];
                 }
             } else {
                 return ['statusCode'=>404, 'parameters'=>$model->errors];

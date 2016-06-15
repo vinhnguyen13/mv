@@ -15,57 +15,16 @@ use yii\helpers\Url;
             </div>
         <?php } else { ?>
         <div class="wrap-list-duan">
-            <ul class="nav nav-tabs clearfix" role="tablist">
-                <li role="presentation" class="active">
-                    <a class="link-list-all" href="#list-all" aria-controls="list-all" role="tab" data-toggle="tab" data-number="<?=$total?>"><?=Yii::t('ad', 'Tất cả')?> (<?=$total > 0 ? $total : 0?>)</a>
-                </li>
-                <li role="presentation"><a class="link-list-sell" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 1], true)?>" href="#list-sell" aria-controls="list-sell" role="tab" data-toggle="tab" data-number="<?=$sell?>"><?=Yii::t('ad', 'Bán')?> (<?=$sell?>)</a></li>
-                <li role="presentation"><a class="link-list-rent" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 2], true)?>" href="#list-rent" aria-controls="list-rent" role="tab" data-toggle="tab" data-number="<?=$rent?>"><?=Yii::t('ad', 'Cho thuê')?> (<?=$rent?>)</a></li>
-                <li class="pull-right">
-                    <div class="clearfix fs-13">
-                        <div class="search-history">
-                            <div>
-                                <input type="text" id="tags" class="form-control" placeholder="<?= Yii::t('listing', 'Search listing...') ?>" title="<?= Yii::t('listing', 'Search listing...') ?>">
-                                <button class="btn-search-hist" href="#"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
-                            </div>
-                        </div>
-                    </div>
-                </li>
+            <ul class="clearfix list-item">
+                <?=$this->render('/dashboard/ad/list', ['products' => $products, 'type' => 0, 'last_id' => $last_id])?>
             </ul>
-            <div class="tab-content">
-                <div role="tabpanel" class="tab-pane fade active in" id="list-all">
-                    <ul class="clearfix list-item">
-                        <?=$this->render('/dashboard/ad/list', ['products' => $products, 'type' => 0, 'last_id' => $last_id])?>
-                    </ul>
-                    <input type="hidden" class="last_id" value="<?=$last_id?>">
-                    <?php if($total > 6){?>
-                    <div class="text-center">
-                        <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 0])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
-                    </div>
-                    <span class="that_all pull-right hide fs-13"><?=Yii::t('ad', "That's all listing.")?></span>
-                    <?php } ?>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="list-sell">
-                    <ul class="clearfix list-item"></ul>
-                    <input type="hidden" class="last_id" value="0">
-                    <?php if($sell > 6){?>
-                    <div class="text-center">
-                        <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 1])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
-                    </div>
-                    <span class="that_all pull-right hide fs-13"><?=Yii::t('ad', "That's all listing.")?></span>
-                    <?php } ?>
-                </div>
-                <div role="tabpanel" class="tab-pane fade" id="list-rent">
-                    <ul class="clearfix list-item"></ul>
-                    <input type="hidden" class="last_id" value="0">
-                    <?php if($rent > 6){?>
-                    <div class="text-center">
-                        <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 2])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
-                    </div>
-                    <span class="that_all pull-right hide fs-13"><?=Yii::t('ad', "That's all listing.")?></span>
-                    <?php } ?>
-                </div>
+            <input type="hidden" class="last_id" value="<?=$last_id?>">
+            <?php if($total > 6){?>
+            <div class="text-center">
+                <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 0])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
             </div>
+            <span class="that_all pull-right hide fs-13"><?=Yii::t('ad', "That's all listing.")?></span>
+            <?php } ?>
         </div>
         <?php } ?>
     </div>

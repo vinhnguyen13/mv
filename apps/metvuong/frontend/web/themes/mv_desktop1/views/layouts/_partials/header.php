@@ -28,8 +28,8 @@ use frontend\models\AdProductSearch;
                 <div class="wrap-menu">
                     <a href="#" id="hide-menu" class="icon"></a>
                     <ul class="clearfix">
-                        <li class="<?=!empty($this->params['menuBuy']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_SELL, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><span class="icon-mv"><span class="icon-icons-search"></span></span><?=Yii::t('general', 'Buy')?></a></li>
-                        <li class="<?=!empty($this->params['menuRent']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_RENT, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><span class="icon-mv"><span class="icon-icons-search"></span></span><?=Yii::t('general', 'Rent')?></a></li>
+                        <li class="<?=!empty($this->params['menuBuy']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index1']) ?>"><span class="icon-mv"><span class="icon-icons-search"></span></span><?=Yii::t('general', 'Buy')?></a></li>
+                        <li class="<?=!empty($this->params['menuRent']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index2']) ?>"><span class="icon-mv"><span class="icon-icons-search"></span></span><?=Yii::t('general', 'Rent')?></a></li>
                         <li class="<?=!empty($this->params['menuSell']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/post']) ?>"><span class="icon-mv"><span class="icon-key"></span></span><?=Yii::t('general', 'Sell')?></a></li>
                         <li class="<?=!empty($this->params['menuProject']) ? 'active' : '' ;?>"><a href="<?=Url::to(['building-project/index']);?>"><span class="icon-mv"><span class="icon-fill-1"></span></span><?=Yii::t('general', 'New Project')?></a></li>
                         <li class="<?=!empty($this->params['menuNews']) ? 'active' : '' ;?>"><a href="<?=Url::to(['news/index']);?>"><span class="icon-mv"><span class="icon-group"></span></span><?=Yii::t('general', 'News')?></a></li>
@@ -63,6 +63,9 @@ use frontend\models\AdProductSearch;
                             </div>
                         </a>
                     </li>
+                    <li class="num-gold">
+                        <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span>10 Keys</a>
+                    </li>
                     <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
                     <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()])?>"><span class="icon-mv"><span class="icon-barometer"></span></span><?=Yii::t('ad', 'Dashboard')?></a></li>
                     <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="wrapNotifyOther"><span class="icon-mv"><span class="icon-icons-bell"></span></span><?=Yii::t('activity', 'Notification')?>
@@ -77,13 +80,13 @@ use frontend\models\AdProductSearch;
                     </a></li>
                     <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->getUsername()])?>"><span class="icon-mv"><span class="icon-settings"></span></span><?=Yii::t('user', 'Setting')?></a></li>
                     <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><span class="icon icon-logout"></span><?=Yii::t('user', 'Log Out')?></a></li>
-                    <li class="flag-lang">
+                    <!-- <li class="flag-lang">
                         <p class="pull-right">
                             <a href="<?=Url::current(['language-change'=>'en-US'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-en.png' ?>" alt=""></a>
                             <a href="<?=Url::current(['language-change'=>'vi-VN'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-vn.png' ?>" alt=""></a>
                         </p>
                         <?=Yii::t('general', 'Language')?>
-                    </li>
+                    </li> -->
                 </ul>
                 <?php } ?>
             </div>
@@ -113,6 +116,9 @@ use frontend\models\AdProductSearch;
                 </div>
                 <?php } else{?>
                     <ul class="pull-left list-redire">
+                        <!-- <li class="num-gold">
+                            <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span>10 Keys</a>
+                        </li> -->
                         <li class="dropdown-message box-dropdown">
                             <a class="val-selected wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->getUsername()])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
                                 <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
@@ -146,21 +152,21 @@ use frontend\models\AdProductSearch;
                                 </div>
                             </div>
                         </li>
-                        <li>
+                        <!-- <li>
                             <a class="" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()])?>" data-toggle="tooltip" data-placement="bottom" title="Dashboard">
                                 <span class="icon-mv"><span class="icon-barometer"></span></span>
                             </a>
-                        </li>
+                        </li> -->
                     </ul>
                     <div class="user-edit box-dropdown">
-                        <a class="val-selected wrapNotifyTotal" data-toggle="tooltip" data-placement="bottom" href="#" title="<?=Yii::t('user', 'Profile')?>">
+                        <a class="val-selected wrapNotifyTotal" data-toggle="tooltip" data-placement="bottom" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()])?>" title="<?=Yii::t('user', 'Profile')?>">
                             <span class="wrap-img"><img src="<?=Yii::$app->user->identity->profile->getAvatarUrl();?>" alt="" width="40" height="40"></span>
                             <div>
                                 <p><span class="name-user"><?=Yii::$app->user->identity->profile->getDisplayName();?></span>
                                     <span class="address"><?=empty(Yii::$app->user->identity->location) ? "" : Yii::$app->user->identity->location->city?></span></p>
                             </div>
                         </a>
-                        <div class="item-dropdown hide-dropdown">
+                        <!-- <div class="item-dropdown hide-dropdown">
                             <ul class="clearfix">
                                 <li>
                                     <a href="<?=Url::to(['member/profile', 'username'=>Yii::$app->user->identity->getUsername()])?>">
@@ -180,14 +186,14 @@ use frontend\models\AdProductSearch;
                                     <?=Yii::t('general', 'Language')?>
                                 </li>
                             </ul>
-                        </div>
+                        </div> -->
                     </div>
                 <?php } ?>
             </div>
             <ul class="clearfix list-menu">
                 <li class="dt-logo"><a href="/" class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt=""></a></li>
-                <li class="<?=!empty($this->params['menuBuy']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_SELL, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><?=Yii::t('general', 'Buy')?></a></li>
-                <li class="<?=!empty($this->params['menuRent']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index', 'type' => AdProduct::TYPE_FOR_RENT, 'city_id' => AdProductSearch::DEFAULT_CITY, 'district_id' => AdProductSearch::DEFAULT_DISTRICT]) ?>"><?=Yii::t('general', 'Rent')?></a></li>
+                <li class="<?=!empty($this->params['menuBuy']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index1']) ?>"><?=Yii::t('general', 'Buy')?></a></li>
+                <li class="<?=!empty($this->params['menuRent']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index2']) ?>"><?=Yii::t('general', 'Rent')?></a></li>
                 <li class="<?=!empty($this->params['menuSell']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/post']) ?>"><?=Yii::t('general', 'Sell')?></a></li>
                 <li class="<?=!empty($this->params['menuProject']) ? 'active' : '' ;?>"><a href="<?=Url::to(['building-project/index']);?>"><?=Yii::t('general', 'New Project')?></a></li>
                 <li class="<?=!empty($this->params['menuNews']) ? 'active' : '' ;?>"><a href="<?=Url::to(['news/index']);?>"><?=Yii::t('general', 'News')?></a></li>
@@ -265,7 +271,7 @@ use frontend\models\AdProductSearch;
             });
         });
 
-        $('.guest-dropdown,.user-edit').dropdown({
+        $('.guest-dropdown').dropdown({
             styleShow: 0,
             selectedValue: false
         });

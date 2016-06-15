@@ -710,6 +710,8 @@ class BatdongsanV2 extends Component
                                     $district_id = null;
                                     $ward_id = null;
                                     $street_id = null;
+                                    $lat = $value[$filename]["lat"];
+                                    $lng = $value[$filename]["lng"];
 
                                     $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
                                     // neu co du an thi lay dia chi cua du an gan cho tin dang
@@ -726,6 +728,8 @@ class BatdongsanV2 extends Component
                                             $ward_id = $project->ward_id;
                                             $street_id = $project->street_id;
                                             $home_no = $project->home_no;
+                                            $lat = $project->lat;
+                                            $lng - $project->lng;
                                             $count_project++;
                                             print_r(" - " . $project_name);
                                         }
@@ -767,8 +771,8 @@ class BatdongsanV2 extends Component
                                         'area' => $area,
                                         'price' => $price,
                                         'price_type' => empty($price) ? 0 : 1,
-                                        'lat' => $value[$filename]["lat"],
-                                        'lng' => $value[$filename]["lng"],
+                                        'lat' => $lat,
+                                        'lng' => $lng,
                                         'start_date' => $value[$filename]["start_date"],
                                         'end_date' => $value[$filename]["end_date"],
                                         'verified' => 1,
@@ -1211,7 +1215,7 @@ class BatdongsanV2 extends Component
                 'type', 'content', 'area', 'price', 'price_type', 'lat', 'lng',
                 'start_date', 'end_date', 'verified', 'created_at', 'updated_at', 'source', 'status',
                 'is_expired'];
-            $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at'];
+            $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at', 'folder'];
             $ad_info_columns = ['product_id', 'facade_width', 'land_width', 'home_direction', 'facade_direction', 'floor_no', 'room_no', 'toilet_no', 'interior'];
             $ad_contact_columns = ['product_id', 'name', 'phone', 'mobile', 'address', 'email'];
 //            $ad_product_tool_map_columns = ['product_main_id', 'product_tool_id'];
@@ -1331,11 +1335,13 @@ class BatdongsanV2 extends Component
                         if (count($imageArray) > 0 && isset($imageArray[$index])) {
                             foreach ($imageArray[$index] as $image) {
                                 if (count($image) > 0 && !empty($image)) {
+                                    $result = Metvuong::DownloadImage($image->file_name, $image->uploaded_at);
                                     $imageRecord = [
                                         'user_id' => $image->user_id,
                                         'product_id' => $i,
-                                        'file_name' => $image->file_name,
-                                        'uploaded_at' => $image->uploaded_at
+                                        'file_name' => $result[0],
+                                        'uploaded_at' => $image->uploaded_at,
+                                        'folder' => $result[1]
                                     ];
                                     $bulkImage[] = $imageRecord;
                                 }
