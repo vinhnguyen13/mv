@@ -201,7 +201,7 @@ class ElasticController extends Controller {
 			]
 		];
 		
-		$synonyms = ["hcm,ho chi minh", "cmt8,cach mang thang tam", "1,mot", "2,hai", "3,ba", "4,bon", "5,nam", "6,sau", "7,bay", "8,tam", "9,chin", "q,quan", "p,phuong"];
+		$synonyms = ["hcm,ho chi minh", "cmt8,cach mang thang tam", "1,mot", "2,hai", "3,ba", "4,bon", "5,nam", "6,sau", "7,bay", "8,tam", "9,chin", "q,quan", "p,phuong", "thang,slash", "quan 1,quan nhat"];
 		$settings = [
 			'analysis' => [
 				'char_filter' => [
@@ -258,9 +258,9 @@ class ElasticController extends Controller {
 		$term[] = [
 			'name'	=> $name,
 			'slug' => $slug,
-			'search_name' => Elastic::transform($name),
+			'search_name' => preg_replace("/([0-9])\/([0-9])/", "$1/$2 $1 / $2", Elastic::transform($name)),
 			'full_name' => $fullName,
-			'search_field' => Elastic::transform(str_replace(',', '', $fullName)),
+			'search_field' => preg_replace("/([0-9])\/([0-9])/", "$1/$2 $1 / $2", Elastic::transform(str_replace(',', '', $fullName))),
 			AdProduct::TYPE_FOR_SELL_TOTAL => intval($totalSell),
 			AdProduct::TYPE_FOR_RENT_TOTAL => intval($totalRent),
 			'city_id' => intval($cityId)
