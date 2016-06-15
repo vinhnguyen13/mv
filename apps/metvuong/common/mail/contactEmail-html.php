@@ -30,7 +30,7 @@ $token = $params["token"];
 </p>
 
 <p style="font-size:13px;margin-bottom: 15px;line-height:20px;">
-    Vui lòng xem tài khoản tại link: <b><?= Html::a(Html::encode(Yii::$app->urlManager->hostInfo."/".$params["username"]), $token->url) ?></b>
+    Hãy Ấn Link Này: <b><?= Html::a(Html::encode($params['link_user']), $token->url) ?></b>
 </p>
 
 <p style="font-size:13px;line-height:20px;margin-bottom:15px;">

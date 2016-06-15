@@ -35,6 +35,7 @@ $model = Yii::createObject([
     $(document).ready(function(){
         var timer = 0;
         $(document).on('click', '.btn-recover', function(){
+            $('body').loading();
             var _this = $(this);
             clearTimeout(timer);
             timer = setTimeout(function() {
@@ -45,15 +46,16 @@ $model = Yii::createObject([
                     data: $('#recover-form').serializeArray(),
                     success: function(data) {
                         if(data.statusCode == 200){
+                            $('body').loading({done: true});
                             location.href = data.redirect;
-                        }else if(data.statusCode == 404){
+                        } else if(data.statusCode == 404){
                             var arr = [];
                             $.each(data.parameters, function(idx, val){
                                 var element = 'recover-form-'+idx;
                                 arr[element] = val;
                             });
                             $('#recover-form').yiiActiveForm('updateMessages', arr, true);
-                        }else{
+                        } else{
                             _this.html('Try again !');
                         }
                     }

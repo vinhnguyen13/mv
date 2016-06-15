@@ -20,6 +20,7 @@ use Yii;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 class Metvuong extends Component
 {
@@ -28,13 +29,19 @@ class Metvuong extends Component
         $contacts = AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
                 ->where('email is not null')
                 ->andWhere("email NOT IN (select email from mark_email where status = 1)")
-                ->groupBy('email')->orderBy('count(product_id) desc')->limit(100)->all();
+                ->andWhere("email NOT IN (select email from user)")
+                ->groupBy('email')->orderBy('count(product_id) desc')->limit(1)->all();
 
         if(count($contacts) > 0) {
-            $count_code = CouponCode::getDb()->cache(function() use($code){
-                return CouponCode::find()->where('code = :c',[':c' => $code])->count('code');
+            $coupon = CouponCode::getDb()->cache(function() use($code){
+                return CouponCode::find()->where('code = :c',[':c' => $code])->one();
             });
-            if($count_code == 0)
+
+            if($coupon->type == CouponCode::TYPE_ONE && $coupon->count >= 1) {
+                print_r("{$code} was used. Please, select other coupon code.");
+                return;
+            }
+            if(count($coupon) == 0)
                 $code = null;
 
             foreach ($contacts as $contact) {
@@ -42,61 +49,53 @@ class Metvuong extends Component
                 $email = mb_strtolower($email);
                 // check user exists or create new user
                 $user = $contact->createUserInfo();
-                if (count($user) > 0 && ($user->updated_at > $user->created_at)) {
-                    print_r("\n{$email} was disabled");
+                $token = new Token();
+                $token->user_id = $user->id;
+                $token->code = Yii::$app->security->generateRandomString();
+                $token->type = Token::TYPE_CRAWL_USER_EMAIL;
+                $token->created_at = time();
+                $res = $token->save();
+                if($res == false){
+                    print_r("{$email} cannot create new token");
                     continue;
-                } else {
-                    $token = Token::find()->where(['user_id' => $user->id])->one();
-                    if(count($token) <= 0){
-                        /** @var Token $token */
-                        $token = new Token();
-                        $token->user_id = $user->id;
-                        $token->code = Yii::$app->security->generateRandomString();
-                        $token->type = Token::TYPE_CRAWL_USER_EMAIL;
-                        $token->created_at = time();
-                        $res = $token->save();
-                        if($res == false){
-                            print_r("{$email} cannot create new token");
-                            continue;
-                        }
-                    }
+                }
 
-                    $array_product_id = explode(",", $contact["list_id"]);
-                    $products = AdProduct::getDb()->cache(function () use ($array_product_id) {
-                        return AdProduct::find()->where(['IN', 'id', $array_product_id])->limit(3)->all();
-                    });
-                    $product_list = array();
-                    if (count($products) > 0) {
-                        foreach ($products as $product) {
-                            $url = $product->urlDetail(true); // loi ko the su dung Url::to()
-                            $id = $product->id;
+                $array_product_id = explode(",", $contact["list_id"]);
+                $products = AdProduct::getDb()->cache(function () use ($array_product_id) {
+                    return AdProduct::find()->where(['IN', 'id', $array_product_id])->limit(3)->all();
+                });
+                $product_list = array();
+                if (count($products) > 0) {
+                    foreach ($products as $product) {
+                        $url = $product->urlDetail(true); // loi ko the su dung Url::to()
+                        $id = $product->id;
 //                        $slug = \common\components\Slug::me()->slugify($product->getAddress($product->show_home_no));
 //                        $url = "http://local.metvuong.com/real-estate/detail/{$id}-{$slug}";
-                            $product_list[Yii::$app->params['listing_prefix_id'] . $id] = $url;
-                        }
+                        $product_list[Yii::$app->params['listing_prefix_id'] . $id] = $url;
                     }
-
-                    $rest_total = intval($contact["total"]) - 3;
-
-                    $params = [
-                        'email' => $email,
-                        'username' => $user->username,
-                        'token' => $token,
-                        'product_list' => $product_list,
-                        'rest_total' => $rest_total,
-                        'code' => $code
-                    ];
-
-                    $subjectEmail = "Thông báo tin đăng từ metvuong.com";
-                    $status = \Yii::$app->mailer->compose(['html'=>'contactEmail-html'], ['params' => $params])
-                        ->setFrom(Yii::$app->params['adminEmail'])
-                        ->setTo([$email])
-                        ->setSubject($subjectEmail)
-                        ->send();
-                    $status > 0 ? print_r("\nsent to {$email}") : "Send mail error.";
-                    // Count email marketing has sent
-                    Metvuong::markEmail($email, $status);
                 }
+
+                $rest_total = intval($contact["total"]) - 3;
+
+                $params = [
+                    'email' => $email,
+                    'link_user' => Url::to(['member/profile','username' => $user->username],true),
+                    'token' => $token,
+                    'product_list' => $product_list,
+                    'rest_total' => $rest_total,
+                    'code' => $code
+                ];
+
+                $subjectEmail = "Thông báo tin đăng từ metvuong.com";
+                $status = \Yii::$app->mailer->compose(['html'=>'contactEmail-html'], ['params' => $params])
+                    ->setFrom(Yii::$app->params['adminEmail'])
+                    ->setTo(['nhuttranm@gmail.com'])
+                    ->setSubject($subjectEmail)
+                    ->send();
+                $status > 0 ? print_r("\nsent to {$email}") : "Send mail error.";
+                // Count email marketing has sent
+                Metvuong::markEmail($email, $status);
+
             }
             print_r("\n--------------------\nSend email finish.");
         } else
