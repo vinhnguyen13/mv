@@ -9,6 +9,7 @@ use yii\helpers\Html;
 use vsoft\ad\models\AdCity;
 use vsoft\ad\models\AdDistrict;
 use vsoft\ad\models\AdCategory;
+use vsoft\ad\models\AdProduct;
 use yii\helpers\ArrayHelper;
 use yii\web\View;
 
@@ -36,7 +37,11 @@ foreach ($categories as $category) {
                     <div class="title-frm">Thành phố / Quận-Huyện / Phường-Xã</div>
                     <div class="row region">
                         <div class="form-group col-xs-12 col-sm-6">
-                            <label>Loại </label>
+                            <label>Hình thức</label>
+                            <?=Html::dropDownList('category', null, [AdProduct::TYPE_FOR_SELL => Yii::t('ad', 'Sell'),AdProduct::TYPE_FOR_RENT => Yii::t('ad', 'Rent'),], ['class' => 'form-control search region_category', 'prompt' => "..."])?>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6">
+                            <label>Loại BDS</label>
                             <?=Html::dropDownList('category', null, $categoriesDropDown, ['class' => 'form-control search region_category', 'prompt' => "..."])?>
                         </div>
                         <div class="form-group col-xs-12 col-sm-6">
