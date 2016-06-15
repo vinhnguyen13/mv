@@ -13,6 +13,7 @@ use frontend\models\Token;
 use frontend\models\User;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\MarkEmail;
 use vsoft\coupon\models\CouponCode;
 use vsoft\express\components\AdImageHelper;
 use Yii;
@@ -22,10 +23,13 @@ use yii\helpers\Html;
 
 class Metvuong extends Component
 {
-    public static function sendMailContact($code=null){
+    public static function sendMailContact($code=null)
+    {
         $contacts = AdContactInfo::getDb()->cache(function(){
             return AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
                 ->where('email is not null')
+                ->andWhere("email = 'nhuttranm@gmail.com'")
+                ->andWhere("email NOT IN (select email from mark_email where status = 1)")
                 ->groupBy('email')->orderBy('count(product_id) desc')->limit(100)->all();
         });
 
@@ -38,6 +42,7 @@ class Metvuong extends Component
 
             foreach ($contacts as $contact) {
                 $email = trim($contact["email"]);
+                $email = mb_strtolower($email);
                 // check user exists or create new user
                 $user = $contact->createUserInfo();
                 if (count($user) > 0 && ($user->updated_at > $user->created_at)) {
@@ -86,16 +91,39 @@ class Metvuong extends Component
                     ];
 
                     $subjectEmail = "Thông báo tin đăng từ metvuong.com";
-                    $print = \Yii::$app->mailer->compose(['html'=>'contactEmail-html'], ['params' => $params])
+                    $status = \Yii::$app->mailer->compose(['html'=>'contactEmail-html'], ['params' => $params])
                         ->setFrom(Yii::$app->params['adminEmail'])
                         ->setTo([$email])
                         ->setSubject($subjectEmail)
                         ->send();
-                    $print > 0 ? print_r("\nsent to {$email}") : "Send mail error.";
+                    $status > 0 ? print_r("\nsent to {$email}") : "Send mail error.";
+                    // Count email marketing has sent
+                    Metvuong::markEmail($email, $status);
                 }
             }
         } else
             print_r("No contact info");
+    }
+
+    public static function markEmail($email, $status)
+    {
+        $markEmail = MarkEmail::find()->where('email = :e',[':e' => $email])->one();
+        if(count($markEmail) > 0){
+            if($status) {
+                $c = $markEmail->count;
+                $markEmail->count = $c + 1;
+            }
+            $markEmail->send_time = time();
+            $markEmail->status = $status;
+            $markEmail->update(false);
+        } else {
+            $markEmail = new MarkEmail();
+            $markEmail->email = $email;
+            $markEmail->count = 1;
+            $markEmail->send_time = time();
+            $markEmail->status = $status;
+            $markEmail->save(false);
+        }
     }
 
     public static function DownloadImage($link, $uploaded_at)
