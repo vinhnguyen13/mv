@@ -8,6 +8,7 @@
 
 namespace frontend\models;
 use kartik\helpers\Enum;
+use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductSaved;
 use vsoft\express\models\SysEmail;
 use vsoft\tracking\models\base\AdProductFinder;
@@ -82,6 +83,9 @@ class Tracking extends Component
 
     public function productVisitor($uid, $pid, $time = null, $return = false){
         if($this->checkAccess()) {
+            $product = AdProduct::findOne($pid);
+            if($product->user_id == Yii::$app->user->id)
+                return false;
             $time = !empty($time) ? $time : time();
             $query = AdProductVisitor::find();
             $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
@@ -106,6 +110,9 @@ class Tracking extends Component
     }
     public function productShare($uid, $pid, $time = null, $type, $return = false){
         if($this->checkAccess()) {
+            $product = AdProduct::findOne($pid);
+            if($product->user_id == Yii::$app->user->id)
+                return false;
             $time = !empty($time) ? $time : time();
             $adProductShare = new AdProductShare();
             $adProductShare->user_id = $uid;
@@ -122,6 +129,10 @@ class Tracking extends Component
 
     public function productFinder($uid, $pid, $time = null, $return = false){
         if($this->checkAccess()) {
+            $product = AdProduct::findOne($pid);
+            if($product->user_id == Yii::$app->user->id)
+                return false;
+
             $time = !empty($time) ? $time : time();
             $query = AdProductFinder::find();
             $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
