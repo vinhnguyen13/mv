@@ -61,7 +61,7 @@ foreach ($categories as $category) {
                             <?=Html::dropDownList('streets', null, [], ['class' => 'form-control search region_streets', 'prompt' => "..."])?>
                         </div>
                     </div>
-                    <a href="#" class="btn-form btn-common btn-tinhnhanh"> Tính nhanh <span class="arrow-icon"> </span> </a>
+                    <a href="javascript:;" class="btn-form btn-common btn-tinhnhanh"> Tính nhanh <span class="arrow-icon"> </span> </a>
                 </form>
             </div>
             <div class="tool-hdr black-hdr"> Kết quả</div>
