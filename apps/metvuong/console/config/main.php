@@ -28,7 +28,37 @@ return [
             'class' => 'console\controllers\CrawlerController'
         ],
     ],
+    'modules' => [
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'enableConfirmation' => false,
+            'confirmWithin' => 21600,
+            'cost' => 12,
+            'admins' => ['superadmin'],
+            'modelMap' => [
+                'User' => 'frontend\models\User',
+                'Account' => 'frontend\models\Account',
+                'Profile' => 'frontend\models\Profile',
+            ],
+            'controllerMap' => [
+                'security' => 'frontend\controllers\SecurityController',
+                'registration' => 'frontend\controllers\RegistrationController',
+            ],
+            'urlRules' => [
+//                '<id:\d+>'                               => 'profile/show',
+//                '<action:(login|logout)>'                => 'security/<action>',
+//                '<action:(register|resend)>'             => 'registration/<action>',
+//                'confirm/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'registration/confirm',
+//                'forgot'                                 => 'recovery/request',
+//                'recover/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'recovery/reset',
+//                'settings/<action:\w+>'                  => 'settings/<action>'
+            ]
+        ],
+    ],
     'components' => [
+        'user' => [
+            'class' => 'frontend\models\User',
+        ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
             'baseUrl' => 'http://metvuong.com/',
