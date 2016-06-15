@@ -353,11 +353,27 @@ class Elastic
 			]
 		];
     	
-		return $params;
+		return ['params' => $params, 'additionSearch' => $additionSearch];
     }
     
     public static function searchAreasRankByTotal($v) {
     	$params = self::buildParams($v);
+    	
+    	$sentence = explode(' ', $params['additionSearch']);
+    	$totalWords = count($sentence);
+    	
+    	if($totalWords > 1) {
+    		$lastWord = $sentence[$totalWords-1];
+    	
+	    	$params['query']['function_score']['functions'][] = [
+				"filter" => [
+					"match" => [
+						"search_field" => $lastWord
+					]
+				],
+				"weight" => 1
+			];
+    	}
     	
     	$params['query']['function_score']['functions'][] = [
     		"field_value_factor" => [
@@ -367,13 +383,13 @@ class Elastic
     		]
     	];
     	
-    	return self::requestResult($params);
+    	return self::requestResult($params['params']);
     }
     
     public static function searchAreas($v) {
 		$params = self::buildParams($v);
 		
-		return self::requestResult($params);
+		return self::requestResult($params['params']);
     }
     
     public static function requestResult($params) {
