@@ -21,6 +21,9 @@ use common\models\AdContactInfo as ACI;
  */
 class AdContactInfo extends ACI
 {
+    // used to auto create new user and send mail marketing
+    public $total;
+    public $list_id;
 
 	public function rules()
 	{

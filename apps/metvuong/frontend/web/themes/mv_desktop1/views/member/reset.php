@@ -45,7 +45,7 @@ $model = Yii::createObject([
                     data: $('#recover-form').serializeArray(),
                     success: function(data) {
                         if(data.statusCode == 200){
-                            location.href = '/';
+                            location.href = data.redirect;
                         }else if(data.statusCode == 404){
                             var arr = [];
                             $.each(data.parameters, function(idx, val){

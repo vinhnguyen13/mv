@@ -24,10 +24,9 @@ class Metvuong extends Component
 {
     public static function sendMailContact($code=null){
         $contacts = AdContactInfo::getDb()->cache(function(){
-            $sql = "SELECT email, count(product_id) as total, group_concat(product_id) as list_id
-                    FROM metvuong_dev.ad_contact_info where email is not null group by email order by count(product_id) desc limit 200";
-
-            return AdContactInfo::getDb()->createCommand($sql)->queryAll();
+            return AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
+                ->where('email is not null')
+                ->groupBy('email')->orderBy('count(product_id) desc')->limit(100)->all();
         });
 
         if(count($contacts) > 0) {
@@ -39,14 +38,9 @@ class Metvuong extends Component
 
             foreach ($contacts as $contact) {
                 $email = trim($contact["email"]);
-//                $user = User::getDb()->cache(function () use ($email) {
-//                    return User::find()->where(['email' => $email])->one();
-//                });
-
+                $email = mb_strtolower($email);
                 // check user exists or create new user
-                $adContactInfo = AdContactInfo::find()->where(['email' => $email])->one();
-                $user = $adContactInfo->createUserInfo();
-
+                $user = $contact->createUserInfo();
                 if (count($user) > 0 && ($user->updated_at > $user->created_at)) {
                     continue;
                 } else {
