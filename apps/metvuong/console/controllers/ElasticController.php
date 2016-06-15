@@ -201,13 +201,13 @@ class ElasticController extends Controller {
 			]
 		];
 		
-		$synonyms = ["1,mot", "2,hai", "3,ba", "4,bon", "5,nam", "6,sau", "7,bay", "8,tam", "9,chin", "q,quan", "p,phuong", "thang,slash", "quan 1,quan nhat"];
+		$synonyms = ["hcm=>ho chi minh","cmt8=>cach mang thang tam", "1,mot", "2,hai", "3,ba", "4,bon", "5,nam", "6,sau", "7,bay", "8,tam", "9,chin", "q,quan", "p,phuong", "thang,slash", "quan 1,quan nhat"];
 		$settings = [
 			'analysis' => [
 				'char_filter' => [
 					'my_char_filter' => [
 						'type' => 'mapping',
-						'mappings' => ["/=>slash","hcm=>ho chi minh","cmt8=>cach mang thang tam"]
+						'mappings' => ["/=>slash"]
 					]	
 				],
 				'filter' => [
