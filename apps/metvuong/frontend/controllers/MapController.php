@@ -169,34 +169,7 @@ class MapController extends ActiveController {
 					$response['url'] = $product->urlDetail();
 				}
 			} else {
-				$params = [
-					'query' => [
-						'match_phrase_prefix' => [
-							'search_field' => [
-	    						'query' => $v,
-	    						'max_expansions' => 100
-	    					]
-						],
-	    			],
-	    			'sort' => [
-	    				'total_sell' => [
-	    					'order' => 'desc',
-	    					'mode'	=> 'sum'
-						],
-	    				'total_rent' => [
-	    					'order' => 'desc',
-	    					'mode'	=> 'sum'
-						],
-					],
-	    			'_source' => ['full_name', AdProduct::TYPE_FOR_SELL_TOTAL, AdProduct::TYPE_FOR_RENT_TOTAL]
-	    		];
-				
-				$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['countTotal'] . '/_search');
-				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				
-				$result = json_decode(curl_exec($ch), true);
+				$result = Elastic::searchAreasRankByTotal($v);
 				
 				foreach ($result['hits']['hits'] as $k => $hit) {
 	    			$response[$k] = $hit['_source'];
