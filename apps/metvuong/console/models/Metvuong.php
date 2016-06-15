@@ -25,13 +25,10 @@ class Metvuong extends Component
 {
     public static function sendMailContact($code=null)
     {
-        $contacts = AdContactInfo::getDb()->cache(function(){
-            return AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
+        $contacts = AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
                 ->where('email is not null')
-                ->andWhere("email = 'nhuttranm@gmail.com'")
                 ->andWhere("email NOT IN (select email from mark_email where status = 1)")
                 ->groupBy('email')->orderBy('count(product_id) desc')->limit(100)->all();
-        });
 
         if(count($contacts) > 0) {
             $count_code = CouponCode::getDb()->cache(function() use($code){
@@ -101,8 +98,9 @@ class Metvuong extends Component
                     Metvuong::markEmail($email, $status);
                 }
             }
+            print_r("\n--------------------\nSend email finish.");
         } else
-            print_r("No contact info");
+            print_r("No contact info.");
     }
 
     public static function markEmail($email, $status)
