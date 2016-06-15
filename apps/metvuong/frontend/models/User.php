@@ -255,7 +255,7 @@ class User extends \dektrium\user\models\User
      *
      * @return bool
      */
-    public function register()
+    public function register($sendMail = true)
     {
         if ($this->getIsNewRecord() == false) {
             throw new \RuntimeException('Calling "' . __CLASS__ . '::' . __METHOD__ . '" on existing user');
@@ -275,8 +275,9 @@ class User extends \dektrium\user\models\User
             $token = Yii::createObject(['class' => Token::className(), 'type' => Token::TYPE_CONFIRMATION]);
             $token->link('user', $this);
         }
-
-        $this->mailer->sendWelcomeMessage($this, isset($token) ? $token : null);
+        if($sendMail == true){
+            $this->mailer->sendWelcomeMessage($this, isset($token) ? $token : null);
+        }
         $this->trigger(self::AFTER_REGISTER);
 
         return true;

@@ -116,7 +116,7 @@ class AdContactInfo extends ACI
             $user->setAttributes($this->attributes);
             $user->validate();
             if (!$user->hasErrors()) {
-                $user->register();
+                $user->register(false);
                 return $user;
             }else{
                 return $user->errors;
