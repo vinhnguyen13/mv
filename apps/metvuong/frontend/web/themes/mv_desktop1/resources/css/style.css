@@ -5379,6 +5379,14 @@ html.mm-opening .mm-slideout {
 .box-edit-show {
     display: none;
 }
+.infor-user-settings .avatar {
+    width: 120px;
+}
+.infor-user-settings .avatar .btn-common {
+    display: block;
+    width: 100%;
+    padding: 7px 0;
+}
 .wrap-attr-detail li {
     float: left;
     width: 100%;
@@ -12503,4 +12511,14 @@ height: 190px;
     border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
     border-left: none;
+}
+#change-avatar-form .col-sm-offset-3 {
+    margin-left: 0;
+}
+#change-avatar-form.form-horizontal .form-group {
+    margin: 0;
+    padding: 15px 15px 5px 15px;
+}
+#avatar .modal-dialog {
+    width: 400px;
 }

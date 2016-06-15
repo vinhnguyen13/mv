@@ -217,15 +217,17 @@ Yii::t('time','week');
 <div class="modal fade popup-common" id="avatar" tabindex="-1" role="dialog" aria-labelledby="myModalAvatar">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="icon"></span>
-                </button>
-                <h3><?=Yii::t('profile', 'Change avatar')?></h3>
+            <div class="modal-header title-popup clearfix">
+                <div class="popup_title">
+                    <?=Yii::t('profile', 'Change avatar')?>
+                    <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close">
+                        <span class="icon-mv fs-12 mgR-5"><span class="icon-close-icon"></span></span>
+                    </a>
+                </div>
             </div>
             <div class="modal-body">
                 <div class="wrap-modal clearfix">
-                    <div class="avatar" style="margin-bottom: 50px;">
+                    <div class="avatar">
                         <?php
                         $avatar = str_replace("/store/avatar/","", $model->avatar);
                         $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_SEPARATOR . $avatar;
@@ -237,7 +239,7 @@ Yii::t('time','week');
                             'layout' => 'horizontal',
                             'fieldConfig' => [
                                 'horizontalCssClasses' => [
-                                    'wrapper' => 'col-sm-9',
+                                    'wrapper' => '',
                                 ],
                             ],
                         ]); ?>
