@@ -12,6 +12,7 @@ namespace frontend\models;
 use Yii;
 use Elasticsearch\ClientBuilder;
 use yii\base\Exception;
+use vsoft\ad\models\AdProduct;
 
 class Elastic
 {
@@ -313,6 +314,26 @@ class Elastic
 			];
 		}
 		
+		
+		
+		$sentence = explode(' ', $additionSearch);
+		$totalWords = count($sentence);
+			
+		if($totalWords > 1) {
+			$lastWord = $sentence[$totalWords-1];
+		
+			$functions[] = [
+				"filter" => [
+					"match" => [
+						"search_field" => $lastWord
+					]
+				],
+				"weight" => 1
+			];
+		}
+		
+		
+		
 		$correctText = self::correctText($additionSearch);
 		
 		if($correctText != $additionSearch) {
@@ -353,29 +374,13 @@ class Elastic
 			]
 		];
     	
-		return ['params' => $params, 'additionSearch' => $additionSearch];
+		return $params;
     }
     
     public static function searchAreasRankByTotal($v) {
     	$params = self::buildParams($v);
     	
-    	$sentence = explode(' ', $params['additionSearch']);
-    	$totalWords = count($sentence);
-    	
-    	if($totalWords > 1) {
-    		$lastWord = $sentence[$totalWords-1];
-    	
-	    	$params['params']['query']['function_score']['functions'][] = [
-				"filter" => [
-					"match" => [
-						"search_field" => $lastWord
-					]
-				],
-				"weight" => 1
-			];
-    	}
-    	
-    	$params['params']['query']['function_score']['functions'][] = [
+    	$params['query']['function_score']['functions'][] = [
     		"field_value_factor" => [
     			"field" => ["total_sell", "total_rent"],
     			"modifier" => "log1p",
@@ -383,13 +388,23 @@ class Elastic
     		]
     	];
     	
-    	return self::requestResult($params['params']);
+    	return self::requestResult($params);
     }
     
-    public static function searchAreas($v) {
+    public static function searchAreas($v, $t) {
 		$params = self::buildParams($v);
+    	
+		$field = ($t == AdProduct::TYPE_FOR_SELL) ? AdProduct::TYPE_FOR_SELL_TOTAL : AdProduct::TYPE_FOR_RENT_TOTAL;
 		
-		return self::requestResult($params['params']);
+    	$params['query']['function_score']['functions'][] = [
+    		"field_value_factor" => [
+    			"field" => $field,
+    			"modifier" => "log1p",
+    			"factor" => 1
+    		]
+    	];
+		
+		return self::requestResult($params);
     }
     
     public static function requestResult($params) {

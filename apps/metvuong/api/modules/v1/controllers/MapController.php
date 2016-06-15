@@ -12,7 +12,7 @@ class MapController extends Controller {
 	public function actionGet() {
 		$response = [];
 		
-		$result = Elastic::searchAreas(Elastic::transform(\Yii::$app->request->get('v', '')));
+		$result = Elastic::searchAreas(Elastic::transform(\Yii::$app->request->get('v', '')), \Yii::$app->request->get('t', AdProduct::TYPE_FOR_SELL));
 		
 		foreach ($result['hits']['hits'] as $k => $hit) {
 			$response[$k]['full_name'] = $hit['_source']['full_name'];
