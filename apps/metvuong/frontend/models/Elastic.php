@@ -365,7 +365,7 @@ class Elastic
     	if($totalWords > 1) {
     		$lastWord = $sentence[$totalWords-1];
     	
-	    	$params['query']['function_score']['functions'][] = [
+	    	$params['params']['query']['function_score']['functions'][] = [
 				"filter" => [
 					"match" => [
 						"search_field" => $lastWord
@@ -375,7 +375,7 @@ class Elastic
 			];
     	}
     	
-    	$params['query']['function_score']['functions'][] = [
+    	$params['params']['query']['function_score']['functions'][] = [
     		"field_value_factor" => [
     			"field" => ["total_sell", "total_rent"],
     			"modifier" => "log1p",
