@@ -132,6 +132,10 @@ $parentCatalog = ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID']
                     return true;
                 }
                 else{
+                    if(ch == 1)
+                        $(this).prop('checked', false);
+                    else
+                        $(this).prop('checked', true);
                     return false;
                 }
             });
