@@ -200,6 +200,9 @@ class Elastic
     }
     
     public static function buildParams($v) {
+    	$v = preg_replace("/(q|quan|p|phuong)([0-9]*)/", "$1 $2", $v);
+    	$v = preg_replace("/so ([0-9])/", "$1", $v);
+    	
 		$slop = 8;
 		
 		$should = [
@@ -274,9 +277,6 @@ class Elastic
 				"weight" => 2
 			],
 		];
-		
-		$v = preg_replace("/(q|quan|p|phuong)([0-9]*)/", "$1 $2", $v);
-		$v = preg_replace("/so ([0-9])/", "$1", $v);
 		
 		if(strpos($v, "du an") !== false) {
 			$additionSearch = str_replace("du an", "", $v);
