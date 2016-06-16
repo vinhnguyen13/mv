@@ -3,13 +3,11 @@ use vsoft\ad\models\AdProduct;
 use yii\web\View;
 use yii\helpers\Url;
 
-Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_BEGIN]);
+Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_HEAD]);
 
 $id = $product->id;
 $address = $product->getAddress();
 $urlDetail = $product->urlDetail(true);
-$user = Yii::$app->user->identity;
-$email = empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email);
 
 $finderFrom = (!empty($finders) && isset($finders["from"])) ? $finders["from"] : 0;
 $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
@@ -24,12 +22,6 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
             </div>
         	<section class="clearfix mgB-40">
                 <div class="pull-right fs-13 mgB-15">
-<!--                    <span class="d-ib mgR-20">--><?//=Yii::t('statistic','Select')?><!--</span>-->
-                    <!-- <select id="filterChart" class="mgL-10">
-                        <option value="week"><?=Yii::t('statistic','Week')?></option>
-                        <option value="month"><?=Yii::t('statistic','Month')?></option>
-                        <option value="quarter"><?=Yii::t('statistic','Quarter')?></option>
-                    </select> -->
                     <div class="clearfix d-ib ver-c">
                         <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id, 'filter'=>'week']) ?>" class="show-view-chart<?=($filter=='week' ? ' active' : '')?>"><?=Yii::t('statistic','Week')?></a>
                         <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id, 'filter'=>'month']) ?>" class="show-view-chart<?=($filter=='month' ? ' active' : '')?>"><?=Yii::t('statistic','Month')?></a>
@@ -47,14 +39,14 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
         			</div>
                     <ul class="option-view-stats clearfix">
                         <li>
-                            <a href="javascript:;" class="btn-finder"> 
+                            <a href="#" class="btn-finder">
                                 <span class="icon-mv fs-19"><span class="icon-icons-search"></span></span> 
                                 <?=Yii::t('statistic','Search')?>
                                 <span><?=$search_count ?></span>
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;" class="btn-visitor radio-ui">
+                            <a href="#" class="btn-visitor radio-ui">
                                 <span class="icon-mv"><span class="icon-eye-copy"></span></span>
                                 <?=Yii::t('statistic','Visit')?>
                                 <span><?=$click_count ?></span>
@@ -63,7 +55,7 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;" class="btn-favourite radio-ui">
+                            <a href="#" class="btn-favourite radio-ui">
                                 <span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
                                 <?=Yii::t('statistic','Favourite')?>
                                 <span><?=$fav_count ?></span>
@@ -72,7 +64,7 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
                             </a>
                         </li>
                         <li>
-                            <a href="javascript:;" class="btn-share radio-ui"> 
+                            <a href="#" class="btn-share radio-ui">
                                 <span class="icon-mv"><span class="icon-share-social"></span></span> 
                                 <?=Yii::t('statistic','Share')?> 
                                 <span><?=$share_count?></span>
@@ -245,6 +237,8 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
 </div>
 
 <?php
+$user = Yii::$app->user->identity;
+$email = empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email);
 $id = empty($id) ? AdProduct::find()->select(['id'])->asArray()->one()['id'] : $id;
 echo $this->renderAjax('/ad/_partials/shareEmail',[
     'popup_email_name' => 'popup_email_contact',

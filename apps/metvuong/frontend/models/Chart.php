@@ -138,25 +138,27 @@ class Chart extends Component
                 $tmpDataByPid[$key]['color'] = $color;
 
                 $user = User::findIdentity($item->user_id);
-                $username = $user->username;
-                $email = empty($user->profile->public_email) ? $user->email : $user->profile->public_email;
-                $avatar = $user->profile->getAvatarUrl();
+                if($user) {
+                    $username = $user->username;
+                    $email = empty($user->profile->public_email) ? $user->email : $user->profile->public_email;
+                    $avatar = $user->profile->getAvatarUrl();
 
-                if (array_key_exists($username, $infoSaved)) {
-                    $cc = $infoSaved[$username]['count'];
-                    $cc = ($cc + 1);
-                    $infoSaved[$username] = [
-                        'count' => $cc,
-                        'avatar' => $avatar,
-                        'email' => $email
-                    ];
-                } else {
-                    $cc = 1;
-                    $infoSaved[$username] = [
-                        'count' => $cc,
-                        'avatar' => $avatar,
-                        'email' => $email
-                    ];
+                    if (array_key_exists($username, $infoSaved)) {
+                        $cc = $infoSaved[$username]['count'];
+                        $cc = ($cc + 1);
+                        $infoSaved[$username] = [
+                            'count' => $cc,
+                            'avatar' => $avatar,
+                            'email' => $email
+                        ];
+                    } else {
+                        $cc = 1;
+                        $infoSaved[$username] = [
+                            'count' => $cc,
+                            'avatar' => $avatar,
+                            'email' => $email
+                        ];
+                    }
                 }
 
                 $infoData[$view] = $infoSaved;

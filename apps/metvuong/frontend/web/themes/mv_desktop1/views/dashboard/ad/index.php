@@ -14,14 +14,14 @@ use yii\helpers\Url;
                 </div>
             </div>
         <?php } else { ?>
-        <div class="wrap-list-duan">
+        <div class="wrap-list-duan" id="list-all">
             <ul class="clearfix list-item">
                 <?=$this->render('/dashboard/ad/list', ['products' => $products, 'type' => 0, 'last_id' => $last_id])?>
             </ul>
             <input type="hidden" class="last_id" value="<?=$last_id?>">
             <?php if($total > 6){?>
             <div class="text-center">
-                <a href="#" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 0])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?>...</a>
+                <a style="text-decoration: none; cursor: pointer;" data-url="<?=Url::to(['/dashboard/ad-list', 'type'=> 0])?>" class="load_listing btn-common"><?=Yii::t('listing','More listing')?></a>
             </div>
             <span class="that_all pull-right hide fs-13"><?=Yii::t('ad', "That's all listing.")?></span>
             <?php } ?>
@@ -271,64 +271,6 @@ use yii\helpers\Url;
                 }
             });
         });
-
-        $('#list-sell .load_listing').click(function(){
-            var number = parseInt($('.link-list-sell').data('number'));
-            var count = $('#list-sell .list-item>li').length;
-            if(count < number) {
-                $('body').loading();
-                var last_id = $('#list-sell .last_id').val();
-                var url = $(this).data('url')+"&last_id="+last_id;
-                $.ajax({
-                    type: "get",
-                    dataType: 'html',
-                    url: url,
-                    success: function (data) {
-                        $('#list-sell .list-item').append(data);
-                        last_id = $('#list-sell .list-item>li:last .id-duan span').text();
-                        last_id = last_id.replace("MV", "");
-                        $('#list-sell .last_id').val(last_id);
-                        var count = $('#list-sell .list-item>li').length;
-                        if(count >= number) {
-                            $('#list-sell .that_all').removeClass('hide');
-                            $('#list-sell .load_listing').remove();
-                        }
-                        $('body').loading({done: true});
-                        return true;
-                    }
-                });
-            }
-            return false;
-        });
-        $('#list-rent .load_listing').click(function(){
-            var number = parseInt($('.link-list-rent').data('number'));
-            var count = $('#list-rent .list-item>li').length;
-            if(count < number) {
-                $('body').loading();
-                var last_id = $('#list-rent .last_id').val();
-                var url = $(this).data('url')+"&last_id="+last_id;
-                $.ajax({
-                    type: "get",
-                    dataType: 'html',
-                    url: $(this).data('url'),
-                    success: function (data) {
-                        $('#list-rent .list-item').append(data);
-                        last_id = $('#list-rent .list-item>li:last .id-duan span').text();
-                        last_id = last_id.replace("MV", "");
-                        $('#list-rent .last_id').val(last_id);
-                        var count = $('#list-rent .list-item>li').length;
-                        if(count >= number) {
-                            $('#list-rent .that_all').removeClass('hide');
-                            $('#list-rent .load_listing').remove();
-                        }
-                        $('body').loading({done: true});
-                        return true;
-                    }
-                });
-            }
-            return false;
-        });
-
 
     });
 </script>
