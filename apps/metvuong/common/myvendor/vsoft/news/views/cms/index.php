@@ -1,5 +1,7 @@
 <?php
 
+use vsoft\news\models\CmsCatalog;
+use vsoft\news\models\Status;
 use yii\grid\GridView;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -14,6 +16,7 @@ $this->title = Yii::t('app', 'Cms Shows');
 $this->params['breadcrumbs'][] = $this->title;
 
 $newsCatID = !empty(Yii::$app->params['newsCatID']) ? Yii::$app->params['newsCatID'] : 2;
+$parentCatalog = ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->where(['not in', 'id', [1, $newsCatID]])->where(['status' => Status::STATUS_ACTIVE])->asArray()->all()), 'id', 'label');
 ?>
 <div class="cms-show-index">
 
@@ -62,8 +65,7 @@ $newsCatID = !empty(Yii::$app->params['newsCatID']) ? Yii::$app->params['newsCat
                         return $model->getCatalog()->one()->title;
                     return '';
                 },
-                'filter' => Html::activeDropDownList($searchModel, 'catalog_id', ArrayHelper::map(\vsoft\news\models\CmsCatalog::find()->where(['not in', 'id', [1, $newsCatID]])
-                    ->andWhere('status = :status', [':status' => 1])->asArray()->all(), 'id', 'title'),['class'=>'form-control','prompt' => 'All']),
+                'filter' => Html::activeDropDownList($searchModel, 'catalog_id', $parentCatalog,['class'=>'form-control','prompt' => 'All']),
             ],
 
             [

@@ -15,7 +15,7 @@ class CmsShowSearch extends \funson86\cms\models\CmsShowSearch
     public function rules()
     {
         return array_merge(parent::rules(),[
-            [['created_by', 'updated_by'], 'integer'],
+            [['created_by', 'updated_by','hot_news'], 'integer'],
             [['language_id'], 'string']
         ]);
     }

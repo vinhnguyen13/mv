@@ -1,6 +1,7 @@
 <?php
 
 use vsoft\news\models\CmsCatalog;
+use vsoft\news\models\Status;
 use vsoft\news\models\YesNo;
 use vsoft\news\Module;
 use yii\helpers\ArrayHelper;
@@ -14,7 +15,9 @@ use yii\widgets\ActiveForm;
 //fix the issue that it can assign itself as parent
 //$parentCatalog = ArrayHelper::merge([0 => Module::t('blog', 'Root Catalog')], ArrayHelper::map(CmsCatalog::get(0, CmsCatalog::find()->asArray()->all()), 'id', 'label'));
 // get List Catalog of News
-$parentCatalog = ArrayHelper::merge([20 => 'Homepage', 2 => 'News'], ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->asArray()->all()), 'id', 'label'));
+$newsCatID = !empty(Yii::$app->params['newsCatID']) ? Yii::$app->params['newsCatID'] : 2;
+$parentCatalog = ArrayHelper::map(CmsCatalog::get($newsCatID, CmsCatalog::find()->where(['not in', 'id', [1, $newsCatID]])->andWhere(['status' => Status::STATUS_ACTIVE])->asArray()->all()), 'id', 'label');
+
 unset($parentCatalog[$model->id]);
 
 ?>
