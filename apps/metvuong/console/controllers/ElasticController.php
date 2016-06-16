@@ -254,9 +254,7 @@ class ElasticController extends Controller {
 		$term[] = [
 			'name'	=> $name,
 			'slug' => $slug,
-			'search_name' => preg_replace("/([0-9])\/([0-9])/", "$1/$2 $1 / $2", Elastic::transform($name)),
 			'full_name' => $fullName,
-			'search_field' => preg_replace("/([0-9])\/([0-9])/", "$1/$2 $1 / $2", Elastic::transform(str_replace(',', '', $fullName))),
 			AdProduct::TYPE_FOR_SELL_TOTAL => intval($totalSell),
 			AdProduct::TYPE_FOR_RENT_TOTAL => intval($totalRent),
 			'city_id' => intval($cityId)
