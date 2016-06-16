@@ -6,7 +6,7 @@
  * Time: 9:51 AM
  */
 ?>
-<div class="type-payment">
+<div class="type-payment w-45">
 	<div class="">
 	    <h1 class="color-cd">Chào bạn,</h1>
 	    <p class="mgB-20">Ghi nhận ý kiến đóng góp của các thành viên về việc đăng tin spam, tin lừa đảo hiện nay diễn ra quá nhiều đã làm giảm chất lượng tin đăng cũng như hiệu quả phục vụ của website. Vì vậy, metvuong.com sẽ tiến hành thu phí đăng tin lên website , điều này sẽ góp phần nâng cao chất lượng tin đăng trên website, tránh tình trạng đăng tin spam, tin lừa đảo gây khó khăn và thiệt hại cho người bán, mua hoặc thuê.</p>
