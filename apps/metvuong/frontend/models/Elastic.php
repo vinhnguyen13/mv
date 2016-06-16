@@ -275,10 +275,10 @@ class Elastic
 			],
 		];
 		
-		$additionSearch = preg_replace("/(q|quan|p|phuong)([0-9])/", "$1 $2", $v);
-		$additionSearch = preg_replace("/so\s?(?=[0-9])/", "$1", $additionSearch);
+		$v = preg_replace("/(q|quan|p|phuong)([0-9]*)/", "$1 $2", $v);
+		$v = preg_replace("/so ([0-9])/", "$1", $v);
 		
-		if(strpos($additionSearch, "du an") !== false) {
+		if(strpos($v, "du an") !== false) {
 			$additionSearch = str_replace("du an", "", $v);
 		
 			$functions[] = [

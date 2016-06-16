@@ -207,7 +207,7 @@ class ElasticController extends Controller {
 				'char_filter' => [
 					'my_char_filter' => [
 						'type' => 'mapping',
-						'mappings' => ["/=>slash","hcm=>ho chi minh","cmt8=>cach mang thang tam"]
+						'mappings' => $this->mapping(["/=>slash","hcm=>ho chi minh","cmt8=>cach mang thang tam","xvnt=>xo viet nghe tinh","ntmk=>nguyen thi minh khai"])
 					]	
 				],
 				'filter' => [
@@ -258,9 +258,9 @@ class ElasticController extends Controller {
 		$term[] = [
 			'name'	=> $name,
 			'slug' => $slug,
-			'search_name' => preg_replace("/([0-9])\/([0-9])/", "$1/$2 $1 / $2", Elastic::transform($name)),
+			'search_name' => $this->standardSearchField(Elastic::transform($name)),
 			'full_name' => $fullName,
-			'search_field' => preg_replace("/([0-9])\/([0-9])/", "$1/$2 $1 / $2", Elastic::transform(str_replace(',', '', $fullName))),
+			'search_field' => $this->standardSearchField(Elastic::transform(str_replace(',', '', $fullName))),
 			AdProduct::TYPE_FOR_SELL_TOTAL => intval($totalSell),
 			AdProduct::TYPE_FOR_RENT_TOTAL => intval($totalRent),
 			'city_id' => intval($cityId)
@@ -271,5 +271,37 @@ class ElasticController extends Controller {
 	
 	private function getAreas($table, $where = []) {
 		return ActiveRecord::find()->from($table)->where($where)->asArray(true)->all();
+	}
+	
+	function standardSearchField($s) {
+		$s = preg_replace("/([0-9]*)\/([0-9]*)/", "$1/$2 $1 / $2", $s);
+		$s = preg_replace("/so ([0-9])/", "$1", $s);
+		
+		return $s;
+	}
+	
+	function mapping($maps) {
+		$returnMaps = [];
+	
+		foreach ($maps as $map) {
+			$keyAndVal = explode('=>', $map);
+			$key = $keyAndVal[0];
+			$val = $keyAndVal[1];
+	
+			$words = explode(' ', $val);
+			$countWords = count($words);
+	
+			if($countWords > 2) {
+				$keyArray = str_split($key);
+					
+				for($i = 2; $i < $countWords; $i++) {
+					$returnMaps[] = implode('', array_slice($keyArray, 0, $i)) . '=>' . implode(' ', array_slice($words, 0, $i));
+				}
+			}
+	
+			$returnMaps[] = "$key=>$val";
+		}
+	
+		return $returnMaps;
 	}
 }
