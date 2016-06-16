@@ -26,12 +26,14 @@ use yii\widgets\ActiveForm;
     <?php
     $languages = \lajax\translatemanager\models\Language::find()->where(['status'=>1])->all();
     $language_list = ArrayHelper::map($languages, 'language_id', 'name');
-    $parentCatalog = ArrayHelper::merge([20 => 'Homepage', 2 => 'News'], ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID'], CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->asArray()->all()), 'id', 'label'));
+    $newsCatID = !empty(Yii::$app->params['newsCatID']) ? Yii::$app->params['newsCatID'] : 2;
+    $parentCatalog = ArrayHelper::map(CmsCatalog::get($newsCatID, CmsCatalog::find()->where(['not in', 'id', [1, $newsCatID]])->andWhere(['status' => Status::STATUS_ACTIVE])->asArray()->all()), 'id', 'label');
+
 //    $catalog_data = ArrayHelper::map(CmsCatalog::find()->where(['status' => Status::STATUS_ACTIVE])->all(), 'id', 'title');
-    $cat_id = $model->catalog_id > 0 ? $model->catalog_id : Yii::$app->params['newsCatID'];
+    $cat_id = $model->catalog_id > 0 ? $model->catalog_id : null;
     echo $form->field($model, 'catalog_id')->dropDownList($parentCatalog, [
         'options' => [$cat_id => ['Selected ' => true]],
-    ]); ?>
+    ])->label(Yii::t('cms', 'Category')); ?>
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
