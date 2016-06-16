@@ -53,19 +53,6 @@ if(isset($_POST['NLNapThe'])){
 
 }
 ?>
-<style>
-    #ttNganluong {
-        background: url("/images/nganluong/napthe.png") no-repeat scroll 0 0 transparent;
-        border: 0 none;
-        cursor: pointer;
-        display: inline-block;
-        height: 30px;
-        margin-right: 5px;
-        text-indent: -3000px;
-        vertical-align: middle;
-        width: 122px;
-    }
-</style>
 <?php
 $f = ActiveForm::begin([
     'id' => 'napthe',
@@ -74,15 +61,12 @@ $f = ActiveForm::begin([
     'action' => ''
 ]);
 ?>
-    <div id="body12" style="border: 1px solid #444444;  margin: 0 auto;  padding: 10px;  width: 600px;">
-        <div style="color:#444444;margin-top:10px;font-size:14px" align="center">
-            Chọn loại thẻ để nạp
-        </div>
-
+<div id="the-cao" class="item-payment">
+    <div class="title-item">Thanh toán bằng thẻ cào điện thoại</div>
+    <div class="pd-20">
         <table align="center">
-
             <tr>
-                <td colspan="3">
+                <td colspan="3" class="pdB-10">
                     <table>
                         <tr>
                             <td style="padding-left:0px;padding-top:5px" align="right" ><label for="92"><img  src="/images/nganluong/mobifone.jpg" /></label> </td>
@@ -115,23 +99,24 @@ $f = ActiveForm::begin([
             </tr>
 
             <tr>
-                <td align="right" style="padding-bottom:10px">Số Seri :</td>
-                <td colspan="2"><input type="text" id="txtSoSeri" name="txtSoSeri" style="height:25px;width:200px" /></td>
+                <td>Số Seri :</td>
+                <td colspan="2"><input type="text" id="txtSoSeri" name="txtSoSeri" class="form-control" /></td>
             </tr>
             <tr>
-                <td align="right">Mã số thẻ : </td>
+                <td>Mã số thẻ : </td>
                 <td colspan="2">
-                    <input type="text" id="txtSoPin" name="txtSoPin" style="height:25px;width:200px" />
+                    <input type="text" id="txtSoPin" name="txtSoPin" class="form-control" />
 
                 </td>
             </tr>
 
             <tr>
-                <td colspan="3" align="center" style="padding-bottom:10px;padding-right:10px">
-                    <input type="submit" id="ttNganluong" name="NLNapThe" value="Nạp Thẻ"  />
+                <td></td>
+                <td>
+                    <input type="submit" id="" class="btn-common btn-bd-radius" name="NLNapThe" value="Nạp Thẻ"  />
                 </td>
             </tr>
         </table>
-
     </div>
+</div>
 <?php $f->end(); ?>
