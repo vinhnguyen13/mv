@@ -97,6 +97,7 @@ class MVBootstrap implements BootstrapInterface
             'mvuser/join/<action>' => 'user/registration/<action>',
             'mvuser/forgot/<action>' => 'user/recovery/<action>',
 			'listing/<action>' => 'ad/<action>',
+            '<usrn>/avatar' => 'member/avatar',
         ];
     }
 
