@@ -167,15 +167,23 @@ class ElasticController extends Controller {
 				'properties' => [
 					'name' => [
 						'type' => 'string',
-						'analyzer' => 'my_synonyms'
+						'index' => 'no'
 					],
 					'slug' => [
 						'type' => 'string',
 						'index' => 'no'
 					],
+					'search_name' => [
+						'type' => 'string',
+						"analyzer" => "my_synonyms"
+					],
 					'full_name' => [
 						'type' => 'string',
-						'analyzer' => 'my_synonyms'
+						'index' => 'no'
+					],
+					'search_field' => [
+						'type' => 'string',
+						"analyzer" => "my_synonyms"
 					],
 					'total_sell' => [
 						'type' => 'integer'
@@ -193,30 +201,26 @@ class ElasticController extends Controller {
 			]
 		];
 		
-		$synonyms = ["hcm,ho chi minh", "cmt8,cach mang thang tam", "1,mot", "2,hai", "3,ba", "4,bon", "5,nam", "6,sau", "7,bay", "8,tam", "9,chin", "q,quan", "p,phuong", "thang,slash", "quan 1,quan nhat"];
+		$synonyms = ["1,mot", "2,hai", "3,ba", "4,bon", "5,nam", "6,sau", "7,bay", "8,tam", "9,chin", "q,quan", "p,phuong", "thang,slash", "quan 1,quan nhat"];
 		$settings = [
 			'analysis' => [
 				'char_filter' => [
 					'my_char_filter' => [
 						'type' => 'mapping',
-						'mappings' => ["/=>slash"]
+						'mappings' => ["/=>slash","hcm=>ho chi minh","cmt8=>cach mang thang tam"]
 					]	
 				],
 				'filter' => [
 					'my_synonym_filter' => [
 						'type' => 'synonym',
 						'synonyms' => $synonyms
-					],
-					'my_ascii_folding' => [
-						'type' => 'asciifolding',
-						'preserve_original' => true
 					]
 				],
 				'analyzer' => [
 					'my_synonyms' => [
 						'char_filter' => 'my_char_filter',
 						'tokenizer' => 'standard',
-						'filter' => ['lowercase', 'my_synonym_filter', 'my_ascii_folding']
+						'filter' => ['lowercase', 'my_synonym_filter']
 					]
 				]
 			]	
@@ -254,7 +258,9 @@ class ElasticController extends Controller {
 		$term[] = [
 			'name'	=> $name,
 			'slug' => $slug,
+			'search_name' => preg_replace("/([0-9])\/([0-9])/", "$1/$2 $1 / $2", Elastic::transform($name)),
 			'full_name' => $fullName,
+			'search_field' => preg_replace("/([0-9])\/([0-9])/", "$1/$2 $1 / $2", Elastic::transform(str_replace(',', '', $fullName))),
 			AdProduct::TYPE_FOR_SELL_TOTAL => intval($totalSell),
 			AdProduct::TYPE_FOR_RENT_TOTAL => intval($totalRent),
 			'city_id' => intval($cityId)
