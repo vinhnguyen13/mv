@@ -93,11 +93,11 @@ Yii::$app->view->registerMetaTag([
     'content' => $product->urlDetail(true)
 ]);
 
-if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']['all'] == true) && ($product->user_id != Yii::$app->user->id)) {
-    Tracking::find()->productVisitor(Yii::$app->user->id, $product->id, time());
+if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']['all'] == true) && ($product->user_id != $user->id)) {
+    Tracking::find()->productVisitor($user->id, $product->id, time());
 }
 
-$userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
+//$userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 
 if($owner){
 $reviews = \frontend\models\UserReview::find()->where('review_id = :rid', [':rid' => $owner->id]);
@@ -106,14 +106,14 @@ $count_review = $reviews->count();
 	$count_review = 0;
 }
 
-Yii::t('ad', 'Parking');
-Yii::t('ad', 'Gym');
-Yii::t('ad', 'School');
-Yii::t('ad', 'Park');
-Yii::t('ad', 'Air conditioner');
-Yii::t('ad', 'Washing machine');
-Yii::t('ad', 'Refrigerator');
-Yii::t('ad', 'Television');
+//Yii::t('ad', 'Parking');
+//Yii::t('ad', 'Gym');
+//Yii::t('ad', 'School');
+//Yii::t('ad', 'Park');
+//Yii::t('ad', 'Air conditioner');
+//Yii::t('ad', 'Washing machine');
+//Yii::t('ad', 'Refrigerator');
+//Yii::t('ad', 'Television');
 ?>
 <div class="title-fixed-wrap container">
 	<div class="detail-listing row detail-listing-extra">
@@ -334,7 +334,7 @@ Yii::t('ad', 'Television');
 				                                <label><input type="radio" name="optionsRadios" value="-1"> <?=Yii::t('listing', 'Something else')?> </label>
 				                                <textarea class="pd-5 mgB-5" name="description" id="description" cols="30" rows="5" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
 				                                <input type="hidden" id="pid" name="pid" value="<?=$product->id?>">
-				                                <input type="hidden" id="uid" name="uid" value="<?=empty(Yii::$app->user->id) ? 0 : Yii::$app->user->id?>">
+				                                <input type="hidden" id="uid" name="uid" value="<?=empty($user->id) ? 0 : $user->id?>">
 				                                <div class="text-right">
 				                                    <button class="btn-common send_report"><?=Yii::t('listing', 'Send report')?></button>
 				                                </div>
@@ -354,7 +354,7 @@ Yii::t('ad', 'Television');
                  */
                 if(!Yii::$app->user->isGuest) {
 					$nameUserTo = !empty($owner) ? $owner->profile->getDisplayName() : $product->adContactInfo->name;
-					$nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
+					$nameUserFrom = $user->profile->getDisplayName();
                     ?>
                     <script>
                         $(document).ready(function () {
