@@ -289,32 +289,30 @@ class Elastic
 				],
 				"weight" => 4
 			];
-		}
-		
-		if($additionSearch != $v) {
-			$should[] = [
-				"match_phrase_prefix" => [
-					"search_field" => [
-						"query" => $additionSearch,
-						"slop" => $slop
-					]
-				]
-			];
 			
-			$functions[] = [
-				"filter" => [
-					"match_phrase_prefix" => [
-						"search_field" => [
-							"query" => $additionSearch,
-							"slop" => $slop
+			if($additionSearch != $v) {
+				$should[] = [
+						"match_phrase_prefix" => [
+								"search_field" => [
+										"query" => $additionSearch,
+										"slop" => $slop
+								]
 						]
-					]
-				],
-				"weight" => 3
-			];
+				];
+					
+				$functions[] = [
+						"filter" => [
+								"match_phrase_prefix" => [
+										"search_field" => [
+												"query" => $additionSearch,
+												"slop" => $slop
+										]
+								]
+						],
+						"weight" => 3
+				];
+			}
 		}
-		
-		
 		
 		$sentence = explode(' ', $additionSearch);
 		$totalWords = count($sentence);
