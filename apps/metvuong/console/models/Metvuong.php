@@ -89,7 +89,7 @@ class Metvuong extends Component
                 $subjectEmail = "Thông báo tin đăng từ metvuong.com";
                 $status = \Yii::$app->mailer->compose(['html'=>'contactEmail-html'], ['params' => $params])
                     ->setFrom(Yii::$app->params['adminEmail'])
-                    ->setTo(['nhuttranm@gmail.com'])
+                    ->setTo([$email])
                     ->setSubject($subjectEmail)
                     ->send();
                 $status > 0 ? print_r("\nsent to {$email}") : "Send mail error.";

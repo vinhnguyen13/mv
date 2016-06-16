@@ -2,6 +2,7 @@
 use yii\helpers\ArrayHelper;
 use yii\web\View;
 use yii\helpers\Url;
+
 ?>
 <div class="title-fixed-wrap container">
 	<div class="u-allduan">
@@ -14,7 +15,7 @@ use yii\helpers\Url;
                 </div>
             </div>
         <?php } else { ?>
-        <div class="wrap-list-duan" id="list-all">
+        <div class="wrap-list-duan" id="list-all" data-number="<?=$total?>">
             <ul class="clearfix list-item">
                 <?=$this->render('/dashboard/ad/list', ['products' => $products, 'type' => 0, 'last_id' => $last_id])?>
             </ul>
@@ -261,7 +262,8 @@ use yii\helpers\Url;
                     last_id = $('#list-all .list-item>li:last .id-duan span').text();
                     last_id = last_id.replace("MV", "");
                     $('#list-all .last_id').val(last_id);
-                    var number = parseInt($('.link-list-all').data('number'));
+
+                    var number = parseInt($('#list-all').data('number'));
                     var count = $('#list-all .list-item>li').length;
                     if(count >= number) {
                         $('#list-all .that_all').removeClass('hide');
