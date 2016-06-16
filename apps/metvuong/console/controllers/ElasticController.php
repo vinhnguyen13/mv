@@ -167,7 +167,7 @@ class ElasticController extends Controller {
 				'properties' => [
 					'name' => [
 						'type' => 'string',
-						'index' => 'no'
+						'analyzer' => 'my_synonyms'
 					],
 					'slug' => [
 						'type' => 'string',
@@ -175,7 +175,7 @@ class ElasticController extends Controller {
 					],
 					'full_name' => [
 						'type' => 'string',
-						'index' => 'no'
+						'analyzer' => 'my_synonyms'
 					],
 					'total_sell' => [
 						'type' => 'integer'

@@ -205,7 +205,7 @@ class Elastic
 		$should = [
 			[
 				"match_phrase_prefix" => [
-					"search_field" => [
+					"full_name" => [
 						"query" => $v,
 						"slop" => $slop
 					]
@@ -217,7 +217,7 @@ class Elastic
 			[
 				"filter" => [
 					"match_phrase" => [
-						"search_name" => $v
+						"name" => $v
 					]
 				],
 				"weight" => 1
@@ -225,7 +225,7 @@ class Elastic
 			[
 				"filter" => [
 					"match_phrase_prefix" => [
-						"search_name" => $v
+						"name" => $v
 					]
 				],
 				"weight" => 1
@@ -233,7 +233,7 @@ class Elastic
 			[
 				"filter" => [
 					"match_phrase_prefix" => [
-						"search_field" => $v
+						"full_name" => $v
 					]
 				],
 				"weight" => 1
@@ -241,7 +241,7 @@ class Elastic
 			[
 				"filter" => [
 					"match_phrase_prefix" => [
-						"search_field" => [
+						"full_name" => [
 							"query" => $v,
 							"slop" => $slop
 						]
@@ -294,7 +294,7 @@ class Elastic
 		if($additionSearch != $v) {
 			$should[] = [
 				"match_phrase_prefix" => [
-					"search_field" => [
+					"full_name" => [
 						"query" => $additionSearch,
 						"slop" => $slop
 					]
@@ -304,7 +304,7 @@ class Elastic
 			$functions[] = [
 				"filter" => [
 					"match_phrase_prefix" => [
-						"search_field" => [
+						"full_name" => [
 							"query" => $additionSearch,
 							"slop" => $slop
 						]
@@ -325,7 +325,7 @@ class Elastic
 			$functions[] = [
 				"filter" => [
 					"match" => [
-						"search_field" => $lastWord
+						"full_name" => $lastWord
 					]
 				],
 				"weight" => 1
@@ -339,7 +339,7 @@ class Elastic
 		if($correctText != $additionSearch) {
 			$should[] = [
 				"match_phrase_prefix" => [
-					"search_field" => [
+					"full_name" => [
 						"query" => $correctText,
 						"slop" => $slop
 					]
@@ -349,7 +349,7 @@ class Elastic
 			$functions[] = [
 				"filter" => [
 					"match_phrase_prefix" => [
-						"search_field" => [
+						"full_name" => [
 							"query" => $correctText,
 							"slop" => $slop
 						]
