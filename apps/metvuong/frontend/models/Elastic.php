@@ -200,6 +200,9 @@ class Elastic
     }
     
     public static function buildParams($v) {
+
+    	$v = preg_replace("/so ([0-9])/", "$1", $v);
+    	
 		$slop = 8;
 		
 		$should = [
@@ -276,7 +279,6 @@ class Elastic
 		];
 		
 		$additionSearch = preg_replace("/(q|quan|p|phuong)([0-9])/", "$1 $2", $v);
-		$additionSearch = preg_replace("/so\s?(?=[0-9])/", "$1", $additionSearch);
 		
 		if(strpos($additionSearch, "du an") !== false) {
 			$additionSearch = str_replace("du an", "", $v);
