@@ -33,34 +33,36 @@ $model = Yii::createObject([
 </div>
 <script>
     $(document).ready(function(){
-        var timer = 0;
+        $(window).keydown(function(event){
+            if(event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
         $(document).on('click', '.btn-recover', function(){
             $('body').loading();
             var _this = $(this);
-            clearTimeout(timer);
-            timer = setTimeout(function() {
-                $.ajax({
-                    type: "post",
-                    dataType: 'json',
-                    url: $('#recover-form').attr('action'),
-                    data: $('#recover-form').serializeArray(),
-                    success: function(data) {
-                        if(data.statusCode == 200){
-                            $('body').loading({done: true});
-                            location.href = data.redirect;
-                        } else if(data.statusCode == 404){
-                            var arr = [];
-                            $.each(data.parameters, function(idx, val){
-                                var element = 'recover-form-'+idx;
-                                arr[element] = val;
-                            });
-                            $('#recover-form').yiiActiveForm('updateMessages', arr, true);
-                        } else{
-                            _this.html('Try again !');
-                        }
+            $.ajax({
+                type: "post",
+                dataType: 'json',
+                url: $('#recover-form').attr('action'),
+                data: $('#recover-form').serializeArray(),
+                success: function(data) {
+                    if(data.statusCode == 200){
+                        location.href = data.redirect;
+                    } else if(data.statusCode == 404){
+                        var arr = [];
+                        $.each(data.parameters, function (idx, val) {
+                            var element = 'recovery-form-password';
+                            arr[element] = val;
+                        });
+                        $('#recover-form').yiiActiveForm('updateMessages', arr, true);
+                    } else{
+                        _this.html('Try again !');
                     }
-                });
-            }, 500);
+                    $('body').loading({done:true});
+                }
+            });
             return false;
         });
 

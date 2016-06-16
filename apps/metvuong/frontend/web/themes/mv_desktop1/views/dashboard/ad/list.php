@@ -8,9 +8,6 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 
 $count_product = count($products);
-?>
-
-    <?php
     if($count_product > 0) {
         $categories = \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray( true )->all();
         $types = \vsoft\ad\models\AdProduct::getAdTypes ();
@@ -57,7 +54,7 @@ $count_product = count($products);
                             <?php } ?>
                             <p class="fs-13 text-cappi"><span><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?></span></p>
                             <p class="id-duan">
-                                ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id; ?></span>
+                                ID: <span><?= Yii::$app->params['listing_prefix_id'] . $product->id; ?></span>
                             </p>
                             <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover pull-right"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10 fs-17"><span class="icon-angle-right"></span></span></a>
                             <ul class="clearfix list-attr-td">

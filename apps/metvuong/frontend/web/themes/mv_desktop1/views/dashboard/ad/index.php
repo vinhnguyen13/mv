@@ -271,6 +271,7 @@ use yii\helpers\Url;
                 }
             });
         });
+
         $('#list-sell .load_listing').click(function(){
             var number = parseInt($('.link-list-sell').data('number'));
             var count = $('#list-sell .list-item>li').length;

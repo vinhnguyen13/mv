@@ -83,8 +83,7 @@ class Tracking extends Component
 
     public function productVisitor($uid, $pid, $time = null, $return = false){
         if($this->checkAccess()) {
-            $product = AdProduct::findOne($pid);
-            if($product->user_id == Yii::$app->user->id)
+            if($uid == Yii::$app->user->id)
                 return false;
             $time = !empty($time) ? $time : time();
             $query = AdProductVisitor::find();
@@ -110,8 +109,7 @@ class Tracking extends Component
     }
     public function productShare($uid, $pid, $time = null, $type, $return = false){
         if($this->checkAccess()) {
-            $product = AdProduct::findOne($pid);
-            if($product->user_id == Yii::$app->user->id)
+            if($uid == Yii::$app->user->id)
                 return false;
             $time = !empty($time) ? $time : time();
             $adProductShare = new AdProductShare();
@@ -129,8 +127,7 @@ class Tracking extends Component
 
     public function productFinder($uid, $pid, $time = null, $return = false){
         if($this->checkAccess()) {
-            $product = AdProduct::findOne($pid);
-            if($product->user_id == Yii::$app->user->id)
+            if($uid == Yii::$app->user->id)
                 return false;
 
             $time = !empty($time) ? $time : time();

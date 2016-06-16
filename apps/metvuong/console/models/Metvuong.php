@@ -30,7 +30,7 @@ class Metvuong extends Component
                 ->where('email is not null')
                 ->andWhere("email NOT IN (select email from mark_email where status = 1)")
                 ->andWhere("email NOT IN (select email from user)")
-                ->groupBy('email')->orderBy('count(product_id) desc')->limit(1)->all();
+                ->groupBy('email')->orderBy('count(product_id) desc')->limit(100)->all();
 
         if(count($contacts) > 0) {
             $coupon = CouponCode::getDb()->cache(function() use($code){

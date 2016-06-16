@@ -40,7 +40,7 @@ class DashboardController extends Controller
 
     public function actionIndex()
     {
-        $this->redirect('/dashboard/statistics');
+        $this->redirect(Url::to(['dashboard/ad']));
     }
 
     public function actionStatistics()
