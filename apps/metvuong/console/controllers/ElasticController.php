@@ -201,7 +201,7 @@ class ElasticController extends Controller {
 			]
 		];
 		
-		$synonyms = ["1,so mot", "2,so hai", "3,so ba", "4,so bon", "5,so nam", "6,so sau", "7,so bay", "8,so tam", "9,so chin", "10,so muoi", "q,quan", "p,phuong", "thang,slash", "quan 1,quan nhat"];
+		$synonyms = ["1,mot", "2,hai", "3,ba", "4,bon", "5,nam", "6,sau", "7,bay", "8,tam", "9,chin", "10,muoi", "q,quan", "p,phuong", "thang,slash", "quan 1,quan nhat"];
 		$settings = [
 			'analysis' => [
 				'char_filter' => [
