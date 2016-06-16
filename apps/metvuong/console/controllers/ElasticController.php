@@ -173,17 +173,9 @@ class ElasticController extends Controller {
 						'type' => 'string',
 						'index' => 'no'
 					],
-					'search_name' => [
-						'type' => 'string',
-						"analyzer" => "my_synonyms"
-					],
 					'full_name' => [
 						'type' => 'string',
 						'index' => 'no'
-					],
-					'search_field' => [
-						'type' => 'string',
-						"analyzer" => "my_synonyms"
 					],
 					'total_sell' => [
 						'type' => 'integer'
@@ -214,13 +206,17 @@ class ElasticController extends Controller {
 					'my_synonym_filter' => [
 						'type' => 'synonym',
 						'synonyms' => $synonyms
+					],
+					'my_ascii_folding' => [
+						'type' => 'asciifolding',
+						'preserve_original' => true
 					]
 				],
 				'analyzer' => [
 					'my_synonyms' => [
 						'char_filter' => 'my_char_filter',
 						'tokenizer' => 'standard',
-						'filter' => ['lowercase', 'my_synonym_filter']
+						'filter' => ['lowercase', 'my_synonym_filter', 'my_ascii_folding']
 					]
 				]
 			]	
