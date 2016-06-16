@@ -15,7 +15,7 @@ class CmsShowSearch extends \funson86\cms\models\CmsShowSearch
     public function rules()
     {
         return array_merge(parent::rules(),[
-            [['created_by', 'updated_by','hot_news'], 'integer'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by','hot_news'], 'integer'],
             [['language_id'], 'string']
         ]);
     }
@@ -36,10 +36,11 @@ class CmsShowSearch extends \funson86\cms\models\CmsShowSearch
 
         $query = CmsShow::find()->where('catalog_id in ('. implode (", ", $keys) . ')');
 
-        $query->orderBy(['created_at' => SORT_DESC]);
+//        $query->orderBy(['created_at' => SORT_DESC]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['created_at'=>SORT_DESC]]
         ]);
 
         if ($this->load($params) && !$this->validate()) {

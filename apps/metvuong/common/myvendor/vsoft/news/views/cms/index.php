@@ -26,7 +26,7 @@ $parentCatalog = ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID']
     <p>
         <?= Html::a(Yii::t('app', 'Create Cms Show'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
-    <?php Pjax::begin();?>
+
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -106,7 +106,7 @@ $parentCatalog = ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID']
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-    <?php Pjax::end(); ?>
+
 </div>
 <script src="/frontend/web/js/lib/jquery-2.0.3.min.js"></script>
 <script>
@@ -114,22 +114,26 @@ $parentCatalog = ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID']
         $('input[type=checkbox]').each(function() {
             $(this).change(function(){
                 var cms_id = $(this).val();
+                var question = "Do you want to remove hot news?";
                 var ch = 0;
                 if($(this).is(":checked")) {
                     ch = 1;
+                    question = "Do you want to set hot news?";
                 }
-                $.ajax({
-                    type: "get",
-                    dataType: 'json',
-                    url: '<?=Url::to(['cms/update-hotnews'])?>'+'?cms_id='+ cms_id +'&stage='+ch,
-                    success: function (data) {
-                        if(ch == 1)
-                            alert("Updated [" + data.title+"] to hot news.");
-                        else
-                            alert("Removed hot news for [" + data.title+"].");
-                    }
-                });
-
+                var retVal = confirm(question);
+                if( retVal == true ){
+                    $.ajax({
+                        type: "get",
+                        dataType: 'json',
+                        url: '<?=Url::to(['cms/update-hotnews'])?>'+'?cms_id='+ cms_id +'&stage='+ch,
+                        success: function (data) {
+                        }
+                    });
+                    return true;
+                }
+                else{
+                    return false;
+                }
             });
         });
     });
