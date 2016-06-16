@@ -930,7 +930,9 @@ $(document).ready(function(){
 		}
 	};
 	
-	$('.icon-close-icon').click(function(){
+	$('.icon-close-icon').click(function(e){
+		e.preventDefault();
+		
 		$(this).fadeOut().closest('.alert-success').slideUp();
 		
 		setCookie('cpl', '1');

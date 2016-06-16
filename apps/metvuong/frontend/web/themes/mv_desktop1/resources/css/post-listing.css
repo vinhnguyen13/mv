@@ -157,6 +157,11 @@ html.previewing, body.previewing {
 	font-weight: bold;
 }
 
+.error-hint {
+	color: #a94442;
+    font-weight: 600;
+}
+
 @media (max-width: 985px) {
 	#review-listing .popup-wrap {
     	left: 0;

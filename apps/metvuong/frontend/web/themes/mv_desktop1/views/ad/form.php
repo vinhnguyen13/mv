@@ -324,17 +324,7 @@ use vsoft\ad\models\AdImages;
 							</div>
 						</div>
 					</div>
-					<div class="group-frm type-tin-dang fs-14">
-						<div class="title-frm">Chọn hình thức tin đăng</div>
-						<p class="mgB-10">Mã tin đăng: <strong class="mgL-10">MV05979</strong></p>
-                        <p>Số Keys của bạn không đủ để đăng tin. Vui lòng <a href="#" class="add-gold color-cd text-decor">nạp thêm Keys</a>.</p>
-						<div class="ajax-loading-inner">
-							<div class="w-100 mgT-10 inner-ajax">
-								<?=$this->render('/payment/package/index')?>
-							</div>
-						</div>
-					</div>
-					<div class="error-hint form-group col-xs-12 mgT-30" style="display: none;"><?= Yii::t('ad', 'Có lỗi xảy ra, vui lòng kiểm tra lại các trường bên trên') ?></div>
+					<div class="error-hint" style="display: none;"><?= Yii::t('ad', 'Có lỗi xảy ra, vui lòng kiểm tra lại các trường bên trên') ?></div>
 					<div class="text-right col-xs-12 pdT-50">
 						<button id="preview" type="button" class="btn-common"><?= Yii::t('ad', 'Preview') ?> <span class="icon-mv"><span class="icon-angle-right"></span></span></button>
 					</div>
@@ -413,7 +403,7 @@ use vsoft\ad\models\AdImages;
 												<a class="ref" data-ref=".owner" href="javascript:;"></a>
 											</p>
 											<div class="address-listing"><p class="address-show"></p></div>
-											<div class="pull-left left-attr-detail">
+											<div class="left-attr-detail">
 												<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span>MV0000</span></p>
 												<ul class="clearfix list-attr-td">
 							                        <li><span class="icon-mv"><span class="icon-page-1-copy"></span></span><span class="ref" data-ref="#adproduct-area"></span>m2</li>
@@ -421,9 +411,9 @@ use vsoft\ad\models\AdImages;
 							                        <li><span class="icon-mv"><span class="icon-icon-bathroom"></span></span><span class="ref" data-ref="#adproductadditioninfo-toilet_no"></span></li>
 												</ul>
 											</div>
-											<div class="overflow-all right-attr-detail">
-												<p class="price-td">
-													<?= Yii::t('ad', 'Price') ?> <span class="ref" data-format="formatPrice" data-ref="#adproduct-price"></span>
+											<div class="mgT-10 right-attr-detail">
+												<p class="price-item">
+													<?= Yii::t('ad', 'Price') ?> <strong class="ref" data-format="formatPrice" data-ref="#adproduct-price"></strong>
 												</p>
 											</div>
 										</div>
