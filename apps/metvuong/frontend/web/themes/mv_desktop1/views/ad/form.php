@@ -467,7 +467,7 @@ use vsoft\ad\models\AdImages;
 								            <div id="collapseEght" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingSeven">
 								                <div class="panel-body text-center">
 								            	    <div class="infor-agent clearfix">
-														<a href="javascript:;" class="wrap-img"><img src="<?= "/member/" . Yii::$app->user->identity->getUsername() . "/avatar" ?>" alt="demo"></a>
+														<a href="javascript:;" class="wrap-img"><img src="<?= "/" . Yii::$app->user->identity->getUsername() . "/avatar" ?>" alt="demo"></a>
 														<div class="img-agent">
 															<a href="javascript:;" class="name-agent ref" data-ref="#adcontactinfo-name"></a>
 						                                    <div class="stars"> <span id="rating-all-bottom" class="rateit" data-rateit-value="0" data-rateit-ispreset="true" data-rateit-readonly="true"><span id="rateit-range-2" class="rateit-range" tabindex="0" role="slider" aria-label="rating" aria-owns="rateit-reset-2" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-readonly="true" style="width: 105px; height: 18px;"><span class="rateit-selected rateit-preset" style="height: 18px; width: 0px;"></span><span class="rateit-hover" style="height:18px"></span></span></span> <span class="fs-13 font-600 count_review">(0)</span> </div>
