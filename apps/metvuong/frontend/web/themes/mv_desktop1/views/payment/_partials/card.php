@@ -7,51 +7,6 @@
  */
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
-
-
-if(isset($_POST['NLNapThe'])){
-    include(Yii::getAlias('@common/myvendor/nganluong/card/config.php'));
-    include(Yii::getAlias('@common/myvendor/nganluong/card/includes/MobiCard.php'));
-
-    $soseri = $_POST['txtSoSeri'];
-    $sopin = $_POST['txtSoPin'];
-    $type_card = $_POST['select_method'];
-
-
-    if ($_POST['txtSoSeri'] == "" ) {
-        echo '<script>alert("Vui lòng nhập Số Seri");</script>';
-        echo "<script>location.href='".$_SERVER['HTTP_REFERER']."';</script>";
-        exit();
-    }
-    if ($_POST['txtSoPin'] == "" ) {
-        echo '<script>alert("Vui lòng nhập Mã Thẻ");</script>';
-        echo "<script>location.href='".$_SERVER['HTTP_REFERER']."';</script>";
-        exit();
-    }
-
-    $arytype= array(92=>'VMS',93=>'VNP',107=>'VIETTEL',121=>'VCOIN',120=>'GATE');
-    //Tiến hành kết nối thanh toán Thẻ cào.
-    $call = new MobiCard();
-    $rs = new Result();
-    $coin1 = rand(10,999);
-    $coin2 = rand(0,999);
-    $coin3 = rand(0,999);
-    $coin4 = rand(0,999);
-    $ref_code = $coin4 + $coin3 * 1000 + $coin2 * 1000000 + $coin1 * 100000000;
-
-    $rs = $call->CardPay($sopin,$soseri,$type_card,$ref_code,"","","");
-
-    if($rs->error_code == '00') {
-        // Cập nhật data tại đây
-        echo  '<script>alert("Bạn đã nạp thành công '.$rs->card_amount.' vào trong tài khoản.");</script>'; //$total_results;
-    }
-    else {
-        echo  '<script>alert("Lỗi :'.$rs->error_message.'");</script>';
-    }
-
-    //var_dump($rs);
-
-}
 ?>
 <?php
 $f = ActiveForm::begin([
