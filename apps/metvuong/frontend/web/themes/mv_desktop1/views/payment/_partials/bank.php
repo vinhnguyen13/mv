@@ -652,7 +652,6 @@ $f = ActiveForm::begin([
     </tr>
 </table>
 <?php $f->end(); ?>
-<script src="https://www.nganluong.vn/webskins/javascripts/jquery_min.js" type="text/javascript"></script>
 <script language="javascript">
     $('input[name="option_payment"]').bind('click', function() {
         $('.list-content li').removeClass('active');
