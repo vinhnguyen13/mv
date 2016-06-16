@@ -201,7 +201,7 @@ class Elastic
     
     public static function buildParams($v) {
 
-    	$v = preg_replace("/so ([0-9])/", "$1", $v);
+    	$v = preg_replace("/so ([0-9]|mot|hai|ba|bon|nam|sau|bay|tam|chin|muoi)/", "$1", $v);
     	
 		$slop = 8;
 		
