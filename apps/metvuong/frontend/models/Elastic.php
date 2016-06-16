@@ -200,9 +200,6 @@ class Elastic
     }
     
     public static function buildParams($v) {
-    	$v = preg_replace("/(q|quan|p|phuong)([0-9]*)/", "$1 $2", $v);
-    	$v = preg_replace("/so ([0-9])/", "$1", $v);
-    	
 		$slop = 8;
 		
 		$should = [
@@ -278,7 +275,10 @@ class Elastic
 			],
 		];
 		
-		if(strpos($v, "du an") !== false) {
+		$additionSearch = preg_replace("/(q|quan|p|phuong)([0-9])/", "$1 $2", $v);
+		$additionSearch = preg_replace("/so\s?(?=[0-9])/", "$1", $additionSearch);
+		
+		if(strpos($additionSearch, "du an") !== false) {
 			$additionSearch = str_replace("du an", "", $v);
 		
 			$functions[] = [
@@ -289,30 +289,32 @@ class Elastic
 				],
 				"weight" => 4
 			];
-			
-			if($additionSearch != $v) {
-				$should[] = [
-						"match_phrase_prefix" => [
-								"search_field" => [
-										"query" => $additionSearch,
-										"slop" => $slop
-								]
-						]
-				];
-					
-				$functions[] = [
-						"filter" => [
-								"match_phrase_prefix" => [
-										"search_field" => [
-												"query" => $additionSearch,
-												"slop" => $slop
-										]
-								]
-						],
-						"weight" => 3
-				];
-			}
 		}
+		
+		if($additionSearch != $v) {
+			$should[] = [
+				"match_phrase_prefix" => [
+					"search_field" => [
+						"query" => $additionSearch,
+						"slop" => $slop
+					]
+				]
+			];
+			
+			$functions[] = [
+				"filter" => [
+					"match_phrase_prefix" => [
+						"search_field" => [
+							"query" => $additionSearch,
+							"slop" => $slop
+						]
+					]
+				],
+				"weight" => 3
+			];
+		}
+		
+		
 		
 		$sentence = explode(' ', $additionSearch);
 		$totalWords = count($sentence);
