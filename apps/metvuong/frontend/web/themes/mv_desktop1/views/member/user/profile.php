@@ -58,7 +58,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
                             <?= empty($model->mobile) ?  "<a href='#'><i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i></a>" : "<a href='tel:".$model->mobile."'>".$model->mobile."</a>" ?>
                         </p>
                         <p class="email-user">
-                            <a href="#" data-toggle="modal" data-target="#popup_email_contact" class="email-btn">
+                            <a href="#" data-toggle="modal" data-target="<?=$model->user_id == Yii::$app->user->id ? "" : "#popup_email"?>" data-type="contact" class="email-btn">
                                 <span class="icon-mv"><span class="icon-mail-profile"></span></span>
                                 <?= empty($model->public_email) ?  "<i style=\"font-weight: normal;\">".Yii::t('general', 'Updating')."</i>" : $model->public_email ?>
                             </a>
@@ -165,7 +165,6 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
 </div>
 <?= $this->render('/ad/_partials/shareEmail',[
     'popup_email_name' => 'popup_email_contact',
-    'user' => $user,
     'yourEmail' => $yourEmail,
     'recipientEmail' => $recipientEmail,
     'params' => ['your_email' => false, 'recipient_email' => false] ]);

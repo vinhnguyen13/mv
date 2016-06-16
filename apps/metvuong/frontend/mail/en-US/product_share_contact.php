@@ -40,7 +40,8 @@ use yii\helpers\Html;
     </tr>
     </tbody>
 </table>
-
+<?php if(!empty($contact->detailUrl)){ ?>
 <p style="margin-bottom: 45px;">View details are <a style="font-size:13px;font-weight: bold;text-decoration:none;color:#009455;" href="<?= $contact->detailUrl ?>">here.</a></p>
+<?php } ?>
 <p style="font-size: 13px;margin-bottom:5px;">Regards,</p>
 <p style="font-size: 13px;">Metvuong Team</p>
