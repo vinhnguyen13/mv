@@ -222,14 +222,6 @@ class Elastic
 		$functions = [
 			[
 				"filter" => [
-					"match_phrase_prefix" => [
-						"search_name_n" => $v
-					]
-				],
-				"weight" => 1
-			],
-			[
-				"filter" => [
 					"match_phrase" => [
 						"search_name" => $v
 					]
