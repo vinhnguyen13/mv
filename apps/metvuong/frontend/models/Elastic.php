@@ -255,22 +255,6 @@ class Elastic
 			[
 				"filter" => [
 					"match" => [
-						"_type" => "city"
-					]
-				],
-				"weight" => 3
-			],
-			[
-				"filter" => [
-					"match" => [
-						"_type" => "district"
-					]
-				],
-				"weight" => 2
-			],
-			[
-				"filter" => [
-					"match" => [
 						"city_id" => 1
 					]
 				],
@@ -291,6 +275,23 @@ class Elastic
 					]
 				],
 				"weight" => 4
+			];
+		} else {
+			$functions[] = [
+				"filter" => [
+					"match" => [
+						"_type" => "city"
+					]
+				],
+				"weight" => 3
+			];
+			$functions[] = [
+				"filter" => [
+					"match" => [
+						"_type" => "district"
+					]
+				],
+				"weight" => 2
 			];
 		}
 		
