@@ -254,7 +254,15 @@ class Elastic
 					]
 				],
 				"weight" => 3
-			]
+			],
+			[
+				"filter" => [
+					"match" => [
+						"city_id" => 1
+					]
+				],
+				"weight" => 0.1
+			],
 		];
 		
 		$additionSearch = preg_replace("/(q|quan|p|phuong)([0-9])/", "$1 $2", $v);
