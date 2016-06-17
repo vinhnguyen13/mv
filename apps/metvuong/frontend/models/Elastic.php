@@ -279,6 +279,7 @@ class Elastic
 		];
 		
 		$additionSearch = preg_replace("/(q|quan|p|phuong)([0-9])/", "$1 $2", $v);
+		$additionSearch = preg_replace("/(^|(?<=\s))(tp|thanh pho)(\s|.)/", "", $additionSearch);
 		
 		if(strpos($additionSearch, "du an") !== false) {
 			$additionSearch = str_replace("du an", "", $v);
