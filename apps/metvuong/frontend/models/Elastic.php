@@ -205,13 +205,15 @@ class Elastic
     	$v = preg_replace("/([0-9]*)\/([0-9]*)/", "$1 / $2", $v);
     	
 		$slop = 11;
+		$maxExpansions = 80;
 		
 		$should = [
 			[
 				"match_phrase_prefix" => [
 					"search_field" => [
 						"query" => $v,
-						"slop" => $slop
+						"slop" => $slop,
+						"max_expansions" => $maxExpansions
 					]
 				]	
 			]
@@ -224,7 +226,7 @@ class Elastic
 						"search_name" => $v
 					]
 				],
-				"weight" => 1
+				"weight" => 3
 			],
 			[
 				"filter" => [
@@ -232,7 +234,7 @@ class Elastic
 						"search_name" => $v
 					]
 				],
-				"weight" => 1
+				"weight" => 2
 			],
 			[
 				"filter" => [
@@ -252,15 +254,7 @@ class Elastic
 					]
 				],
 				"weight" => 3
-			],
-			[
-				"filter" => [
-					"match" => [
-						"city_id" => 1
-					]
-				],
-				"weight" => 2
-			],
+			]
 		];
 		
 		$additionSearch = preg_replace("/(q|quan|p|phuong)([0-9])/", "$1 $2", $v);
