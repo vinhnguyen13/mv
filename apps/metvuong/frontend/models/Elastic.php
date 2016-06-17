@@ -204,7 +204,7 @@ class Elastic
     	$v = preg_replace("/so ([0-9]|mot|hai|ba|bon|nam|sau|bay|tam|chin|muoi)/", "$1", $v);
     	$v = preg_replace("/([0-9]*)\/([0-9]*)/", "$1 / $2", $v);
     	
-		$slop = 8;
+		$slop = 11;
 		
 		$should = [
 			[
@@ -335,6 +335,19 @@ class Elastic
 				],
 				"weight" => 1
 			];
+			
+			if($totalWords > 2) {
+				$lastWord = $sentence[$totalWords-2] . ' ' . $lastWord;
+		
+				$functions[] = [
+					"filter" => [
+						"match_phrase_prefix" => [
+							"search_field" => $lastWord
+						]
+					],
+					"weight" => 1
+				];
+			}
 		}
 		
 		
