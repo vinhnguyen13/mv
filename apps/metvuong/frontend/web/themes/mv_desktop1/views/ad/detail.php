@@ -352,7 +352,7 @@ $count_review = $reviews->count();
                 /**
                  * notification
                  */
-                if(!Yii::$app->user->isGuest) {
+                if(!Yii::$app->user->isGuest && !empty($owner)) {
 					$nameUserTo = !empty($owner) ? $owner->profile->getDisplayName() : $product->adContactInfo->name;
 					$nameUserFrom = $user->profile->getDisplayName();
                     ?>
