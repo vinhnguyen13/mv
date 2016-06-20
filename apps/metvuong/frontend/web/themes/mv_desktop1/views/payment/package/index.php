@@ -114,7 +114,7 @@
 	    </div>
 	    <div id="credit-card" class="item-payment">
 	        <div class="title-item">Thanh toán bằng thẻ Creadit Card</div>
-	        <div class="pdT-20 pdB-40 pdL-50 pdR-50">
+	        <div class="pdT-20 pdB-40 pdL-30 pdR-30">
 	            <div class="method_napcard_inner">
 	                
 	                <div class="row">
@@ -179,7 +179,7 @@
 	                        </div>
 	                    </div>
 	                </div>
-	                <p style="font-size: 20px; color: #fff; background: red; display: block; padding: 5px 10px;"><span>Lưu ý:</span> Bạn phải CHỜ 10 GIÂY để nhận kết quả xử lý từ Ngân Lượng. TUYỆT ĐỐI KHÔNG ĐÓNG TRÌNH DUYỆT. Khi giao dịch được xác định thành công, bạn sẽ được tự động chuyển về web metvuong, lúc đó chúng tôi sẽ trả Keys cho bạn. </p>
+	                <p style="font-size: 15px; color: #fff; background: red; display: block; padding: 5px 10px;"><span>Lưu ý:</span> Bạn phải CHỜ 10 GIÂY để nhận kết quả xử lý từ Ngân Lượng. TUYỆT ĐỐI KHÔNG ĐÓNG TRÌNH DUYỆT. Khi giao dịch được xác định thành công, bạn sẽ được tự động chuyển về web metvuong, lúc đó chúng tôi sẽ trả Keys cho bạn. </p>
 	                <br>
 	                <p>Hỗ trợ các ngân hàng:</p>
 	                <img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/banks.jpg' ?>">

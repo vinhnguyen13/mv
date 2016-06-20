@@ -4078,6 +4078,7 @@ html.mm-opening .mm-slideout {
 .list-attr-td {
     margin-bottom: 10px;
     height: 21px; /*fix firefox*/
+    overflow: hidden;
 }
 .price-item {
     text-transform: uppercase;
@@ -5906,31 +5907,23 @@ html.mm-opening .mm-slideout {
     font-size: 15px;
     font-weight: 600;
 }
-.dt-footer div {
-    margin-top: 0;
-    font-size: 13px;
+.list-menu-footer {
+    text-align: center;
+    margin-bottom: 15px;
 }
-.dt-footer p {
-    text-align: right;
+.list-menu-footer li {
+    display: inline-block;
 }
-.dt-footer .license p {
-    /* text-align: left; */
-}
-.dt-footer ul {
-    margin-bottom: 5px;
-}
-.dt-footer li {
-    float: left;
-}
-.dt-footer li a {
+.list-menu-footer li a {
+    display: block;
+    font-size: 12px;
+    line-height: 100%;
+    padding: 0 5px 0 2px;
     border-right: 1px solid #fff;
-    padding: 0 10px;
-    font-size: 13px;
+    text-transform: uppercase;
 }
-.dt-footer li a:hover {text-decoration: underline;color: #fff;}
-.dt-footer li:last-child a {
-    border: none;
-    padding-right: 0;
+.list-menu-footer li:last-child a {
+    border-right: none;
 }
 .logo-footer {
     width: 200px;
@@ -8491,7 +8484,7 @@ margin-right: 5px;
     
     }
     #listing-list .list-attr-td {
-        margin-bottom: 3px;
+        margin-bottom: 7px;
     }
 }
 #popup-review .wrap-popup {
@@ -11682,14 +11675,11 @@ height: 190px;
 .license {
     margin: 0 auto 0;
     font-size: 13px;
-    text-align: right;
+    text-align: center;
     font-weight: 600;
 }
 .license p {
-    margin-bottom: 5px;
-}
-.dt-footer .license p {
-    /* text-align: center; */
+    margin-bottom: 8px;
 }
 @media (max-width: 985px) {
     .license {
@@ -12597,7 +12587,7 @@ ul.cardList li {
 }
 .type-payment h3 {
     margin: 0px;
-    font-size: 20px;
+    font-size: 13px;
     margin-bottom: 15px;
     text-transform: uppercase;
     color: #00a769;
@@ -12642,4 +12632,22 @@ ul.cardList li {
 }
 #the-cao table td {
     padding: 5px 0;
+}
+.box-quy-che {
+    font-size: 14px;
+    padding-top: 50px;
+    margin-bottom: 50px;
+}
+.box-quy-che p {
+    margin-bottom: 10px;
+}
+.box-quy-che ul,
+.box-quy-che li {
+    list-style: inherit;
+}
+.box-quy-che ul {
+    padding-left: 80px;
+}
+.box-quy-che li {
+    margin-bottom: 10px;
 }
