@@ -21,10 +21,7 @@ if(count($news) > 0){
     </div>
     <?php foreach($news as $k => $n) {
         if($k == 0){
-            $banner = \vsoft\news\models\CmsShow::getBanner($n->banner);//"/store/news/show/".\vsoft\news\models\CmsShow::THUMB400x0.$n->banner ;
-//            $checkBanner = file_exists(Yii::getAlias('@store')."/news/show/".\vsoft\news\models\CmsShow::THUMB400x0.$n->banner );
-//            if($checkBanner == false)
-//                $banner = '/themes/metvuong2/resources/images/default-ads.jpg';?>
+            $banner = \vsoft\news\models\CmsShow::getBanner($n->banner);?>
         <div class="item-hot-sidebar">
             <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug], true)?>" title="<?=$n->title?>">
                 <div class="img-show">
