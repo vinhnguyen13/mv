@@ -11,8 +11,26 @@ namespace frontend\models;
 use Yii;
 use yii\base\Component;
 
+
 class Payment extends Component
 {
+    public function init()
+    {
+        if(!defined('URL_API')){
+            define('URL_API', Yii::$app->params['nganluong']['URL_API']);
+        } // Đường dẫn gọi api
+        if(!defined('RECEIVER')){
+            define('RECEIVER', Yii::$app->params['nganluong']['RECEIVER']);
+        } // Email tài khoản ngân lượng
+        if(!defined('MERCHANT_ID')){
+            define('MERCHANT_ID', Yii::$app->params['nganluong']['MERCHANT_ID']);
+        } // Mã merchant kết nối
+        if(!defined('MERCHANT_PASS')){
+            define('MERCHANT_PASS', Yii::$app->params['nganluong']['MERCHANT_PASS']);
+        } // Mật khẩu kết nôi
+        return parent::init();
+    }
+
     public static function me()
     {
         return Yii::createObject(self::className());
@@ -20,7 +38,6 @@ class Payment extends Component
 
     public function payByBank(){
         if(@$_POST['nlpayment']) {
-            include(Yii::getAlias('@common/myvendor/nganluong/bank/config.php'));
             include(Yii::getAlias('@common/myvendor/nganluong/bank/includes/NL_Checkoutv3.php'));
             $nlcheckout= new \NL_CheckOutV3(MERCHANT_ID,MERCHANT_PASS,RECEIVER,URL_API);
             $total_amount=$_POST['total_amount'];

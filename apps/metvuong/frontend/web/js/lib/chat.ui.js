@@ -229,7 +229,6 @@
                 str = str.replace(/</g, "&lt;");
                 str = str.replace(/>/g, "&gt;");
             }
-            console.log(str);
             return str;
         },
         formatOutPut: function (encodedString) {
