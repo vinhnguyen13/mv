@@ -43,7 +43,7 @@ class ElasticController extends Controller {
 				$totalRent = 0;
 			}
 			
-			$cityTermBulk = array_merge($cityTermBulk, $this->buildTerm($city['id'], $city['id'], $city['name'], $city['name'], $totalSell, $totalRent, $city['slug']));
+			$cityTermBulk = array_merge($cityTermBulk, $this->buildTerm($city['id'], $city['id'], $city['name'], $city['name'], $city['name'], $totalSell, $totalRent, $city['slug']));
 		}
 		
 		$this->batchInsert($indexName, 'city', $cityTermBulk);
@@ -65,7 +65,7 @@ class ElasticController extends Controller {
 				$districtFullName = $districtName . ', ' . $city['name'];
 				$districtSlug = $city['slug'] . '/' . $district['slug'];
 				
-				$districtTermBulk = array_merge($districtTermBulk, $this->buildTerm($district['id'], $city['id'], $districtName, $districtFullName, $totalSell, $totalRent, $districtSlug));
+				$districtTermBulk = array_merge($districtTermBulk, $this->buildTerm($district['id'], $city['id'], $district['name'], $districtName, $districtFullName, $totalSell, $totalRent, $districtSlug));
 				
 				$this->buildTermsBelongDistrict('ad_ward', $city['id'], $district['id'], $districtFullName, $indexName, 'ward', $countByWard, $districtSlug, 'w');
 				$this->buildTermsBelongDistrict('ad_street', $city['id'], $district['id'], $districtFullName, $indexName, 'street', $countByStreet, $districtSlug, 's');
@@ -116,7 +116,7 @@ class ElasticController extends Controller {
 				$totalRent = 0;
 			}
 			
-			$buildTerm = $this->buildTerm($term['id'], $cityId, $name, $fullName, $totalSell, $totalRent, $districtSlug . '/' . $p . '_' . $term['id']);
+			$buildTerm = $this->buildTerm($term['id'], $cityId, $term['name'], $name, $fullName, $totalSell, $totalRent, $districtSlug . '/' . $p . '_' . $term['id']);
 			
 			$buildTerm[1]['district_id'] = intval($districtId);
 			
@@ -189,6 +189,10 @@ class ElasticController extends Controller {
 						'type' => 'string',
 						"analyzer" => "analyzer_startswith"
 					],
+					'search_name_key' => [
+						'type' => 'string',
+						"analyzer" => "analyzer_startswith"
+					],
 					'total_sell' => [
 						'type' => 'integer'
 					],
@@ -254,7 +258,7 @@ class ElasticController extends Controller {
 		curl_close($ch);
 	}
 	
-	private function buildTerm($id, $cityId, $name, $fullName, $totalSell, $totalRent, $slug) {
+	private function buildTerm($id, $cityId, $name, $nameWithPre, $fullName, $totalSell, $totalRent, $slug) {
 		$term = [];
 		
 		$term[] = [
@@ -268,7 +272,8 @@ class ElasticController extends Controller {
 		$term[] = [
 			'name'	=> $name,
 			'slug' => $slug,
-			'search_name' => $this->standardSearch(Elastic::transform($name)),
+			'search_name_key' => $this->standardSearch(Elastic::transform($name)),
+			'search_name' => $this->standardSearch(Elastic::transform($nameWithPre)),
 			'full_name' => $fullName,
 			'search_field' => $searchField,
 			'search_field_key' => $searchField,
