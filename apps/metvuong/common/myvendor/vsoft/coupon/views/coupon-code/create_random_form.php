@@ -13,6 +13,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin();
     $events = \yii\helpers\ArrayHelper::map(\vsoft\coupon\models\CouponEvent::find()->where(['status' => Status::STATUS_ACTIVE])->all(), 'id', 'name');
+    $model->amount_type = 1;
     ?>
     <table class="table table-striped">
         <tr>
@@ -40,10 +41,8 @@ use yii\widgets\ActiveForm;
             <th>Discount by </th>
             <td>number</td>
             <td></td>
-            <td><?= $form->field($model, 'amount_type')->radioList(\vsoft\coupon\models\CouponCode::getAmountTypes(), [
-                    'options' => [1 => ['Selected ' => true]]
-                ])->label(false) ?>
-                <?= $form->field($model, 'amount')->textInput()->label(false) ?></td>
+            <td><?= $form->field($model, 'amount_type')->radioList(\vsoft\coupon\models\CouponCode::getAmountTypes())->label(false) ?>
+                <?= $form->field($model, 'amount')->textInput(['placeholder' => Yii::t('coupon','Input amount')])->label(false) ?></td>
         </tr>
         <tr>
             <th>Number of coupons</th>
