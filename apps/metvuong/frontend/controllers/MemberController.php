@@ -14,6 +14,7 @@ use frontend\models\UserLocation;
 use frontend\models\UserReview;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdProduct;
+use vsoft\express\components\ImageHelper;
 use vsoft\express\components\StringHelper;
 use Yii;
 use yii\base\InvalidParamException;
@@ -30,6 +31,7 @@ use yii\web\NotFoundHttpException;
 use yii\web\Response;
 use frontend\models\RecoveryForm;
 use frontend\models\ProfileForm;
+use yii\web\UploadedFile;
 
 /**
  * Site controller
@@ -567,6 +569,74 @@ class MemberController extends Controller
                 ->orderBy(['created_at' => SORT_DESC])->all();
             if(count($reviews) > 0){
                 return $this->renderAjax('/member/_partials/review', ['reviews' => $reviews]);
+            }
+        }
+        return false;
+    }
+
+    public function actionUpload($folder = 'avatar')
+    {
+        $this->checkAccess();
+        $model = Yii::createObject([
+            'class' => ProfileForm::className(),
+            'scenario' => 'updateavatar',
+        ]);
+
+        if($_FILES) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+
+            $image = UploadedFile::getInstanceByName('upload');
+            $dir = \Yii::getAlias('@store') . "/$folder";
+            $uniqid = uniqid();
+            $extension = pathinfo($image->name, PATHINFO_EXTENSION);
+
+            $user = Yii::$app->user->identity;
+
+            $orginal = 'u_'. $user->id. '_' .$uniqid . '.' . $extension;
+            $thumbnail = 'u_'. $user->id. '_' .$uniqid . '.thumb.' . $extension;
+
+            $orginalPath = $dir . '/' . $orginal;
+            $thumbnailPath = $dir . '/' . $thumbnail;
+
+            $image->saveAs($orginalPath);
+
+            $options = ['thumbWidth' => 120, 'thumbHeight' => 120];
+            $imageHelper = new ImageHelper($orginalPath, $options);
+            $imageHelper->makeThumb(false, $thumbnailPath);
+
+            $response['files'][] = [
+                'url'           => Url::to("/store/$folder/" .$orginal),
+                'thumbnailUrl'  => Url::to("/store/$folder/" .$thumbnail),
+                'name'          => $user->username,
+                'type'          => $image->type,
+                'size'          => $image->size,
+                'deleteUrl'     => Url::to(['member/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail, 'folder' => $folder]),
+                'deleteType'    => 'DELETE',
+                'deleteLater'	=> 0,
+            ];
+            $model->updateAvatar($orginal);
+            return $response;
+        }
+        return $response['files'] = array();
+    }
+
+    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'avatar') {
+        $this->checkAccess();
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if(!$deleteLater) {
+            $dir = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder;
+            if($orginal != "default-avatar.jpg" && $thumbnail != "default-avatar.thumb.jpg")
+            {
+                if(file_exists($dir . DIRECTORY_SEPARATOR . $orginal))
+                    unlink($dir . DIRECTORY_SEPARATOR . $orginal);
+                if(file_exists($dir . DIRECTORY_SEPARATOR . $thumbnail))
+                    unlink($dir . DIRECTORY_SEPARATOR . $thumbnail);
+                $model = Yii::createObject([
+                    'class' => ProfileForm::className(),
+                    'scenario' => 'updateavatar',
+                ]);
+
+                return $model->updateAvatar(null);
             }
         }
         return false;

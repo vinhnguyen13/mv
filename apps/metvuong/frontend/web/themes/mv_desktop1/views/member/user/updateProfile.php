@@ -56,8 +56,23 @@ Yii::t('time','week');
                         <a href="#" class="cancel-profile btn-common btn-cancel"><?= Yii::t('user', 'Hủy') ?></a>    
                     </div>
                     <div class="avatar wrap-img pull-left mgR-15 text-center">
-                        <img class="mgB-10" id="profileAvatar" src="<?=$model->avatar?>" alt="metvuong avatar" />
-                        <a class="btn-common" href="#" data-toggle="modal" data-target="#avatar"><?=Yii::t('user','upload image')?></a>
+                        <?php
+                        $avatar = str_replace("/store/avatar/","", $model->avatar);
+                        $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_SEPARATOR . $avatar;
+
+                        echo \common\widgets\FileUploadAvatar::widget([
+                            'model' => $model, 'attribute' => 'avatar',
+                            'url' => Url::to(['member/upload', 'folder' => 'avatar'], true),
+                            'clientOptions' => [
+                                'maxNumberOfFiles' => 1,
+                                'imageMaxWidth' => 1024,
+                                'imageMaxHeight' => 1024,
+                                'disableImageResize' => false,
+                                'imageCrop' => true,
+                                'noAvatar' => file_exists($avatar) ? true : false,
+                            ],
+                            'fieldOptions' => ['folder' => 'avatar'],
+                        ]);   ?>
                     </div>
                     <div class="overflow-all">
                         <?php
@@ -83,6 +98,7 @@ Yii::t('time','week');
                             <span class="icon-mv"><span class="icon-mail-profile"></span></span>
                             <?= $f->field($profile_form, 'public_email')->textInput(['value' => empty($model->public_email) ? $user->email : $model->public_email ])->label(false)?>
                             <input type="hidden" name="scenario" value="updateprofile">
+                            <input type="hidden" name="avatar" class="avatar-user" value="<?=$avatar?>">
                         </div>
                         <?php $f->end(); ?>
                         <div class="location mgB-5">
@@ -210,56 +226,6 @@ Yii::t('time','week');
                     <a href="<?=Url::current(['language-change'=>'vi-VN'])?>"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-vn.png' ?>" alt=""></a>
                 </div>
             </section>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade popup-common" id="avatar" tabindex="-1" role="dialog" aria-labelledby="myModalAvatar">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header title-popup clearfix">
-                <div class="popup_title">
-                    <?=Yii::t('profile', 'Change avatar')?>
-                    <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close">
-                        <span class="icon-mv fs-12 mgR-5"><span class="icon-close-icon"></span></span>
-                    </a>
-                </div>
-            </div>
-            <div class="modal-body">
-                <div class="wrap-modal clearfix">
-                    <div class="avatar">
-                        <?php
-                        $avatar = str_replace("/store/avatar/","", $model->avatar);
-                        $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_SEPARATOR . $avatar;
-
-                        $form = ActiveForm::begin([
-                            'id' => 'change-avatar-form',
-                            'enableAjaxValidation' => false,
-                            'enableClientValidation' => true,
-                            'layout' => 'horizontal',
-                            'fieldConfig' => [
-                                'horizontalCssClasses' => [
-                                    'wrapper' => '',
-                                ],
-                            ],
-                        ]); ?>
-                        <?=Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']);?>
-                        <?= $form->field($model, 'avatar')->widget(\common\widgets\FileUploadAvatar::className(), [
-                            'url' => Url::to(['/user-management/avatar', 'folder' => 'avatar']),
-                            'clientOptions' => [
-                                'maxNumberOfFiles' => 1,
-                                'imageMaxWidth' => 800,
-                                'imageMaxHeight' => 800,
-                                'disableImageResize' => false,
-                                'imageCrop' => true,
-                                'noAvatar' => file_exists($avatar) ? true : false,
-                            ],
-                            'fieldOptions' => ['folder' => 'avatar'],
-                        ])->label(false) ?>
-                        <?php ActiveForm::end(); ?>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 </div>
