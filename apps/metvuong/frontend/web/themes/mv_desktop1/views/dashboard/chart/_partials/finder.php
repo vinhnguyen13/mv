@@ -120,20 +120,19 @@ if($from > 0 && $to > 0)
                             events: {
                                 click: function () {
                                     $('#frmListVisit .wrap-modal').html('');
-                                    var timer = 0;
                                     var _this = this;
-                                    clearTimeout(timer);
-                                    timer = setTimeout(function () {
-                                        $.ajax({
-                                            type: "get",
-                                            dataType: 'html',
-                                            url: _this.url,
-                                            success: function (data) {
-                                                $('#frmListVisit .wrap-modal').html($(data));
-                                            }
-                                        });
-                                    }, 500);
-                                    $('#frmListVisit').modal();
+                                    $('body').loading();
+                                    $.ajax({
+                                        type: "get",
+                                        dataType: 'html',
+                                        url: _this.url,
+                                        success: function (data) {
+                                            $('body').loading({done: true});
+                                            $('#frmListVisit .wrap-modal').html($(data));
+                                            
+                                            $('#frmListVisit').modal();
+                                        }
+                                    });
                                 }
                             }
                         }
