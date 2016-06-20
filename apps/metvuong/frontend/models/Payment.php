@@ -66,9 +66,6 @@ class Payment extends Component
 
             $buyer_address ='';
 
-
-
-
             if($payment_method !='' && $buyer_email !="" && $buyer_mobile !="" && $buyer_fullname !="" && filter_var( $buyer_email, FILTER_VALIDATE_EMAIL )  ){
                 if($payment_method =="VISA"){
 

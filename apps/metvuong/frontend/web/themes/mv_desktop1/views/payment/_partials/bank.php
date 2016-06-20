@@ -57,29 +57,11 @@ use yii\helpers\Url;
                 </tr>
             </table>
             <ul class="list-content">
-                <li class="active">
-                    <label><input type="radio" value="NL" name="option_payment" selected="true" checked="true">Thanh
-                        toán bằng Ví điện tử NgânLượng</label>
-
-                    <div class="boxContent">
-                        <p>
-                            Thanh toán trực tuyến AN TOÀN và ĐƯỢC BẢO VỆ, sử dụng thẻ ngân hàng trong và ngoài nước hoặc
-                            nhiều hình thức tiện lợi khác.
-                            Được bảo hộ & cấp phép bởi NGÂN HÀNG NHÀ NƯỚC, ví điện tử duy nhất được cộng đồng ƯA THÍCH
-                            NHẤT 2 năm liên tiếp, Bộ Thông tin Truyền thông trao giải thưởng Sao Khuê
-                            <br/>Giao dịch. Đăng ký ví NgânLượng.vn miễn phí <a
-                                href="https://www.nganluong.vn/?portal=nganluong&amp;page=user_register"
-                                target="_blank">tại đây</a></p>
-                    </div>
-                </li>
                 <li>
-                    <label><input type="radio" value="ATM_ONLINE" name="option_payment">Thanh toán online bằng thẻ ngân
-                        hàng nội địa</label>
+                    <label><input type="radio" value="ATM_ONLINE" name="option_payment">Thanh toán online bằng THẺ NGÂN HÀNG NỘI ĐỊA</label>
 
                     <div class="boxContent">
-                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span> Bạn cần
-                            đăng ký Internet-Banking hoặc dịch vụ thanh toán trực tuyến tại ngân hàng trước khi thực
-                            hiện.</p>
+                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span> Bạn cần đăng ký Internet-Banking hoặc dịch vụ thanh toán trực tuyến tại ngân hàng trước khi thực hiện.</p>
 
                         <ul class="cardList clearfix">
                             <li class="bank-online-methods ">
@@ -250,12 +232,10 @@ use yii\helpers\Url;
                     </div>
                 </li>
                 <li>
-                    <label><input type="radio" value="IB_ONLINE" name="option_payment">Thanh toán bằng IB</label>
+                    <label><input type="radio" value="IB_ONLINE" name="option_payment">Thanh toán bằng INTERNET BANKING</label>
 
                     <div class="boxContent">
-                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span> Bạn cần
-                            đăng ký Internet-Banking hoặc dịch vụ thanh toán trực tuyến tại ngân hàng trước khi thực
-                            hiện.</p>
+                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span> Bạn cần đăng ký Internet-Banking hoặc dịch vụ thanh toán trực tuyến tại ngân hàng trước khi thực hiện.</p>
 
                         <ul class="cardList clearfix">
                             <li class="bank-online-methods ">
@@ -289,7 +269,7 @@ use yii\helpers\Url;
                     </div>
                 </li>
                 <li>
-                    <label><input type="radio" value="ATM_OFFLINE" name="option_payment">Thanh toán atm offline</label>
+                    <label><input type="radio" value="ATM_OFFLINE" name="option_payment">Thanh toán ATM OFFLINE</label>
 
                     <div class="boxContent">
 
@@ -382,8 +362,7 @@ use yii\helpers\Url;
                     </div>
                 </li>
                 <li>
-                    <label><input type="radio" value="NH_OFFLINE" name="option_payment">Thanh toán tại văn phòng ngân
-                        hàng</label>
+                    <label><input type="radio" value="NH_OFFLINE" name="option_payment">Thanh toán tại VĂN PHÒNG NGÂN HÀNG</label>
 
                     <div class="boxContent">
 
@@ -484,12 +463,10 @@ use yii\helpers\Url;
                     </div>
                 </li>
                 <li>
-                    <label><input type="radio" value="VISA" name="option_payment" selected="true">Thanh toán bằng thẻ
-                        Visa hoặc MasterCard</label>
+                    <label><input type="radio" value="VISA" name="option_payment" selected="true">Thanh toán bằng THẺ VISA HOẶC MASTERCARD</label>
 
                     <div class="boxContent">
-                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span>Visa hoặc
-                            MasterCard.</p>
+                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span>Visa hoặc MasterCard.</p>
                         <ul class="cardList clearfix">
                             <li class="bank-online-methods ">
                                 <label for="vcb_ck_on">
@@ -519,6 +496,19 @@ use yii\helpers\Url;
                 $('input[name="option_payment"]').bind('click', function () {
                     $('.list-content li').removeClass('active');
                     $(this).parent().parent('li').addClass('active');
+                });
+
+                $('input[name="nlpayment"]').bind('click', function () {
+                    var chkIsNull = false;
+                    $('input[type=text]').each(function(){
+                        if($(this).val().trim() == ''){
+                            chkIsNull = true;
+                        }
+                    })
+                    if(chkIsNull){
+                        alert(lajax.t('Please fill full data'));
+                        return false;
+                    }
                 });
             </script>
         </div>
