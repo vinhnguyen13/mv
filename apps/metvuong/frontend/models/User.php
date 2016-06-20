@@ -535,23 +535,16 @@ class User extends \dektrium\user\models\User
         return Url::to(['/chat/with', 'username'=>$username]);
     }
     
-    public function getBalance($username = null)
+    public function getBalance()
     {
-    	return self::_getBalance($this->id);
-    }
-    
-    public static function _getBalance($userId)
-    {
-    	$balance = (new Query())->from('ec_balance')->where('`user_id` = :user_id', [':user_id' => $userId])->one();
-		
-		if(!$balance) {
-			$command = \Yii::$app->db->createCommand();
-			$command->insert('ec_balance', ['user_id' => $userId])->execute();
-			
-			$lastInsertID = \Yii::$app->db->lastInsertID;
-			$balance = (new Query())->from('ec_balance')->where("`id` = $lastInsertID")->one();
-		}
-		
-		return $balance;
+    	$balance = Balance::findOne(['user_id' => $this->id]);
+    	
+    	if(!$balance) {
+    		$balance = new Balance();
+    		$balance->user_id = $this->id;
+    		$balance->save(false);
+    	}
+    	
+    	return $balance;
     }
 }
