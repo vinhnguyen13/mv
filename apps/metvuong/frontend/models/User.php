@@ -50,6 +50,7 @@ use yii\web\IdentityInterface;
  * Defined relations:
  * @property Account[] $accounts
  * @property Profile   $profile
+ * @property Balance   $balance
  *
  * @author Dmitry Erofeev <dmeroff@gmail.com>
  */
@@ -535,6 +536,9 @@ class User extends \dektrium\user\models\User
         return Url::to(['/chat/with', 'username'=>$username]);
     }
     
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getBalance()
     {
     	$balance = Balance::findOne(['user_id' => $this->id]);

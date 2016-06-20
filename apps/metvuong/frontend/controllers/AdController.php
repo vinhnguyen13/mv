@@ -508,6 +508,20 @@ class AdController extends Controller
     				}
     			}
     			
+    			$balance = Yii::$app->user->identity->balance;
+    			
+    			if($balance->amount > AdProduct::CHARGE_POST) {
+    				$balance->amount -= AdProduct::CHARGE_POST;
+    				$balance->save();
+    				
+    				$product->status = AdProduct::STATUS_ACTIVE;
+    				$product->save(false);
+    			
+    				$result['template'] = $this->renderPartial('_partials/post_success', ['balance' => $balance]);
+    			} else {
+    				$result['template'] = $this->renderPartial('_partials/post_pending', ['balance' => $balance, 'productId' => $product->id]);
+    			}
+    			
     			$result['url'] = $product->urlDetail();
     		} else {
     			$result['success'] = false;

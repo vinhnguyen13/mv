@@ -446,9 +446,9 @@ $(document).ready(function(){
 					
 					if(r.success) {
 						$('.wrap-frm-listing').hide();
-						$('#success-notify').removeClass('hide');
+						$('#success-notify').removeClass('hide').html(r.template);
 						
-						$('#to-detail').attr('href', r.url);
+						// $('#to-detail').attr('href', r.url);
 						
 						window.onbeforeunload = function() {};
 					} else {

@@ -11,14 +11,20 @@ use vsoft\express\components\AdImageHelper;
 
 class AdProduct extends AP
 {
+	const CHARGE_POST = 5;
+	const CHARGE_BOOST_1 = 3;
+	const CHARGE_BOOST_3 = 5;
+	
+	
 	const TYPE_FOR_SELL = 1;
 	const TYPE_FOR_RENT = 2;
 	
 	const OWNER_HOST = 1;
 	const OWNER_AGENT = 2;
 	
-	const STATUS_ACTIVE = 1;
+	const STATUS_PENDING = -1;
 	const STATUS_INACTIVE = 0;
+	const STATUS_ACTIVE = 1;
 	
 	const EXPIRED = 86400;
 	
