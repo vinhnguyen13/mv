@@ -23,9 +23,9 @@
 
 <?php if($products): ?>
 <div id="has-result">
-	<div class="top-listing clearfix">
+	<!-- <div class="top-listing clearfix">
 		<p><span id="count-from"><?= $pages->offset + 1 ?></span> - <span id="count-to"><?= $pages->offset + count($products) ?></span> <?= sprintf(Yii::t('ad', 'of %s listings'), '<span id="count-total">' . $pages->totalCount . '</span>') ?></p>
-	</div>
+	</div> -->
 	<div id="listing-list" class="wrap-lazy">
 		<ul class="clearfix">
 			<?php foreach ($products as $product): ?>
@@ -86,16 +86,18 @@
 								<strong><?= ucfirst(Yii::t('ad', $categories[$product['category_id']]['name'])) ?> <?= mb_strtolower($types[$product['type']], 'utf8') ?></strong>
 							</p>
 							<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product['id'] ?></span></p>
-							<ul class="clearfix list-attr-td">
-			                    <?php if($product['area'] || $product['room_no'] || $product['toilet_no']) : ?>
-			                    	<?php if($product['area']): ?><li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span><?= $product['area'] ?>m<sup>2</sup> </li><?php endif; ?>
-			                    	<?php if($product['room_no']): ?><li><span class="icon-mv"><span class="icon-bed-search"></span></span><?= $product['room_no'] ?> </li><?php endif; ?>
-			                    	<?php if($product['toilet_no']): ?><li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span><?= $product['toilet_no'] ?> </li><?php endif; ?>
-			                    <?php else: ?>
-			                    	<li><?=Yii::t('listing', 'updating')?></li>
-			                    <?php endif; ?>
-							</ul>
-					        <p class="price-item"><?= Yii::t('listing', 'Price') ?><strong><?= StringHelper::formatCurrency($product['price']) . ' ' . Yii::t('ad', 'VND') ?></strong></p>   
+							<div class="clearfix price-attr">
+								<p class="price-item"><?= Yii::t('listing', 'Price') ?><strong><?= StringHelper::formatCurrency($product['price']) . ' ' . Yii::t('ad', 'VND') ?></strong></p>   
+								<ul class="clearfix list-attr-td">
+				                    <?php if($product['area'] || $product['room_no'] || $product['toilet_no']) : ?>
+				                    	<?php if($product['area']): ?><li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span><?= $product['area'] ?>m<sup>2</sup> </li><?php endif; ?>
+				                    	<?php if($product['room_no']): ?><li><span class="icon-mv"><span class="icon-bed-search"></span></span><?= $product['room_no'] ?> </li><?php endif; ?>
+				                    	<?php if($product['toilet_no']): ?><li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span><?= $product['toilet_no'] ?> </li><?php endif; ?>
+				                    <?php else: ?>
+				                    	<li><?=Yii::t('listing', 'updating')?></li>
+				                    <?php endif; ?>
+								</ul>
+							</div>
 					    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['updated_at']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?= $product['score'] ?></span></p>
 					    </div>
 					</a>

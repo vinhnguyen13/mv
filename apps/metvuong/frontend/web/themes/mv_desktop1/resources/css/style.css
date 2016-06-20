@@ -887,7 +887,9 @@ label {
 }
 .infor-by-up {
     font-size: 14px;
-    margin-bottom: 7px;
+    /* margin-bottom: 7px; */
+    display: inline-block;
+    vertical-align: middle;
 }
 .infor-by-up strong {
     font-weight: 600;
@@ -1452,7 +1454,7 @@ label {
 .val-selected,
 .value-selected {
     /* border: 1px solid #F1F1F1; */
-    background: #f0f0f0;
+    background: #f5f5f5;
     height: 40px;
     line-height: 40px;
     padding-left: 10px;
@@ -1462,6 +1464,14 @@ label {
     -webkit-tap-highlight-color: rgba(0, 167, 105, 0.23);
     white-space: nowrap;
     width: 100%;
+}
+.val-selected {
+    padding: 0 10px;
+    height: 51px;
+    line-height: 51px;
+}
+.search-subpage .frm-item .val-selected {
+    border-left: 1px solid #c3c3c3;
 }
 .val-selected .selected {
     display: inline-block;
@@ -1505,6 +1515,7 @@ label {
 .option-show-listing {
     margin-bottom: 10px;
     padding: 0 0;
+    border-bottom: solid 1px #BDBDBD;
 }
 .dropdown-select .arrowDown {
     position: absolute;
@@ -1522,7 +1533,7 @@ label {
     float: left;
 }
 .search-subpage .val-selected.active{
-    border: 1px solid #00a769;
+    /* border: 1px solid #00a769; */
 }
 .advande-search-btn.active span {
     -webkit-transform: rotate3d(0,0,1,45deg);
@@ -2367,7 +2378,7 @@ label {
     width: 22px;
     height: 14px;
 }
-.user-edit {padding: 9px 0;}
+.user-edit {padding: 4px 0 5px;}
 .user-edit .wrapNotifyTotal {
     color: #009544;
     font-size: 15px;
@@ -3274,8 +3285,8 @@ html.mm-opening .mm-slideout {
 }
 #listing-list .pic-intro {
     float: left;
-    width: 180px;
-    height: 140px;
+    width: 165px;
+    height: 110px;
     margin-bottom: 0;
 }
 .pic-intro img {
@@ -3801,8 +3812,8 @@ html.mm-opening .mm-slideout {
     float: left;
     color: #3c3c3c;
     font-size: 13px;
-    padding-right: 10px;
-    margin-right: 10px;
+    padding-right: 5px;
+    margin-right: 5px;
     vertical-align: middle;
     line-height: 19px;
     font-weight: 600;
@@ -3815,10 +3826,27 @@ html.mm-opening .mm-slideout {
     font-size: 20px;
     margin-right: 8px;
 }
+#listing-list .list-attr-td li .icon-mv {
+    font-size: 15px;
+}
+.left-attr-detail .list-attr-td li .icon-mv {
+    font-size: 21px;
+}
+.left-attr-detail .list-attr-td .icon-mv .icon-icon-bathroom {
+    font-size: 29px;
+}
+.left-attr-detail .list-attr-td li {
+    padding-right: 10px;
+    margin-right: 10px;
+}
 .list-attr-td li .icon-mv .icon-icon-bathroom {
     font-size: 27px;
     position: relative;
     top: -4px;
+}
+#listing-list .list-attr-td li .icon-mv .icon-icon-bathroom {
+    font-size: 22px;
+    top: -3px;
 }
 .list-attr-td li .icon {
     position: relative;
@@ -4080,14 +4108,32 @@ html.mm-opening .mm-slideout {
     height: 21px; /*fix firefox*/
     overflow: hidden;
 }
+#listing-list .info-item .list-attr-td {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 0;
+}
 .price-item {
     text-transform: uppercase;
     border: solid 1px #8e8e8e;
     padding: 10px 15px;
-    /* float: left; */
-    font-size: 13px;
+    float: left;
+    font-size: 15px;
     line-height: 100%;
+    margin-bottom: 10px;
+}
+.price-attr {
+    margin: 7px 0 8px 0;
+}
+#listing-list .info-item .price-item {
+    padding: 0;
+    border: none;
+    font-size: 20px;
     display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    float: none;
+    margin-bottom: 0;
 }
 .right-attr-detail .price-item {
     font-size: 15px;
@@ -4095,6 +4141,7 @@ html.mm-opening .mm-slideout {
 .price-item strong {
     padding-left: 5px;
     color: #00a769;
+    font-weight: 600;
 }
 .icon-alert {
     background-position: 0 -1310px;
@@ -4325,7 +4372,7 @@ html.mm-opening .mm-slideout {
     color: #00a769;
 }
 #listing-list .address-listing {
-    margin-bottom: 3px;
+    margin-bottom: 5px;
 }
 #listing-list .vip .address-listing {
     color: #006D45;
@@ -4340,7 +4387,6 @@ html.mm-opening .mm-slideout {
     font-weight: 400;
     font-size: 13px;
     float: right;
-    line-height: 21px;
 }
 .id-duan span {
     font-weight: 600;
@@ -5705,11 +5751,11 @@ html.mm-opening .mm-slideout {
         -webkit-box-shadow: 0 1px 0 0 #DEDEDE;
         -moz-box-shadow: 0 1px 0 0 #DEDEDE;
         -ms-box-shadow: 0 1px 0 0 #DEDEDE;
-        height: 64px;
+        height: 55px;
         border-bottom: solid 0.5px #b1b1b1;
     }
     #wrapper {
-        padding-top: 63px;
+        padding-top: 55px;
     }
     .search-box {
         width: 70%;
@@ -5785,7 +5831,7 @@ html.mm-opening .mm-slideout {
 }
 .list-menu li a {
     font-size: 15px;
-    padding: 21px 20px;
+    padding: 16px 20px 17px;
     display: block;
     text-transform: uppercase;
 }
@@ -5799,7 +5845,7 @@ html.mm-opening .mm-slideout {
 }
 .list-menu li.dt-logo a {
     width: 115px;
-    padding: 10px 0;
+    padding: 5px 0 6px;
 }
 .icon-phone-2 {
     background-position: 0px -2071px;
@@ -5978,7 +6024,7 @@ footer li a {
     }
     .search-subpage {
         position: fixed;
-        top: 63px;
+        top: 55px;
         left: 0;
         width: 100%;
         background: #fff;
@@ -5988,13 +6034,16 @@ footer li a {
     }
     .search-subpage .frm-item {
         float: left;
-        margin-right: 15px;
         margin-bottom: 0;
         /* width: 10%; */
-        padding: 10px 0;
+        padding: 0;
+    }
+    .search-subpage .select-location {
+        margin-right: 10px;
     }
     .advande-search {
-        padding: 0 10px;
+        padding: 0 15px;
+        background: #f5f5f5;
     }
     .advande-search .toggle-search {
         display: block !important;
@@ -6022,7 +6071,7 @@ footer li a {
         width: 620px;
         background: #fff;
         z-index: 10;
-        padding-top: 124px;
+        padding-top: 107px;
         height: 100%;
         transition-delay: 5s;
         transition: right 1s ease;
@@ -6033,7 +6082,7 @@ footer li a {
         height: 100%;
         top: 0;
         left: 0;
-        padding-top: 124px;
+        padding-top: 107px;
         padding-bottom: 0;
         padding-right: 620px;
     }
@@ -6124,7 +6173,7 @@ footer li a {
         overflow-y: auto;
     }
     #content-holder {
-        padding: 10px 0 0 0;
+        /* padding: 10px 0 0 0; */
     }
     #search-form {
         /* top: 0; */
@@ -6138,16 +6187,17 @@ footer li a {
         font-size: 14px;
     }
     .option-show-listing.dropdown-select .val-selected {
-        padding: 10px 15px;
+        padding: 5px 10px;
         background: none;
-        border-bottom: solid 1px #BDBDBD;
         text-align: center;
         height: auto;
+        float: left;
+        width: 50%;
     }
     .option-show-listing.dropdown-select .val-selected:hover {
         border: none;
-        border-bottom: solid 1px #dcdcdc;
-        background: #dcdcdc;
+        /* border-bottom: solid 1px #dcdcdc; */
+        /* background: #dcdcdc; */
     }
     .option-show-listing .selected {
         float: none;
@@ -6212,8 +6262,10 @@ footer li a {
 .date-post {
     font-weight: 400;
     /* margin-bottom: 5px; */
-    margin-top: 7px;
+    /* margin-top: 5px; */
     color: #999;
+    float: left;
+    width: 100%;
 }
 .wrap-news .date-post {
     margin-bottom: 10px;
@@ -7318,7 +7370,7 @@ footer li a {
     -webkit-transition: right .6s ease-out;
     -moz-transition: right .6s ease-out;
     -ms-transition: right .6s ease-out;
-    padding-top: 124px;
+    padding-top: 107px;
     box-shadow: -2px -1px 5px 0 rgba(0,0,0,.4);
     -webkit-box-shadow: -2px -1px 5px 0 rgba(0,0,0,.4);
     -moz-box-shadow: -2px -1px 5px 0 rgba(0,0,0,.4);
@@ -7670,9 +7722,8 @@ footer li a {
 .select-location .dropdown-up-style {
     width: 300px;
 }
-.advande-search .box-dropdown .val-selected:hover,
 .advande-search .box-dropdown .val-selected.active {
-    border: none;
+    /* border: none; */
 }
 .select2-container--default.select2-container--open .select2-selection__rendered,
 
@@ -7693,8 +7744,11 @@ footer li a {
     border-right: 5px solid transparent;
     border-top: 5px solid #888;
     position: absolute;
-    top: 17px;
+    top: 50%;
     right: 8px;
+    margin-top: -3px;
+}
+.arrowDownFillFull {
 }
 .advande-search .box-dropdown .val-selected.active .arrowDownFillFull,
 .advande-search .box-dropdown .val-selected:hover .arrowDownFillFull {
@@ -7806,7 +7860,7 @@ footer li a {
 .select2-duan {
     margin-top: 10px;
 }
-.detail-listing-dt .infor-by-up {margin-top: 5px;margin-bottom: 4px;}
+.detail-listing-dt .infor-by-up {margin-top: 5px;margin-bottom: 4px;display: block;}
 @media ( max-width: 985px ) {
     .select-duan .wrap-duan .select2 {
         padding-right: 0;
@@ -8999,7 +9053,7 @@ margin-right: 5px;
     background: rgb(2, 220, 139);
 }
 .list-redire {
-    padding: 17px 0 0;
+    padding: 10px 0 0;
     margin-right: 14px;
 }
 .list-redire li {
@@ -11600,7 +11654,7 @@ height: 190px;
     }
 }
 #listing-list > ul > li a {
-    padding: 15px;
+    padding: 10px;
     display: block;
 }
 #listing-list > ul > li a:hover {
@@ -12650,4 +12704,11 @@ ul.cardList li {
 }
 .box-quy-che li {
     margin-bottom: 10px;
+}
+#map-search-wrap {
+    padding: 8px 0;
+}
+#map-search {
+    height: 35px;
+    line-height: 35px;
 }
