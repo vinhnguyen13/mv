@@ -257,6 +257,17 @@ class Elastic
 			],
 			[
 				"filter" => [
+					"match_phrase_prefix" => [
+						"search_field_key" => [
+							"query" => $v,
+							"max_expansions" => 12
+						]
+					]
+				],
+				"weight" => 1
+			],
+			[
+				"filter" => [
 					"match" => [
 						"city_id" => 1
 					]

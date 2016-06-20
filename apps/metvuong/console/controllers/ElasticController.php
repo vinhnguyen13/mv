@@ -185,6 +185,10 @@ class ElasticController extends Controller {
 						'type' => 'string',
 						"analyzer" => "my_synonyms"
 					],
+					'search_field_key' => [
+						'type' => 'string',
+						"analyzer" => "analyzer_startswith"
+					],
 					'total_sell' => [
 						'type' => 'integer'
 					],
@@ -221,6 +225,10 @@ class ElasticController extends Controller {
 						'char_filter' => 'my_char_filter',
 						'tokenizer' => 'standard',
 						'filter' => ['lowercase', 'my_synonym_filter']
+					],
+					'analyzer_startswith' => [
+						'tokenizer' => 'keyword',
+						'filter' => 'lowercase'
 					]
 				]
 			]	
@@ -255,12 +263,15 @@ class ElasticController extends Controller {
 			]
 		];
 		
+		$searchField = $this->standardSearch(Elastic::transform(str_replace(',', '', $fullName)));
+		
 		$term[] = [
 			'name'	=> $name,
 			'slug' => $slug,
 			'search_name' => $this->standardSearch(Elastic::transform($name)),
 			'full_name' => $fullName,
-			'search_field' => $this->standardSearch(Elastic::transform(str_replace(',', '', $fullName))),
+			'search_field' => $searchField,
+			'search_field_key' => $searchField,
 			AdProduct::TYPE_FOR_SELL_TOTAL => intval($totalSell),
 			AdProduct::TYPE_FOR_RENT_TOTAL => intval($totalRent),
 			'city_id' => intval($cityId)
