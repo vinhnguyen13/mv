@@ -297,7 +297,7 @@ class Elastic
 						"_type" => "city"
 					]
 				],
-				"weight" => 3
+				"weight" => 2
 			];
 			$functions[] = [
 				"filter" => [
@@ -305,7 +305,7 @@ class Elastic
 						"_type" => "district"
 					]
 				],
-				"weight" => 2
+				"weight" => 1
 			];
 		}
 		
