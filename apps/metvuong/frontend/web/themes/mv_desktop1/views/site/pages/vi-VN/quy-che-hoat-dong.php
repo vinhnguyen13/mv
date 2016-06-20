@@ -3,9 +3,7 @@ use yii\helpers\Url;
 ?>
 <div class="container">
 	<div class="box-quy-che">
-		<p style="margin-left:92.25pt; ext-align:center">
-		    <br>
-		</p>
+		<p style="text-align: center;"><span style="font-size: 26px; line-height: 41.6px;text-transform:uppercase;">QUY CHẾ HOẠT ĐỘNG CỦA SÀN GIAO DỊCH<br>THƯƠNG MẠI ĐIỆN TỬ WWW.METVUONG.COM</span></p>
 		<p style="margin-left:12.0pt">Metvuong.com là trung tâm thương mại điện tử phục vụ nhu cầu giới thiệu, mua bán trực tuyến về nhà đất bao gồm: Đăng tin rao vặt về BĐS (BĐS); Đặt baner quảng cáo.</p>
 		<p style="margin-left:12.0pt">Metvuong.com được xây dựng nhằm hỗ trợ tối đa cho khách hàng muốn tìm hiểu thông tin trực tuyến về nhiều loại nhà đất, dự án, cho thuê hoặc mua bán.</p>
 		<p style="margin-left:12.0pt">Sứ mệnh mà Metvuong.com hướng tới là sẽ trở thành Sàn thương mại điện tử tin cậy trong thị trường BĐS, là cầu nối thương mại giữa người bán và người mua, giữa doanh nghiệp xây dựng với người dân có nhu cầu về vật liệu xây dựng, nội thất, BĐS.</p>

@@ -8,18 +8,24 @@ use yii\helpers\Url;
 				<ul>
 					<li><a href="<?=Url::to(['site/page', 'view'=>'about'])?>"><?=Yii::t('general', 'About Us')?></a></li>
 					<li><a href="<?=Url::to(['site/page', 'view'=>'faq'])?>"><?=Yii::t('general', 'FAQs')?></a></li>
+					<li><a href="<?=Url::to(['site/page', 'view'=>'quy-che-hoat-dong'])?>">Quy chế hoạt động</a></li>
+					<li><a href="<?=Url::to(['site/page', 'view'=>'chinh-sach-bao-mat'])?>">Chính sách bảo mật</a></li>
 				</ul>
 			</div>
 			<div class="pull-right col-xs-6">
 				<ul>
 					<li><a href="<?=Url::to(['site/contact'])?>"><?=Yii::t('general', 'Contact Us')?></a></li>
 					<li><a href="<?=Url::to(['site/page', 'view'=>'terms'])?>"><?=Yii::t('general', 'Terms and Conditions')?></a></li>
+					<li><a href="<?=Url::to(['site/page', 'view'=>'giai-quyet-tranh-chap'])?>">Quy trình giải quyết tranh chấp</a></li>
 				</ul>
 			</div>
 		</div>
 		<div class="infor-address">
 			<p><?=Yii::t('general', 'MetVuong Address')?></p>
 			<p><?=Yii::t('general', 'Copyright {year} {domain}', ['year'=>2016, 'domain'=>'MetVuong.com'])?></p>
+			<p>Giấy phép số 0313814871, Cấp Bởi Sở Kế Hoạch và Đầu Tư Thành Phố Hồ Chí Minh, Ngày 19/05/2016.</p>
+			<p>Các thông tin phát hành lại từ trang này phải ghi nguồn "metvuong.com"</p>
+			<p><?=Yii::t('general', 'Developed by MetVuong LTD. Company')?></p>
 		</div>
 	</div>
 	<div class="dt-footer clearfix container">
@@ -31,7 +37,7 @@ use yii\helpers\Url;
 				<li><a href="<?=Url::to(['site/page', 'view'=>'giai-quyet-tranh-chap'])?>">Quy trình giải quyết tranh chấp</a></li>
 			</ul>
 		</div>
-		<div class="pull-right">
+		<div class="pull-right col-right">
 			<ul class="clearfix">
 				<li><a href="<?=Url::to(['site/page', 'view'=>'about'])?>"><?=Yii::t('general', 'About Us')?></a></li>
 				<li><a href="<?=Url::to(['site/page', 'view'=>'faq'])?>"><?=Yii::t('general', 'FAQs')?></a></li>
@@ -39,11 +45,9 @@ use yii\helpers\Url;
 				<li><a href="<?=Url::to(['site/page', 'view'=>'interestRate'])?>"><?=Yii::t('general', 'Interest rate')?></a></li>
 			</ul>
 			<p><?=Yii::t('general', 'Copyright {year} {domain}', ['year'=>2016, 'domain'=>'MetVuong.com'])?></p>
+			<p>Giấy phép số 0313814871, Cấp Bởi Sở Kế Hoạch và Đầu Tư Thành Phố Hồ Chí Minh, Ngày 19/05/2016.</p>
+			<p>Các thông tin phát hành lại từ trang này phải ghi nguồn "metvuong.com"</p>
+			<p><?=Yii::t('general', 'Developed by MetVuong LTD. Company')?></p>
 		</div>
-	</div>
-	<div class="license container">
-		<p>Giấy phép số 0313814871, Cấp Bởi Sở Kế Hoạch và Đầu Tư Thành Phố Hồ Chí Minh, Ngày 19/05/2016.</p>
-		<p>Các thông tin phát hành lại từ trang này phải ghi nguồn "metvuong.com"</p>
-		<p><?=Yii::t('general', 'Developed by MetVuong LTD. Company')?></p>
 	</div>
 </footer>
