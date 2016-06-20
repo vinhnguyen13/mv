@@ -211,7 +211,7 @@ class ElasticController extends Controller {
 				'char_filter' => [
 					'my_char_filter' => [
 						'type' => 'mapping',
-						'mappings' => $this->mapping(["/=>slash","hcm=>ho chi minh","cmt8=>cach mang thang tam","xvnt=>xo viet nghe tinh","ntmk=>nguyen thi minh khai", "hn=>ha noi"])
+						'mappings' => $this->mapping(["/=>slash","hcm=>ho chi minh","cmt8=>cach mang thang tam","xvnt=>xo viet nghe tinh","ntmk=>nguyen thi minh khai", "hn=>ha noi", "hagl=>hoang anh gia lai"])
 					]	
 				],
 				'filter' => [
