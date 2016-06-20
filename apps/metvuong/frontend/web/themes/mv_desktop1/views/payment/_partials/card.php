@@ -27,8 +27,6 @@ $f = ActiveForm::begin([
                             <td style="padding-left:0px;padding-top:5px" align="right" ><label for="92"><img  src="/images/nganluong/mobifone.jpg" /></label> </td>
                             <td style="padding-left:10px;padding-top:5px"><label for="93"><img  src="/images/nganluong/vinaphone.jpg" /></label></td>
                             <td style="padding-top:5px;padding-left:5px" align="left"><label for="107"><img  src="/images/nganluong/viettel.jpg" width="110" height="35" /></label></td>
-                            <td style="padding-top:5px;padding-left:5px" align="left"><label for="121"><img width="100" height="35" src="/images/nganluong/vtc.jpg"></label> </td>
-                            <td style="padding-top:5px;padding-left:5px" align="left"> <label for="120"><img width="100" height="35" src="/images/nganluong/gate.jpg"></label></td>
                         </tr>
                         <tr>
                             <td align="center" style="padding-bottom:0px;">
@@ -40,14 +38,6 @@ $f = ActiveForm::begin([
                             <td align="center" style="padding-bottom:0px;padding-right:0px">
                                 <input type="radio"  name="select_method" value="VIETTEL" id="107" />
                             </td>
-                            <td align="center" style="padding-right:10px">
-                                <input type="radio" id="121" value="VCOIN" name="select_method">
-                            </td>
-
-                            <td align="center" style="padding-bottom:0px;padding-right:0px">
-                                <input type="radio" id="120" value="GATE" name="select_method">
-                            </td>
-
                         </tr>
                     </table>
                 </td>
