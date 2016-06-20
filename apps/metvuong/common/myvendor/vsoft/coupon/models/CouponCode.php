@@ -28,11 +28,28 @@ class CouponCode extends CouponCodeBase
     const TYPE_ONE = 1;
     const TYPE_MANY = 2;
 
+    const AMOUNT_TYPE_PERCENT = 1;
+    const AMOUNT_TYPE_PRICE = 2;
+
     public static function getTypes($id = null)
     {
         $data = [
             self::TYPE_ONE => Module::t('coupon', 'One'),
             self::TYPE_MANY => Module::t('coupon', 'Many'),
+        ];
+
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
+    }
+
+    public static function getAmountTypes($id = null)
+    {
+        $data = [
+            self::AMOUNT_TYPE_PERCENT => Module::t('coupon', 'Percent'),
+            self::TYPE_MANY => Module::t('coupon', 'Price'),
         ];
 
         if ($id !== null && isset($data[$id])) {

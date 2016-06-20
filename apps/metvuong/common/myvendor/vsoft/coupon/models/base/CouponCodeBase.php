@@ -16,6 +16,8 @@ use Yii;
  * @property integer $type
  * @property integer $created_at
  * @property integer $updated_at
+ * @property string $amount
+ * @property integer $amount_type
  *
  * @property CouponEvent $couponEvent
  */
@@ -35,10 +37,11 @@ class CouponCodeBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cp_event_id', 'status', 'count', 'type', 'created_at', 'updated_at'], 'integer'],
+            [['cp_event_id', 'status', 'count', 'type', 'created_at', 'updated_at', 'amount_type'], 'integer'],
+            [['amount'], 'number'],
+            [['amount'], 'required'],
             [['code'], 'string', 'max' => 32],
             [['code'], 'unique'],
-            [['code','cp_event_id'], 'required'],
             [['cp_event_id'], 'exist', 'skipOnError' => true, 'targetClass' => CouponEvent::className(), 'targetAttribute' => ['cp_event_id' => 'id']],
         ];
     }
@@ -51,12 +54,14 @@ class CouponCodeBase extends \yii\db\ActiveRecord
         return [
             'id' => Yii::t('coupon', 'ID'),
             'code' => Yii::t('coupon', 'Code'),
-            'cp_event_id' => Yii::t('coupon', 'Coupon Event'),
+            'cp_event_id' => Yii::t('coupon', 'Cp Event ID'),
             'status' => Yii::t('coupon', 'Status'),
             'count' => Yii::t('coupon', 'Count'),
             'type' => Yii::t('coupon', 'Type'),
             'created_at' => Yii::t('coupon', 'Created At'),
             'updated_at' => Yii::t('coupon', 'Updated At'),
+            'amount' => Yii::t('coupon', 'Amount'),
+            'amount_type' => Yii::t('coupon', 'Amount Type'),
         ];
     }
 
