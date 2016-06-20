@@ -60,6 +60,7 @@ Yii::t('time','week');
                         $avatar = str_replace("/store/avatar/","", $model->avatar);
                         $avatar = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . "avatar" . DIRECTORY_SEPARATOR . $avatar;
 
+                        echo Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']);
                         echo \common\widgets\FileUploadAvatar::widget([
                             'model' => $model, 'attribute' => 'avatar',
                             'url' => Url::to(['member/upload', 'folder' => 'avatar'], true),
@@ -72,6 +73,14 @@ Yii::t('time','week');
                                 'noAvatar' => file_exists($avatar) ? true : false,
                             ],
                             'fieldOptions' => ['folder' => 'avatar'],
+                            'clientEvents' => [
+                                'fileuploaddone' => 'function(e, data) {
+                                console.log(data);
+                                    $(".avatar-user").prop("value", data.result.files[0]["name"]);
+                                    $(".avatar img").attr("src", data.result.files[0]["thumbnailUrl"]);
+                                    $(".user-edit img").attr("src", data.result.files[0]["thumbnailUrl"]);
+                                }',
+                            ]
                         ]);   ?>
                     </div>
                     <div class="overflow-all">
@@ -82,7 +91,7 @@ Yii::t('time','week');
                         ]);
                         $f = ActiveForm::begin([
                             'id' => 'form-edit-ttcn',
-                            'enableAjaxValidation' => false,
+                            'enableAjaxValidation' => true,
                             'enableClientValidation' => true,
                             'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->getUsername()])
                         ]);
@@ -98,7 +107,7 @@ Yii::t('time','week');
                             <span class="icon-mv"><span class="icon-mail-profile"></span></span>
                             <?= $f->field($profile_form, 'public_email')->textInput(['value' => empty($model->public_email) ? $user->email : $model->public_email ])->label(false)?>
                             <input type="hidden" name="scenario" value="updateprofile">
-                            <input type="hidden" name="avatar" class="avatar-user" value="<?=$avatar?>">
+                            <input type="hidden" name="profile-form[avatar]" class="avatar-user" value="">
                         </div>
                         <?php $f->end(); ?>
                         <div class="location mgB-5">
@@ -434,10 +443,9 @@ Yii::t('time','week');
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                 return false;
             }
-            if (this.value.length > this.maxLength) {
-                this.value = this.value.slice(0, this.maxLength);
-                return false;
-            }
+//            if (this.value.length >= this.maxLength) {
+//                return false;
+//            }
         });
 
     });

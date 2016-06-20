@@ -116,7 +116,7 @@ class FileUploadAvatar extends FU {
 					'size'          => '1',
 					'deleteUrl'     => Url::to(['member/delete-image', 'orginal' => $pathInfo["basename"], 'thumbnail' => $thumb, 'folder'=>$folder]),
 					'deleteType'    => 'DELETE',
-					'deleteLater'	=> false,
+					'deleteLater'	=> 1,
 				];
 			}
 			

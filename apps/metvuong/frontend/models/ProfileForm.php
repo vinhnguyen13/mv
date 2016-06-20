@@ -101,6 +101,7 @@ class ProfileForm extends Model
 
 //            'phoneValidate' => ['phone', 'integer'],
             'mobileValidate' => ['mobile', 'integer'],
+            'mobileValidateMinMax' => [['mobile'], 'string', 'min' => 7, 'max' => 11],
             'mobileRequired' => ['mobile', 'required'],
 
             'oldPasswordRequired' => ['old_password', 'required'],
@@ -159,7 +160,8 @@ class ProfileForm extends Model
             $profile->address = $this->address;
             $profile->bio = $this->bio;
             $profile->user->updateAttributes(['aliasname'=>$this->aliasname]);
-            return $profile->save();
+            $profile->avatar = $this->avatar;
+            return $profile->save(false);
         }
         return false;
     }
@@ -239,7 +241,7 @@ class ProfileForm extends Model
         $profile = Yii::$app->user->identity->profile;
         if(!empty($profile)) {
             $profile->avatar = $filename;
-            return $profile->save();
+            return $profile->save(false);
         }
         return false;
     }

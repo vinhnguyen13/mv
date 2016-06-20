@@ -411,6 +411,7 @@ class MemberController extends Controller
 
     public function actionUpdateProfile($username)
     {
+        $this->checkAccess();
         $this->view->params['menuUpdateProfile'] = true;
         $this->view->params['isDashboard'] = true;
         if (Yii::$app->user->isGuest) {
@@ -429,12 +430,30 @@ class MemberController extends Controller
                     $post = Yii::$app->request->post();
                     if ($post) {
                         $scenario = trim($post["scenario"]);
-                        $model = Yii::createObject([
-                            'class' => ProfileForm::className(),
-                            'scenario' => $scenario,
-                        ]);
-                        $model = $model->loadProfile($username, $scenario);
-                        $model->load($post);
+                        if($scenario != $model->scenario) {
+                            $model = Yii::createObject([
+                                'class' => ProfileForm::className(),
+                                'scenario' => $scenario,
+                            ]);
+                            $model = $model->loadProfile($username, $scenario);
+                        }
+
+                        $name = isset($post["profile-form"]["name"]) ? $post["profile-form"]["name"] : null;
+                        if(!empty($name))
+                            $model->name = $name;
+
+                        $mobile = isset($post["profile-form"]["mobile"]) ? $post["profile-form"]["mobile"] : null;
+                        if(!empty($mobile))
+                            $model->mobile = $mobile;
+
+                        $public_email = isset($post["profile-form"]["public_email"]) ? $post["profile-form"]["public_email"] : null;
+                        if(!empty($mobile))
+                            $model->public_email = $public_email;
+
+                        $avatar = isset($post["profile-form"]["avatar"]) ? $post["profile-form"]["avatar"] : null;
+                        if(!empty($mobile))
+                            $model->avatar = $avatar;
+
                         $model->validate();
                         if (!$model->hasErrors()) {
                             $model->updateProfile();
@@ -607,7 +626,7 @@ class MemberController extends Controller
             $response['files'][] = [
                 'url'           => Url::to("/store/$folder/" .$orginal),
                 'thumbnailUrl'  => Url::to("/store/$folder/" .$thumbnail),
-                'name'          => $user->username,
+                'name'          => $orginal,
                 'type'          => $image->type,
                 'size'          => $image->size,
                 'deleteUrl'     => Url::to(['member/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumbnail, 'folder' => $folder]),
