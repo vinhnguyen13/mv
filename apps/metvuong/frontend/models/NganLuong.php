@@ -14,6 +14,7 @@ use yii\base\Component;
 
 class NganLuong extends Component
 {
+    const PRICE_LIST = [2000,50000,100000,200000,500000];
     protected $nlcheckout;
     public function init()
     {
@@ -49,7 +50,7 @@ class NganLuong extends Component
             $array_items=array();
             $payment_method =$_POST['option_payment'];
             $bank_code = @$_POST['bankcode'];
-            $order_code ="macode_".time();
+            $order_code = $data['transaction_id'];
 
             $payment_type ='';
             $discount_amount =0;
@@ -96,11 +97,11 @@ class NganLuong extends Component
             //var_dump($nl_result); die;
             if ($nl_result->error_code =='00'){
                 //Cập nhât order với token  $nl_result->token để sử dụng check hoàn thành sau này
-                Payment::me()->updateTransactionNganluong($nl_result->token);
+                Payment::me()->transactionNganluong($nl_result->token, $data['transaction_id']);
                 header('Location: '.(string)$nl_result->checkout_url);
                 exit;
             }else{
-                echo $nl_result->error_message;
+                return ['error_code'=>$nl_result->error_code, 'error_message'=>$nl_result->error_message];
             }
 
         }
@@ -110,24 +111,15 @@ class NganLuong extends Component
         if(isset($_POST['NLNapThe'])){
             include(Yii::getAlias('@common/myvendor/nganluong/card/config.php'));
             include(Yii::getAlias('@common/myvendor/nganluong/card/includes/MobiCard.php'));
-
             $soseri = $_POST['txtSoSeri'];
             $sopin = $_POST['txtSoPin'];
             $type_card = $_POST['select_method'];
-
-
             if ($_POST['txtSoSeri'] == "" ) {
-                echo '<script>alert("Vui lòng nhập Số Seri");</script>';
-                echo "<script>location.href='".$_SERVER['HTTP_REFERER']."';</script>";
-                exit();
+                $return = ['error_code'=>111, 'error_message'=>'Please input Seri'];
             }
             if ($_POST['txtSoPin'] == "" ) {
-                echo '<script>alert("Vui lòng nhập Mã Thẻ");</script>';
-                echo "<script>location.href='".$_SERVER['HTTP_REFERER']."';</script>";
-                exit();
+                $return = ['error_code'=>111, 'error_message'=>'Please input Code'];
             }
-
-            $arytype= array(92=>'VMS',93=>'VNP',107=>'VIETTEL',121=>'VCOIN',120=>'GATE');
             //Tiến hành kết nối thanh toán Thẻ cào.
             $call = new \MobiCard();
             $rs = new \Result();
@@ -141,14 +133,12 @@ class NganLuong extends Component
 
             if($rs->error_code == '00') {
                 // Cập nhật data tại đây
-                echo  '<script>alert("Bạn đã nạp thành công '.$rs->card_amount.' vào trong tài khoản.");</script>'; //$total_results;
+                $return = ['error_code'=>0, 'error_message'=>'You have paid {card_amount} successfully into your account', 'card_amount'=>$rs->card_amount];
             }
             else {
-                echo  '<script>alert("Lỗi :'.$rs->error_message.'");</script>';
+                $return = ['error_code'=>$rs->error_code, 'error_message'=>$rs->error_message];
             }
-
-            //var_dump($rs);
-
+            return $return;
         }
     }
 

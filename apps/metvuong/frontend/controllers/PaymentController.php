@@ -24,9 +24,9 @@ class PaymentController extends Controller
     }
 
     public function actionIndex(){
+        $this->checkAccess();
         if(Yii::$app->request->isPost) {
-            Payment::me()->payByBank();
-            Payment::me()->payByMobiCard();
+            Payment::me()->payWithNganLuong();
         }
         return $this->render('index');
     }
@@ -37,12 +37,25 @@ class PaymentController extends Controller
         return $this->render('package/index');
     }
 
-    public function actionReturn(){
-
+    public function actionSuccess(){
+        $token = Yii::$app->request->get('token');
+        $error_code = Yii::$app->request->get('error_code');
+        if(!empty($token)){
+            Payment::me()->success($token);
+            $this->redirect('/');
+            /**
+             * redirect to
+             * 1.referer url
+             * 2.payment history
+             * 3.home page if not found 1 & 2
+             */
+        }
     }
 
     public function actionCancel(){
-
+        /**
+         * transaction cancel by user, show layout cancel
+         */
     }
 
 }

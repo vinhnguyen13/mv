@@ -8,6 +8,7 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 
+$profile = Yii::$app->user->identity->profile;
 ?>
 <div id="credit-card" class="item-payment">
     <div class="title-item">Thanh toán bằng Thẻ Ngân Hàng</div>
@@ -40,20 +41,19 @@ use yii\helpers\Url;
                 <tr>
                     <td>Họ Tên:</td>
                     <td>
-                        <input type="text" id="fullname" name="buyer_fullname" class="field-check form-control"
-                               value="">
+                        <input type="text" id="fullname" name="buyer_fullname" class="field-check form-control" value="<?=$profile->getDisplayName()?>">
                     </td>
                 </tr>
                 <tr>
                     <td>Email:</td>
                     <td>
-                        <input type="text" id="fullname" name="buyer_email" class="field-check form-control" value="">
+                        <input type="text" id="fullname" name="buyer_email" class="field-check form-control" value="<?=$profile->public_email?>">
                     </td>
                 </tr>
                 <tr>
                     <td>Số Điện thoại:</td>
                     <td>
-                        <input type="text" id="fullname" name="buyer_mobile" class="field-check form-control" value="">
+                        <input type="text" id="fullname" name="buyer_mobile" class="field-check form-control" value="<?=$profile->mobile?>">
                     </td>
                 </tr>
             </table>
@@ -493,11 +493,15 @@ use yii\helpers\Url;
                 </tr>
             </table>
             <?php $f->end(); ?>
+
             <script language="javascript">
                 $('input[name="option_payment"]').bind('click', function () {
                     $('.list-content li').removeClass('active');
                     $(this).parent().parent('li').addClass('active');
                 });
+
+                $('input[name="option_payment"]:first').trigger('click');
+                $('input[name="bankcode"]:first').trigger('click');
 
                 $('input[name="nlpayment"]').bind('click', function () {
                     var chkIsNull = false;

@@ -28,14 +28,7 @@ use yii\helpers\Url;
 			<?= $this->render('/payment/_partials/card'); ?>
 		</div>
 		<div role="tabpanel" class="tab-pane" id="tab-sms">
-			<div id="sms" class="item-payment">
-		        <div class="title-item">Thanh toán bằng tin nhắn SMS</div>
-		        <div class="w-30 text-center pd-20">
-		            <p class="mgB-5">Soạn tin nhắn với cú pháp</p>
-		            <p class="mgB-5"><span class="color-cd font-700">TT MV</span> [Mã Thành Viên] [Số Tiền] gửi <strong>19001590</strong></p>
-		            <p>VD: TT MV 1234 10000 gửi 19001590</p>
-		        </div>
-		    </div>
+			<?= $this->render('/payment/_partials/sms'); ?>
 		</div>
 	</div>
 </div>
