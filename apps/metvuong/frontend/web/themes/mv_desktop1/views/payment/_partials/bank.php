@@ -11,7 +11,7 @@ use yii\helpers\Url;
 ?>
 <div id="credit-card" class="item-payment">
     <div class="title-item">Thanh toán bằng Thẻ Ngân Hàng</div>
-    <div class="pdT-20 pdB-40 pdL-20 pdR-20">
+    <div class="mgT-20">
         <div class="method_napcard_inner">
             <?php
             $f = ActiveForm::begin([

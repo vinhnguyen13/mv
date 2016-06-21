@@ -411,7 +411,7 @@ use vsoft\ad\models\AdImages;
 							                        <li><span class="icon-mv"><span class="icon-icon-bathroom"></span></span><span class="ref" data-ref="#adproductadditioninfo-toilet_no"></span></li>
 												</ul>
 											</div>
-											<div class="mgT-10 right-attr-detail">
+											<div class="right-attr-detail">
 												<p class="price-item">
 													<?= Yii::t('ad', 'Price') ?> <strong class="ref" data-format="formatPrice" data-ref="#adproduct-price"></strong>
 												</p>
