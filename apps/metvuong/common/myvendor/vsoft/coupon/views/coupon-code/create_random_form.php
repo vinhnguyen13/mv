@@ -39,10 +39,9 @@ use yii\widgets\ActiveForm;
         </tr>
         <tr>
             <th>Discount by </th>
-            <td>number</td>
+            <td><?= $form->field($model, 'amount_type')->radioList(\vsoft\coupon\models\CouponCode::getAmountTypes())->label(false) ?></td>
             <td></td>
-            <td><?= $form->field($model, 'amount_type')->radioList(\vsoft\coupon\models\CouponCode::getAmountTypes())->label(false) ?>
-                <?= $form->field($model, 'amount')->textInput(['placeholder' => Yii::t('coupon','Input amount')])->label(false) ?></td>
+            <td><?= $form->field($model, 'amount')->textInput(['placeholder' => Yii::t('coupon','Input number')])->label(false) ?></td>
         </tr>
         <tr>
             <th>Number of coupons</th>

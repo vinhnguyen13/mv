@@ -37,6 +37,8 @@ use vsoft\ad\models\AdFacility;
         return \frontend\models\User::findOne($user_id);
     });
 
+    $rep_email = empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email);
+    $adContactInfo = $product->adContactInfo;
 	$url = '#';
 	if($owner && $owner->profile) {
 		$avatar = $owner->profile->getAvatarUrl();
@@ -44,11 +46,12 @@ use vsoft\ad\models\AdFacility;
 		/**
 		 * auto register user
 		 */
-		if($product->adContactInfo->email){
-			$user = $product->adContactInfo->getUserInfo();
+		if($adContactInfo && $adContactInfo->email){
+			$user = $adContactInfo->getUserInfo();
 			if(!empty($user)){
 				$url = $user->urlProfile();
 			}
+            $rep_email = $adContactInfo->email;
 		}
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
@@ -207,22 +210,22 @@ $count_review = $reviews->count();
 	                                        <span class="fs-13 font-600 count_review">(<?=$count_review?>)</span>
 	                                    </div>
                                     <?php } else {?>
-                                        <span class="name-agent"><?= $product->adContactInfo->name ?></span>
+                                        <span class="name-agent"><?= $adContactInfo->name ?></span>
                                     <?php } ?>
 
-                                    <?php if($product->adContactInfo->mobile): ?>
+                                    <?php if($adContactInfo->mobile): ?>
                                         <div class="item-agent">
                                             <span class="icon-mv">
                                             	<span class="icon-phone-profile"></span>
                                             </span>
-                                            <a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
+                                            <a href="tel:<?= $adContactInfo->mobile ?>"><?= $adContactInfo->mobile ?></a>
                                         </div>
                                     <?php endif; ?>
 
-                                    <?php if($product->adContactInfo->email): ?>
+                                    <?php if($adContactInfo->email): ?>
                                         <div class="item-agent">
                                             <span class="icon-mv"><span class="icon-mail-profile"></span></span>
-                                            <?= $product->adContactInfo->email ?>
+                                            <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn"><?= $adContactInfo->email ?></a>
                                         </div>
                                     <?php endif; ?>
 
@@ -233,8 +236,8 @@ $count_review = $reviews->count();
                                                 <?= $owner->location->city?>
                                             </div>
                                         <?php } } ?>
+                                    <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
                                     <?php if(!empty($owner->username) && !$owner->isMe()) { ?>
-                                        <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
                                         <a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
                                     <?php }?>
 								</div>
@@ -255,8 +258,9 @@ $count_review = $reviews->count();
 						<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 						<ul class="clearfix list-attr-td">
 	                        <?php
-                            $room_no = $product->adProductAdditionInfo->room_no;
-                            $toilet_no = $product->adProductAdditionInfo->toilet_no;
+                            $adProductAdditionInfo = $product->adProductAdditionInfo;
+                            $room_no = $adProductAdditionInfo->room_no;
+                            $toilet_no = $adProductAdditionInfo->toilet_no;
                             if(empty($product->area) && empty($room_no) && empty($toilet_no)){ ?>
 	                            <li><?=Yii::t('listing','updating')?></li>
 	                        <?php } else {
@@ -271,12 +275,12 @@ $count_review = $reviews->count();
 					</div>
 				</div>
 
-				<?=$this->renderAjax('/ad/_partials/shareEmail',[
+				<?= $this->renderAjax('/ad/_partials/shareEmail',[
                     'popup_email_name' => 'popup_email_contact',
                     'pid' => $product->id,
                     'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
                     'from_name' => empty($user) ? "" : (empty($user->profile->name) ? $user->username : $user->profile->name),
-                    'recipientEmail' => empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email),
+                    'recipientEmail' => $rep_email,
                     'to_name' => empty($owner) ? "" : (empty($owner->profile->name) ? $owner->username : $owner->profile->name),
                     'params' => ['your_email' => false, 'recipient_email' => false] ])?>
 
@@ -353,7 +357,7 @@ $count_review = $reviews->count();
                  * notification
                  */
                 if(!Yii::$app->user->isGuest && !empty($owner)) {
-					$nameUserTo = !empty($owner) ? $owner->profile->getDisplayName() : $product->adContactInfo->name;
+					$nameUserTo = !empty($owner) ? $owner->profile->getDisplayName() : $adContactInfo->name;
 					$nameUserFrom = $user->profile->getDisplayName();
                     ?>
                     <script>
@@ -602,23 +606,23 @@ $count_review = $reviews->count();
 			                    <?php if($product->projectBuilding): ?>
 								<li><strong><?= Yii::t('ad', 'Project') ?>:</strong> <a href="<?= Url::to(["building-project/view", 'slug'=> $product->projectBuilding->slug]); ?>"><?= $product->projectBuilding->name ?></a></li>
 								<?php endif; ?>
-								<?php if($product->adProductAdditionInfo->facade_width): ?>
-								<li><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <?= $product->adProductAdditionInfo->facade_width ?>m</li>
+								<?php if($adProductAdditionInfo->facade_width): ?>
+								<li><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <?= $adProductAdditionInfo->facade_width ?>m</li>
 								<?php endif; ?>
-								<?php if($product->adProductAdditionInfo->land_width): ?>
-								<li><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <?= $product->adProductAdditionInfo->land_width ?>m</li>
+								<?php if($adProductAdditionInfo->land_width): ?>
+								<li><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <?= $adProductAdditionInfo->land_width ?>m</li>
 								<?php endif; ?>
-								<?php if($product->adProductAdditionInfo->floor_no): ?>
-								<li><strong><?= $product->projectBuilding ? Yii::t('ad', 'Floor plan') : Yii::t('ad', 'Number of storeys') ?>:</strong> <?= $product->adProductAdditionInfo->floor_no ?>  <?= Yii::t('ad', 'storeys') ?></li>
+								<?php if($adProductAdditionInfo->floor_no): ?>
+								<li><strong><?= $product->projectBuilding ? Yii::t('ad', 'Floor plan') : Yii::t('ad', 'Number of storeys') ?>:</strong> <?= $adProductAdditionInfo->floor_no ?>  <?= Yii::t('ad', 'storeys') ?></li>
 								<?php endif; ?>
-								<?php if($product->adProductAdditionInfo->home_direction): ?>
-								<li><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <?= $directionList[$product->adProductAdditionInfo->home_direction] ?></li>
+								<?php if($adProductAdditionInfo->home_direction): ?>
+								<li><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <?= $directionList[$adProductAdditionInfo->home_direction] ?></li>
 								<?php endif; ?>
-								<?php if($product->adProductAdditionInfo->facade_direction): ?>
-								<li><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <?= $directionList[$product->adProductAdditionInfo->facade_direction] ?></li>
+								<?php if($adProductAdditionInfo->facade_direction): ?>
+								<li><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <?= $directionList[$adProductAdditionInfo->facade_direction] ?></li>
 								<?php endif; ?>
-								<?php if($product->adProductAdditionInfo->interior): ?>
-								<li><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <?= $product->adProductAdditionInfo->interior ?></li>
+								<?php if($adProductAdditionInfo->interior): ?>
+								<li><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <?= $adProductAdditionInfo->interior ?></li>
 								<?php endif; ?>
 							</ul>
 		                </div>
@@ -654,7 +658,7 @@ $count_review = $reviews->count();
 		                </div>
 		            </div>
 		        </div>
-		        <?php elseif($product->adProductAdditionInfo->facility): ?>
+		        <?php elseif($adProductAdditionInfo->facility): ?>
 		        <div class="panel panel-default">
 		            <div class="panel-heading" role="tab" id="headingFour">
 		                <h4 class="panel-title">
@@ -668,8 +672,8 @@ $count_review = $reviews->count();
 		                <div class="panel-body" name="experience">
                             <ul class="clearfix list-tienich">
 							<?php
-//                            implode(', ', ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name'))
-                            $additional_facilities = ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name');
+//                            implode(', ', ArrayHelper::getColumn(AdFacility::find()->where(['id' => $adProductAdditionInfo->facility])->all(), 'name'))
+                            $additional_facilities = ArrayHelper::getColumn(AdFacility::find()->where(['id' => $adProductAdditionInfo->facility])->all(), 'name');
                             if(count($additional_facilities) > 0) {
                                 foreach ($additional_facilities as $k => $facility) {
                                     $class = \common\components\Slug::me()->slugify($facility); ?>
@@ -711,28 +715,25 @@ $count_review = $reviews->count();
                                         <span class="fs-13 font-600 count_review">(<?=$count_review?>)</span>
                                     </div>
                                     <?php } else {?>
-						            <span class="name-agent"><?= $product->adContactInfo->name ?></span>
-                                    <?php } ?>
-
-
-
-									<?php if($product->adContactInfo->mobile): ?>
+						            <span class="name-agent"><?= $adContactInfo->name ?></span>
+                                    <?php }
+                                    if($adContactInfo->mobile): ?>
 									<div class="item-agent">
 										<div>
 											<span class="icon icon-phone"></span>
 										</div>
-										<a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
+										<a href="tel:<?= $adContactInfo->mobile ?>"><?= $adContactInfo->mobile ?></a>
 									</div>
-									<?php endif; ?>
-									<?php if($product->adContactInfo->email): ?>
+									<?php endif;
+                                    if($adContactInfo->email): ?>
 									<div class="item-agent">
 										<div>
 											<span class="icon icon-email"></span>
 										</div>
-										<?= $product->adContactInfo->email ?>
+                                        <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn"><?= $adContactInfo->email ?></a>
 									</div>
-									<?php endif; ?>
-                                    <?php if($owner){
+									<?php endif;
+                                    if($owner){
                                         if(!empty($owner->location)) {?>
 										<div class="item-agent">
 											<div>
@@ -758,10 +759,10 @@ $count_review = $reviews->count();
 											<?= $product->urlDetail(true) ?>
 										</a>
 									</div>
+                                    <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
-                                        <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
 										<a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
-									<?php }?>
+									<?php } ?>
 								</div>
 							</div>
 

@@ -49,7 +49,7 @@ class CouponCode extends CouponCodeBase
     {
         $data = [
             self::AMOUNT_TYPE_PERCENT => Module::t('coupon', 'Percent'),
-            self::TYPE_MANY => Module::t('coupon', 'Price'),
+            self::AMOUNT_TYPE_PRICE => Module::t('coupon', 'Amount'),
         ];
 
         if ($id !== null && isset($data[$id])) {
