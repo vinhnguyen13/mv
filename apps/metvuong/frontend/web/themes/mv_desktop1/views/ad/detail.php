@@ -98,7 +98,7 @@ Yii::$app->view->registerMetaTag([
     'content' => $product->urlDetail(true)
 ]);
 
-if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']['all'] == true) && ($product->user_id != $user->id)) {
+if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']['all'] == true) && !empty($user) && ($product->user_id != $user->id)) {
     Tracking::find()->productVisitor($user->id, $product->id, time());
 }
 
