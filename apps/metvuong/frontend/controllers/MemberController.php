@@ -209,7 +209,7 @@ class MemberController extends Controller
                         return $this->redirect(Url::to(['member/reset-password', 'id' => md5($user_id . $new_token->code), 'code' => $new_token->code], true));
                     }
                     else
-                        return $this->redirect(Url::to(['member/profile', 'username' => $user->username], true));
+                        return $this->redirect(Url::to(['dashboard/ad', 'username' => $user->username], true));
                 }
             }
         }

@@ -715,7 +715,7 @@ class AdController extends Controller
                 $address = $model->address;
                 if($model->type == "contact") {
                     $user = User::findOne($model->uid);
-                    $profile_url = Url::to(['member/profile', 'username' => $user->username], true);
+                    $profile_url = Url::to(['dashboard/ad', 'username' => $user->username], true);
                     $token = new Token();
                     $token->user_id = $model->uid;
                     $token->code = Yii::$app->security->generateRandomString();
