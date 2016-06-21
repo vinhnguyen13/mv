@@ -22,6 +22,9 @@ class MVBootstrap implements BootstrapInterface
             $preferredLanguage = $app->request->getPreferredLanguage($this->supportedLanguages);
             $app->language = $preferredLanguage;
         }*/
+        if (!empty($preferredLanguage)) {
+            $app->language = $preferredLanguage;
+        }
 
         $this->changeLanguage();
 
