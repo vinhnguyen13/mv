@@ -214,5 +214,16 @@ echo $this->render('/ad/_partials/shareSocial',[
             }, 400);
         });
 
+        function fbShare(url, title, descr, image, winWidth, winHeight) {
+            var winTop = (screen.height / 2) - (winHeight / 2);
+            var winLeft = (screen.width / 2) - (winWidth / 2);
+            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url)+ '&p[images][0]=' + image, 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+        }
+
+        $('.share-facebook').click(function (){
+            fbShare('<?=Url::to(["building-project/view", 'slug'=>$model->slug], true) ?>', '<?=$model->name ?>', '<?=$description ?>', '<?= $imageUrl ?>', 800, 600);
+            $('#popup-share-social').modal('hide');
+        });
+
     });
 </script>
