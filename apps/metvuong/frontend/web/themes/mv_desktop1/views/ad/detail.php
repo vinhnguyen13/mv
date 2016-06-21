@@ -86,9 +86,11 @@ Yii::$app->view->registerMetaTag([
     'property' => 'og:type',
     'content' => 'article'
 ]);
+$representImage = $product->representImage;
+$product_image = strpos($representImage, "batdongsan") == true ? $representImage: Yii::$app->urlManager->createAbsoluteUrl($representImage);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
-    'content' => strpos($product->representImage, "batdongsan") == true ? $product->representImage: Yii::$app->urlManager->createAbsoluteUrl($product->representImage)
+    'content' => $product_image
 ]);
 
 Yii::$app->view->registerMetaTag([
@@ -498,8 +500,7 @@ $count_review = $reviews->count();
                                             var winHeight = 350;
                                             var winTop = (screen.height / 2) - (winHeight / 2);
                                             var winLeft = (screen.width / 2) - (winWidth / 2);
-                                            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link), 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
-//                                            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + link + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+                                            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link)+'&p[images][0]='+'<?=$product_image?>', 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
                                         }
                                         $('body').loading({done:true});
                                         return true;

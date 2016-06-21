@@ -25,7 +25,6 @@ Yii::$app->view->registerMetaTag([
     'name' => 'description',
     'content' => empty($news["seo_description"]) ? $news["brief"] : $news["seo_description"]
 ]);
-
 Yii::$app->view->registerMetaTag([
     'property' => 'og:site_name',
     'content' => Yii::$app->name
@@ -46,7 +45,6 @@ Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
     'content' => \vsoft\news\models\CmsShow::getBanner($news["banner"])
 ]);
-
 Yii::$app->view->registerMetaTag([
     'property' => 'og:url',
     'content' => \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true)
@@ -60,10 +58,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 
 $_title = str_replace("'", "\'", $news["title"]);
 $_brief = str_replace("'", "\'", $news["brief"]);
-$banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["banner"]);
-//$checkBanner = file_exists(Yii::getAlias('@store')."/news/show/".$news["banner"]);
-//if($checkBanner == false)
-//    $banner = Yii::$app->urlManager->createAbsoluteUrl('/themes/metvuong2/resources/images/default-ads.jpg');
+
 ?>
 <script>
     window.fbAsyncInit = function() {
@@ -192,7 +187,7 @@ $banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["b
             var winTop = (screen.height / 2) - (winHeight / 2);
             var winLeft = (screen.width / 2) - (winWidth / 2);
 //            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
-            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href), 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(location.href)+'&p[images][0]='+'<?=\vsoft\news\models\CmsShow::getBanner($news["banner"])?>', 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
         }
 
         $(document).on('click', '.detail-content .fb-share', function(){
