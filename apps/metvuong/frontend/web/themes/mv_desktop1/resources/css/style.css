@@ -6190,7 +6190,7 @@ footer li a {
     #search-form {
         /* top: 0; */
         z-index: 11;
-        /* position: absolute; */
+        position: relative;
         background: #fff;
     }
     .top-listing {
@@ -6248,7 +6248,7 @@ footer li a {
         width: 200px;
     }
     .dropdown-up-style {
-        top: 50px;
+        top: 51px;
     }
     .box-dropdown .dropdown-up-style .item-dropdown {
         border-top: none;
@@ -6303,7 +6303,7 @@ footer li a {
         width: 25%;
     }
     .select-loaibds {
-        width: 12%;
+        /* width: 12%; */
     }
 }
 @media ( min-width: 985px ) and ( max-width: 1280px ) {
@@ -7625,10 +7625,10 @@ footer li a {
 }
 @media ( min-width: 985px ) and ( max-width: 1280px ) {
     .search-subpage .num-phongngu {
-        width: 9%;
+        /* width: 9%; */
     }
     .search-subpage .select-loaibds {
-        width: 14%;
+        /* width: 14%; */
     }
 }
 @media ( min-width: 1366px ) {
@@ -12670,7 +12670,7 @@ ul.cardList li {
 }
 .tab-payment {
     border: none;
-    background: #e8e8e8;
+    border-bottom: 1px solid #c3c3c3;
 }
 .tab-payment li {
     border-right: 1px solid #c7c7c7;
@@ -12691,6 +12691,7 @@ ul.cardList li {
     padding: 15px 40px;
     line-height: 100%;
     border-radius: 0px;
+    background: #e8e8e8;
 }
 .tab-payment li.active a:hover,
 .tab-payment li a:hover {
@@ -12732,4 +12733,32 @@ ul.cardList li {
     border: none;
     padding: 6px 20px;
     text-transform: uppercase;
+}
+.input-couple .btn-common {
+    text-transform: uppercase;
+    font-size: 14px;
+    padding: 5px 20px;
+}
+.infor-user-settings .avatar #profile-form-avatar-fileupload {
+    position: relative;
+    padding-bottom: 45px;
+}
+.infor-user-settings .avatar .fileupload-buttonbar {
+    margin: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+.infor-user-settings .avatar .fileupload-buttonbar > div {
+    width: 100%;
+    padding: 0;
+}
+.infor-user-settings .wrap-attr-detail li {
+    padding: 0;
+    margin: 0;
+}
+.infor-user-settings .files li .preview {
+    padding: 0;
+    margin: 0;
 }
