@@ -37,4 +37,12 @@ class PaymentController extends Controller
         return $this->render('package/index');
     }
 
+    public function actionReturn(){
+
+    }
+
+    public function actionCancel(){
+
+    }
+
 }

@@ -29,6 +29,7 @@ use yii\helpers\Url;
                     <td>Số tiền thanh toán:</td>
                     <td>
                         <select id="total_amount" name="total_amount" class="field-check form-control">
+                            <option value="2000">2,000</option>
                             <option value="500000">500,000</option>
                             <option value="200000">200,000</option>
                             <option value="100000">100,000</option>
@@ -500,12 +501,13 @@ use yii\helpers\Url;
 
                 $('input[name="nlpayment"]').bind('click', function () {
                     var chkIsNull = false;
-                    $('input[type=text]').each(function(){
+                    $('#NLpayBank input[type=text]').each(function(){
                         if($(this).val().trim() == ''){
                             chkIsNull = true;
                         }
+                        console.log($(this));
                     })
-                    if(chkIsNull){
+                    if(chkIsNull==true){
                         alert(lajax.t('Please fill full data'));
                         return false;
                     }

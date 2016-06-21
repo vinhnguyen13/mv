@@ -9,7 +9,7 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
             <div class="title-gd mgB-15">Thông tin tài khoản</div>
             <div class="mgB-30">
                 Số Keys Còn Lại: <span class="d-ib mgL-20 font-700"><span class="icon-mv mgR-5 color-gold fs-20"><span class="icon-coin-dollar"></span></span>10 Keys</span>
-                <a href="" class="d-ib btn mgL-20 pdT-5 pdB-5 font-600 fs-13 deposit">Nạp Keys</a>
+                <a href="<?=\yii\helpers\Url::to(['payment/index'])?>" class="d-ib btn mgL-20 pdT-5 pdB-5 font-600 fs-13 deposit">Nạp Keys</a>
             </div>
             <div class="title-gd mgB-5">Giao dịch gần đây</div>
             <div class="tbl-wrap clearfix">
