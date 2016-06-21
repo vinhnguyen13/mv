@@ -29,9 +29,10 @@ Yii::$app->view->registerMetaTag([
     'property' => 'og:type',
     'content' => 'article'
 ]);
+$logoUrl = $model->logoUrl;
 Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
-    'content' => $model->logoUrl
+    'content' => $logoUrl
 ]);
 
 $lbl_updating = Yii::t('general', 'Updating');
@@ -68,7 +69,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                 <div class="swiper-slide">
                                     <div class="img-show">
                                         <div>
-                                            <img src="<?=$model->logoUrl?>" alt="<?=$model->location?>">
+                                            <img src="<?=$logoUrl?>" alt="<?=$model->location?>">
                                         </div>
                                     </div>
                                 </div>
@@ -159,9 +160,9 @@ $content = strip_tags($model->description);
 $description = \yii\helpers\StringHelper::truncate($content, 500);
 $description = str_replace("\r", "", $description);
 $description = str_replace("\n", "", $description);
-$imageUrl = $model->logoUrl;
+$imageUrl = $logoUrl;
 if (!filter_var($imageUrl, FILTER_VALIDATE_URL))
-    $imageUrl = Yii::$app->urlManager->hostInfo . $model->logoUrl;
+    $imageUrl = Yii::$app->urlManager->hostInfo . $logoUrl;
 echo $this->render('/ad/_partials/shareSocial',[
     'popup_email_name' => 'share',
     'project' => $model,

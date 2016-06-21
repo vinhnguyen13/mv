@@ -37,6 +37,8 @@ use vsoft\ad\models\AdFacility;
         return \frontend\models\User::findOne($user_id);
     });
 
+    $rep_email = empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email);
+    $adContactInfo = $product->adContactInfo;
 	$url = '#';
 	if($owner && $owner->profile) {
 		$avatar = $owner->profile->getAvatarUrl();
@@ -44,11 +46,12 @@ use vsoft\ad\models\AdFacility;
 		/**
 		 * auto register user
 		 */
-		if($product->adContactInfo->email){
-			$user = $product->adContactInfo->getUserInfo();
+		if($adContactInfo && $adContactInfo->email){
+			$user = $adContactInfo->getUserInfo();
 			if(!empty($user)){
 				$url = $user->urlProfile();
 			}
+            $rep_email = $adContactInfo->email;
 		}
 		$avatar = Yii::$app->view->theme->baseUrl . '/resources/images/default-avatar.jpg';
 	}
@@ -83,9 +86,11 @@ Yii::$app->view->registerMetaTag([
     'property' => 'og:type',
     'content' => 'article'
 ]);
+$representImage = $product->representImage;
+$product_image = strpos($representImage, "batdongsan") == true ? $representImage: Yii::$app->urlManager->createAbsoluteUrl($representImage);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
-    'content' => strpos($product->representImage, "batdongsan") == true ? $product->representImage: Yii::$app->urlManager->createAbsoluteUrl($product->representImage)
+    'content' => $product_image
 ]);
 
 Yii::$app->view->registerMetaTag([
@@ -93,11 +98,11 @@ Yii::$app->view->registerMetaTag([
     'content' => $product->urlDetail(true)
 ]);
 
-if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']['all'] == true) && ($product->user_id != Yii::$app->user->id)) {
-    Tracking::find()->productVisitor(Yii::$app->user->id, $product->id, time());
+if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']['all'] == true) && ($product->user_id != $user->id)) {
+    Tracking::find()->productVisitor($user->id, $product->id, time());
 }
 
-$userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
+//$userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
 
 if($owner){
 $reviews = \frontend\models\UserReview::find()->where('review_id = :rid', [':rid' => $owner->id]);
@@ -106,14 +111,14 @@ $count_review = $reviews->count();
 	$count_review = 0;
 }
 
-Yii::t('ad', 'Parking');
-Yii::t('ad', 'Gym');
-Yii::t('ad', 'School');
-Yii::t('ad', 'Park');
-Yii::t('ad', 'Air conditioner');
-Yii::t('ad', 'Washing machine');
-Yii::t('ad', 'Refrigerator');
-Yii::t('ad', 'Television');
+//Yii::t('ad', 'Parking');
+//Yii::t('ad', 'Gym');
+//Yii::t('ad', 'School');
+//Yii::t('ad', 'Park');
+//Yii::t('ad', 'Air conditioner');
+//Yii::t('ad', 'Washing machine');
+//Yii::t('ad', 'Refrigerator');
+//Yii::t('ad', 'Television');
 ?>
 <div class="title-fixed-wrap container">
 	<div class="detail-listing row detail-listing-extra">
@@ -129,7 +134,7 @@ Yii::t('ad', 'Television');
 						<div class="swiper-slide">
 							<div class="img-show">
 								<div>
-									<img src="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" alt="<?=$address?>">
+									<img src="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" alt="<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) . ' - ' . $address?>">
 								</div>
 							</div>
 						</div>
@@ -207,22 +212,22 @@ Yii::t('ad', 'Television');
 	                                        <span class="fs-13 font-600 count_review">(<?=$count_review?>)</span>
 	                                    </div>
                                     <?php } else {?>
-                                        <span class="name-agent"><?= $product->adContactInfo->name ?></span>
+                                        <span class="name-agent"><?= $adContactInfo->name ?></span>
                                     <?php } ?>
 
-                                    <?php if($product->adContactInfo->mobile): ?>
+                                    <?php if($adContactInfo->mobile): ?>
                                         <div class="item-agent">
                                             <span class="icon-mv">
                                             	<span class="icon-phone-profile"></span>
                                             </span>
-                                            <a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
+                                            <a href="tel:<?= $adContactInfo->mobile ?>"><?= $adContactInfo->mobile ?></a>
                                         </div>
                                     <?php endif; ?>
 
-                                    <?php if($product->adContactInfo->email): ?>
+                                    <?php if($adContactInfo->email): ?>
                                         <div class="item-agent">
                                             <span class="icon-mv"><span class="icon-mail-profile"></span></span>
-                                            <?= $product->adContactInfo->email ?>
+                                            <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn"><?= $adContactInfo->email ?></a>
                                         </div>
                                     <?php endif; ?>
 
@@ -233,8 +238,8 @@ Yii::t('ad', 'Television');
                                                 <?= $owner->location->city?>
                                             </div>
                                         <?php } } ?>
+                                    <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
                                     <?php if(!empty($owner->username) && !$owner->isMe()) { ?>
-                                        <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
                                         <a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
                                     <?php }?>
 								</div>
@@ -255,8 +260,9 @@ Yii::t('ad', 'Television');
 						<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 						<ul class="clearfix list-attr-td">
 	                        <?php
-                            $room_no = $product->adProductAdditionInfo->room_no;
-                            $toilet_no = $product->adProductAdditionInfo->toilet_no;
+                            $adProductAdditionInfo = $product->adProductAdditionInfo;
+                            $room_no = $adProductAdditionInfo->room_no;
+                            $toilet_no = $adProductAdditionInfo->toilet_no;
                             if(empty($product->area) && empty($room_no) && empty($toilet_no)){ ?>
 	                            <li><?=Yii::t('listing','updating')?></li>
 	                        <?php } else {
@@ -271,12 +277,12 @@ Yii::t('ad', 'Television');
 					</div>
 				</div>
 
-				<?=$this->renderAjax('/ad/_partials/shareEmail',[
+				<?= $this->renderAjax('/ad/_partials/shareEmail',[
                     'popup_email_name' => 'popup_email_contact',
                     'pid' => $product->id,
                     'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
                     'from_name' => empty($user) ? "" : (empty($user->profile->name) ? $user->username : $user->profile->name),
-                    'recipientEmail' => empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email),
+                    'recipientEmail' => $rep_email,
                     'to_name' => empty($owner) ? "" : (empty($owner->profile->name) ? $owner->username : $owner->profile->name),
                     'params' => ['your_email' => false, 'recipient_email' => false] ])?>
 
@@ -334,7 +340,7 @@ Yii::t('ad', 'Television');
 				                                <label><input type="radio" name="optionsRadios" value="-1"> <?=Yii::t('listing', 'Something else')?> </label>
 				                                <textarea class="pd-5 mgB-5" name="description" id="description" cols="30" rows="5" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
 				                                <input type="hidden" id="pid" name="pid" value="<?=$product->id?>">
-				                                <input type="hidden" id="uid" name="uid" value="<?=empty(Yii::$app->user->id) ? 0 : Yii::$app->user->id?>">
+				                                <input type="hidden" id="uid" name="uid" value="<?=empty($user->id) ? 0 : $user->id?>">
 				                                <div class="text-right">
 				                                    <button class="btn-common send_report"><?=Yii::t('listing', 'Send report')?></button>
 				                                </div>
@@ -352,9 +358,9 @@ Yii::t('ad', 'Television');
                 /**
                  * notification
                  */
-                if(!Yii::$app->user->isGuest) {
-					$nameUserTo = !empty($owner) ? $owner->profile->getDisplayName() : $product->adContactInfo->name;
-					$nameUserFrom = Yii::$app->user->identity->profile->getDisplayName();
+                if(!Yii::$app->user->isGuest && !empty($owner)) {
+					$nameUserTo = !empty($owner) ? $owner->profile->getDisplayName() : $adContactInfo->name;
+					$nameUserFrom = $user->profile->getDisplayName();
                     ?>
                     <script>
                         $(document).ready(function () {
@@ -494,8 +500,7 @@ Yii::t('ad', 'Television');
                                             var winHeight = 350;
                                             var winTop = (screen.height / 2) - (winHeight / 2);
                                             var winLeft = (screen.width / 2) - (winWidth / 2);
-                                            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link), 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
-//                                            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + link + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+                                            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link)+'&p[images][0]='+'<?=$product_image?>', 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
                                         }
                                         $('body').loading({done:true});
                                         return true;
@@ -602,23 +607,23 @@ Yii::t('ad', 'Television');
 			                    <?php if($product->projectBuilding): ?>
 								<li><strong><?= Yii::t('ad', 'Project') ?>:</strong> <a href="<?= Url::to(["building-project/view", 'slug'=> $product->projectBuilding->slug]); ?>"><?= $product->projectBuilding->name ?></a></li>
 								<?php endif; ?>
-								<?php if($product->adProductAdditionInfo->facade_width): ?>
-								<li><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <?= $product->adProductAdditionInfo->facade_width ?>m</li>
+								<?php if($adProductAdditionInfo->facade_width): ?>
+								<li><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <?= $adProductAdditionInfo->facade_width ?>m</li>
 								<?php endif; ?>
-								<?php if($product->adProductAdditionInfo->land_width): ?>
-								<li><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <?= $product->adProductAdditionInfo->land_width ?>m</li>
+								<?php if($adProductAdditionInfo->land_width): ?>
+								<li><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <?= $adProductAdditionInfo->land_width ?>m</li>
 								<?php endif; ?>
-								<?php if($product->adProductAdditionInfo->floor_no): ?>
-								<li><strong><?= $product->projectBuilding ? Yii::t('ad', 'Floor plan') : Yii::t('ad', 'Number of storeys') ?>:</strong> <?= $product->adProductAdditionInfo->floor_no ?>  <?= Yii::t('ad', 'storeys') ?></li>
+								<?php if($adProductAdditionInfo->floor_no): ?>
+								<li><strong><?= $product->projectBuilding ? Yii::t('ad', 'Floor plan') : Yii::t('ad', 'Number of storeys') ?>:</strong> <?= $adProductAdditionInfo->floor_no ?>  <?= Yii::t('ad', 'storeys') ?></li>
 								<?php endif; ?>
-								<?php if($product->adProductAdditionInfo->home_direction): ?>
-								<li><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <?= $directionList[$product->adProductAdditionInfo->home_direction] ?></li>
+								<?php if($adProductAdditionInfo->home_direction): ?>
+								<li><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <?= $directionList[$adProductAdditionInfo->home_direction] ?></li>
 								<?php endif; ?>
-								<?php if($product->adProductAdditionInfo->facade_direction): ?>
-								<li><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <?= $directionList[$product->adProductAdditionInfo->facade_direction] ?></li>
+								<?php if($adProductAdditionInfo->facade_direction): ?>
+								<li><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <?= $directionList[$adProductAdditionInfo->facade_direction] ?></li>
 								<?php endif; ?>
-								<?php if($product->adProductAdditionInfo->interior): ?>
-								<li><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <?= $product->adProductAdditionInfo->interior ?></li>
+								<?php if($adProductAdditionInfo->interior): ?>
+								<li><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <?= $adProductAdditionInfo->interior ?></li>
 								<?php endif; ?>
 							</ul>
 		                </div>
@@ -654,7 +659,7 @@ Yii::t('ad', 'Television');
 		                </div>
 		            </div>
 		        </div>
-		        <?php elseif($product->adProductAdditionInfo->facility): ?>
+		        <?php elseif($adProductAdditionInfo->facility): ?>
 		        <div class="panel panel-default">
 		            <div class="panel-heading" role="tab" id="headingFour">
 		                <h4 class="panel-title">
@@ -668,8 +673,8 @@ Yii::t('ad', 'Television');
 		                <div class="panel-body" name="experience">
                             <ul class="clearfix list-tienich">
 							<?php
-//                            implode(', ', ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name'))
-                            $additional_facilities = ArrayHelper::getColumn(AdFacility::find()->where(['id' => $product->adProductAdditionInfo->facility])->all(), 'name');
+//                            implode(', ', ArrayHelper::getColumn(AdFacility::find()->where(['id' => $adProductAdditionInfo->facility])->all(), 'name'))
+                            $additional_facilities = ArrayHelper::getColumn(AdFacility::find()->where(['id' => $adProductAdditionInfo->facility])->all(), 'name');
                             if(count($additional_facilities) > 0) {
                                 foreach ($additional_facilities as $k => $facility) {
                                     $class = \common\components\Slug::me()->slugify($facility); ?>
@@ -711,28 +716,25 @@ Yii::t('ad', 'Television');
                                         <span class="fs-13 font-600 count_review">(<?=$count_review?>)</span>
                                     </div>
                                     <?php } else {?>
-						            <span class="name-agent"><?= $product->adContactInfo->name ?></span>
-                                    <?php } ?>
-
-
-
-									<?php if($product->adContactInfo->mobile): ?>
+						            <span class="name-agent"><?= $adContactInfo->name ?></span>
+                                    <?php }
+                                    if($adContactInfo->mobile): ?>
 									<div class="item-agent">
 										<div>
 											<span class="icon icon-phone"></span>
 										</div>
-										<a href="tel:<?= $product->adContactInfo->mobile ?>"><?= $product->adContactInfo->mobile ?></a>
+										<a href="tel:<?= $adContactInfo->mobile ?>"><?= $adContactInfo->mobile ?></a>
 									</div>
-									<?php endif; ?>
-									<?php if($product->adContactInfo->email): ?>
+									<?php endif;
+                                    if($adContactInfo->email): ?>
 									<div class="item-agent">
 										<div>
 											<span class="icon icon-email"></span>
 										</div>
-										<?= $product->adContactInfo->email ?>
+                                        <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn"><?= $adContactInfo->email ?></a>
 									</div>
-									<?php endif; ?>
-                                    <?php if($owner){
+									<?php endif;
+                                    if($owner){
                                         if(!empty($owner->location)) {?>
 										<div class="item-agent">
 											<div>
@@ -758,10 +760,10 @@ Yii::t('ad', 'Television');
 											<?= $product->urlDetail(true) ?>
 										</a>
 									</div>
+                                    <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
 									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
-                                        <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
 										<a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
-									<?php }?>
+									<?php } ?>
 								</div>
 							</div>
 

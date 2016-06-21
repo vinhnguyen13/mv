@@ -25,7 +25,6 @@ Yii::$app->view->registerMetaTag([
     'name' => 'description',
     'content' => empty($news["seo_description"]) ? $news["brief"] : $news["seo_description"]
 ]);
-
 Yii::$app->view->registerMetaTag([
     'property' => 'og:site_name',
     'content' => Yii::$app->name
@@ -42,12 +41,10 @@ Yii::$app->view->registerMetaTag([
     'property' => 'og:type',
     'content' => 'article'
 ]);
-
 Yii::$app->view->registerMetaTag([
     'property' => 'og:image',
     'content' => \vsoft\news\models\CmsShow::getBanner($news["banner"])
 ]);
-
 Yii::$app->view->registerMetaTag([
     'property' => 'og:url',
     'content' => \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true)
@@ -61,10 +58,7 @@ else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
 
 $_title = str_replace("'", "\'", $news["title"]);
 $_brief = str_replace("'", "\'", $news["brief"]);
-$banner = Yii::$app->urlManager->createAbsoluteUrl('/store/news/show/'. $news["banner"]);
-//$checkBanner = file_exists(Yii::getAlias('@store')."/news/show/".$news["banner"]);
-//if($checkBanner == false)
-//    $banner = Yii::$app->urlManager->createAbsoluteUrl('/themes/metvuong2/resources/images/default-ads.jpg');
+
 ?>
 <script>
     window.fbAsyncInit = function() {
