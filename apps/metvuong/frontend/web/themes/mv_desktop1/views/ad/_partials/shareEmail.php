@@ -72,11 +72,15 @@ use yii\helpers\Url;
                                 $types = \vsoft\ad\models\AdProduct::getAdTypes();
                                 $product_type = $types[$product->type];
 
+                                $user_id = $product->user_id;
+
                                 $address = $product->getAddress();
                                 $category = ucfirst(Yii::t('ad', $categories[$product->category_id]['name'], null, Yii::$app->language)). " " .mb_strtolower(Yii::t('ad', $product_type, null, Yii::$app->language));
                                 $area = $product->area;
-                                $room_no = $product->adProductAdditionInfo->room_no;
-                                $toilet_no = $product->adProductAdditionInfo->toilet_no;
+                                $adProductAdditionInfo = $product->adProductAdditionInfo;
+                                $room_no = $adProductAdditionInfo->room_no;
+                                $toilet_no = $adProductAdditionInfo->toilet_no;
+
                                 $price = vsoft\express\components\StringHelper::formatCurrency($product->price);
                                 $imageUrl = $product->representImage;
                                 if (!filter_var($imageUrl, FILTER_VALIDATE_URL))
@@ -91,6 +95,7 @@ use yii\helpers\Url;
                                 <p class="send-by">BY METVUONG.COM</p>
                             </div>
                                 <?= $f->field($share_form, 'pid')->hiddenInput(['class' => 'pid', 'value'=> Yii::$app->params['listing_prefix_id'] . $pid])->label(false); ?>
+                                <?= $f->field($share_form, 'uid')->hiddenInput(['class' => '_address', 'value'=>$user_id])->label(false) ?>
                                 <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
                                 <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> $detailUrl ])->label(false) ?>
                                 <?= $f->field($share_form, 'domain')->hiddenInput(['class' => '_domain', 'value'=>Yii::$app->urlManager->getHostInfo()])->label(false) ?>

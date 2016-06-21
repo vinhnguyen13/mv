@@ -4,12 +4,27 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $user common\models\User */
 
+$type_email = $contact->type == "share" ? "chia sẻ" : "liên hệ";
 ?>
 
 
 <a href="<?=\yii\helpers\Url::home(true)?>" style="text-decoration: none;"><p style="color: #00a769;font-size: 16px;font-weight: bold;margin-bottom: 15px;">Thông báo từ metvuong.com</p></a>
 <p style="margin-bottom: 10px;"><strong style="color: #222;font-size: 13px;">Xin chào, <?= $contact->recipient_email ?>!</strong></p>
-<p style="font-size: 13px;margin-bottom: 35px;line-height:20px"><?= str_replace(PHP_EOL, "<br>", $contact->content)?></p>
+<p style="font-size: 13px;margin-bottom: 35px;line-height:20px">
+    Tin Đăng của <?= $contact->recipient_email ?> đã được chúng tôi đăng trên <a href="<?=\yii\helpers\Url::home(true)?>" style="text-decoration: none;">Metvuong.com</a>,
+    một trong những người sử dụng <a href="<?=\yii\helpers\Url::home(true)?>" style="text-decoration: none;">Metvuong.com</a> đang muốn <?=$type_email?> về <?=$contact->category?> của bạn.
+    Họ có những câu hỏi như sau:
+</p>
+
+<p style="padding-left: 40px;font-size: 13px;margin-bottom: 35px;line-height:20px"><?= str_replace(PHP_EOL, "<br>", $contact->content)?></p>
+
+<?php if(!empty($token_url) && !empty($profile_url)){ ?>
+<p style="font-size: 13px;margin-bottom: 35px;line-height:20px">
+    Chúng tôi đã tạo một tài khoản MetVuong cho bạn rồi.
+    Để liên lạc với họ, <?= $contact->recipient_email ?> chỉ cần đang nhập vào tài khoản này.
+    Ấn vào link sau đây: <b><?= Html::a(Html::encode($profile_url), $token_url) ?></b>
+</p>
+<?php } ?>
 
 <table style="margin-bottom: 30px;">
     <tbody><tr>

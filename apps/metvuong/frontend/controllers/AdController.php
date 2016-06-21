@@ -5,7 +5,9 @@ use frontend\components\Controller;
 use frontend\models\Ad;
 use frontend\models\Profile;
 use frontend\models\ShareForm;
+use frontend\models\Token;
 use frontend\models\Tracking;
+use frontend\models\User;
 use frontend\models\UserActivity;
 use vsoft\ad\models\AdCategory;
 use vsoft\ad\models\AdContactInfo;
@@ -704,15 +706,28 @@ class AdController extends Controller
             ]);
             $model->load($post);
             $model->validate();
-
+            $profile_url = null;
+            $token_url = null;
             if (!$model->hasErrors()) {
-
                 $from_name = !empty($model->from_name) ? $model->from_name : $model->your_email;
-                $type_email = $model->type == "share" ? "chia sẻ" : "liên hệ với bạn qua";
-
+                $type_email = $model->type == "share" ? "chia sẻ" : "liên hệ";
+                $category = $model->category;
+                $address = $model->address;
+                if($model->type == "contact") {
+                    $user = User::findOne($model->uid);
+                    $profile_url = Url::to(['member/profile', 'username' => $user->username], true);
+                    $token = new Token();
+                    $token->user_id = $model->uid;
+                    $token->code = Yii::$app->security->generateRandomString();
+                    $token->type = Token::TYPE_CRAWL_USER_EMAIL;
+                    $token->created_at = time();
+                    if ($token->save())
+                        $token_url = $token->url;
+                }
                 // send to
-                $subjectEmail = "Metvuong.com - {$from_name} {$type_email} tin {$model->pid}";
-                $result = Yii::$app->mailer->compose(['html' => "../mail/".Yii::$app->language."/product_share_contact"], ['contact' => $model])
+//                $subjectEmail = "Metvuong.com - {$from_name} {$type_email} tin {$model->pid}";
+                $subjectEmail = "Có Người Muốn {$type_email} {$category} của bạn ở {$address}";
+                $result = Yii::$app->mailer->compose(['html' => "../mail/vi-VN/product_share_contact"], ['contact' => $model, 'profile_url' => $profile_url, 'token_url' => $token_url])
                 ->setFrom(Yii::$app->params['adminEmail'])
                 ->setTo([trim($model->recipient_email)])
                 ->setSubject($subjectEmail)

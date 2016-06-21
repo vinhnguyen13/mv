@@ -29,7 +29,7 @@ class Metvuong extends Component
         $contacts = AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
                 ->where('email is not null')
                 ->andWhere("email NOT IN (select email from mark_email where status = 1)")
-                ->andWhere("email NOT IN (select email from user)")
+                ->andWhere("email NOT IN (select email from user where updated_at > created_at )")
                 ->groupBy('email')->orderBy('count(product_id) desc')->limit(100)->all();
 
         if(count($contacts) > 0) {

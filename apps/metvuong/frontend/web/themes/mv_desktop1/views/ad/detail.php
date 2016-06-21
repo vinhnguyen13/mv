@@ -224,7 +224,7 @@ $count_review = $reviews->count();
                                         </div>
                                     <?php endif; ?>
 
-                                    <?php if($adContactInfo->email): ?>
+                                    <?php if($adContactInfo && $adContactInfo->email): ?>
                                         <div class="item-agent">
                                             <span class="icon-mv"><span class="icon-mail-profile"></span></span>
                                             <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn"><?= $adContactInfo->email ?></a>
@@ -238,8 +238,11 @@ $count_review = $reviews->count();
                                                 <?= $owner->location->city?>
                                             </div>
                                         <?php } } ?>
+
+                                    <?php if($adContactInfo && !empty($adContactInfo->email)){ ?>
                                     <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
-                                    <?php if(!empty($owner->username) && !$owner->isMe()) { ?>
+                                    <?php }
+                                    if(!empty($owner->username) && !$owner->isMe()) { ?>
                                         <a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
                                     <?php }?>
 								</div>
@@ -277,14 +280,18 @@ $count_review = $reviews->count();
 					</div>
 				</div>
 
-				<?= $this->renderAjax('/ad/_partials/shareEmail',[
-                    'popup_email_name' => 'popup_email_contact',
-                    'pid' => $product->id,
-                    'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
-                    'from_name' => empty($user) ? "" : (empty($user->profile->name) ? $user->username : $user->profile->name),
-                    'recipientEmail' => $rep_email,
-                    'to_name' => empty($owner) ? "" : (empty($owner->profile->name) ? $owner->username : $owner->profile->name),
-                    'params' => ['your_email' => false, 'recipient_email' => false] ])?>
+				<?php
+                    echo $this->renderAjax('/ad/_partials/shareEmail', [
+                        'popup_email_name' => 'popup_email_contact',
+                        'pid' => $product->id,
+                        'uid' => $product->user_id,
+                        'yourEmail' => empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email),
+                        'from_name' => empty($user) ? "" : (empty($user->profile->name) ? $user->username : $user->profile->name),
+                        'recipientEmail' => strtolower(trim($rep_email)),
+                        'to_name' => empty($owner) ? "" : (empty($owner->profile->name) ? $owner->username : $owner->profile->name),
+                        'username' => empty($owner) ? null : $owner->username,
+                        'params' => ['your_email' => false, 'recipient_email' => false]]);
+                ?>
 
 				<div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 					<div class="modal-dialog" role="document">
@@ -479,12 +486,6 @@ $count_review = $reviews->count();
 							}, 400);
 						});
 
-//                        function fbShare(url, title, descr, image, winWidth, winHeight) {
-//                            var winTop = (screen.height / 2) - (winHeight / 2);
-//                            var winLeft = (screen.width / 2) - (winWidth / 2);
-//                            window.open('http://www.facebook.com/sharer.php?s=100&p[url]=' + url + '&p[title]=' + title + '&p[summary]=' + descr + '&p[images][0]=' + image, 'sharer', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
-//                        }
-
                         $('.share-facebook').click(function (){
                             $('body').loading();
                             var url = $(this).data("url");
@@ -520,6 +521,7 @@ $count_review = $reviews->count();
                             } else if(type == 'contact'){
                                 $('#popup_email .popup_title').text('<?=Yii::t('send_email','CONTACT')?>');
                                 $('#share_form .type').attr('value', 'contact');
+                                $('#share_form .recipient_email').attr('value', '<?=$rep_email?>');
                             }
                             var url = $(this).data("url");
                             if(url != undefined && url.length > 0) {
@@ -726,7 +728,7 @@ $count_review = $reviews->count();
 										<a href="tel:<?= $adContactInfo->mobile ?>"><?= $adContactInfo->mobile ?></a>
 									</div>
 									<?php endif;
-                                    if($adContactInfo->email): ?>
+                                    if($adContactInfo && $adContactInfo->email): ?>
 									<div class="item-agent">
 										<div>
 											<span class="icon icon-email"></span>
@@ -760,8 +762,10 @@ $count_review = $reviews->count();
 											<?= $product->urlDetail(true) ?>
 										</a>
 									</div>
+                                    <?php if($adContactInfo && !empty($adContactInfo->email)){ ?>
                                     <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
-									<?php if(!empty($owner->username) && !$owner->isMe()) { ?>
+									<?php }
+                                    if(!empty($owner->username) && !$owner->isMe()) { ?>
 										<a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
 									<?php } ?>
 								</div>

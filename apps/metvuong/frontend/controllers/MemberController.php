@@ -14,6 +14,7 @@ use frontend\models\UserLocation;
 use frontend\models\UserReview;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdProduct;
+use vsoft\ad\models\MarkEmail;
 use vsoft\express\components\ImageHelper;
 use vsoft\express\components\StringHelper;
 use Yii;
@@ -171,39 +172,48 @@ class MemberController extends Controller
     public function actionConfirmLogin($id, $code)
     {
         $token = Token::find()->where(['MD5(CONCAT(user_id, code))' => $id, 'code' => $code, 'type' => Token::TYPE_CRAWL_USER_EMAIL])->one();
+
         $countToken = count($token);
         if($countToken > 0) {
             $user = $token->user;
             if (count($user) > 0) {
                 $loginStatus = Yii::$app->getUser()->login($user, 0);
                 if ($loginStatus) {
-                    $token->updateAttributes([
-                        'code' => Yii::$app->security->generateRandomString(),
-                    ]);
+//                    $token->updateAttributes([
+//                        'code' => Yii::$app->security->generateRandomString(),
+//                    ]);
+                    $token->delete();
                     $user_id = $user->id;
                     $email = $user->email;
-                    $contacts = AdContactInfo::getDb()->cache(function () use ($email) {
-                        $sql = "SELECT group_concat(product_id) as list_id FROM ad_contact_info where email = '{$email}'";
-                        return AdContactInfo::getDb()->createCommand($sql)->queryAll();
-                    });
 
-                    if (count($contacts) && isset($contacts[0]["list_id"])) {
-                        $list_id = $contacts[0]["list_id"];
-                        $update_sql = "UPDATE `ad_product` SET `user_id`={$user_id} WHERE id IN ({$list_id})";
-                        AdProduct::getDb()->createCommand($update_sql)->execute();
+                    $mark_email = MarkEmail::checkEmailExists($email);
+                    if (count($mark_email) > 0) {
+                        $contacts = AdContactInfo::getDb()->cache(function () use ($email) {
+                            $sql = "SELECT group_concat(product_id) as list_id FROM ad_contact_info where email = '{$email}'";
+                            return AdContactInfo::getDb()->createCommand($sql)->queryAll();
+                        });
+
+                        if (count($contacts) && isset($contacts[0]["list_id"])) {
+                            $list_id = $contacts[0]["list_id"];
+                            $update_sql = "UPDATE `ad_product` SET `user_id`={$user_id} WHERE id IN ({$list_id})";
+                            AdProduct::getDb()->createCommand($update_sql)->execute();
+                        }
+
+                        $new_token = new Token();
+                        $new_token->user_id = $user->id;
+                        $new_token->code = Yii::$app->security->generateRandomString();
+                        $new_token->type = Token::TYPE_RECOVERY;
+                        $new_token->created_at = time();
+                        $new_token->save();
+
+                        return $this->redirect(Url::to(['member/reset-password', 'id' => md5($user_id . $new_token->code), 'code' => $new_token->code], true));
                     }
-
-                    $new_token = new Token();
-                    $new_token->user_id = $user->id;
-                    $new_token->code = Yii::$app->security->generateRandomString();
-                    $new_token->type = Token::TYPE_RECOVERY;
-                    $new_token->created_at = time();
-                    $new_token->save();
-
-                    return $this->redirect(Url::to(['member/reset-password', 'id' => md5($user_id . $new_token->code), 'code' => $new_token->code], true));
+                    else
+                        return $this->redirect(Url::to(['member/profile', 'username' => $user->username], true));
                 }
             }
         }
+
         return $this->redirect(Url::home(true));
     }
 
