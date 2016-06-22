@@ -418,6 +418,28 @@ class MemberController extends Controller
         return null;
     }
 
+    public function actionUpdateBio($username)
+    {
+        $this->checkAccess();
+        if(Yii::$app->request->isAjax){
+            if(Yii::$app->request->isPost) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                $post = Yii::$app->request->post();
+                $profile = Yii::$app->user->identity->profile;
+                if ($profile) {
+                    $bio = isset($post["profile-form"]["bio"]) ? $post["profile-form"]["bio"] : null;
+                    if($bio) {
+                        $profile->bio = $bio;
+                        $profile->save(false);
+                        return ['statusCode' => 200, 'model' => $profile->attributes];
+                    }
+
+                }
+            }
+        }
+        return false;
+    }
+
     public function actionUpdateProfile($username)
     {
         $this->checkAccess();
@@ -438,15 +460,6 @@ class MemberController extends Controller
                     Yii::$app->response->format = Response::FORMAT_JSON;
                     $post = Yii::$app->request->post();
                     if ($post) {
-                        $scenario = trim($post["scenario"]);
-                        if($scenario != $model->scenario) {
-                            $model = Yii::createObject([
-                                'class' => ProfileForm::className(),
-                                'scenario' => $scenario,
-                            ]);
-                            $model = $model->loadProfile($username, $scenario);
-                        }
-
                         $name = isset($post["profile-form"]["name"]) ? $post["profile-form"]["name"] : null;
                         if(!empty($name))
                             $model->name = $name;

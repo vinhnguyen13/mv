@@ -168,7 +168,7 @@ Yii::t('time','week');
                         'id' => 'form-edit-mtbt',
                         'enableAjaxValidation' => false,
                         'enableClientValidation' => true,
-                        'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->getUsername()])
+                        'action' => Url::to(['member/update-bio', 'username'=>Yii::$app->user->identity->getUsername()])
                     ]);
                     ?>
                     <div class="txt-wrap">
