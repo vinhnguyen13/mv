@@ -184,9 +184,11 @@
 							buttonsHolder.append(button);
 						}
 
-						button = plugin.options.buttons.noThanks.element.clone();
-						button.addClass(plugin.options.buttons.noThanks.class).addClass(uniq+' no-thanks');
-						buttonsHolder.append(button);
+						if (plugin.options.steps[index + 1]) {
+							button = plugin.options.buttons.noThanks.element.clone();
+							button.addClass(plugin.options.buttons.noThanks.class).addClass(uniq+' no-thanks');
+							buttonsHolder.append(button);
+						}
 
 						var content = $("<div>").append(step.content);
 
@@ -286,11 +288,11 @@ $(document).ready(function () {
 	                {
 	                    selector: ".dt-header",
 	                    placement: "bottom",
-	                    content: "At the top you will find the HomeBar, this bar will always be visible to you, and will let you quickly navigate to all of Metvuong's key Features.",
+	                    content: txtTour[0],
 	                },{
 	                    selector: ".search-wrap-home",
 	                    placement: "bottom",
-	                    content: "<p class='mgB-10'>The main feature of the Metvuong homepage is our Search Bar. It will let you quickly select how you want to search for your property, whether it be through it's location (city, district, ward and street) or by which Development it belongs to.</p><p>If you know the MVID of your listing, you can also use this as a shortcut to take you to the listing that you want.</p>"
+	                    content: txtTour[1]
 	                }
 	            ]
 	}else if ( $(".statis section").length ) {
@@ -298,7 +300,7 @@ $(document).ready(function () {
 	                {
 	                    selector: ".statis section",
 	                    placement: "left",
-	                    content: "<p class='mgB-5'>Here you can clearly track the popularity of your listing, based on metrics such as the amount of views and favorites, as well as see this as a function of time.</p><p>You can also reach out to customers who may have searched for or favorited this listing, simply click on their account to send them a message</p>",
+	                    content: txtTour[0],
 	                }
 	            ]
 	}else if ( $(".menuUser ul").length ) {
@@ -306,12 +308,12 @@ $(document).ready(function () {
 	                {
 	                    selector: ".menuUser ul",
 	                    placement: "right",
-	                    content: "<p class='mgB-5'>The Dashboard is where you will find many of Metvuong's more advanced Features</p><p class='mgB-5'>Customizing your personal information</p><p class='mgB-5'>Update yourself on your listings status</p><p class='mgB-5'>Buy more Keys</p><p>Look at your notifications and messages.</p>"
+	                    content: txtTour[0]
 	                },
 	                {
 	                    selector: "#list-all",
 	                    placement: "left",
-	                    content: "<p class='mgB-5'>Here is where you can post your listings.</p><p class='mgB-5'>At Metvuong.com we encourage detailed and accurate information, listings that fulfill this requirement will have a higher MV Score, which means that it is more likely to show up on a customers search.</p><p>Any information found to be false in the listing will lead to penalties on the listings score.</p>",
+	                    content: txtTour[1],
 	                }
 	            ]
 	}else if ( $("#map-wrap").length ) {
@@ -319,15 +321,15 @@ $(document).ready(function () {
 	                {
 	                    selector: ".toggle-search",
 	                    placement: "bottom",
-	                    content: "Welcome to the Metvuong Buy Page, this is functionally the same as the Metvuong Rent Page, here up top you can alter your search parameters, and the results will change dynamically.",
+	                    content: txtTour[0],
 	                },{
 	                	selector: "#map-wrap",
 	                	placement: "right",
-	                	content: "The map on the bottom let's you see where your potential listings lie, you can click on them to bring them up for closer inspection."
+	                	content: txtTour[1]
 	                },{
 	                	selector: ".wrap-listing",
 	                	placement: "left",
-	                	content: "The list on the right are the listings that are the closest to your search parameters, categorized by our MV algorithim to ensure the quality as well as relevancy to your listing."
+	                	content: txtTour[2]
 	                }
 	            ]
 	}else if ( $(".type-payment").length ) {
@@ -335,7 +337,7 @@ $(document).ready(function () {
 	                {
 	                    selector: ".type-payment",
 	                    placement: "left",
-	                    content: "Metvuong.com caters to a variety of payment system to maximize your convenience, simply select the amount of keys you want to buy, and your method of payment. THe more you buy, the cheaper it is.",
+	                    content: txtTour[0],
 	                }
 	            ]
 	}

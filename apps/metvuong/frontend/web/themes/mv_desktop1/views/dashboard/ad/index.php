@@ -106,6 +106,11 @@ use yii\helpers\Url;
             'value' => true,
             'expire' => time() + (10 * 365 * 24 * 60 * 60)
         ]));
+?>
+<script>
+    var txtTour = ["<p class='mgB-5'>The Dashboard is where you will find many of Metvuong's more advanced Features</p><p class='mgB-5'>Customizing your personal information</p><p class='mgB-5'>Update yourself on your listings status</p><p class='mgB-5'>Buy more Keys</p><p>Look at your notifications and messages.</p>","<p class='mgB-5'>Here is where you can post your listings.</p><p class='mgB-5'>At Metvuong.com we encourage detailed and accurate information, listings that fulfill this requirement will have a higher MV Score, which means that it is more likely to show up on a customers search.</p><p>Any information found to be false in the listing will lead to penalties on the listings score.</p>"];
+</script>
+<?php
         $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
     }
 ?>    

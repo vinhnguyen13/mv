@@ -3840,6 +3840,9 @@ html.mm-opening .mm-slideout {
     font-size: 20px;
     margin-right: 8px;
 }
+.list-attr-td li .icon-page-1-copy {
+    margin-left: 1px;
+}
 #listing-list .list-attr-td li .icon-mv {
     font-size: 15px;
 }
@@ -3955,7 +3958,7 @@ html.mm-opening .mm-slideout {
     margin: 0 0 30px;
 }
 .wrap-list-duan .address-feat .list-attr-td {
-    margin-left: 1px;
+    margin-left: 0px;
     min-height: 21px;
     margin-bottom: 0;
     overflow: hidden;
@@ -4130,17 +4133,24 @@ html.mm-opening .mm-slideout {
 .price-item {
     text-transform: uppercase;
     border: solid 1px #8e8e8e;
-    padding: 10px 15px;
     float: left;
     font-size: 15px;
     line-height: 100%;
     margin-bottom: 10px;
+    position: relative;
+    padding-left: 12px;
+}
+.price-item .icon-mv {
+    font-size: 25px;
+    line-height: 100%;
+    position: absolute;
+    top: -4px;
+    left: 0;
 }
 .price-attr {
     margin: 7px 0 8px 0;
 }
 #listing-list .info-item .price-item {
-    padding: 0;
     border: none;
     font-size: 20px;
     display: inline-block;
@@ -6729,6 +6739,9 @@ footer li a {
     .wrap-list-duan,
     .wrap-giao-dich {
         padding-left: 30px;
+    }
+    .wrap-list-duan {
+        padding-right: 10px;
     }
     .wrap-edit-tt {
         width: 100%;
@@ -9324,6 +9337,9 @@ margin-right: 5px;
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+.icon-pricing:before {
+    content: "\e93c";
 }
 .icon-ben-xe-tram-xe:before {
     content: "\e939";
@@ -12817,4 +12833,10 @@ ul.cardList li {
 .detail-listing-extra .left-attr-detail,
 #review-listing .left-attr-detail {
     margin-bottom: 15px;
+}
+.u-allduan .hemi-intro-popover {
+    top: 60px !important;
+}
+.u-allduan .popover.left>.arrow {
+    top: 50% !important;
 }

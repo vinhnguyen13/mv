@@ -41,6 +41,11 @@ EOD;
             'value' => true,
             'expire' => time() + (10 * 365 * 24 * 60 * 60)
         ]));
+?>
+<script>
+    var txtTour = ["Welcome to the Metvuong Buy Page, this is functionally the same as the Metvuong Rent Page, here up top you can alter your search parameters, and the results will change dynamically.","The map on the bottom let's you see where your potential listings lie, you can click on them to bring them up for closer inspection.","The list on the right are the listings that are the closest to your search parameters, categorized by our MV algorithim to ensure the quality as well as relevancy to your listing."];
+</script>
+<?php
         $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
     }
 ?>

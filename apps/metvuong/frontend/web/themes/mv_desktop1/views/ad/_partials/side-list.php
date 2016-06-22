@@ -87,7 +87,7 @@
 							</p>
 							<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product['id'] ?></span></p>
 							<div class="clearfix price-attr">
-								<p class="price-item"><?= Yii::t('listing', 'Price') ?><strong><?= StringHelper::formatCurrency($product['price']) . ' ' . Yii::t('ad', 'VND') ?></strong></p>   
+								<p class="price-item"><span class="icon-mv"><span class="icon-pricing"></span></span><strong><?= StringHelper::formatCurrency($product['price']) . ' ' . Yii::t('ad', 'VND') ?></strong></p>   
 								<ul class="clearfix list-attr-td">
 				                    <?php if($product['area'] || $product['room_no'] || $product['toilet_no']) : ?>
 				                    	<?php if($product['area']): ?><li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span><?= $product['area'] ?>m<sup>2</sup> </li><?php endif; ?>

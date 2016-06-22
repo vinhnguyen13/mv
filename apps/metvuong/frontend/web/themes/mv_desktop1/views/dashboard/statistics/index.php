@@ -12,6 +12,11 @@ if(empty($cookie)){
         'value' => true,
         'expire' => time() + (10 * 365 * 24 * 60 * 60)
     ]));
+?>
+<script>
+    var txtTour = ["Metvuong.com caters to a variety of payment system to maximize your convenience, simply select the amount of keys you want to buy, and your method of payment. THe more you buy, the cheaper it is."];
+</script>
+<?php
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
 }
 
