@@ -17,6 +17,11 @@ if(empty($cookie)){
         'value' => true,
         'expire' => time() + (10 * 365 * 24 * 60 * 60)
     ]));
+?>
+<script>
+    var txtTour = ["<p class='mgB-5'>Here you can clearly track the popularity of your listing, based on metrics such as the amount of views and favorites, as well as see this as a function of time.</p><p>You can also reach out to customers who may have searched for or favorited this listing, simply click on their account to send them a message</p>"];
+</script>
+<?php
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
 }
 ?>
