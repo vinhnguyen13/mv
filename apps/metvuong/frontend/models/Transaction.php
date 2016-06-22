@@ -16,7 +16,7 @@ class Transaction extends EcTransactionHistoryBase
 {
     const STATUS_PENDING = 0;
     const STATUS_PROCESSING = 1;
-    const STATUS_TRANSFERRED = 2;
+    const STATUS_SUCCESS = 2;
     const STATUS_FAIL = -2;
     const STATUS_CANCELED = -1;
 

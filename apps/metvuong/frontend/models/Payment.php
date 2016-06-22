@@ -118,12 +118,12 @@ class Payment extends Component
                     $balanceValue = !empty($balance->amount) ? ($balance->amount + $transactionNganLuong['amount']) : $transactionNganLuong['amount'];
                     $checkUpdate = Yii::$app->db->createCommand()
                         ->update('ec_transaction_history', [
-                            'status' => Transaction::STATUS_TRANSFERRED,
+                            'status' => Transaction::STATUS_SUCCESS,
                             'balance' => $balanceValue,
                         ], 'code=:code', [':code'=>$transactionNganLuong['code']])->execute();
                     Yii::$app->db->createCommand()
                         ->update('ec_transaction_nganluong', [
-                            'status' => Transaction::STATUS_TRANSFERRED,
+                            'status' => Transaction::STATUS_SUCCESS,
                         ], 'transaction_code=:code', [':code'=>$transactionNganLuong['code']])->execute();
                     if($checkUpdate){
                         $this->updateBalance($transactionNganLuong['user_id'], $transactionNganLuong['amount']);
