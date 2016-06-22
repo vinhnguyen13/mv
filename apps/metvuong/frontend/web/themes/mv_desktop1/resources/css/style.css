@@ -10644,7 +10644,7 @@ label:hover {
     display: block;
     background: #00a769;
     color: #fff;
-    padding: 10px 0;
+    padding: 5px 0;
     font-size: 13px;
     text-align: center;
     font-weight: 600;
@@ -12813,4 +12813,8 @@ ul.cardList li {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.2);
     z-index: 600;
+}
+.detail-listing-extra .left-attr-detail,
+#review-listing .left-attr-detail {
+    margin-bottom: 15px;
 }
