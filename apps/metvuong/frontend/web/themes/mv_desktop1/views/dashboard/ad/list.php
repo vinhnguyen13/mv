@@ -30,6 +30,10 @@ $count_product = count($products);
                     $thumb = $product->projectBuilding->logoUrl;
                 }
             }
+
+            $adProductAdditionInfo = $product->adProductAdditionInfo;
+            $room_no = empty($adProductAdditionInfo) ? 0 : $adProductAdditionInfo->room_no;
+            $toilet_no = empty($adProductAdditionInfo) ? 0 : $adProductAdditionInfo->toilet_no;
             ?>
             <li class="col-xs-12 col-md-6 col-sm-6">
                 <div class="item p<?=$product->id?> clearfix">
@@ -58,12 +62,12 @@ $count_product = count($products);
                             </p>
                             <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover pull-right"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10 fs-17"><span class="icon-angle-right"></span></span></a>
                             <ul class="clearfix list-attr-td">
-                                <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
+                                <?php if(empty($product->area) && empty($room_no) && empty($toilet_no)){ ?>
                                     <li><span><?=Yii::t('listing','updating')?></span></li>
                                 <?php } else {
                                     echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
-                                    echo $product->adProductAdditionInfo->room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                                    echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span> ' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                    echo $room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $room_no . ' </li>' : '';
+                                    echo $toilet_no ? '<li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span> ' . $toilet_no . ' </li>' : '';
                                 } ?>
                             </ul>
                         </div>

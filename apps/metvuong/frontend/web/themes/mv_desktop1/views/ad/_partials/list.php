@@ -22,8 +22,8 @@ $categories = $categoriesDb->cache(function($categoriesDb){
 $types = AdProduct::getAdTypes();
 ?>
 <?php foreach ($products as $product):
-    $room_no = $product->adProductAdditionInfo->room_no;
-    $toilet_no = $product->adProductAdditionInfo->toilet_no;
+    $room_no = empty($product->adProductAdditionInfo) ? null : $product->adProductAdditionInfo->room_no;
+    $toilet_no = empty($product->adProductAdditionInfo) ? null : $product->adProductAdditionInfo->toilet_no;
     $catType = ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) . ' ' . mb_strtolower($types[$product->type], 'utf8');
     $alt = $catType . ' - ' . $product->getAddress($product->show_home_no);
 	?>
