@@ -22,7 +22,7 @@ class Payment extends Component
         return Yii::createObject(self::className());
     }
 
-    public function payWithNganLuong(){
+    public function payWithNganLuong($redirect){
         if(isset($_POST['nlpayment'])){
             $transaction_code = md5(uniqid(rand(), true));
             Transaction::me()->saveTransaction($transaction_code, [
@@ -35,7 +35,7 @@ class Payment extends Component
                 'status'=>Transaction::STATUS_PENDING,
             ]);
             return NganLuong::me()->payByBank([
-                'return_url' => Url::to(['/payment/success'], true),
+                'return_url' => Url::to(['/payment/success', 'redirect'=>$redirect], true),
                 'cancel_url' => Url::to(['/payment/cancel'], true),
                 'transaction_code' => $transaction_code,
             ]);

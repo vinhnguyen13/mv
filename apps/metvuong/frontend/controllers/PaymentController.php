@@ -26,7 +26,8 @@ class PaymentController extends Controller
     public function actionIndex(){
         $this->checkAccess();
         if(Yii::$app->request->isPost) {
-            Payment::me()->payWithNganLuong();
+            $redirect = Yii::$app->request->get('redirect');
+            Payment::me()->payWithNganLuong($redirect);
         }
         return $this->render('index');
     }
@@ -41,7 +42,12 @@ class PaymentController extends Controller
         $token = Yii::$app->request->get('token');
         $error_code = Yii::$app->request->get('error_code');
         if(!empty($token)){
+            $redirect = Yii::$app->request->get('redirect');
             Payment::me()->success($token);
+            if(!empty($redirect)){
+                $this->redirect($redirect);
+                Yii::$app->end();
+            }
             $this->redirect('/');
             /**
              * redirect to
