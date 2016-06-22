@@ -9,7 +9,8 @@ $cookie = $request->cookies['costatistic'];
 if(empty($cookie)){
     Yii::$app->response->cookies->add(new \yii\web\Cookie([
         'name' => 'costatistic',
-        'value' => true
+        'value' => true,
+        'expire' => time() + (10 * 365 * 24 * 60 * 60)
     ]));
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
 }
