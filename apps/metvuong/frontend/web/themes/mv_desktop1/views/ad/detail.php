@@ -38,7 +38,7 @@ use vsoft\ad\models\AdFacility;
     });
 
     $rep_email = empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email);
-    $adContactInfo = $product->adContactInfo;
+    $adContactInfo = empty($product->adContactInfo) ? new \vsoft\ad\models\AdContactInfo() : $product->adContactInfo;
 	$url = '#';
 	if($owner && $owner->profile) {
 		$avatar = $owner->profile->getAvatarUrl();
