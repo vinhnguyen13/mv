@@ -243,7 +243,7 @@ $count_review = $reviews->count();
                                     <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
                                     <?php }
                                     if(!empty($owner->username) && !$owner->isMe()) { ?>
-                                        <a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
+                                        <a href="#" class="chat-btn btn-common btn-small chat-now <?=Yii::$app->user->isGuest ? "user-login-link" : "" ?>" data-chat-user="<?=$owner->username?>">Chat</a>
                                     <?php }?>
 								</div>
 							</div>
@@ -766,7 +766,7 @@ $count_review = $reviews->count();
                                     <a href="#" data-toggle="modal" data-target="#popup_email" data-type="contact" class="email-btn btn-common btn-small">Email</a>
 									<?php }
                                     if(!empty($owner->username) && !$owner->isMe()) { ?>
-										<a href="#" class="chat-btn btn-common btn-small chat-now" data-chat-user="<?=$owner->username?>">Chat</a>
+										<a href="#" class="chat-btn btn-common btn-small chat-now <?=Yii::$app->user->isGuest ? "user-login-link" : "" ?>" data-chat-user="<?=$owner->username?>">Chat</a>
 									<?php } ?>
 								</div>
 							</div>
