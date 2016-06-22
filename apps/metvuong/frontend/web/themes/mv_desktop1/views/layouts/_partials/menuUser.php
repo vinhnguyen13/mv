@@ -25,7 +25,7 @@ use yii\helpers\Url;
                 <li>
                     <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>">
                         <div><span class="icon-mv"><span class="icon-coin-dollar"></span></span></div>
-                        Giao dịch
+                        <?= Yii::t('ad', 'Payment') ?>
                     </a>
                 </li>
                 <li>
