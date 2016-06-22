@@ -100,6 +100,9 @@ use vsoft\ad\models\AdImages;
 					<div class="group-frm">
 						<div class="title-frm"><?= Yii::t('ad', 'Loại tin') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">8</span>') ?></span></div>
 						<div class="row">
+							<?php if($expiredEdit): ?>
+							<div class="expired-edit"><?= Yii::t("ad", "Không thể cập nhật các mục dưới đây khi tin đã được đăng hơn 2 ngày") ?></div>
+							<?php endif; ?>
 							<div class="form-group col-xs-12 col-sm-6">
 								<label for="<?= Html::getInputId($product, 'type') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('type') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">3</span>') ?></span></label>
 								<?= Html::activeDropDownList($product, 'type', $product->getAdTypes(), ['class' => 'form-control', 'disabled' => $expiredEdit]) ?>
@@ -141,6 +144,9 @@ use vsoft\ad\models\AdImages;
 					<div class="group-frm">
 						<div class="title-frm"><?= Yii::t('ad', 'Địa chỉ') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">12</span>') ?></span></div>
 						<div class="row">
+							<?php if($expiredEdit): ?>
+							<div class="expired-edit"><?= Yii::t("ad", "Không thể cập nhật các mục dưới đây khi tin đã được đăng hơn 2 ngày") ?></div>
+							<?php endif; ?>
 							<div class="form-group col-xs-12 col-sm-6">
 								<label for="<?= Html::getInputId($product, 'city_id') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('city_id') ?></span><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
 								<?= Html::activeDropDownList($product, 'city_id', $citiesDropdown, ['class' => 'form-control search', 'options' => $citiesOptions, 'prompt' => "...", 'disabled' => $disabledCity]) ?>

@@ -234,6 +234,14 @@ html.previewing, body.previewing {
     white-space: nowrap;
     vertical-align: top;
 }
+
+.expired-edit {
+	padding: 0 20px;
+    margin: 4px 0 10px 0;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.7);
+}
+
 @media (max-width: 985px) {
 	#review-listing .popup-wrap {
     	left: 0;
