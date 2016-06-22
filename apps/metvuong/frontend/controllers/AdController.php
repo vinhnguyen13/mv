@@ -715,15 +715,22 @@ class AdController extends Controller
                 $category = $model->category;
                 $address = $model->address;
                 if($model->type == "contact") {
-                    $user = User::findOne($model->uid);
-                    $profile_url = Url::to(['dashboard/ad', 'username' => $user->username], true);
-                    $token = new Token();
-                    $token->user_id = $model->uid;
-                    $token->code = Yii::$app->security->generateRandomString();
-                    $token->type = Token::TYPE_CRAWL_USER_EMAIL;
-                    $token->created_at = time();
-                    if ($token->save())
-                        $token_url = $token->url;
+                    $uid = $model->uid;
+                    if($uid > 0) {
+                        $user = Yii::$app->db->cache(function () use ($uid) {
+                            return User::findOne($uid);
+                        });
+                        if (count($user) > 0) {
+                            $profile_url = Url::to(['dashboard/ad', 'username' => $user->username], true);
+                            $token = new Token();
+                            $token->user_id = $model->uid;
+                            $token->code = Yii::$app->security->generateRandomString();
+                            $token->type = Token::TYPE_CRAWL_USER_EMAIL;
+                            $token->created_at = time();
+                            if ($token->save())
+                                $token_url = $token->url;
+                        }
+                    }
                 }
                 // send to
 //                $subjectEmail = "Metvuong.com - {$from_name} {$type_email} tin {$model->pid}";
