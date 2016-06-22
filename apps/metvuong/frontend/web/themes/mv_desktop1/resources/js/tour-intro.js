@@ -168,7 +168,7 @@
 					plugin.options.onBeforeChangeStep(plugin, step); //CALLBACK
 
 					currentElement.addClass(plugin.options.currentStep.selectedClass);
-					
+
 					scrollToElement(function () {
 						var template = $(plugin.options.popover.template);
 						var uniq = "id" + Math.random().toString(30).slice(2);
@@ -183,6 +183,10 @@
 							button.addClass(plugin.options.buttons.finish.class).addClass(uniq);
 							buttonsHolder.append(button);
 						}
+
+						button = plugin.options.buttons.noThanks.element.clone();
+						button.addClass(plugin.options.buttons.noThanks.class).addClass(uniq+' no-thanks');
+						buttonsHolder.append(button);
 
 						var content = $("<div>").append(step.content);
 
@@ -208,6 +212,12 @@
 									});
 								}else if ( plugin.options.steps[index].selector == ".dt-header" ) {
 									$(plugin.options.steps[index].selector).append('<div class="bg-over"></div>');
+								}
+
+								if ( $(this).hasClass('no-thanks') ) {
+									plugin.finish();
+									$(".dt-header").find('.bg-over').remove();
+									return;
 								}
 
 								if (plugin.options.steps[index + 1]) {
