@@ -75,11 +75,15 @@ Yii::t('time','week');
                             'fieldOptions' => ['folder' => 'avatar'],
                             'clientEvents' => [
                                 'fileuploaddone' => 'function(e, data) {
-                                console.log(data);
                                     $(".avatar-user").prop("value", data.result.files[0]["name"]);
                                     $(".avatar img").attr("src", data.result.files[0]["thumbnailUrl"]);
                                     $(".user-edit img").attr("src", data.result.files[0]["thumbnailUrl"]);
                                 }',
+                                'fileuploaddestroyed' => 'function(e, data){
+                                    $(".avatar-user").prop("value", "/images/default-avatar.jpg");
+                                    $(".avatar img").attr("src", "/images/default-avatar.jpg");
+                                    $(".user-edit img").attr("src", "/images/default-avatar.jpg");
+                                }'
                             ]
                         ]);   ?>
                     </div>
@@ -288,7 +292,7 @@ Yii::t('time','week');
                         var arr = [];
                         $.each(data.parameters, function (idx, val) {
                             var element = 'profile-form-' + idx;
-                            arr[element] = lajax.t(val);
+                            arr[element] = val;
                         });
                         $('#form-edit-ttcn').yiiActiveForm('updateMessages', arr, true);
                     } else {
@@ -408,15 +412,6 @@ Yii::t('time','week');
                 }
             });
 
-        });
-
-        $('#avatar').on('hidden.bs.modal', function () {
-            var url = $('.files .name a').attr("href");
-            if(url == null || url == '')
-                url = '/store/avatar/default-avatar.jpg';
-            $('#headAvatar').attr("src", url);
-            $('.avatar img').attr("src", url);
-            $('.user-edit img').attr("src", url);
         });
         
         $('#userlocation-city_id').change(function(){

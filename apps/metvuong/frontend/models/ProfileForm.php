@@ -59,6 +59,8 @@ class ProfileForm extends Model
             'email'    => Yii::t('user', 'Email'),
             'old_password' => Yii::t('user', 'Old Password'),
             'new_password' => Yii::t('user', 'New Password'),
+            'mobile' => Yii::t('user', 'Mobile'),
+            'public_email' => Yii::t('user', 'Email'),
         ];
     }
 

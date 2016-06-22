@@ -107,14 +107,15 @@ class FileUploadAvatar extends FU {
 			$files = [];
 			foreach ($values as $value) {
 				$pathInfo = pathinfo($value);
+                $orginal = str_replace(".thumb", "", $pathInfo['filename']). '.' . $pathInfo['extension'];
 				$thumb = $pathInfo['filename'] . '.' . $pathInfo['extension'];
 				$files[] = [
-					'url'           => Url::to($value),
+					'url'           => Url::to("/store/$folder/" . $orginal),
 					'thumbnailUrl'  => Url::to("/store/$folder/" . $thumb),
-					'name'          => $pathInfo["basename"],
+					'name'          => $orginal,
 					'type'          => 'image/jpeg',
 					'size'          => '1',
-					'deleteUrl'     => Url::to(['member/delete-image', 'orginal' => $pathInfo["basename"], 'thumbnail' => $thumb, 'folder'=>$folder]),
+					'deleteUrl'     => Url::to(['member/delete-image', 'orginal' => $orginal, 'thumbnail' => $thumb, 'folder'=>$folder]),
 					'deleteType'    => 'DELETE',
 					'deleteLater'	=> 1,
 				];
