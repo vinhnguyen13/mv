@@ -122,7 +122,7 @@ class AdContactInfo extends ACI
                 $user->register(false);
                 return $user;
             }else{
-                return $user->errors;
+                return ['errors' => $user->errors]; // Su dung errors trong lien he send mail
             }
         }
     }

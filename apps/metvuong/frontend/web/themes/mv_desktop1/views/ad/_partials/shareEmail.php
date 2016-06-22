@@ -77,8 +77,9 @@ use yii\helpers\Url;
                                     $adContactInfo = $product->adContactInfo;
                                     if(count($adContactInfo) > 0) {
                                         $user = $adContactInfo->createUserInfo();
-                                        if(count($user) > 0)
+                                        if(!isset($user['errors']) && count($user)) {
                                             $user_id = $user->id;
+                                        }
                                     }
                                 }
 
