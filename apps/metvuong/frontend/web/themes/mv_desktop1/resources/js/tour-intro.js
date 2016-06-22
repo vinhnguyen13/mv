@@ -88,7 +88,7 @@
 
 		plugin.start = function () {
 			
-			if ( parseInt($('#checkUserFirst').val()) ) return;
+			if ( parseInt($('#checkUserFirst').val()) || checkMobile() ) return;
 
 			plugin.options.onStart(plugin); //CALLBACK
 
