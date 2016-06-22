@@ -30,6 +30,8 @@ AppAsset::register($this);
     <?php $this->beginContent('@app/views/layouts/_partials/analyticstracking.php'); ?><?php $this->endContent();?>
 
     <div id="alert-noti"></div>
+
+    <input type="hidden" value="0" id="checkUserFirst" />
     
 </body>
 </html>

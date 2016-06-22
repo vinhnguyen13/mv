@@ -282,3 +282,28 @@ EOD;
 		</div>
 	</div>
 </div>
+
+<script>
+	$(document).ready(function () {
+        var intro = $.hemiIntro({
+            debug: false,
+            steps: [
+                {
+                    selector: ".toggle-search",
+                    placement: "bottom",
+                    content: "Welcome to the Metvuong Buy Page, this is functionally the same as the Metvuong Rent Page, here up top you can alter your search parameters, and the results will change dynamically.",
+                },{
+                	selector: "#map-wrap",
+                	placement: "right",
+                	content: "The map on the bottom let's you see where your potential listings lie, you can click on them to bring them up for closer inspection."
+                },{
+                	selector: ".wrap-listing",
+                	placement: "left",
+                	content: "The list on the right are the listings that are the closest to your search parameters, categorized by our MV algorithim to ensure the quality as well as relevancy to your listing."
+                }
+            ]
+        });
+
+        intro.start();
+    });
+</script>

@@ -2266,6 +2266,7 @@ label {
 .save-item.active {
     background-position: 0px -505px;
 }
+.infor-user-settings .avatar .fileupload-buttonbar .fileinput-button,
 .list-social-login li a.facebook, 
 .list-social-login li a.google,
 .btn-common {
@@ -2284,6 +2285,10 @@ label {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.infor-user-settings .avatar .fileupload-buttonbar .fileinput-button {
+    width: 100%;
+    padding: 8px;
 }
 .btn-common {
     border: 1px solid transparent;
@@ -2697,7 +2702,7 @@ footer {
     display: none;
 }
 .statis section {
-    /* padding: 30px 0 0 0; */
+    padding: 10px 10px 10px 30px;
 }
 #sandbox-container input {
     border-radius: 0;
@@ -6053,13 +6058,15 @@ footer li a {
     }
     .search-subpage .select-location {
         margin-right: 10px;
+        margin-left: 15px;
     }
     .advande-search {
-        padding: 0 15px;
+        padding: 0 15px 0 0;
         background: #f5f5f5;
     }
     .advande-search .toggle-search {
         display: block !important;
+        float: left;
     }
     .btn-submit {
         width: auto;
@@ -6098,6 +6105,7 @@ footer li a {
         padding-top: 107px;
         padding-bottom: 0;
         padding-right: 620px;
+        /* z-index: 11; */
     }
     .wrap-map-listing .inner-wrap {
         height: 100%;
@@ -8811,7 +8819,7 @@ margin-right: 5px;
     width: 240px;
     /* left: 340px; */
     /* margin-top: 128px; */
-    margin-top: 63px;
+    margin-top: 55px;
     padding-top: 40px;
 }
 .menuUser li a {
@@ -8865,7 +8873,7 @@ margin-right: 5px;
     /* border-left: 1px solid #DADADA; */
 }
 .statis {
-    padding-left: 270px;
+    padding-left: 240px;
 }
 .wrap-list-duan .tab-content {
     padding: 0;
@@ -11619,8 +11627,8 @@ height: 190px;
     background: #FBFBFB;
 }
 #listing-list > ul > li a.vip {
-    /* background: #F3F3F3; */
-    /* border-top: 1px solid #fff; */
+    /* background: red; */
+    border: 5px solid #f72626;
 }
 @media (max-width: 985px) {
     #listing-list .pic-intro {
@@ -11942,6 +11950,7 @@ height: 190px;
     /* background: #F9F9F9; */
     /* width: 45%; */
     margin: 0 auto 0;
+    padding: 50px 10px 0;
 }
 .type-payment h1 {
     margin: 0 0 15px 0;
@@ -12781,12 +12790,23 @@ ul.cardList li {
 }
 
 .hemi-intro-popover {
-  z-index: 600; 
+  z-index: 600;
 }
 
 .hemi-intro-buttons-holder {
   padding: 10px 0; 
 }
-.hemi-intro-popover {
-    max-width: 500px;
+.hemi-intro-popover {width: 250px;}
+.search-box .hemi-intro-popover {
+    width: 500px;
+    max-width: inherit;
+}
+.bg-over {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 600;
 }

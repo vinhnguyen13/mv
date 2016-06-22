@@ -94,12 +94,31 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
+
 <?php 
     $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/custom-datepicker.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'jquery-ui');
     Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery-ui.js', ['position'=>View::POS_END]);
 ?>    
 <script>
 	$(document).ready(function () {
+
+        var intro = $.hemiIntro({
+            debug: false,
+            steps: [
+                {
+                    selector: ".menuUser ul",
+                    placement: "right",
+                    content: "<p class='mgB-5'>The Dashboard is where you will find many of Metvuong's more advanced Features</p><p class='mgB-5'>Customizing your personal information</p><p class='mgB-5'>Update yourself on your listings status</p><p class='mgB-5'>Buy more Keys</p><p>Look at your notifications and messages.</p>"
+                },
+                {
+                    selector: "#list-all",
+                    placement: "left",
+                    content: "<p class='mgB-5'>Here is where you can post your listings.</p><p class='mgB-5'>At Metvuong.com we encourage detailed and accurate information, listings that fulfill this requirement will have a higher MV Score, which means that it is more likely to show up on a customers search.</p><p>Any information found to be false in the listing will lead to penalties on the listings score.</p>",
+                }
+            ]
+        });
+
+        intro.start();
 
         $(document).bind('boost/form_process', function (event, days, rebuildPicker) {
             var checkMoney = days + ' ' + ((days > 1) ? lajax.t('days') :  lajax.t('day'));
