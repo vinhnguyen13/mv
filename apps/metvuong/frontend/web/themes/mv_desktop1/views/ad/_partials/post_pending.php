@@ -9,8 +9,8 @@ use vsoft\ad\models\AdProduct;
 		<li><?= sprintf(Yii::t("ad", "Phí đăng tin: %s keys"), '<strong>' . AdProduct::CHARGE_POST . '</strong>') ?></li>
 	</ul>
 	<div class="text-center">
-		<a class="btn-common mgR-10" href="/payment/index?redirect=%2Flisting%2Fupdate-status%3Fid%3D79153%26url%3D%252Flisting%252Fnotify-success"><?= Yii::t("ad", "Nạp thêm keys") ?></a>
-		<a class="btn-common mgR-10" href="/payment/index?redirect=%2Flisting%2Fupdate-status%3Fid%3D79153%26url%3D%252Flisting%252Fnotify-success"><?= Yii::t("ad", "Nhập mã coupon") ?></a></div>
+		<a class="btn-common mgR-10" href="<?= Url::to(['payment/index', 'redirect' => Url::to(['/ad/update-status', 'id' => $productId, 'url' => Url::to(['/ad/notify-success'])])]) ?>"><?= Yii::t("ad", "Nạp thêm keys") ?></a>
+		<a class="btn-common mgR-10" href="<?= Url::to(['payment/index', 'redirect' => Url::to(['/ad/update-status', 'id' => $productId, 'url' => Url::to(['/ad/notify-success'])])]) ?>"><?= Yii::t("ad", "Nhập mã coupon") ?></a></div>
 	</div>
 </div>
 <div class="notify" style="margin-top: 12px;">
