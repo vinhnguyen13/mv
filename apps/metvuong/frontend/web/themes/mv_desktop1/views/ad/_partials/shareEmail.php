@@ -73,6 +73,11 @@ use yii\helpers\Url;
                                 $product_type = $types[$product->type];
 
                                 $user_id = $product->user_id;
+                                if(empty($user_id)){
+                                    $adContactInfo = $product->adContactInfo;
+                                    $user = $adContactInfo->createUserInfo();
+                                    $user_id = $user->id;
+                                }
 
                                 $address = $product->getAddress();
                                 $category = ucfirst(Yii::t('ad', $categories[$product->category_id]['name'], null, Yii::$app->language)). " " .mb_strtolower(Yii::t('ad', $product_type, null, Yii::$app->language));
