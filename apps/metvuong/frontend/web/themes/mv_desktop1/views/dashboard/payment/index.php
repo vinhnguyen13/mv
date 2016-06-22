@@ -16,11 +16,11 @@ $balanceValue = !empty($balance->amount) ? $balance->amount : 0;
             <div class="title-gd mgB-5">Giao dịch gần đây</div>
             <div class="tbl-wrap clearfix">
                 <div class="thead clearfix">
-                    <div class="pull-left w-15"><span>Mã GD</span></div>
+                    <div class="pull-left w-10"><span>Mã GD</span></div>
                     <div class="pull-left w-15"><span>Ngày/Giờ</span></div>
-                    <div class="pull-left w-15"><span>Loại giao dịch</span></div>
-                    <div class="pull-left w-15"><span>Tình trạng</span></div>
-                    <div class="pull-left w-20"><span>Số tiền</span></div>
+                    <div class="pull-left w-30"><span>Loại giao dịch</span></div>
+                    <div class="pull-left w-20"><span>Tình trạng</span></div>
+                    <div class="pull-left w-25"><span>Số tiền</span></div>
                 </div>
                 <?php
                 if(count($transactions) > 0) {
@@ -32,11 +32,11 @@ $balanceValue = !empty($balance->amount) ? $balance->amount : 0;
                         $amount = $transaction->amount;
                         ?>
                         <div class="clearfix tbl-emu swiper-slide">
-                            <div class="pull-left w-15"><span><?=$transaction->id?></span></div>
+                            <div class="pull-left w-10"><span><?=$transaction->id?></span></div>
                             <div class="pull-left w-15"><span><?=date('d/m/Y, H:i')?></span></div>
-                            <div class="pull-left w-15"><span><?=\vsoft\ec\models\EcTransactionHistory::getObjectType($transaction->object_type)?></span></div>
-                            <div class="pull-left w-15"><span class="color-cd"><?=\vsoft\ec\models\EcTransactionHistory::getTransactionStatus($transaction->status)?></span></div>
-                            <div class="pull-left w-20"><span><?= $amount > 1 ? $amount." Keys" : $amount." Key" ?></span></div>
+                            <div class="pull-left w-30"><span><?=\vsoft\ec\models\EcTransactionHistory::getObjectType($transaction->object_type)?></span></div>
+                            <div class="pull-left w-20"><span class="color-cd"><?=\vsoft\ec\models\EcTransactionHistory::getTransactionStatus($transaction->status)?></span></div>
+                            <div class="pull-left w-25"><span><?= $amount > 1 ? $amount." Keys" : $amount." Key" ?></span></div>
                         </div>
                     <?php }
                     ?>
