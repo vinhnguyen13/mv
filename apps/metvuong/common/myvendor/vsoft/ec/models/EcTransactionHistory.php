@@ -59,7 +59,7 @@ class EcTransactionHistory extends EcTransactionHistoryBase
     public static function getTransactionStatus($id=null)
     {
         $data = [
-            self::STATUS_TRANSFERRED => Module::t('ec', 'Success'),
+            self::STATUS_SUCCESS => Module::t('ec', 'Success'),
             self::STATUS_FAIL => Module::t('ec', 'Failed'),
             self::STATUS_PENDING => Module::t('ec', 'Pending'),
             self::STATUS_PROCESSING => Module::t('ec', 'Processing'),
