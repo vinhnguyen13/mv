@@ -5,8 +5,19 @@
  * Date: 2/26/2016
  * Time: 9:51 AM
  */
+use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+
+$request = Yii::$app->request;
+$cookie = $request->cookies['copayment'];
+if(empty($cookie)){
+    Yii::$app->response->cookies->add(new \yii\web\Cookie([
+        'name' => 'copayment',
+        'value' => true
+    ]));
+    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
+}
 ?>
 <div class="type-payment w-50">
 	<h3>Chọn phương thức thanh toán</h3>
