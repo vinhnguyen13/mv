@@ -98,6 +98,15 @@ use yii\helpers\Url;
 <?php 
     $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/custom-datepicker.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'jquery-ui');
     Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery-ui.js', ['position'=>View::POS_END]);
+    $request = Yii::$app->request;
+    $cookie = $request->cookies['codashboard'];
+    if(empty($cookie)){
+        Yii::$app->response->cookies->add(new \yii\web\Cookie([
+            'name' => 'codashboard',
+            'value' => true
+        ]));
+        $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
+    }
 ?>    
 <script>
 	$(document).ready(function () {

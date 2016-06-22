@@ -32,6 +32,16 @@ EOD;
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_END]);
+
+    $request = Yii::$app->request;
+    $cookie = $request->cookies['colisting'];
+    if(empty($cookie)){
+        Yii::$app->response->cookies->add(new \yii\web\Cookie([
+            'name' => 'colisting',
+            'value' => true
+        ]));
+        $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
+    }
 ?>
 <div class="result-listing clearfix">
 	<div class="wrap-listing-item">

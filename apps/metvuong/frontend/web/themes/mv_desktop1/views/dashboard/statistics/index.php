@@ -4,6 +4,15 @@ use yii\web\View;
 use yii\helpers\Url;
 
 Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_HEAD]);
+$request = Yii::$app->request;
+$cookie = $request->cookies['costatistic'];
+if(empty($cookie)){
+    Yii::$app->response->cookies->add(new \yii\web\Cookie([
+        'name' => 'costatistic',
+        'value' => true
+    ]));
+    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
+}
 
 $id = $product->id;
 $address = $product->getAddress();

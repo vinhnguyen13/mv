@@ -6,6 +6,15 @@ use vsoft\ad\models\AdProduct;
 use yii\web\View;
 
 $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-helper.js', ['position'=>View::POS_HEAD]);
+$request = Yii::$app->request;
+$cookie = $request->cookies['cohomepage'];
+if(empty($cookie)){
+    Yii::$app->response->cookies->add(new \yii\web\Cookie([
+        'name' => 'cohomepage',
+        'value' => true
+    ]));
+    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
+}
 ?>
 <div class="page-home">
 
