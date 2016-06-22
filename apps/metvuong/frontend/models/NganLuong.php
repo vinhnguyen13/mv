@@ -15,7 +15,11 @@ use yii\base\Component;
 class NganLuong extends Component
 {
     const PRICE_LIST = [2000,50000,100000,200000,500000];
+    const METHOD_BANKING = 1;
+    const METHOD_MOBILE_CARD = 2;
+    const METHOD_SMS = 3;
     protected $nlcheckout;
+
     public function init()
     {
         if(!defined('URL_API')){
@@ -50,7 +54,7 @@ class NganLuong extends Component
             $array_items=array();
             $payment_method =$_POST['option_payment'];
             $bank_code = @$_POST['bankcode'];
-            $order_code = $data['transaction_id'];
+            $order_code = $data['transaction_code'];
 
             $payment_type ='';
             $discount_amount =0;
@@ -97,7 +101,21 @@ class NganLuong extends Component
             //var_dump($nl_result); die;
             if ($nl_result->error_code =='00'){
                 //Cập nhât order với token  $nl_result->token để sử dụng check hoàn thành sau này
-                Payment::me()->transactionNganluong($nl_result->token, $data['transaction_id']);
+
+
+                Transaction::me()->saveTransaction($data['transaction_code'], [
+                    'status'=>Transaction::STATUS_PROCESSING,
+                ]);
+                Payment::me()->transactionNganluong($nl_result->token, [
+                    'transaction_code'=>$data['transaction_code'],
+                    'amount'=>$total_amount,
+                    'buyer_fullname'=>$buyer_fullname,
+                    'buyer_email'=>$buyer_email,
+                    'buyer_mobile'=>$buyer_mobile,
+                    'bankcode'=>$bank_code,
+                    'option_payment'=>$payment_method,
+                    'status'=>Transaction::STATUS_PENDING,
+                ]);
                 header('Location: '.(string)$nl_result->checkout_url);
                 exit;
             }else{

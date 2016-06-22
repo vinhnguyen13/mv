@@ -11,6 +11,7 @@ namespace frontend\models;
 use Yii;
 use yii\base\Component;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 
 
@@ -23,14 +24,24 @@ class Payment extends Component
 
     public function payWithNganLuong(){
         if(isset($_POST['nlpayment'])){
-            NganLuong::me()->payByBank([
+            $transaction_code = md5(uniqid(rand(), true));
+            Transaction::me()->saveTransaction($transaction_code, [
+                'code'=>$transaction_code,
+                'user_id'=>Yii::$app->user->identity->id,
+                'object_id'=>NganLuong::METHOD_BANKING,
+                'object_type'=>Transaction::OBJECT_TYPE_BUY_KEYS,
+                'amount'=>Transaction::me()->convertVND2Keys($_POST['total_amount']),
+                'balance'=>0,
+                'status'=>Transaction::STATUS_PENDING,
+            ]);
+            return NganLuong::me()->payByBank([
                 'return_url' => Url::to(['/payment/success'], true),
-                'cancel_url' => Url::to(['/payment/cancel', 'tid'=>'transactionid'], true),
-                'transaction_id' => 1,
+                'cancel_url' => Url::to(['/payment/cancel'], true),
+                'transaction_code' => $transaction_code,
             ]);
         }
         if(isset($_POST['NLNapThe'])){
-            NganLuong::me()->payByMobiCard();
+            return NganLuong::me()->payByMobiCard();
         }
     }
 
@@ -54,29 +65,41 @@ class Payment extends Component
         return true;
     }
 
-    public function transactionNganluong($token, $transactionID){
+
+
+    public function transactionNganluong($token, $data){
         $transaction_nganluong = $this->getTransactionNganluong(['token'=>$token]);
         if(empty($transaction_nganluong)){
-            Yii::$app->db->createCommand()
-                ->insert('ec_transaction_nganluong', [
-                    'token' => $token,
-                    'transaction_id' => $transactionID,
-                ])->execute();
+            $columns = ArrayHelper::merge([
+                'token' => $token,
+                'created_at' => time(),
+            ], $data);
+            Yii::$app->db->createCommand()->insert('ec_transaction_nganluong', $columns)->execute();
         }
         return $transaction_nganluong;
     }
 
     public function getTransactionNganluong($condition){
         $query = new Query();
-        $transaction_nganluong = $query->select('id,token,transaction_id')->from('ec_transaction_nganluong')->where($condition)->one();
+        $transaction_nganluong = $query->select('id,token,transaction_code')->from('ec_transaction_nganluong')->where($condition)->one();
         if(!empty($transaction_nganluong)){
             return $transaction_nganluong;
         }
     }
 
-    public function getTransaction($condition){
+    public function getTransactionWithNganluong($condition){
         $query = new Query();
-        $transaction = $query->select('id,user_id,object_id,object_type,amount,balance,action_type,action_detail,status,params,created_at,updated_at')
+        $transaction_nganluong = $query->select('code,user_id,object_id,object_type,b.amount,balance,b.status,params,b.created_at,b.updated_at')->from('ec_transaction_nganluong a')
+            ->join('INNER JOIN', 'ec_transaction_history b', 'b.code = a.transaction_code')
+            ->where($condition)->one();
+        if(!empty($transaction_nganluong)){
+            return $transaction_nganluong;
+        }
+    }
+
+    public function getTransactionMetVuong($condition){
+        $query = new Query();
+        $transaction = $query->select('id,code,user_id,object_id,object_type,amount,balance,status,params,created_at,updated_at')
             ->from('ec_transaction_history')->where($condition)->one();
         if(!empty($transaction)){
             return $transaction;
@@ -89,27 +112,41 @@ class Payment extends Component
         try {
             $getToken = NganLuong::me()->getTransactionDetail($token);
             if(!empty($getToken->order_code)){
-                $transactionHistory = $this->getTransaction(['id'=>$getToken->order_code]);
-                if(!empty($transactionHistory['id'])){
+                $transactionNganLuong = $this->getTransactionWithNganluong(['token'=>$token]);
+                if(!empty($transactionNganLuong['code'])){
+                    $balance = Yii::$app->user->identity->getBalance();
+                    $balanceValue = !empty($balance->amount) ? ($balance->amount + $transactionNganLuong['amount']) : $transactionNganLuong['amount'];
                     $checkUpdate = Yii::$app->db->createCommand()
                         ->update('ec_transaction_history', [
-                            'created_at' => time(),
-                        ], 'id=:id', [':id'=>$transactionHistory['id']])->execute();
+                            'status' => Transaction::STATUS_TRANSFERRED,
+                            'balance' => $balanceValue,
+                        ], 'code=:code', [':code'=>$transactionNganLuong['code']])->execute();
+                    Yii::$app->db->createCommand()
+                        ->update('ec_transaction_nganluong', [
+                            'status' => Transaction::STATUS_TRANSFERRED,
+                        ], 'transaction_code=:code', [':code'=>$transactionNganLuong['code']])->execute();
                     if($checkUpdate){
-                        $this->updateBalance($transactionHistory['user_id'], $transactionHistory['amount']);
+                        $this->updateBalance($transactionNganLuong['user_id'], $transactionNganLuong['amount']);
                     }
                 }
 
             }
             $transaction->commit();
+            return true;
         } catch (\Exception $e) {
             $transaction->rollBack();
             throw $e;
         }
     }
 
+    /**
+     * @param $token
+     * @return bool
+     * @throws \Exception
+     * link http://localhost/payment/success?error_code=00&token=3221723-e66bec1fc53bff03b5aea93c694fdcc7
+     */
     public function success($token){
-        $this->processTransaction($token);
+        return $this->processTransaction($token);
     }
 
     public function cancel($tid){

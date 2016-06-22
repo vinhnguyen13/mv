@@ -18,7 +18,7 @@ class EcTransactionHistorySearch extends EcTransactionHistory
     public function rules()
     {
         return [
-            [['id', 'user_id', 'object_id', 'object_type', 'action_type', 'action_detail', 'charge_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'user_id', 'object_id', 'object_type', 'charge_id', 'status', 'created_at', 'updated_at'], 'integer'],
             [['amount'], 'number'],
             [['params'], 'safe'],
         ];
@@ -67,8 +67,6 @@ class EcTransactionHistorySearch extends EcTransactionHistory
             'object_id' => $this->object_id,
             'object_type' => $this->object_type,
             'amount' => $this->amount,
-            'action_type' => $this->action_type,
-            'action_detail' => $this->action_detail,
             'charge_id' => $this->charge_id,
             'status' => $this->status,
             'created_at' => $this->created_at,

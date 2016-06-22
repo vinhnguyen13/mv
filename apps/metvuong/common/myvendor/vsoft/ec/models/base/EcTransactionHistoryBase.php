@@ -8,12 +8,12 @@ use Yii;
  * This is the model class for table "ec_transaction_history".
  *
  * @property string $id
+ * @property string $code
  * @property integer $user_id
  * @property integer $object_id
  * @property integer $object_type
- * @property string $amount
- * @property integer $action_type
- * @property integer $action_detail
+ * @property integer $amount
+ * @property string $balance
  * @property integer $charge_id
  * @property integer $status
  * @property string $params
@@ -39,11 +39,9 @@ class EcTransactionHistoryBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'object_id', 'object_type', 'action_type', 'action_detail', 'charge_id', 'status', 'created_at', 'updated_at'], 'integer'],
-            [['amount'], 'number'],
-            [['params'], 'string', 'max' => 32],
-            [['charge_id'], 'exist', 'skipOnError' => true, 'targetClass' => EcCharge::className(), 'targetAttribute' => ['charge_id' => 'id']],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
+            [['user_id', 'object_id', 'object_type', 'amount', 'balance', 'charge_id', 'status', 'created_at', 'updated_at'], 'integer'],
+            [['params'], 'string'],
+            [['code'], 'string', 'max' => 255]
         ];
     }
 
@@ -53,18 +51,18 @@ class EcTransactionHistoryBase extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => Yii::t('ec', 'ID'),
-            'user_id' => Yii::t('ec', 'User ID'),
-            'object_id' => Yii::t('ec', 'Object ID'),
-            'object_type' => Yii::t('ec', 'Object Type'),
-            'amount' => Yii::t('ec', 'Amount'),
-            'action_type' => Yii::t('ec', 'Action Type'),
-            'action_detail' => Yii::t('ec', 'Action Detail'),
-            'charge_id' => Yii::t('ec', 'Charge ID'),
-            'status' => Yii::t('ec', 'Status'),
-            'params' => Yii::t('ec', 'Params'),
-            'created_at' => Yii::t('ec', 'Created At'),
-            'updated_at' => Yii::t('ec', 'Updated At'),
+            'id' => 'ID',
+            'code' => 'Code',
+            'user_id' => 'User ID',
+            'object_id' => 'Object ID',
+            'object_type' => 'Object Type',
+            'amount' => 'Amount',
+            'balance' => 'Balance',
+            'charge_id' => 'Charge ID',
+            'status' => 'Status',
+            'params' => 'Params',
+            'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
         ];
     }
 
