@@ -185,20 +185,19 @@ class MemberController extends Controller
                     $token->delete();
                     $user_id = $user->id;
                     $email = $user->email;
+                    $contacts = AdContactInfo::getDb()->cache(function () use ($email) {
+                        $sql = "SELECT group_concat(product_id) as list_id FROM ad_contact_info where email = '{$email}'";
+                        return AdContactInfo::getDb()->createCommand($sql)->queryAll();
+                    });
+
+                    if (count($contacts) && isset($contacts[0]["list_id"])) {
+                        $list_id = $contacts[0]["list_id"];
+                        $update_sql = "UPDATE `ad_product` SET `user_id`={$user_id} WHERE id IN ({$list_id})";
+                        AdProduct::getDb()->createCommand($update_sql)->execute();
+                    }
 
                     $mark_email = MarkEmail::checkEmailExists($email);
                     if (count($mark_email) > 0) {
-                        $contacts = AdContactInfo::getDb()->cache(function () use ($email) {
-                            $sql = "SELECT group_concat(product_id) as list_id FROM ad_contact_info where email = '{$email}'";
-                            return AdContactInfo::getDb()->createCommand($sql)->queryAll();
-                        });
-
-                        if (count($contacts) && isset($contacts[0]["list_id"])) {
-                            $list_id = $contacts[0]["list_id"];
-                            $update_sql = "UPDATE `ad_product` SET `user_id`={$user_id} WHERE id IN ({$list_id})";
-                            AdProduct::getDb()->createCommand($update_sql)->execute();
-                        }
-
                         $new_token = new Token();
                         $new_token->user_id = $user->id;
                         $new_token->code = Yii::$app->security->generateRandomString();
