@@ -32,19 +32,3 @@ use yii\helpers\Url;
 		</div>
 	</div>
 </div>
-<script>
-    $(document).ready(function () {
-        var intro = $.hemiIntro({
-            debug: false,
-            steps: [
-                {
-                    selector: ".type-payment",
-                    placement: "left",
-                    content: "Metvuong.com caters to a variety of payment system to maximize your convenience, simply select the amount of keys you want to buy, and your method of payment. THe more you buy, the cheaper it is.",
-                }
-            ]
-        });
-
-        intro.start();
-    });
-</script>
