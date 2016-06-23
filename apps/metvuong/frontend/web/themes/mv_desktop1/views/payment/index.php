@@ -42,32 +42,26 @@ if(empty($cookie)){
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
 }
 ?>
-<div class="payment-gr">
-	<div class="type-payment w-50">
-		
-		<div class="title-box">Bạn có mã khuyến mãi ?</div>
-		<div class="input-couple mgB-20">
-			<p class="mgB-10">Nhập Mã Coupon:</p>
-			<input type="text" class="d-ib w-30 mgR-15 form-control">
-			<button type="submit" class="btn-common">Gửi</button>
+<?php
+$profile = Yii::$app->user->identity->profile;
+?>
+<div class="type-payment w-50">
+	<?= $this->render('/coupon/_partials/coupon'); ?>
+	<div class="title-box"><?=Yii::t('payment', 'Payment method')?></div>
+	<ul class="nav nav-tabs tab-payment" role="tablist">
+		<li role="presentation" class="active"><a href="#tab-atm" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('payment', 'Banking')?></a></li>
+		<li role="presentation" class=""><a href="#tab-thecao" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('payment', 'Mobile Card')?></a></li>
+		<li role="presentation" class=""><a href="#tab-sms" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('payment', 'SMS')?></a></li>
+	</ul>
+	<div class="tab-content">
+		<div role="tabpanel" class="tab-pane active" id="tab-atm">
+			<?= $this->render('/payment/_partials/bank', ['profile'=>$profile]); ?>
 		</div>
-
-		<div class="title-box">Chọn phương thức thanh toán</div>
-		<ul class="nav nav-tabs tab-payment" role="tablist">
-			<li role="presentation" class="active"><a href="#tab-atm" aria-controls="home" role="tab" data-toggle="tab">ATM</a></li>
-			<li role="presentation" class=""><a href="#tab-thecao" aria-controls="home" role="tab" data-toggle="tab">Thẻ cào</a></li>
-			<li role="presentation" class=""><a href="#tab-sms" aria-controls="home" role="tab" data-toggle="tab">SMS</a></li>
-		</ul>
-		<div class="tab-content">
-			<div role="tabpanel" class="tab-pane active" id="tab-atm">
-				<?= $this->render('/payment/_partials/bank'); ?>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="tab-thecao">
-				<?= $this->render('/payment/_partials/card'); ?>
-			</div>
-			<div role="tabpanel" class="tab-pane" id="tab-sms">
-				<?= $this->render('/payment/_partials/sms'); ?>
-			</div>
+		<div role="tabpanel" class="tab-pane" id="tab-thecao">
+			<?= $this->render('/payment/_partials/card', ['profile'=>$profile]); ?>
+		</div>
+		<div role="tabpanel" class="tab-pane" id="tab-sms">
+			<?= $this->render('/payment/_partials/sms', ['profile'=>$profile]); ?>
 		</div>
 	</div>
 </div>
