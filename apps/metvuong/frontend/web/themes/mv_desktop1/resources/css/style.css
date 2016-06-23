@@ -6142,7 +6142,7 @@ footer li a {
         width: 100%;
         padding: 0;
         margin: 0;
-        border-bottom: solid 1px #dcdcdc;
+        /* border-bottom: solid 1px #dcdcdc; */
     }
     .item-listing .img-intro {
         width: 170px;
@@ -11654,14 +11654,18 @@ height: 190px;
 #listing-list > ul > li a {
     padding: 10px;
     display: block;
+    border-bottom: solid 1px #dcdcdc; */
 }
 #listing-list > ul > li a:hover {
     color: inherit;
     background: #FBFBFB;
 }
 #listing-list > ul > li a.vip {
-    /* background: red; */
-    border: 5px solid #f72626;
+    border: 1px solid red;
+    border-top: none;
+}
+#listing-list > ul > li:first-child a.vip {
+    border-top: 1px solid red;
 }
 @media (max-width: 985px) {
     #listing-list .pic-intro {
@@ -12871,4 +12875,12 @@ ul.cardList li {
 .disabled-rc {
     opacity: .7;
     cursor: not-allowed;
+}
+.val-payment {
+    margin-bottom: 20px;
+}
+.val-payment li {
+    font-weight: 600;
+    margin-right: 10px;
+    float: left;
 }
