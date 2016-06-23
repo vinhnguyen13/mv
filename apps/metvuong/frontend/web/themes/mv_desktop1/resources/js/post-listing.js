@@ -555,6 +555,27 @@ $(document).ready(function(){
 		self.input.on('keyup', self._hideError);
 	};
 	
+	$('#notify').on('click', '.boost', function(e){
+		e.preventDefault();
+		
+		$('body').loading();
+		
+		$.get($(this).attr('href'), function(r){
+			
+			$('body').loading({done: true});
+			
+			if(!r.success) {
+				$('#notify-boost-charge').show();
+			}
+			
+			$('.notify-post').hide();
+			$('.notify-boost').show();
+			
+			$('#notify-boost-message').text(r.message);
+			$('#notify-boost-key').find('.key').text(r.amount);
+		});
+	});
+	
 	$('#preview').click(function(){
 		if(form.validate()) {
 			errorHint.hide();

@@ -939,7 +939,7 @@ class AdController extends Controller
 					
 					$template = $this->renderPartial('/dashboard/ad/list', ['products' => [$product]]);
 					
-					return ['success' => true, 'message' => \Yii::t("listing", "Tin đã được boost thành công."), 'template' => $template];
+					return ['success' => true, 'amount' => $balance->amount, 'message' => \Yii::t("listing", "Tin đã được boost thành công."), 'template' => $template];
     			} else {
     				return ['success' => false, 'message' => \Yii::t("listing", "Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.")];
     			}
