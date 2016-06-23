@@ -43,7 +43,32 @@ EOD;
         ]));
 ?>
 <script>
-    var txtTour = ["Welcome to the Metvuong Buy Page, this is functionally the same as the Metvuong Rent Page, here up top you can alter your search parameters, and the results will change dynamically.","The map on the bottom let's you see where your potential listings lie, you can click on them to bring them up for closer inspection.","The list on the right are the listings that are the closest to your search parameters, categorized by our MV algorithim to ensure the quality as well as relevancy to your listing."];
+	$(document).ready(function () {
+		var txtTour = ["Welcome to the Metvuong Buy Page, this is functionally the same as the Metvuong Rent Page, here up top you can alter your search parameters, and the results will change dynamically.","The map on the bottom let's you see where your potential listings lie, you can click on them to bring them up for closer inspection.","The list on the right are the listings that are the closest to your search parameters, categorized by our MV algorithim to ensure the quality as well as relevancy to your listing."];
+	    var intro = $.hemiIntro({
+	        debug: false,
+	        steps: [
+	            {
+	                selector: ".toggle-search",
+	                placement: "bottom",
+	                content: txtTour[0],
+	            },{
+	            	selector: "#map-wrap",
+	            	placement: "right",
+	            	content: txtTour[1]
+	            },{
+	            	selector: ".wrap-listing",
+	            	placement: "left",
+	            	content: txtTour[2]
+	            }
+	        ],
+	        onComplete: function (item) {
+	        	
+	        }
+	    });
+
+	    intro.start();
+	});
 </script>
 <?php
         $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);

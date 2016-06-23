@@ -16,7 +16,28 @@ if(empty($cookie)){
     ]));
 ?>
 <script>
-    var txtTour = ["At the top you will find the HomeBar, this bar will always be visible to you, and will let you quickly navigate to all of Metvuong's key Features.","<p class='mgB-10'>The main feature of the Metvuong homepage is our Search Bar. It will let you quickly select how you want to search for your property, whether it be through it's location (city, district, ward and street) or by which Development it belongs to.</p><p>If you know the MVID of your listing, you can also use this as a shortcut to take you to the listing that you want.</p>"];
+    $(document).ready(function () {
+        var txtTour = ["At the top you will find the HomeBar, this bar will always be visible to you, and will let you quickly navigate to all of Metvuong's key Features.","<p class='mgB-10'>The main feature of the Metvuong homepage is our Search Bar. It will let you quickly select how you want to search for your property, whether it be through it's location (city, district, ward and street) or by which Development it belongs to.</p><p>If you know the MVID of your listing, you can also use this as a shortcut to take you to the listing that you want.</p>"];
+        var intro = $.hemiIntro({
+            debug: false,
+            steps: [
+                {
+                    selector: ".dt-header",
+                    placement: "bottom",
+                    content: txtTour[0],
+                },{
+                    selector: ".search-wrap-home",
+                    placement: "bottom",
+                    content: txtTour[1]
+                }
+            ],
+            onComplete: function (item) {
+                
+            }
+        });
+
+        intro.start();
+    });
 </script>
 <?php
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);

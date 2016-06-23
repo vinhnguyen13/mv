@@ -14,7 +14,24 @@ if(empty($cookie)){
     ]));
 ?>
 <script>
-    var txtTour = ["Metvuong.com caters to a variety of payment system to maximize your convenience, simply select the amount of keys you want to buy, and your method of payment. THe more you buy, the cheaper it is."];
+    $(document).ready(function () {
+        var txtTour = ["Metvuong.com caters to a variety of payment system to maximize your convenience, simply select the amount of keys you want to buy, and your method of payment. THe more you buy, the cheaper it is."];
+        var intro = $.hemiIntro({
+            debug: false,
+            steps: [
+                {
+                    selector: ".type-payment",
+                    placement: "left",
+                    content: txtTour[0],
+                }
+            ],
+            onComplete: function (item) {
+                
+            }
+        });
+
+        intro.start();
+    });
 </script>
 <?php
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
