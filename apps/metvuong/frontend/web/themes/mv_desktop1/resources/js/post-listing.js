@@ -266,15 +266,19 @@ $(document).ready(function(){
 		self._hideError = function() {
 			self.hideError($(this));
 			
-			var errorFields = form.getFormErrors();
+			self.buildErrorHint();
+			
+			point.calc();
+		};
+		
+		self.buildErrorHint = function() {
+			var errorFields = self.getFormErrors();
 			
 			if(errorFields.length) {
 				$('#error-fields').text(errorFields.join(', ') + '.');
 			} else {
 				errorHint.hide();
 			}
-			
-			point.calc();
 		};
 		
 		self.hasError = function(el) {
@@ -564,10 +568,7 @@ $(document).ready(function(){
 			form.showPreview();
 		} else {
 			errorHint.show();
-			
-			var errorFields = form.getFormErrors();
-			
-			$('#error-fields').text(errorFields.join(', ') + '.');
+			form.buildErrorHint();
 		}
 	});
 	
@@ -761,11 +762,13 @@ $(document).ready(function(){
 				
 				form.fields.cityId.prop("disabled", true);
 				select2Select(form.fields.cityId, r.city_id);
+				form.hideError(form.fields.cityId);
 
 				form.fields.districtId.prop("disabled", true);
 				show(form.fields.districtId);
 				select2Change(form.fields.districtId, r.districts);
 				select2Select(form.fields.districtId, r.district_id);
+				form.hideError(form.fields.districtId);
 
 				adw.show();
 
@@ -773,6 +776,7 @@ $(document).ready(function(){
 				if(r.ward_id) {
 					form.fields.wardId.prop("disabled", true);
 					select2Select(form.fields.wardId, r.ward_id);
+					form.hideError(form.fields.wardId);
 				} else {
 					form.fields.wardId.prop("disabled", false);
 					select2Select(form.fields.wardId, '');
@@ -782,6 +786,7 @@ $(document).ready(function(){
 				if(r.street_id) {
 					form.fields.streetId.prop("disabled", true);
 					select2Select(form.fields.streetId, r.street_id);
+					form.hideError(form.fields.streetId);
 				} else {
 					form.fields.streetId.prop("disabled", false);
 					select2Select(form.fields.streetId, '');
@@ -795,6 +800,8 @@ $(document).ready(function(){
 					form.fields.homeNo.val('');
 				}
 
+				form.buildErrorHint();
+				
 				point.calc();
 			});
 		});
