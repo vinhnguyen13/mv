@@ -9855,7 +9855,7 @@ margin-right: 5px;
 .wrap-attr-detail textarea {
     border: 1px solid #d4d4d4;
     width: 100%;
-    height: 100px;
+    height: 250px;
     resize: none;
     padding: 5px;
 }
@@ -12843,6 +12843,7 @@ ul.cardList li {
 #review-listing .left-attr-detail {
     margin-bottom: 15px;
 }
+.payment-gr .hemi-intro-popover,
 .post-listing .hemi-intro-popover,
 .u-allduan .hemi-intro-popover {
     top: 60px !important;

@@ -259,7 +259,7 @@
 					offsetTop = currentStep.offsetTop;
 				}
 				var called = false;
-				if ( currentElement.hasClass('wrap-frm-listing') || currentElement.hasClass('wrap-list-duan') ) {
+				if ( currentElement.hasClass('wrap-frm-listing') || currentElement.hasClass('wrap-list-duan') || currentElement.hasClass('type-payment') ) {
 					if (called === false) {
 						callback();
 						called = true;
