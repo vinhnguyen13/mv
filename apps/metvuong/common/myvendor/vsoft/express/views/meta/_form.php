@@ -31,7 +31,7 @@ $metadata = \yii\helpers\Json::decode($model->metadata,true);
     echo Html::label('Title');
     echo Html::input('text','og:title',$metadata["og:title"],['class'=>'form-control form-group']);
 
-    echo Html::label('Image');
+    echo Html::label('Image Url');
     echo Html::input('text','og:image',$metadata["og:image"],['class'=>'form-control form-group']);
 
     echo Html::label('Author');

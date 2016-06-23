@@ -18,7 +18,8 @@ class CouponCodeSearch extends CouponCode
     public function rules()
     {
         return [
-            [['id', 'cp_event_id', 'status', 'count', 'type', 'created_at', 'updated_at'], 'integer'],
+            [['id', 'cp_event_id', 'status', 'count', 'type', 'created_at', 'updated_at', 'amount_type'], 'integer'],
+            [['amount'], 'integer', 'integerOnly' => false],
             [['code'], 'safe'],
         ];
     }
@@ -47,6 +48,7 @@ class CouponCodeSearch extends CouponCode
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['created_at'=>SORT_DESC]]
         ]);
 
         $this->load($params);
@@ -64,8 +66,9 @@ class CouponCodeSearch extends CouponCode
             'status' => $this->status,
             'count' => $this->count,
             'type' => $this->type,
+            'amount' => $this->amount,
+            'amount_type' => $this->amount_type,
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ]);
 
         $query->andFilterWhere(['like', 'code', $this->code]);

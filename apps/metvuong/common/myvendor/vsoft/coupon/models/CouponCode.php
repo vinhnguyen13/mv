@@ -20,6 +20,8 @@ use yii\db\Expression;
  * @property integer $type
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $amount
+ * @property integer $amount_type
  *
  * @property CouponEvent $couponEvent
  */

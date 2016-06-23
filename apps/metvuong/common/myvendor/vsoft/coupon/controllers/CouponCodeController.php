@@ -106,9 +106,14 @@ class CouponCodeController extends Controller
                 if(!empty($code)){
                     $event_id = (isset($post["CouponCode"]["cp_event_id"])) ? intval($post["CouponCode"]["cp_event_id"]) : 0;
                     $type = (isset($post["CouponCode"]["type"])) ? intval($post["CouponCode"]["type"]) : 2;
+                    $amount = (isset($post["CouponCode"]["amount"])) ? intval($post["CouponCode"]["amount"]) : 0;
+                    $amount_type = (isset($post["CouponCode"]["amount_type"])) ? intval($post["CouponCode"]["amount_type"]) : 1;
                     $model = new CouponCode();
                     $model->code = $code;
                     $model->cp_event_id = $event_id;
+                    $model->type = $type;
+                    $model->amount = $amount;
+                    $model->amount_type = $amount_type;
                     $model->type = $type;
                     $model->save(false);
                 }

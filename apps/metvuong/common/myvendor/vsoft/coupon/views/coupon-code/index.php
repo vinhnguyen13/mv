@@ -52,6 +52,14 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'filter' => Html::activeDropDownList($searchModel, 'type',  \vsoft\coupon\models\CouponCode::getTypes(),['class'=>'form-control','prompt' => 'All']),
             ],
+            'amount',
+            [
+                'attribute' => 'amount_type',
+                'value' => function ($model) {
+                    return \vsoft\coupon\models\CouponCode::getAmountTypes($model->amount_type);
+                },
+                'filter' => Html::activeDropDownList($searchModel, 'amount_type', \vsoft\coupon\models\CouponCode::getAmountTypes(),['class'=>'form-control','prompt' => 'All']),
+            ],
             [
                 'attribute' => 'created_at',
                 'value' => function ($model) {
@@ -60,6 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => ['datetime', 'php: d/m/Y H:i a'],
                 'filter' => false
             ],
+
             // 'updated_at',
 
             ['class' => 'yii\grid\ActionColumn'],
