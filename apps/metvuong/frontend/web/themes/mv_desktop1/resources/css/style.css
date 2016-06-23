@@ -12843,9 +12843,11 @@ ul.cardList li {
 #review-listing .left-attr-detail {
     margin-bottom: 15px;
 }
+.post-listing .hemi-intro-popover,
 .u-allduan .hemi-intro-popover {
     top: 60px !important;
 }
+.post-listing .popover.left>.arrow,
 .u-allduan .popover.left>.arrow {
     top: 50% !important;
 }

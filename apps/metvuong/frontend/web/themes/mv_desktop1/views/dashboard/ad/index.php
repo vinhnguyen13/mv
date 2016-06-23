@@ -130,7 +130,7 @@ use yii\helpers\Url;
         });
 
         intro.start();
-        
+
     });
 </script>
 <?php

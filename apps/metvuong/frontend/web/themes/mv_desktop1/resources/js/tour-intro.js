@@ -259,14 +259,22 @@
 					offsetTop = currentStep.offsetTop;
 				}
 				var called = false;
-				$('html, body').animate({
-					scrollTop: currentElement.offset().top - offsetTop - 70
-				}, plugin.options.scroll.anmationSpeed, function () {
+				if ( currentElement.hasClass('wrap-frm-listing') || currentElement.hasClass('wrap-list-duan') ) {
 					if (called === false) {
 						callback();
 						called = true;
 					}
-				});
+				}else {
+					$('html, body').animate({
+						scrollTop: currentElement.offset().top - offsetTop - 70
+					}, plugin.options.scroll.anmationSpeed, function () {
+						if (called === false) {
+							callback();
+							called = true;
+						}
+					});	
+				}
+				
 			} else {
 				callback();
 			}
