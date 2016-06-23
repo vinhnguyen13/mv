@@ -298,8 +298,8 @@ if(!isset($cookie['cohomepage']) || empty($cookie['cohomepage'])){
             <!-- <div class="title-sub"><?= Yii::t('general', 'LIÊN HỆ') ?></div> -->
             <div class="clearfix">
                 <div class="box-about">
-                    <div class="color-cd font-600 fs-17 mgB-10">Về MetVuong</div>
-                    <p class="fs-14 lh-24 text-justify">Metvuong.com là phương bất động sản. Tìm kiếm hay mua và bán Bất động sản sẽ dễ dàng hơn bao giờ hết với <a href="/" class="text-decor color-cd">metvuong.com</a>. Với hệ thống thông tin bát nháo hiện nay, ta dễ dàng thất lạc trong hàng đống dữ liệu. Nhưng với <a href="/" class="text-decor color-cd">metvuong.com</a>, mọi rắc rối sẽ không còn nữa. Việc tìm, thuê hay mua bán một căn nhà hay một căn hộ chưa bao giờ dễ dàng như thế. Chuẩn xác và đơn giản, bất động sản chẳng còn là một vấn đề nan giải. </p>
+                    <div class="color-cd font-600 fs-17 mgB-10"><?=Yii::t('general', 'About Metvuong')?></div>
+                    <p class="fs-14 lh-24 text-justify"><?=Yii::t('general',"Metvuong.com là phương bất động sản. Tìm kiếm hay mua và bán Bất động sản sẽ dễ dàng hơn bao giờ hết với <a href='/' class='text-decor color-cd'>metvuong.com</a>. Với hệ thống thông tin bát nháo hiện nay, ta dễ dàng thất lạc trong hàng đống dữ liệu. Nhưng với <a href='/' class='text-decor color-cd'>metvuong.com</a>, mọi rắc rối sẽ không còn nữa. Việc tìm, thuê hay mua bán một căn nhà hay một căn hộ chưa bao giờ dễ dàng như thế. Chuẩn xác và đơn giản, bất động sản chẳng còn là một vấn đề nan giải.")?></p>
                 </div>
                 <div class="wrap-img map-location">
                     <div class="img-show"><iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:EksyMSBOZ3V54buFbiBUcnVuZyBOZ-G6oW4sIELhur9uIE5naMOpLCBRdeG6rW4gMSwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe></div>

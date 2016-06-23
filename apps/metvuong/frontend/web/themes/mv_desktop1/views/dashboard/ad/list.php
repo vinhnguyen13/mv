@@ -112,7 +112,7 @@ $count_product = count($products);
 	                                </div>
 	                                <a href="#"  data-toggle="modal" data-target="#update-boost" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-boost"><?= Yii::t('statistic', 'Up') ?></a>
 	                                <div class="clearfix"></div>
-	                                <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor">Xem thống kê</span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
+	                                <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor"><?=Yii::t('statistic','Xem thống kê')?></span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
 	                            	<?php endif; ?>
                             	<?php endif; ?>
                             </div>
