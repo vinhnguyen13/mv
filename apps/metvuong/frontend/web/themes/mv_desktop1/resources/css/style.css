@@ -1219,7 +1219,7 @@ label {
 }
 .checkbox-ui input,
 .radio-ui input {
-    /* display: none; */
+    display: none;
 }
 .btn-post {
     
@@ -12867,8 +12867,8 @@ ul.cardList li {
     position: relative;
     z-index: 11;
 }
-.disabled-rc label,
+.disabled-rc:hover,
 .disabled-rc {
-    opacity: .6;
+    opacity: .7;
     cursor: not-allowed;
 }

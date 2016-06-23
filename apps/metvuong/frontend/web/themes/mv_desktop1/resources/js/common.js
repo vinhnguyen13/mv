@@ -329,6 +329,7 @@ $.fn.checkbox_ui = function (options) {
         function toggleCheck (e) {
             e.preventDefault();
             var _this = $(this);
+            if ( _this.hasClass('disabled-rc') ) return;
             if ( _this.find('input[type=checkbox]').prop("checked") ) {
                 _this.find('input[type=checkbox]').prop("checked", false);
                 checkedItem(_this, false);
