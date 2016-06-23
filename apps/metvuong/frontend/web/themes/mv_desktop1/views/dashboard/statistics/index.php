@@ -15,12 +15,12 @@ if(empty($cookie)){
 ?>
 <script>
     $(document).ready(function () {
-        var txtTour = ["Metvuong.com caters to a variety of payment system to maximize your convenience, simply select the amount of keys you want to buy, and your method of payment. THe more you buy, the cheaper it is."];
+        var txtTour = ["<p class='mgB-5'>Here you can clearly track the popularity of your listing, based on metrics such as the amount of views and favorites, as well as see this as a function of time.</p><p>You can also reach out to customers who may have searched for or favorited this listing, simply click on their account to send them a message</p>"];
         var intro = $.hemiIntro({
             debug: false,
             steps: [
                 {
-                    selector: ".type-payment",
+                    selector: ".statis section",
                     placement: "left",
                     content: txtTour[0],
                 }
