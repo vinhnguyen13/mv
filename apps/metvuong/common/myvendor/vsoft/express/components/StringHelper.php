@@ -12,7 +12,7 @@ class StringHelper extends SH {
 			$String = sprintf(\Yii::t('ad', '%s ngày trước'), $PreviousDay);
 		} elseif( $Time < $StartDay ) {
 			$PreviousTime = date( 'H:i', $Time );
-			$String = 'hôm qua, lúc ' . $PreviousTime;
+			$String = sprintf(\Yii::t('ad', 'hôm qua, lúc %s'), $PreviousTime);
 		} else {
 	
 			$Afternoon = $StartDay + 46799;

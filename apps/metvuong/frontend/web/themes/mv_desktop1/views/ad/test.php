@@ -3,6 +3,15 @@
 	
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/test.css');
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/test.js', ['position' => View::POS_END]);
+	
+	Yii::t('ad', 'Chổ gửi xe');
+	Yii::t('ad', 'Tập gym');
+	Yii::t('ad', 'Trường học');
+	Yii::t('ad', 'Công viên');
+	Yii::t('ad', 'Máy lạnh');
+	Yii::t('ad', 'Máy giặt');
+	Yii::t('ad', 'Tủ lạnh');
+	Yii::t('ad', 'Ti vi');
 ?>
 <div style="padding: 12px;">
 	<div class="clearfix nav">
