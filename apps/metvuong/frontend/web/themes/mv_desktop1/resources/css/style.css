@@ -1219,7 +1219,7 @@ label {
 }
 .checkbox-ui input,
 .radio-ui input {
-    display: none;
+    /* display: none; */
 }
 .btn-post {
     
@@ -4142,11 +4142,12 @@ html.mm-opening .mm-slideout {
     padding: 6px 10px;
 }
 .price-item .icon-mv {
-    font-size: 17px;
+    font-size: 20px;
     line-height: 100%;
     position: absolute;
     top: 0px;
     left: 0;
+    color: #000;
 }
 .price-attr {
     margin: 7px 0 8px 0;
@@ -4159,7 +4160,7 @@ html.mm-opening .mm-slideout {
     margin-right: 10px;
     float: none;
     margin-bottom: 0;
-    padding: 0 0 0 12px;
+    padding: 0 0 0 19px;
 }
 .right-attr-detail {
     overflow: hidden;
@@ -9351,7 +9352,7 @@ margin-right: 5px;
     -moz-osx-font-smoothing: grayscale;
 }
 .icon-pricing:before {
-    content: "\e93c";
+    content: "\e94a";
 }
 .icon-ben-xe-tram-xe:before {
     content: "\e939";
@@ -12865,4 +12866,9 @@ ul.cardList li {
 .listing-contai {
     position: relative;
     z-index: 11;
+}
+.disabled-rc label,
+.disabled-rc {
+    opacity: .6;
+    cursor: not-allowed;
 }

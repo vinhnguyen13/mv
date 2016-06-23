@@ -320,6 +320,10 @@ $.fn.checkbox_ui = function (options) {
             el.addClass('active');
         }
 
+        if ( el.find('input[type=checkbox]').attr('disabled') ) {
+            el.addClass('disabled-rc');
+        }
+
         el.on('click', toggleCheck);
 
         function toggleCheck (e) {
@@ -334,7 +338,7 @@ $.fn.checkbox_ui = function (options) {
             }
             _this.find('input[type=checkbox]').trigger('change');
 
-            sc.settings.done(_this.find('input[type=checkbox]'));
+            sc.settings.done(_this.find('input[type=checkbox]')); // CALLBACK
         }
 
         function checkedItem (item, flagChecked) {
