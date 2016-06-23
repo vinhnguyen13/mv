@@ -35,9 +35,6 @@ use yii\helpers\Url;
 			<li><a href="<?=Url::to(['site/page', 'view'=>'faq'])?>"><?=Yii::t('general', 'FAQs')?></a></li>
 			<li><a href="<?=Url::to(['site/page', 'view'=>'terms'])?>"><?=Yii::t('general', 'Terms and Conditions')?></a></li>
 			<li><a href="<?=Url::to(['site/page', 'view'=>'interestRate'])?>"><?=Yii::t('general', 'Interest rate')?></a></li>
-			<li><a href="<?=Url::to(['site/page', 'view'=>'quy-che-hoat-dong'])?>"><?=Yii::t('general', 'Quy chế hoạt động')?></a></li>
-			<li><a href="<?=Url::to(['site/page', 'view'=>'chinh-sach-bao-mat'])?>"><?=Yii::t('general', 'Chính sách bảo mật')?></a></li>
-			<li><a href="<?=Url::to(['site/page', 'view'=>'giai-quyet-tranh-chap'])?>"><?=Yii::t('general', 'Quy trình giải quyết tranh chấp')?></a></li>
 		</ul>
 		<div class="license">
 			<p><?=Yii::t('general', 'Copyright {year} {domain}', ['year'=>2016, 'domain'=>'MetVuong.com'])?></p>

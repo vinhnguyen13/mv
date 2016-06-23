@@ -11986,7 +11986,7 @@ height: 190px;
     padding-bottom: 50px;
     /* background: #F9F9F9; */
     /* width: 45%; */
-    margin: 0 auto 0;
+    margin: 0 auto 100px;
     padding: 50px 10px 0;
 }
 .type-payment h1 {
@@ -12047,6 +12047,9 @@ height: 190px;
 }
 #the-cao {
     background: url(../images/bg-card.png) no-repeat right 45px;
+}
+#sms {
+    background: url(../images/sms-bulk-sms-text-message-marking.png) no-repeat right 0;
 }
 .keyword_wrapper {
     /* background: #fbfdff; */
@@ -12681,6 +12684,7 @@ ul.cardList li {
     padding: 0;
     width: auto;
     margin-right: 25px;
+    margin-bottom: 15px;
 }
 .list-content li .boxContent {
     padding-left: 25px;
@@ -12782,7 +12786,9 @@ ul.cardList li {
 .input-couple .btn-common {
     text-transform: uppercase;
     font-size: 14px;
-    padding: 5px 20px;
+    padding: 6px 20px;
+    width: 25%;
+    float: left;
 }
 .infor-user-settings .avatar #profile-form-avatar-fileupload {
     position: relative;
@@ -12866,6 +12872,11 @@ ul.cardList li {
 .type-payment .input-couple {
     background: #f7f7f7;
     padding: 15px;
+    width: 50%;
+}
+.type-payment .input-couple input {
+    width: 75%;
+    float: left;
 }
 .listing-contai {
     position: relative;
@@ -12877,10 +12888,94 @@ ul.cardList li {
     cursor: not-allowed;
 }
 .val-payment {
-    margin-bottom: 20px;
+    float: left;
+    border-right: 1px dotted #a9a9a9;
+    border-bottom: 1px dotted #a9a9a9;
 }
 .val-payment li {
     font-weight: 600;
-    margin-right: 10px;
+    border-top: 1px dotted #a9a9a9;
+    border-left: 1px dotted #a9a9a9;
     float: left;
+    width: 50%;
+    padding: 8px 10px;
+}
+.val-payment li span {
+    display: inline-block;
+    width: 45%;
+}
+.val-payment li span:last-child {
+    width: auto;
+    padding-left: 20px;
+}
+.noti-pay {
+    margin-bottom: 20px;
+}
+@media (max-width: 1200px) {
+    .type-payment {
+        width: 90%;
+    }
+}
+@media (max-width: 985px) {
+    #NLpayBank > .w-50 {
+        width: 80%;
+    }
+}
+@media (max-width: 768px) {
+    .noti-pay,
+    .type-payment .input-couple,
+    #NLpayBank > .w-50 {
+        width: 100%;
+    }
+    .tab-payment li {
+        width: 33.333%;
+    }
+    .tab-payment li a {
+        font-size: 13px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .type-payment {
+        padding: 20px 0;
+    }
+    .item-payment .title-item {
+        font-size: 15px;
+    }
+    #sms,
+    #the-cao {
+        background: none;
+    }
+    #the-cao img {
+        max-width: 100%;
+    }
+    #the-cao .w-50,
+    #sms > .w-50 {
+        width: 100%;
+    }
+}
+@media (max-width: 460px) {
+    .tab-payment li a {
+        font-size: 12px;
+    }
+    .input-couple .btn-common {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .val-payment li {
+        font-size: 12px;
+        padding: 5px;
+    }
+    .val-payment li span {
+        width: 50%;
+    }
+    .val-payment li span:last-child {
+        padding-left: 2%;
+        width: auto;
+    }
+    .list-content li .boxContent {
+        padding: 0;
+    }
+    .item-payment {
+        font-size: 13px;
+    }
 }

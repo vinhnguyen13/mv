@@ -10,9 +10,9 @@ $event = CouponEvent::find()->andWhere(['<','start_date',time()])->andWhere(['>'
 if(!empty($event)) {
     ?>
     <div class="title-box"><?=Yii::t('coupon', 'You have coupon ?')?></div>
-    <div class="input-couple mgB-20">
+    <div class="input-couple mgB-20 clearfix">
         <p class="mgB-10"><?=Yii::t('coupon', 'Input code')?>:</p>
-        <input type="text" class="d-ib w-30 mgR-15 form-control code">
+        <input type="text" class="d-ib form-control code">
         <button type="submit" class="btn-common submit coupon"><?=Yii::t('coupon', 'Send')?></button>
     </div>
     <script>

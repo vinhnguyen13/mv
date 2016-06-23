@@ -46,7 +46,7 @@ if(!isset($cookie['copayment']) || empty($cookie['copayment'])){
 <?php
 $profile = Yii::$app->user->identity->profile;
 ?>
-<div class="type-payment w-50">
+<div class="type-payment w-60">
 	<?= $this->render('/coupon/_partials/coupon'); ?>
 	<div class="title-box"><?=Yii::t('payment', 'Payment method')?></div>
 	<ul class="nav nav-tabs tab-payment" role="tablist">

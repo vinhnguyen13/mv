@@ -22,46 +22,67 @@ use yii\helpers\Url;
             ]);
             ?>
 
-            <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span>
-                <ul>
-                    <li>500,000vnd = 510 keys</li>
-                    <li>200,000vnd = 205 keys</li>
-                    <li>100,000nvd = 100 keys</li>
-                    <li>50,000vnd = 46 keys</li>
-                </ul>
-            </p>
-            <table class="w-50 mgB-15">
-                <tr>
-                    <td>Số tiền thanh toán:</td>
-                    <td>
-                        <select id="total_amount" name="total_amount" class="field-check form-control">
-                            <option value="2000">2,000</option>
-                            <option value="500000">500,000</option>
-                            <option value="200000">200,000</option>
-                            <option value="100000">100,000</option>
-                            <option value="50000">50,000</option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Họ Tên:</td>
-                    <td>
-                        <input type="text" id="fullname" name="buyer_fullname" class="field-check form-control" value="<?=$profile->getDisplayName()?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Email:</td>
-                    <td>
-                        <input type="text" id="fullname" name="buyer_email" class="field-check form-control" value="<?=$profile->public_email?>">
-                    </td>
-                </tr>
-                <tr>
-                    <td>Số Điện thoại:</td>
-                    <td>
-                        <input type="text" id="fullname" name="buyer_mobile" class="field-check form-control" value="<?=$profile->mobile?>">
-                    </td>
-                </tr>
-            </table>
+            <div class="w-50">
+                <div class="noti-pay">
+                    <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span></p>
+                    <div class="clearfix">
+                        <ul class="val-payment">
+                            <li>
+                                <span>500,000vnd</span>
+                                =
+                                <span>510 keys</span>
+                            </li>
+                            <li>
+                                <span>200,000vnd</span>
+                                =
+                                <span>205 keys</span>
+                            </li>
+                            <li>
+                                <span>100,000vnd</span>
+                                =
+                                <span>100 keys</span>
+                            </li>
+                            <li>
+                                <span>50,000vnd</span>
+                                =
+                                <span>46 keys</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <table class="mgB-15 w-100">
+                    <tr>
+                        <td class="w-35">Số tiền thanh toán:</td>
+                        <td>
+                            <select id="total_amount" name="total_amount" class="field-check form-control">
+                                <option value="2000">2,000</option>
+                                <option value="500000">500,000</option>
+                                <option value="200000">200,000</option>
+                                <option value="100000">100,000</option>
+                                <option value="50000">50,000</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Họ Tên:</td>
+                        <td>
+                            <input type="text" id="fullname" name="buyer_fullname" class="field-check form-control" value="<?=$profile->getDisplayName()?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td>
+                            <input type="text" id="fullname" name="buyer_email" class="field-check form-control" value="<?=$profile->public_email?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Số Điện thoại:</td>
+                        <td>
+                            <input type="text" id="fullname" name="buyer_mobile" class="field-check form-control" value="<?=$profile->mobile?>">
+                        </td>
+                    </tr>
+                </table>
+            </div>
             <ul class="list-content">
                 <li>
                     <label><input type="radio" value="ATM_ONLINE" name="option_payment">Thanh toán online bằng THẺ NGÂN HÀNG NỘI ĐỊA</label>
@@ -489,14 +510,10 @@ use yii\helpers\Url;
                 </li>
             </ul>
 
-            <table style="clear:both;width:500px;padding-left:46px;">
-                <tr>
-                    <td></td>
-                    <td>
-                        <input type="submit" name="nlpayment" value="thanh toán" class="btn-common btn-bd-radius"/>
-                    </td>
-                </tr>
-            </table>
+            <div class="mgT-20 text-left">
+                <input type="submit" name="nlpayment" value="thanh toán" class="btn-common btn-bd-radius"/>
+            </div>
+            
             <?php $f->end(); ?>
 
             <script language="javascript">
