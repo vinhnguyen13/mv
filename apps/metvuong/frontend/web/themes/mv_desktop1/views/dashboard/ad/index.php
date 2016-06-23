@@ -175,18 +175,14 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
 <?php 
     $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/custom-datepicker.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'jquery-ui');
     Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery-ui.js', ['position'=>View::POS_END]);
-    $request = Yii::$app->request;
-    $cookie = $request->cookies['codashboard'];
-    if(empty($cookie)){
-        Yii::$app->response->cookies->add(new \yii\web\Cookie([
-            'name' => 'codashboard',
-            'value' => true,
-            'expire' => time() + (10 * 365 * 24 * 60 * 60)
-        ]));
+$cookies = Yii::$app->request->cookies;
+$cookie = $cookies->getValue('tutorial');
+if(!isset($cookie['codashboard']) || empty($cookie['codashboard'])){
 ?>
 <script>
     $(document).ready(function () {
-        var txtTour = ["<p class='mgB-5'>The Dashboard is where you will find many of Metvuong's more advanced Features</p><p class='mgB-5'>Customizing your personal information</p><p class='mgB-5'>Update yourself on your listings status</p><p class='mgB-5'>Buy more Keys</p><p>Look at your notifications and messages.</p>","<p class='mgB-5'>Here is where you can post your listings.</p><p class='mgB-5'>At Metvuong.com we encourage detailed and accurate information, listings that fulfill this requirement will have a higher MV Score, which means that it is more likely to show up on a customers search.</p><p>Any information found to be false in the listing will lead to penalties on the listings score.</p>"];
+        var txtTour = ["<?=Yii::t('tutorial', "<p class='mgB-5'>Bảng Điều Khiển là một công cụ tiện ích với nhiều tính năng nổi bật của MetVuong.com như:</p><p class='mgB-5'>Trang Thông tin cá nhân của bạn</p><p class='mgB-5'>Cập nhật trạng thái các tin đăng của bạn gồm có:</p><p class='mgB-5'>Lượt tìm kiếm tin đăng, </p><p class='mgB-5'>Lượt yêu thích,</p><p class='mgB-5'>Lượt chia sẻ, </p><p class='mgB-5'>Liên hệ online với người đang tìm kiếm thông tin</p><p class='mgB-5'>Mua keys, tài khoản của bạn</p>")?>",
+            "<?=Yii::t('tutorial',"<p class='mgB-5'>Đây là nơi tập trung danh sách các tin đăng của bạn.</p>")?>"];
         var intro = $.hemiIntro({
             debug: false,
             steps:[
@@ -198,11 +194,17 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
                 {
                     selector: "#list-all",
                     placement: "left",
-                    content: txtTour[1],
+                    content: txtTour[1]
                 }
             ],
             onComplete: function (item) {
-                
+                $.ajax({
+                    type: "get",
+                    dataType: 'json',
+                    url: '<?=Url::to(['site/set-cookie'])?>'+'?name=codashboard',
+                    success: function (data) {
+                    }
+                });
             }
         });
 

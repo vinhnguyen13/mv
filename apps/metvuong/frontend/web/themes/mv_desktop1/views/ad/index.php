@@ -33,18 +33,15 @@ EOD;
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_END]);
 
-    $request = Yii::$app->request;
-    $cookie = $request->cookies['colisting'];
-    if(empty($cookie)){
-        Yii::$app->response->cookies->add(new \yii\web\Cookie([
-            'name' => 'colisting',
-            'value' => true,
-            'expire' => time() + (10 * 365 * 24 * 60 * 60)
-        ]));
+    $cookies = Yii::$app->request->cookies;
+    $cookie = $cookies->getValue('tutorial');
+    if(!isset($cookie['colisting']) || empty($cookie['colisting'])){
 ?>
 <script>
 	$(document).ready(function () {
-		var txtTour = ["Welcome to the Metvuong Buy Page, this is functionally the same as the Metvuong Rent Page, here up top you can alter your search parameters, and the results will change dynamically.","The map on the bottom let's you see where your potential listings lie, you can click on them to bring them up for closer inspection.","The list on the right are the listings that are the closest to your search parameters, categorized by our MV algorithim to ensure the quality as well as relevancy to your listing."];
+		var txtTour = ["<?=Yii::t('tutorial',"Chào mừng bạn đến với trang Cần Mua, mục này và mục Cần Thuê có chức năng giống nhau, để tìm sản phẩm theo tên thành phố, quận, phường, đường, mã số… bạn hãy gõ vào thanh tìm kiếm ngay hàng đầu và kết quả sẽ tự động thay đổi khi bạn thay đổi thông tin tìm kiếm.")?>",
+            "<?=Yii::t('tutorial',"Bản đồ lớn sẽ cho phép bạn nhìn thấy địa điểm trong danh sách tiềm năng của bạn, bạn có thể nhấp vào để xem cụ thể các địa điểm.")?>",
+            "<?=Yii::t('tutorial',"Các danh sách bên phải là danh sách sản phẩm được đề xuất có kết quả gần nhất với các yêu cầu tìm kiếm, được phân loại theo cách đánh giá của MetVuong để đảm bảo chất lượng tin cũng như sự liên quan đến yêu cầu của bạn.")?>"];
 	    var intro = $.hemiIntro({
 	        debug: false,
 	        steps: [
@@ -63,7 +60,13 @@ EOD;
 	            }
 	        ],
 	        onComplete: function (item) {
-	        	
+                $.ajax({
+                    type: "get",
+                    dataType: 'json',
+                    url: '<?=Url::to(['site/set-cookie'])?>?name=colisting',
+                    success: function (data) {
+                    }
+                });
 	        }
 	    });
 

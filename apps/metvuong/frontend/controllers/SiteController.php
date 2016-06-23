@@ -398,4 +398,23 @@ class SiteController extends Controller
 			return $result;
 		}
 	}
+
+    public function actionSetCookie($name='cohomepage'){
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            $cookies = Yii::$app->request->cookies;
+            $value = $cookies->getValue('tutorial', []);
+            $value = array_merge($value, [
+                $name => true,
+            ]);
+
+            Yii::$app->response->cookies->add(new \yii\web\Cookie([
+                'name' => 'tutorial',
+                'value' => $value,
+                'expire' => time() + (10 * 365 * 24 * 60 * 60)
+            ]));
+            return true;
+        }
+        return false;
+    }
 }

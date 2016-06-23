@@ -4,29 +4,30 @@ use yii\web\View;
 use yii\helpers\Url;
 
 Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_HEAD]);
-$request = Yii::$app->request;
-$cookie = $request->cookies['costatistic'];
-if(empty($cookie)){
-    Yii::$app->response->cookies->add(new \yii\web\Cookie([
-        'name' => 'costatistic',
-        'value' => true,
-        'expire' => time() + (10 * 365 * 24 * 60 * 60)
-    ]));
+$cookies = Yii::$app->request->cookies;
+$cookie = $cookies->getValue('tutorial');
+if(!isset($cookie['costatistic']) || empty($cookie['costatistic'])){
 ?>
 <script>
     $(document).ready(function () {
-        var txtTour = ["<p class='mgB-5'>Here you can clearly track the popularity of your listing, based on metrics such as the amount of views and favorites, as well as see this as a function of time.</p><p>You can also reach out to customers who may have searched for or favorited this listing, simply click on their account to send them a message</p>"];
+        var txtTour = ["<p class='mgB-5'>Ở đây bạn có thể theo dõi rõ diễn tiến tin đăng của bạn, dựa trên các số liệu như số lượng các lượt tìm kiếm, yêu thích, chia sẻ hiển thị theo các khoảng thời gian.</p><p class='mgB-5'> Bạn cũng có thể liện hệ với những người đang tìm kiếm sản phẩm của bạn bằng cách nhấp vào tài khoản của khách để gửi tin nhắn hoặc Chat với họ.</p>"];
         var intro = $.hemiIntro({
             debug: false,
             steps: [
                 {
                     selector: ".statis section",
                     placement: "left",
-                    content: txtTour[0],
+                    content: txtTour[0]
                 }
             ],
             onComplete: function (item) {
-                
+                $.ajax({
+                    type: "get",
+                    dataType: 'json',
+                    url: '<?=Url::to(['site/set-cookie'])?>'+'?name=costatistic',
+                    success: function (data) {
+                    }
+                });
             }
         });
 

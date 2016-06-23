@@ -9,18 +9,13 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 
-$request = Yii::$app->request;
-$cookie = $request->cookies['copayment'];
-if(empty($cookie)){
-    Yii::$app->response->cookies->add(new \yii\web\Cookie([
-        'name' => 'copayment',
-        'value' => true,
-        'expire' => time() + (10 * 365 * 24 * 60 * 60)
-    ]));
+$cookies = Yii::$app->request->cookies;
+$cookie = $cookies->getValue('tutorial');
+if(!isset($cookie['copayment']) || empty($cookie['copayment'])){
 ?>
 <script>    
     $(document).ready(function () {
-        var txtTour = ["Metvuong.com caters to a variety of payment system to maximize your convenience, simply select the amount of keys you want to buy, and your method of payment. THe more you buy, the cheaper it is."];
+        var txtTour = ["<?=Yii::t('tutorial',"Metvuong.com có đầy đủ các hệ thống thanh toán để tối đa hóa sự tiện lợi của bạn, chỉ cần chọn số chìa khóa bạn muốn mua và phương thức thanh toán. Mua sỉ sẽ có chiết khấu tốt hơn.")?>"];
         var intro = $.hemiIntro({
             debug: false,
             steps: [
@@ -31,7 +26,13 @@ if(empty($cookie)){
                 }
             ],
             onComplete: function (item) {
-                
+                $.ajax({
+                    type: "get",
+                    dataType: 'json',
+                    url: '<?=Url::to(['site/set-cookie'])?>'+'?name=copayment',
+                    success: function (data) {
+                    }
+                });
             }
         });
 

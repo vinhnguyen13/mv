@@ -77,36 +77,42 @@ use vsoft\ad\models\AdImages;
 	$disabledWard = ($product->projectBuilding && $product->projectBuilding->ward_id) || $expiredEdit;
 	$disabledStreet = ($product->projectBuilding && $product->projectBuilding->street_id) || $expiredEdit;
 	$disabledHome = ($product->projectBuilding && $product->projectBuilding->home_no) || $expiredEdit;
-	if(empty($cookie)){
-    Yii::$app->response->cookies->add(new \yii\web\Cookie([
-        'name' => 'copayment',
-        'value' => true,
-        'expire' => time() + (10 * 365 * 24 * 60 * 60)
-    ]));
-?>
-<script>    
-    $(document).ready(function () {
-        var txtTour = ["<p class='mgB-5'>Đây là trang để bạn đang tin sản phẩm cho thuê hoặc bán của bạn.</p><p class='mgB-5'>Metvuong.com khuyến khích bạn đăng các thông tin chi tiết và chính xác, với các tin chất lượng, bạn sẽ đạt số điểm cao và điều đó có nghĩa là sẽ có nhiều khách hàng tiềm năng sẽ liên hệ với bạn trong thời gian ngắn nhất.</p><p class='mgB-5'>Nếu bạn cung cấp thông tin mà sau khi xác minh là chưa chính xác thì chúng tôi sẽ hạ điểm số hoặc loại bỏ tin đăng.</p>"];
-        var intro = $.hemiIntro({
-            debug: false,
-            steps: [
-                {
-                    selector: ".wrap-frm-listing",
-                    placement: "left",
-                    content: txtTour[0],
-                }
-            ],
-            onComplete: function (item) {
-                
-            }
-        });
 
-        intro.start();
-    });
-</script>
-<?php
-    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
-}
+    $cookies = Yii::$app->request->cookies;
+    $cookie = $cookies->getValue('tutorial');
+    if(Yii::$app->controller->action->actionMethod == 'actionPost') {
+        if (!isset($cookie['coforbuy']) || empty($cookie['coforbuy'])) {
+            ?>
+            <script>
+                $(document).ready(function () {
+                    var txtTour = ["<?=Yii::t('tutorial',"<p class='mgB-5'>Đây là trang để bạn đang tin sản phẩm cho thuê hoặc bán của bạn.</p><p class='mgB-5'>Metvuong.com khuyến khích bạn đăng các thông tin chi tiết và chính xác, với các tin chất lượng, bạn sẽ đạt số điểm cao và điều đó có nghĩa là sẽ có nhiều khách hàng tiềm năng sẽ liên hệ với bạn trong thời gian ngắn nhất.</p><p class='mgB-5'>Nếu bạn cung cấp thông tin mà sau khi xác minh là chưa chính xác thì chúng tôi sẽ hạ điểm số hoặc loại bỏ tin đăng.</p>")?>"];
+                    var intro = $.hemiIntro({
+                        debug: false,
+                        steps: [
+                            {
+                                selector: ".wrap-frm-listing",
+                                placement: "left",
+                                content: txtTour[0],
+                            }
+                        ],
+                        onComplete: function (item) {
+                            $.ajax({
+                                type: "get",
+                                dataType: 'json',
+                                url: '<?=Url::to(['site/set-cookie'])?>?name=coforbuy',
+                                success: function (data) {
+                                }
+                            });
+                        }
+                    });
+
+                    intro.start();
+                });
+            </script>
+            <?php
+            $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/tour-intro.js', ['position' => View::POS_END]);
+        }
+    }
 ?>
 <div class="title-fixed-wrap container">
 	<div class="post-listing">

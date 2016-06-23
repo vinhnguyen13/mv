@@ -9,7 +9,7 @@ $this->title = Yii::t('meta', 'Update {modelClass}: ', [
     'modelClass' => 'Meta',
 ]) . ' ' . $model->url;
 $this->params['breadcrumbs'][] = ['label' => Yii::t('meta', 'Meta'), 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->params['breadcrumbs'][] = ['label' => $model->url, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = Yii::t('meta', 'Update');
 ?>
 <div class="lc-meta-update">
