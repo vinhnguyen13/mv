@@ -72,8 +72,8 @@ class MetaController extends Controller
             unset($data["Metadata"]);
 
             $arr_data = array_merge($data, $seo, [
-                'fb:app_id' => '856286731156793',
-                'og:site_name' => 'Lancaster',
+                'fb:app_id' => '119696758407282',
+                'og:site_name' => 'Metvuong',
                 'og:type' => 'website',
                 'og:locale' => 'vi_VN',
                 'og:locale:alternate' => 'en_US',
@@ -113,8 +113,8 @@ class MetaController extends Controller
             unset($data["Metadata"]);
 
             $arr_data = array_merge($data, $seo, [
-                'fb:app_id' => '856286731156793',
-                'og:site_name' => 'Lancaster',
+                'fb:app_id' => '119696758407282',
+                'og:site_name' => 'Metvuong',
                 'og:type' => 'article',
                 'og:locale' => 'vi_VN',
                 'og:locale:alternate' => 'en_US',
