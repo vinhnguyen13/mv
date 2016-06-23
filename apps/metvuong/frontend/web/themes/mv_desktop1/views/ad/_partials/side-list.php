@@ -23,9 +23,9 @@
 
 <?php if($products): ?>
 <div id="has-result">
-	<!-- <div class="top-listing clearfix">
+	<div class="top-listing clearfix">
 		<p><span id="count-from"><?= $pages->offset + 1 ?></span> - <span id="count-to"><?= $pages->offset + count($products) ?></span> <?= sprintf(Yii::t('ad', 'of %s listings'), '<span id="count-total">' . $pages->totalCount . '</span>') ?></p>
-	</div> -->
+	</div>
 	<div id="listing-list" class="wrap-lazy">
 		<ul class="clearfix">
 			<?php foreach ($products as $product): ?>

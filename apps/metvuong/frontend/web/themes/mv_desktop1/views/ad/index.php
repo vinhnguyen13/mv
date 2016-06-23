@@ -256,7 +256,6 @@ EOD;
 							?>
 							<?= Html::activeDropDownList($searchModel, 'order_by', $items, ['prompt' => Yii::t('ad', 'Sort by'), 'class' => 'form-control']) ?>
 						</div>
-						<span class="pull-right mgT-15 mgR-10 fs-13 font-600">1 - 20 trong 8857 tin</span>
 					</div>
 					<div style="display: none;" id="af-wrap">
 						<?= Html::activeHiddenInput($searchModel, 'rm', ['disabled' => true]); ?>
