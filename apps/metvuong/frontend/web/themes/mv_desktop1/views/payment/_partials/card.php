@@ -19,6 +19,7 @@ $f = ActiveForm::begin([
 <div id="the-cao" class="item-payment">
     <div class="title-item">Thanh toán bằng thẻ cào điện thoại</div>
     <div class="pd-20">
+        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span> Bạn nhập đầy đủ thông tin sau </p>
         <table align="center">
             <tr>
                 <td colspan="3" class="pdB-10">
@@ -42,7 +43,24 @@ $f = ActiveForm::begin([
                     </table>
                 </td>
             </tr>
-
+            <tr>
+                <td>Họ Tên:</td>
+                <td>
+                    <input type="text" id="fullname" name="buyer_fullname" class="field-check form-control" value="<?=$profile->getDisplayName()?>">
+                </td>
+            </tr>
+            <tr>
+                <td>Email:</td>
+                <td>
+                    <input type="text" id="fullname" name="buyer_email" class="field-check form-control" value="<?=$profile->public_email?>">
+                </td>
+            </tr>
+            <tr>
+                <td>Số Điện thoại:</td>
+                <td>
+                    <input type="text" id="fullname" name="buyer_mobile" class="field-check form-control" value="<?=$profile->mobile?>">
+                </td>
+            </tr>
             <tr>
                 <td>Số Seri :</td>
                 <td colspan="2"><input type="text" id="txtSoSeri" name="txtSoSeri" class="form-control" /></td>
@@ -54,7 +72,6 @@ $f = ActiveForm::begin([
 
                 </td>
             </tr>
-
             <tr>
                 <td></td>
                 <td>

@@ -8,7 +8,6 @@
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 
-$profile = Yii::$app->user->identity->profile;
 ?>
 <div id="credit-card" class="item-payment">
     <div class="title-item">Thanh toán bằng Thẻ Ngân Hàng</div>
@@ -23,8 +22,7 @@ $profile = Yii::$app->user->identity->profile;
             ]);
             ?>
 
-            <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span> Bạn nhập đầy đủ
-                thông tin sau </p>
+            <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span> Bạn nhập đầy đủ thông tin sau </p>
             <table class="w-50 mgB-15">
                 <tr>
                     <td>Số tiền thanh toán:</td>
