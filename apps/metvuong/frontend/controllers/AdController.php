@@ -519,11 +519,12 @@ class AdController extends Controller
     				$product->status = AdProduct::STATUS_ACTIVE;
     				$product->save(false);
     			
-    				$result['template'] = $this->renderPartial('_partials/post_success', ['balance' => $balance]);
+    				$template = 'post_success';
     			} else {
-    				$result['template'] = $this->renderPartial('_partials/post_pending', ['balance' => $balance, 'productId' => $product->id]);
+    				$template = 'post_pending';
     			}
     			
+    			$result['template'] = $this->renderPartial('_partials/' . $template, ['balance' => $balance, 'product' => $product]);
     			$result['url'] = $product->urlDetail();
     		} else {
     			$result['success'] = false;

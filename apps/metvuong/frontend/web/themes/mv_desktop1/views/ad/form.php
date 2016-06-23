@@ -75,26 +75,7 @@ use vsoft\ad\models\AdImages;
 <div class="title-fixed-wrap container">
 	<div class="post-listing">
 		<div class="title-top"><?= Yii::t('ad', 'Post Listing') ?></div>
-		<div id="success-notify" class="hide">
-			<?php if($product->isNewRecord): ?>
-				<div class="color-cd fs-20 font-600 mgB-15 text-uper"><?= Yii::t('ad', 'Đăng tin thành công') ?></div>
-				<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Tin của bạn đang chờ xét duyệt và sẽ hiển thị đến người xem sớm nhất') ?></p>
-				<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Cảm ơn đã sử dụng dịch vụ của MetVuong') ?></p>
-				<div class="text-center">
-					<a class="btn-common mgR-10" href="<?= Url::current() ?>"><?= Yii::t('ad', 'Tiếp tục đăng tin') ?></a>
-					<a class="btn-common mgL-10" id="to-detail" href="#"><?= Yii::t('ad', 'Xem tin vừa đăng') ?></a>	
-				</div>
-				
-			<?php else: ?>
-				<div class="color-cd fs-20 font-600 mgB-15 text-uper"><?= Yii::t('ad', 'Cập nhật thành công') ?></div>
-				<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Tin của bạn sẽ được xét duyệt lại trước khi hiển thị đến người xem') ?></p>
-				<p class="mgB-10 fs-14"><?= Yii::t('ad', 'Cảm ơn đã sử dụng dịch vụ của MetVuong') ?></p>
-				<div class="text-center">
-					<a class="btn-common" href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()])?>"><?= Yii::t('ad', 'Quay trở về Dashboard') ?></a>
-					<a class="btn-common" id="to-detail" href="#"><?= Yii::t('ad', 'Xem tin vừa cập nhật') ?></a>
-				</div>
-			<?php endif; ?>
-		</div>
+		<div id="notify" class="hide"></div>
 		<div class="wrap-frm-listing row">
 			<div class="col-sm-8">
 				<?php if(!isset($_COOKIE['cpl'])): ?>

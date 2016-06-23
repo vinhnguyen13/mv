@@ -592,7 +592,7 @@ $(document).ready(function(){
 			
 			if(r.success) {
 				$('.wrap-frm-listing').hide();
-				$('#success-notify').removeClass('hide').html(r.template);
+				$('#notify').removeClass('hide').html(r.template);
 				
 				window.onbeforeunload = function() {};
 			} else {
