@@ -868,6 +868,19 @@ class AdController extends Controller
 		
 		return $response;
     }
+    
+    public function actionBoost($day, $id) {
+    	$chargeBoost = [
+    		1 => AdProduct::CHARGE_BOOST_1,
+    		3 => AdProduct::CHARGE_BOOST_3	
+    	];
+    	
+    	$product = AdProduct::findOne($id);
+    	
+    	if(isset($chargeBoost[$day]) && $product && $product->user_id == Yii::$app->user->identity->id) {
+    		echo 'OK';
+    	} 
+    }
 
     public function actionLoadListingWidget($pid = 0){
         if($pid > 0)

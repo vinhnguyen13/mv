@@ -188,6 +188,7 @@ html.previewing, body.previewing {
 
 .show-project #projectMask {
 	cursor: pointer;
+	padding-right: 30px;
 }
 .show-project #projectMask:hover {
 	text-decoration: underline;
@@ -209,7 +210,7 @@ html.previewing, body.previewing {
 }
 
 .notify {
-	width: 500px;
+	width: 660px;
     margin: 50px auto 0;
     border: 1px solid #B3B3B3;
     padding: 20px;
