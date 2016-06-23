@@ -4139,7 +4139,7 @@ html.mm-opening .mm-slideout {
     line-height: 100%;
     margin-bottom: 10px;
     position: relative;
-    padding-left: 10px;
+    padding: 6px 10px;
 }
 .price-item .icon-mv {
     font-size: 17px;
@@ -4159,6 +4159,7 @@ html.mm-opening .mm-slideout {
     margin-right: 10px;
     float: none;
     margin-bottom: 0;
+    padding: 0 0 0 12px;
 }
 .right-attr-detail {
     overflow: hidden;
@@ -4166,6 +4167,7 @@ html.mm-opening .mm-slideout {
 .right-attr-detail .price-item {
     font-size: 20px;
     margin-bottom: 0;
+    padding: 8px 15px;
 }
 .price-item strong {
     padding-left: 5px;
@@ -6070,6 +6072,7 @@ footer li a {
     .search-subpage .select-location {
         margin-right: 10px;
         margin-left: 15px;
+        padding: 8px 0;
     }
     .advande-search {
         padding: 0 15px 0 0;
@@ -12698,9 +12701,6 @@ ul.cardList li {
 .box-quy-che li {
     margin-bottom: 10px;
 }
-#map-search-wrap {
-    padding: 8px 0;
-}
 #map-search {
     height: 35px;
     line-height: 35px;
@@ -12848,4 +12848,14 @@ ul.cardList li {
 }
 .u-allduan .popover.left>.arrow {
     top: 50% !important;
+}
+.type-payment .title-box {
+    color: #00a769;
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+.type-payment .input-couple {
+    background: #f7f7f7;
+    padding: 15px;
 }
