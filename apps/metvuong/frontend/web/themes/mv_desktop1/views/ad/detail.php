@@ -212,10 +212,10 @@ $count_review = $reviews->count();
 	                                        <span class="fs-13 font-600 count_review">(<?=$count_review?>)</span>
 	                                    </div>
                                     <?php } else {?>
-                                        <span class="name-agent"><?= $adContactInfo->name ?></span>
+                                        <span class="name-agent"><?= !empty($adContactInfo) ? $adContactInfo->name : null ?></span>
                                     <?php } ?>
 
-                                    <?php if($adContactInfo->mobile): ?>
+                                    <?php if($adContactInfo && $adContactInfo->mobile): ?>
                                         <div class="item-agent">
                                             <span class="icon-mv">
                                             	<span class="icon-phone-profile"></span>
@@ -264,8 +264,8 @@ $count_review = $reviews->count();
 						<ul class="clearfix list-attr-td">
 	                        <?php
                             $adProductAdditionInfo = $product->adProductAdditionInfo;
-                            $room_no = $adProductAdditionInfo->room_no;
-                            $toilet_no = $adProductAdditionInfo->toilet_no;
+                            $room_no = !empty($adProductAdditionInfo) ? $adProductAdditionInfo->room_no : null;
+                            $toilet_no = !empty($adProductAdditionInfo) ? $adProductAdditionInfo->toilet_no : null;
                             if(empty($product->area) && empty($room_no) && empty($toilet_no)){ ?>
 	                            <li><?=Yii::t('listing','updating')?></li>
 	                        <?php } else {
@@ -366,7 +366,7 @@ $count_review = $reviews->count();
                  * notification
                  */
                 if(!Yii::$app->user->isGuest && !empty($owner)) {
-					$nameUserTo = !empty($owner) ? $owner->profile->getDisplayName() : $adContactInfo->name;
+					$nameUserTo = !empty($owner) ? $owner->profile->getDisplayName() : (!empty($adContactInfo) ? $adContactInfo->name : null);
 					$nameUserFrom = $user->profile->getDisplayName();
                     ?>
                     <script>
@@ -609,22 +609,22 @@ $count_review = $reviews->count();
 			                    <?php if($product->projectBuilding): ?>
 								<li><strong><?= Yii::t('ad', 'Project') ?>:</strong> <a href="<?= Url::to(["building-project/view", 'slug'=> $product->projectBuilding->slug]); ?>"><?= $product->projectBuilding->name ?></a></li>
 								<?php endif; ?>
-								<?php if($adProductAdditionInfo->facade_width): ?>
+								<?php if($adProductAdditionInfo && $adProductAdditionInfo->facade_width): ?>
 								<li><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <?= $adProductAdditionInfo->facade_width ?>m</li>
 								<?php endif; ?>
-								<?php if($adProductAdditionInfo->land_width): ?>
+								<?php if($adProductAdditionInfo && $adProductAdditionInfo->land_width): ?>
 								<li><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <?= $adProductAdditionInfo->land_width ?>m</li>
 								<?php endif; ?>
-								<?php if($adProductAdditionInfo->floor_no): ?>
+								<?php if($adProductAdditionInfo && $adProductAdditionInfo->floor_no): ?>
 								<li><strong><?= $product->projectBuilding ? Yii::t('ad', 'Floor plan') : Yii::t('ad', 'Number of storeys') ?>:</strong> <?= $adProductAdditionInfo->floor_no ?>  <?= Yii::t('ad', 'storeys') ?></li>
 								<?php endif; ?>
-								<?php if($adProductAdditionInfo->home_direction): ?>
+								<?php if($adProductAdditionInfo && $adProductAdditionInfo->home_direction): ?>
 								<li><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <?= $directionList[$adProductAdditionInfo->home_direction] ?></li>
 								<?php endif; ?>
-								<?php if($adProductAdditionInfo->facade_direction): ?>
+								<?php if($adProductAdditionInfo && $adProductAdditionInfo->facade_direction): ?>
 								<li><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <?= $directionList[$adProductAdditionInfo->facade_direction] ?></li>
 								<?php endif; ?>
-								<?php if($adProductAdditionInfo->interior): ?>
+								<?php if($adProductAdditionInfo && $adProductAdditionInfo->interior): ?>
 								<li><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <?= $adProductAdditionInfo->interior ?></li>
 								<?php endif; ?>
 							</ul>
@@ -661,7 +661,7 @@ $count_review = $reviews->count();
 		                </div>
 		            </div>
 		        </div>
-		        <?php elseif($adProductAdditionInfo->facility): ?>
+		        <?php elseif($adProductAdditionInfo && $adProductAdditionInfo->facility): ?>
 		        <div class="panel panel-default">
 		            <div class="panel-heading" role="tab" id="headingFour">
 		                <h4 class="panel-title">
@@ -718,9 +718,9 @@ $count_review = $reviews->count();
                                         <span class="fs-13 font-600 count_review">(<?=$count_review?>)</span>
                                     </div>
                                     <?php } else {?>
-						            <span class="name-agent"><?= $adContactInfo->name ?></span>
+						            <span class="name-agent"><?= !empty($adContactInfo) ? $adContactInfo->name : null ?></span>
                                     <?php }
-                                    if($adContactInfo->mobile): ?>
+                                    if($adContactInfo && $adContactInfo->mobile): ?>
 									<div class="item-agent">
 										<div>
 											<span class="icon icon-phone"></span>
