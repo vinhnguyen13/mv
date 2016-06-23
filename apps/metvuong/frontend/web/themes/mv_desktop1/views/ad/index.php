@@ -295,7 +295,7 @@ EOD;
 						<?= Html::activeHiddenInput($searchModel, 'page', ['disabled' => true]); ?>
 					</div>
 				</form>
-				<div style="position: relative;">
+				<div class="listing-contai">
 					<div class="wrap-listing clearfix">
 						<div id="content-holder"><?= $this->render('_partials/side-list', ['searchModel' => $searchModel, 'list' => $list]) ?></div>
 						<div id="loading-list" class="loading-proccess" style="display: none; position: absolute;top: 0px;left: 0px;right: 0;bottom: 0;z-index: 999;background: rgba(0, 0, 0, 0.5);"><span></span></div>
