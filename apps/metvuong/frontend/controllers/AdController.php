@@ -43,6 +43,8 @@ use yii\db\ActiveRecord;
 use frontend\models\Elastic;
 use frontend\models\MapSearch;
 use yii\db\Query;
+use frontend\models\Transaction;
+use frontend\models\NganLuong;
 
 class AdController extends Controller
 {
@@ -527,12 +529,23 @@ class AdController extends Controller
     			
     			$balance = Yii::$app->user->identity->balance;
     			
-    			if($balance->amount > AdProduct::CHARGE_POST) {
+    			if($balance->amount >= AdProduct::CHARGE_POST) {
     				$balance->amount -= AdProduct::CHARGE_POST;
     				$balance->save();
     				
     				$product->status = AdProduct::STATUS_ACTIVE;
     				$product->save(false);
+    				
+    				$transaction_code = md5(uniqid(rand(), true));
+    				Transaction::me()->saveTransaction($transaction_code, [
+						'code'=>$transaction_code,
+						'user_id'=>Yii::$app->user->identity->id,
+						'object_id'=>$product->id,
+						'object_type'=>Transaction::OBJECT_TYPE_POST,
+						'amount'=>AdProduct::CHARGE_POST,
+						'balance'=>$balance->amount,
+						'status'=>Transaction::STATUS_SUCCESS,
+    				]);
     			
     				$template = 'post_success';
     			} else {
@@ -892,16 +905,54 @@ class AdController extends Controller
     }
     
     public function actionBoost($day, $id) {
-    	$chargeBoost = [
-    		1 => AdProduct::CHARGE_BOOST_1,
-    		3 => AdProduct::CHARGE_BOOST_3	
-    	];
-    	
-    	$product = AdProduct::findOne($id);
-    	
-    	if(isset($chargeBoost[$day]) && $product && $product->user_id == Yii::$app->user->identity->id) {
-    		echo 'OK';
-    	} 
+    	if(Yii::$app->user->identity) {
+    		$chargeBoost = [
+    				1 => AdProduct::CHARGE_BOOST_1,
+    				3 => AdProduct::CHARGE_BOOST_3
+    		];
+    		 
+    		$product = AdProduct::findOne($id);
+    		 
+    		if(isset($chargeBoost[$day]) && $product && $product->user_id == Yii::$app->user->identity->id) {
+    			echo 'OK';
+    		}
+    	}
+    }
+    
+    public function actionUpdateStatus($id) {
+    	if(Yii::$app->user->identity) {
+    		$product = AdProduct::findOne($id);
+    		
+    		if($product && $product->user_id == Yii::$app->user->identity->id) {
+    			if($product->status == AdProduct::STATUS_PENDING) {
+					$balance = Yii::$app->user->identity->balance;
+    				
+					if($balance->amount >= AdProduct::CHARGE_POST) {
+						$balance->amount -= AdProduct::CHARGE_POST;
+						$balance->save(false);
+						
+						$product->status = AdProduct::STATUS_ACTIVE;
+						$product->save(false);
+						
+    					$transaction_code = md5(uniqid(rand(), true));
+    					Transaction::me()->saveTransaction($transaction_code, [
+    							'code'=>$transaction_code,
+    							'user_id'=>Yii::$app->user->identity->id,
+    							'object_id'=>$product->id,
+    							'object_type'=>Transaction::OBJECT_TYPE_POST,
+    							'amount'=>AdProduct::CHARGE_POST,
+    							'balance'=>$balance->amount,
+    							'status'=>Transaction::STATUS_SUCCESS,
+    					]);
+						return $this->render('update-status', ['balance' => $balance, 'product' => $product, 'template' => 'post_success']);
+					} else {
+						return $this->render('update-status', ['balance' => $balance, 'product' => $product, 'template' => 'post_pending']);
+					}
+    			} else {
+    				echo 'Tin đã được cập nhật trạng thái trước đó, không cần phải cập nhật lại.';
+    			}
+    		}
+    	}
     }
 
     public function actionLoadListingWidget($pid = 0){
