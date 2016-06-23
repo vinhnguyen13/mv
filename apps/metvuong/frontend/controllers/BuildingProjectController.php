@@ -11,6 +11,9 @@ use vsoft\ad\models\AdBuildingProject;
 use yii\web\NotFoundHttpException;
 use yii\helpers\Url;
 use yii\web\Response;
+use vsoft\ad\models\AdDistrict;
+use vsoft\ad\models\AdWard;
+use vsoft\ad\models\AdStreet;
 
 class BuildingProjectController extends Controller
 {
@@ -66,10 +69,22 @@ class BuildingProjectController extends Controller
         \Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         $model = AdBuildingProject::find()->where('`id` = :id', [':id' => $id])->asArray(true)->one();
+        
+        $response = [
+        	'url' => Url::to(['building-project/view', 'slug' => $model['slug']]),
+        	'city_id' => $model['city_id'],
+        	'district_id' => $model['district_id'],
+        	'ward_id' => $model['ward_id'],
+        	'street_id' => $model['street_id'],
+        	'districts' => AdDistrict::getListByCity($model['city_id']),
+        	'wards' => AdWard::getListByDistrict($model['district_id']),
+        	'streets' => AdStreet::getListByDistrict($model['district_id']),
+        	'home_no' => $model['home_no'],
+        	'lat' => $model['lat'],
+        	'lng' => $model['lng']
+        ];
 
-        $model['url'] = Url::to(['building-project/view', 'slug' => $model['slug']]);
-
-        return $model;
+        return $response;
 	}
 
     function actionFind() {

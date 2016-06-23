@@ -27,6 +27,9 @@ class AdCategory extends AC
 
 	const CATEGORY_CHCK = 6;
 	
+	public static $landType = [10,11];
+	public static $landTypeApplyFields = ['home_no', 'room_no', 'toilet_no', 'floor_no', 'home_direction', 'facade_direction'];
+	
 	public static function templateMap() {
 		return [
 			self::TEMPLATE_SUGGEST_LIST => 'loai-duan',

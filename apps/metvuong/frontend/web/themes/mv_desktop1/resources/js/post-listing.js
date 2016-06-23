@@ -1,21 +1,25 @@
-function setCookie(cname, cvalue, exdays) {if(typeof exdays === 'undefined') {document.cookie = cname + "=" + cvalue + "; path=/";} else {var d = new Date();d.setTime(d.getTime() + (exdays*24*60*60*1000));var expires = "expires="+d.toGMTString();document.cookie = cname + "=" + cvalue + "; " + expires + "; path=/";}}
-function getCookie(cname) { var name = cname + "="; var ca = document.cookie.split(';');for(var i=0; i<ca.length; i++) { var c = ca[i]; while (c.charAt(0)==' ') c = c.substring(1);if (c.indexOf(name) != -1) return c.substring(name.length,c.length); } return "";}
-
-var allow = [46, 8, 9, 27, 13, 110, 116];
+var events = { mobileEvents: [], desktopEvents: [], attachMobileEvent: function() { events._attachEvent.apply(events.mobileEvents, arguments); }, attachDesktopEvent: function() { events._attachEvent.apply(events.desktopEvents, arguments); }, _attachEvent: function() { events.switchEvent('on', arguments); this.push(arguments); }, detachMobileEvents: function() { events._detachEvents(events.mobileEvents); events._attachEvents(events.desktopEvents); }, detachDesktopEvents: function() { events._detachEvents(events.desktopEvents); events._attachEvents(events.mobileEvents); }, _detachEvents: function(eventsCollection) { for(var i in eventsCollection) { events.switchEvent('off', eventsCollection[i]); } }, _attachEvents: function(eventsCollection) { for(var i in eventsCollection) { events.switchEvent('on', eventsCollection[i]); } }, switchEvent: function(status, args) { var argsArray = []; for(var i in args) { argsArray.push(args[i]); } var el = argsArray.splice(0, 1); el = el[0]; el[status].apply(el, argsArray); } };
+var desktop = { checkToEnable: function() { if(desktop.isDesktop() && !desktop.isEnabled) { desktop.enable(); } else if(!desktop.isDesktop() && desktop.isEnabled) { desktop.disable(); } }, isDesktop: function() { return $('.m-header').css('display') == 'none'; }, enable: function() { desktop.isEnabled = true; events.detachMobileEvents(); if(!desktop.isLoadedResources) { desktop.isLoadedResources = true; desktop.loadResources(); } }, disable: function() { desktop.isEnabled = false; events.detachDesktopEvents(); } };
+var $window = $(window);
 var form;
 
 $(document).ready(function(){
-	var CountUp=function(a,t,n,e,i,r){for(var o=0,s=["webkit","moz","ms","o"],m=0;m<s.length&&!window.requestAnimationFrame;++m)window.requestAnimationFrame=window[s[m]+"RequestAnimationFrame"],window.cancelAnimationFrame=window[s[m]+"CancelAnimationFrame"]||window[s[m]+"CancelRequestAnimationFrame"];window.requestAnimationFrame||(window.requestAnimationFrame=function(a,t){var n=(new Date).getTime(),e=Math.max(0,16-(n-o)),i=window.setTimeout(function(){a(n+e)},e);return o=n+e,i}),window.cancelAnimationFrame||(window.cancelAnimationFrame=function(a){clearTimeout(a)});var u=this;u.options={useEasing:!0,useGrouping:!0,separator:",",decimal:".",easingFn:null,formattingFn:null};for(var l in r)r.hasOwnProperty(l)&&(u.options[l]=r[l]);""===u.options.separator&&(u.options.useGrouping=!1),u.options.prefix||(u.options.prefix=""),u.options.suffix||(u.options.suffix=""),u.d="string"==typeof a?document.getElementById(a):a,u.startVal=Number(t),u.endVal=Number(n),u.countDown=u.startVal>u.endVal,u.frameVal=u.startVal,u.decimals=Math.max(0,e||0),u.dec=Math.pow(10,u.decimals),u.duration=1e3*Number(i)||2e3,u.formatNumber=function(a){a=a.toFixed(u.decimals),a+="";var t,n,e,i;if(t=a.split("."),n=t[0],e=t.length>1?u.options.decimal+t[1]:"",i=/(\d+)(\d{3})/,u.options.useGrouping)for(;i.test(n);)n=n.replace(i,"$1"+u.options.separator+"$2");return u.options.prefix+n+e+u.options.suffix},u.easeOutExpo=function(a,t,n,e){return n*(-Math.pow(2,-10*a/e)+1)*1024/1023+t},u.easingFn=u.options.easingFn?u.options.easingFn:u.easeOutExpo,u.formattingFn=u.options.formattingFn?u.options.formattingFn:u.formatNumber,u.version=function(){return"1.7.1"},u.printValue=function(a){var t=u.formattingFn(a);"INPUT"===u.d.tagName?this.d.value=t:"text"===u.d.tagName||"tspan"===u.d.tagName?this.d.textContent=t:this.d.innerHTML=t},u.count=function(a){u.startTime||(u.startTime=a),u.timestamp=a;var t=a-u.startTime;u.remaining=u.duration-t,u.options.useEasing?u.countDown?u.frameVal=u.startVal-u.easingFn(t,0,u.startVal-u.endVal,u.duration):u.frameVal=u.easingFn(t,u.startVal,u.endVal-u.startVal,u.duration):u.countDown?u.frameVal=u.startVal-(u.startVal-u.endVal)*(t/u.duration):u.frameVal=u.startVal+(u.endVal-u.startVal)*(t/u.duration),u.countDown?u.frameVal=u.frameVal<u.endVal?u.endVal:u.frameVal:u.frameVal=u.frameVal>u.endVal?u.endVal:u.frameVal,u.frameVal=Math.round(u.frameVal*u.dec)/u.dec,u.printValue(u.frameVal),t<u.duration?u.rAF=requestAnimationFrame(u.count):u.callback&&u.callback()},u.start=function(a){return u.callback=a,u.rAF=requestAnimationFrame(u.count),!1},u.pauseResume=function(){u.paused?(u.paused=!1,delete u.startTime,u.duration=u.remaining,u.startVal=u.frameVal,requestAnimationFrame(u.count)):(u.paused=!0,cancelAnimationFrame(u.rAF))},u.reset=function(){u.paused=!1,delete u.startTime,u.startVal=t,cancelAnimationFrame(u.rAF),u.printValue(u.startVal)},u.update=function(a){cancelAnimationFrame(u.rAF),u.paused=!1,delete u.startTime,u.startVal=u.frameVal,u.endVal=Number(a),u.countDown=u.startVal>u.endVal,u.rAF=requestAnimationFrame(u.count)},u.printValue(u.startVal)};
+	var CountUp=function(c,g,l,n,h,d){for(var p=0,k=["webkit","moz","ms","o"],f=0;f<k.length&&!window.requestAnimationFrame;++f)window.requestAnimationFrame=window[k[f]+"RequestAnimationFrame"],window.cancelAnimationFrame=window[k[f]+"CancelAnimationFrame"]||window[k[f]+"CancelRequestAnimationFrame"];window.requestAnimationFrame||(window.requestAnimationFrame=function(a,q){var e=(new Date).getTime(),c=Math.max(0,16-(e-p)),d=window.setTimeout(function(){a(e+c)},c);p=e+c;return d});window.cancelAnimationFrame|| (window.cancelAnimationFrame=function(a){clearTimeout(a)});var a=this;a.options={useEasing:!0,useGrouping:!0,separator:"",decimal:".",easingFn:null,formattingFn:null};for(var m in d)d.hasOwnProperty(m)&&(a.options[m]=d[m]);""===a.options.separator&&(a.options.useGrouping=!1);a.options.prefix||(a.options.prefix="");a.options.suffix||(a.options.suffix="");a.d="string"===typeof c?document.getElementById(c):c;a.startVal=Number(g);a.endVal=Number(l);a.countDown=a.startVal>a.endVal;a.frameVal=a.startVal; a.decimals=Math.max(0,n||0);a.dec=Math.pow(10,a.decimals);a.duration=1E3*Number(h)||2E3;a.firedCallback=!1;a.formatNumber=function(b){b=b.toFixed(a.decimals);var c,e;c=(b+"").split(".");b=c[0];c=1<c.length?a.options.decimal+c[1]:"";e=/(\d+)(\d{3})/;if(a.options.useGrouping)for(;e.test(b);)b=b.replace(e,"$1"+a.options.separator+"$2");return a.options.prefix+b+c+a.options.suffix};a.easeOutExpo=function(a,c,e,d){return e*(-Math.pow(2,-10*a/d)+1)*1024/1023+c};a.easingFn=a.options.easingFn?a.options.easingFn: a.easeOutExpo;a.formattingFn=a.options.formattingFn?a.options.formattingFn:a.formatNumber;a.version=function(){return"1.7.1"};a.printValue=function(b){b=a.formattingFn(b);"INPUT"===a.d.tagName?this.d.value=b:"text"===a.d.tagName||"tspan"===a.d.tagName?this.d.textContent=b:this.d.innerHTML=b};a.count=function(b){a.startTime||(a.startTime=b);a.timestamp=b;b-=a.startTime;a.remaining=a.duration-b;a.frameVal=a.options.useEasing?a.countDown?a.startVal-a.easingFn(b,0,a.startVal-a.endVal,a.duration):a.easingFn(b, a.startVal,a.endVal-a.startVal,a.duration):a.countDown?a.startVal-b/a.duration*(a.startVal-a.endVal):a.startVal+b/a.duration*(a.endVal-a.startVal);a.frameVal=a.countDown?a.frameVal<a.endVal?a.endVal:a.frameVal:a.frameVal>a.endVal?a.endVal:a.frameVal;a.frameVal=Math.round(a.frameVal*a.dec)/a.dec;a.printValue(a.frameVal);b<a.duration&&(a.rAF=requestAnimationFrame(a.count),a.firedCallback||a.endVal!=a.frameVal||(a.callback&&a.callback(),a.firedCallback=!0))};a.start=function(b){a.callback=b;a.rAF=requestAnimationFrame(a.count); return!1};a.pauseResume=function(){a.paused?(a.paused=!1,delete a.startTime,a.duration=a.remaining,a.startVal=a.frameVal,requestAnimationFrame(a.count)):(a.paused=!0,cancelAnimationFrame(a.rAF))};a.reset=function(){a.paused=!1;delete a.startTime;a.startVal=g;cancelAnimationFrame(a.rAF);a.printValue(a.startVal)};a.update=function(b){cancelAnimationFrame(a.rAF);a.paused=!1;delete a.startTime;a.startVal=a.frameVal;a.endVal=Number(b);a.countDown=a.startVal>a.endVal;a.rAF=requestAnimationFrame(a.count)}; a.printValue(a.startVal)};(function(c){c.fn.countup=function(g,l){this.each(function(n,h){var d=Number(c(h).text());(new CountUp(h,d,g)).start(l)});return this}})(jQuery);
 
-	var excludeFields = {
-		'10': ['homeNo', 'roomNo', 'toiletNo', 'floorNo', 'homeDirection', 'facadeDirection'],
-		'11': ['homeNo', 'roomNo', 'toiletNo', 'floorNo', 'homeDirection', 'facadeDirection']
-	};
+	var adw = $('#address-detail-wrap');
+	var projectMask = $('#projectMask');
+	var searchList = $('#search-list');
+	var projectWrap = $('#project-wrap');
+	var priceShow = $('#price-show');
+	var priceMask = $('#priceMask');
+	var errorHint = $('.error-hint');
+	
+	$('.alert-success .icon-close-icon').on('click', hideHint);
 	
 	var point = {
 		fields: {},
-		counterFields: {},
 		pel: $('#score-percent'),
+		score: $('#score'),
 		init: function() {
 			$('.point-select').find('li').each(function(){
 				var self = $(this);
@@ -23,45 +27,30 @@ $(document).ready(function(){
 				
 				point.fields[id] = self;
 				point.fields[id + 'Icon'] = self.find('.icon-checked');
-				
-				point.counterFields[id] = new CountUp(self.find('.count').get(0), 0, 0, 0, 1, {useEasing : true});
 			});
-			
-			point.counter = new CountUp("score", 0, 0, 0, 1, {useEasing : true});
 		},
 		update: function(n) {
-			point.counter.update(n);
+			point.score.countup(n);
 			point.pel.css('width', n + '%');
 		},
-		current: function() {
-			return point.counter.endVal;
-		},
-		increase: function(n) {
-			point.update(point.current() + n);
-		},
-		decrease: function(n) {
-			point.update(point.current() - n);
-		},
 		checkPoint: function(field, p) {
-			var ppp = $(point.counterFields[field].d).parent();
-			clearTimeout(ppp.data('timeout'));
-			ppp.stop(true, true).show();
+			var icon = point.fields[field + 'Icon'];
+			var count = point.fields[field].find('.count');
+			var parent = count.parent();
 			
-			point.fields[field + 'Icon'].addClass('selected-point');
-			point.counterFields[field].update(p);
-			return p;
-		},
-		uncheckPoint: function(field) {
-			point.fields[field + 'Icon'].removeClass('selected-point');
-			point.counterFields[field].update(0);
-			
-			var pp = $(point.counterFields[field].d);
-			var ppp = pp.parent();
-			
-			clearTimeout(ppp.data('timeout'));
-			ppp.data('timeout', setTimeout(function(){
-				ppp.fadeOut();
-			}, 500));
+			if(p > 0) {
+				icon.addClass('selected-point');
+				
+				parent.fadeIn(50, function(){
+					count.countup(p);
+				});
+			} else {
+				icon.removeClass('selected-point');
+				
+				count.countup(p, function(){
+					parent.fadeOut();
+				});
+			}
 		},
 		calc: function() {
 			var p = 0;
@@ -71,12 +60,10 @@ $(document).ready(function(){
 			pType += form.fields.type.val() ? form.getPoint(form.fields.type) : 0;
 			pType += form.fields.categoryId.val() ? form.getPoint(form.fields.categoryId) : 0;
 			pType += form.fields.projectBuildingId.val() ? form.getPoint(form.fields.projectBuildingId) : 0;
-
-			if(pType) {
-				p += point.checkPoint('type', pType);
-			} else {
-				point.uncheckPoint('type');
-			}
+			
+			point.checkPoint('type', pType);
+			p += pType;
+			
 			
 			var addressPoint = 0;
 			
@@ -86,17 +73,14 @@ $(document).ready(function(){
 			addressPoint += form.fields.streetId.val() ? form.getPoint(form.fields.streetId) : 0;
 			addressPoint += form.fields.homeNo.val() ? form.getPoint(form.fields.homeNo) : 0;
 			
-			if(addressPoint) {
-				p += point.checkPoint('address', addressPoint);
-			} else {
-				point.uncheckPoint('address');
-			}
+			point.checkPoint('address', addressPoint);
+			p += addressPoint;
 			
 			
 			var infoP = 0;
 			
 			infoP += form.fields.area.val() ? form.getPoint(form.fields.area) : 0;
-			infoP += form.fields.priceMask.val() ? form.getPoint(form.fields.priceMask) : 0;
+			infoP += priceMask.val() ? form.getPoint(priceMask) : 0;
 			infoP += form.fields.roomNo.val() ? form.getPoint(form.fields.roomNo) : 0;
 			infoP += form.fields.toiletNo.val() ? form.getPoint(form.fields.toiletNo) : 0;
 			
@@ -110,11 +94,8 @@ $(document).ready(function(){
 				infoP += 5;
 			}
 			
-			if(infoP) {
-				p += point.checkPoint('info', infoP);
-			} else {
-				point.uncheckPoint('info');
-			}
+			point.checkPoint('info', infoP);
+			p += infoP;
 			
 			var additionP = 0;
 			
@@ -128,11 +109,8 @@ $(document).ready(function(){
 			
 			additionP += (facilityP > 5) ? 5 : facilityP;
 			
-			if(additionP) {
-				p += point.checkPoint('additionInfo', additionP);
-			} else {
-				point.uncheckPoint('additionInfo');
-			}
+			point.checkPoint('additionInfo', additionP);
+			p += additionP;
 			
 			var totalImage = form.files.children().length;
 			var imageP = 0;
@@ -143,388 +121,283 @@ $(document).ready(function(){
 				imageP += 5;
 			}
 			
-			if(imageP > 0) {
-				p += point.checkPoint('photo', imageP);
-			} else {
-				point.uncheckPoint('photo');
-			}
+			point.checkPoint('photo', imageP);
+			p += imageP;
 			
 			var contactP = 5;
 			
 			contactP += (form.fields.name.val()) ? form.getPoint(form.fields.name) : 0;
 			contactP += (form.fields.email.val()) ? form.getPoint(form.fields.email) : 0;
 			contactP += (form.fields.mobile.val()) ? form.getPoint(form.fields.mobile) : 0;
+
+			point.checkPoint('contact', contactP);
+			p += contactP;
 			
-			p += point.checkPoint('contact', contactP);
-				
 			point.update(p);
 		}
 	};
 	
-	form = {
-		el: $('#w0'),
-		fields: {},
-		init: function() {
-			form.el.find('select, input, textarea').each(function(){
-				var self = $(this);
-				
-				if(self.attr('id')) {
-					form.fields[camel(self.attr('id'))] = self;
-				}
-			});
-			
+	form = new function() {
+		var self = this;
 
-			form.fields.categoryId.on('change', function(){
-				var self = $(this);
-				var val = self.val();
-				
-				if(val == CHCK) {
-					form.getWrap(self).find('.point').text(2);
-					form.getWrap(form.fields.projectBuildingId).find('.point').text(3);
-				} else {
-					form.getWrap(self).find('.point').text(5);
-					form.getWrap(form.fields.projectBuildingId).find('.point').text(0);
-				}
-				
-				if(excludeFields[val]) {
-					for(var i in excludeFields[val]) {
-						form.fields[excludeFields[val][i]].val('');
-					}
-				}
-			});
+		self.el = $('#w0');
+		self.input = self.el.find('select, input, textarea');
+		self.files = $(".files" );
+		self.fields = mapFieldsName(self.input);
+		
+		select2(self.el.find('select'));
+		
+		self.filterCategories = function() {
+			var type = form.fields.type.val();
+			var currentCat = self.fields.categoryId.val();
+			var options = [];
 			
-			for(var i in form.fields) {
-				form.fields[i].on('change', function(){
-					form.hideError($(this));
-					point.calc();
-				});
-				form.fields[i].on('keyup', function(){
-					point.calc();
-				});
-			}
-			
-			$('.tienich-frm input').change(function(){
-				point.calc();
-			});
-			
-			form.files = $(".files" );
-			form.projectWrap = $('.project-wrap');
-			form.attachEvents();
-			
-			form.oldCat = form.fields.categoryId.val();
-		},
-		resetLatLng: function(e) {
-			if(!form.projectWrap.hasClass('has-project')) {
-				form.fields.lat.val('');
-				form.fields.lng.val('');
-			}
-		},
-		attachEvents: function() {
-			form.files.sortable({cancel: '.template-upload'});
-			form.files.disableSelection();
-			
-			form.fields.streetId.on('change', form.resetLatLng);
-			form.fields.homeNo.on('change', form.resetLatLng);
-			form.fields.wardId.on('change', form.resetLatLng);
-			
-			form.fields.type.on('change', form.filterCategories);
-			
-			form.fields.cityId.on('change', function(e, eventData){
-				if(eventData) {
-					form.cityChange(function(r){
-						form.select(form.fields.districtId, eventData.district_id, eventData);
-					});
-				} else {
-					form.cityChange();
-				}
-			});
-			
-			form.fields.districtId.on('change', function(e, eventData){
-				if(eventData) {
-					form.districtChange(function(r){
-						if(eventData.ward_id) {
-							form.select(form.fields.wardId, eventData.ward_id);
-							form.fields.wardId.prop('disabled', true);
-						}
-						
-						if(eventData.street_id) {
-							form.select(form.fields.streetId, eventData.street_id);
-							form.fields.streetId.prop('disabled', true);
-						}
-						
-						if(eventData.home_no) {
-							form.fields.homeNo.val(eventData.home_no).prop('disabled', true);
+			for(var i = 0; i < categories.length; i++) {
+				if(categories[i]['apply_to_type'] == type || categories[i]['apply_to_type'] == APPLY_TO_TYPE_BOTH) {
+					options.push({
+						id: categories[i]['id'],
+						name: categories[i]['name'],
+						data: {
+							limit: categories[i]['limit_area']
 						}
 					});
-				} else {
-					form.districtChange();
-				}
-			});
-			
-			form.fields.categoryId.on('change', function(){
-				var val = $(this).val();
-				
-				if(val == CHCK) {
-					form.getWrap(form.fields.projectBuildingId).fadeIn();
-				} else {
-					form.getWrap(form.fields.projectBuildingId).fadeOut(function(){
-						form.removeProject();
-					});
-				}
-				
-				if(typeof excludeFields[form.oldCat] !== 'undefined') {
-					for(var i = 0; i < excludeFields[form.oldCat].length; i++) {
-						form.getWrap(form.fields[excludeFields[form.oldCat][i]]).fadeIn();
-					}
-				}
-				
-				if(typeof excludeFields[val] !== 'undefined') {
-					for(var i = 0; i < excludeFields[val].length; i++) {
-						form.getWrap(form.fields[excludeFields[val][i]]).fadeOut().val('');
-					}
-				}
-
-				form.oldCat = val;
-			});
-			
-			var ss = $('#search-list');
-			
-			form.fields.projectMask.on('keyup', function(){
-				var self = $(this);
-				var val = self.val().trim();
-				
-		    	if(val.length > 1) {
-		    		if(self.data('v') != val) {
-		    			self.data('v', val);
-		            	
-		    			if($.data(this, 'ajax')) {
-		    				$.data(this, 'ajax').abort();
-		    			}
-		    			
-		    			$.data(this, 'ajax', $.get('/listing/list-project', {v: val}, function(response){
-		            		if(response.length) {
-		            			showSearchProject();
-		            			
-		            			var list = ss.find('ul').html('');
-		            			
-		            			for(var i in response) {
-		            				list.append('<li data-id="' + response[i].id + '">' + response[i].full_name + '</li>');
-		                      	}
-		            		} else {
-		            			ss.addClass('hide');
-		            		}
-		            	}));
-		            }
-		    	} else {
-		    		form.fields.projectMask.data('v', '');
-		    		ss.addClass('hide');
-		    	}
-			}).on('blur', function(){
-				form.fields.projectMask.data('v', '').val('');
-			});
-			
-			function showSearchProject(items) {
-				ss.removeClass('hide');
-				$(document).on('click', hideSearchProject);
-			}
-			
-			function hideSearchProject(e) {
-				if($(e.target).attr('id') != 'projectMask') {
-		    		ss.addClass('hide');
-					$(document).off('click', hideSearchProject);
 				}
 			}
-			
-			var projectValue = $('#project-value');
-			
-			ss.on('click', 'li', function(){
-				var self = $(this);
-				var val = self.data('id');
-				
-				form.fields.projectBuildingId.val(self.data('id'));
-				form.projectWrap.addClass('has-project');
-				projectValue.find('.name').text(self.text());
-				
-				$.get('/building-project/detail', {id: val}, function(r){
-					projectValue.attr('href', r.url);
-					form.select(form.fields.cityId, r.city_id, r);
-					form.fields.cityId.prop("disabled", true);
-					form.fields.districtId.prop("disabled", true);
-					
-					form.fields.lat.val(r.lat);
-					form.fields.lng.val(r.lng);
-					
-					if(r.facilities) {
-						var fa = r.facilities.split(',');
 
-						$('.tienich-frm input').each(function(){
-							var self = $(this);
-							if($.inArray(self.val(), fa) != -1) {
-								self.parent().addClass('active');
-							}
-						});
-					}
-				});
-			});
+			select2Change(self.fields.categoryId, options);
+			select2Select(self.fields.categoryId, currentCat, !hasValue(self.fields.categoryId, currentCat));
+		};
+		
+		self.catChange = function() {
+			var categoryId = Number(self.fields.categoryId.val());
 			
-			projectValue.find('.icon-mv').on('click', function(e){
-				form.removeProject();
-				
-				e.preventDefault();
-			});
-			
-			
-			$('.radio-ui').radio({
-				done: function (item) {
-					if(item.attr('name') == 'price-unit') {
-						var unit = Number(item.val());
-						var mask = Number(form.fields.priceMask.val().replace(',', '.'));
-
-						calPrice(unit, mask);
-					}
+			if(landType.indexOf(categoryId) === -1) {
+				for(var i in landTypeApplyFields) {
+					show(self.fields[camel(landTypeApplyFields[i])]);
 				}
-			});
-			
-			form.fields.priceMask.on('keyup', function(e){
-				var self = $(this);
-				
-				var unit = Number(form.el.find('input[name=price-unit]').filter(':checked').val());
-				var mask = self.val() ? Number(self.val().replace(',', '.')) : '';
-				
-				calPrice(unit, mask);
-			});
-			
-			function calPrice(unit, mask) {
-				var priceShow = $('#price-show');
-				
-				if(mask) {
-					var price = Math.round(mask * unit);
-					
-					form.fields.price.val(price);
-					
-					var priceFormat = formatNumber(price + '');
-					
-					
-					if(priceFormat) {
-						priceShow.text(priceFormat).parent().show();
-					} else {
-						priceShow.parent().hide();
-					}
-				} else {
-					form.fields.price.val('');
-					priceShow.parent().hide();
-				}
-			}
-			
-			$('#preview').click(function(){
-				if(form.validate()) {
-					$('.error-hint').fadeOut();
-					
-					if(!form.fields.lat.val()) {
-						form.geoLocation(form.buildAddress());
-					}
-					
-					form.showPreview();
-				} else {
-					$('.error-hint').fadeIn();
-				}
-			});
-			
-			$('#review-listing').click(function(e){
-				if($(e.target).attr('id') == 'review-listing') {
-					form.hidePreview();
-				}
-			});
-			
-			$('#post').click(function(){
-				var disabled = form.el.find(':input:disabled').prop('disabled', false);
-				
-				$('body').loading();
-				
-				$.post(form.el.attr('action'), form.el.serialize(), function(r){
-					$('body').loading({done: true});
-					
-					if(r.success) {
-						$('.wrap-frm-listing').hide();
-						$('#success-notify').removeClass('hide').html(r.template);
-						
-						// $('#to-detail').attr('href', r.url);
-						
-						window.onbeforeunload = function() {};
-					} else {
-						
-					}
-				});
-				
-				disabled.prop('disabled', true);
-			});
-		},
-		showPreview: function() {
-			$('html, body').addClass('previewing');
-			
-			var previewEls = form.getPreviewEls();
-			
-			previewEls.swiperWrapper.html('');
-			
-			if(tempSlide) {
-				previewEls.galleryDetail.show();
-				previewEls.noGallery.hide();
-				
-				for(var i in tempSlide) {
-					previewEls.swiperWrapper.append('<div class="swiper-slide"> <div class="img-show"> <div> <img src="' + tempSlide[i] + '"> </div> </div> </div>');
-				}
-				
-				tempSlide = false;
 			} else {
-				var galleries = form.files.find('.template-download');
-				
-				if(galleries.length > 0) {
-					previewEls.galleryDetail.show();
-					previewEls.noGallery.hide();
-					
-					galleries.each(function(){
-						previewEls.swiperWrapper.append('<div class="swiper-slide"> <div class="img-show"> <div> <img src="' + $(this).find('a').attr('href') + '"> </div> </div> </div>');
-					});
-				} else {
-					previewEls.galleryDetail.hide();
-					previewEls.noGallery.show();
+				for(var i in landTypeApplyFields) {
+					hide(self.fields[camel(landTypeApplyFields[i])], true);
 				}
 			}
 			
-			if(previewEls.swiperWrapper.html() != '') {
-				form.swiper = new Swiper('.swiper-container', {
-			        nextButton: '.swiper-button-next',
-	    			prevButton: '.swiper-button-prev'
-			    });
+			if(categoryId == CHCK) {
+				parent(self.fields.categoryId).find('.point').text(2);
+				show(form.fields.projectBuildingId);
+			} else {
+				parent(self.fields.categoryId).find('.point').text(5);
+				hide(form.fields.projectBuildingId);
+				
+				removeProject();
+			}
+		};
+		
+		self.cityChange = function() {
+			var cityId = self.fields.cityId.val();
+
+			select2Change(self.fields.districtId, []);
+			select2Select(self.fields.districtId, '', true);
+			
+			if(cityId) {
+				$.get('/listing/list-district', {cityId: self.fields.cityId.val()}, function(districts){
+					select2Change(self.fields.districtId, districts);
+				});
+				show(self.fields.districtId);
+			} else {
+				hide(self.fields.districtId, true, true);
+			}
+		};
+		
+		self.districtChange = function() {
+			select2Change(self.fields.wardId, []);
+			select2Change(self.fields.streetId, []);
+			
+			var districtId = self.fields.districtId.val();
+			
+			if(districtId) {
+				$.get('/listing/list-sw', {districtId: districtId}, function(response){
+					select2Change(self.fields.wardId, response.wards);
+					select2Change(self.fields.streetId, response.streets);
+				});
+				adw.show();
+			} else {
+				adw.hide();
+			}
+		};
+		
+		self.fileuploadcompleted = function() {
+			if(form.files.find('.template-download').length > 1) {
+				$('#upload-hint').fadeIn();
 			}
 			
-			form.updateRef($('#review-listing'));
+			self.fileuploadcommon();
+		};
+		
+		self.fileuploaddestroyed = function() {
+			if(form.files.find('.template-download').length < 2) {
+				$('#upload-hint').fadeOut();
+			}
 			
-			$('.list-attr-td, .list-tienich-detail').find('.ref').each(function(){
-				var self = $(this);
-				var li = self.closest('li');
-				
-				if(self.text()) {
-					li.show();
-				} else {
-					li.hide();
-				}
+			form.fileuploadcommon();
+		};
+
+		self.fileuploadcommon = function() {
+			form.files.sortable('refreshPositions');
+			
+			point.calc();
+		};
+
+		self.require = function(el, m) {
+			if(el.val()) {
+				self.hideError(el);
+			} else {
+				self.showError(el, m);
+			}
+		};
+		
+		self.showError = function(el, m) {
+			parent(el).addClass('has-error').find('.help-block').text(m);
+		};
+		
+		self.hideError = function(el) {
+			parent(el).removeClass('has-error').find('.help-block').text('');
+		};
+
+		self._hideError = function() {
+			self.hideError($(this));
+			
+			var errorFields = form.getFormErrors();
+			
+			if(errorFields.length) {
+				$('#error-fields').text(errorFields.join(', ') + '.');
+			} else {
+				errorHint.hide();
+			}
+			
+			point.calc();
+		};
+		
+		self.hasError = function(el) {
+			return parent(el).hasClass('has-error');
+		};
+		
+		self.isHidden = function(el) {
+			return (parent(el).css('display') == 'none');
+		}
+		
+		self.getSelectedCatEl = function() {
+			return self.fields.categoryId.find("option:selected");
+		};
+		
+		self.isNumber = function(number) {
+			var format = form.formatNumber(number);
+
+			return !isNaN(format);
+		};
+
+		self.formatNumber = function(number) {
+			return number.replace('.', 'A').replace(',', '.');
+		};
+		
+		self.isDigit = function(digit) {
+			return /^\d+$/.test(digit);
+		};
+		
+		self.validateEmail = function (email) { 
+			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			return re.test(email);
+		};
+		
+		self.getFormErrors = function() {
+			var errorFields = [];
+			
+			form.el.find('.has-error').each(function(){
+				errorFields.push($(this).find('.label-attr').text());
 			});
 			
-			$('.item-agent .ref').each(function(){
-				var self = $(this);
-				var item = self.closest('.item-agent');
-				
-				if(self.text()) {
-					item.show();
-				} else {
-					item.hide();
-				}
-			});
+			return errorFields;
+		};
+		
+		self.validate = function() {
+			self.require(self.fields.categoryId, lajax.t('Choose property types'));
+			self.require(self.fields.cityId, lajax.t('Choose city'));
 			
-			$('.address-show').text(form.buildAddress());
-		},
-		updateRef: function(container) {
+			if(!self.isHidden(self.fields.districtId)) {
+				self.require(self.fields.districtId, lajax.t('Choose district'));
+			}
+			
+			if(adw.css('display') != 'none') {
+				self.require(self.fields.wardId, lajax.t('Choose ward'));
+				self.require(self.fields.streetId, lajax.t('Choose street'));
+			}
+			
+			self.require(self.fields.area, lajax.t('Enter home size'));
+			self.require(self.fields.price, lajax.t('Enter price'));
+			self.require(self.fields.content, lajax.t('Enter content'));
+			self.require(self.fields.mobile, lajax.t('Enter mobile number'));
+			
+			if(!self.hasError(self.fields.area)) {
+				var val = self.fields.area.val();
+				
+				if(!self.isNumber(val) || val < 0) {
+					self.showError(self.fields.area, lajax.t('Home size is invalid'));
+				} else {
+					if(self.getSelectedCatEl()) {
+						var limit = self.getSelectedCatEl().data('limit');
+						
+						if(limit && Number(limit) < Number(val)) {
+							self.showError(self.fields.area, lajax.t('Home size must be not greater %s').replace('%s', limit));
+						}
+					}
+				}
+			}
+			
+			if(!self.hasError(self.fields.price)) {
+				if(!self.isNumber(self.fields.price.val())) {
+					self.showError(self.fields.price, lajax.t('Price is invalid'));
+				}
+			}
+			
+			if(!self.hasError(self.fields.mobile)) {
+				var val = self.fields.mobile.val();
+				
+				if(!self.isDigit(val)) {
+					self.showError(self.fields.mobile, lajax.t('Mobile number is invalid'));
+				} else if(val.length < 7 || val.length > 11) {
+					self.showError(self.fields.mobile, lajax.t('Số di động phải từ 7 đến 11 số.'));
+				}
+			}
+			
+			if(self.hasError(self.fields.mobile)) {
+				self.fields.mobile.prop('disabled', false);
+			}
+			
+			if(self.fields.email.val() && !self.validateEmail(self.fields.email.val())) {
+				self.showError(self.fields.email, lajax.t('Địa chỉ email không hợp lệ'));
+			} else {
+				self.hideError(self.fields.email);
+			}
+
+			if(self.hasError(self.fields.email)) {
+				self.fields.email.prop('disabled', false);
+			}
+			
+			if(self.el.find('.has-error').length > 0) {
+				return false;
+			}
+			
+			return true;
+		};
+		
+		self.getPreviewEls = function() {
+			return {
+				galleryDetail: $('.gallery-detail'),
+				noGallery: $('.no-gallery'),
+				swiperWrapper: $('.swiper-wrapper')
+			};
+		};
+		
+		self.updateRef = function(container) {
 			container.find('.ref').each(function(){
 				var self = $(this);
 				var refEl = $(self.data('ref'));
@@ -553,395 +426,588 @@ $(document).ready(function(){
 					self.text(val);
 				}
 			});
-		},
-		hidePreview: function() {
-			$('html, body').removeClass('previewing');
-			
-			if(form.swiper) {
-				form.swiper.destroy(false, true);
-				form.swiper = null;
-			}
-		},
-		getPreviewEls: function() {
-			return {
-				galleryDetail: $('.gallery-detail'),
-				noGallery: $('.no-gallery'),
-				swiperWrapper: $('.swiper-wrapper')
-			};
-		},
-		geoLocation: function(address) {
+		};
+		
+		self.setLatLng = function(lat, lng) {
+			self.fields.lat.val(lat);
+			self.fields.lng.val(lng);
+		};
+
+		self.geoLocation = function(address) {
 			if(address) {
 				var geoCode = new google.maps.Geocoder;
 				geoCode.geocode({address: address}, function(results) {
 					if(results.length) {
-						form.fields.lat.val(results[0].geometry.location.lat());
-						form.fields.lng.val(results[0].geometry.location.lng());
+						self.setLatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
 					} else {
-						form.geoLocation(form.splitAddress(address));
+						self.geoLocation(self.splitAddress(address));
 					}
 				});
-			}
-		},
-		splitAddress: function(address) {
-			address = address.split(', ');
-			address.shift();
-			return address.join(', ');
-		},
-		buildAddress: function() {
-			var address = [];
-			
-			if(form.fields.homeNo.val() && form.fields.showHomeNo.prop('checked')) {
-				address.push(form.fields.homeNo.val());
-			}
-
-			
-			var street = form.fields.streetId.find('option').filter(':selected');
-			address.push(street.data('pre') + ' ' + street.text());
-			
-			var ward = form.fields.wardId.find('option').filter(':selected');
-			address.push(ward.data('pre') + ' ' + ward.text());
-			
-			address.push(form.fields.districtId.find('option').filter(':selected').text());
-			address.push(form.fields.cityId.find('option').filter(':selected').text());
-			
-			return address.join(', ');
-		},
-		removeProject: function() {
-
-			form.projectWrap.removeClass('has-project');
-			form.fields.projectBuildingId.val('');
-			
-			form.fields.cityId.prop("disabled", false);
-			form.fields.districtId.prop("disabled", false);
-			form.fields.wardId.prop("disabled", false);
-			form.fields.streetId.prop("disabled", false);
-			form.fields.homeNo.prop("disabled", false);
-			
-			point.calc();
-		},
-		filterCategories: function() {
-			var type = form.fields.type.val();
-			var selectedValue = form.getSelectedCatEl() ? form.getSelectedCatEl().attr('value') : '';
-			var flag = true;
-			
-			form.fields.categoryId.find("option:not(:first-child)").remove();
-			for(var i = 0; i < categories.length; i++) {
-				if(categories[i]['apply_to_type'] == type || categories[i]['apply_to_type'] == APPLY_TO_TYPE_BOTH) {
-					var option = $('<option value="' + categories[i]['id'] + '" data-limit="' + categories[i]['limit_area'] + '">' + categories[i]['name'] + '</option>');
-					
-					if(selectedValue == categories[i]['id']) {
-						option.prop('selected', true);
-						flag = false;
-					}
-
-					form.fields.categoryId.append(option);
-				}
-			}
-			
-			if(flag && selectedValue != '') {
-				form.fields.categoryId.select2("val");
-			}
-		},
-		getSelectedCatEl: function() {
-			var el = null;
-
-			form.fields.categoryId.find("option:not(:first-child)").each(function(){
-				var self = $(this);
-				
-				if(self.attr('value') == form.fields.categoryId.val()) {
-					el = self;
-					
-					return false;
-				}
-			});
-			return el;
-		},
-		getWrap: function(el) {
-			return el.closest('.form-group');
-		},
-		cityChange: function(fn) {
-			if(form.fields.cityId.val()) {
-				form.getWrap(form.fields.districtId).fadeIn();
-			} else {
-				form.getWrap(form.fields.districtId).fadeOut();
-			}
-			
-			$.get('/listing/list-district', {cityId: form.fields.cityId.val()}, function(districts){
-				form.appendDropdown(form.fields.districtId, districts);
-
-				if(fn) {
-					fn(districts);
-				}
-			});
-		},
-		districtChange: function(fn) {
-			form.appendDropdown(form.fields.wardId, []);
-			form.appendDropdown(form.fields.streetId, []);
-			
-			if(form.fields.districtId.val()) {
-				form.getWrap(form.fields.wardId).fadeIn();
-				form.getWrap(form.fields.streetId).fadeIn();
-				
-				if(typeof excludeFields[form.fields.categoryId.val()] === 'undefined') {
-					form.getWrap(form.fields.homeNo).fadeIn();
-				}
-			} else {
-				form.getWrap(form.fields.wardId).fadeOut();
-				form.getWrap(form.fields.streetId).fadeOut();
-				form.getWrap(form.fields.homeNo).fadeOut();
-			}
-			
-			
-			
-			if(form.fields.districtId.val()) {
-				$.get('/listing/list-sw', {districtId: form.fields.districtId.val()}, function(response){
-					form.appendDropdown(form.fields.wardId, response.wards);
-					form.appendDropdown(form.fields.streetId, response.streets);
-
-					if(fn) {
-						fn(response);
-					}
-				});
-			}
-		},
-		select: function(el, val, params) {
-			el.val(val).trigger('change', params);
-		},
-		appendDropdown: function(el, items) {
-			el.find("option:not(:first-child)").remove();
-			for(var i in items) {
-				if(items[i]['pre']) {
-					el.append('<option data-pre="' + items[i]['pre'] + '" value="' + items[i]['id'] + '">' + items[i]['name'] + '</option>');
-				} else {
-					el.append('<option value="' + items[i]['id'] + '">' + items[i]['name'] + '</option>');
-				}
-			}
-			
-			el.select2('val');
-		},
-		fileuploadcompleted: function(e, d, t) {
-			if(form.files.find('.template-download').length > 1) {
-				$('#upload-hint').fadeIn();
-			}
-			
-			form.fileuploadcommon();
-		},
-		fileuploaddestroyed: function(e, d, t) {
-			if(form.files.find('.template-download').length < 2) {
-				$('#upload-hint').fadeOut();
-			}
-			
-			form.fileuploadcommon();
-		},
-		fileuploadcommon: function() {
-			form.files.sortable('refreshPositions');
-			point.calc();
-		},
-		validate: function() {
-			form.require(form.fields.categoryId, lajax.t('Choose property types'));
-			form.require(form.fields.cityId, lajax.t('Choose city'));
-			
-			if(!form.isHidden(form.fields.districtId)) {
-				form.require(form.fields.districtId, lajax.t('Choose district'));
-			}
-			
-			if(!form.isHidden(form.fields.wardId)) {
-				form.require(form.fields.wardId, lajax.t('Choose ward'));
-			}
-			
-			if(!form.isHidden(form.fields.streetId)) {
-				form.require(form.fields.streetId, lajax.t('Choose street'));
-			}
-			
-			form.require(form.fields.area, lajax.t('Enter home size'));
-			form.require(form.fields.price, lajax.t('Enter price'));
-			form.require(form.fields.content, lajax.t('Enter content'));
-			form.require(form.fields.mobile, lajax.t('Enter mobile number'));
-			
-			if(!form.hasError(form.fields.area)) {
-				var val = form.fields.area.val();
-				
-				if(!form.isNumber(val) || val < 0) {
-					form.showError(form.fields.area, lajax.t('Home size is invalid'));
-				} else {
-					if(form.getSelectedCatEl()) {
-						var limit = form.getSelectedCatEl().data('limit');
-						
-						if(limit && Number(limit) < Number(val)) {
-							form.showError(form.fields.area, lajax.t('Home size must be not greater %s').replace('%s', limit));
-						}
-					}
-				}
-			}
-			
-			if(!form.hasError(form.fields.price)) {
-				if(!form.isNumber(form.fields.price.val())) {
-					form.showError(form.fields.price, lajax.t('Price is invalid'));
-				}
-			}
-			
-			if(!form.hasError(form.fields.mobile)) {
-				var val = form.fields.mobile.val();
-				
-				if(!form.isDigit(val)) {
-					form.showError(form.fields.mobile, lajax.t('Mobile number is invalid'));
-				} else if(val.length < 7 || val.length > 11) {
-					form.showError(form.fields.mobile, lajax.t('Số di động phải từ 7 đến 11 số.'));
-				}
-			}
-			
-			if(form.fields.email.val() && !form.validateEmail(form.fields.email.val())) {
-				form.showError(form.fields.email, lajax.t('Địa chỉ email không hợp lệ'));
-			} else {
-				form.hideError(form.fields.email);
-			}
-			
-			if(form.el.find('.has-error').length > 0) {
-				return false;
-			}
-			
-			return true;
-		},
-		require: function(el, m) {
-			if(el.val()) {
-				form.hideError(el);
-			} else {
-				form.showError(el, m);
-			}
-		},
-		showError: function(el, m) {
-			form.getWrap(el).addClass('has-error').find('.help-block').text(m);
-		},
-		hideError: function(el) {
-			form.getWrap(el).removeClass('has-error').find('.help-block').text('');
-		},
-		hasError: function(el) {
-			return form.getWrap(el).hasClass('has-error');
-		},
-		isHidden: function(el) {
-			return (form.getWrap(el).css('display') == 'none');
-		},
-		isNumber: function(number) {
-			var format = form.formatNumber(number);
-
-			return !isNaN(format);
-		},
-		isDigit: function(digit) {
-			return /^\d+$/.test(digit);
-		},
-		formatNumber: function(number) {
-			return number.replace('.', 'A').replace(',', '.');
-		},
-		validateEmail: function (email) { 
-			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-			return re.test(email);
-		},
-		getPoint: function(el) {
-			return Number(form.getWrap(el).find('.point').text());
-		}
-	};
-	
-	point.init();
-	form.init();
-	
-	setTimeout(function(){
-		point.calc();
-	}, 1000);
-	
-	form.el.find('select').each(function(){
-		var self = $(this);
-		var options = {
-			width: '100%',
-			placeholder: '...',
-			language: {
-				'noResults': function() {
-					return self.data('no-results');
-				}
 			}
 		};
 		
-		if(!self.hasClass('search')) {
-			options.minimumResultsForSearch = Infinity;
-		}
+		self.splitAddress = function(address) {
+			address = address.split(', ');
+			address.shift();
+			return address.join(', ');
+		};
 		
-		self.select2(options);
-	});
-	
-	form.el.find('.number-only').on('keydown', numnberOnly);
-	
-	var w = $(window);
-	var cl = $('.checkpoint-listing');
-	var offtop = $('.wrap-frm-listing').offset().top - ($('header').outerHeight()) + parseInt($('.wrap-frm-listing').css('padding-top')) - 12;
+		self.buildAddress = function() {
+			var address = [];
+			
+			if(self.fields.homeNo.val() && self.fields.showHomeNo.prop('checked')) {
+				address.push(self.fields.homeNo.val());
+			}
 
-	if(Number(cl.css('margin-top').replace('px', '')) == 0) {
-		w.on('scroll', wScroll).trigger('scroll');
-	}
-	
-	function wScroll() {
-		var st = w.scrollTop();
-		if(st >= offtop) {
-			cl.css('top', st - offtop);
-		} else {
-			cl.css('top', 0);
-		}
-	}
-	
-	w.on('resize', function(){
-		offtop = $('.wrap-frm-listing').offset().top - ($('header').outerHeight()) + parseInt($('.wrap-frm-listing').css('padding-top')) - 12;
+			
+			var street = self.fields.streetId.find('option').filter(':selected');
+			address.push(street.data('pre') + ' ' + street.text());
+			
+			var ward = self.fields.wardId.find('option').filter(':selected');
+			address.push(ward.data('pre') + ' ' + ward.text());
+			
+			address.push(self.fields.districtId.find('option').filter(':selected').text());
+			address.push(self.fields.cityId.find('option').filter(':selected').text());
+			
+			return address.join(', ');
+		};
 		
-		if(Number(cl.css('margin-top').replace('px', '')) == 0) {
-			w.on('scroll', wScroll);
+		self.hidePreview = function() {
+			$('html, body').removeClass('previewing');
+			
+			if(self.swiper) {
+				self.swiper.destroy(false, true);
+				self.swiper = null;
+			}
+		};
+		
+		self.showPreview = function() {
+			$('html, body').addClass('previewing');
+			
+			var previewEls = self.getPreviewEls();
+			
+			previewEls.swiperWrapper.html('');
+			
+			var galleries = self.files.find('.template-download');
+			
+			if(galleries.length > 0) {
+				previewEls.galleryDetail.show();
+				previewEls.noGallery.hide();
+				
+				galleries.each(function(){
+					previewEls.swiperWrapper.append('<div class="swiper-slide"> <div class="img-show"> <div> <img src="' + $(this).find('a').attr('href') + '"> </div> </div> </div>');
+				});
+			} else {
+				previewEls.galleryDetail.hide();
+				previewEls.noGallery.show();
+			}
+			
+			if(previewEls.swiperWrapper.html() != '') {
+				self.swiper = new Swiper('.swiper-container', {
+			        nextButton: '.swiper-button-next',
+	    			prevButton: '.swiper-button-prev'
+			    });
+			}
+			
+			self.updateRef($('#review-listing'));
+			
+			$('.list-attr-td, .list-tienich-detail').find('.ref').each(function(){
+				var self = $(this);
+				var li = self.closest('li');
+				
+				if(self.text()) {
+					li.show();
+				} else {
+					li.hide();
+				}
+			});
+			
+			$('.item-agent .ref').each(function(){
+				var self = $(this);
+				var item = self.closest('.item-agent');
+				
+				if(self.text()) {
+					item.show();
+				} else {
+					item.hide();
+				}
+			});
+			
+			$('.address-show').text(self.buildAddress());
+		};
+		
+		self.getPoint = function(el) {
+			return Number(parent(el).find('.point').text());
+		};
+		
+		self.files.sortable({cancel: '.template-upload'});
+		self.fields.type.on('change', self.filterCategories);
+		self.fields.categoryId.on('change', self.catChange);
+		self.fields.cityId.on('change', self.cityChange);
+		self.fields.districtId.on('change', self.districtChange);
+		self.el.find('.number-only').on('keydown', numnberOnly);
+		
+		self.input.on('change', self._hideError);
+		self.input.on('keyup', self._hideError);
+	};
+	
+	$('#preview').click(function(){
+		if(form.validate()) {
+			errorHint.hide();
+			
+			if(projectMask.data('lat') && projectMask.data('lng')) {
+				form.setLatLng(projectMask.data('lat'), projectMask.data('lng'));
+			} else {
+				form.geoLocation(form.buildAddress());
+			}
+			
+			form.showPreview();
 		} else {
-			cl.removeAttr('style');
-			w.off('scroll', wScroll);
+			errorHint.show();
+			
+			var errorFields = form.getFormErrors();
+			
+			$('#error-fields').text(errorFields.join(', ') + '.');
 		}
 	});
 	
-	if(isNewRecord) {
-		form.data = form.el.serialize();
-	} else {
-		function serialize(e, data) {
-			form.data = form.el.serialize();
-			jQuery('#w1-fileupload').off('fileuploadcompleted', serialize);
+	$('#review-listing').click(function(e){
+		if($(e.target).attr('id') == 'review-listing') {
+			form.hidePreview();
 		}
-		
-		jQuery('#w1-fileupload').on('fileuploadcompleted', serialize);
-		
-		var maskValue = Number(form.fields.price.val()) / Number(form.fields.priceUnitMil.val());
-		
-		if(maskValue > 999) {
-			form.fields.priceMask.val((Number(form.fields.price.val()) / Number(form.fields.priceUnitBil.val()) + '').replace('.', ','));
-			form.fields.priceUnitBil.parent().trigger('click');
-		} else {
-			form.fields.priceMask.val(maskValue);
-			form.fields.priceUnitMil.parent().trigger('click');
-		}
-		
-		// form.showPreview();
-	}
+	});
 	
 	$('#back').click(function(){
 		form.hidePreview();
 	});
+	
+	$('#post').click(function(){
+		var disabled = form.el.find(':input:disabled').prop('disabled', false);
+		
+		$('body').loading();
+		
+		$.post(form.el.attr('action'), form.el.serialize(), function(r){
+			$('body').loading({done: true});
+			
+			if(r.success) {
+				$('.wrap-frm-listing').hide();
+				$('#success-notify').removeClass('hide').html(r.template);
+				
+				window.onbeforeunload = function() {};
+			} else {
+				
+			}
+		});
+		
+		disabled.prop('disabled', true);
+	});
+	
+	point.init();
+	setTimeout(function(){point.calc();}, 500);
+	attachWindowScrollEvent();
+	attachProjectSuggest();
+	attachRadioUi();
+	attachPriceFormat();
+	
+	if(isNewRecord) {
+		form.data = form.el.serialize();
+	} else {
+		if(totalImage) {
+			function serialize(e, data) {
+				form.data = form.el.serialize();
+				jQuery('#w1-fileupload').off('fileuploadcompleted', serialize);
+			}
+			
+			jQuery('#w1-fileupload').on('fileuploadcompleted', serialize);
+		} else {
+			form.data = form.el.serialize();
+		}
+	}
 	
 	window.onbeforeunload = function() {
 		if(form.data != form.el.serialize()) {
 			return lajax.t("Are you sure you want to navigate away from this page and discard all changes ?");
 		}
 	};
-	
-	$('.icon-close-icon').click(function(e){
+
+	function attachPriceFormat() {
+		if(!isNewRecord) {
+			var priceUnitMil = $('#price-unit-mil');
+			var priceUnitBil = $('#price-unit-bil');
+			var maskValue = Number(form.fields.price.val()) / Number(priceUnitMil.val());
+			
+			if(maskValue > 999) {
+				priceMask.val((Number(form.fields.price.val()) / Number(priceUnitBil.val()) + '').replace('.', ','));
+				priceUnitBil.parent().trigger('click');
+			} else {
+				priceMask.val(maskValue);
+				priceUnitMil.parent().trigger('click');
+			}
+		}
+		
+		priceMask.on('keyup', function(e){
+			calPrice();
+		});
+	}
+
+	function attachRadioUi() {
+		$('.radio-ui').radio({
+			done: function (item) {
+				if(item.attr('name') == 'price-unit') {
+					calPrice();
+				}
+			}
+		});
+	}
+
+	function calPrice() {
+		var unit = Number(form.el.find('input[name=price-unit]').filter(':checked').val());
+		var price = Number(priceMask.val().replace(',', '.'));
+		
+		if(price) {
+			price = Math.round(price * unit);
+			
+			form.fields.price.val(price);
+			
+			var priceFormat = formatNumber(price + '');
+			
+			if(priceFormat) {
+				priceShow.text(priceFormat).parent().show();
+			} else {
+				priceShow.parent().hide();
+			}
+		} else {
+			form.fields.price.val('');
+			priceShow.parent().hide();
+		}
+	}
+
+	function removeProject() {
+		form.fields.cityId.prop("disabled", false);
+		form.fields.districtId.prop("disabled", false);
+		form.fields.wardId.prop("disabled", false);
+		form.fields.streetId.prop("disabled", false);
+		form.fields.homeNo.prop("disabled", false);
+		
+		projectMask.val('').prop('readonly', false).focus();
+		projectWrap.removeClass('show-project');
+		form.fields.projectBuildingId.val('');
+		
+		projectMask.data('url', null);
+		projectMask.data('lat', null);
+		projectMask.data('lng', null);
+		
+		point.calc();
+	}
+
+	function attachProjectSuggest() {
+		
+		projectMask.on('keyup', function(){
+			var val = $(this).val().trim();
+
+			if($.data(this, 'ajax')) {
+				$.data(this, 'ajax').abort();
+			}
+			
+			if(val.length) {
+				$.data(this, 'ajax', $.get('/map/search-project', {v: val}, function(response){
+	        		if(response.length) {
+	        			searchList.addClass('has-result');
+	        			
+	        			var list = searchList.find('ul').html('');
+	        			
+	        			for(var i in response) {
+	        				list.append('<li class="search-item" data-id="' + response[i].id + '">' + response[i].full_name + '</li>');
+	                  	}
+	        		} else {
+	        			searchList.removeClass('has-result');
+	        		}
+	        	}));
+	    	} else {
+	    		searchList.removeClass('has-result');
+	    	}
+		}).on('focus', function(){
+			if(!projectMask.prop('readonly')) {
+				showSearchList();
+			}
+		}).on('click', function(){
+			if(projectMask.prop('readonly')) {
+				window.open(projectMask.data('url'), '_blank');
+			}
+		});
+		
+		projectWrap.on('click', '.icon-close-icon', function(){
+			removeProject();
+		});
+		
+		searchList.on('click', 'li', function(){
+			hideSearchList_();
+			
+			var self = $(this);
+			var id = self.data('id');
+			
+			form.fields.projectBuildingId.val(id);
+			
+			projectMask.val(self.text()).prop('readonly', true);
+			projectWrap.addClass('show-project');
+			
+			searchList.find('ul').html('');
+			searchList.removeClass('has-result');
+			
+			$.get('/building-project/detail', {id: id}, function(r){
+				projectMask.data('url', r.url);
+				projectMask.data('lat', r.lat);
+				projectMask.data('lng', r.lng);
+				
+				form.fields.cityId.prop("disabled", true);
+				select2Select(form.fields.cityId, r.city_id);
+
+				form.fields.districtId.prop("disabled", true);
+				show(form.fields.districtId);
+				select2Change(form.fields.districtId, r.districts);
+				select2Select(form.fields.districtId, r.district_id);
+
+				adw.show();
+
+				select2Change(form.fields.wardId, r.wards);
+				if(r.ward_id) {
+					form.fields.wardId.prop("disabled", true);
+					select2Select(form.fields.wardId, r.ward_id);
+				} else {
+					form.fields.wardId.prop("disabled", false);
+					select2Select(form.fields.wardId, '');
+				}
+				
+				select2Change(form.fields.streetId, r.streets);
+				if(r.street_id) {
+					form.fields.streetId.prop("disabled", true);
+					select2Select(form.fields.streetId, r.street_id);
+				} else {
+					form.fields.streetId.prop("disabled", false);
+					select2Select(form.fields.streetId, '');
+				}
+				
+				if(r.home_no) {
+					form.fields.homeNo.prop("disabled", true);
+					form.fields.homeNo.val(r.home_no);
+				} else {
+					form.fields.homeNo.prop("disabled", false);
+					form.fields.homeNo.val('');
+				}
+
+				point.calc();
+			});
+		});
+		
+		function showSearchList() {
+			if(searchList.hasClass('hide')) {
+				searchList.removeClass('hide');
+				$(document).on('click', hideSearchList);
+			}
+		}
+		
+		function hideSearchList(e) {
+			var target = $(e.target);
+			
+			if(target.hasClass('search-item') || target.closest('#project-wrap').length == 0) {
+				hideSearchList_();
+			}
+		}
+		
+		function hideSearchList_() {
+			searchList.addClass('hide');
+			projectMask.val('');
+			$(document).off('click', hideSearchList);
+		}
+	}
+
+	function hide(el, reset, trigger) {
+		parent(el).hide();
+
+		if(reset) {
+			var tagName = el.get(0).tagName;
+			
+			if(tagName == 'INPUT') {
+				el.val('');
+				
+				if(trigger) {
+					el.trigger('change');
+				}
+			} else if(tagName == 'SELECT') {
+				select2Select(el, '', trigger);
+			}
+		}
+	}
+
+	function show(el) {
+		parent(el).show();
+	}
+
+	function parent(el) {
+		return el.closest('.form-group');
+	}
+
+	function select2(select) {
+		select.each(function(){
+			var self = $(this);
+			var options = {
+				width: '100%',
+				placeholder: '...',
+				language: {
+					'noResults': function() {
+						return self.data('no-results');
+					}
+				}
+			};
+			
+			if(!self.hasClass('search')) {
+				options.minimumResultsForSearch = Infinity;
+			}
+			
+			self.select2(options);
+		});
+	}
+
+	function select2Change(el, options) {
+		var firstOption = el.find('option:first-child').clone();
+		
+		el.html('');
+		
+		if(firstOption.attr('value') == '') {
+			el.append(firstOption);
+		}
+		
+		for(var i in options) {
+			var option = options[i];
+			
+			var optionEl = $('<option value="' + option.id + '">' + option.name + '</option>');
+			
+			if(option.data) {
+				optionEl.data(option.data);
+			}
+			
+			if(option.pre) {
+				optionEl.data('pre', option.pre);
+			}
+			
+			el.append(optionEl);
+		}
+		
+		var firstEl = el.find('option:first-child');
+		
+		if(firstEl.length) {
+			el.val(firstEl.val()).trigger('change.select2');
+		} else {
+			el.val(null).trigger('change.select2');
+		}
+	}
+
+	function select2Select(el, val, trigger) {
+		if(!hasValue(el, val)) {
+			var firstEl = el.find('option:first-child');
+			val = firstEl.length ? firstEl.val() : null;
+		}
+		
+		if(trigger) {
+			el.val(val).change();
+		} else {
+			el.val(val).trigger('change.select2');
+		}
+	}
+
+	function hasValue(select, val) {
+		var exists = false;
+		select.find('option').each(function(){
+		    if(this.value == val) {
+		        exists = true;
+		        return false;
+		    }
+		});
+		return exists;
+	}
+
+	function mapFieldsName(fields) {
+		var _fields = {};
+		var patt = /\[(\w*)\]/i;
+		
+		fields.each(function(){
+			var self = $(this);
+			var name = self.attr('name');
+			
+			if(name) {
+				var pattMatch = name.match(patt);
+
+				if(pattMatch) {
+					var attribute = pattMatch[1];
+					
+					if(_fields[camel(attribute)]) {
+						if(_fields[camel(attribute)].attr('type') == 'hidden') {
+							_fields[camel(attribute)] = self;
+						} else {
+							_fields[camel(attribute)] = _fields[camel(attribute)].add(self);
+						}
+					} else {
+						_fields[camel(attribute)] = self;
+					}
+				}
+			}
+		});
+		
+		return _fields;
+	}
+
+	function hideHint(e) {
 		e.preventDefault();
 		
 		$(this).fadeOut().closest('.alert-success').slideUp();
 		
-		setCookie('cpl', '1');
-	});
+		setServerCookie('cpl', 1);
+	}
+
+	function attachWindowScrollEvent() {
+		var header = $('.wrap-header');
+		var cl = $('.checkpoint-listing');
+		var wrapFormListing = $('.wrap-frm-listing');
+		
+		var offtop, offleft, width, setTop;
+
+		checkToAttach();
+		$window.on('resize', checkToAttach);
+		
+		function checkToAttach() {
+			cl.removeAttr('style');
+			cl.get(0).offsetLeft;
+			
+			setTop = header.outerHeight() + 12;
+			offtop = wrapFormListing.offset().top + parseInt(wrapFormListing.css('padding-top')) - setTop;
+			offleft = cl.offset().left;
+			width = cl.outerWidth();
+			
+			if(Number(cl.css('margin-top').replace('px', '')) == 0) {
+				$window.on('scroll', wScroll);
+				wScroll();
+			} else {
+				$window.off('scroll', wScroll);
+			}
+		}
+		
+		function wScroll() {
+			var st = $window.scrollTop();
+			if(st >= offtop) {
+				cl.css({
+					position: 'fixed',
+					top: setTop + 'px',
+					left: offleft + 'px',
+					width: width + 'px'
+				});
+			} else {
+				cl.removeAttr('style');
+			}
+		}
+	}
 });
 
-function camel(str) {
-	return str.replace(/adproduct-|adproductadditioninfo-|adcontactinfo-/, '').replace(/_([a-z])|-([a-z])/g, function (g) { return g[1].toUpperCase(); });
-}
+var allow = [46, 8, 9, 27, 13, 110, 116];
 
 function numnberOnly(e) {
 	if($(this).hasClass('number-float')) {
@@ -966,4 +1032,8 @@ function numnberOnly(e) {
 
 function formatContent(content) {
 	return content.replace(/\n/g, "<br />");
+}
+
+function camel(str) {
+	return str.replace(/_([a-z])|-([a-z])/g, function (g) { return g[1].toUpperCase(); });
 }

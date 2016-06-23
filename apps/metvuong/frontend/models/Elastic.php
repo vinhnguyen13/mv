@@ -419,7 +419,7 @@ class Elastic
     		]
     	];
     	
-    	return self::requestResult($params);
+    	return self::requestResult($params, self::elasticUrl());
     }
     
     public static function searchAreas($v, $t) {
@@ -435,11 +435,35 @@ class Elastic
     		]
     	];
 		
-		return self::requestResult($params);
+		return self::requestResult($params, self::elasticUrl());
     }
     
-    public static function requestResult($params) {
-		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['countTotal'] . '/_search');
+    public static function searchProjects($v) {
+    	$params = self::buildParams($v);
+    	
+    	$params['query']['function_score']['functions'][] = [
+    		"field_value_factor" => [
+    			"field" => ["total_sell", "total_rent"],
+    			"modifier" => "log1p",
+    			"factor" => 1
+    		]
+    	];
+    	
+    	$params['query']['function_score']['query']["bool"]["must"][] = [
+			"match" => [
+				"city_id" => 1
+			]
+    	];
+    	
+    	return self::requestResult($params, self::elasticUrl('/project_building'));
+    }
+    
+    public static function elasticUrl($type = '') {
+    	return \Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['countTotal'] . $type . '/_search';
+    }
+    
+    public static function requestResult($params, $url) {
+		$ch = curl_init($url);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
 		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

@@ -70,7 +70,7 @@ use vsoft\ad\models\AdImages;
 		];
 	}
 	
-	$this->registerJs("var tempSlide = " . ($product->adImages ? json_encode(ArrayHelper::map($product->adImages, 'id', function($im) { return $im->getUrl(AdImages::SIZE_LARGE);})) : 'false') . "; var isNewRecord = " . ($product->isNewRecord ? 'true' : 'false') . "; var categories = " . json_encode($categoriesJs) . "; var APPLY_TO_TYPE_BOTH = " . AdCategory::APPLY_TO_TYPE_BOTH . "; var CHCK = " . AdCategory::CATEGORY_CHCK . ";", View::POS_HEAD);
+	$this->registerJs("var totalImage = " . count($product->adImages) . "; var landTypeApplyFields = " . json_encode(AdCategory::$landTypeApplyFields) . "; var landType = " . json_encode(AdCategory::$landType) . "; var isNewRecord = " . ($product->isNewRecord ? 'true' : 'false') . "; var categories = " . json_encode($categoriesJs) . "; var APPLY_TO_TYPE_BOTH = " . AdCategory::APPLY_TO_TYPE_BOTH . "; var CHCK = " . AdCategory::CATEGORY_CHCK . ";", View::POS_HEAD);
 ?>
 <div class="title-fixed-wrap container">
 	<div class="post-listing">
@@ -106,7 +106,8 @@ use vsoft\ad\models\AdImages;
 				<?php endif; ?>
 				<?php $form = ActiveForm::begin([
 						'options' => [
-							'class' => 'clearfix'
+							'class' => 'clearfix',
+							'autocomplete' => 'off'
 						]
 					]) ?>
 					<div class="group-frm">
@@ -118,17 +119,32 @@ use vsoft\ad\models\AdImages;
 							</div>
 							<div class="form-group col-xs-12 col-sm-6">
 								<?php $catP = ($product->category_id == AdCategory::CATEGORY_CHCK) ? 2 : 5 ?>
-								<label for="<?= Html::getInputId($product, 'category_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('category_id') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">' . $catP . '</span>') ?></span></label>
+								<label for="<?= Html::getInputId($product, 'category_id') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('category_id') ?></span><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">' . $catP . '</span>') ?></span></label>
 								<?= Html::activeDropDownList($product, 'category_id', $categoriesDropDown, ['options' => $categoriesDropDownOptions, 'class' => 'form-control', 'prompt' => "..."]) ?>
 								<div class="help-block"></div>
 							</div>
-							<div class="form-group col-xs-12 project-wrap<?= $product->projectBuilding ? ' has-project' : '' ?>"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
-								<label for="" class="fs-13 mgB-5"><?= $product->getAttributeLabel('project_building_id') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">3</span>') ?></span></label>
+							<?php
+								$projectMaskAttr = '';
+								$projectMaskVal = '';
+								$projectWrapClass = '';
+								
+								if($product->projectBuilding) {
+									$projectMaskAttr = 'readonly="readonly" data-url="' . Url::to(['building-project/view', 'slug' => $product->projectBuilding->slug]) . '" ';
+									$projectMaskVal = $product->projectBuilding->name . ', ' . $districtDropdown[$product->projectBuilding->district_id] . ', ' . $citiesDropdown[$product->projectBuilding->city_id];
+									$projectWrapClass = ' class="show-project"';
+								}
+							?>
+							<div class="form-group col-xs-12"<?= $product->category_id == AdCategory::CATEGORY_CHCK ? '' : ' style="display: none;"' ?>>
+								<label for="" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('project_building_id') ?></span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">3</span>') ?></span></label>
 								<?= Html::activeHiddenInput($product, 'project_building_id') ?>
-								<input type="hidden" id="project-name" value="<?= $product->projectBuilding ? $product->projectBuilding->name : '' ?>" />
-								<a target="_blank" href="<?= $product->projectBuilding ? Url::to(['building-project/view', 'slug' => $product->projectBuilding->slug]) : '#'; ?>" id="project-value"><span class="icon-mv fs-12 mgR-5"><span class="icon-close-icon"></span></span><span class="name"><?= $product->projectBuilding ? $product->projectBuilding->name . ', ' . $districtDropdown[$product->projectBuilding->district_id] . ', ' . $citiesDropdown[$product->projectBuilding->city_id] : '' ?></span></a>
-								<input type="text" class="form-control" id="projectMask" placeholder="...">
-								<div id="search-list" class="hide"><ul></ul></div>
+								<div id="project-wrap"<?= $projectWrapClass ?>>
+									<input <?= $projectMaskAttr ?>type="text" class="form-control" id="projectMask" placeholder="..." value="<?= $projectMaskVal ?>" />
+									<span class="icon-mv"><span class="icon-close-icon"></span></span>
+									<div id="search-list" class="hide">
+										<span class="search-hint">Nhập tên dự án và chọn từ gợi ý dưới đây</span>
+										<ul></ul>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -137,32 +153,34 @@ use vsoft\ad\models\AdImages;
 						<div class="title-frm"><?= Yii::t('ad', 'Địa chỉ') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">12</span>') ?></span></div>
 						<div class="row">
 							<div class="form-group col-xs-12 col-sm-6">
-								<label for="<?= Html::getInputId($product, 'city_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('city_id') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
+								<label for="<?= Html::getInputId($product, 'city_id') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('city_id') ?></span><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
 								<?= Html::activeDropDownList($product, 'city_id', $citiesDropdown, ['class' => 'form-control search', 'options' => $citiesOptions, 'prompt' => "...", 'disabled' => ($product->projectBuilding && $product->projectBuilding->city_id) ? true : false]) ?>
 								<div class="help-block"></div>
 							</div>
 							<div class="form-group col-xs-12 col-sm-6"<?= $product->city_id ? '' : ' style="display: none;"' ?>>
-								<label for="<?= Html::getInputId($product, 'district_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('district_id') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
+								<label for="<?= Html::getInputId($product, 'district_id') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('district_id') ?></span><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
 								<?= Html::activeDropDownList($product, 'district_id', $districtDropdown, ['class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose City to show Districts'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->district_id) ? true : false]) ?>
 								<div class="help-block"></div>
 							</div>
-							<div class="form-group col-xs-12 col-sm-6"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
-								<label for="<?= Html::getInputId($product, 'ward_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('ward_id') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
-								<?= Html::activeDropDownList($product, 'ward_id', $wardsDropdown, ['options' => $wardsOptions, 'class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Wards'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->ward_id) ? true : false]) ?>
-								<div class="help-block"></div>
-							</div>
-							<div class="form-group col-xs-12 col-sm-6"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
-								<label for="<?= Html::getInputId($product, 'street_id') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('street_id') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
-								<?= Html::activeDropDownList($product, 'street_id', $streetsDropdown, ['options' => $streetsOptions, 'class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Streets'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->street_id) ? true : false]) ?>
-								<div class="help-block"></div>
-							</div>
-							<div class="form-group col-xs-12 col-sm-6 fild-address"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
-								<label for="<?= Html::getInputId($product, 'home_no') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('home_no') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">4</span>') ?></span></label>
-								<?= Html::activeTextInput($product, 'home_no', ['class' => 'form-control', 'placeholder' => '...', 'disabled' => ($product->projectBuilding && $product->projectBuilding->home_no) ? true : false]) ?>
-								<label class="checkbox-inline fs-13 checkbox-ui">
-									<?= Html::activeCheckbox($product, 'show_home_no', ['label' => false]) ?>
-									<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= $product->getAttributeLabel('show_home_no') ?>
-								</label>
+							<div id="address-detail-wrap"<?= $product->district_id ? '' : ' style="display: none;"' ?>>
+								<div class="form-group col-xs-12 col-sm-6">
+									<label for="<?= Html::getInputId($product, 'ward_id') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('ward_id') ?></span><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
+									<?= Html::activeDropDownList($product, 'ward_id', $wardsDropdown, ['options' => $wardsOptions, 'class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Wards'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->ward_id) ? true : false]) ?>
+									<div class="help-block"></div>
+								</div>
+								<div class="form-group col-xs-12 col-sm-6">
+									<label for="<?= Html::getInputId($product, 'street_id') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('street_id') ?></span><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
+									<?= Html::activeDropDownList($product, 'street_id', $streetsDropdown, ['options' => $streetsOptions, 'class' => 'form-control search', 'prompt' => "...", 'data-no-results' => Yii::t('ad', 'Choose District to show Streets'), 'disabled' => ($product->projectBuilding && $product->projectBuilding->street_id) ? true : false]) ?>
+									<div class="help-block"></div>
+								</div>
+								<div class="form-group col-xs-12 col-sm-6 fild-address"<?= in_array($product->category_id, AdCategory::$landType) ? ' style="display: none;"' : '' ?>>
+									<label for="<?= Html::getInputId($product, 'home_no') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('home_no') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">4</span>') ?></span></label>
+									<?= Html::activeTextInput($product, 'home_no', ['class' => 'form-control', 'placeholder' => '...', 'disabled' => ($product->projectBuilding && $product->projectBuilding->home_no) ? true : false]) ?>
+									<label class="checkbox-inline fs-13 checkbox-ui">
+										<?= Html::activeCheckbox($product, 'show_home_no', ['label' => false]) ?>
+										<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= $product->getAttributeLabel('show_home_no') ?>
+									</label>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -170,12 +188,12 @@ use vsoft\ad\models\AdImages;
 						<div class="title-frm"><?= Yii::t('ad', 'General Information') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">35</span>') ?></span></div>
 						<div class="row">
 							<div class="form-group col-xs-12 col-sm-6">
-								<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('area') ?> (m2)<span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
+								<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('area') ?></span> (m2)<span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
 								<?= Html::activeTextInput($product, 'area', ['class' => 'form-control number-only number-float', 'placeholder' => '...']) ?>
 								<div class="help-block"></div>
 							</div>
 							<div class="form-group col-xs-12 col-sm-6 price-type">
-								<label for="<?= Html::getInputId($product, 'price') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('price') ?> (<?= Yii::t('ad', 'VND') ?>)<span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label><span class="price-show-wrap"><span id="price-show"></span></span>
+								<label for="<?= Html::getInputId($product, 'price') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('price') ?></span> (<?= Yii::t('ad', 'VND') ?>)<span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label><span class="price-show-wrap"><span id="price-show"></span></span>
 								<?= Html::activeHiddenInput($product, 'price', ['class' => 'form-control text-right', 'placeholder' => '...']) ?>
 								<div style="position: relative;">
 									<input type="text" id="priceMask" class="form-control text-right number-only number-float" placeholder="...">
@@ -202,7 +220,7 @@ use vsoft\ad\models\AdImages;
 								<div class="help-block"></div>
 							</div>
 							<div class="form-group col-xs-12">
-								<label for="<?= Html::getInputId($product, 'content') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('content') ?><span class="require-hint">*</span><span class="hint"><?= Yii::t('ad', '10 từ(+5), 20 từ(+10), 30 từ(+15)') ?></span></label>
+								<label for="<?= Html::getInputId($product, 'content') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('content') ?></span><span class="require-hint">*</span><span class="hint"><?= Yii::t('ad', '10 từ(+5), 20 từ(+10), 30 từ(+15)') ?></span></label>
 								<?= Html::activeTextarea($product, 'content', ['class' => 'form-control', 'rows' => 5]) ?>
 								<div class="help-block"></div>
 							</div>
@@ -297,16 +315,16 @@ use vsoft\ad\models\AdImages;
 							<div class="fs-13 row">
 								<div class="form-group col-xs-12 col-sm-6">
 									<label for="<?= Html::getInputId($contactInfo, 'name') ?>" class="fs-13 mgB-5"><?= $contactInfo->getAttributeLabel('name') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
-									<?= Html::activeTextInput($contactInfo, 'name', ['class' => 'form-control', 'placeholder' => '...']) ?>
+									<?= Html::activeTextInput($contactInfo, 'name', ['class' => 'form-control', 'placeholder' => '...', 'disabled' => $contactInfo->name ? true : false]) ?>
 								</div>
 								<div class="form-group col-xs-12 col-sm-6">
-									<label for="<?= Html::getInputId($contactInfo, 'mobile') ?>" class="fs-13 mgB-5"><?= $contactInfo->getAttributeLabel('mobile') ?><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
-									<?= Html::activeTextInput($contactInfo, 'mobile', ['class' => 'form-control number-only', 'placeholder' => '...']) ?>
+									<label for="<?= Html::getInputId($contactInfo, 'mobile') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $contactInfo->getAttributeLabel('mobile') ?></span><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
+									<?= Html::activeTextInput($contactInfo, 'mobile', ['class' => 'form-control number-only', 'maxlength' => 11, 'data-zero-first' => 1, 'placeholder' => '...', 'disabled' => $contactInfo->mobile ? true : false]) ?>
 									<div class="help-block"></div>
 								</div>
 								<div class="form-group col-xs-12 col-sm-6">
-									<label for="<?= Html::getInputId($contactInfo, 'email') ?>" class="fs-13 mgB-5"><?= $contactInfo->getAttributeLabel('email') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
-									<?= Html::activeTextInput($contactInfo, 'email', ['class' => 'form-control', 'placeholder' => '...']) ?>
+									<label for="<?= Html::getInputId($contactInfo, 'email') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $contactInfo->getAttributeLabel('email') ?></span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
+									<?= Html::activeTextInput($contactInfo, 'email', ['class' => 'form-control', 'placeholder' => '...', 'disabled' => $contactInfo->email ? true : false]) ?>
 									<div class="help-block"></div>
 								</div>
 								<div class="form-group col-xs-12 col-sm-6">
@@ -324,7 +342,7 @@ use vsoft\ad\models\AdImages;
 							</div>
 						</div>
 					</div>
-					<div class="error-hint" style="display: none;"><?= Yii::t('ad', 'Có lỗi xảy ra, vui lòng kiểm tra lại các trường bên trên') ?></div>
+					<div class="error-hint" style="display: none;"><?= Yii::t('ad', 'Có lỗi xảy ra, vui lòng kiểm tra lại: ') ?><span id="error-fields"></span></div>
 					<div class="text-right col-xs-12 pdT-50">
 						<button id="preview" type="button" class="btn-common"><?= Yii::t('ad', 'Preview') ?> <span class="icon-mv"><span class="icon-angle-right"></span></span></button>
 					</div>
@@ -404,7 +422,6 @@ use vsoft\ad\models\AdImages;
 											</p>
 											<div class="address-listing"><p class="address-show"></p></div>
 											<div class="left-attr-detail">
-												<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span>MV0000</span></p>
 												<ul class="clearfix list-attr-td">
 							                        <li><span class="icon-mv"><span class="icon-page-1-copy"></span></span><span class="ref" data-ref="#adproduct-area"></span>m2</li>
 							                        <li><span class="icon-mv"><span class="icon-bed-search"></span></span><span class="ref" data-ref="#adproductadditioninfo-room_no"></span></li>

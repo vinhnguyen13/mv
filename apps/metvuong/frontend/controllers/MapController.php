@@ -14,6 +14,21 @@ class MapController extends ActiveController {
 	
 	public $modelClass = 'frontend\models\MapSearch';
 	
+	public function actionSearchProject() {
+		$v = Elastic::transform(\Yii::$app->request->get('v'));
+		
+		$response = [];
+		
+		$result = Elastic::searchProjects($v);
+
+		foreach ($result['hits']['hits'] as $k => $hit) {
+			$response[$k]['full_name'] = $hit['_source']['full_name'];
+			$response[$k]['id'] = $hit['_id'];
+		}
+		
+		return $response;
+	}
+	
 	public function actionGet() {
 		$mapSearch = new MapSearch();
 		$mapSearch->type = $this->getType();
