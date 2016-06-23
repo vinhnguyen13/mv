@@ -19,7 +19,14 @@ $f = ActiveForm::begin([
 <div id="the-cao" class="item-payment">
     <div class="title-item">Thanh toán bằng thẻ cào điện thoại</div>
     <div class="pd-20">
-        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span> Bạn nhập đầy đủ thông tin sau </p>
+        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span>
+            <ul>
+                <li>500,000vnd = 400 keys</li>
+                <li>200,000vnd = 160 keys</li>
+                <li>100,000nvd = 80 keys</li>
+                <li>50,000vnd = 40 keys</li>
+            </ul>
+        </p>
         <table align="center">
             <tr>
                 <td colspan="3" class="pdB-10">

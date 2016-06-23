@@ -22,7 +22,14 @@ use yii\helpers\Url;
             ]);
             ?>
 
-            <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span> Bạn nhập đầy đủ thông tin sau </p>
+            <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span>
+                <ul>
+                    <li>500,000vnd = 510 keys</li>
+                    <li>200,000vnd = 205 keys</li>
+                    <li>100,000nvd = 100 keys</li>
+                    <li>50,000vnd = 46 keys</li>
+                </ul>
+            </p>
             <table class="w-50 mgB-15">
                 <tr>
                     <td>Số tiền thanh toán:</td>
