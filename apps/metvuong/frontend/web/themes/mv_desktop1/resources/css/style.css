@@ -5996,9 +5996,13 @@ html.mm-opening .mm-slideout {
     display: block;
     font-size: 12px;
     line-height: 100%;
-    padding: 0 5px 0 2px;
+    padding: 0 10px 0 10px;
     border-right: 1px solid #fff;
     text-transform: uppercase;
+}
+.list-menu-footer li a:hover {
+    color: #fff;
+    text-decoration: underline;
 }
 .list-menu-footer li:last-child a {
     border-right: none;
@@ -10805,8 +10809,8 @@ label:hover {
     .col-right .item-sidebar,
     .col-right,
     .result-listing {
-        padding-left: 20px;
-        padding-right: 20px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
     .title-top {
         margin-left: -20px;
@@ -11670,7 +11674,7 @@ height: 190px;
 @media (max-width: 985px) {
     #listing-list .pic-intro {
         width: 100%;
-        height: 250px;
+        height: 200px;
         margin-bottom: 8px;
     }
     #listing-list > ul > li a {
@@ -12911,6 +12915,9 @@ ul.cardList li {
 .noti-pay {
     margin-bottom: 20px;
 }
+.bg-bank {
+    background: url(../images/MAGNETIC-STRIP-CARD.jpg) no-repeat bottom right;
+}
 @media (max-width: 1200px) {
     .type-payment {
         width: 90%;
@@ -12919,6 +12926,15 @@ ul.cardList li {
 @media (max-width: 985px) {
     #NLpayBank > .w-50 {
         width: 80%;
+    }
+    .search-subpage .frm-item .val-selected {
+        height: 35px;
+        line-height: 35px;
+        border: solid 1px #e6e6e6;
+        font-size: 12px;
+    }
+    #map-search {
+        box-shadow: none;
     }
 }
 @media (max-width: 768px) {
