@@ -353,17 +353,6 @@ class DashboardController extends Controller
         return false;
     }
 
-    // Check use code coupon
-    public function actionPayWithCoupon($code)
-    {
-        $this->checkAccess();
-        $res = CouponHistory::checkCoupon($code);
-        echo "<pre>";
-        print_r($res);
-        echo "<pre>";
-        exit();
-    }
-
     public function actionPayment()
     {
         $this->checkAccess();
