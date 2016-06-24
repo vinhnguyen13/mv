@@ -5,8 +5,7 @@ use yii\helpers\Url;
     <div class="container">
         <div class="menuUser">
             <ul class="clearfix">
-                <li><a class="profile-item" href="<?= Url::to(['member/update-profile', 'username' => Yii::$app->user->identity->getUsername()]) ?>"
-                       class="<?= !empty($this->params['menuUpdateProfile']) ? 'active' : ''; ?>">
+                <li><a class="profile-item <?= !empty($this->params['menuUpdateProfile']) ? 'active' : ''; ?>" href="<?= Url::to(['member/update-profile', 'username' => Yii::$app->user->identity->getUsername()]) ?>">
                         <div>
                             <span class="icon-mv"><span class="icon-settings"></span></span>
                         </div>
@@ -14,8 +13,7 @@ use yii\helpers\Url;
                     </a>
                 </li>
                 <li>
-                    <a class="dashboard-item" href="<?= Url::to(['/dashboard/ad', 'username' => Yii::$app->user->identity->getUsername()]) ?>"
-                       class="<?= !empty($this->params['menuDashboard']) ? 'active' : ''; ?>">
+                    <a class="dashboard-item <?= !empty($this->params['menuDashboard']) ? 'active' : ''; ?>" href="<?= Url::to(['/dashboard/ad', 'username' => Yii::$app->user->identity->getUsername()]) ?>">
                         <div>
                             <span class="icon-mv"><span class="icon-barometer"></span></span>
                         </div>
@@ -23,15 +21,13 @@ use yii\helpers\Url;
                     </a>
                 </li>
                 <li>
-                    <a class="pay-item" href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>"
-                       class="<?= !empty($this->params['menuPayment']) ? 'active' : ''; ?>">
+                    <a class="pay-item <?= !empty($this->params['menuPayment']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>">
                         <div><span class="icon-mv"><span class="icon-coin-dollar"></span></span></div>
                         <?= Yii::t('ad', 'Payment') ?>
                     </a>
                 </li>
                 <li>
-                    <a class="noti-item" href="<?= Url::to(['/notification/index', 'username' => Yii::$app->user->identity->getUsername()]) ?>"
-                       class="wrapNotifyOther <?= !empty($this->params['menuNotification']) ? 'active' : ''; ?>">
+                    <a class="noti-item wrapNotifyOther <?= !empty($this->params['menuNotification']) ? 'active' : ''; ?>" href="<?= Url::to(['/notification/index', 'username' => Yii::$app->user->identity->getUsername()]) ?>">
                         <div>
                             <span class="icon-mv"><span class="icon-icons-bell"></span></span>
                             <?php if (!empty($this->params['notify_other'])) { ?>
@@ -42,8 +38,7 @@ use yii\helpers\Url;
                     </a>
                 </li>
                 <li>
-                    <a class="mess-item" href="<?= Url::to(['/chat/index', 'username' => Yii::$app->user->identity->getUsername()]) ?>"
-                       class="wrapNotifyChat  <?= !empty($this->params['menuChat']) ? 'active' : ''; ?>">
+                    <a class="mess-item wrapNotifyChat <?= !empty($this->params['menuChat']) ? 'active' : ''; ?>" href="<?= Url::to(['/chat/index', 'username' => Yii::$app->user->identity->getUsername()]) ?>">
                         <div>
                             <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>
                             <?php if (!empty($this->params['notify_chat'])) { ?>
