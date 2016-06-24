@@ -5891,8 +5891,11 @@ html.mm-opening .mm-slideout {
     margin-top: 0;
     font-size: 13px;
 }
+.dt-footer div.col-right {
+    text-align: center;
+}
 .dt-footer p {
-    text-align: right;
+    text-align: center;
 }
 .dt-footer .license p {
     text-align: left;
@@ -5900,15 +5903,17 @@ html.mm-opening .mm-slideout {
 .dt-footer ul {
     margin-bottom: 5px;
 }
-.dt-footer li {
-    float: left;
-}
+.dt-footer .col-right li {display: inline-block;}
 .dt-footer li a {
     border-right: 1px solid #fff;
     padding: 0 10px;
     font-size: 13px;
     display: block;
     line-height: 100%;
+    text-transform: uppercase;
+}
+.dt-footer .col-right li a {
+    font-size: 14px;
 }
 .dt-footer li a:hover {text-decoration: underline;color: #fff;}
 .dt-footer li:last-child a {
@@ -5916,7 +5921,6 @@ html.mm-opening .mm-slideout {
     padding-right: 0;
 }
 .logo-footer {
-    /* width: 115px; */
 }
 footer li a {
     color: #fff;
@@ -12140,7 +12144,7 @@ height: 190px;
 }
 .logo-footer a.wrap-img {
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 .logo-footer li {
     float: none;
@@ -12153,5 +12157,5 @@ height: 190px;
     margin-bottom: 7px;
 }
 .logo-footer .wrap-img img {
-    /* width: 220px; */
+    width: 230px;
 }

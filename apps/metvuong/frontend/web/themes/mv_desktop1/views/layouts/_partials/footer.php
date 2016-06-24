@@ -26,6 +26,7 @@ use yii\helpers\Url;
 			<p>Giấy phép số 0313814871, Cấp Bởi Sở Kế Hoạch và Đầu Tư Thành Phố Hồ Chí Minh, Ngày 19/05/2016.</p>
 			<p>Các thông tin phát hành lại từ trang này phải ghi nguồn "metvuong.com"</p>
 			<p><?=Yii::t('general', 'Developed by MetVuong LTD. Company')?></p>
+			<a href="http://online.gov.vn/HomePage/WebsiteDisplay.aspx?DocId=24505"><img alt="" title="" src="http://online.gov.vn/seals/IZqmwD4BzN5EISz3RG0KRQ==.jpgx" /></a>
 		</div>
 	</div>
 	<div class="dt-footer clearfix container">
@@ -38,16 +39,19 @@ use yii\helpers\Url;
 			</ul>
 		</div>
 		<div class="pull-right col-right">
-			<ul class="clearfix">
-				<li><a href="<?=Url::to(['site/page', 'view'=>'about'])?>"><?=Yii::t('general', 'About Us')?></a></li>
-				<li><a href="<?=Url::to(['site/page', 'view'=>'faq'])?>"><?=Yii::t('general', 'FAQs')?></a></li>
-				<li><a href="<?=Url::to(['site/page', 'view'=>'terms'])?>"><?=Yii::t('general', 'Terms and Conditions')?></a></li>
-				<li><a href="<?=Url::to(['site/page', 'view'=>'interestRate'])?>"><?=Yii::t('general', 'Interest rate')?></a></li>
-			</ul>
+			<div class="clearfix">
+				<ul>
+					<li><a href="<?=Url::to(['site/page', 'view'=>'about'])?>"><?=Yii::t('general', 'About Us')?></a></li>
+					<li><a href="<?=Url::to(['site/page', 'view'=>'faq'])?>"><?=Yii::t('general', 'FAQs')?></a></li>
+					<li><a href="<?=Url::to(['site/page', 'view'=>'terms'])?>"><?=Yii::t('general', 'Terms and Conditions')?></a></li>
+					<li><a href="<?=Url::to(['site/page', 'view'=>'interestRate'])?>"><?=Yii::t('general', 'Interest rate')?></a></li>
+				</ul>
+			</div>
 			<p><?=Yii::t('general', 'Copyright {year} {domain}', ['year'=>2016, 'domain'=>'MetVuong.com'])?></p>
 			<p>Giấy phép số 0313814871, Cấp Bởi Sở Kế Hoạch và Đầu Tư Thành Phố Hồ Chí Minh, Ngày 19/05/2016.</p>
 			<p>Các thông tin phát hành lại từ trang này phải ghi nguồn "metvuong.com"</p>
 			<p><?=Yii::t('general', 'Developed by MetVuong LTD. Company')?></p>
+			<a href="http://online.gov.vn/HomePage/WebsiteDisplay.aspx?DocId=24505"><img alt="" title="" src="http://online.gov.vn/seals/IZqmwD4BzN5EISz3RG0KRQ==.jpgx" /></a>
 		</div>
 	</div>
 </footer>
