@@ -27,15 +27,15 @@
                     class: "hemi-intro-buttons-holder"
                 },
                 next: {
-                    element: $("<a href='javascript:void(0)' class='btn-tour btn'>Next</a>"),
+                    element: $("<a href='javascript:void(0)' class='btn-tour btn'>"+lajax.t('Next')+"</a>"),
                     class: "btn btn-primary"
                 },
                 noThanks: {
-                	element: $("<a href='javascript:void(0)' class='btn-tour btn mgL-10'>No Thanks</a>"),
+                	element: $("<a href='javascript:void(0)' class='btn-tour btn mgL-10'>"+lajax.t('No Thanks')+"</a>"),
                     class: "btn btn-primary"
                 },
                 finish: {
-                    element: $("<a href='javascript:void(0)' class='btn-tour btn'>Finish</a>"),
+                    element: $("<a href='javascript:void(0)' class='btn-tour btn'>"+lajax.t('Finish')+"</a>"),
                     class: "btn btn-primary"
                 }
             },
