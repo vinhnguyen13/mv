@@ -101,13 +101,12 @@ class NganLuong extends Component
             //var_dump($nl_result); die;
             if ($nl_result->error_code =='00'){
                 //Cập nhât order với token  $nl_result->token để sử dụng check hoàn thành sau này
-
-
                 Transaction::me()->saveTransaction($data['transaction_code'], [
                     'status'=>Transaction::STATUS_PROCESSING,
                 ]);
                 Payment::me()->transactionNganluong($nl_result->token, [
                     'transaction_code'=>$data['transaction_code'],
+                    'payment_method'=>NganLuong::METHOD_BANKING,
                     'amount'=>$total_amount,
                     'buyer_fullname'=>$buyer_fullname,
                     'buyer_email'=>$buyer_email,
@@ -125,7 +124,7 @@ class NganLuong extends Component
         }
     }
 
-    public function payByMobiCard(){
+    public function payByMobiCard($data){
         if(isset($_POST['NLNapThe'])){
             include(Yii::getAlias('@common/myvendor/nganluong/card/config.php'));
             include(Yii::getAlias('@common/myvendor/nganluong/card/includes/MobiCard.php'));
@@ -146,11 +145,17 @@ class NganLuong extends Component
             $coin3 = rand(0,999);
             $coin4 = rand(0,999);
             $ref_code = $coin4 + $coin3 * 1000 + $coin2 * 1000000 + $coin1 * 100000000;
+            $ref_code = $data['transaction_code'];
 
-            $rs = $call->CardPay($sopin,$soseri,$type_card,$ref_code,"","","");
+            $buyer_fullname =$_POST['buyer_fullname'];
+            $buyer_email =$_POST['buyer_email'];
+            $buyer_mobile =$_POST['buyer_mobile'];
+
+            $rs = $call->CardPay($sopin,$soseri,$type_card,$ref_code,$buyer_fullname,$buyer_mobile,$buyer_email);
 
             if($rs->error_code == '00') {
                 // Cập nhật data tại đây
+                Payment::me()->processTransactionByMobileCard($data['transaction_code'], $rs);
                 $return = ['error_code'=>0, 'error_message'=>'You have paid {card_amount} successfully into your account', 'card_amount'=>$rs->card_amount];
             }
             else {
@@ -162,5 +167,37 @@ class NganLuong extends Component
 
     public function getTransactionDetail($token){
         return $this->nlcheckout->GetTransactionDetail($token);
+    }
+
+    public function VND2Keys($type = null, $price = null)
+    {
+        $arr = [
+            self::METHOD_BANKING => [
+                500000  => 510,
+                200000  => 205,
+                100000  => 100,
+                50000   => 46,
+            ],
+            self::METHOD_MOBILE_CARD => [
+                500000  => 400,
+                200000  => 160,
+                100000  => 80,
+                50000   => 40,
+            ],
+            self::METHOD_SMS => [
+                100000  => 54,
+                50000   => 27,
+            ],
+        ];
+        if($type == self::METHOD_BANKING){
+            $return = $arr[$type][$price];
+        }elseif($type == self::METHOD_MOBILE_CARD){
+            return $price*(80/100)/1000;
+        }elseif($type == self::METHOD_MOBILE_CARD){
+            $return = $arr[$type][$price];
+        }else{
+            $return = $arr;
+        }
+        return $return;
     }
 }

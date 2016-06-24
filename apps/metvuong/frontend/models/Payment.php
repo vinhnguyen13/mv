@@ -121,30 +121,68 @@ class Payment extends Component
         }
     }
 
-    protected function processTransactionByBanking($token){
+    public function processTransactionByBanking($token){
         $connection = Yii::$app->db;
         $transaction = $connection->beginTransaction();
         try {
             $getToken = NganLuong::me()->getTransactionDetail($token);
             if(!empty($getToken->order_code)){
-                $transactionNganLuong = $this->getTransactionWithNganluong(['token'=>$token]);
-                if(!empty($transactionNganLuong['code'])){
+                $transactionNL = $this->getTransactionWithNganluong(['token'=>$token]);
+                if(!empty($transactionNL['code']) && $transactionNL['status'] != Transaction::STATUS_SUCCESS){
                     $balance = Yii::$app->user->identity->getBalance();
-                    $balanceValue = !empty($balance->amount) ? ($balance->amount + $transactionNganLuong['amount']) : $transactionNganLuong['amount'];
+                    $balanceValue = !empty($balance->amount) ? ($balance->amount + $transactionNL['amount']) : $transactionNL['amount'];
                     $checkUpdate = Yii::$app->db->createCommand()
                         ->update('ec_transaction_history', [
                             'status' => Transaction::STATUS_SUCCESS,
                             'balance' => $balanceValue,
-                        ], 'code=:code', [':code'=>$transactionNganLuong['code']])->execute();
+                        ], 'code=:code', [':code'=>$transactionNL['code']])->execute();
                     Yii::$app->db->createCommand()
                         ->update('ec_transaction_nganluong', [
                             'status' => Transaction::STATUS_SUCCESS,
-                        ], 'transaction_code=:code', [':code'=>$transactionNganLuong['code']])->execute();
+                        ], 'transaction_code=:code', [':code'=>$transactionNL['code']])->execute();
                     if($checkUpdate){
-                        $this->updateBalance($transactionNganLuong['user_id'], $transactionNganLuong['amount']);
+                        $this->updateBalance($transactionNL['user_id'], $transactionNL['amount']);
                     }
                 }
 
+            }
+            $transaction->commit();
+            return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
+
+    public function processTransactionByMobileCard($transaction_code, $rs){
+        $connection = Yii::$app->db;
+        $transaction = $connection->beginTransaction();
+        try {
+            $transactionMV = $this->getTransactionMetVuong(['code'=>$transaction_code]);
+            if(!empty($transactionMV['code']) && $transactionMV['status'] != Transaction::STATUS_SUCCESS && !empty($rs) && $rs->error_code == '00'){
+                Payment::me()->transactionNganluong($rs->transaction_id, [
+                    'transaction_code'=>$transactionMV['code'],
+                    'payment_method'=>NganLuong::METHOD_MOBILE_CARD,
+                    'amount'=>$rs->card_amount,
+                    'buyer_fullname'=>$rs->client_fullname,
+                    'buyer_email'=>$rs->client_email,
+                    'buyer_mobile'=>$rs->client_mobile,
+                    'type_card'=>$rs->type_card,
+                    'status'=>Transaction::STATUS_SUCCESS,
+                ]);
+                $amout = NganLuong::me()->VND2Keys(NganLuong::METHOD_MOBILE_CARD, $rs->card_amount);
+                $amout = intval($amout);
+                $balance = Yii::$app->user->identity->getBalance();
+                $balanceValue = !empty($balance->amount) ? ($balance->amount + $amout) : $amout;
+                $checkUpdate = Yii::$app->db->createCommand()
+                    ->update('ec_transaction_history', [
+                        'status' => Transaction::STATUS_SUCCESS,
+                        'balance' => $balanceValue,
+                        'amount'=>$amout,
+                    ], 'code=:code', [':code'=>$transactionMV['code']])->execute();
+                if($checkUpdate){
+                    $this->updateBalance($transactionMV['user_id'], $amout);
+                }
             }
             $transaction->commit();
             return true;

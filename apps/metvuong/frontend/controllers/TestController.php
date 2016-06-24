@@ -5,6 +5,8 @@ use common\components\Util;
 use frontend\components\Mailer;
 use Elasticsearch\ClientBuilder;
 use frontend\models\Elastic;
+use frontend\models\NganLuong;
+use frontend\models\Payment;
 use frontend\models\Tracking;
 use frontend\models\UserActivity;
 use GuzzleHttp\Ring\Client\CurlHandler;
@@ -27,6 +29,30 @@ class TestController extends \yii\web\Controller
         $chk = $mailer->sendWelcomeMessage($user, null, true);
         echo "<pre>";
         print_r($chk);
+        echo "</pre>";
+        exit;
+    }
+
+    public function actionPayment(){
+        $obj = (object) array(
+            'error_code' => '00',
+            'merchant_id' => '46893',
+            'merchant_account' => 'gateway@trungthuygroup.vn',
+            'pin_card' => '94083621396476',
+            'card_serial' => '36182500453622',
+            'type_card' => 'VNP',
+            'order_id' => '89363abaea2f303afc79b682eb2282b2',
+            'client_fullname' => 'Vinh Quang',
+            'client_email' => 'vnphone2014@gmail.com',
+            'client_mobile' => '0908100060',
+            'card_amount' => 20000,
+            'amount' => 16000,
+            'transaction_id' => '61918050',
+            'error_message' => 'Nạp thẻ thành công, mệnh giá thẻ = 20000',
+        );
+        Payment::me()->processTransactionByMobileCard('89363abaea2f303afc79b682eb2282b2', $obj);
+        echo "<pre>";
+        print_r(5);
         echo "</pre>";
         exit;
     }

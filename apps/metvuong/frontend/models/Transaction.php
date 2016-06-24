@@ -45,7 +45,11 @@ class Transaction extends EcTransactionHistoryBase
             $transactionMv->created_at = time();
         }
         $transactionMv->attributes = $data;
-        $transactionMv->save();
+        $transactionMv->validate();
+        if(!$transactionMv->hasErrors()) {
+            return $transactionMv->save();
+        }
+        return $transactionMv->errors;
     }
 
 }

@@ -14,8 +14,6 @@ class m160624_090354_change_ec_blance extends Migration
 
     public function down()
     {
-//        `created_at` int(11) DEFAULT NULL,
-//        `updated_at` int(11) DEFAULT NULL,
         $this->dropColumn('ec_balance', 'created_at');
         $this->dropColumn('ec_balance', 'updated_at');
         return false;
