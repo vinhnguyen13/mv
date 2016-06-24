@@ -28,6 +28,8 @@ $metadata = \yii\helpers\Json::decode($model->metadata,true);
     echo Html::label('Description');
     echo Html::input('text','description',$metadata["description"],['class'=>'form-control form-group']);
 
+    echo "<i>Facebook Meta Tag: </i><br><br>";
+
     echo Html::label('Title');
     echo Html::input('text','og:title',$metadata["og:title"],['class'=>'form-control form-group']);
 

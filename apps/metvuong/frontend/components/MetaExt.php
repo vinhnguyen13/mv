@@ -11,6 +11,7 @@ use vsoft\express\models\Metadata;
 use Yii;
 use yii\base\Component;
 use yii\helpers\Json;
+use yii\helpers\Url;
 
 class MetaExt extends Component
 {
@@ -32,19 +33,29 @@ class MetaExt extends Component
         return $model;
     }
 
-    public function addMeta($data)
+    public function addMeta($data, $url)
     {
         foreach ($data as $key => $item) {
             /**
              * check key exist in mapping, return key mapping
              */
+
             if (!empty($item)) {
+                if(Url::home(true) == $url){
+                    if(Yii::$app->language == 'vi-VN') {
+                        if($key == "description" || $key == 'og:description')
+                            $item = "MetVuong.com là công cụ giúp cho việc tìm kiếm, mua bán bất động sản dễ dàng hơn, nhanh hơn, hiệu quả hơn. MetVuong.com sử dụng thuật toán để sắp xếp và phân loại tất cả các danh sách đăng tin, do đó bạn luôn có thông tin chính xác và hữu ích nhất.";
+                    } else if(Yii::$app->language == 'en-US') {
+                        if($key == "description" || $key == 'og:description')
+                            $item = "Metvuong.com is the where real estate is easier, faster, more effective. Metvuong.com uses an algorithm to sort and categorise all of our listings, so that you don't deal with clutter.";
+                    }
+                }
                 foreach (Yii::$app->params['meta']['attributes'] as $mapKey => $value) {
                     $checkKey = array_keys($value, $key);
                     if (!empty($checkKey)) {
                         Yii::$app->view->registerMetaTag([
-                            $mapKey => $key,
-                            'content' => $item
+                                $mapKey => $key,
+                                'content' => $item
                         ]);
                     }
                 }
@@ -57,7 +68,7 @@ class MetaExt extends Component
         $meta = $this->getMeta($url);
         if (!empty($meta)) {
             $json_data = Json::decode($meta->metadata, true);
-            $this->addMeta($json_data);
+            $this->addMeta($json_data, $url);
         }
 
     }

@@ -2,6 +2,10 @@
 use yii\helpers\Url;
 use vsoft\ad\models\AdProduct;
 use frontend\models\AdProductSearch;
+
+// Thêm meta description
+$meta = new \frontend\components\MetaExt();
+$meta->add(Yii::$app->request->absoluteUrl);
 ?>
 <header class="clearfix header">
     <div class="container wrap-header">
