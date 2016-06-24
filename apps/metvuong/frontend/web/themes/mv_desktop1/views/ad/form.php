@@ -81,7 +81,7 @@ use vsoft\ad\models\AdImages;
     $cookies = Yii::$app->request->cookies;
     $cookie = $cookies->getValue('tutorial');
     if(Yii::$app->controller->action->actionMethod == 'actionPost') {
-        if (!isset($cookie['coforbuy']) || empty($cookie['coforbuy'])) {
+        if (!isset($cookie['coPost']) || empty($cookie['coPost'])) {
             ?>
             <script>
                 $(document).ready(function () {
@@ -99,7 +99,7 @@ use vsoft\ad\models\AdImages;
                             $.ajax({
                                 type: "get",
                                 dataType: 'json',
-                                url: '<?=Url::to(['site/set-cookie'])?>?name=coforbuy',
+                                url: '<?=Url::to(['site/set-cookie'])?>?name=coPost',
                                 success: function (data) {
                                 }
                             });

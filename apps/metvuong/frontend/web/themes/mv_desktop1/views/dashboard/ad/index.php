@@ -175,46 +175,6 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
 <?php 
     $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/custom-datepicker.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'jquery-ui');
     Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery-ui.js', ['position'=>View::POS_END]);
-$cookies = Yii::$app->request->cookies;
-$cookie = $cookies->getValue('tutorial');
-if(!isset($cookie['codashboard']) || empty($cookie['codashboard'])){
-?>
-<script>
-    $(document).ready(function () {
-        var txtTour = ["<?=Yii::t('tutorial', "<p class='mgB-5'>Bảng Điều Khiển là một công cụ tiện ích với nhiều tính năng nổi bật của MetVuong.com như:</p><p class='mgB-5'>Trang Thông tin cá nhân của bạn</p><p class='mgB-5'>Cập nhật trạng thái các tin đăng của bạn gồm có:</p><p class='mgB-5'>Lượt tìm kiếm tin đăng, </p><p class='mgB-5'>Lượt yêu thích,</p><p class='mgB-5'>Lượt chia sẻ, </p><p class='mgB-5'>Liên hệ online với người đang tìm kiếm thông tin</p><p class='mgB-5'>Mua keys, tài khoản của bạn</p>")?>",
-            "<?=Yii::t('tutorial',"<p class='mgB-5'>Đây là nơi tập trung danh sách các tin đăng của bạn.</p>")?><?=Yii::t('tutorial',"<p class='mgB-5'>Ấn vào xem thống kê chi tiết cho mỗi tin đăng.</p>")?>"];
-        var intro = $.hemiIntro({
-            debug: false,
-            steps:[
-                {
-                    selector: ".menuUser ul",
-                    placement: "right",
-                    content: txtTour[0]
-                },
-                {
-                    selector: "#list-all",
-                    placement: "left",
-                    content: txtTour[1]
-                }
-            ],
-            onComplete: function (item) {
-                $.ajax({
-                    type: "get",
-                    dataType: 'json',
-                    url: '<?=Url::to(['site/set-cookie'])?>'+'?name=codashboard',
-                    success: function (data) {
-                    }
-                });
-            }
-        });
-
-        intro.start();
-
-    });
-</script>
-<?php
-        $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
-    }
 ?>    
 <script>
 	$(document).ready(function () {

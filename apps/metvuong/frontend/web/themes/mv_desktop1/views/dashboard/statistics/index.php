@@ -4,39 +4,6 @@ use yii\web\View;
 use yii\helpers\Url;
 
 Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_HEAD]);
-$cookies = Yii::$app->request->cookies;
-$cookie = $cookies->getValue('tutorial');
-if(!isset($cookie['costatistic']) || empty($cookie['costatistic'])){
-?>
-<script>
-    $(document).ready(function () {
-        var txtTour = ["<p class='mgB-5'>Ở đây bạn có thể theo dõi rõ diễn tiến tin đăng của bạn, dựa trên các số liệu như số lượng các lượt tìm kiếm, yêu thích, chia sẻ hiển thị theo các khoảng thời gian.</p><p class='mgB-5'> Bạn cũng có thể liện hệ với những người đang tìm kiếm sản phẩm của bạn bằng cách nhấp vào tài khoản của khách để gửi tin nhắn hoặc Chat với họ.</p>"];
-        var intro = $.hemiIntro({
-            debug: false,
-            steps: [
-                {
-                    selector: ".statis section",
-                    placement: "left",
-                    content: txtTour[0]
-                }
-            ],
-            onComplete: function (item) {
-                $.ajax({
-                    type: "get",
-                    dataType: 'json',
-                    url: '<?=Url::to(['site/set-cookie'])?>'+'?name=costatistic',
-                    success: function (data) {
-                    }
-                });
-            }
-        });
-
-        intro.start();
-    });
-</script>
-<?php
-    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
-}
 
 $id = $product->id;
 $address = $product->getAddress();

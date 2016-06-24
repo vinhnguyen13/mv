@@ -35,6 +35,43 @@ $metadata = \yii\helpers\Json::decode($model->metadata,true);
 
     echo Html::label('Image Url');
     echo Html::input('text','og:image',$metadata["og:image"],['class'=>'form-control form-group']);
+//    if($model->isNewRecord) {
+//        echo \kartik\file\FileInput::widget([
+//            'name' => 'og:image',
+//            'options' => ['accept' => 'image/*'],
+//            'pluginOptions' => [
+//                'previewFileType' => 'image',
+//                'showUpload' => false,
+//                'browseLabel' => '',
+//                'removeLabel' => '',
+//                'mainClass' => 'input-group-lg',
+//                'resizeImage' => true,
+//                'maxImageWidth' => 200,
+//                'resizePreference' => 'width',
+//            ]
+//        ]);
+//    } else {
+//        echo \kartik\file\FileInput::widget([
+//            'name' => 'og:image',
+//            'options' => ['accept' => 'image/*'],
+//            'pluginOptions' => [
+//                'previewFileType' => 'image',
+//                'showUpload' => false,
+//                'browseLabel' => '',
+//                'removeLabel' => '',
+//                'initialPreview' => [
+//                    Html::img("/store/news/show/" . $metadata["og:image"], ['class' => 'file-preview-image', 'alt' => 'Banner', 'title' => $metadata["og:image"]]),
+//                ],
+//                'initialCaption' => $metadata["og:image"],
+////            'overwriteInitial'=>false, // used in multi upload case
+//                'mainClass' => 'input-group-lg',
+//                'resizeImage'=> true,
+//                'maxImageWidth'=> 200,
+//                'resizePreference'=> 'width',
+//            ],
+//        ]);
+//    }
+//    echo "<br>";
 
     echo Html::label('Author');
     echo Html::input('text','article:author',$metadata["article:author"],['class'=>'form-control form-group']);

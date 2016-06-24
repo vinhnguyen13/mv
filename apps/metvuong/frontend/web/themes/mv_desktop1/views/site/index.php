@@ -6,45 +6,6 @@ use vsoft\ad\models\AdProduct;
 use yii\web\View;
 
 $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-helper.js', ['position'=>View::POS_HEAD]);
-
-$cookies = Yii::$app->request->cookies;
-$cookie = $cookies->getValue('tutorial');
-if(!isset($cookie['cohomepage']) || empty($cookie['cohomepage'])){
-?>
-<script>
-    $(document).ready(function () {
-        var txtTour = ["<?=Yii::t("tutorial","Ở phía trên bạn sẽ tìm thấy thanh Menu, thanh này sẽ luôn được hiển thị cho bạn và cho phép bạn nhanh chóng điều hướng đến tất cả các tính năng quan trọng của trang.")?>",
-            "<?=Yii::t("tutorial","Bạn sẽ dễ dàng tìm kiếm các vấn đề liên quan đến bất động sản bằng thanh Tìm Kiếm Nhanh nằm ngay giữa trang chủ. Tiện ích này cho phép bạn nhanh chóng tìm kiếm thông tin hoặc sản phẩm bất động sản theo yêu cầu của bạn, thông qua vị trí (thành phố, quận, phường và đường) hoặc tên dự án, mã ID sản phẩm (Nếu bạn biết ID tin cần tìm, bạn cũng có thể gõ mã này như một phím tắt để đưa đến tin ấy một cách nhanh nhất).")?>"];
-        var intro = $.hemiIntro({
-            debug: false,
-            steps: [
-                {
-                    selector: ".dt-header",
-                    placement: "bottom",
-                    content: txtTour[0]
-                },{
-                    selector: ".search-wrap-home",
-                    placement: "bottom",
-                    content: txtTour[1]
-                }
-            ],
-            onComplete: function (item) {
-                $.ajax({
-                    type: "get",
-                    dataType: 'json',
-                    url: '<?=Url::to(['site/set-cookie'])?>?name=cohomepage',
-                    success: function (data) {
-                    }
-                });
-            }
-        });
-
-        intro.start();
-    });
-</script>
-<?php
-    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
-}
 ?>
 <div class="page-home">
 

@@ -15,7 +15,9 @@
     </div>
     <?php if(empty($this->params['noFooter'])){?>
         <?php $this->beginContent('@app/views/layouts/_partials/footer.php'); ?><?php $this->endContent();?>
-    <?php }?>
+    <?php }
+    $this->beginContent('@app/views/layouts/_partials/tutorial.php');$this->endContent();
+    ?>
 </div>
 <?php $this->endContent();?>
 
