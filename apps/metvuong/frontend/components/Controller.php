@@ -46,6 +46,7 @@ class Controller extends \yii\web\Controller
             }
 
         }
+        $this->view->params['balance'] = 0;
         if(!Yii::$app->user->isGuest){
             $parseUrl = Yii::$app->urlManager->parseRequest(Yii::$app->request);
             $urlBase = !empty($parseUrl[0]) ? $parseUrl[0] : '';
@@ -78,6 +79,11 @@ class Controller extends \yii\web\Controller
             if (!empty($_GET['language-change'])) {
                 Cache::me()->delete(Cache::PRE_NOTIFICATION.Yii::$app->user->id);
             }
+            /**
+             * Balance of user
+             */
+            $balance = Yii::$app->user->identity->getBalance();
+            $this->view->params['balance'] = !empty($balance->amount) ? $balance->amount : 0;
         }
         return parent::beforeAction($action);
     }

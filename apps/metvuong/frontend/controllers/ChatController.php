@@ -6,6 +6,7 @@ use frontend\models\Chat;
 use Yii;
 use yii\base\Event;
 use yii\base\ViewEvent;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
@@ -18,7 +19,7 @@ class ChatController extends Controller
     public function beforeAction($action)
     {
         $this->checkAccess();
-        $this->view->params = ['noFooter' => true, 'menuChat' => true, 'isDashboard' => true];
+        $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuChat' => true, 'isDashboard' => true], $this->view->params);
         return parent::beforeAction($action);
     }
 

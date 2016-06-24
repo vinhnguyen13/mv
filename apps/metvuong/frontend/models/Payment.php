@@ -30,7 +30,7 @@ class Payment extends Component
                 'user_id'=>Yii::$app->user->identity->id,
                 'object_id'=>NganLuong::METHOD_BANKING,
                 'object_type'=>Transaction::OBJECT_TYPE_BUY_KEYS,
-                'amount'=>Transaction::me()->convertVND2Keys($_POST['total_amount']),
+                'amount'=>NganLuong::me()->VND2Keys(NganLuong::METHOD_BANKING, $_POST['total_amount']),
                 'balance'=>0,
                 'status'=>Transaction::STATUS_PENDING,
             ]);
@@ -41,7 +41,19 @@ class Payment extends Component
             ]);
         }
         if(isset($_POST['NLNapThe'])){
-            return NganLuong::me()->payByMobiCard();
+            $transaction_code = md5(uniqid(rand(), true));
+            Transaction::me()->saveTransaction($transaction_code, [
+                'code'=>$transaction_code,
+                'user_id'=>Yii::$app->user->identity->id,
+                'object_id'=>NganLuong::METHOD_MOBILE_CARD,
+                'object_type'=>Transaction::OBJECT_TYPE_BUY_KEYS,
+                'amount'=>0,
+                'balance'=>0,
+                'status'=>Transaction::STATUS_PENDING,
+            ]);
+            return NganLuong::me()->payByMobiCard([
+                'transaction_code' => $transaction_code,
+            ]);
         }
     }
 
@@ -54,14 +66,17 @@ class Payment extends Component
             Yii::$app->db->createCommand()
                 ->update('ec_balance', [
                     'amount' => $amount,
+                    'updated_at' => time(),
                 ], 'user_id='.$user_id)->execute();
         }else{
             Yii::$app->db->createCommand()
                 ->insert('ec_balance', [
                     'user_id' => $user_id,
                     'amount' => $amount,
+                    'created_at' => time(),
                 ])->execute();
         }
+        Yii::$app->db->schema->refresh();
         return true;
     }
 
@@ -106,7 +121,7 @@ class Payment extends Component
         }
     }
 
-    protected function processTransaction($token){
+    protected function processTransactionByBanking($token){
         $connection = Yii::$app->db;
         $transaction = $connection->beginTransaction();
         try {
@@ -146,7 +161,7 @@ class Payment extends Component
      * link http://localhost/payment/success?error_code=00&token=3221723-e66bec1fc53bff03b5aea93c694fdcc7
      */
     public function success($token){
-        return $this->processTransaction($token);
+        return $this->processTransactionByBanking($token);
     }
 
     public function cancel($tid){

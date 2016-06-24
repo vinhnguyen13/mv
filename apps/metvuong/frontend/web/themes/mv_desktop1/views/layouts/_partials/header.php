@@ -68,7 +68,7 @@ $meta->add(Yii::$app->request->absoluteUrl);
                         </a>
                     </li>
                     <li class="num-gold">
-                        <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span>10 Keys</a>
+                        <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span><?=$this->params['balance']?> Keys</a>
                     </li>
                     <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
                     <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()])?>"><span class="icon-mv"><span class="icon-barometer"></span></span><?=Yii::t('ad', 'Dashboard')?></a></li>
@@ -120,9 +120,9 @@ $meta->add(Yii::$app->request->absoluteUrl);
                 </div>
                 <?php } else{?>
                     <ul class="pull-left list-redire">
-                        <!-- <li class="num-gold">
-                            <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span>10 Keys</a>
-                        </li> -->
+                        <li class="num-gold">
+                            <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span><?=$this->params['balance']?> Keys</a>
+                        </li>
                         <li class="dropdown-message box-dropdown">
                             <a class="val-selected wrapNotifyChat" href="<?=Url::to(['/chat/index', 'username'=> Yii::$app->user->identity->getUsername()])?>" data-toggle="tooltip" data-placement="bottom" title="<?=Yii::t('chat', 'Chat')?>">
                                 <span class="icon-mv"><span class="icon-bubbles-icon"></span></span>

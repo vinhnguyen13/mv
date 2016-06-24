@@ -23,7 +23,8 @@ use yii\helpers\Url;
                     </a>
                 </li>
                 <li>
-                    <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>">
+                    <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>"
+                       class="<?= !empty($this->params['menuPayment']) ? 'active' : ''; ?>">
                         <div><span class="icon-mv"><span class="icon-coin-dollar"></span></span></div>
                         <?= Yii::t('ad', 'Payment') ?>
                     </a>

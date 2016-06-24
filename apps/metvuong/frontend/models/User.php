@@ -19,6 +19,7 @@ use dektrium\user\Module;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\caching\DbDependency;
 use yii\db\ActiveRecord;
 use yii\db\Query;
 use yii\helpers\Url;
@@ -541,12 +542,18 @@ class User extends \dektrium\user\models\User
      */
     public function getBalance()
     {
-    	$balance = Balance::findOne(['user_id' => $this->id]);
+        $dep = new DbDependency();
+        $dep->sql = 'SELECT updated_at FROM ec_balance WHERE user_id = '.$this->id;
+
+        $balance = Balance::getDb()->cache(function(){
+            return Balance::findOne(['user_id' => $this->id]);
+        }, 86400, $dep);
     	
     	if(!$balance) {
     		$balance = new Balance();
     		$balance->user_id = $this->id;
     		$balance->amount = 0;
+    		$balance->created_at = time();
     		$balance->save(false);
     	}
     	

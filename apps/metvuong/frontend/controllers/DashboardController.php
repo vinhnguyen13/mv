@@ -19,6 +19,7 @@ use vsoft\tracking\models\base\AdProductVisitor;
 use Yii;
 use yii\data\Pagination;
 use yii\db\mssql\PDO;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
 use yii\web\Response;
@@ -35,7 +36,6 @@ class DashboardController extends Controller
     public function beforeAction($action)
     {
         $this->checkAccess();
-        $this->view->params = ['noFooter' => true, 'menuDashboard' => true, 'isDashboard' => true];
         return parent::beforeAction($action);
     }
 
@@ -224,6 +224,7 @@ class DashboardController extends Controller
 
     public function actionAd()
     {
+        $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuDashboard' => true, 'isDashboard' => true], $this->view->params);
         $this->checkIsMe();
         $products = array();
         $search = array();
@@ -355,8 +356,8 @@ class DashboardController extends Controller
 
     public function actionPayment()
     {
+        $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuPayment' => true, 'isDashboard' => true], $this->view->params);
         $this->checkAccess();
-        $this->view->params = ['noFooter' => true, 'menuPayment' => true, 'isDashboard' => true];
         $query = EcTransactionHistory::find()->where('user_id = :_uid',[':_uid' => Yii::$app->user->id]);
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count]);

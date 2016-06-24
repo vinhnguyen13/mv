@@ -7,6 +7,7 @@ use frontend\models\UserActivity;
 use frontend\models\UserData;
 use Yii;
 use yii\db\mssql\PDO;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
 use yii\web\Response;
@@ -21,7 +22,7 @@ class NotificationController extends Controller
     public function beforeAction($action)
     {
         $this->checkAccess();
-        $this->view->params = ['noFooter' => true, 'menuNotification' => true, 'isDashboard' => true];
+        $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuNotification' => true, 'isDashboard' => true], $this->view->params);
         return parent::beforeAction($action);
     }
 

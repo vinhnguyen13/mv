@@ -48,8 +48,4 @@ class Transaction extends EcTransactionHistoryBase
         $transactionMv->save();
     }
 
-    public function convertVND2Keys($amount_VND)
-    {
-        return $amount_VND/1000;
-    }
 }
