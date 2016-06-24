@@ -103,9 +103,6 @@ class AdContactInfo extends ACI
 	}
 
     public function createUserInfo(){
-        if(empty(Yii::$app->setting->get('generateAccount'))){
-            return false;
-        }
         if(($user = User::findOne(['email'=>$this->email])) != null) {
             return $user;
         }else{
