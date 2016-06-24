@@ -21,9 +21,6 @@ $action = Yii::$app->controller->uniqueid."/".Yii::$app->controller->action->id;
 //    'ad/post' => 'Post',
 //];
 
-var_dump($action);
-exit();
-
 if($action == 'site/index' && !isset($cookie['Homepage']) || empty($cookie['Homepage'])){
     $txtArr = [
         Yii::t("tutorial","Ở phía trên bạn sẽ tìm thấy thanh Menu, thanh này sẽ luôn được hiển thị cho bạn và cho phép bạn nhanh chóng điều hướng đến tất cả các tính năng quan trọng của trang."),
