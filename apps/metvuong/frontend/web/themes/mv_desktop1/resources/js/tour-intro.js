@@ -358,7 +358,7 @@ function textTour(txtArr, namePage) {
             $.ajax({
                 type: "get",
                 dataType: 'json',
-                url: "<?=Url::to(['site/set-cookie'])?>?name="+namePage+"",
+                url: "<?=Url::to(['site/set-cookie'], true)?>?name="+namePage+"",
                 success: function (data) {
                 }
             });
