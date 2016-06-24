@@ -182,7 +182,7 @@ if(!isset($cookie['codashboard']) || empty($cookie['codashboard'])){
 <script>
     $(document).ready(function () {
         var txtTour = ["<?=Yii::t('tutorial', "<p class='mgB-5'>Bảng Điều Khiển là một công cụ tiện ích với nhiều tính năng nổi bật của MetVuong.com như:</p><p class='mgB-5'>Trang Thông tin cá nhân của bạn</p><p class='mgB-5'>Cập nhật trạng thái các tin đăng của bạn gồm có:</p><p class='mgB-5'>Lượt tìm kiếm tin đăng, </p><p class='mgB-5'>Lượt yêu thích,</p><p class='mgB-5'>Lượt chia sẻ, </p><p class='mgB-5'>Liên hệ online với người đang tìm kiếm thông tin</p><p class='mgB-5'>Mua keys, tài khoản của bạn</p>")?>",
-            "<?=Yii::t('tutorial',"<p class='mgB-5'>Đây là nơi tập trung danh sách các tin đăng của bạn.</p>")?>"];
+            "<?=Yii::t('tutorial',"<p class='mgB-5'>Đây là nơi tập trung danh sách các tin đăng của bạn.</p>")?><?=Yii::t('tutorial',"<p class='mgB-5'>Ấn vào xem thống kê chi tiết cho mỗi tin đăng.</p>")?>"];
         var intro = $.hemiIntro({
             debug: false,
             steps:[

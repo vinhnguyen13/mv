@@ -85,7 +85,7 @@ use vsoft\ad\models\AdImages;
             ?>
             <script>
                 $(document).ready(function () {
-                    var txtTour = ["<?=Yii::t('tutorial',"<p class='mgB-5'>Đây là trang để bạn đang tin sản phẩm cho thuê hoặc bán của bạn.</p><p class='mgB-5'>Metvuong.com khuyến khích bạn đăng các thông tin chi tiết và chính xác, với các tin chất lượng, bạn sẽ đạt số điểm cao và điều đó có nghĩa là sẽ có nhiều khách hàng tiềm năng sẽ liên hệ với bạn trong thời gian ngắn nhất.</p><p class='mgB-5'>Nếu bạn cung cấp thông tin mà sau khi xác minh là chưa chính xác thì chúng tôi sẽ hạ điểm số hoặc loại bỏ tin đăng.</p>")?>"];
+                    var txtTour = ["<?=Yii::t('tutorial',"<p class='mgB-5'>Đây là trang để bạn đăng tin sản phẩm cho thuê hoặc bán của bạn.</p><p class='mgB-5'>Metvuong.com khuyến khích bạn đăng các thông tin chi tiết và chính xác, với các tin chất lượng, bạn sẽ đạt số điểm cao và điều đó có nghĩa là sẽ có nhiều khách hàng tiềm năng sẽ liên hệ với bạn trong thời gian ngắn nhất.</p><p class='mgB-5'>Nếu bạn cung cấp thông tin mà sau khi xác minh là chưa chính xác thì chúng tôi sẽ hạ điểm số hoặc loại bỏ tin đăng.</p>")?>"];
                     var intro = $.hemiIntro({
                         debug: false,
                         steps: [
