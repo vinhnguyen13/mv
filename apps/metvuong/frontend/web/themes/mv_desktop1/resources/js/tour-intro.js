@@ -289,8 +289,8 @@
 	};
 })(jQuery);
 
-function textTour(txtArr, namePage) {
-	console.log(namePage);
+function textTour(txtArr, urlPage) {
+	console.log(urlPage);
     var steps = '';
 	if ( $(".search-wrap-home").length ) {
 		steps = [
@@ -358,7 +358,7 @@ function textTour(txtArr, namePage) {
             $.ajax({
                 type: "get",
                 dataType: 'json',
-                url: "<?=Url::to(['site/set-cookie'], true)?>?name="+namePage+"",
+                url: urlPage,
                 success: function (data) {
                 }
             });
