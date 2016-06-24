@@ -21,6 +21,8 @@ $action = Yii::$app->controller->uniqueid."/".Yii::$app->controller->action->id;
 //    'ad/post' => 'Post',
 //];
 
+var_dump($action);
+exit();
 
 if($action == 'site/index' && !isset($cookie['Homepage']) || empty($cookie['Homepage'])){
     $txtArr = [
@@ -34,7 +36,7 @@ if($action == 'site/index' && !isset($cookie['Homepage']) || empty($cookie['Home
         });
     </script>
     <?php
-    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
+    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
 } else if($action == 'dashboard/ad' && !isset($cookie['Dashboard']) || empty($cookie['Dashboard'])){
     $txtArr = [
         Yii::t("tutorial","<p class='mgB-5'>Bảng Điều Khiển là một công cụ tiện ích với nhiều tính năng nổi bật của MetVuong.com như:</p><p class='mgB-5'>Trang Thông tin cá nhân của bạn</p><p class='mgB-5'>Cập nhật trạng thái các tin đăng của bạn gồm có:</p><p class='mgB-5'>Lượt tìm kiếm tin đăng, </p><p class='mgB-5'>Lượt yêu thích,</p><p class='mgB-5'>Lượt chia sẻ, </p><p class='mgB-5'>Liên hệ online với người đang tìm kiếm thông tin</p><p class='mgB-5'>Mua keys, tài khoản của bạn</p>"),
@@ -47,7 +49,7 @@ if($action == 'site/index' && !isset($cookie['Homepage']) || empty($cookie['Home
         });
     </script>
     <?php
-    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
+    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
 } else if($action == 'dashboard/statistics' && !isset($cookie['Statistic']) || empty($cookie['Statistic'])){
     $txtArr = [
         Yii::t("tutorial","<p class='mgB-5'>Ở đây bạn có thể theo dõi rõ diễn tiến tin đăng của bạn, dựa trên các số liệu như số lượng các lượt tìm kiếm, yêu thích, chia sẻ hiển thị theo các khoảng thời gian.</p><p class='mgB-5'> Bạn cũng có thể liện hệ với những người đang tìm kiếm sản phẩm của bạn bằng cách nhấp vào tài khoản của khách để gửi tin nhắn hoặc Chat với họ.</p>")
@@ -59,7 +61,7 @@ if($action == 'site/index' && !isset($cookie['Homepage']) || empty($cookie['Home
         });
     </script>
     <?php
-    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
+    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
 } else if($action == 'ad/index1' && !isset($cookie['BuyListing']) || empty($cookie['BuyListing'])){
     $txtArr = [
         Yii::t("tutorial","Để tìm sản phẩm cho bán theo tên thành phố, quận, phường, đường, mã số… bạn hãy gõ vào thanh tìm kiếm ngay hàng đầu và kết quả sẽ tự động thay đổi trên bản đồ và danh sách tiềm năng."),
@@ -73,7 +75,7 @@ if($action == 'site/index' && !isset($cookie['Homepage']) || empty($cookie['Home
         });
     </script>
     <?php
-    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
+    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
 } else if($action == 'ad/index2' && !isset($cookie['RentListing']) || empty($cookie['RentListing'])){
     $txtArr = [
         Yii::t("tutorial","Để tìm sản phẩm cho thuê theo tên thành phố, quận, phường, đường, mã số… bạn hãy gõ vào thanh tìm kiếm ngay hàng đầu và kết quả sẽ tự động thay đổi trên bản đồ và danh sách tiềm năng."),
@@ -87,7 +89,7 @@ if($action == 'site/index' && !isset($cookie['Homepage']) || empty($cookie['Home
         });
     </script>
     <?php
-    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
+    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
 }
 else if($action == 'ad/post' && !isset($cookie['Post']) || empty($cookie['Post'])){
     $txtArr = [
@@ -100,7 +102,7 @@ else if($action == 'ad/post' && !isset($cookie['Post']) || empty($cookie['Post']
         });
     </script>
     <?php
-    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
+    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
 }
 
 

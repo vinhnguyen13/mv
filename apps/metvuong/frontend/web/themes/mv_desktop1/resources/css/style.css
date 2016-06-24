@@ -4142,10 +4142,10 @@ html.mm-opening .mm-slideout {
     padding: 6px 10px;
 }
 .price-item .icon-mv {
-    font-size: 20px;
+    font-size: 18px;
     line-height: 100%;
     position: absolute;
-    top: 0px;
+    top: 2px;
     left: 0;
     color: #000;
 }
@@ -4160,7 +4160,7 @@ html.mm-opening .mm-slideout {
     margin-right: 10px;
     float: none;
     margin-bottom: 0;
-    padding: 0 0 0 19px;
+    padding: 0 0 0 17px;
 }
 .right-attr-detail {
     overflow: hidden;
@@ -4172,8 +4172,8 @@ html.mm-opening .mm-slideout {
 }
 .price-item strong {
     padding-left: 5px;
-    color: #00a769;
-    font-weight: 600;
+    color: #3c3c3c;
+    font-weight: 400;
 }
 .icon-alert {
     background-position: 0 -1310px;
@@ -7110,7 +7110,7 @@ footer li a {
     border: solid 1px #00a769;
 }
 .pagination>li {
-    margin: 0 1%;
+    margin: 0 2px;
     display: inline-block;
 }
 .pagination>li:last-child>a, .pagination>li:last-child>span,
@@ -11738,6 +11738,7 @@ height: 190px;
     font-size: 13px;
     text-align: center;
     font-weight: 600;
+    position: relative;
 }
 .license p {
     margin-bottom: 8px;
@@ -12924,6 +12925,11 @@ ul.cardList li {
 .bg-bank {
     background: url(../images/MAGNETIC-STRIP-CARD.jpg) no-repeat bottom right;
 }
+.logo-bct {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
 @media (max-width: 1200px) {
     .type-payment {
         width: 90%;
@@ -12990,6 +12996,14 @@ ul.cardList li {
     }
     .box-feature-item .list-attr-td li .icon-mv {
         font-size: 17px;
+    }
+    .logo-bct {
+        position: static;
+        display: inline-block;
+        width: 150px;
+    }
+    .logo-bct img {
+        max-width: 100%;
     }
 }
 @media (max-width: 768px) {

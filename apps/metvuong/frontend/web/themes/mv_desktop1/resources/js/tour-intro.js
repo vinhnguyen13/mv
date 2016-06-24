@@ -288,3 +288,82 @@
 		return plugin;
 	};
 })(jQuery);
+
+function textTour(txtArr, namePage) {
+	console.log(namePage);
+    var steps = '';
+	if ( $(".search-wrap-home").length ) {
+		steps = [
+	                {
+	                    selector: ".dt-header",
+	                    placement: "bottom",
+	                    content: txtArr[0],
+	                },{
+	                    selector: ".search-wrap-home",
+	                    placement: "bottom",
+	                    content: txtArr[1]
+	                }
+	            ]
+	}else if ( $(".statis section").length ) {
+		steps = [
+	                {
+	                    selector: ".statis section",
+	                    placement: "left",
+	                    content: txtArr[0],
+	                }
+	            ]
+	}else if ( $(".menuUser ul").length ) {
+		steps = [
+	                {
+	                    selector: ".menuUser ul",
+	                    placement: "right",
+	                    content: txtArr[0]
+	                },
+	                {
+	                    selector: "#list-all",
+	                    placement: "left",
+	                    content: txtArr[1],
+	                }
+	            ]
+	}else if ( $("#map-wrap").length ) {
+		steps = [
+	                {
+	                    selector: ".toggle-search",
+	                    placement: "bottom",
+	                    content: txtArr[0],
+	                },{
+	                	selector: "#map-wrap",
+	                	placement: "right",
+	                	content: txtArr[1]
+	                },{
+	                	selector: ".wrap-listing",
+	                	placement: "left",
+	                	content: txtArr[2]
+	                }
+	            ]
+	}else if ( $(".type-payment").length ) {
+		steps = [
+	                {
+	                    selector: ".type-payment",
+	                    placement: "left",
+	                    content: txtArr[0],
+	                }
+	            ]
+	}
+
+	var intro = $.hemiIntro({
+        debug: false,
+        steps: steps,
+        onComplete: function (item) {
+            $.ajax({
+                type: "get",
+                dataType: 'json',
+                url: "<?=Url::to(['site/set-cookie'])?>?name="+namePage+"",
+                success: function (data) {
+                }
+            });
+        }
+    });
+
+    intro.start();
+}
