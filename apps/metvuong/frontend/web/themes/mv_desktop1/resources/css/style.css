@@ -3830,7 +3830,7 @@ html.mm-opening .mm-slideout {
     padding-right: 5px;
     margin-right: 5px;
     vertical-align: middle;
-    line-height: 19px;
+    /* line-height: 19px; */
     font-weight: 600;
 }
 .list-attr-td li:last-child {
@@ -3848,23 +3848,23 @@ html.mm-opening .mm-slideout {
     font-size: 15px;
 }
 .left-attr-detail .list-attr-td li .icon-mv {
-    font-size: 21px;
+    font-size: 19px;
 }
 .left-attr-detail .list-attr-td .icon-mv .icon-icon-bathroom {
-    font-size: 29px;
+    font-size: 20px;
 }
 .left-attr-detail .list-attr-td li {
     padding-right: 10px;
     margin-right: 10px;
 }
 .list-attr-td li .icon-mv .icon-icon-bathroom {
-    font-size: 27px;
+    font-size: 19px;
     position: relative;
-    top: -4px;
+    top: 0;
 }
 #listing-list .list-attr-td li .icon-mv .icon-icon-bathroom {
-    font-size: 22px;
-    top: -3px;
+    font-size: 17px;
+    top: 0;
 }
 .list-attr-td li .icon {
     position: relative;
@@ -4123,7 +4123,7 @@ html.mm-opening .mm-slideout {
 }
 .list-attr-td {
     margin-bottom: 10px;
-    height: 21px; /*fix firefox*/
+    height: 22px; /*fix firefox*/
     overflow: hidden;
 }
 #listing-list .info-item .list-attr-td {
@@ -5834,7 +5834,7 @@ html.mm-opening .mm-slideout {
     }
     .container {
         width: auto;
-        padding: 0 20px;
+        padding: 0 10px;
     }
     .wrap-header {
         padding: 0;
@@ -6021,6 +6021,7 @@ footer li a {
     .txt-location form input {
         width: 100%;
         margin-bottom: 10px;
+        margin-right: 0;
     }
     .txt-location form button {
         width: 100%;
@@ -6216,7 +6217,7 @@ footer li a {
         /* top: 0; */
         z-index: 11;
         position: relative;
-        background: #fff;
+        /* background: #fff; */
     }
     .top-listing {
         font-size: 13px;
@@ -7441,7 +7442,7 @@ footer li a {
 #content-holder {
     position: relative;
     z-index: 2;
-    background: #fff;
+    /* background: #fff; */
     height: 100%;
 }
 #content-holder #has-result {
@@ -11753,9 +11754,11 @@ height: 190px;
     position: relative;
     top: -2px;
 }
+.icon-cho-gui-xe:before,
 .icon-parking:before {
     content: "\e937"
 }
+.icon-tap-gym:before,
 .icon-gym:before {
     content: "\e936";
 }
@@ -11763,6 +11766,7 @@ height: 190px;
 .icon-park:before {
     content: "\e935"
 }
+.icon-may-lanh:before,
 .icon-air-conditioner:before {
     content: "\e934"
 }
@@ -11772,6 +11776,7 @@ height: 190px;
 .icon-refrigerator:before {
     content: "\e932"
 }
+.icon-ti-vi:before,
 .icon-television:before {
     content: "\e931"
 }
@@ -12456,6 +12461,7 @@ height: 190px;
         margin-bottom: 30px;
         float: left;
         margin-top: 0;
+        padding: 0;
     }
     .map-location .img-show {
         height: 100%;
@@ -12884,7 +12890,7 @@ ul.cardList li {
 }
 .listing-contai {
     position: relative;
-    z-index: 11;
+    /* z-index: 11; */
 }
 .disabled-rc:hover,
 .disabled-rc {
@@ -12935,6 +12941,55 @@ ul.cardList li {
     }
     #map-search {
         box-shadow: none;
+    }
+    .search-box {
+        padding: 0 10px;
+    }
+    .search-wrap-home {
+        padding: 0;
+    }
+    .news-item,
+    .box-item.box-feature-item {
+        padding-top: 10px;
+    }
+    .title-sub {
+        margin-bottom: 10px;
+    }
+    .keyword_col {
+        margin-bottom: 10px;
+    }
+    .search-home {
+        padding-top: 20px;
+    }
+    .listing-item,
+    .news-item ul {
+        margin: 0 -10px;
+    }
+    .listing-item > li,
+    .news-item ul li {
+        padding: 0 10px;
+    }
+    .news-item ul li {
+        margin-bottom: 20px;
+    }
+    .keyword_wrapper {
+        display: none;
+    }
+    .txt-location .name-cty,
+    .box-about > div {
+        font-weight: 400 !important;
+        text-transform: uppercase;
+        text-align: center;
+    }
+    .wrap-img-news {
+        height: 180px;
+    }
+    .box-feature-item .id-duan {
+        float: right;
+        margin-bottom: 0;
+    }
+    .box-feature-item .list-attr-td li .icon-mv {
+        font-size: 17px;
     }
 }
 @media (max-width: 768px) {
