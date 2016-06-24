@@ -46,6 +46,7 @@ class DashboardController extends Controller
 
     public function actionStatistics()
     {
+        $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuDashboard' => true, 'isDashboard' => true], $this->view->params);
 //        $uids = [1,2,3,4,5];
 //        $pids = [1,1,1,1,1,1,1,1,1];
 //        $times = Util::me()->dateRange(strtotime('-30 days'), strtotime('+1 days'), '+1 day', 'd-m-Y H:i:s');

@@ -9,41 +9,6 @@ use yii\web\View;
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 
-$cookies = Yii::$app->request->cookies;
-$cookie = $cookies->getValue('tutorial');
-if(!isset($cookie['copayment']) || empty($cookie['copayment'])){
-?>
-<script>    
-    $(document).ready(function () {
-        var txtTour = ["<?=Yii::t('tutorial',"Metvuong.com có đầy đủ các hệ thống thanh toán để tối đa hóa sự tiện lợi của bạn, chỉ cần chọn số chìa khóa bạn muốn mua và phương thức thanh toán. Mua sỉ sẽ có chiết khấu tốt hơn.")?>"];
-        var intro = $.hemiIntro({
-            debug: false,
-            steps: [
-                {
-                    selector: ".type-payment",
-                    placement: "left",
-                    content: txtTour[0],
-                }
-            ],
-            onComplete: function (item) {
-                $.ajax({
-                    type: "get",
-                    dataType: 'json',
-                    url: '<?=Url::to(['site/set-cookie'])?>'+'?name=copayment',
-                    success: function (data) {
-                    }
-                });
-            }
-        });
-
-        intro.start();
-    });
-</script>
-<?php
-    $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.min.js', ['position'=>View::POS_END]);
-}
-?>
-<?php
 $profile = Yii::$app->user->identity->profile;
 ?>
 <div class="type-payment w-60">

@@ -50,7 +50,7 @@ $types = AdProduct::getAdTypes();
                         echo $toilet_no ? '<li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>' . $toilet_no . ' </li>' : '';
                     } ?>
 				</ul>
-		        <p class="price-item"><?= Yii::t('listing', 'Price') ?><strong><?= StringHelper::formatCurrency($product->price) . ' ' . Yii::t('ad', 'VND') ?></strong></p>   
+		        <p class="price-item"><?= StringHelper::formatCurrency($product->price) . ' ' . Yii::t('ad', 'VND') ?></p>   
 		    	<p class="date-post">đăng <?= StringHelper::previousTime($product->updated_at) ?><span class="pull-right">Điểm: 95</span></p>
 		    </div>
 		</a>

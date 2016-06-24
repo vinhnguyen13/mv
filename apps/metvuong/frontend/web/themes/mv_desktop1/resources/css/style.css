@@ -4122,7 +4122,7 @@ html.mm-opening .mm-slideout {
     line-height: 32px;
 }
 .list-attr-td {
-    margin-bottom: 10px;
+    margin-bottom: 14px;
     height: 22px; /*fix firefox*/
     overflow: hidden;
 }
@@ -4133,13 +4133,13 @@ html.mm-opening .mm-slideout {
 }
 .price-item {
     text-transform: uppercase;
-    border: solid 1px #8e8e8e;
+    /* border: solid 1px #8e8e8e; */
     float: left;
-    font-size: 15px;
+    font-size: 18px;
     line-height: 100%;
     margin-bottom: 10px;
     position: relative;
-    padding: 6px 10px;
+    /* padding: 6px 10px; */
 }
 .price-item .icon-mv {
     font-size: 18px;
@@ -4168,7 +4168,7 @@ html.mm-opening .mm-slideout {
 .right-attr-detail .price-item {
     font-size: 20px;
     margin-bottom: 0;
-    padding: 8px 15px;
+    /* padding: 8px 15px; */
 }
 .price-item strong {
     padding-left: 5px;
@@ -8863,6 +8863,17 @@ margin-right: 5px;
     font-size: 15px;
     /* height: 60px; */
     /* line-height: 60px; */
+}
+.menuUser li a.btn-tour {
+    padding: 0;
+    display: inline-block;
+    font-size: 14px;
+    padding: 6px 12px;
+    text-transform: none;
+    font-weight: bold;
+}
+.menuUser li a.btn-tour:hover {
+    color: #3c3c3c;
 }
 .menuUser li a > div {
     display: inline-block;

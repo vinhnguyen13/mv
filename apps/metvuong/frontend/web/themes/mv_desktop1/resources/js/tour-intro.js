@@ -259,7 +259,7 @@
 					offsetTop = currentStep.offsetTop;
 				}
 				var called = false;
-				if ( currentElement.hasClass('wrap-frm-listing') || currentElement.hasClass('wrap-list-duan') || currentElement.hasClass('type-payment') ) {
+				if ( currentElement.hasClass('wrap-frm-listing') || currentElement.hasClass('wrap-list-duan') || currentElement.hasClass('type-payment') || currentElement.hasClass('profile-item') || currentElement.hasClass('dashboard-item') || currentElement.hasClass('pay-item') || currentElement.hasClass('noti-item') || currentElement.hasClass('mess-item') ) {
 					if (called === false) {
 						callback();
 						called = true;
@@ -315,14 +315,34 @@ function textTour(txtArr, urlPage) {
 	}else if ( $(".menuUser ul").length ) {
 		steps = [
 	                {
-	                    selector: ".menuUser ul",
+	                    selector: ".menuUser li .profile-item",
 	                    placement: "right",
 	                    content: txtArr[0]
 	                },
 	                {
-	                    selector: "#list-all",
-	                    placement: "left",
+	                    selector: ".menuUser li .dashboard-item",
+	                    placement: "right",
 	                    content: txtArr[1],
+	                },
+	                {
+	                    selector: ".menuUser li .pay-item",
+	                    placement: "right",
+	                    content: txtArr[2],
+	                },
+	                {
+	                    selector: ".menuUser li .noti-item",
+	                    placement: "right",
+	                    content: txtArr[3],
+	                },
+	                {
+	                    selector: ".menuUser li .mess-item",
+	                    placement: "right",
+	                    content: txtArr[4],
+	                },
+	                {
+	                    selector: ".wrap-list-duan",
+	                    placement: "left",
+	                    content: txtArr[5],
 	                }
 	            ]
 	}else if ( $("#map-wrap").length ) {
@@ -349,6 +369,14 @@ function textTour(txtArr, urlPage) {
 	                    content: txtArr[0],
 	                }
 	            ]
+	}else if ( $(".wrap-frm-listing").length ) {
+		steps = [
+			{
+				selector: ".wrap-frm-listing",
+	            placement: "left",
+	            content: txtArr[0]
+            }
+		]
 	}
 
 	var intro = $.hemiIntro({
