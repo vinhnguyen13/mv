@@ -399,7 +399,7 @@ class SiteController extends Controller
 		}
 	}
 
-    public function actionSetCookie($name='cohomepage'){
+    public function actionSetCookie($name='Homepage'){
         if(Yii::$app->request->isAjax) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             $cookies = Yii::$app->request->cookies;
