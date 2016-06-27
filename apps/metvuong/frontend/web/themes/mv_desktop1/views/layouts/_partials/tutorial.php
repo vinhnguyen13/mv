@@ -41,7 +41,7 @@ if($action == 'site/index' && (!isset($cookie['Homepage']) || empty($cookie['Hom
         Yii::t("tutorial","Trang thông tin cá nhân của bạn, ở đây bạn có thể thay đổi mật khẩu và thông tin cá nhân của bạn."),
         Yii::t("tutorial","<p class='mgB-5'>Cập nhật trạng thái các tin đăng của bạn gồm có:</p><p class='mgB-5'>Lượt tìm kiếm tin đăng,</p><p class='mgB-5'>Lượt yêu thích,</p><p>Lượt chia sẻ.</p>"),
         Yii::t("tutorial","Trong trang thanh toán bạn có thể xem được lịch sử giao dịch và nạp thêm chìa khóa vào tài khoản của bạn."),
-        Yii::t("tutorial","Trang thông báo sẽ cho bạn xem lịch sử của những người đã xem hoạc thích một tin đăng của bạn, và từ trang này bạn có thể liên lạc họ qua email hoặc tin nhắn."),
+        Yii::t("tutorial","Trang thông báo sẽ cho bạn xem lịch sử của những người đã xem hoặc thích một tin đăng của bạn, và từ trang này bạn có thể liên lạc họ qua email hoặc tin nhắn."),
         Yii::t("tutorial",'Trang Trò Chuyện hiển thị "lịch sử trò chuyện" của những người mà bạn đã chat.'),
         Yii::t("tutorial","<p class='mgB-5'>Ở đây bạn có thể theo dõi rõ diễn tiến tin đăng của bạn, dựa trên các số liệu như số lượng các lượt tìm kiếm, yêu thích, chia sẻ hiển thị theo các khoảng thời gian.</p><p>Bạn cũng có thể liện hệ với những người đang tìm kiếm sản phẩm của bạn bằng cách nhấp vào tài khoản của khách để gửi tin nhắn hoặc Chat với họ.</p>"),
     ];
