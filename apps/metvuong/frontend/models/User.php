@@ -542,13 +542,12 @@ class User extends \dektrium\user\models\User
      */
     public function getBalance()
     {
-        $dep = new DbDependency();
+        /*$dep = new DbDependency();
         $dep->sql = 'SELECT updated_at FROM ec_balance WHERE user_id = '.$this->id;
 
         $balance = Balance::getDb()->cache(function(){
             return Balance::findOne(['user_id' => $this->id]);
-        }, 86400, $dep);
-
+        }, 86400, $dep);*/
         $balance = Balance::findOne(['user_id' => $this->id]);
     	if(!$balance) {
     		$balance = new Balance();
