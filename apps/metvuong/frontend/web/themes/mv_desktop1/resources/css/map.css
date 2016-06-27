@@ -226,6 +226,16 @@
 	cursor: pointer;
 }
 
+.wrap-listing-item #listing-list > ul > li:first-child a.vip {
+	border-top: 2px solid #F44336;
+}
+
+.wrap-listing-item #listing-list > ul > li a.vip {
+    border: 2px solid #F44336;
+    padding: 6px;
+    margin: 2px;
+}
+
 @media ( max-width : 985px) {
 	#map-search-wrap {
 		width: 100%;

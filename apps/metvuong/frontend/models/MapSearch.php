@@ -55,7 +55,7 @@ class MapSearch extends AdProduct {
 
 		$query = new Query();
 
-		$query->select('ad_product.show_home_no, ad_product.home_no, ad_product.street_id, ad_product.ward_id, ad_product.district_id, ad_product.id, ad_product.area, ad_product.price, ad_product.lng, ad_product.lat, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no');
+		$query->select('ad_product.boost_time, ad_product.show_home_no, ad_product.home_no, ad_product.street_id, ad_product.ward_id, ad_product.district_id, ad_product.id, ad_product.area, ad_product.price, ad_product.lng, ad_product.lat, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no');
 		$query->from('ad_product');
 		$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
 		
