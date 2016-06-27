@@ -4,6 +4,9 @@ $(window).on('load', function () {
 
 $(document).ready(function() {
 
+    var getNumKey = parseInt($('.list-redire .num-gold a').data('keys'));
+    $('.list-redire .num-gold .notifi').html(convertKey(getNumKey));
+    
     $(document).on('click', '.option-chat-box .val-selected', function (e) {
         $(this).closest('.box-dropdown').toggleClass('show-hide');
     });
@@ -1323,3 +1326,17 @@ $.fn.popover.Constructor.prototype.leave = function(obj){
         });
     }
 };
+
+
+function convertKey ( numKey ) {
+
+    if ( numKey >= 1000 && numKey < 1000000 ) {
+        var val = numKey / 1000,
+            getNum = val.toString().split('.'),
+            numConverted = getNum[0]+'K'+(getNum[1] != undefined ? getNum[1] : '');
+
+        return numConverted;
+    }
+
+    return numKey;
+}
