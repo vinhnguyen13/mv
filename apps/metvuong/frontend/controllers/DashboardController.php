@@ -84,6 +84,9 @@ class DashboardController extends Controller
         $shares = Chart::find()->getShareWithLastTime($id, $date, $filter);
         $favourites = Chart::find()->getSavedWithLastTime($id, $date, $filter);
 
+        if(empty($finders) && empty($visitors) && empty($shares) && empty($favourites)) {
+            return $this->redirect(Url::home());
+        }
 //        if(Yii::$app->request->isAjax){
 //            return $this->renderAjax('statistics/index', [
 //                'product' => $product,

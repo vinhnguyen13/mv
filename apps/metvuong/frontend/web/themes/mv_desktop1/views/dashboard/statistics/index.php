@@ -24,8 +24,8 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
                 <div class="pull-right fs-13 mgB-15">
                     <div class="clearfix d-ib ver-c">
                         <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id, 'filter'=>'week']) ?>" class="show-view-chart<?=($filter=='week' ? ' active' : '')?>"><?=Yii::t('statistic','Week')?></a>
+                        <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id, 'filter'=>'2week']) ?>" class="show-view-chart<?=($filter=='2week' ? ' active' : '')?>"><?=Yii::t('statistic','Two weeks')?></a>
                         <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id, 'filter'=>'month']) ?>" class="show-view-chart<?=($filter=='month' ? ' active' : '')?>"><?=Yii::t('statistic','Month')?></a>
-                        <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id, 'filter'=>'quarter']) ?>" class="show-view-chart<?=($filter=='quarter' ? ' active' : '')?>"><?=Yii::t('statistic','Quarter')?></a>
                     </div>
                 </div>
                 <div class="clearfix"></div>

@@ -18,6 +18,7 @@ use vsoft\tracking\models\AdProductVisitorSearch;
 use Yii;
 use yii\base\Component;
 use yii\helpers\Url;
+use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
@@ -30,6 +31,7 @@ class Chart extends Component
 
     protected $filter = [
         'week' => -6,
+        '2week' => -13,
         'month' => -30,
         'quarter' => -90,
     ];
@@ -236,6 +238,8 @@ class Chart extends Component
             $useDate = new \DateTime($useDate);
         }*/
         $useDate = new \DateTime(date('Y-m-d', time()));
+        if(!isset($this->filter[$filter]))
+            return null;
         $days = $this->filter[$filter]." days";
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
@@ -268,7 +272,8 @@ class Chart extends Component
             $useDate = new \DateTime($useDate);
         }*/
         $useDate = new \DateTime(date('Y-m-d', time()));
-
+        if(!isset($this->filter[$filter]))
+            return null;
         $days = $this->filter[$filter]." days";
 
         $f = date_format($useDate, 'Y-m-d 00:00:00');
@@ -298,7 +303,8 @@ class Chart extends Component
             $useDate = new \DateTime($useDate);
         }*/
         $useDate = new \DateTime(date('Y-m-d', time()));
-
+        if(!isset($this->filter[$filter]))
+            return null;
         $days = $this->filter[$filter]." days";
 
         $f = date_format($useDate, 'Y-m-d 00:00:00');
@@ -330,6 +336,8 @@ class Chart extends Component
             $useDate = new \DateTime($useDate);
         }*/
         $useDate = new \DateTime(date('Y-m-d', time()));
+        if(!isset($this->filter[$filter]))
+            return null;
         $days = $this->filter[$filter]." days";
 
         $f = date_format($useDate, 'Y-m-d 00:00:00');
