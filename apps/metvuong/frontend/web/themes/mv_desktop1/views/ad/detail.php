@@ -758,8 +758,8 @@ $count_review = $reviews->count();
 										<div>
 											<span class="icon-mv"><span class="icon-link fs-16"></span></span>
 										</div>
-										<a href="<?=$product->urlDetail(true)?>" class="email-btn">
-											<?= $product->urlDetail(true) ?>
+										<a href="<?= Url::to(['/mv' . $product->id], true) ?>" class="email-btn">
+											<?= Url::to(['/mv' . $product->id], true) ?>
 										</a>
 									</div>
                                     <?php if($adContactInfo && !empty($adContactInfo->email)){ ?>
