@@ -2570,7 +2570,7 @@ footer .col-xs-6 > div a {
     color: #fff;
 }
 footer li:last-child {
-    border-top: 1.5px solid #fff;
+    /* border-top: 1.5px solid #fff; */
 }
 footer .col-xs-6 em {
     float: left;
@@ -6016,6 +6016,10 @@ footer li a {
     padding: 10px 0;
     display: block;
     font-size: 12px;
+}
+.m-footer li a {
+    
+padding: 5px 0;
 }
 @media (min-width: 320px) and (max-width: 460px) {
     .txt-location form input {
@@ -10825,8 +10829,8 @@ label:hover {
         padding-right: 10px;
     }
     .title-top {
-        margin-left: -20px;
-        margin-right: -20px;
+        margin-left: -10px;
+        margin-right: -10px;
         width: inherit;
     }
     .detail-duan-moi {
@@ -10943,7 +10947,11 @@ label:hover {
         font-size: 14px;
     }
     .statis {
-        padding: 0 20px 20px;
+        padding: 0 10px 20px;
+    }
+    .summary .wrap-chart .wrap-img,
+    .statis > section {
+        padding: 0;
     }
     .alert-warning {
         font-size: 14px;
@@ -11759,6 +11767,25 @@ height: 190px;
         text-align: center;
         font-size: 14px;
         margin-top: 10px;
+        border-top: 1px solid #fff;
+        padding-top: 10px;
+    }
+    .box-input {
+        font-size: 13px;
+    }
+    .filter-minmax  li a {
+        font-size: 13px;
+        padding: 5px 10px;
+    }
+    .wrap-frm-listing .alert-success h2 {
+        font-size: 14px;
+        font-weight: 700;
+    }
+    .wrap-frm-listing .alert-success {
+        font-size: 13px;
+    }
+    .tienich-frm li {
+        width: 33.333%;
     }
 }
 .icon-icon-bathroom {
@@ -12859,6 +12886,10 @@ ul.cardList li {
   padding: 10px 0; 
 }
 .hemi-intro-popover {width: 250px;}
+.post-listing .hemi-intro-popover {
+    width: 600px;
+    max-width: inherit;
+}
 .search-box .hemi-intro-popover {
     width: 500px;
     max-width: inherit;
@@ -12971,6 +13002,7 @@ ul.cardList li {
     }
     .search-wrap-home {
         padding: 0;
+        margin-top: -20px;
     }
     .news-item,
     .box-item.box-feature-item {
@@ -13039,7 +13071,8 @@ ul.cardList li {
         padding-right: 0;
     }
     .type-payment {
-        padding: 20px 0;
+        padding: 20px 10px;
+        width: 100%;
     }
     .item-payment .title-item {
         font-size: 15px;
@@ -13080,5 +13113,11 @@ ul.cardList li {
     }
     .item-payment {
         font-size: 13px;
+    }
+    .bg-bank {
+        background: none;
+    }
+    .bg-bank > .w-50 {
+        width: 100%;
     }
 }

@@ -374,7 +374,7 @@ function textTour(txtArr, urlPage) {
 		steps = [
 			{
 				selector: ".wrap-frm-listing",
-	            placement: "left",
+	            placement: "top",
 	            content: txtArr[0]
             }
 		]
