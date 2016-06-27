@@ -104,9 +104,11 @@ if($from > 0 && $to > 0)
                             tooltip = '<b>Final result is </b> ' + this.y;
                         }
                         else {
-                            tooltip = '<b class="chart_result" onclick="clickTooltip(\''+this.point.url+'\')">' + this.y + ' <?=Yii::t('chart','user')?></b><br/>';
+                            if(this.y > 0)
+                                tooltip = '<b class="chart_result" onclick="clickTooltip(\''+this.point.url+'\')">' + this.y + ' <?=Yii::t('chart','user')?></b><br/>';
+                            else
+                                tooltip = '<b class="chart_result">' + this.y + ' <?=Yii::t('chart','user')?></b><br/>';
                         }
-                        cloneToolTip = tooltip;
                         return tooltip;
                     }
                 },
@@ -122,24 +124,23 @@ if($from > 0 && $to > 0)
                                 click: function () {
                                     $('#frmListVisit .wrap-modal').html('');
                                     var _this = this;
-                                    console.log(_this);
-                                    $('body').loading();
-                                    $.ajax({
-                                        type: "get",
-                                        dataType: 'html',
-                                        url: _this.url,
-                                        success: function (data) {
-                                            console.log(data);
-                                            $('body').loading({done: true});
-                                            $('#frmListVisit .wrap-modal').html($(data));
-                                            
-                                            $('#frmListVisit').modal();
-                                        }
-                                    });
+                                    if(_this.url) {
+                                        $('body').loading();
+                                        $.ajax({
+                                            type: "get",
+                                            dataType: 'html',
+                                            url: _this.url,
+                                            success: function (data) {
+                                                console.log(data);
+                                                $('body').loading({done: true});
+                                                $('#frmListVisit .wrap-modal').html($(data));
+
+                                                $('#frmListVisit').modal();
+                                            }
+                                        });
+                                    }
                                 },
-                                mouseOver: function () {
-                                    return cloneToolTip;
-                                }
+
                             }
                         }
                     }
