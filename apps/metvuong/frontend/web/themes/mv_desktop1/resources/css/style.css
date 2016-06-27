@@ -12029,12 +12029,17 @@ height: 190px;
     content: "\f046";
 }
 .type-payment {
+    margin: 0 auto 100px;
+}
+.type-payment .hemi-intro-popover {
+    width: 400px;
+    max-width: inherit;
+    top: 50px !important;
+}
+.type-payment .innner-block {
     font-size: 14px;
     padding-top: 50px;
     padding-bottom: 50px;
-    /* background: #F9F9F9; */
-    /* width: 45%; */
-    margin: 0 auto 100px;
     padding: 50px 10px 0;
 }
 .type-payment h1 {
@@ -12982,6 +12987,7 @@ ul.cardList li {
 @media (max-width: 1200px) {
     .type-payment {
         width: 90%;
+        position: relative;
     }
 }
 @media (max-width: 985px) {

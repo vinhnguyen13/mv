@@ -362,11 +362,11 @@ function textTour(txtArr, urlPage) {
 	                	content: txtArr[2]
 	                }
 	            ]
-	}else if ( $(".type-payment").length ) {
+	}else if ( $(".type-payment .innner-block").length ) {
 		steps = [
 	                {
-	                    selector: ".type-payment",
-	                    placement: "left",
+	                    selector: ".type-payment .innner-block",
+	                    placement: "top",
 	                    content: txtArr[0],
 	                }
 	            ]
