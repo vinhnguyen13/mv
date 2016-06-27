@@ -8,7 +8,6 @@ use yii\helpers\Url;
 				<ul>
 					<li><a href="<?=Url::to(['site/page', 'view'=>'about'])?>"><?=Yii::t('general', 'About Us')?></a></li>
 					<li><a href="<?=Url::to(['site/page', 'view'=>'faq'])?>"><?=Yii::t('general', 'FAQs')?></a></li>
-					<li><a href="<?=Url::to(['site/page', 'view'=>'service'])?>">Dịch vụ</a></li>
 				</ul>
 			</div>
 			<div class="pull-right col-xs-6">
@@ -37,7 +36,6 @@ use yii\helpers\Url;
 			<li><a href="<?=Url::to(['site/page', 'view'=>'faq'])?>"><?=Yii::t('general', 'FAQs')?></a></li>
 			<li><a href="<?=Url::to(['site/page', 'view'=>'terms'])?>"><?=Yii::t('general', 'Terms and Conditions')?></a></li>
 			<li><a href="<?=Url::to(['site/page', 'view'=>'interestRate'])?>"><?=Yii::t('general', 'Interest rate')?></a></li>
-			<li><a href="<?=Url::to(['site/page', 'view'=>'service'])?>">Dịch vụ</a></li>
 		</ul>
 		<div class="license">
 			<p><?=Yii::t('general', 'Copyright {year} {domain}', ['year'=>2016, 'domain'=>'MetVuong.com'])?></p>

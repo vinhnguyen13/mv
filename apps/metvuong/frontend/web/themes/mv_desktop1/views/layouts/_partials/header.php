@@ -204,7 +204,7 @@ $meta->add(Yii::$app->request->absoluteUrl);
                 <li class="<?=!empty($this->params['menuSell']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/post']) ?>"><?=Yii::t('general', 'Sell')?></a></li>
                 <li class="<?=!empty($this->params['menuProject']) ? 'active' : '' ;?>"><a href="<?=Url::to(['building-project/index']);?>"><?=Yii::t('general', 'New Project')?></a></li>
                 <li class="<?=!empty($this->params['menuNews']) ? 'active' : '' ;?>"><a href="<?=Url::to(['news/index']);?>"><?=Yii::t('general', 'News')?></a></li>
-                <li class="<?=!empty($this->params['menuPricing']) ? 'active' : '' ;?>"><a href="<?=Url::to(['/payment/package'])?>"><?=Yii::t('general', 'Pricing')?></a></li>
+                <li class="<?=!empty($this->params['menuPricing']) ? 'active' : '' ;?>"><a href="<?=Url::to(['site/page', 'view'=>'service'])?>"><?=Yii::t('general', 'Service')?></a></li>
             </ul>
         </div>
     </div>
