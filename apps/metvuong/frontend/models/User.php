@@ -548,7 +548,8 @@ class User extends \dektrium\user\models\User
         $balance = Balance::getDb()->cache(function(){
             return Balance::findOne(['user_id' => $this->id]);
         }, 86400, $dep);
-    	
+
+        $balance = Balance::findOne(['user_id' => $this->id]);
     	if(!$balance) {
     		$balance = new Balance();
     		$balance->user_id = $this->id;
