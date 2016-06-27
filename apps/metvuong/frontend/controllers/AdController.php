@@ -243,6 +243,8 @@ class AdController extends Controller
 			$query->andWhere(['>=', 'ad_product.lng', $rect[1]]);
 			$query->andWhere(['<=', 'ad_product.lng', $rect[3]]);
 		}
+		
+		$mapSearch->sort($query);
     		 
 		$list = $mapSearch->getList($query);
     		 

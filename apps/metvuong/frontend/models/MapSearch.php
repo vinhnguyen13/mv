@@ -172,12 +172,6 @@ class MapSearch extends AdProduct {
 		$listQuery->offset($pages->offset);
 		$listQuery->limit($pages->limit);
 		
-		$sort = $this->order_by ? $this->order_by : '-score';
-		$doa = StringHelper::startsWith($sort, '-') ? 'DESC' : 'ASC';
-		$sort = str_replace('-', '', $sort);
-				
-		$listQuery->orderBy("$sort $doa");
-		
 		$listQuery->addSelect([
 			"ad_product.score",
 			"ad_product.updated_at",
@@ -186,6 +180,15 @@ class MapSearch extends AdProduct {
 		]);
 		
 		return ['products' => $listQuery->all(), 'pages' => $pages];
+	}
+	
+	public function sort($query) {
+		$sort = $this->order_by ? $this->order_by : '-score';
+		$doa = StringHelper::startsWith($sort, '-') ? 'DESC' : 'ASC';
+		$sort = str_replace('-', '', $sort);
+		
+		$query->orderBy("boost_time DESC");
+		$query->addOrderBy("$sort $doa");
 	}
 	
 	function fetchValues() {

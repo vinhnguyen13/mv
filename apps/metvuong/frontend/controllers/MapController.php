@@ -73,7 +73,8 @@ class MapController extends ActiveController {
 		}
 		 
 		if($mapSearch->rm || $mapSearch->rl) {
-		
+			
+			$mapSearch->sort($query);
 			$mapSearch->fetchValues();
 			
 			if($mapSearch->rect) {
@@ -87,12 +88,6 @@ class MapController extends ActiveController {
 			 
 			if($mapSearch->rm) {
 				$markerQuery = clone $query;
-				 
-				$sort = $mapSearch->order_by ? $mapSearch->order_by : '-score';
-				$doa = StringHelper::startsWith($sort, '-') ? 'DESC' : 'ASC';
-				$sort = str_replace('-', '', $sort);
-				 
-				$markerQuery->orderBy("$sort $doa");
 				
 				$markerQuery->addSelect(['`ad_images`.`file_name` AS f', '`ad_images`.`folder` AS d']);
 				$markerQuery->leftJoin('`ad_images`', '`ad_images`.`product_id` = `ad_product`.`id` AND `ad_images`.`order` = 0');
