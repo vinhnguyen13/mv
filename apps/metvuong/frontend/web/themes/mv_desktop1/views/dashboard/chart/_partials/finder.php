@@ -54,7 +54,6 @@ if($from > 0 && $to > 0)
 //    $categories = array_merge($categories, $categories2, $categories3, $categories4);
     $categories = $categories2;
 
-
     ?>
     <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     <script>
