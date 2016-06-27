@@ -85,7 +85,11 @@ class DashboardController extends Controller
         $favourites = Chart::find()->getSavedWithLastTime($id, $date, $filter);
 
         if(empty($finders) && empty($visitors) && empty($shares) && empty($favourites)) {
-            return $this->redirect(Url::home());
+            Yii::$app->session->setFlash('danger', Yii::t('statistic', '<div class="text-center">Not found data with filter.</div>'));
+            return $this->render('/_systems/_alert', [
+                'title'  => Yii::t('statistic', 'Invalid or expired link'),
+                'module' => $this->module,
+            ]);
         }
 //        if(Yii::$app->request->isAjax){
 //            return $this->renderAjax('statistics/index', [

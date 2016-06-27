@@ -69,9 +69,9 @@ if($action == 'site/index' && (!isset($cookie['Homepage']) || empty($cookie['Hom
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
 } else if($action == 'ad/index1' && (!isset($cookie['BuyListing']) || empty($cookie['BuyListing']))){
     $txtArr = [
-        Yii::t("tutorial","Chào mừng bạn đến với trang Cần Mua, mục này và mục Cần Thuê có chức năng giống nhau, để tìm sản phẩm theo tên thành phố, quận, phường, đường, mã số… bạn hãy gõ vào thanh tìm kiếm ngay hàng đầu và kết quả sẽ tự động thay đổi khi bạn thay đổi thông tin tìm kiếm."),
+        Yii::t("tutorial","Để tìm sản phẩm cho bán theo tên thành phố, quận, phường, đường, mã số… bạn hãy gõ vào thanh tìm kiếm ngay hàng đầu và kết quả sẽ tự động thay đổi trên bản đồ và danh sách tiềm năng."),
         Yii::t("tutorial","Bản đồ lớn sẽ cho phép bạn nhìn thấy địa điểm trong danh sách tiềm năng của bạn, bạn có thể nhấp vào để xem cụ thể các địa điểm."),
-        Yii::t("tutorial","Các danh sách bên phải là danh sách sản phẩm được đề xuất có kết quả gần nhất với các yêu cầu tìm kiếm, được phân loại theo cách đánh giá của MetVuong để đảm bảo chất lượng tin cũng như sự liên quan đến yêu cầu của bạn.")
+        Yii::t("tutorial","Danh sách tiềm năng bên phải là danh sách sản phẩm được đề xuất có kết quả gần nhất với các yêu cầu tìm kiếm, được phân loại theo cách đánh giá của MetVuong để đảm bảo chất lượng tin cũng như sự liên quan đến yêu cầu của bạn.")
     ];
     $urlPage = Url::to(['site/set-cookie', 'name' => 'BuyListing'], true);
     ?>
@@ -84,7 +84,7 @@ if($action == 'site/index' && (!isset($cookie['Homepage']) || empty($cookie['Hom
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
 } else if($action == 'ad/index2' && (!isset($cookie['RentListing']) || empty($cookie['RentListing']))){
     $txtArr = [
-        Yii::t("tutorial","Chào mừng bạn đến với trang Cần Thuê, mục này và mục Cần Mua có chức năng giống nhau, để tìm sản phẩm theo tên thành phố, quận, phường, đường, mã số… bạn hãy gõ vào thanh tìm kiếm ngay hàng đầu và kết quả sẽ tự động thay đổi khi bạn thay đổi thông tin tìm kiếm."),
+        Yii::t("tutorial","Để tìm sản phẩm cho thuê theo tên thành phố, quận, phường, đường, mã số… bạn hãy gõ vào thanh tìm kiếm ngay hàng đầu và kết quả sẽ tự động thay đổi trên bản đồ và danh sách tiềm năng"),
         Yii::t("tutorial","Bản đồ lớn sẽ cho phép bạn nhìn thấy địa điểm trong danh sách tiềm năng của bạn, bạn có thể nhấp vào để xem cụ thể các địa điểm."),
         Yii::t("tutorial","Danh sách tiềm năng bên phải là danh sách sản phẩm được đề xuất có kết quả gần nhất với các yêu cầu tìm kiếm, được phân loại theo cách đánh giá của MetVuong để đảm bảo chất lượng tin cũng như sự liên quan đến yêu cầu của bạn.")
     ];
