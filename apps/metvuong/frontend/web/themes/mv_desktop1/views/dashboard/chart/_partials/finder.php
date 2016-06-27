@@ -58,6 +58,7 @@ if($from > 0 && $to > 0)
     <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
     <script>
         $(function () {
+            var cloneToolTip = null;
             var chart = $('#chartAds').highcharts({
                 chart: {
                     type: 'line'
@@ -103,8 +104,9 @@ if($from > 0 && $to > 0)
                             tooltip = '<b>Final result is </b> ' + this.y;
                         }
                         else {
-                            tooltip = '<b>' + this.y + ' <?=Yii::t('chart','user')?></b><br/>';
+                            tooltip = '<b class="chart_result" onclick="clickTooltip(\''+this.point.url+'\')">' + this.y + ' <?=Yii::t('chart','user')?></b><br/>';
                         }
+                        cloneToolTip = tooltip;
                         return tooltip;
                     }
                 },
@@ -120,18 +122,23 @@ if($from > 0 && $to > 0)
                                 click: function () {
                                     $('#frmListVisit .wrap-modal').html('');
                                     var _this = this;
+                                    console.log(_this);
                                     $('body').loading();
                                     $.ajax({
                                         type: "get",
                                         dataType: 'html',
                                         url: _this.url,
                                         success: function (data) {
+                                            console.log(data);
                                             $('body').loading({done: true});
                                             $('#frmListVisit .wrap-modal').html($(data));
                                             
                                             $('#frmListVisit').modal();
                                         }
                                     });
+                                },
+                                mouseOver: function () {
+                                    return cloneToolTip;
                                 }
                             }
                         }
@@ -143,7 +150,24 @@ if($from > 0 && $to > 0)
                 }
             });
         });
+        function clickTooltip(url) {
+            $('#frmListVisit .wrap-modal').html('');
+            var _this = this;
+            console.log(_this);
+            $('body').loading();
+            $.ajax({
+                type: "get",
+                dataType: 'html',
+                url: url,
+                success: function (data) {
+                    console.log(data);
+                    $('body').loading({done: true});
+                    $('#frmListVisit .wrap-modal').html($(data));
 
+                    $('#frmListVisit').modal();
+                }
+            });
+        }
     </script>
 <div class="statistic-info">
     <a href="<?=$urlDetail?>" class="fs-14"><p class="name-post"><span class="icon address-icon"></span><?=$address?></p></a>
