@@ -5994,7 +5994,7 @@ html.mm-opening .mm-slideout {
 }
 .list-menu-footer li a {
     display: block;
-    font-size: 12px;
+    font-size: 14px;
     line-height: 100%;
     padding: 0 10px 0 10px;
     border-right: 1px solid #fff;
@@ -12940,6 +12940,13 @@ ul.cardList li {
     position: absolute;
     bottom: 0;
     right: 0;
+}
+.wrap-content-page {
+    font-size: 14px;
+    padding: 50px 0;
+}
+.wrap-content-page p {
+    margin-bottom: 15px;
 }
 @media (max-width: 1200px) {
     .type-payment {
