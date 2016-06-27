@@ -111,6 +111,7 @@
 				}
 			} else {
 				//plugin.backdrop.appendTo("body");
+				if ( plugin.options.steps == "" ) return;
 				goToStep(currentIndex);
 				if ( plugin.options.steps[currentIndex].selector != '.dt-header' ) {
 					$('.dt-header').append('<div class="bg-over"></div>');
