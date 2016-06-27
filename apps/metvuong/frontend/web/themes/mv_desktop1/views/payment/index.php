@@ -16,7 +16,7 @@ $profile = Yii::$app->user->identity->profile;
 	<div class="title-box"><?=Yii::t('payment', 'Payment method')?></div>
 	<ul class="nav nav-tabs tab-payment" role="tablist">
 		<li role="presentation" class="active"><a href="#tab-atm" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('payment', 'Banking')?></a></li>
-		<li role="presentation" class=""><a href="#tab-thecao" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('payment', 'Mobile Card')?></a></li>
+		<li role="presentation" class=""><a href="#tab-thecao" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('payment','Mobile Credit')?></a></li>
 		<li role="presentation" class=""><a href="#tab-sms" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('payment', 'SMS')?></a></li>
 	</ul>
 	<div class="tab-content">

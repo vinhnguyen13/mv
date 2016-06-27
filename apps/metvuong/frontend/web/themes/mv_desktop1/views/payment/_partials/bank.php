@@ -10,7 +10,7 @@ use yii\helpers\Url;
 
 ?>
 <div id="credit-card" class="item-payment">
-    <div class="title-item">Thanh toán bằng Thẻ Ngân Hàng</div>
+    <div class="title-item"><?=Yii::t('payment', 'Payment methods')?></div>
     <div class="mgT-20">
         <div class="method_napcard_inner">
             <?php
@@ -24,35 +24,19 @@ use yii\helpers\Url;
             <div class="bg-bank">
                 <div class="w-50">
                     <div class="noti-pay">
-                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span></p>
+                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor"><?=Yii::t('payment', 'Note')?>:</span></p>
                         <div class="clearfix">
                             <ul class="val-payment">
-                                <li>
-                                    <span>500,000vnd</span>
-                                    =
-                                    <span>510 keys</span>
-                                </li>
-                                <li>
-                                    <span>200,000vnd</span>
-                                    =
-                                    <span>205 keys</span>
-                                </li>
-                                <li>
-                                    <span>100,000vnd</span>
-                                    =
-                                    <span>100 keys</span>
-                                </li>
-                                <li>
-                                    <span>50,000vnd</span>
-                                    =
-                                    <span>46 keys</span>
-                                </li>
+                                <li><span>500,000 VND</span>=<span>510 <?=Yii::t('payment', 'Keys')?></span></li>
+                                <li><span>200,000 VND</span>=<span>205 <?=Yii::t('payment', 'Keys')?></span></li>
+                                <li><span>100,000 VND</span>=<span>100 <?=Yii::t('payment', 'Keys')?></span></li>
+                                <li><span>50,000 VND</span>=<span>46 <?=Yii::t('payment', 'Keys')?></span></li>
                             </ul>
                         </div>
                     </div>
                     <table class="mgB-15 w-100">
                         <tr>
-                            <td class="w-35">Số tiền thanh toán:</td>
+                            <td class="w-35"><?=Yii::t('payment', 'Amount')?>:</td>
                             <td>
                                 <select id="total_amount" name="total_amount" class="field-check form-control">
                                     <option value="2000">2,000</option>
@@ -64,19 +48,19 @@ use yii\helpers\Url;
                             </td>
                         </tr>
                         <tr>
-                            <td>Họ Tên:</td>
+                            <td><?=Yii::t('payment', 'Full name')?>:</td>
                             <td>
                                 <input type="text" id="fullname" name="buyer_fullname" class="field-check form-control" value="<?=$profile->getDisplayName()?>">
                             </td>
                         </tr>
                         <tr>
-                            <td>Email:</td>
+                            <td><?=Yii::t('payment', 'Email')?>:</td>
                             <td>
                                 <input type="text" id="fullname" name="buyer_email" class="field-check form-control" value="<?=$profile->public_email?>">
                             </td>
                         </tr>
                         <tr>
-                            <td>Số Điện thoại:</td>
+                            <td><?=Yii::t('payment', 'Phone number')?>:</td>
                             <td>
                                 <input type="text" id="fullname" name="buyer_mobile" class="field-check form-control" value="<?=$profile->mobile?>">
                             </td>
@@ -86,10 +70,10 @@ use yii\helpers\Url;
             </div>
             <ul class="list-content">
                 <li>
-                    <label><input type="radio" value="ATM_ONLINE" name="option_payment">Thanh toán online bằng THẺ NGÂN HÀNG NỘI ĐỊA</label>
+                    <label><input type="radio" value="ATM_ONLINE" name="option_payment"><?=Yii::t('payment', 'Online Payment with a Local Card')?></label>
 
                     <div class="boxContent">
-                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span> Bạn cần đăng ký Internet-Banking hoặc dịch vụ thanh toán trực tuyến tại ngân hàng trước khi thực hiện.</p>
+                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor"><?=Yii::t('payment', 'Note')?>:</span> <?=Yii::t('payment', 'You need registered for internet banking prior to this transfer.')?></p>
 
                         <ul class="cardList clearfix">
                             <li class="bank-online-methods ">
@@ -260,10 +244,10 @@ use yii\helpers\Url;
                     </div>
                 </li>
                 <li>
-                    <label><input type="radio" value="IB_ONLINE" name="option_payment">Thanh toán bằng INTERNET BANKING</label>
+                    <label><input type="radio" value="IB_ONLINE" name="option_payment"><?=Yii::t('payment', 'Internet banking')?></label>
 
                     <div class="boxContent">
-                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span> Bạn cần đăng ký Internet-Banking hoặc dịch vụ thanh toán trực tuyến tại ngân hàng trước khi thực hiện.</p>
+                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor"><?=Yii::t('payment', 'Note')?>:</span> <?=Yii::t('payment', 'You need registered for internet banking prior to this transfer.')?></p>
 
                         <ul class="cardList clearfix">
                             <li class="bank-online-methods ">
@@ -297,7 +281,7 @@ use yii\helpers\Url;
                     </div>
                 </li>
                 <li>
-                    <label><input type="radio" value="ATM_OFFLINE" name="option_payment">Thanh toán ATM OFFLINE</label>
+                    <label><input type="radio" value="ATM_OFFLINE" name="option_payment"><?=Yii::t('payment', 'Offline ATM')?></label>
 
                     <div class="boxContent">
 
@@ -390,7 +374,7 @@ use yii\helpers\Url;
                     </div>
                 </li>
                 <li>
-                    <label><input type="radio" value="NH_OFFLINE" name="option_payment">Thanh toán tại VĂN PHÒNG NGÂN HÀNG</label>
+                    <label><input type="radio" value="NH_OFFLINE" name="option_payment"><?=Yii::t('payment', 'Bank Branch')?></label>
 
                     <div class="boxContent">
 
@@ -491,10 +475,10 @@ use yii\helpers\Url;
                     </div>
                 </li>
                 <li>
-                    <label><input type="radio" value="VISA" name="option_payment" selected="true">Thanh toán bằng THẺ VISA HOẶC MASTERCARD</label>
+                    <label><input type="radio" value="VISA" name="option_payment" selected="true"><?=Yii::t('payment', 'Master or Visa Card')?></label>
 
                     <div class="boxContent">
-                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span>Visa hoặc MasterCard.</p>
+                        <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor"><?=Yii::t('payment', 'Note')?>:</span>Visa hoặc MasterCard.</p>
                         <ul class="cardList clearfix">
                             <li class="bank-online-methods ">
                                 <label for="visa_vs">
@@ -512,7 +496,7 @@ use yii\helpers\Url;
             </ul>
 
             <div class="mgT-20 text-left">
-                <input type="submit" name="nlpayment" value="thanh toán" class="btn-common btn-bd-radius"/>
+                <input type="submit" name="nlpayment" value="<?=Yii::t('payment', 'Submit');?>" class="btn-common btn-bd-radius"/>
             </div>
             
             <?php $f->end(); ?>

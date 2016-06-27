@@ -17,18 +17,18 @@ $f = ActiveForm::begin([
 ]);
 ?>
 <div id="the-cao" class="item-payment">
-    <div class="title-item">Thanh toán bằng thẻ cào điện thoại</div>
+    <div class="title-item"><?=Yii::t('payment','Mobile Credit')?></div>
     <div class="pdT-20">
         <div class="noti-pay w-50">
-            <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor">Lưu ý:</span>
-                Giá trị tiền được cộng vào tài khoản cho khách hàng là giá trị sau khi trừ <b>10%</b> phí dịch vụ thanh toán cho nhà mạng và <b>10%</b> thuế VAT. Ví dụ, nạp thẻ 100.000đ sẽ được cộng 80.000đ vào tài khoản.
+            <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor"><?=Yii::t('payment', 'Note')?>:</span>
+                <?=Yii::t('payment', 'The amount of keys added to your account will be after a <b>10%</b> service charge and <b>10%</b> VAT on top. E.g. Buying 100.000 VND through Mobile Credit will add 81.000 VND worth of Keys to your account.')?>
             </p>
             <div class="clearfix">
                 <ul class="val-payment">
-                    <li><span>500,000vnd</span>=<span>400 keys</span></li>
-                    <li><span>200,000vnd</span>=<span>160 keys</span></li>
-                    <li><span>100,000vnd</span>=<span>80 keys</span></li>
-                    <li><span>50,000vnd</span>=<span>40 keys</span></li>
+                    <li><span>500,000 VND</span>=<span>400 <?=Yii::t('payment', 'Keys')?></span></li>
+                    <li><span>200,000 VND</span>=<span>160 <?=Yii::t('payment', 'Keys')?></span></li>
+                    <li><span>100,000 VND</span>=<span>80 <?=Yii::t('payment', 'Keys')?></span></li>
+                    <li><span>50,000 VND</span>=<span>40 <?=Yii::t('payment', 'Keys')?></span></li>
                 </ul>
             </div>
         </div>
@@ -57,29 +57,29 @@ $f = ActiveForm::begin([
                 </td>
             </tr>
             <tr>
-                <td>Họ Tên:</td>
+                <td><?=Yii::t('payment', 'Full name')?>:</td>
                 <td>
                     <input type="text" id="fullname" name="buyer_fullname" class="field-check form-control" value="<?=$profile->getDisplayName()?>">
                 </td>
             </tr>
             <tr>
-                <td>Email:</td>
+                <td><?=Yii::t('payment', 'Email')?>:</td>
                 <td>
                     <input type="text" id="fullname" name="buyer_email" class="field-check form-control" value="<?=$profile->public_email?>">
                 </td>
             </tr>
             <tr>
-                <td>Số Điện thoại:</td>
+                <td><?=Yii::t('payment', 'Phone number')?>:</td>
                 <td>
                     <input type="text" id="fullname" name="buyer_mobile" class="field-check form-control" value="<?=$profile->mobile?>">
                 </td>
             </tr>
             <tr>
-                <td>Số Seri :</td>
+                <td><?=Yii::t('payment', 'Seri')?>:</td>
                 <td colspan="2"><input type="text" id="txtSoSeri" name="txtSoSeri" class="form-control" /></td>
             </tr>
             <tr>
-                <td>Mã số thẻ : </td>
+                <td><?=Yii::t('payment', 'Card number')?>: </td>
                 <td colspan="2">
                     <input type="text" id="txtSoPin" name="txtSoPin" class="form-control" />
 
@@ -88,7 +88,7 @@ $f = ActiveForm::begin([
             <tr>
                 <td></td>
                 <td>
-                    <input type="submit" id="" class="btn-common btn-bd-radius" name="NLNapThe" value="Nạp Thẻ"  />
+                    <input type="submit" id="" class="btn-common btn-bd-radius" name="NLNapThe" value="<?=Yii::t('payment', 'Submit')?>"  />
                 </td>
             </tr>
         </table>
