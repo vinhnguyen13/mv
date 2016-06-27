@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Url;
 ?>
 <div id="sms" class="item-payment">
-    <div class="title-item">Thanh toán bằng tin nhắn SMS</div>
+    <div class="title-item"><?=Yii::t('payment', 'Payment by SMS')?></div>
     <div class="w-50 pdT-20">
         <div class="noti-pay">
             <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor"><?=Yii::t('payment', 'Note')?>:</span>
