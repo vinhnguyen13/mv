@@ -98,7 +98,7 @@
 				                    <?php endif; ?>
 								</ul>
 							</div>
-					    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['updated_at']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?= $product['score'] ?></span></p>
+					    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['start_date']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?= $product['score'] ?></span></p>
 					    </div>
 					</a>
 			        <?php /* tracking finder

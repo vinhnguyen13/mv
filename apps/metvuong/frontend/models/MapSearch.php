@@ -174,7 +174,7 @@ class MapSearch extends AdProduct {
 		
 		$listQuery->addSelect([
 			"ad_product.score",
-			"ad_product.updated_at",
+			"ad_product.start_date",
 			"ad_product.category_id",
 			"ad_product.type",
 		]);
