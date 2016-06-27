@@ -10,7 +10,7 @@ use yii\helpers\Url;
 
 ?>
 <div id="credit-card" class="item-payment">
-    <div class="title-item"><?=Yii::t('payment', 'Payment methods')?></div>
+    <div class="title-item"><?=Yii::t('payment', 'Payment by bank cards')?></div>
     <div class="mgT-20">
         <div class="method_napcard_inner">
             <?php
