@@ -233,7 +233,7 @@ EOD;
 							<?php
 								$items = [
 									'-score' => Yii::t('ad', 'Point'),
-									'-updated_at' => Yii::t('ad', 'Newest'),
+									'-start_date' => Yii::t('ad', 'Newest'),
 									'-price' =>Yii::t('ad', 'Price (High to Low)'),
 									'price' =>Yii::t('ad', 'Price (Low to Hight)'),
 								];

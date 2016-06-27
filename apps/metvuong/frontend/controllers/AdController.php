@@ -962,7 +962,8 @@ class AdController extends Controller
 						$balance->save(false);
 						
 						$product->status = AdProduct::STATUS_ACTIVE;
-						$product->end_date = time() + (AdProduct::EXPIRED * 30);
+						$product->start_date = time();
+						$product->end_date = $product->start_date + (AdProduct::EXPIRED * 30);
 						$product->is_expired = 0;
 						$product->save(false);
 						
