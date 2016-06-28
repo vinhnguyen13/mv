@@ -46,14 +46,14 @@ use yii\web\View;
                                     </div>
                                     <div class="item-dropdown hide-dropdown">
                                         <ul class="clearfix">
-                                            <li><a href="#" data-value="ATM_ONLINE">Online Payment with a Local Card</a></li>
-                                            <li><a href="#" data-value="IB_ONLINE">Internet banking</a></li>
-                                            <li><a href="#" data-value="ATM_OFFLINE">Offline ATM</a></li>
-                                            <li><a href="#" data-value="NH_OFFLINE">Bank Branch</a></li>
-                                            <li><a href="#" data-value="VISA">Master or Visa Card</a></li>
+                                            <li><a href="#" data-value="ATM_ONLINE"><?=Yii::t('payment', 'Online Payment with a Local Card')?></a></li>
+                                            <li><a href="#" data-value="IB_ONLINE"><?=Yii::t('payment', 'Internet banking')?></a></li>
+                                            <li><a href="#" data-value="ATM_OFFLINE"><?=Yii::t('payment', 'Offline ATM')?></a></li>
+                                            <li><a href="#" data-value="NH_OFFLINE"><?=Yii::t('payment', 'Bank Branch')?></a></li>
+                                            <li><a href="#" data-value="VISA"><?=Yii::t('payment', 'Master or Visa Card')?></a></li>
                                         </ul>
                                     </div>
-                                    <input type="hidden" id="" value="">
+                                    <input type="hidden" name="option_payment" id="" value="">
                                 </div>
                             </td>
                         </tr>
@@ -91,9 +91,11 @@ use yii\web\View;
                                             <li><a href="#" data-value="NAB"><span class="d-ib mgR-10 ver-c"><i class="NAB"></i></span>Ngân hàng Nam Á</a></li>
                                             <li><a href="#" data-value="SHB"><span class="d-ib mgR-10 ver-c"><i class="SHB"></i></span>Ngân hàng TMCP Sài Gòn - Hà Nội (SHB)</a></li>
                                             <li><a href="#" data-value="OJB"><span class="d-ib mgR-10 ver-c"><i class="OJB"></i></span>Ngân hàng TMCP Đại Dương (OceanBank)</a></li>
+                                            <li><a href="#" data-value="VISA">VISA</a></li>
+                                            <li><a href="#" data-value="MASTER">MASTER</a></li>
                                         </ul>
                                     </div>
-                                    <input type="hidden" id="" value="">
+                                    <input type="hidden" name="bankcode" id="" value="">
                                 </div>
                             </td>
                         </tr>
@@ -114,7 +116,7 @@ use yii\web\View;
                                             <li><a href="#" data-value="50000">50,000</a></li>
                                         </ul>
                                     </div>
-                                    <input type="hidden" id="" value="">
+                                    <input type="hidden" name="total_amount" id="" value="">
                                 </div>
                             </td>
                         </tr>
@@ -139,7 +141,7 @@ use yii\web\View;
                     </table>
                 </div>
             </div>
-            <ul class="list-content">
+            <ul class="list-content" style="display: none">
                 <li>
                     <label><input type="radio" value="ATM_ONLINE" name="option_payment"><?=Yii::t('payment', 'Online Payment with a Local Card')?></label>
 

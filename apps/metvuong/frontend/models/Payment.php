@@ -13,6 +13,7 @@ use yii\base\Component;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
+use yii\web\HttpException;
 
 
 class Payment extends Component
@@ -25,20 +26,25 @@ class Payment extends Component
     public function payWithNganLuong($redirect){
         if(isset($_POST['nlpayment'])){
             $transaction_code = md5(uniqid(rand(), true));
-            Transaction::me()->saveTransaction($transaction_code, [
-                'code'=>$transaction_code,
-                'user_id'=>Yii::$app->user->identity->id,
-                'object_id'=>NganLuong::METHOD_BANKING,
-                'object_type'=>Transaction::OBJECT_TYPE_BUY_KEYS,
-                'amount'=>NganLuong::me()->VND2Keys(NganLuong::METHOD_BANKING, $_POST['total_amount']),
-                'balance'=>0,
-                'status'=>Transaction::STATUS_PENDING,
-            ]);
-            return NganLuong::me()->payByBank([
-                'return_url' => Url::to(['/payment/success', 'redirect'=>$redirect], true),
-                'cancel_url' => Url::to(['/payment/cancel'], true),
-                'transaction_code' => $transaction_code,
-            ]);
+            $amount = NganLuong::me()->VND2Keys(NganLuong::METHOD_BANKING, $_POST['total_amount']);
+            if(!empty($amount) && is_numeric($amount)){
+                Transaction::me()->saveTransaction($transaction_code, [
+                    'code'=>$transaction_code,
+                    'user_id'=>Yii::$app->user->identity->id,
+                    'object_id'=>NganLuong::METHOD_BANKING,
+                    'object_type'=>Transaction::OBJECT_TYPE_BUY_KEYS,
+                    'amount'=>$amount,
+                    'balance'=>0,
+                    'status'=>Transaction::STATUS_PENDING,
+                ]);
+                return NganLuong::me()->payByBank([
+                    'return_url' => Url::to(['/payment/success', 'redirect'=>$redirect], true),
+                    'cancel_url' => Url::to(['/payment/cancel'], true),
+                    'transaction_code' => $transaction_code,
+                ]);
+            }else{
+                throw new HttpException(500, Yii::t('yii', 'Amount not real.'));
+            }
         }
         if(isset($_POST['NLNapThe'])){
             $transaction_code = md5(uniqid(rand(), true));
@@ -104,7 +110,7 @@ class Payment extends Component
 
     public function getTransactionWithNganluong($condition){
         $query = new Query();
-        $transaction_nganluong = $query->select('code,user_id,object_id,object_type,b.amount,balance,b.status,params,b.created_at,b.updated_at')->from('ec_transaction_nganluong a')
+        $transaction_nganluong = $query->select('code,user_id,object_id,object_type,b.amount,balance,b.status,b.params,b.created_at,b.updated_at')->from('ec_transaction_nganluong a')
             ->join('INNER JOIN', 'ec_transaction_history b', 'b.code = a.transaction_code')
             ->where($condition)->one();
         if(!empty($transaction_nganluong)){
@@ -147,6 +153,7 @@ class Payment extends Component
 
             }
             $transaction->commit();
+            \Yii::$app->getSession()->setFlash('popupsuccess', true);
             return true;
         } catch (\Exception $e) {
             $transaction->rollBack();
@@ -185,6 +192,7 @@ class Payment extends Component
                 }
             }
             $transaction->commit();
+            \Yii::$app->getSession()->setFlash('popupsuccess', true);
             return true;
         } catch (\Exception $e) {
             $transaction->rollBack();

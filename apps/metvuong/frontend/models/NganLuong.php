@@ -152,7 +152,6 @@ class NganLuong extends Component
             $buyer_mobile =$_POST['buyer_mobile'];
 
             $rs = $call->CardPay($sopin,$soseri,$type_card,$ref_code,$buyer_fullname,$buyer_mobile,$buyer_email);
-
             if($rs->error_code == '00') {
                 // Cập nhật data tại đây
                 Payment::me()->processTransactionByMobileCard($data['transaction_code'], $rs);
@@ -177,6 +176,7 @@ class NganLuong extends Component
                 200000  => 205,
                 100000  => 100,
                 50000   => 46,
+                2000   => 1,
             ],
             self::METHOD_MOBILE_CARD => [
                 500000  => 400,

@@ -48,7 +48,7 @@ class PaymentController extends Controller
                 $this->redirect($redirect);
                 Yii::$app->end();
             }
-            $this->redirect('/');
+            return $this->redirect('index');
             /**
              * redirect to
              * 1.referer url
@@ -56,12 +56,15 @@ class PaymentController extends Controller
              * 3.home page if not found 1 & 2
              */
         }
+        return $this->render('index');
     }
 
     public function actionCancel(){
         /**
          * transaction cancel by user, show layout cancel
          */
+        \Yii::$app->getSession()->setFlash('popupcancel', true);
+        return $this->redirect('index');
     }
 
 }
