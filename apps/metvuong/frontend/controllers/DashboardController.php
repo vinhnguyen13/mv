@@ -448,6 +448,12 @@ class DashboardController extends Controller
 
     public function actionInvite()
     {
-        return $this->render('invite/index');
+        $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuInvite' => true, 'isDashboard' => true], $this->view->params);
+        $this->checkAccess();
+        if(Yii::$app->request->isAjax) {
+            return $this->renderAjax('invite/index');
+        } else {
+            return $this->render('invite/index');
+        }
     }
 }

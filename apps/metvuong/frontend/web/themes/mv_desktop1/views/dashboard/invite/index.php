@@ -6,7 +6,7 @@
  */
 ?>
 <div class="title-fixed-wrap container">
-    <div>
+    <div class="pull-right">
         <?= Yii::t('activity', 'Invite friend') ?>
     </div>
 </div>
