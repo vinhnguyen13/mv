@@ -74,9 +74,15 @@ Yii::$app->view->registerMetaTag([
     'content' => $description
 ]);
 
+$fb_appId = '119696758407282'; // stage.metvuong.com
+if(strpos(Yii::$app->urlManager->hostInfo, 'dev.metvuong.com'))
+    $fb_appId = '736950189771012';
+else if(strpos(Yii::$app->urlManager->hostInfo, 'local.metvuong.com'))
+    $fb_appId = '891967050918314';
+
 Yii::$app->view->registerMetaTag([
     'property' => 'fb:app_id',
-    'content' => '119696758407282' 
+    'content' => $fb_appId
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:title',
