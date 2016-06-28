@@ -39,13 +39,22 @@ use yii\web\View;
                         <tr>
                             <td class="w-35"><?=Yii::t('payment', 'Method')?>:</td>
                             <td>
-                                <select id="total_amount" name="total_amount" class="field-check form-control">
-                                    <option value="ATM_ONLINE">Online Payment with a Local Card</option>
-                                    <option value="IB_ONLINE">Internet banking</option>
-                                    <option value="ATM_OFFLINE">Offline ATM</option>
-                                    <option value="NH_OFFLINE">Bank Branch</option>
-                                    <option value="VISA">Master or Visa Card</option>
-                                </select>
+                                <div class="box-dropdown dropdown-common">
+                                    <div class="val-selected style-click">
+                                        <span class="selected" data-placeholder="Chọn phương thức thanh toán">Chọn phương thức thanh toán</span>
+                                        <span class="arrowDownFillFull"></span>
+                                    </div>
+                                    <div class="item-dropdown hide-dropdown">
+                                        <ul class="clearfix">
+                                            <li><a href="#" data-value="ATM_ONLINE">Online Payment with a Local Card</a></li>
+                                            <li><a href="#" data-value="IB_ONLINE">Internet banking</a></li>
+                                            <li><a href="#" data-value="ATM_OFFLINE">Offline ATM</a></li>
+                                            <li><a href="#" data-value="NH_OFFLINE">Bank Branch</a></li>
+                                            <li><a href="#" data-value="VISA">Master or Visa Card</a></li>
+                                        </ul>
+                                    </div>
+                                    <input type="hidden" id="" value="">
+                                </div>
                             </td>
                         </tr>
                         <tr>
@@ -91,13 +100,22 @@ use yii\web\View;
                         <tr>
                             <td class="w-35"><?=Yii::t('payment', 'Amount')?>:</td>
                             <td>
-                                <select id="total_amount" name="total_amount" class="field-check form-control">
-                                    <option value="2000">2,000</option>
-                                    <option value="500000">500,000</option>
-                                    <option value="200000">200,000</option>
-                                    <option value="100000">100,000</option>
-                                    <option value="50000">50,000</option>
-                                </select>
+                                <div class="box-dropdown dropdown-common">
+                                    <div class="val-selected style-click">
+                                        <span class="selected" data-placeholder="Chọn số tiền">Chọn số tiền</span>
+                                        <span class="arrowDownFillFull"></span>
+                                    </div>
+                                    <div class="item-dropdown hide-dropdown">
+                                        <ul class="clearfix">
+                                            <li><a href="#" data-value="2000">2,000</a></li>
+                                            <li><a href="#" data-value="500000">500,000</a></li>
+                                            <li><a href="#" data-value="200000">200,000</a></li>
+                                            <li><a href="#" data-value="100000">100,000</a></li>
+                                            <li><a href="#" data-value="50000">50,000</a></li>
+                                        </ul>
+                                    </div>
+                                    <input type="hidden" id="" value="">
+                                </div>
                             </td>
                         </tr>
                         <tr>

@@ -10489,7 +10489,7 @@ input:-webkit-autofill {
     transition: background-color .1s linear;
     -ms-transition: background-color .1s linear;
     -moz-transition: background-color .1s linear;
-    padding: 16px 22px 17px;
+    padding: 16px 10px 17px;
     display: block;
     /* background: #848484; */
     color: #3c3c3c;
@@ -10548,7 +10548,7 @@ input:-webkit-autofill {
     overflow: hidden;
 }
 .detail-listing-dt .wrap-swiper .icons-detail a .icon-mv {
-    width: 30px;
+    width: 25px;
     font-size: 18px;
 }
 .detail-listing-dt .wrap-swiper .icons-detail a .icon-mv.fs-18 {
