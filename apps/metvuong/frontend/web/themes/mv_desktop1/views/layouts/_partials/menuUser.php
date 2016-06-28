@@ -48,6 +48,12 @@ use yii\helpers\Url;
                     </a>
                 </li>
                 <li>
+                    <a class="invite-item <?= !empty($this->params['menuInvite']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/invite'])?>">
+                        <div><span class="icon-mv"><span class="icon-coin-dollar"></span></span></div>
+                        <?= Yii::t('activity', 'Invite friend') ?>
+                    </a>
+                </li>
+                <li>
                     <a data-method="post" href="<?=Url::to(['/member/logout'])?>">
                         <div><span class="icon-mv"><span class="icon-sign-out"></span></span></div>
                         <?=Yii::t('user', 'Log Out')?>

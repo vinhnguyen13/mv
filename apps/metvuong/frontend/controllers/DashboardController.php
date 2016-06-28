@@ -438,4 +438,9 @@ class DashboardController extends Controller
     		}
     	}
     }
+
+    public function actionInvite()
+    {
+        return $this->render('invite/index');
+    }
 }
