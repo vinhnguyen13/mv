@@ -173,13 +173,30 @@ class MapSearch extends AdProduct {
 		$listQuery->limit($pages->limit);
 		
 		$listQuery->addSelect([
+			"ad_product.user_id",
 			"ad_product.score",
 			"ad_product.start_date",
 			"ad_product.category_id",
 			"ad_product.type",
 		]);
 		
-		return ['products' => $listQuery->all(), 'pages' => $pages];
+		$products = $listQuery->all();
+		
+		if(\Yii::$app->params['tracking']['all']) {
+			$tracking = !empty($this->project_building_id) || ((!empty($this->ward_id) || !empty($this->street_id)) && (!empty($this->room_no) || !empty($this->price_min) || !empty($this->price_max)));
+			
+			if($tracking && \Yii::$app->user->identity) {
+				$userId = \Yii::$app->user->id;
+				
+				foreach ($products as $product) {
+					if($product['user_id'] != $userId) {
+						Tracking::find()->productFinder($userId, $product['id'], time());
+					}
+				}
+			}
+		}
+		
+		return ['products' => $products, 'pages' => $pages];
 	}
 	
 	public function sort($query) {
