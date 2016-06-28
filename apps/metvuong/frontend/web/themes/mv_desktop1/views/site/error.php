@@ -10,15 +10,12 @@ use yii\helpers\Html;
 $this->title = $name;
 ?>
 <div class="site-error">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <div class="alert alert-danger">
-        <?= nl2br(Html::encode($message)) ?>
-    </div>
-
-    <p>
-        Please contact us if you think this is a server error. Thank you.
-    </p>
-
+	<div class="container wrap_404">
+		<div>
+			<h3 class="title_404">404</h3>
+			<span class="line_1_404">Opps, sorry we can't find that page!</span>
+			<span class="line_2_404">Either something went wrong or the page doesn't exist anymore.</span>
+			<a href="/" class="readon">Home Page</a>
+		</div>
+	</div>
 </div>

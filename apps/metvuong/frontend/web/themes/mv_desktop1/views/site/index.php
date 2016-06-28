@@ -59,7 +59,69 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
         </div>
     </section>
 
-    <section class="box-item pdT-50 keyword_wrapper clearfix mgB-0 bg-f5f5f5">
+    <script>
+        $(document).ready(function () {
+            $('.box-feature-item').loading({full: false});
+            $.ajax({
+                type: "get",
+                dataType: 'html',
+                url: '<?=Url::to(['site/feature-listings'])?>',
+                success: function (data) {
+                    $( ".box-feature-item .wrap-item").html(data);
+                    $('.box-feature-item').loading({done:true});
+                }
+            });
+
+            $('.news-item').loading({full: false});
+            $.ajax({
+                type: "get",
+                dataType: 'html',
+                url: '<?=Url::to(['site/news'])?>',
+                success: function (data) {
+                    $( ".news-item .wrap-item").html(data);
+                    $('.news-item').loading({done:true});
+                }
+            });
+        });
+    </script>
+
+    <section class="search-home bg-f5f5f5">
+        <div class="container">
+            <!-- <div class="title-sub"><?= Yii::t('general', 'LIÊN HỆ') ?></div> -->
+            <div class="clearfix">
+                <div class="box-about">
+                    <p class="fs-14 lh-24 text-justify"><?=Yii::t('general',"Metvuong.com là phương bất động sản. Tìm kiếm hay mua và bán Bất động sản sẽ dễ dàng hơn bao giờ hết với <a href='/' class='text-decor color-cd'>metvuong.com</a>. Với hệ thống thông tin bát nháo hiện nay, ta dễ dàng thất lạc trong hàng đống dữ liệu. Nhưng với <a href='/' class='text-decor color-cd'>metvuong.com</a>, mọi rắc rối sẽ không còn nữa. Việc tìm, thuê hay mua bán một căn nhà hay một căn hộ chưa bao giờ dễ dàng như thế. Chuẩn xác và đơn giản, bất động sản chẳng còn là một vấn đề nan giải.")?></p>
+                </div>
+                <div class="wrap-img map-location">
+                    <div class="img-show"><iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:EksyMSBOZ3V54buFbiBUcnVuZyBOZ-G6oW4sIELhur9uIE5naMOpLCBRdeG6rW4gMSwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe></div>
+                </div>
+                <div class="txt-location">
+                    <p class="name-cty color-cd"><?= Yii::t('general', 'METVUONG TEAM') ?></p>
+                    <ul class="clearfix">
+                        <li>
+                            <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
+                            <p><?=Yii::t('general','metvuong_address')?></p>
+                        </li>
+                        <li>
+                            <span class="icon-mv"><span class="icon-phone-profile"></span></span>
+                            <p><a href="tel:<?=Yii::t('general','metvuong_phone')?>"><?=Yii::t('general','metvuong_phone')?></a> - <a href="tel:<?=Yii::t('general','metvuong_mobile')?>"><?=Yii::t('general','metvuong_mobile')?></a></p>
+                        </li>
+                        <li>
+                            <span class="icon-mv"><span class="icon-mail-profile"></span></span>
+                            <p><?=Yii::t('general','metvuong_email')?></p>
+                        </li>
+                    </ul>
+                    <p class="color-cd get-email"><?= Yii::t('general', 'SUBSCRIBED OUR NEWSLETTER') ?></p>
+                    <form action="">
+                        <input type="text" placeholder="<?= Yii::t('general', 'Your Email') ?>" />
+                        <button type="submit" class="btn-common"><?= Yii::t('general', 'Subscribe') ?></button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="box-item pdT-50 keyword_wrapper clearfix mgB-0">
         <div class="container">
             <div class=" col-md-2  col-sm-4  col-xs-12">
                 <div class="keyword_col">
@@ -223,69 +285,6 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
                         <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Tân Thành">Huyện Tân Thành</a></h3></li>      
                         <li class="item"><h3><a class="link" href="#" title="Nhà đất tại Huyện Côn Đảo">Huyện Côn Đảo</a></h3></li>
                     </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <script>
-        $(document).ready(function () {
-            $('.box-feature-item').loading({full: false});
-            $.ajax({
-                type: "get",
-                dataType: 'html',
-                url: '<?=Url::to(['site/feature-listings'])?>',
-                success: function (data) {
-                    $( ".box-feature-item .wrap-item").html(data);
-                    $('.box-feature-item').loading({done:true});
-                }
-            });
-
-            $('.news-item').loading({full: false});
-            $.ajax({
-                type: "get",
-                dataType: 'html',
-                url: '<?=Url::to(['site/news'])?>',
-                success: function (data) {
-                    $( ".news-item .wrap-item").html(data);
-                    $('.news-item').loading({done:true});
-                }
-            });
-        });
-    </script>
-
-    <section class="search-home">
-        <div class="container">
-            <!-- <div class="title-sub"><?= Yii::t('general', 'LIÊN HỆ') ?></div> -->
-            <div class="clearfix">
-                <div class="box-about">
-                    <div class="color-cd font-600 fs-17 mgB-10"><?=Yii::t('general', 'About Metvuong')?></div>
-                    <p class="fs-14 lh-24 text-justify"><?=Yii::t('general',"Metvuong.com là phương bất động sản. Tìm kiếm hay mua và bán Bất động sản sẽ dễ dàng hơn bao giờ hết với <a href='/' class='text-decor color-cd'>metvuong.com</a>. Với hệ thống thông tin bát nháo hiện nay, ta dễ dàng thất lạc trong hàng đống dữ liệu. Nhưng với <a href='/' class='text-decor color-cd'>metvuong.com</a>, mọi rắc rối sẽ không còn nữa. Việc tìm, thuê hay mua bán một căn nhà hay một căn hộ chưa bao giờ dễ dàng như thế. Chuẩn xác và đơn giản, bất động sản chẳng còn là một vấn đề nan giải.")?></p>
-                </div>
-                <div class="wrap-img map-location">
-                    <div class="img-show"><iframe width="100%" height="100%" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?q=place_id:EksyMSBOZ3V54buFbiBUcnVuZyBOZ-G6oW4sIELhur9uIE5naMOpLCBRdeG6rW4gMSwgSOG7kyBDaMOtIE1pbmgsIFZp4buHdCBOYW0&key=AIzaSyDgukAnWQNq0fitebULUbottG5gvK64OCQ" allowfullscreen></iframe></div>
-                </div>
-                <div class="txt-location">
-                    <p class="name-cty color-cd"><?= Yii::t('general', 'METVUONG TEAM') ?></p>
-                    <ul class="clearfix">
-                        <li>
-                            <span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
-                            <p><?=Yii::t('general','metvuong_address')?></p>
-                        </li>
-                        <li>
-                            <span class="icon-mv"><span class="icon-phone-profile"></span></span>
-                            <p><a href="tel:<?=Yii::t('general','metvuong_phone')?>"><?=Yii::t('general','metvuong_phone')?></a> - <a href="tel:<?=Yii::t('general','metvuong_mobile')?>"><?=Yii::t('general','metvuong_mobile')?></a></p>
-                        </li>
-                        <li>
-                            <span class="icon-mv"><span class="icon-mail-profile"></span></span>
-                            <p><?=Yii::t('general','metvuong_email')?></p>
-                        </li>
-                    </ul>
-                    <p class="color-cd get-email"><?= Yii::t('general', 'SUBSCRIBED OUR NEWSLETTER') ?></p>
-                    <form action="">
-                        <input type="text" placeholder="<?= Yii::t('general', 'Your Email') ?>" />
-                        <button type="submit" class="btn-common"><?= Yii::t('general', 'Subscribe') ?></button>
-                    </form>
                 </div>
             </div>
         </div>

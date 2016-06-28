@@ -10679,6 +10679,10 @@ label:hover {
 .wrap-swiper .icons-detail .popover {
     max-width: inherit;
     min-width: 300px;
+    top: -40px !important;
+}
+.wrap-swiper .popover.left>.arrow {
+    top: 65px !important;
 }
 .wrap-swiper .icons-detail .popover a {
     background: none;
@@ -10686,6 +10690,7 @@ label:hover {
     padding: 0;
     display: inline-block;
     margin-right: 15px;
+    border: none;
 }
 .wrap-swiper .popover .name-agent {
     margin-bottom: 5px;
@@ -10717,7 +10722,7 @@ label:hover {
     line-height: 100%;
 }
 .wrap-swiper .icons-detail .popover-content {
-    padding: 15px;
+    padding: 10px;
 }
 @media (max-width: 985px) {
     .list-menu-news,
@@ -12466,21 +12471,22 @@ height: 190px;
     margin: 0 auto 5px;
 }
 .txt-location,
-.map-location,
-.box-about {
-    width: 33.3333%;
+.map-location {
+    width: 50%;
 }
 .box-about {
     float: left;
     padding-right: 15px;
+    margin-bottom: 20px;
 }
 .txt-location {
     float: right;
     padding-left: 15px;
 }
 .map-location {
-    height: 250px;
+    height: 275px;
     float: left;
+    padding-right: 15px;
 }
 @media (max-width: 985px) {
     .txt-location {
@@ -12962,6 +12968,7 @@ ul.cardList li {
 .val-payment li span {
     display: inline-block;
     width: 45%;
+    font-size: 12px;
 }
 .val-payment li span:last-child {
     width: auto;

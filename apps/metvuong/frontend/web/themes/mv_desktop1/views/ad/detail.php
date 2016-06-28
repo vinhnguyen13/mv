@@ -164,43 +164,6 @@ $count_review = $reviews->count();
 				</div>
 				<?php endif; ?>
 				<ul class="pull-right icons-detail">
-					<li class="color-1">
-						<a href="#" data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Copy link') ?>" data-title-success="<?= Yii::t('ad', 'Copied') ?>" class="btn-copy" data-clipboard-text="<?= $product->urlDetail(true) ?>">
-							<span class="icon-mv"><span class="icon-link"></span></span>
-							<span><?= Yii::t('ad', 'Copy link') ?></span>
-						</a>
-					</li>
-					<li class="color-2">
-						<a href="#" class="share-facebook" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
-							<span class="icon-mv"><span class="icon-facebook"></span></span>
-							<span><?= Yii::t('ad', 'Share Facebook') ?></span>
-						</a>
-					</li>
-					<li class="color-3">
-						<a href="#" data-toggle="modal" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_EMAIL], true)?>"
-                           data-target="#popup_email" data-type="share" class="email-btn">
-							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
-							<span><?= Yii::t('ad', 'Share Email') ?></span>
-						</a>
-					</li>
-					<li class="color-4">
-						<a href="#" class="save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?> <?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
-							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
-							<span><?= Yii::t('ad', 'Add to Favorites') ?></span>
-						</a>
-					</li>
-					<li class="color-5">
-						<a href="#" data-toggle="modal" data-target="#popup-map">
-							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
-							<span><?= Yii::t('ad', 'Location') ?></span>
-						</a>
-					</li>
-					<li class="color-6">
-						<a href="#" class="report<?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>">
-							<span class="icon-mv"><span class="icon-warning"></span></span>
-							<span><?= Yii::t('ad', 'Report Abuse') ?></span>
-						</a>
-					</li>
 					<li class="color-8">
 						<a href="#" data-popover="true">
 							<span class="icon-mv"><span class="icon-phone-profile"></span></span>
@@ -258,6 +221,43 @@ $count_review = $reviews->count();
 								</div>
 							</div>
 						</div>
+					</li>
+					<li class="color-4">
+						<a href="#" class="save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?> <?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
+							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
+							<span><?= Yii::t('ad', 'Add to Favorites') ?></span>
+						</a>
+					</li>
+					<li class="color-1">
+						<a href="#" data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Copy link') ?>" data-title-success="<?= Yii::t('ad', 'Copied') ?>" class="btn-copy" data-clipboard-text="<?= $product->urlDetail(true) ?>">
+							<span class="icon-mv"><span class="icon-link"></span></span>
+							<span><?= Yii::t('ad', 'Copy link 1') ?></span>
+						</a>
+					</li>
+					<li class="color-2">
+						<a href="#" class="share-facebook" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
+							<span class="icon-mv"><span class="icon-facebook"></span></span>
+							<span><?= Yii::t('ad', 'Share Facebook') ?></span>
+						</a>
+					</li>
+					<li class="color-3">
+						<a href="#" data-toggle="modal" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_EMAIL], true)?>"
+                           data-target="#popup_email" data-type="share" class="email-btn">
+							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
+							<span><?= Yii::t('ad', 'Share Email') ?></span>
+						</a>
+					</li>
+					<li class="color-5">
+						<a href="#" data-toggle="modal" data-target="#popup-map">
+							<span class="icon-mv"><span class="icon-pin-active-copy-3"></span></span>
+							<span><?= Yii::t('ad', 'Location') ?></span>
+						</a>
+					</li>
+					<li class="color-6">
+						<a href="#" class="report<?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>">
+							<span class="icon-mv"><span class="icon-warning"></span></span>
+							<span><?= Yii::t('ad', 'Report Abuse') ?></span>
+						</a>
 					</li>
 				</ul>
 			</div>
