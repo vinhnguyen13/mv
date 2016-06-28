@@ -57,13 +57,14 @@ use vsoft\ad\models\AdFacility;
 	}
 
     $address = $product->getAddress($product->show_home_no);
-
+    $title = "Metvuong.com: ".$address;
     $directionList = AdProductAdditionInfo::directionList();
 
 $content = strip_tags($product->content);
 $description = \yii\helpers\StringHelper::truncate($content, 500, $suffix = '...', $encoding = 'UTF-8');
 $description = str_replace("\r", "", $description);
 $description = str_replace("\n", "", $description);
+
 
 Yii::$app->view->registerMetaTag([
     'name' => 'keywords',
@@ -86,7 +87,7 @@ Yii::$app->view->registerMetaTag([
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:title',
-    'content' => $address
+    'content' => $title
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:description',
@@ -511,7 +512,7 @@ $count_review = $reviews->count();
                                             var winHeight = 350;
                                             var winTop = (screen.height / 2) - (winHeight / 2);
                                             var winLeft = (screen.width / 2) - (winWidth / 2);
-                                            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link)+'&p[images][0]='+'<?=$product_image?>', 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+                                            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link)+ '&p[title]=<?=$title?>&p[images][0]='+'<?=$product_image?>', 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
                                         }
                                         $('body').loading({done:true});
                                         return true;

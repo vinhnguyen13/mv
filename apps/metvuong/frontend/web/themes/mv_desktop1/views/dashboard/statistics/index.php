@@ -39,16 +39,14 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
         			</div>
                     <ul class="option-view-stats clearfix">
                         <li>
-                            <a href="#" class="btn-finder radio-ui">
+                            <a href="#" class="btn-finder">
                                 <span class="icon-mv fs-19"><span class="icon-icons-search"></span></span> 
                                 <?=Yii::t('statistic','Search')?>
                                 <span><?=$search_count ?></span>
-                                <input type="radio" name="toggle-chart" value="1000000" checked="checked">
-                                <span class="icon-mv toggle-ui-check"><span class="icon-checkbox"></span></span>    
                             </a>
                         </li>
                         <li>
-                            <a href="#" class="btn-visitor radio-ui">
+                            <a href="#" class="btn-visitor radio-ui active">
                                 <span class="icon-mv"><span class="icon-eye-copy"></span></span>
                                 <?=Yii::t('statistic','Visit')?>
                                 <span><?=$click_count ?></span>
@@ -268,9 +266,8 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
 //                }
 
                 chart.series[index].show();
-
                 for ( var i = 0; i < chart.series.length; i++ ) {
-                    if ( i != index ) {
+                    if ( i != index && i > 0) {
                         chart.series[i].hide();
                     }
                 }
