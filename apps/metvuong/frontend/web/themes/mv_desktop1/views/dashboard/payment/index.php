@@ -4,22 +4,22 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
 ?>
 <div class="title-fixed-wrap container">
     <div class="giao-dich">
-        <div class="title-top">Giao Dịch</div>
         <div class="wrap-giao-dich">
-            <div class="title-gd mgB-15">Thông tin tài khoản</div>
+            <div class="title-gd mgB-15"><?=Yii::t('payment', 'Your balance')?></div>
             <div class="mgB-30">
-                Số Keys Còn Lại: <span class="d-ib mgL-20 font-700"><span class="icon-mv mgR-5 color-gold fs-20"><span class="icon-coin-dollar"></span></span><?=number_format($this->params['balance'])?> Keys</span>
-                <a href="<?=\yii\helpers\Url::to(['payment/index'])?>" class="d-ib btn mgL-20 pdT-5 pdB-5 font-600 fs-13 deposit">Nạp Keys</a>
-                <a href="<?=\yii\helpers\Url::to(['payment/index'])?>" class="d-ib btn mgL-10 pdT-5 pdB-5 font-600 fs-13">Coupon</a>
+                <?=Yii::t('payment', 'Remaining Keys')?>: <span class="d-ib mgL-20 font-700"><span class="icon-mv mgR-5 color-gold fs-20"><span class="icon-coin-dollar"></span></span><?=number_format($this->params['balance'])?> Keys</span>
+                <a href="<?=\yii\helpers\Url::to(['payment/index'])?>" class="d-ib btn mgL-20 pdT-5 pdB-5 font-600 fs-13 deposit"><?=Yii::t('payment', 'Buy Keys')?></a>
+                <a href="javascript:;" class="d-ib btn mgL-20 pdT-5 pdB-5 font-600 fs-13 btn-coupon"><?=Yii::t('coupon', 'Coupon')?></a>
+                <?= $this->render('/coupon/_partials/coupon'); ?>
             </div>
-            <div class="title-gd mgB-5">Giao dịch gần đây</div>
+            <div class="title-gd mgB-5"><?=Yii::t('payment', 'Transaction history')?></div>
             <div class="tbl-wrap clearfix">
                 <div class="thead clearfix">
-                    <div class="pull-left w-10"><span>Mã GD</span></div>
-                    <div class="pull-left w-15"><span>Ngày/Giờ</span></div>
-                    <div class="pull-left w-30"><span>Loại giao dịch</span></div>
-                    <div class="pull-left w-20"><span>Tình trạng</span></div>
-                    <div class="pull-left w-25"><span>Số tiền</span></div>
+                    <div class="pull-left w-10"><span><?=Yii::t('payment', 'ID')?></span></div>
+                    <div class="pull-left w-15"><span><?=Yii::t('payment', 'Date/Time')?></span></div>
+                    <div class="pull-left w-30"><span><?=Yii::t('payment', 'Type')?></span></div>
+                    <div class="pull-left w-20"><span><?=Yii::t('payment', 'Status')?></span></div>
+                    <div class="pull-left w-25"><span><?=Yii::t('payment', 'Keys value')?></span></div>
                 </div>
                 <?php
                 if(count($transactions) > 0) {
@@ -32,7 +32,7 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
                         ?>
                         <div class="clearfix tbl-emu swiper-slide">
                             <div class="pull-left w-10"><span><?=$transaction->id?></span></div>
-                            <div class="pull-left w-15"><span><?=date('d/m/Y, H:i')?></span></div>
+                            <div class="pull-left w-15"><span><?=date('d/m/Y, H:i', $transaction->created_at)?></span></div>
                             <div class="pull-left w-30"><span><?=\vsoft\ec\models\EcTransactionHistory::getObjectType($transaction->object_type)?></span></div>
                             <div class="pull-left w-20"><span class="color-cd"><?=\vsoft\ec\models\EcTransactionHistory::getTransactionStatus($transaction->status)?></span></div>
                             <div class="pull-left w-25"><span><?= $amount > 1 ? $amount." Keys" : $amount." Key" ?></span></div>
@@ -45,10 +45,10 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
                     <?php
                 } else {?>
                 <div class="clearfix tbl-emu">
-                    <div class="text-center"><span>Không có giao dịch.</span></div>
+                    <div class="text-center"><span><?=Yii::t('payment', 'No transaction')?>.</span></div>
                 </div>
                 <?php } ?>
-                
+
             </div>
             <br>
             <nav class="text-center">
@@ -63,17 +63,10 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
 </div>
 <script>
     $(document).ready(function () {
-//        $('.deposit').click(function () {
-//            $.ajax({
-//                type: "get",
-//                dataType: 'html',
-//                url: '<?//=yii\helpers\Url::to(['dashboard/create-transaction']) ?>//',
-//                success: function (data) {
-//                    if(data)
-//                        window.location.reload();
-//                }
-//            });
-//        });
+        $('.btn-coupon').click(function () {
+            $('#coupon-dialog .inner-popup .alert').remove();
+            $('#coupon-dialog').modal('toggle');
+        });
 
         var swiper = undefined;
         $(window).on('resize', function () {
