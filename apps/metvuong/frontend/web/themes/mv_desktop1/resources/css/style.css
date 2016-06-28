@@ -9377,6 +9377,9 @@ margin-right: 5px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.icon-invite-friend:before {
+    content: "\e94b";
+}
 .icon-pricing:before {
     content: "\e94a";
 }
