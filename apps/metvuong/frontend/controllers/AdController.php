@@ -529,6 +529,7 @@ class AdController extends Controller
     				}
     			}
     			
+    			/*
     			$balance = Yii::$app->user->identity->balance;
     			
     			if($balance->amount >= AdProduct::CHARGE_POST) {
@@ -557,6 +558,21 @@ class AdController extends Controller
     			$result['template'] = $this->renderPartial('_partials/' . $template, ['balance' => $balance, 'product' => $product]);
     			$result['amount'] = $balance->amount;
     			$result['url'] = $product->urlDetail();
+    			*/
+    			
+    			/*
+    			 * Temp code
+    			 */
+    			$product->status = AdProduct::STATUS_ACTIVE;
+    			$product->save(false);
+    			
+    			$balance = Yii::$app->user->identity->balance;
+    			$result['template'] = $this->renderPartial('_partials/post_success', ['balance' => $balance, 'product' => $product]);
+    			$result['amount'] = $balance->amount;
+    			$result['url'] = $product->urlDetail();
+    			/*
+    			 * Temp code
+    			 */
     		} else {
     			$result['success'] = false;
     			$result['errors'] = [
@@ -909,7 +925,7 @@ class AdController extends Controller
     
     public function actionBoost($day, $id) {
     	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    	
+    	/*
     	if(Yii::$app->user->identity) {
     		$chargeBoost = [
     				1 => AdProduct::CHARGE_BOOST_1,
@@ -946,6 +962,31 @@ class AdController extends Controller
     			} else {
     				return ['success' => false, 'message' => \Yii::t("listing", "Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.")];
     			}
+    		}
+    	}
+    	*/
+    	
+    	/*
+    	 * Temp code
+    	 */
+    	if(Yii::$app->user->identity) {
+    		$chargeBoost = [
+    				1 => AdProduct::CHARGE_BOOST_1,
+    				3 => AdProduct::CHARGE_BOOST_3
+    		];
+    		 
+    		$product = AdProduct::findOne($id);
+    		 
+    		if(isset($chargeBoost[$day]) && $product && $product->user_id == Yii::$app->user->identity->id) {
+    			$balance = Yii::$app->user->identity->balance;
+    			
+    			$boost_time = $day * 86400;
+    			$product->boost_time = $product->boost_time ? $product->boost_time + $boost_time : time() + $boost_time;
+    			$product->save(false);
+    			
+    			$template = $this->renderPartial('/dashboard/ad/list', ['products' => [$product]]);
+    				
+    			return ['success' => true, 'amount' => $balance->amount, 'message' => \Yii::t("listing", "Tin đã được boost thành công."), 'template' => $template];
     		}
     	}
     }
