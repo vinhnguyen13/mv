@@ -210,7 +210,7 @@ class Payment extends Component
         return $this->processTransactionByBanking($token);
     }
 
-    public function cancel($tid){
-
+    public function cancel(){
+        \Yii::$app->getSession()->setFlash('popupcancel', true);
     }
 }

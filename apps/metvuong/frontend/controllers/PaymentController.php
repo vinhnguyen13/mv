@@ -63,7 +63,7 @@ class PaymentController extends Controller
         /**
          * transaction cancel by user, show layout cancel
          */
-        \Yii::$app->getSession()->setFlash('popupcancel', true);
+        Payment::me()->cancel();
         return $this->redirect('index');
     }
 
