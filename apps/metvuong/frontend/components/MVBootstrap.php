@@ -15,7 +15,7 @@ class MVBootstrap implements BootstrapInterface
 
     public function bootstrap($app)
     {
-        $preferredLanguage = isset($app->request->cookies['language']) ? (string)$app->request->cookies['language'] : null;
+        $preferredLanguage = isset($app->request->cookies['language']) ? (string)$app->request->cookies['language'] : $app->language;
         // or in case of database:
         // $preferredLanguage = $app->user->language;
         /*if (empty($preferredLanguage)) {
