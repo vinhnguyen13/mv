@@ -871,8 +871,9 @@ class AdController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
         $uid = Yii::$app->user->isGuest ? null : Yii::$app->user->id;
         $pid = (int)Yii::$app->request->get('product_id');
+        $product_user_id = (int)Yii::$app->request->get('product_user_id');
         $type = (int)Yii::$app->request->get('type');
-        if($pid > 0) {
+        if($pid > 0 && $product_user_id != $uid) {
             return Tracking::find()->productShare($uid, $pid, time(), $type);
         }
         return false;

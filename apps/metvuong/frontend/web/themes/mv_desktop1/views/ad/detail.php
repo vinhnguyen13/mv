@@ -236,13 +236,13 @@ $count_review = $reviews->count();
 						</a>
 					</li>
 					<li class="color-2">
-						<a href="#" class="share-facebook" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
+						<a href="#" class="share-facebook" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'product_user_id' => $product->user_id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
 							<span class="icon-mv"><span class="icon-facebook"></span></span>
 							<span><?= Yii::t('ad', 'Share Facebook') ?></span>
 						</a>
 					</li>
 					<li class="color-3">
-						<a href="#" data-toggle="modal" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_EMAIL], true)?>"
+						<a href="#" data-toggle="modal" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'product_user_id' => $product->user_id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_EMAIL], true)?>"
                            data-target="#popup_email" data-type="share" class="email-btn">
 							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
 							<span><?= Yii::t('ad', 'Share Email') ?></span>
