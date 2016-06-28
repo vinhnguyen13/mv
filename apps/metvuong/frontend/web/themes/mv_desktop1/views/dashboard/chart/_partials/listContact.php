@@ -7,8 +7,8 @@ Yii::t('chart','Saved');
 Yii::t('chart','Shares');
 ?>
 <div class="clearfix mgB-15">
-    <h3><?=Yii::t('chart', $view);?></h3>
-    <p style="color: #4a933a;" class="desTotal"> Tổng số người: <?=count($favourites)?></p>
+    <h3><?=Yii::t('chart', $view) ?></h3>
+    <p style="color: #4a933a;" class="desTotal"> <?=Yii::t('chart','Total user')?>: <?=count($favourites)?></p>
 </div>
 <ul class="clearfix">
 <?php
