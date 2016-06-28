@@ -407,33 +407,40 @@ class DashboardController extends Controller
     		$product = AdProduct::findOne($id);
     		if($product && $product->user_id == Yii::$app->user->identity->id) {
     			if($product->is_expired == 1) {
-    				$balance = Yii::$app->user->identity->balance;
+					$product->status = AdProduct::STATUS_ACTIVE;
+    				$product->end_date = time() + (AdProduct::EXPIRED * 30);
+    				$product->is_expired = 0;
+    				$product->save(false);
+    				
+    				$template = $this->renderPartial('/dashboard/ad/list', ['products' => [$product]]);
+    				return ['success' => true, 'message' => \Yii::t("listing", "Tin đã được gia hạn thành công."), 'template' => $template];
+//     				$balance = Yii::$app->user->identity->balance;
     
-    				if($balance->amount >= AdProduct::CHARGE_POST) {
-    					$balance->amount -= AdProduct::CHARGE_POST;
-    					$balance->save(false);
+//     				if($balance->amount >= AdProduct::CHARGE_POST) {
+//     					$balance->amount -= AdProduct::CHARGE_POST;
+//     					$balance->save(false);
     
-    					$product->status = AdProduct::STATUS_ACTIVE;
-    					$product->end_date = time() + (AdProduct::EXPIRED * 30);
-    					$product->is_expired = 0;
-    					$product->save(false);
+//     					$product->status = AdProduct::STATUS_ACTIVE;
+//     					$product->end_date = time() + (AdProduct::EXPIRED * 30);
+//     					$product->is_expired = 0;
+//     					$product->save(false);
 
-    					$transaction_code = md5(uniqid(rand(), true));
-    					Transaction::me()->saveTransaction($transaction_code, [
-    							'code'=>$transaction_code,
-    							'user_id'=>Yii::$app->user->identity->id,
-    							'object_id'=>$product->id,
-    							'object_type'=>Transaction::OBJECT_TYPE_UPDATE_EXPIRED,
-    							'amount'=>AdProduct::CHARGE_POST,
-    							'balance'=>$balance->amount,
-    							'status'=>Transaction::STATUS_SUCCESS,
-    					]);
+//     					$transaction_code = md5(uniqid(rand(), true));
+//     					Transaction::me()->saveTransaction($transaction_code, [
+//     							'code'=>$transaction_code,
+//     							'user_id'=>Yii::$app->user->identity->id,
+//     							'object_id'=>$product->id,
+//     							'object_type'=>Transaction::OBJECT_TYPE_UPDATE_EXPIRED,
+//     							'amount'=>AdProduct::CHARGE_POST,
+//     							'balance'=>$balance->amount,
+//     							'status'=>Transaction::STATUS_SUCCESS,
+//     					]);
     						
-    					$template = $this->renderPartial('/dashboard/ad/list', ['products' => [$product]]);
-						return ['success' => true, 'message' => \Yii::t("listing", "Tin đã được gia hạn thành công."), 'template' => $template];
-    				} else {
-    					return ['success' => false, 'message' => \Yii::t("listing", "Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.")];
-    				}
+//     					$template = $this->renderPartial('/dashboard/ad/list', ['products' => [$product]]);
+// 						return ['success' => true, 'message' => \Yii::t("listing", "Tin đã được gia hạn thành công."), 'template' => $template];
+//     				} else {
+//     					return ['success' => false, 'message' => \Yii::t("listing", "Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.")];
+//     				}
     			}
     		}
     	}

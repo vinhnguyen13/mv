@@ -3,8 +3,6 @@ use yii\helpers\ArrayHelper;
 use yii\web\View;
 use yii\helpers\Url;
 use vsoft\ad\models\AdProduct;
-
-$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard-listing.js', ['position' => View::POS_END]);
 ?>
 <div class="title-fixed-wrap container">
 	<div class="u-allduan">
@@ -72,7 +70,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
         </div>
     </div>
 </div>
-<div id="update-status" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div id="update-status" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-href="<?= Url::to(['/ad/update-status']) ?>">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -98,7 +96,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
         </div>
     </div>
 </div>
-<div id="update-expired" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div id="update-expired" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-href="<?= Url::to(['/dashboard/update-expired']) ?>">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -124,7 +122,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
         </div>
     </div>
 </div>
-<div id="update-boost" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div id="update-boost" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-href="<?= Url::to(['/ad/boost']) ?>">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -178,6 +176,44 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
 ?>    
 <script>
 	$(document).ready(function () {
+
+		$('.wrap-list-duan').on('click', '.btn-expired', function(e){
+			$('body').loading();
+
+			var id = $(this).data('product');
+			
+			$.get($('#update-expired').data('href'), {id: id}, function(r){
+				$('body').loading({done: true});
+				
+				if(r.success) {
+					$('#p-' + id).replaceWith(r.template);
+					
+					$('#notify-text').text(r.message);
+					$('#notify').modal('toggle');
+				}
+			});
+
+			return false;
+		});
+
+		$('.wrap-list-duan').on('click', '.btn-boost', function(){
+			$('body').loading();
+			
+			var id = $(this).data('product');
+
+			$.get($('#update-boost').data('href'), {day: 3, id: id}, function(r){
+				$('body').loading({done: true});
+				
+				if(r.success) {
+					$('#p-' + id).replaceWith(r.template);
+					
+					$('#notify-text').text(r.message);
+					$('#notify').modal('toggle');
+				}
+			});
+			
+			return false;
+		});
 
         $(document).bind('boost/form_process', function (event, days, rebuildPicker) {
             var checkMoney = days + ' ' + ((days > 1) ? lajax.t('days') :  lajax.t('day'));
