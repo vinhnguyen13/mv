@@ -11714,11 +11714,12 @@ label:hover {
         margin-bottom: 8px;
     }
     #listing-list > ul > li a {
-        padding: 0;
         box-shadow: 0px 0px 10px #ABABAB;
         -webkit-box-shadow: 0px 0px 10px #ABABAB;
         -moz-box-shadow: 0px 0px 10px #ABABAB;
         -ms-box-shadow: 0px 0px 10px #ABABAB;
+        padding: 0;
+        height: 343px;
     }
     #listing-list .info-item {
         padding: 0 15px 15px;
@@ -11727,7 +11728,7 @@ label:hover {
         margin-bottom: 30px;
     }
     #listing-list > ul {
-        margin: 0 -15px;
+        margin: 0;
     }
 }
 @media (max-width: 985px) {
@@ -13160,6 +13161,9 @@ ul.cardList li {
     }
     .logo-bct img {
         max-width: 100%;
+    }
+    .wrap-listing-item #listing-list > ul > li a.vip {
+        margin: 0;
     }
 }
 @media (max-width: 768px) {
