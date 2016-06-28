@@ -75,3 +75,20 @@ function formatNumber(number) {
 	
 	return numberFormated;
 }
+
+var balance = {
+	selector: '.num-gold .notifi',
+	update: function(key) {
+		$(this.selector).text(key);
+	},
+	increase: function(key) {
+		var newKey = Number($(this.selector).text()) + key;
+		
+		this.update(newKey);
+	},
+	decrease: function(key) {
+		var newKey = Number($(this.selector).text()) - key;
+		
+		this.update(newKey);
+	}
+};
