@@ -36,6 +36,49 @@ use yii\helpers\Url;
                     </div>
                     <table class="mgB-15 w-100">
                         <tr>
+                            <td class="w-35"><?=Yii::t('payment', 'Method')?>:</td>
+                            <td>
+                                <select id="total_amount" name="total_amount" class="field-check form-control">
+                                    <option value="ATM_ONLINE">Online Payment with a Local Card</option>
+                                    <option value="IB_ONLINE">Internet banking</option>
+                                    <option value="ATM_OFFLINE">Offline ATM</option>
+                                    <option value="NH_OFFLINE">Bank Branch</option>
+                                    <option value="VISA">Master or Visa Card</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="w-35"><?=Yii::t('payment', 'Bank')?>:</td>
+                            <td>
+                                <select id="total_amount" name="total_amount" class="field-check form-control">
+                                    <option value="BIDV">Ngân hàng TMCP Đầu tư & Phát triển Việt Nam</option>
+                                    <option value="VCB">Ngân hàng TMCP Ngoại Thương Việt Nam</option>
+                                    <option value="DAB">Ngân hàng Đông Á</option>
+                                    <option value="TCB">Ngân hàng Kỹ Thương</option>
+                                    <option value="MB">Ngân hàng Quân Đội</option>
+                                    <option value="VIB">Ngân hàng Quốc tế</option>
+                                    <option value="ICB">Ngân hàng Công Thương Việt Nam</option>
+                                    <option value="EXB">Ngân hàng Xuất Nhập Khẩu</option>
+                                    <option value="ACB">Ngân hàng Á Châu</option>
+                                    <option value="HDB">Ngân hàng Phát triển Nhà TPHCM</option>
+                                    <option value="MSB">Ngân hàng Hàng Hải</option>
+                                    <option value="NVB">Ngân hàng Nam Việt</option>
+                                    <option value="VAB">Ngân hàng Việt Á</option>
+                                    <option value="VPB">Ngân Hàng Việt Nam Thịnh Vượng</option>
+                                    <option value="SCB">Ngân hàng Sài Gòn Thương tín</option>
+                                    <option value="PGB">Ngân hàng Xăng dầu Petrolimex</option>
+                                    <option value="GPB">Ngân hàng TMCP Dầu khí Toàn Cầu</option>
+                                    <option value="AGB">Ngân hàng Nông nghiệp & Phát triển nông thôn</option>
+                                    <option value="SGB">Ngân hàng Sài Gòn Công Thương</option>
+                                    <option value="BAB">Ngân hàng Bắc Á</option>
+                                    <option value="TPB">Tền phong bank</option>
+                                    <option value="NAB">Ngân hàng Nam Á</option>
+                                    <option value="SHB">Ngân hàng TMCP Sài Gòn - Hà Nội (SHB)</option>
+                                    <option value="OJB">Ngân hàng TMCP Đại Dương (OceanBank)</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
                             <td class="w-35"><?=Yii::t('payment', 'Amount')?>:</td>
                             <td>
                                 <select id="total_amount" name="total_amount" class="field-check form-control">

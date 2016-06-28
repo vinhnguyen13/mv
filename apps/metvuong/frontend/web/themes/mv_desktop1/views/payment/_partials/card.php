@@ -59,19 +59,19 @@ $f = ActiveForm::begin([
             <tr>
                 <td><?=Yii::t('payment', 'Full name')?>:</td>
                 <td>
-                    <input type="text" id="fullname" name="buyer_fullname" class="field-check form-control" value="<?=$profile->getDisplayName()?>">
+                    <input type="text" id="fullname" name="buyer_fullname" class="field-check form-control" value="<?=$profile->getDisplayName()?>" readonly="readonly">
                 </td>
             </tr>
             <tr>
                 <td><?=Yii::t('payment', 'Email')?>:</td>
                 <td>
-                    <input type="text" id="fullname" name="buyer_email" class="field-check form-control" value="<?=$profile->public_email?>">
+                    <input type="text" id="fullname" name="buyer_email" class="field-check form-control" value="<?=$profile->public_email?>" readonly="readonly">
                 </td>
             </tr>
             <tr>
                 <td><?=Yii::t('payment', 'Phone number')?>:</td>
                 <td>
-                    <input type="text" id="fullname" name="buyer_mobile" class="field-check form-control" value="<?=$profile->mobile?>">
+                    <input type="text" id="fullname" name="buyer_mobile" class="field-check form-control" value="<?=$profile->mobile?>" readonly="readonly">
                 </td>
             </tr>
             <tr>
