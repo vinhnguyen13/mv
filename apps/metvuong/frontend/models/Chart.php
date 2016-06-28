@@ -48,6 +48,7 @@ class Chart extends Component
 //        print_r(date('d-m-Y H:i:s', $to));
 //        echo "<pre>";
 //        exit();
+
         $adProductFinders = AdProductFinder::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->orderBy('time DESC')->all();
         $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
         $defaultData = array_map(function ($key, $date) {
@@ -254,6 +255,11 @@ class Chart extends Component
         $to = $dateTo->getTimestamp();
 
         $dataFinders = $this->getDataFinder($id, $from, $to);
+//        echo "<pre>";
+//        print_r($id.PHP_EOL.$from.PHP_EOL.$to);
+//        print_r($dataFinders);
+//        echo "<pre>";
+//        exit();
         if($dataFinders != false) {
             $infoDataFinders = empty($dataFinders) ? null : $dataFinders["infoData"];
             if (!empty($infoDataFinders) && isset($infoDataFinders["finders"])) {

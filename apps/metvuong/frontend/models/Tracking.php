@@ -127,12 +127,12 @@ class Tracking extends Component
             $query = AdProductFinder::find();
             $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
             $query->andWhere(['user_id' => $uid]);
-            $query->andWhere(['product_id' => $pid]);
+            $query->andWhere(['product_id' => (int)$pid]);
             $query->orderBy('time DESC');
             if (($adProductFinder = $query->one()) === null) {
                 $adProductFinder = new AdProductFinder();
                 $adProductFinder->user_id = $uid;
-                $adProductFinder->product_id = $pid;
+                $adProductFinder->product_id = (int)$pid;
                 $adProductFinder->count = 1;
             } else {
                 $adProductFinder->count++;
