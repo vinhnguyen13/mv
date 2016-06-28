@@ -75,6 +75,10 @@ Yii::$app->view->registerMetaTag([
 ]);
 
 Yii::$app->view->registerMetaTag([
+    'property' => 'fb:app_id',
+    'content' => '119696758407282' 
+]);
+Yii::$app->view->registerMetaTag([
     'property' => 'og:title',
     'content' => $address
 ]);
