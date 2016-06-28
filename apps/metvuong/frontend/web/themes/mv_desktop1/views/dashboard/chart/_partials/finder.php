@@ -48,8 +48,8 @@ if($from > 0 && $to > 0)
     ksort($data4['categories']);
     $categories4 = array_values($data4['categories']);
 
-//    $dataChart = \yii\helpers\ArrayHelper::merge($dataChart1, $dataChart2);
-    $dataChart = \yii\helpers\ArrayHelper::merge($dataChart2, $dataChart3);
+    $dataChart = \yii\helpers\ArrayHelper::merge($dataChart1, $dataChart2);
+    $dataChart = \yii\helpers\ArrayHelper::merge($dataChart, $dataChart3);
     $dataChart = \yii\helpers\ArrayHelper::merge($dataChart, $dataChart4);
 //    $categories = array_merge($categories, $categories2, $categories3, $categories4);
     $categories = $categories2;
@@ -60,9 +60,6 @@ if($from > 0 && $to > 0)
         $(function () {
             var cloneToolTip = null;
             var chart = $('#chartAds').highcharts({
-                chart: {
-                    type: 'line'
-                },
                 legend: {
                     enabled: false
                 },

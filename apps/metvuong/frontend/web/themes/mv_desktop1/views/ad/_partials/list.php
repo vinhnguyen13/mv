@@ -54,12 +54,6 @@ $types = AdProduct::getAdTypes();
 		    	<p class="date-post">đăng <?= StringHelper::previousTime($product->updated_at) ?><span class="pull-right">Điểm: 95</span></p>
 		    </div>
 		</a>
-        <?php
-        // tracking finder
-        if($product->user_id != Yii::$app->user->id && isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
-            Tracking::find()->productFinder(Yii::$app->user->id, (int)$product->id, time());
-        }
-        ?>
 	</div>
 </li>
 <?php endforeach; ?>

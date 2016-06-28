@@ -116,10 +116,23 @@ class Chart extends Component
             $infoSaved = array();
             foreach($adProductTypes as $k => $item){
                 $day = date(self::DATE_FORMAT, $item->time);
+                $color = '#00a769';
+                $typeChart = 'column';
 
-                if($view == "saved")
+                if($view == 'finders'){
+                    $color = '#337ab7';
+                    $typeChart = 'column';
+                }elseif($view == 'visitors'){
+                    $color = '#a94442';
+                    $typeChart = 'line';
+                }elseif($view == 'saved'){
                     $day = date(self::DATE_FORMAT, $item->saved_at);
-
+                    $color = '#00a769';
+                    $typeChart = 'line';
+                }elseif($view == 'shares'){
+                    $color = '#8a6d3b';
+                    $typeChart = 'line';
+                }
                 $key = $pid;
                 if(empty($tmpDataByPid[$key]['data'])){
                     $tmpDataByPid[$key]['data'] = $defaultData;
@@ -127,17 +140,8 @@ class Chart extends Component
                 $kDate = array_search($day, $dateRange);
                 $tmpDataByPid[$key]['data'][$kDate]['y']++;
                 $tmpDataByPid[$key]['data'][$kDate]['url'] = Url::to(['/dashboard/clickchart', 'id'=>$pid, 'date'=>$dateRange[$kDate], 'view'=>$view]);
-                $color = '#00a769';
-                if($view == 'finders'){
-                    $color = '#337ab7';
-                }elseif($view == 'visitors'){
-                    $color = '#a94442';
-                }elseif($view == 'saved'){
-                    $color = '#00a769';
-                }elseif($view == 'shares'){
-                    $color = '#8a6d3b';
-                }
                 $tmpDataByPid[$key]['color'] = $color;
+                $tmpDataByPid[$key]['type'] = $typeChart;
 
                 $user = User::findIdentity($item->user_id);
                 if($user) {
