@@ -179,46 +179,6 @@ EOD;
 										</div>
 									</div>
 								</div>
-								<div class="frm-item select-others show-num-frm">
-									<div class="box-dropdown dropdown-common">
-										<div class="val-selected style-click">
-											<span class="selected" data-placeholder="Loại bất động sản?"><?= Yii::t('ad', 'More') ?></span>
-											<span class="arrowDownFillFull"></span>
-										</div>
-										<div class="item-dropdown hide-dropdown">
-											<?= Html::activeHiddenInput($searchModel, 'type', ['name' => '']); ?>
-											<div class="form-group col-xs-12 col-sm-6">
-												<div class="">
-													<?php 
-														$items = [AdProduct::OWNER_HOST => Yii::t('ad', 'Owner'), AdProduct::OWNER_AGENT => Yii::t('ad', 'Agent')];
-													?>
-													<?= Html::activeDropDownList($searchModel, 'owner', $items, ['prompt' => Yii::t('ad', Yii::t('ad', 'Owner') . '/' . Yii::t('ad', 'Agent')), 'class' => 'form-control']) ?>
-												</div>
-											</div>
-											<div class="form-group col-xs-12 col-sm-6">
-												<div class="">
-													<?php
-														$tDays = Yii::t('ad', 'days');
-														$tMonth = Yii::t('ad', 'month');
-														$items = [
-															"-1 day" => "1 " . Yii::t('ad', 'day'),
-															"-7 day" => "7 " . $tDays,
-															"-14 day" => "14 " . $tDays,
-															"-30 day" => "30 " . $tDays,
-															"-60 day" => "60 " . $tDays,
-															"-90 day" => "90 " . $tDays,
-															"-6 month" => "6 " . $tMonth,
-															"-12 month" => "12 " . $tMonth,
-															"-24 month" => "24 " . $tMonth,
-															"-36 month" => "36 " . $tMonth,
-														];
-													?>
-													<?= Html::activeDropDownList($searchModel, 'created_before', $items, ['prompt' => Yii::t('ad', 'Time posted'), 'class' => 'form-control']) ?>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
 							</div>
 							<button class="btn-submit btn-common <?= $hideSearchForm ? '' : 'active' ?>"><?= Yii::t('ad', 'Search') ?></button>
 						</div>
