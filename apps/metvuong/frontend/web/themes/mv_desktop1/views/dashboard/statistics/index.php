@@ -50,7 +50,7 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
                                 <span class="icon-mv"><span class="icon-eye-copy"></span></span>
                                 <?=Yii::t('statistic','Visit')?>
                                 <span><?=$click_count ?></span>
-                                <input type="checkbox" name="toggle-chart" value="1000000" checked="checked">  
+                                <input type="checkbox" name="toggle-chart" value="1000000" checked="checked">
                                 <span class="icon-mv toggle-ui-check"><span class="icon-checkbox"></span></span> 
                             </a>
                         </li>
@@ -59,7 +59,7 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
                                 <span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
                                 <?=Yii::t('statistic','Favourite')?>
                                 <span><?=$fav_count ?></span>
-                                <input type="checkbox" name="toggle-chart" value="1000000" checked="checked">  
+                                <input type="checkbox" name="toggle-chart" value="1000000">
                                 <span class="icon-mv toggle-ui-check"><span class="icon-checkbox"></span></span> 
                             </a>
                         </li>
@@ -68,7 +68,7 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
                                 <span class="icon-mv"><span class="icon-share-social"></span></span> 
                                 <?=Yii::t('statistic','Share')?> 
                                 <span><?=$share_count?></span>
-                                <input type="checkbox" name="toggle-chart" value="1000000" checked="checked">  
+                                <input type="checkbox" name="toggle-chart" value="1000000">
                                 <span class="icon-mv toggle-ui-check"><span class="icon-checkbox"></span></span>    
                             </a>
                         </li>
@@ -248,17 +248,31 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
     'params' => ['your_email' => false, 'recipient_email' => false] ])?>
 <script>
     $(document).ready(function () {
+        var chart = $('#chartAds').highcharts();
+        var favorite_line = chart.series[2],
+            share_line = chart.series[3];
+            favorite_line.hide();
+            share_line.hide();
 
         $('.option-view-stats .radio-ui').checkbox_ui({
             done: function (item) {
                 var index = item.parent().parent().index();
-                var chart = $('#chartAds').highcharts(),
-                    series = chart.series[(index-1)];
-                if (series.visible) {
-                    series.hide();
-                } else {
-                    series.show();
-                }
+//                var series = chart.series[index];
+//                if (series.visible) {
+//                    series.hide();
+//                } else {
+//                    series.show();
+//                }
+
+                console.log(chart.series[index]);
+                chart.series[index].show();
+                /*$('.option-view-stats .radio-ui').prop("checked", "checked");
+                $.each(chart.series, function( idx, value ) {
+                    if(idx != index && idx > 0){
+                        chart.series[idx].hide();
+                        $('.option-view-stats .radio-ui').removeClass("active");
+                    }
+                });*/
 
             }
         });
