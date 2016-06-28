@@ -32,11 +32,6 @@ use yii\helpers\Url;
 	<div class="dt-footer clearfix container">
 		<div class="logo-footer pull-left">
 			<a href="#" class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo-white.png' ?>" alt=""></a>
-			<ul class="clearfix">
-				<li><a href="<?=Url::to(['site/page', 'view'=>'quy-che-hoat-dong'])?>">Quy chế hoạt động</a></li>
-				<li><a href="<?=Url::to(['site/page', 'view'=>'chinh-sach-bao-mat'])?>">Chính sách bảo mật</a></li>
-				<li><a href="<?=Url::to(['site/page', 'view'=>'giai-quyet-tranh-chap'])?>">Quy trình giải quyết tranh chấp</a></li>
-			</ul>
 		</div>
 		<div class="pull-right col-right">
 			<div class="clearfix">
