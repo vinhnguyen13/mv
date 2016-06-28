@@ -1,8 +1,13 @@
 <?php
 use yii\helpers\Url;
+
+Yii::t('chart','Finders');
+Yii::t('chart','Visitors');
+Yii::t('chart','Saved');
+Yii::t('chart','Shares');
 ?>
 <div class="clearfix mgB-15">
-    <h3><?=$view;?></h3>
+    <h3><?=Yii::t('chart', $view);?></h3>
     <p style="color: #4a933a;" class="desTotal"> Tổng số người: <?=count($favourites)?></p>
 </div>
 <ul class="clearfix">
