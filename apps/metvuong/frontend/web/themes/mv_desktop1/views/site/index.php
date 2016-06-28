@@ -17,7 +17,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
         <div id="hScreen"></div>
         <div class="search-wrap-home">
             <div class="text-center logo-search-box wrap-img">
-                <img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt="">
+                <img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo-beta.png' ?>" alt="">
             </div>
             <div class="search-homepage">
                 <ul class="clearfix">
