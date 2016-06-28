@@ -7,6 +7,7 @@
  */
 use yii\widgets\ActiveForm;
 use yii\helpers\Url;
+use yii\web\View;
 
 ?>
 <div id="credit-card" class="item-payment">
@@ -50,7 +51,41 @@ use yii\helpers\Url;
                         <tr>
                             <td class="w-35"><?=Yii::t('payment', 'Bank')?>:</td>
                             <td>
-                                <select id="total_amount" name="total_amount" class="field-check form-control">
+                                <div class="box-dropdown dropdown-common">
+                                    <div class="val-selected style-click">
+                                        <span class="selected" data-placeholder=""></span>
+                                        <span class="arrowDownFillFull"></span>
+                                    </div>
+                                    <div class="item-dropdown hide-dropdown">
+                                        <ul class="clearfix loai-bds">
+                                            <li><a href="#" data-value="BIDV">Ngân hàng TMCP Đầu tư & Phát triển Việt Nam</a></li>
+                                            <li><a href="#" data-value="VCB">Ngân hàng TMCP Ngoại Thương Việt Nam</a></li>
+                                            <li><a href="#" data-value="DAB">Ngân hàng Đông Á</a></li>
+                                            <li><a href="#" data-value="TCB">Ngân hàng Kỹ Thương</a></li>
+                                            <li><a href="#" data-value="MB">Ngân hàng Quân Đội</a></li>
+                                            <li><a href="#" data-value="VIB">Ngân hàng Quốc tế</a></li>
+                                            <li><a href="#" data-value="ICB">Ngân hàng Công Thương Việt Nam</a></li>
+                                            <li><a href="#" data-value="EXB">Ngân hàng Xuất Nhập Khẩu</a></li>
+                                            <li><a href="#" data-value="ACB">Ngân hàng Á Châu</a></li>
+                                            <li><a href="#" data-value="HDB">Ngân hàng Phát triển Nhà TPHCM</a></li>
+                                            <li><a href="#" data-value="MSB">Ngân hàng Hàng Hải</a></li>
+                                            <li><a href="#" data-value="NVB">Ngân hàng Nam Việt</a></li>
+                                            <li><a href="#" data-value="VAB">Ngân hàng Việt Á</a></li>
+                                            <li><a href="#" data-value="VPB">Ngân Hàng Việt Nam Thịnh Vượng</a></li>
+                                            <li><a href="#" data-value="SCB">Ngân hàng Sài Gòn Thương tín</a></li>
+                                            <li><a href="#" data-value="PGB">Ngân hàng Xăng dầu Petrolimex</a></li>
+                                            <li><a href="#" data-value="GPB">Ngân hàng TMCP Dầu khí Toàn Cầu</a></li>
+                                            <li><a href="#" data-value="AGB">Ngân hàng Nông nghiệp & Phát triển nông thôn</a></li>
+                                            <li><a href="#" data-value="SGB">Ngân hàng Sài Gòn Công Thương</a></li>
+                                            <li><a href="#" data-value="BAB">Ngân hàng Bắc Á</a></li>
+                                            <li><a href="#" data-value="TPB">Tền phong bank</a></li>
+                                            <li><a href="#" data-value="NAB">Ngân hàng Nam Á</a></li>
+                                            <li><a href="#" data-value="SHB">Ngân hàng TMCP Sài Gòn - Hà Nội (SHB)</a></li>
+                                            <li><a href="#" data-value="OJB">Ngân hàng TMCP Đại Dương (OceanBank)</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- <select id="total_amount" name="total_amount" class="field-check form-control">
                                     <option value="BIDV">Ngân hàng TMCP Đầu tư & Phát triển Việt Nam</option>
                                     <option value="VCB">Ngân hàng TMCP Ngoại Thương Việt Nam</option>
                                     <option value="DAB">Ngân hàng Đông Á</option>
@@ -58,24 +93,41 @@ use yii\helpers\Url;
                                     <option value="MB">Ngân hàng Quân Đội</option>
                                     <option value="VIB">Ngân hàng Quốc tế</option>
                                     <option value="ICB">Ngân hàng Công Thương Việt Nam</option>
+
                                     <option value="EXB">Ngân hàng Xuất Nhập Khẩu</option>
+
                                     <option value="ACB">Ngân hàng Á Châu</option>
+
                                     <option value="HDB">Ngân hàng Phát triển Nhà TPHCM</option>
+
                                     <option value="MSB">Ngân hàng Hàng Hải</option>
+
                                     <option value="NVB">Ngân hàng Nam Việt</option>
+
                                     <option value="VAB">Ngân hàng Việt Á</option>
+
                                     <option value="VPB">Ngân Hàng Việt Nam Thịnh Vượng</option>
+
                                     <option value="SCB">Ngân hàng Sài Gòn Thương tín</option>
+
                                     <option value="PGB">Ngân hàng Xăng dầu Petrolimex</option>
+
                                     <option value="GPB">Ngân hàng TMCP Dầu khí Toàn Cầu</option>
+
                                     <option value="AGB">Ngân hàng Nông nghiệp & Phát triển nông thôn</option>
+
                                     <option value="SGB">Ngân hàng Sài Gòn Công Thương</option>
+
                                     <option value="BAB">Ngân hàng Bắc Á</option>
+
                                     <option value="TPB">Tền phong bank</option>
+
                                     <option value="NAB">Ngân hàng Nam Á</option>
+
                                     <option value="SHB">Ngân hàng TMCP Sài Gòn - Hà Nội (SHB)</option>
+
                                     <option value="OJB">Ngân hàng TMCP Đại Dương (OceanBank)</option>
-                                </select>
+                                </select> -->
                             </td>
                         </tr>
                         <tr>
@@ -542,29 +594,41 @@ use yii\helpers\Url;
                 <input type="submit" name="nlpayment" value="<?=Yii::t('payment', 'Submit');?>" class="btn-common btn-bd-radius"/>
             </div>
             
-            <?php $f->end(); ?>
+            <?php 
+                $f->end(); 
+                $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.jquery.min.js', ['position' => View::POS_END]);
+            ?>
 
+            
             <script language="javascript">
-                $('input[name="option_payment"]').bind('click', function () {
-                    $('.list-content li').removeClass('active');
-                    $(this).parent().parent('li').addClass('active');
-                });
+                $(document).ready(function () {
+                    
+                    $('.bg-bank .dropdown-common').dropdown({
+                        txtAdd: true,
+                        styleShow: 0
+                    });
 
-                $('input[name="option_payment"]:first').trigger('click');
-                $('input[name="bankcode"]:first').trigger('click');
+                    $('input[name="option_payment"]').bind('click', function () {
+                        $('.list-content li').removeClass('active');
+                        $(this).parent().parent('li').addClass('active');
+                    });
 
-                $('input[name="nlpayment"]').bind('click', function () {
-                    var chkIsNull = false;
-                    $('#NLpayBank input[type=text]').each(function(){
-                        if($(this).val().trim() == ''){
-                            chkIsNull = true;
+                    $('input[name="option_payment"]:first').trigger('click');
+                    $('input[name="bankcode"]:first').trigger('click');
+
+                    $('input[name="nlpayment"]').bind('click', function () {
+                        var chkIsNull = false;
+                        $('#NLpayBank input[type=text]').each(function(){
+                            if($(this).val().trim() == ''){
+                                chkIsNull = true;
+                            }
+                            console.log($(this));
+                        })
+                        if(chkIsNull==true){
+                            alert(lajax.t('Please fill full data'));
+                            return false;
                         }
-                        console.log($(this));
-                    })
-                    if(chkIsNull==true){
-                        alert(lajax.t('Please fill full data'));
-                        return false;
-                    }
+                    });
                 });
             </script>
         </div>

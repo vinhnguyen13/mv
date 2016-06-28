@@ -13053,6 +13053,29 @@ ul.cardList li {
     border: 1px solid #3c3c3c;
     color: #3c3c3c;
 }
+.bg-bank .val-selected {
+    height: 35px;
+    line-height: 35px;
+    border: 1px solid #ccc;
+    background: #fff;
+    font-size: 14px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
+}
+.bg-bank .dropdown-up-style {
+    top: 35px;
+}
+.bg-bank .dropdown-up-style .item-dropdown {
+    box-shadow: none;
+    -moz-box-shadow: none;
+    -ms-box-shadow: none;
+    border: 1px solid #ccc;
+    border-top: none;
+    max-height: 300px;
+    overflow: hidden;
+    overflow-y: auto;
+}
 @media (max-width: 1200px) {
     .type-payment {
         width: 90%;
