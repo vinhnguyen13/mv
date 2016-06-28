@@ -12992,6 +12992,54 @@ ul.cardList li {
 .wrap-content-page p {
     margin-bottom: 15px;
 }
+.site-error {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding-top: 55px;
+}
+.wrap_404 {
+    height: 100%;
+    width: 40%;
+    margin: 0 auto 0;
+    padding-top: 150px;
+    text-align: center;
+    color: #00a769;
+}
+.wrap_404 h3 {
+    margin: 0 0 10px 0;
+    text-align: center;
+    font-size: 100px;
+    line-height: 100%;
+    font-weight: 600;
+}
+.line_1_404 {
+    display: block;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+.line_2_404 {
+    display: block;
+    margin-bottom: 30px;
+}
+.wrap_404 a {
+    display: inline-block;
+    border: 1px solid #00a769;
+    font-size: 14px;
+    padding: 4px 20px;
+    border-radius: 4px;
+    font-weight: 600;
+    color: #00a769;
+    transition: all .2s ease-out;
+}
+.wrap_404 a:hover {
+    border: 1px solid #3c3c3c;
+    color: #3c3c3c;
+}
 @media (max-width: 1200px) {
     .type-payment {
         width: 90%;

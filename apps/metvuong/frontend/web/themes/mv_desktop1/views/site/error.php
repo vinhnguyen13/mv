@@ -10,7 +10,7 @@ use yii\helpers\Html;
 $this->title = $name;
 ?>
 <div class="site-error">
-	<div class="container wrap_404">
+	<div class="wrap_404">
 		<div>
 			<h3 class="title_404">404</h3>
 			<span class="line_1_404">Opps, sorry we can't find that page!</span>
