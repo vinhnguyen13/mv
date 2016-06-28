@@ -167,7 +167,7 @@ $count_review = $reviews->count();
 				<ul class="pull-right icons-detail">
 					<li class="color-8">
 						<a href="#" data-popover="true">
-							<span class="icon-mv"><span class="icon-phone-profile"></span></span>
+							<span class="icon-mv"><span class="icon-info-circle"></span></span>
 							<span><?= Yii::t('ad', 'Contact Agent') ?></span>
 						</a>
 						<div class="popover-append hide">
