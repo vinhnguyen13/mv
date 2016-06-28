@@ -58,30 +58,30 @@ use yii\web\View;
                                     </div>
                                     <div class="item-dropdown hide-dropdown">
                                         <ul class="clearfix loai-bds">
-                                            <li><a href="#" data-value="BIDV">Ngân hàng TMCP Đầu tư & Phát triển Việt Nam</a></li>
-                                            <li><a href="#" data-value="VCB">Ngân hàng TMCP Ngoại Thương Việt Nam</a></li>
-                                            <li><a href="#" data-value="DAB">Ngân hàng Đông Á</a></li>
-                                            <li><a href="#" data-value="TCB">Ngân hàng Kỹ Thương</a></li>
-                                            <li><a href="#" data-value="MB">Ngân hàng Quân Đội</a></li>
-                                            <li><a href="#" data-value="VIB">Ngân hàng Quốc tế</a></li>
-                                            <li><a href="#" data-value="ICB">Ngân hàng Công Thương Việt Nam</a></li>
-                                            <li><a href="#" data-value="EXB">Ngân hàng Xuất Nhập Khẩu</a></li>
-                                            <li><a href="#" data-value="ACB">Ngân hàng Á Châu</a></li>
-                                            <li><a href="#" data-value="HDB">Ngân hàng Phát triển Nhà TPHCM</a></li>
-                                            <li><a href="#" data-value="MSB">Ngân hàng Hàng Hải</a></li>
-                                            <li><a href="#" data-value="NVB">Ngân hàng Nam Việt</a></li>
-                                            <li><a href="#" data-value="VAB">Ngân hàng Việt Á</a></li>
-                                            <li><a href="#" data-value="VPB">Ngân Hàng Việt Nam Thịnh Vượng</a></li>
-                                            <li><a href="#" data-value="SCB">Ngân hàng Sài Gòn Thương tín</a></li>
-                                            <li><a href="#" data-value="PGB">Ngân hàng Xăng dầu Petrolimex</a></li>
-                                            <li><a href="#" data-value="GPB">Ngân hàng TMCP Dầu khí Toàn Cầu</a></li>
-                                            <li><a href="#" data-value="AGB">Ngân hàng Nông nghiệp & Phát triển nông thôn</a></li>
-                                            <li><a href="#" data-value="SGB">Ngân hàng Sài Gòn Công Thương</a></li>
-                                            <li><a href="#" data-value="BAB">Ngân hàng Bắc Á</a></li>
-                                            <li><a href="#" data-value="TPB">Tền phong bank</a></li>
-                                            <li><a href="#" data-value="NAB">Ngân hàng Nam Á</a></li>
-                                            <li><a href="#" data-value="SHB">Ngân hàng TMCP Sài Gòn - Hà Nội (SHB)</a></li>
-                                            <li><a href="#" data-value="OJB">Ngân hàng TMCP Đại Dương (OceanBank)</a></li>
+                                            <li><a href="#" data-value="BIDV"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng TMCP Đầu tư &amp; Phát triển Việt Nam</a></li>
+                                            <li><a href="#" data-value="VCB"><span class="d-ib mgR-10 ver-c"><i class="VCB"></i></span>Ngân hàng TMCP Ngoại Thương Việt Nam</a></li>
+                                            <li><a href="#" data-value="DAB"><span class="d-ib mgR-10 ver-c"><i class="DAB"></i></span>Ngân hàng Đông Á</a></li>
+                                            <li><a href="#" data-value="TCB"><span class="d-ib mgR-10 ver-c"><i class="TCB"></i></span>Ngân hàng Kỹ Thương</a></li>
+                                            <li><a href="#" data-value="MB"><span class="d-ib mgR-10 ver-c"><i class="MB"></i></span>Ngân hàng Quân Đội</a></li>
+                                            <li><a href="#" data-value="VIB"><span class="d-ib mgR-10 ver-c"><i class="VIB"></i></span>Ngân hàng Quốc tế</a></li>
+                                            <li><a href="#" data-value="ICB"><span class="d-ib mgR-10 ver-c"><i class="ICB"></i></span>Ngân hàng Công Thương Việt Nam</a></li>
+                                            <li><a href="#" data-value="EXB"><span class="d-ib mgR-10 ver-c"><i class="EXB"></i></span>Ngân hàng Xuất Nhập Khẩu</a></li>
+                                            <li><a href="#" data-value="ACB"><span class="d-ib mgR-10 ver-c"><i class="ACB"></i></span>Ngân hàng Á Châu</a></li>
+                                            <li><a href="#" data-value="HDB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng Phát triển Nhà TPHCM</a></li>
+                                            <li><a href="#" data-value="MSB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng Hàng Hải</a></li>
+                                            <li><a href="#" data-value="NVB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng Nam Việt</a></li>
+                                            <li><a href="#" data-value="VAB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng Việt Á</a></li>
+                                            <li><a href="#" data-value="VPB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân Hàng Việt Nam Thịnh Vượng</a></li>
+                                            <li><a href="#" data-value="SCB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng Sài Gòn Thương tín</a></li>
+                                            <li><a href="#" data-value="PGB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng Xăng dầu Petrolimex</a></li>
+                                            <li><a href="#" data-value="GPB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng TMCP Dầu khí Toàn Cầu</a></li>
+                                            <li><a href="#" data-value="AGB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng Nông nghiệp &amp; Phát triển nông thôn</a></li>
+                                            <li><a href="#" data-value="SGB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng Sài Gòn Công Thương</a></li>
+                                            <li><a href="#" data-value="BAB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng Bắc Á</a></li>
+                                            <li><a href="#" data-value="TPB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Tền phong bank</a></li>
+                                            <li><a href="#" data-value="NAB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng Nam Á</a></li>
+                                            <li><a href="#" data-value="SHB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng TMCP Sài Gòn - Hà Nội (SHB)</a></li>
+                                            <li><a href="#" data-value="OJB"><span class="d-ib mgR-10 ver-c"><i class="BIDV"></i></span>Ngân hàng TMCP Đại Dương (OceanBank)</a></li>
                                         </ul>
                                     </div>
                                 </div>

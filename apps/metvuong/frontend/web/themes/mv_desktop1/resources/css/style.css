@@ -13066,6 +13066,12 @@ ul.cardList li {
 .bg-bank .dropdown-up-style {
     top: 35px;
 }
+.bg-bank .loai-bds a span {
+
+}
+.bg-bank .loai-bds a span i {
+    
+}
 .bg-bank .dropdown-up-style .item-dropdown {
     box-shadow: none;
     -moz-box-shadow: none;
@@ -13075,6 +13081,8 @@ ul.cardList li {
     max-height: 300px;
     overflow: hidden;
     overflow-y: auto;
+    width: 100% !important;
+    z-index: 10;
 }
 @media (max-width: 1200px) {
     .type-payment {
