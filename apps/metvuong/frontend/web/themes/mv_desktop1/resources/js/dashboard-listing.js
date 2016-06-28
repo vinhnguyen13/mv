@@ -23,7 +23,10 @@ $(document).ready(function(){
 				if(r.success) {
 					$('#p-' + id).replaceWith(r.template);
 					
-					$('.current-key').text(currentKey - charge);
+					var key = currentKey - charge;
+					
+					$('.current-key').text(key);
+					balance.update(key);
 				}
 
 				$('#notify-text').text(r.message);
@@ -57,7 +60,10 @@ $(document).ready(function(){
 				if(r.success) {
 					$('#p-' + id).replaceWith(r.template);
 					
-					$('.current-key').text(currentKey - charge);
+					var key = currentKey - charge;
+					
+					$('.current-key').text(key);
+					balance.update(key);
 				}
 
 				$('#notify-text').text(r.message);
@@ -93,7 +99,10 @@ $(document).ready(function(){
 				if(r.success) {
 					$('#p-' + id).replaceWith(r.template);
 					
-					$('.current-key').text(currentKey - key);
+					var ckey = currentKey - key;
+					
+					$('.current-key').text(ckey);
+					balance.update(ckey);
 				}
 
 				$('#notify-text').text(r.message);

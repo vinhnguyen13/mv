@@ -59,4 +59,23 @@ class Balance extends \yii\db\ActiveRecord
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
+    
+	public function beforeSave($insert)
+	{
+	    if (parent::beforeSave($insert)) {
+	        
+	    	$this->updated_at = time();
+	    	
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
+    
+	public function afterSave ( $insert, $changedAttributes )
+	{
+		Yii::$app->db->schema->refreshTableSchema('ec_balance');
+		
+	    return parent::afterSave($insert, $changedAttributes);
+	}
 }

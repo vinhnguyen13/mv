@@ -555,6 +555,7 @@ class AdController extends Controller
     			}
     			
     			$result['template'] = $this->renderPartial('_partials/' . $template, ['balance' => $balance, 'product' => $product]);
+    			$result['amount'] = $balance->amount;
     			$result['url'] = $product->urlDetail();
     		} else {
     			$result['success'] = false;

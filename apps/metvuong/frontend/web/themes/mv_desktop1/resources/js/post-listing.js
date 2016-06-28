@@ -564,7 +564,9 @@ $(document).ready(function(){
 			
 			$('body').loading({done: true});
 			
-			if(!r.success) {
+			if(r.success) {
+				balance.update(r.amount);
+			} else {
 				$('#notify-boost-charge').show();
 			}
 			
@@ -614,6 +616,8 @@ $(document).ready(function(){
 			if(r.success) {
 				$('.wrap-frm-listing').hide();
 				$('#notify').removeClass('hide').html(r.template);
+				
+				balance.update(r.amount);
 				
 				window.onbeforeunload = function() {};
 			} else {

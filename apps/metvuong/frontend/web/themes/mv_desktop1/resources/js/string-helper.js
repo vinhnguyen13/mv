@@ -78,16 +78,19 @@ function formatNumber(number) {
 
 var balance = {
 	selector: '.num-gold .notifi',
+	get: function() {
+		return Number($(this.selector).text());
+	},
 	update: function(key) {
 		$(this.selector).text(key);
 	},
 	increase: function(key) {
-		var newKey = Number($(this.selector).text()) + key;
+		var newKey = this.get() + key;
 		
 		this.update(newKey);
 	},
 	decrease: function(key) {
-		var newKey = Number($(this.selector).text()) - key;
+		var newKey = this.get() - key;
 		
 		this.update(newKey);
 	}
