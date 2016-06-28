@@ -5920,16 +5920,21 @@ html.mm-opening .mm-slideout {
     width: 100%;
     padding: 12px 0;
 }
+.txt-location li p {
+    font-size: 14px;
+}
 .txt-location li:first-child {
     border-top: none;
 }
 .txt-location li .icon-mv {
-    margin-right: 20px;
+    margin-right: 15px;
     vertical-align: middle;
     font-size: 20px;
     float: left;
     color: #3c3c3c;
     line-height: 100%;
+    position: relative;
+    top: 1px;
 }
 .txt-location li .icon-phone-profile {
     font-size: 22px;
@@ -8664,7 +8669,7 @@ margin-right: 5px;
   display: inline-block;
   height: 100%;
   vertical-align: middle;
-  margin-right: -4px;
+  margin: 0 0 0 -5px;
 }
 
 .modal-dialog {
@@ -12478,6 +12483,9 @@ height: 190px;
     float: left;
     padding-right: 15px;
     margin-bottom: 20px;
+    text-shadow: 1px 1px 1px #fff;
+    -moz-text-shadow: 1px 1px 1px #fff;
+    -ms-text-shadow: 1px 1px 1px #fff;
 }
 .txt-location {
     float: right;
