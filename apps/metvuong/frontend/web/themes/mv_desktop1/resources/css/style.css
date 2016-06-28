@@ -12569,7 +12569,7 @@ height: 190px;
 .option-view-stats li a.btn-finder {
     background: #ececec;
     color: #3c3c3c;
-    cursor: default;
+    /* cursor: default; */
 }
 .option-view-stats li a.btn-visitor {
     background: #a94442;
@@ -12588,7 +12588,7 @@ height: 190px;
 }
 .option-view-stats li a.btn-finder:active,
 .option-view-stats li a.btn-finder:hover {
-    opacity: 1;
+    /* opacity: 1; */
 }
 .btn-bd-radius {
     border-radius: 3px;
