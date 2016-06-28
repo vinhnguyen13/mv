@@ -41,6 +41,7 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
                     ?>
                     </div>
                     </div>
+                    <div class="swiper-pagination"></div>
                     <?php
                 } else {?>
                 <div class="clearfix tbl-emu">
