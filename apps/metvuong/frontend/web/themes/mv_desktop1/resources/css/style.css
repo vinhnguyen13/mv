@@ -12066,7 +12066,7 @@ label:hover {
 .type-payment .hemi-intro-popover {
     width: 400px;
     max-width: inherit;
-    top: 50px !important;
+    top: 80px !important;
 }
 .type-payment .innner-block {
     font-size: 14px;
@@ -12812,6 +12812,7 @@ ul.cardList li {
 .tab-payment {
     border: none;
     border-bottom: 1px solid #c3c3c3;
+    margin-top: 30px;
 }
 .tab-payment li {
     border-right: 1px solid #c7c7c7;
@@ -12961,7 +12962,7 @@ ul.cardList li {
 }
 .type-payment .title-box {
     color: #00a769;
-    font-size: 16px;
+    font-size: 25px;
     margin-bottom: 15px;
     text-transform: uppercase;
 }
