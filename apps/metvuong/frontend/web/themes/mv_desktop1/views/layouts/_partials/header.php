@@ -94,9 +94,9 @@ $meta->add(Yii::$app->request->absoluteUrl);
                         </a>
                     </li>
                     <li>
-                        <a class="" href="#">
+                        <a class="favorite-item <?= !empty($this->params['menuFavorite']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/favorite', 'username' => Yii::$app->user->identity->getUsername()])?>" href="#">
                             <div><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span></div>
-                            Favorites
+                            <?= Yii::t('activity', 'Favorites') ?>
                         </a>
                     </li>
                     <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->getUsername()])?>"><span class="icon-mv"><span class="icon-settings"></span></span><?=Yii::t('user', 'Setting')?></a></li>

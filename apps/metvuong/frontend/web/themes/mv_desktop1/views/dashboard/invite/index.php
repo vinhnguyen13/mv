@@ -11,6 +11,7 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
 ?>
 <div class="title-fixed-wrap container">
     <div class="invite-friend block-dash">
+    	<div class="title-top">Invite </div>
     	<div class="inner-dash">
 	    	<div class="frm-invite">
 	    		<p class="mgB-15"><span class="color-red d-ib mgR-5 font-600">Lưu ý:</span> Khi "Mời thêm bạn bè" thì keys của bạn sẽ được tặng thêm 10key.</p>
