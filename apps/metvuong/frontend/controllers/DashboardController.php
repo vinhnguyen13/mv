@@ -101,33 +101,59 @@ class DashboardController extends Controller
 //                'view' => '_partials/finder'
 //            ]);
 //        }else{
-            if (($search = \frontend\models\Tracking::find()->countFinders($product->id)) === null) {
-                $search = 0;
+
+//            if (($search = \frontend\models\Tracking::find()->countFinders($product->id)) === null) {
+//                $search = 0;
+//            }
+//            if (($click = \frontend\models\Tracking::find()->countVisitors($product->id)) === null) {
+//                $click = 0;
+//            }
+//            if (($fav = \frontend\models\Tracking::find()->countFavourites($product->id)) === null) {
+//                $fav = 0;
+//            }
+//            if (($share = \frontend\models\Tracking::find()->countShares($product->id)) === null) {
+//                $share = 0;
+//            }
+        $search_count = $click_count = $fav_count = $share_count= 0;
+        if(count($finders["finders"]) > 0){
+            foreach ($finders["finders"] as $item) {
+                $search_count = $search_count + $item["count"];
             }
-            if (($click = \frontend\models\Tracking::find()->countVisitors($product->id)) === null) {
-                $click = 0;
+
+        }
+        if(count($visitors["visitors"]) > 0){
+            foreach ($visitors["visitors"] as $item) {
+                $click_count = $click_count + $item["count"];
             }
-            if (($fav = \frontend\models\Tracking::find()->countFavourites($product->id)) === null) {
-                $fav = 0;
+
+        }
+        if(count($favourites["saved"]) > 0){
+            foreach ($favourites["saved"] as $item) {
+                $fav_count = $fav_count + $item["count"];
             }
-            if (($share = \frontend\models\Tracking::find()->countShares($product->id)) === null) {
-                $share = 0;
+
+        }
+        if(count($shares["shares"]) > 0){
+            foreach ($shares["shares"]as $item) {
+                $share_count = $share_count + $item["count"];
             }
-            return $this->render('statistics/index', [
-                'product' => $product,
-                'visitors' => $visitors,
-                'finders' => $finders,
-                'favourites' => $favourites,
-                'shares' => $shares,
-                'view' => '_partials/finder',
-                'search_count' => $search,
-                'click_count' => $click,
-                'fav_count' => $fav,
-                'share_count' => $share,
-                'from' => $finders["from"],
-                'to' => $finders["to"],
-                'filter' => $filter
-            ]);
+
+        }
+        return $this->render('statistics/index', [
+            'product' => $product,
+            'visitors' => $visitors,
+            'finders' => $finders,
+            'favourites' => $favourites,
+            'shares' => $shares,
+            'view' => '_partials/finder',
+            'search_count' => $search_count,
+            'click_count' => $click_count,
+            'fav_count' => $fav_count,
+            'share_count' => $share_count,
+            'from' => $finders["from"],
+            'to' => $finders["to"],
+            'filter' => $filter
+        ]);
 //        }
     }
 
