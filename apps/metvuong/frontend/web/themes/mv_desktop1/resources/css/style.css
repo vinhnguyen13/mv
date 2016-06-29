@@ -11705,11 +11705,11 @@ label:hover {
     background: #FBFBFB;
 }
 #listing-list > ul > li a.vip {
-    border: 3px solid red;
+    border: 3px solid #d40000;
     border-top: none;
 }
 #listing-list > ul > li:first-child a.vip {
-    border-top: 3px solid red;
+    border-top: 3px solid #d40000;
 }
 @media (max-width: 985px) {
     #listing-list .pic-intro {
