@@ -6,12 +6,22 @@
  * Time: 1:28 PM
  */
 use vsoft\coupon\models\CouponEvent;
+use vsoft\coupon\models\CouponCode;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+use yii\web\View;
+
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_END]);
 
 $event = CouponEvent::find()->andWhere(['<','start_date',time()])->andWhere(['>','end_date',time()])->one();
 if(!empty($event)) {
+    $code = CouponCode::find()->where(['cp_event_id'=>$event->id, 'type'=>CouponCode::TYPE_MANY])->one();
     ?>
+    <p>
+        MetVuong hiện đang chạy Beta, hệ thống sẽ tặng <?=$code->amount;?> Keys <br/>
+        <a data-toggle="tooltip" data-placement="bottom" title="Sao chép đường dẫn" data-title-success="Đã sao chép" class="btn-copy" data-clipboard-text="<?=$code->code;?>">Copy mã của bạn <b><?=$code->code;?></b></a><br/>
+        Sau đó <a href="javascript:;" class="btn-coupon"><b>click vào đây</b></a>, dán mã của bạn vào để nhận Keys miễn phí từ MetVuong. <br/>
+    </p>
     <div id="coupon-dialog" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -49,6 +59,21 @@ if(!empty($event)) {
     </div>
     <script>
         $(document).ready(function () {
+            var clipboard = new Clipboard('.btn-copy');
+
+            clipboard.on('success', function(e) {
+                var txtSuccess = $(e.trigger).data('titleSuccess');
+                $('.btn-copy').tooltip("show");
+                $('.tooltip .tooltip-inner').text(txtSuccess);
+                setTimeout(function () {
+                    $('.btn-copy').tooltip("destroy");
+                },500);
+            });
+
+            $('.btn-coupon').click(function () {
+                $('#coupon-dialog .inner-popup .alert').remove();
+                $('#coupon-dialog').modal('toggle');
+            });
             $(document).on('click', '#coupon-dialog .coupon', function (e) {
                 $('.input-couple').loading({full: false});
                 $('#coupon-dialog .inner-popup .alert').remove();

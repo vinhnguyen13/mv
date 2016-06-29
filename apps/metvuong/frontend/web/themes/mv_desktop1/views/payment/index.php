@@ -14,6 +14,7 @@ $profile = Yii::$app->user->identity->profile;
 <div class="type-payment w-60">
 	<div class="innner-block">
 		<div class="title-box"><?=Yii::t('payment', 'Payment method')?></div>
+		<?= $this->render('/coupon/_partials/coupon'); ?>
 		<ul class="nav nav-tabs tab-payment" role="tablist">
 			<li role="presentation" class="active"><a href="#tab-atm" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('payment', 'Banking')?></a></li>
 			<li role="presentation" class=""><a href="#tab-thecao" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('payment','Mobile Credit')?></a></li>
