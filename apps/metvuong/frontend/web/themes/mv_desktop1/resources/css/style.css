@@ -8895,6 +8895,9 @@ margin-right: 5px;
     font-size: 27px;
     line-height: 100%;
 }
+.menuUser li a.active > div .icon-heart-icon-listing:before {
+    content: "\e91f";
+}
 .menuUser li a > div span.icon-mv .icon-barometer {
     font-size: 32px;
 }
@@ -13128,6 +13131,18 @@ ul.cardList li {
 }
 .invite-friend .inner-dash {
     padding-bottom: 150px;
+}
+.wrap-coupon {
+    background: #f3f3f3;
+    padding: 12px 15px;
+    font-style: italic;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.14);
+    -webkit-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.14);
+    -moz-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.14);
+    -ms-box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.14);
 }
 @media (max-width: 1200px) {
     .type-payment {
