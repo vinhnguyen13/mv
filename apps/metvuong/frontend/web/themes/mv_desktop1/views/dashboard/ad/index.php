@@ -42,7 +42,7 @@ $this->registerCss(".inner-popup {font-size: 14px;} .modal .hint {font-weight: 6
                         <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
                     </div>
                     <div class="inner-popup">
-                        <div id="notify-text"></div>
+                        <div class="hint" id="notify-text"></div>
                     </div>
                 </div>
             </div>

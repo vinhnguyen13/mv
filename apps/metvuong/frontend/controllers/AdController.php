@@ -920,6 +920,14 @@ class AdController extends Controller
     		$product = AdProduct::findOne($id);
     		 
     		if(isset($chargeBoost[$day]) && $product && $product->user_id == Yii::$app->user->identity->id) {
+    			$now = time();
+    			$boost_time = $day * 86400;
+    			$boost_time = $product->boost_time > $now ? $product->boost_time + $boost_time : $now + $boost_time;
+    			
+    			if($boost_time - $product->updated_at > 86400 * 30) {
+    				return ['success' => false, 'message' => sprintf(\Yii::t("listing", "Thời gian boost không được nhiều hơn 30 ngày (tối đa đến ngày %s)."), date('d-m-Y', $now + 86400 * 30))];
+    			}
+    			
     			$balance = Yii::$app->user->identity->balance;
     			
     			if($balance->amount >= $chargeBoost[$day]) {
@@ -928,6 +936,9 @@ class AdController extends Controller
 					
 					$boost_time = $day * 86400;
 					$product->boost_time = $product->boost_time ? $product->boost_time + $boost_time : time() + $boost_time;
+					if($product->boost_time > $product->end_date) {
+						$product->end_date = $product->boost_time;
+					}
 					$product->save(false);
 					
 					$transaction_code = md5(uniqid(rand(), true));
