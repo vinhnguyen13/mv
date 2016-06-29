@@ -91,7 +91,7 @@ if(!empty($event)) {
                             timer = setTimeout(function () {
                                 $('#coupon-dialog').modal('toggle');
                                 location.reload();
-                            }, 100);
+                            }, 1000);
                         }else if(data.error_code != 0){
                             $('#coupon-dialog .inner-popup').append('<div class="alert alert-info">'+data.error_message+'</div>');
                         }
