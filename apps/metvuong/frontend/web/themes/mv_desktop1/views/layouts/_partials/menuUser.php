@@ -54,6 +54,12 @@ use yii\helpers\Url;
                     </a>
                 </li>
                 <li>
+                    <a class="" href="#">
+                        <div><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span></div>
+                        Favorites
+                    </a>
+                </li>
+                <li>
                     <a data-method="post" href="<?=Url::to(['/member/logout'])?>">
                         <div><span class="icon-mv"><span class="icon-sign-out"></span></span></div>
                         <?=Yii::t('user', 'Log Out')?>

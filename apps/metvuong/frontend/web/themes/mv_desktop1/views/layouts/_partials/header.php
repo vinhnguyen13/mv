@@ -70,8 +70,13 @@ $meta->add(Yii::$app->request->absoluteUrl);
                     <li class="num-gold">
                         <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="fs-14"><span class="icon-mv mgR-5 color-gold"><span class="icon-coin-dollar"></span></span><?=$this->params['balance']?> Keys</a>
                     </li>
-                    <!-- <li><a href="<?= Url::to(['/ad/post']) ?>"><em class="icon-plus"></em>Đăng tin mới</a></li> -->
                     <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()])?>"><span class="icon-mv"><span class="icon-barometer"></span></span><?=Yii::t('ad', 'Dashboard')?></a></li>
+                    <li>
+                        <a class="pay-item <?= !empty($this->params['menuPayment']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>">
+                            <div><span class="icon-mv"><span class="icon-coin-dollar"></span></span></div>
+                            <?= Yii::t('ad', 'Payment') ?>
+                        </a>
+                    </li>
                     <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="wrapNotifyOther"><span class="icon-mv"><span class="icon-icons-bell"></span></span><?=Yii::t('activity', 'Notification')?>
                             <?php if(!empty($this->params['notify_other'])){?>
                                 <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
@@ -82,6 +87,18 @@ $meta->add(Yii::$app->request->absoluteUrl);
                                 <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
                             <?php }?>
                     </a></li>
+                    <li>
+                        <a class="invite-item <?= !empty($this->params['menuInvite']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/invite', 'username' => Yii::$app->user->identity->getUsername()])?>">
+                            <div><span class="icon-mv"><span class="icon-invite-friend"></span></span></div>
+                            <?= Yii::t('activity', 'Invite friend') ?>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="" href="#">
+                            <div><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span></div>
+                            Favorites
+                        </a>
+                    </li>
                     <li><a data-method="post" href="<?=Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->getUsername()])?>"><span class="icon-mv"><span class="icon-settings"></span></span><?=Yii::t('user', 'Setting')?></a></li>
                     <li><a data-method="post" href="<?=Url::to(['/member/logout'])?>"><span class="icon icon-logout"></span><?=Yii::t('user', 'Log Out')?></a></li>
                     <!-- <li class="flag-lang">

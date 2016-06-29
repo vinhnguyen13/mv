@@ -12441,7 +12441,7 @@ label:hover {
     }
     .tbl-emu {
         float: left;
-        /* width: 65%; */
+        width: 65%;
     }
     .tbl-emu > div {
         width: 100%;
@@ -12455,7 +12455,9 @@ label:hover {
     .wrap-tr-each {
         width: 65%;
     }
-    
+    .invite-friend .inner-tr {
+        display: block;
+    }
 }
 #frmListVisit .modal-header .close {
     width: auto;
@@ -13100,6 +13102,36 @@ ul.cardList li {
     width: 100% !important;
     z-index: 10;
 }
+.block-dash {
+    padding-left: 240px;
+}
+.inner-dash {
+    padding: 40px 0 0 30px;
+}
+.frm-invite {
+    font-size: 14px;
+    width: 50%;
+    margin-bottom: 30px;
+}
+.frm-invite textarea {
+    border-radius: 0;
+    resize: none;
+}
+.invite-friend .tbl-emu > div span {
+    white-space: inherit;
+}
+.invite-friend .wrap-tr-each .tbl-emu {
+    display: table-row;
+}
+.invite-friend .inner-tr {
+    display: table;
+}
+.invite-friend .tbl-emu > div {
+    display: table-cell;
+}
+.invite-friend .inner-dash {
+    padding-bottom: 150px;
+}
 @media (max-width: 1200px) {
     .type-payment {
         width: 90%;
@@ -13107,6 +13139,15 @@ ul.cardList li {
     }
 }
 @media (max-width: 985px) {
+    .block-dash {
+        padding-left: 0;
+    }
+    .invite-friend .inner-dash {
+        padding-left: 0;
+    }
+    .frm-invite {
+        width: 70%;
+    }
     #NLpayBank > .w-50 {
         width: 80%;
     }
@@ -13244,5 +13285,27 @@ ul.cardList li {
     }
     .bg-bank > .w-50 {
         width: 100%;
+    }
+}
+@media (max-width: 500px) {
+    .invite-friend .tbl-emu > div,
+    .invite-friend .wrap-tr-each .tbl-emu {
+        display: block;
+    }
+    .invite-friend .inner-tr {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+    }
+    .invite-friend .wrap-tr-each .tbl-emu {
+        float: left;
+    }
+    .frm-invite {
+        width: 100%;
+    }
+    .invite-friend .tbl-emu > div span {
+        white-space: nowrap;
     }
 }
