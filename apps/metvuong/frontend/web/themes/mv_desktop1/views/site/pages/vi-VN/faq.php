@@ -1,3 +1,6 @@
+<?php
+use yii\helpers\Url;
+?>
 <div class="title-fixed-wrap container">
 	<div class="page-faqs">
 		<div class="title-top"><!-- <a href="#" id="prev-page" class="hide"><span class="icon arrowRight-1"></span></a> -->NHỮNG CÂU HỎI THƯỜNG GẶP</div>
@@ -16,7 +19,7 @@
 					<br>
 				</li>
 				<li>Điền đầy đủ thông tin vào các mục bắt buộc có đánh dấu “<span style="color:#FF0000;">*</span>”</li>
-				<li>Tiêu đề và nội dung phải viết chữ có dấu, chuẩn chính tả, không viết tắt, viết trại chữ theo hình thức chat, tuổi teen, ngôn ngữ tối nghĩa và các quy định khác (có thể xem thêm ở link sau:&nbsp;<a data-cke-saved-href="http://metvuong.com/quy-dinh-su-dung" href="http://metvuong.com/quy-dinh-su-dung">http://metvuong.com/quy-dinh-su-dung</a>).</li>
+				<li>Tiêu đề và nội dung phải viết chữ có dấu, chuẩn chính tả, không viết tắt, viết trại chữ theo hình thức chat, tuổi teen, ngôn ngữ tối nghĩa và các quy định khác (có thể xem thêm ở link sau:&nbsp;<a data-cke-saved-href="<?=Url::to(['site/page', 'view'=>'terms'])?>" href="<?=Url::to(['site/page', 'view'=>'terms'])?>">http://metvuong.com/quy-dinh-su-dung</a>).</li>
 				<li>Tin đăng sau 24h sẽ được hệ thống kiểm duyệt và cho hiển thị lên trang mạng.
 					<br>
 				</li>
@@ -24,7 +27,7 @@
 			<p dir="ltr"><strong>2.&nbsp;Tại sao tôi đăng tin nhưng không thấy hiện?</strong></p>
 			<p dir="ltr">Tin bạn đã làm đúng các bước nhưng chưa thấy hiển thị trên trang, bạn vui lòng kiểm tra lại như sau:</p>
 			<ul dir="ltr">
-				<li>Về thông tin đăng: Phải dùng ngôn từ trong sáng, rõ ràng, đúng chính tả, không viết tắt, viết trại chữ theo hình thức chat, tuổi teen, ngôn ngữ tối nghĩa và các quy định khác (có thể xem thêm ở link sau:&nbsp;<a data-cke-saved-href="http://metvuong.com/quy-dinh-su-dung" href="http://metvuong.com/quy-dinh-su-dung">http://metvuong.com/quy-dinh-su-dung</a>).
+				<li>Về thông tin đăng: Phải dùng ngôn từ trong sáng, rõ ràng, đúng chính tả, không viết tắt, viết trại chữ theo hình thức chat, tuổi teen, ngôn ngữ tối nghĩa và các quy định khác (có thể xem thêm ở link sau:&nbsp;<a data-cke-saved-href="<?=Url::to(['site/page', 'view'=>'terms'])?>" href="<?=Url::to(['site/page', 'view'=>'terms'])?>">http://metvuong.com/quy-dinh-su-dung</a>).
 				<br>
 			</li>
 			<li>Kiểm tra tài khoản free (không trả phí) còn lượt đăng tin không?

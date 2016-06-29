@@ -1,3 +1,6 @@
+<?php
+use yii\helpers\Url;
+?>
 <div class="title-fixed-wrap container">
 	<div class="page-faqs">
 		<div class="title-top"><!-- <a href="#" id="prev-page" class="hide"><span class="icon arrowRight-1"></span></a> -->Q & A
@@ -17,7 +20,7 @@
 					<br>
 				</li>
 				<li>Complete information on mandatory items marked “<span style="color:#FF0000;">*</span>”</li>
-				<li>The title and content of listings should follow to spelling standards, no abbreviations, no slang of chat, no teenager writing style, obscure language and other provisions (more at the following link:&nbsp;<a data-cke-saved-href="http://metvuong.com/quy-dinh-su-dung" href="http://metvuong.com/quy-dinh-su-dung">http://metvuong.com/quy-dinh-su-dung</a>).</li>
+				<li>The title and content of listings should follow to spelling standards, no abbreviations, no slang of chat, no teenager writing style, obscure language and other provisions (more at the following link:&nbsp;<a data-cke-saved-href="<?=Url::to(['site/page', 'view'=>'terms'])?>" href="<?=Url::to(['site/page', 'view'=>'terms'])?>">http://metvuong.com/quy-dinh-su-dung</a>).</li>
 				<li>Listing will be posted after 24h and displayed on the website.
 					<br>
 				</li>
@@ -25,7 +28,7 @@
 			<p dir="ltr"><strong>2. Why my listing not appear on page after posting?</strong></p>
 			<p dir="ltr">If you followed all requirements of page but have not seen listing displayed on the page, please check the following:</p>
 			<ul dir="ltr">
-				<li>Checking your listing information: words in bright, clear, correct spelling, not abbreviations, not sland of chat camps, not teenager writing style, obscure language and other provisions (more at link:&nbsp;<a data-cke-saved-href="http://metvuong.com/quy-dinh-su-dung" href="http://metvuong.com/quy-dinh-su-dung">http://metvuong.com/quy-dinh-su-dung</a>).
+				<li>Checking your listing information: words in bright, clear, correct spelling, not abbreviations, not sland of chat camps, not teenager writing style, obscure language and other provisions (more at link:&nbsp;<a data-cke-saved-href="<?=Url::to(['site/page', 'view'=>'terms'])?>" href="<?=Url::to(['site/page', 'view'=>'terms'])?>">http://metvuong.com/quy-dinh-su-dung</a>).
 				<br>
 			</li>
 			<li>Checking listing quota in free Account
