@@ -10524,6 +10524,7 @@ input:-webkit-autofill {
     border: none;
     margin: 0;
     vertical-align: middle;
+    overflow: inherit;
 }
 .wrap-swiper .icons-detail li:first-child a {
     margin-top: 0;
@@ -11765,6 +11766,20 @@ label:hover {
 .page-about-us {
     padding-top: 50px;
     min-height: 768px;
+}
+.page-faqs p {
+    margin-bottom: 15px;
+}
+.page-faqs ul,
+.page-faqs li {
+    list-style: inherit;
+}
+.page-faqs ul {
+    padding-left: 50px;
+    margin-bottom: 15px;
+}
+.page-faqs a {
+    text-decoration: underline;
 }
 .loading-chat {
     font-size: 12px;

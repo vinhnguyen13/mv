@@ -2,139 +2,79 @@
 	<div class="page-faqs">
 		<div class="title-top"><!-- <a href="#" id="prev-page" class="hide"><span class="icon arrowRight-1"></span></a> -->NHỮNG CÂU HỎI THƯỜNG GẶP</div>
 		<div class="inner-page">
-			<ul class="clearfix list-phuluc">
-				<li>
-					<a href="#">1. Làm thế nào để đăng tin trên metvuong.com? Đăng tin thế nào nhanh nhất?<span class="pull-right icon arrowLeft-1"></span></a>
-					<div class="wrap-slide-show">
-						<div class="slide-show">
-							<div class="title-phuluc">1. Làm thế nào để đăng tin trên metvuong.com? Đăng tin thế nào nhanh nhất?</div>
-							<p class="mgB-10">Bạn truy cập vào metvuong.com, chọn địa điểm của bạn, nhấp vào biểu tượng tròn đầu người phía trên cùng bên phải màn hình để đăng ký thành viên. Khi đăng ký và kích họat tài khoản thành công, bạn sử dụng tài khoản đó để đăng nhập vào trang và đăng tin theo các bước hướng dẫn. Bạn có thể vào phần quản lý tin đăng để chỉnh sửa thông tin cùng với các quyền lợi thành viên khác của metvuong.com.</p>
-							<p class="mgB-10"><strong>Chú ý:</strong></p>
-							<p class="mgB-10 pdL-10">•   Trong quá trình đăng tin, phải thực hiện đầy đủ các thao tác theo hướng dẫn</p>
-							<p class="mgB-10 pdL-10">•   Tin đăng sau 24h sẽ được hệ thống kiểm duyệt và cho hiển thị lên trang mạng.</p>
-							<p class="mgB-10 pdL-10">•   Tiêu đề và nội dung phải viết chữ có dấu, chuẩn chính tả, không viết tắt, viết trại chữ theo hình thức chat, tuổi teen, ngôn ngữ tối nghĩa và các quy định khác (có thể xem thêm ở link sau: http://metvuong.com/quy-dinh-su-dung).</p>
-							<p class="mgB-10 pdL-10">•   Điền đầy đủ thông tin vào các mục bắt buộc có đánh dấu <span style="color:red;">“*”</span></p>
-						</div>
-					</div>
+			<p dir="ltr"><strong>1.&nbsp;Làm thế nào để đăng tin trên metvuong.com? Đăng tin thế nào nhanh nhất?</strong>
+				<br>
+			</p>
+			<p dir="ltr">Bạn truy cập vào metvuong.com, chọn địa điểm của bạn, nhấp vào biểu tượng tròn đầu người phía trên cùng bên phải màn hình để đăng ký thành viên. Khi đăng ký và kích họat tài khoản thành công, bạn sử dụng tài khoản đó để đăng nhập vào trang và đăng tin theo các bước hướng dẫn. Bạn có thể vào phần quản lý tin đăng để chỉnh sửa thông tin cùng với các quyền lợi thành viên khác của metvuong.com.
+				<br>
+			</p>
+			<p dir="ltr"><strong>Chú ý:</strong>
+				<br>
+			</p>
+			<ul dir="ltr">
+				<li>Trong quá trình đăng tin, phải thực hiện đầy đủ các thao tác theo hướng dẫn
+					<br>
 				</li>
-				<li>
-					<a href="#">2. Tại sao tôi đăng tin nhưng không thấy hiện?<span class="pull-right icon arrowLeft-1"></span></a>
-					<div class="wrap-slide-show">
-						<div class="slide-show">
-							<div class="title-phuluc">2. Tại sao tôi đăng tin nhưng không thấy hiện?</div>
-							<p class="mgB-10">Tin bạn đã làm đúng các bước nhưng chưa thấy hiển thị trên trang, bạn vui lòng kiểm tra lại như sau:</p>
-							<ul class="mgB-10" style="list-style: disc;padding-left: inherit;">
-								<li class="mgB-10" style="list-style: disc;">Về thông tin đăng: Phải dùng ngôn từ trong sáng, rõ ràng, đúng chính tả, không viết tắt, viết trại chữ theo hình thức chat, tuổi teen, ngôn ngữ tối nghĩa và các quy định khác (có thể xem thêm ở link sau: http://metvuong.com/quy-dinh-su-dung).</li>
-								<li class="mgB-10" style="list-style: disc;">Kiểm tra tài khoản free (không trả phí) còn lượt đăng tin không?</li>
-								<li class="mgB-10" style="list-style: disc;">Kiểm tra tài khoản có trả phí có còn điểm/coin không?</li>
-							</ul>
-							<p>Nếu tin của bạn không nằm trong các trường hợp trên, xin <a href="#" class="normal-link">liên hệ với metvuong.com</a></p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<a href="#">3. Tôi được phép đăng bao nhiêu tin trên website?<span class="pull-right icon arrowLeft-1"></span></a>
-					<div class="wrap-slide-show">
-						<div class="slide-show">
-							<div class="title-phuluc">3. Tôi được phép đăng bao nhiêu tin trên website?</div>
-							<p>Khi Đăng Nhập thành viên của trang, bạn sẽ được tặng miễn phí ….. lượt đăng tin,… xem tin, ….</p>
-							<p class="mgB-10">Để đảm bảo quá trình đăng tin, xem tin, chat với người mua/bán của bạn không bị gián đoạn, bạn có thể mua thêm điểm/coin theo hướng dẫn của metvuong.com.</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<a href="#">4. Đăng tin có mất phí không?<span class="pull-right icon arrowLeft-1"></span></a>
-					<div class="wrap-slide-show">
-						<div class="slide-show">
-							<div class="title-phuluc">4. Đăng tin có mất phí không?</div>
-							<p class="mgB-10">Hiện nay, metvuong.com có 2 hình thức đăng tin là miễn phí và có trả phí.</p>
-							<p class="mgB-10">Với đăng tin miễn phí, khi bạn Đăng Nhập thành viên của trang, bạn sẽ được tặng miễn phí ….. lượt đăng tin,…</p>
-							<p class="mgB-10">Với đăng tin có trả phí, tài khoản của bạn sẽ có thêm các quyền lợi sau:</p>
-							<ul class="mgB-10" style="list-style: disc;padding-left: inherit;">
-								<li class="mgB-10" style="list-style: disc;">Đăng tin: 1 tin = điểm/coin</li>
-								<li class="mgB-10" style="list-style: disc;">Xem tin:</li>
-								<li class="mgB-10" style="list-style: disc;">Chat: </li>
-								<li class="mgB-10" style="list-style: disc;">Xem thông tin người view</li>
-								<li class="mgB-10" style="list-style: disc;">Vị trí VIP</li>
-							</ul>
-						</div>
-					</div>
-				</li>
-				<li>
-					<a href="#">5. Tôi muốn tin được đăng ở vị trí VIP thì phải làm gì?<span class="pull-right icon arrowLeft-1"></span></a>
-					<div class="wrap-slide-show">
-						<div class="slide-show">
-							<div class="title-phuluc">5. Tôi muốn tin đăng được đăng vị trí VIP thì phải làm gì?</div>
-							<p class="mgB-10">Bạn có thể nạp điểm/coin vào tài khoản để có các quyền lợi :</p>
-							<ul class="mgB-10" style="list-style: disc;padding-left: inherit;">
-								<li class="mgB-10" style="list-style: disc;">Đăng tin: 1 tin = điểm/coin</li>
-								<li class="mgB-10" style="list-style: disc;">Xem tin:</li>
-								<li class="mgB-10" style="list-style: disc;">Chat: </li>
-								<li class="mgB-10" style="list-style: disc;">Xem thông tin người view</li>
-								<li class="mgB-10" style="list-style: disc;">Vị trí VIP</li>
-							</ul>
-						</div>
-					</div>
-				</li>
-				<li>
-					<a href="#">6. Nạp tiền vào tài khoản bằng cách nào?<span class="pull-right icon arrowLeft-1"></span></a>
-					<div class="wrap-slide-show">
-						<div class="slide-show">
-							<div class="title-phuluc">6. Nạp tiền vào tài khoản bằng cách nào?</div>
-							<p>Bạn làm theo hướng dẫn của metvuong.com</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<a href="#">7. Tại sao tôi nên đăng ký thành viên?<span class="pull-right icon arrowLeft-1"></span></a>
-					<div class="wrap-slide-show">
-						<div class="slide-show">
-							<div class="title-phuluc">7. Tại sao tôi nên đăng ký thành viên?</div>
-							<p class="mgB-10">Khi Đăng ký thành viên, bạn sẽ có ngay các quyền lợi :</p>
-							<ul class="mgB-10" style="list-style: disc;padding-left: inherit;">
-								<li class="mgB-10" style="list-style: disc;">Tặng miễn phí ….. lượt đăng tin</li>
-								<li class="mgB-10" style="list-style: disc;">Tặng … lượt xem tin</li>
-							</ul>
-						</div>
-					</div>
-				</li>
-				<li>
-					<a href="#">8. Đăng ký thành viên như thế nào?<span class="pull-right icon arrowLeft-1"></span></a>
-					<div class="wrap-slide-show">
-						<div class="slide-show">
-							<div class="title-phuluc">8. Đăng ký thành viên như thế nào?</div>
-							<p>Nhấp vào biểu tượng đầu người tròn trên cùng bên phải, nhấp vào Đăng ký, điền theo hướng dẫn.
-Có thể dùng tài khoản từ trang Google, Facebook có sẵn để Đăng ký</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<a href="#">9. Tại sao tôi không thể đăng nhập?<span class="pull-right icon arrowLeft-1"></span></a>
-					<div class="wrap-slide-show">
-						<div class="slide-show">
-							<div class="title-phuluc">9. Tại sao tôi không thể đăng nhập?</div>
-							<p class="mgB-10">Sau khi bạn đăng ký thành công, bạn sẽ phải vào email của mình để kích hoạt tài khoản. Khi tài khoản được kích họat, bạn mới đăng nhập được vào website.</p>
-							<p class="mgB-10">Trong trường hợp bạn không nhận được email kích hoạt, hoặc đã thực hiện thao tác kích hoạt nhưng vẫn không đăng nhập được vào website, hãy liên hệ với chúng tôi để được trợ giúp:</p>
-						</div>
-					</div>
-				</li>
-				<li>
-					<a href="#">10. Làm cách nào đổi mật khẩu?<span class="pull-right icon arrowLeft-1"></span></a>
-					<div class="wrap-slide-show">
-						<div class="slide-show">
-							<div class="title-phuluc"></div>
-						</div>
-					</div>
-				</li>
-				<li>
-					<a href="#">11. Liên hệ với Metvuong làm đối tác?<span class="pull-right icon arrowLeft-1"></span></a>
-					<div class="wrap-slide-show">
-						<div class="slide-show">
-							<div class="title-phuluc"></div>
-						</div>
-					</div>
+				<li>Điền đầy đủ thông tin vào các mục bắt buộc có đánh dấu “<span style="color:#FF0000;">*</span>”</li>
+				<li>Tiêu đề và nội dung phải viết chữ có dấu, chuẩn chính tả, không viết tắt, viết trại chữ theo hình thức chat, tuổi teen, ngôn ngữ tối nghĩa và các quy định khác (có thể xem thêm ở link sau:&nbsp;<a data-cke-saved-href="http://metvuong.com/quy-dinh-su-dung" href="http://metvuong.com/quy-dinh-su-dung">http://metvuong.com/quy-dinh-su-dung</a>).</li>
+				<li>Tin đăng sau 24h sẽ được hệ thống kiểm duyệt và cho hiển thị lên trang mạng.
+					<br>
 				</li>
 			</ul>
-		</div>
+			<p dir="ltr"><strong>2.&nbsp;Tại sao tôi đăng tin nhưng không thấy hiện?</strong></p>
+			<p dir="ltr">Tin bạn đã làm đúng các bước nhưng chưa thấy hiển thị trên trang, bạn vui lòng kiểm tra lại như sau:</p>
+			<ul dir="ltr">
+				<li>Về thông tin đăng: Phải dùng ngôn từ trong sáng, rõ ràng, đúng chính tả, không viết tắt, viết trại chữ theo hình thức chat, tuổi teen, ngôn ngữ tối nghĩa và các quy định khác (có thể xem thêm ở link sau:&nbsp;<a data-cke-saved-href="http://metvuong.com/quy-dinh-su-dung" href="http://metvuong.com/quy-dinh-su-dung">http://metvuong.com/quy-dinh-su-dung</a>).
+				<br>
+			</li>
+			<li>Kiểm tra tài khoản free (không trả phí) còn lượt đăng tin không?
+				<br>
+			</li>
+			<li>Kiểm tra tài khoản có trả phí có còn keys không?
+				<br>
+			</li>
+		</ul>
+		<p>Nếu tin của bạn không nằm trong các trường hợp trên, xin liên hệ với metvuong.com tại:</p>
+		<p dir="ltr">Điện thoại : (+84) (8) 7309 9966 - (+84) (8) 3824 6810
+			<br>
+		</p>
+		<p dir="ltr">Email: <a data-cke-saved-href="mailto:info@metvuong.com" href="mailto:info@metvuong.com">info@metvuong.com</a>
+		<br>
+	</p>
+	<p dir="ltr">
+		<a data-cke-saved-href="mailto:info@metvuong.com" href="mailto:info@metvuong.com"></a><strong>3.&nbsp;Tôi được phép đăng bao nhiêu tin trên website?</strong></p>
+		<p dir="ltr">Khi Đăng Nhập thành viên của trang, bạn sẽ được miễn phí xem tin và sử dụng coupon để đăng tin miễn phí.</p>
+		<p dir="ltr">Để đảm bảo quá trình đăng tin, xem tin, chat với người mua/bán của bạn không bị gián đoạn, bạn có thể mua thêm keys theo hướng dẫn của metvuong.com.<strong></strong>
+			<br>
+		</p>
+		<p dir="ltr"><strong>4.&nbsp;Đăng tin có mất phí không?</strong>
+			<br>
+		</p>
+		<p dir="ltr">Metvuong.com có đầy đủ các hệ thống thanh toán để tối đa hóa sự tiện lợi của bạn, chỉ cần chọn số chìa khóa bạn muốn mua và phương thức thanh toán. Mua sỉ sẽ có chiết khấu tốt hơn.
+			<br>
+		</p>
+		<p dir="ltr">Để biết thêm chi tiết, vui lòng nhấp vào biểu tượng “<span class="icon-mv mgR-5 color-gold fs-20 mgL-5"><span class="icon-coin-dollar"></span></span>đồng tiền” phía trên cùng bên phải</p>
+		<p dir="ltr"><strong>5.&nbsp;Nạp tiền vào tài khoản bằng cách nào?</strong></p>
+		<p dir="ltr">Bạn vui lòng nhấp vào biểu tượng “<span class="icon-mv mgR-5 color-gold fs-20 mgL-5"><span class="icon-coin-dollar"></span></span>đồng tiền” trong bảng điều khiển và làm theo hướng dẫn của metvuong.com
+			<br>
+		</p>
+		<p dir="ltr"><strong>6.&nbsp;Đăng ký thành viên như thế nào?</strong></p>
+		<p dir="ltr">Bạn hãy nhấp vào biểu tượng đầu người tròn trên cùng bên phải,sau đó nhấp vào Đăng ký và điền theo hướng dẫn.</p>
+		<p dir="ltr">Bạn có thể dễ dàng đăng kí thành viên với trang Google, Facebook có sẵn.
+			<br>
+		</p>
+		<p dir="ltr"><strong>7.&nbsp;Tại sao tôi không thể đăng nhập?</strong>
+			<br>
+		</p>
+		<p dir="ltr">Sau khi bạn đăng ký thành công, bạn sẽ phải vào email của mình để kích hoạt tài khoản. Khi tài khoản được kích họat, bạn mới đăng nhập được vào website.
+		<br>Trong trường hợp bạn không nhận được email kích hoạt, hoặc đã thực hiện thao tác kích hoạt nhưng vẫn không đăng nhập được vào website, hãy liên hệ với chúng tôi để được trợ giúp:</p>
+		<p>Điện thoại : (+84) (8) 7309 9966 - (+84) (8) 3824 6810
+			<br>
+		</p>
+		<p>Email&nbsp;&nbsp;&nbsp;&nbsp;: <a data-cke-saved-href="mailto:info@metvuong.com" href="mailto:info@metvuong.com">info@metvuong.com</a></p>
+		<p>
+			<br>
+		</p>
 	</div>
+</div>
 </div>

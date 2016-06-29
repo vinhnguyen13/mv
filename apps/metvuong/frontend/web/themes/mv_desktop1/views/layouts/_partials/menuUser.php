@@ -49,7 +49,7 @@ use yii\helpers\Url;
                 </li>
                 <li>
                     <a class="invite-item <?= !empty($this->params['menuInvite']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/invite', 'username' => Yii::$app->user->identity->getUsername()])?>">
-                        <div><span class="icon-mv"><span class="icon-coin-dollar"></span></span></div>
+                        <div><span class="icon-mv"><span class="icon-invite-friend"></span></span></div>
                         <?= Yii::t('activity', 'Invite friend') ?>
                     </a>
                 </li>
