@@ -102,7 +102,7 @@ if($from > 0 && $to > 0)
                         }
                         else {
                             if(this.y > 0)
-                                tooltip = '<b class="chart_result" onclick="clickTooltip(\''+this.point.url+'\')">' + this.y + ' <?=Yii::t('chart','user')?></b><br/>';
+                                tooltip = '<a href="#"><b class="chart_result" onclick="clickTooltip(\''+this.point.url+'\')">' + this.y + ' <?=Yii::t('chart','user')?> </b></a><br/>';
                             else
                                 tooltip = '<b class="chart_result">' + this.y + ' <?=Yii::t('chart','user')?></b><br/>';
                         }
