@@ -56,9 +56,9 @@ use yii\helpers\Url;
 		<p dir="ltr">Metvuong.com có đầy đủ các hệ thống thanh toán để tối đa hóa sự tiện lợi của bạn, chỉ cần chọn số chìa khóa bạn muốn mua và phương thức thanh toán. Mua sỉ sẽ có chiết khấu tốt hơn.
 			<br>
 		</p>
-		<p dir="ltr">Để biết thêm chi tiết, vui lòng nhấp vào biểu tượng “<span class="icon-mv mgR-5 fs-20 mgL-5"><span class="icon-coin-dollar"></span></span>đồng tiền” phía trên cùng bên phải</p>
+		<p dir="ltr">Để biết thêm chi tiết, vui lòng nhấp vào biểu tượng “<span class="icon-mv mgR-5 fs-20 mgL-5"><span class="icon-coin-dollar"></span></span>chìa khóa” phía trên cùng bên phải</p>
 		<p dir="ltr"><strong>5.&nbsp;Nạp tiền vào tài khoản bằng cách nào?</strong></p>
-		<p dir="ltr">Bạn vui lòng nhấp vào biểu tượng “<span class="icon-mv mgR-5 fs-20 mgL-5"><span class="icon-coin-dollar"></span></span>đồng tiền” trong bảng điều khiển và làm theo hướng dẫn của metvuong.com
+		<p dir="ltr">Bạn vui lòng nhấp vào biểu tượng “<span class="icon-mv mgR-5 fs-20 mgL-5"><span class="icon-coin-dollar"></span></span>chìa khóa” trong bảng điều khiển và làm theo hướng dẫn của metvuong.com
 			<br>
 		</p>
 		<p dir="ltr"><strong>6.&nbsp;Đăng ký thành viên như thế nào?</strong></p>
