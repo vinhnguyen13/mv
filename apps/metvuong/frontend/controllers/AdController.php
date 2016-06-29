@@ -350,6 +350,8 @@ class AdController extends Controller
     	$product = AdProduct::find()->where('id = :id AND user_id = :uid', [':id' => $id, ':uid' => Yii::$app->user->identity->id])->one();
     	
     	if($product) {
+    		$expiredEdit = ($product->created_at && $product->created_at < time() - 172800);
+    		
     		$additionInfo = $product->adProductAdditionInfo;
     		$contactInfo = $product->adContactInfo;
     		
@@ -359,6 +361,18 @@ class AdController extends Controller
     			
     			//$post['AdProductAdditionInfo']['addition_fields'] = json_encode($post['AdProductAdditionInfo']['addition_fields']);
 
+    			if($expiredEdit) {
+    				unset($post['AdProduct']['type']);
+    				unset($post['AdProduct']['category_id']);
+    				unset($post['AdProduct']['project_building_id']);
+    				unset($post['AdProduct']['city_id']);
+    				unset($post['AdProduct']['district_id']);
+    				unset($post['AdProduct']['ward_id']);
+    				unset($post['AdProduct']['street_id']);
+    				unset($post['AdProduct']['home_no']);
+    				unset($post['AdProduct']['show_home_no']);
+    			}
+    			
     			$product->load($post);
     			$additionInfo->load($post);
     			$contactInfo->load($post);
@@ -426,6 +440,7 @@ class AdController extends Controller
     					$product->adImages[$id]->delete();
     				}
     				
+    				$result['template'] = $this->renderPartial('_partials/update-success', ['product' => $product]);
     				$result['url'] = $product->urlDetail();
     			} else {
     				$result['success'] = false;
@@ -439,7 +454,7 @@ class AdController extends Controller
     			return $result;
     		}
     		 
-    		return $this->render('form', ['product' => $product, 'additionInfo' => $additionInfo, 'contactInfo' => $contactInfo]);
+    		return $this->render('form', ['product' => $product, 'additionInfo' => $additionInfo, 'contactInfo' => $contactInfo, 'expiredEdit' => $expiredEdit]);
     	}
     }
     
@@ -545,7 +560,7 @@ class AdController extends Controller
     		$contactInfo->address = Yii::$app->user->identity->profile->address;
     	}
     	
-    	return $this->render('form', ['product' => $product, 'additionInfo' => $additionInfo, 'contactInfo' => $contactInfo]);
+    	return $this->render('form', ['product' => $product, 'additionInfo' => $additionInfo, 'contactInfo' => $contactInfo, 'expiredEdit' => false]);
     }
     
     /**

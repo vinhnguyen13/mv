@@ -72,8 +72,6 @@ use vsoft\ad\models\AdImages;
 	
 	$this->registerJs("var totalImage = " . count($product->adImages) . "; var landTypeApplyFields = " . json_encode(AdCategory::$landTypeApplyFields) . "; var landType = " . json_encode(AdCategory::$landType) . "; var isNewRecord = " . ($product->isNewRecord ? 'true' : 'false') . "; var categories = " . json_encode($categoriesJs) . "; var APPLY_TO_TYPE_BOTH = " . AdCategory::APPLY_TO_TYPE_BOTH . "; var CHCK = " . AdCategory::CATEGORY_CHCK . ";", View::POS_HEAD);
 
-	$expiredEdit = ($product->created_at && $product->created_at < time() - 172800);
-	
 	$disabledCity = ($product->projectBuilding && $product->projectBuilding->city_id) || $expiredEdit;
 	$disabledDistrict = ($product->projectBuilding && $product->projectBuilding->district_id) || $expiredEdit;
 	$disabledWard = ($product->projectBuilding && $product->projectBuilding->ward_id) || $expiredEdit;
