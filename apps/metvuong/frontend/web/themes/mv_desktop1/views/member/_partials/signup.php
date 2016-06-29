@@ -23,6 +23,7 @@ $model = Yii::createObject(RegistrationForm::className());
         <button type="button" class="btn-primary btn-common btn-login" id="btn-register"><?=Yii::t('user', 'Sign Up')?></button>
     </div>
 <?php ActiveForm::end(); ?>
+
 <?= \vsoft\user\widgets\Connect::widget([
     'baseAuthUrl' => ['/user/security/auth'],
     'groupTitle' => Yii::t('user', '')

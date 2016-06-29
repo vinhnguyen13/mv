@@ -54,9 +54,9 @@
 		<p dir="ltr">Metvuong.com caters to a variety of payment system to maximize your convenience, simply select the amount of keys you want to buy, and your method of payment. The more you buy, the cheaper it is.
 			<br>
 		</p>
-		<p dir="ltr">Please click “<span class="icon-mv mgR-5 color-gold fs-20 mgL-5"><span class="icon-coin-dollar"></span></span>Key” symbol on the right to get more information.</p>
+		<p dir="ltr">Please click “<span class="icon-mv mgR-5 fs-20 mgL-5"><span class="icon-coin-dollar"></span></span>Key” symbol on the right to get more information.</p>
 		<p dir="ltr"><strong>5. How to pay?</strong></p>
-		<p dir="ltr">You click “<span class="icon-mv mgR-5 color-gold fs-20 mgL-5"><span class="icon-coin-dollar"></span></span>Key” symbol on the right  and follow the instructions of metvuong.com
+		<p dir="ltr">You click “<span class="icon-mv mgR-5 fs-20 mgL-5"><span class="icon-coin-dollar"></span></span>Key” symbol on the right  and follow the instructions of metvuong.com
 			<br>
 		</p>
 		<p dir="ltr"><strong>6. How to Register?</strong></p>

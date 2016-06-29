@@ -6374,19 +6374,17 @@ padding: 5px 0;
     .title-top {
         text-align: left;
         padding: 0 0 10px 0;
-        font-size: 21px;
+        font-size: 22px;
         background: inherit;
         border-bottom: solid 1px #00a769;
         margin: 0 0 0 0;
         font-weight: 600;
         line-height: 100%;
-        /* display: none; */
     }
-    .giao-dich .title-top,
-    .statis .title-top,
-    .profile-user .title-top,
+    .block-dash .title-top,
+    .invite-friend .title-top,
     .noti-alert .title-top,
-    .title-top {
+    .u-allduan .title-top {
         display: none;
     }
     .post-listing .title-top {
@@ -8337,7 +8335,7 @@ margin-right: 5px;
     }
     .wrap-infor-duan .info-item .address-feat {
         margin-bottom: 0;
-        padding-bottom: 0;
+        padding: 0;
     }
     .list-duan .col-left .wrap-item > a {
         width: 100%;
@@ -8371,7 +8369,7 @@ margin-right: 5px;
 }
 @media ( min-width: 640px ) and ( max-width: 985px ) {
     .infor-duan .list-duan ul {
-        margin: 0 -10px;
+        /* margin: 0 -10px; */
     }
     .wrap-duan-moi .sidebar-col .list-post > li,
     .infor-duan .list-duan ul li {
@@ -9393,7 +9391,7 @@ margin-right: 5px;
     content: "\e93a";
 }
 .icon-coin-dollar:before {
-    content: "\e92e";
+    content: "\e94c";
 }
 .icon-calendar:before {
     content: "\e92d";
@@ -10908,10 +10906,9 @@ label:hover {
         display: inline-block;
     }
     .wrap-infor-duan .bottom-feat-box {
-        padding-top: 0;
         height: 73px;
         overflow: hidden;
-        padding-bottom: 0;
+        padding: 0;
     }
     .col-right,
     .col-left {
