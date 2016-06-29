@@ -93,7 +93,9 @@ $count_product = count($products);
 	                                    </div>
 	                                </div>
 	                                <a href="#"  data-toggle="modal" data-target="#update-expired" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-expired"><?= Yii::t('statistic', 'Gia hạn tin đăng') ?></a>
-                            		<?php else: ?>
+                            		<div class="clearfix"></div>
+	                                <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor"><?=Yii::t('statistic','Xem thống kê')?></span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
+	                            	<?php else: ?>
                             		<div class="status-duan">
 	                                    <div class="wrap-icon status-get-point">
                                             <div class="mgR-5"><span class="icon icon-active-pro"></span>
