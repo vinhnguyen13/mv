@@ -1,59 +1,18 @@
 <?php 
-	use frontend\models\Tracking;
-	use vsoft\ad\models\AdImages;
-	use vsoft\express\components\StringHelper;
-	use vsoft\ad\models\AdCategory;
-	use yii\helpers\Url;
-	use vsoft\ad\models\AdProduct;
-	use yii\web\View;
-	use yii\helpers\Html;
-	use vsoft\ad\models\AdWard;
-	use yii\helpers\ArrayHelper;
-	use vsoft\ad\models\AdStreet;
-	use yii\widgets\LinkPager;
-	use common\models\AdCity;
-	use vsoft\ad\models\AdDistrict;
-	use vsoft\ad\models\AdBuildingProject;
+use yii\helpers\Url;
+use vsoft\ad\models\AdProduct;
+use yii\web\View;
+use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
+use yii\widgets\LinkPager;
 
 $categoriesDb = \vsoft\ad\models\AdCategory::getDb();
 $categories = $categoriesDb->cache(function($categoriesDb){
     return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
 });
 $types = AdProduct::getAdTypes();
+
+foreach ($products as $product):
+	echo $this->render('/ad/_partials/list-item', ['product' => $product, 'categories'=>$categories, 'types'=>$types]);
+endforeach;
 ?>
-<?php foreach ($products as $product):
-    $room_no = empty($product->adProductAdditionInfo) ? null : $product->adProductAdditionInfo->room_no;
-    $toilet_no = empty($product->adProductAdditionInfo) ? null : $product->adProductAdditionInfo->toilet_no;
-    $catType = ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) . ' ' . mb_strtolower($types[$product->type], 'utf8');
-    $alt = $catType . ' - ' . $product->getAddress($product->show_home_no);
-	?>
-<li class="col-xs-12 col-sm-6 col-lg-4">
-	<div class="item">
-		<a data-id="<?= $product->id ?>" class="clearfix" href="<?= $product->urlDetail(); ?>" title="<?= $alt ?>">
-			<div class="pic-intro">
-				<img alt="<?= $alt ?>" src="<?= $product->file_name ? AdImages::getImageUrl($product->folder, $product->file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage() ?>" />
-			</div>
-			<div class="info-item clearfix">
-				<div class="address-listing">
-					<!-- <span class="icon-mv mgR-5" style=""><span class="icon-star-full"></span></span> --><?= $product->getAddress($product->show_home_no) ?>
-				</div>
-				<p class="infor-by-up">
-					<strong><?= $catType ?></strong>
-				</p>
-				<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-				<ul class="clearfix list-attr-td">
-                    <?php if(empty($product->area) && empty($room_no) && empty($toilet_no)){ ?>
-                        <li><?=Yii::t('listing','updating')?></li>
-                    <?php } else {
-                        echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm<sup>2</sup> </li>' : '';
-                        echo $room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $room_no . ' </li>' : '';
-                        echo $toilet_no ? '<li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>' . $toilet_no . ' </li>' : '';
-                    } ?>
-				</ul>
-		        <p class="price-item"><?= StringHelper::formatCurrency($product->price) . ' ' . Yii::t('ad', 'VND') ?></p>   
-		    	<p class="date-post">đăng <?= StringHelper::previousTime($product->updated_at) ?><span class="pull-right">Điểm: 95</span></p>
-		    </div>
-		</a>
-	</div>
-</li>
-<?php endforeach; ?>
