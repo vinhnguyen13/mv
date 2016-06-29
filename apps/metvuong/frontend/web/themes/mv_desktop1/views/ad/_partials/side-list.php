@@ -101,11 +101,6 @@
 					    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['start_date']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?= $product['score'] ?></span></p>
 					    </div>
 					</a>
-			        <?php /* tracking finder
-				        if($product->user_id != Yii::$app->user->id && isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
-				            Tracking::find()->productFinder(Yii::$app->user->id, (int)$product->id, time());
-				        }
-				    */ ?>
 				</div>
 			</li>
 			<?php endforeach; ?>
