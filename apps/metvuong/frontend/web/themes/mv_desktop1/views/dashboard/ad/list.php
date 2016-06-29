@@ -102,9 +102,9 @@ $count_product = count($products);
                                             </div>
                                             <strong><?= Yii::t('statistic', 'Active Project') ?></strong>
                                         </div>
-                                        <?php $day_number = !empty($product->expired && $product->expired > 0) ? $product->expired : 0; ?>
-                                        <p class="expired"><?= Yii::t('statistic', 'Expired in the last') ?>
-                                            <strong><?= $day_number > 1 ? $day_number . " " . Yii::t('statistic', 'days') : $day_number . " " . Yii::t('statistic', 'day') ?></strong>
+                                        <?php // $day_number = !empty($product->expired && $product->expired > 0) ? $product->expired : 0; ?>
+                                        <p class="expired"><?= Yii::t('statistic', 'Exipire on') ?>
+                                            <strong><?= date("d-m-Y", $product->end_date) ?></strong>
                                         </p>
                                         <?php if($product->boost_time > $now): ?>
                                         <p class="expired"><?= Yii::t('statistic', 'Được boost đến') ?>
