@@ -19,7 +19,7 @@ if(!empty($event)) {
     ?>
     <div class="wrap-coupon bg-warning">
         <p class="mgB-5">MetVuong hiện đang chạy Beta, hệ thống sẽ tặng <b><?=intval($code->amount);?></b> Keys</p>
-        <p class="mgB-5"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Sao chép đường dẫn" data-title-success="Đã sao chép" class="btn-copy" data-clipboard-text="<?=$code->code;?>">Copy mã của bạn <b><?=$code->code;?></b></a></p>
+        <p class="mgB-5"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Sao chép key" data-title-success="Đã sao chép" class="btn-copy" data-clipboard-text="<?=$code->code;?>">Copy mã của bạn <b><?=$code->code;?></b></a></p>
         <p class="mgB-5">Sau đó <a href="javascript:;" class="btn-coupon text-decor"><b>click vào đây</b></a>, dán mã của bạn vào để nhận Keys miễn phí từ MetVuong.</p>
     </div>
     <div id="coupon-dialog" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
