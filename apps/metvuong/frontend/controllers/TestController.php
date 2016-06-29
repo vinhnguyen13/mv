@@ -213,6 +213,40 @@ class TestController extends \yii\web\Controller
         Yii::$app->cache->flush();
     }
 
+    public function actionChart($pid, $index){
+        for($i = $index; $i >= 0; $i-- ){
+            $useDate = new \DateTime(date('Y-m-d', time()));
+            $f = date_format($useDate, 'Y-m-d 00:00:00');
+            $dateFrom = new \DateTime($f);
+            $from = strtotime("-$i days", $dateFrom->getTimestamp());
+
+
+
+            $rid2 = rand(2, 4);
+            for($i2 = $rid2; $i2 >= 0; $i2-- ) {
+                $uid = rand(0, 30);
+                Tracking::find()->productVisitor($uid, $pid, $from);
+            }
+
+            $rid3 = rand(1, 3);
+            for($i3 = $rid3; $i3 >= 0; $i3-- ) {
+                $uid = rand(0, 30);
+                Tracking::find()->productShare($uid, $pid, $from, 2);
+            }
+
+            $rid = (($rid2 > $rid3) ? $rid2 : $rid3) + 1;
+            for($i1 = $rid; $i1 >= 0; $i1-- ) {
+                $uid = rand(0, 30);
+                Tracking::find()->productFinder($uid, $pid, $from);
+            }
+
+        }
+        echo "<pre>";
+        print_r(999);
+        echo "</pre>";
+        exit;
+    }
+
     public function actionInfo(){
         echo "<pre>";
         print_r(phpinfo());
