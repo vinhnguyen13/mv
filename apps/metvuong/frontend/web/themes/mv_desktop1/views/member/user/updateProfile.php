@@ -232,7 +232,7 @@ Yii::t('time','week');
             </section>
             <section class="lang">
                 <div class="title-update-tt">
-                    NGÔN NGỮ        
+                    <?=Yii::t('profile', "LANGUAGE")?>
                 </div>
                 <div class="mgT-15">
                     <a href="<?=Url::current(['language-change'=>'en-US'])?>" class="d-ib mgR-10"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/flag-en.png' ?>" alt=""></a>
