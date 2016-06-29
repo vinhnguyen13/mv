@@ -211,7 +211,7 @@ class DashboardController extends Controller
                 $data = Chart::find()->getDataFinder($id, $from, $to);
                 $infoData = empty($data) ? null : $data["infoData"];
                 $favourites = empty($infoData["finders"]) ? null : $infoData["finders"];
-                $html = "<li>finders</li>";
+//                $html = "<li>finders</li>";
             } else if ($view == "visitors"){
                 $data = Chart::find()->getDataVisitor($id, $from, $to);
                 $infoData = empty($data) ? null : $data["infoData"];
