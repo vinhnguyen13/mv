@@ -232,7 +232,7 @@ $count_review = $reviews->count();
 					<li class="color-1">
 						<a href="#" data-toggle="tooltip" data-placement="bottom" title="<?= Yii::t('ad', 'Copy link') ?>" data-title-success="<?= Yii::t('ad', 'Copied') ?>" class="btn-copy" data-clipboard-text="<?= $product->urlDetail(true) ?>">
 							<span class="icon-mv"><span class="icon-link"></span></span>
-							<span><?= Yii::t('ad', 'Copy link 1') ?></span>
+							<span><?= Yii::t('ad', 'Copy link') ?></span>
 						</a>
 					</li>
 					<li class="color-2">
