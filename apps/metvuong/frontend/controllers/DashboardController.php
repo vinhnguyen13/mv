@@ -449,4 +449,15 @@ class DashboardController extends Controller
             return $this->render('invite/index');
         }
     }
+
+    public function actionFavorite()
+    {
+        $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuFavorite' => true, 'isDashboard' => true], $this->view->params);
+        $this->checkAccess();
+        if(Yii::$app->request->isAjax) {
+            return $this->renderAjax('favorite/index');
+        } else {
+            return $this->render('favorite/index');
+        }
+    }
 }
