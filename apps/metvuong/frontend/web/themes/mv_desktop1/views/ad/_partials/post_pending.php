@@ -16,15 +16,15 @@ use vsoft\ad\models\AdProduct;
 <div class="notify" style="margin-top: 12px;">
 	<table class="notify-table" style="font-size: 15px;">
   	<tbody><tr>
-      <td class="notify-table-label">Mã tin:</td>
+      <td class="notify-table-label"><?= Yii::t('ad', 'ID') ?>:</td>
       <td>MV<?= $product->id ?></td>
     </tr>
   	<tr>
-      <td class="notify-table-label">Đường dẫn:</td>
+      <td class="notify-table-label"><?= Yii::t('ad', 'Link') ?>:</td>
       <td><a href="<?= Url::to(['/mv'.$product->id], true) ?>"><?= Url::to(['/mv'.$product->id], true) ?></a></td>
     </tr>
   	<tr>
-      <td class="notify-table-label">Địa chỉ BĐS:</td>
+      <td class="notify-table-label"><?= Yii::t('ad', 'Địa chỉ') ?>:</td>
       <td><?= $product->getAddress() ?></td>
     </tr>
   </tbody></table>
