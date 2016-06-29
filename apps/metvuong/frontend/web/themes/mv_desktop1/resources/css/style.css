@@ -890,6 +890,7 @@ label {
     /* margin-bottom: 7px; */
     display: inline-block;
     vertical-align: middle;
+    line-height: 100%;
 }
 .infor-by-up strong {
     font-weight: 600;
@@ -4151,7 +4152,7 @@ html.mm-opening .mm-slideout {
     color: #000;
 }
 .price-attr {
-    margin: 7px 0 8px 0;
+    margin: 9px 0 10px 0;
 }
 #listing-list .info-item .price-item {
     border: none;
@@ -4403,6 +4404,7 @@ html.mm-opening .mm-slideout {
     overflow: hidden;
     white-space: nowrap;
     color: #00a769;
+    line-height: 100%;
 }
 #listing-list .address-listing {
     margin-bottom: 5px;
@@ -4420,6 +4422,8 @@ html.mm-opening .mm-slideout {
     font-weight: 400;
     font-size: 13px;
     float: right;
+    line-height: 100%;
+    margin-top: 5px;
 }
 .id-duan span {
     font-weight: 600;
@@ -7294,7 +7298,6 @@ padding: 5px 0;
 }
 @media ( max-width: 640px ) {
     #listing-list .list-attr-td {
-        margin: 5px 0 10px 0;
     }
 }
 #listing-list > ul {
@@ -11500,9 +11503,11 @@ label:hover {
     .right-attr-detail {
         overflow: visible !important;
     }
-    .id-duan {
-        float: none;
+    #listing-list .info-item .price-item {
         margin-bottom: 10px;
+    }
+    .price-attr {
+        margin-bottom: 5px;
     }
     .list-attr-td {
         overflow: hidden;
@@ -11727,9 +11732,13 @@ label:hover {
     }
     #listing-list > ul > li {
         margin-bottom: 30px;
+        padding: 0 10px;
     }
     #listing-list > ul {
-        margin: 0;
+        margin: 0 -10px;
+    }
+    #listing-list .info-item .price-item {
+        font-size: 17px;
     }
 }
 @media (max-width: 985px) {
