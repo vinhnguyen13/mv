@@ -292,7 +292,7 @@ $count_review = $reviews->count();
 				</div>
 
 				<?php
-                    echo $this->renderAjax('/ad/_partials/shareEmail', [
+                    echo $this->render('/ad/_partials/shareEmail', [
                         'popup_email_name' => 'popup_email_contact',
                         'pid' => $product->id,
                         'uid' => $product->user_id,
