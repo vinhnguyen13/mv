@@ -242,7 +242,7 @@ $meta->add(Yii::$app->request->absoluteUrl);
         </div>
     </div>
 </div>
-<div id="popup-signup" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<!-- <div id="popup-signup" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -257,19 +257,23 @@ $meta->add(Yii::$app->request->absoluteUrl);
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <script>
     $(document).ready(function () {
-        $(document).on('click', '.user-login-link', function (e) {
-            /*if(checkMobile()){
-                return true;
-            }*/
+        $(document).on('click', '.user-login-link, .user-signup-link', function (e) {
             e.preventDefault();
+            var url = '';
+            if ( $(this).hasClass('user-login-link') ) {
+                url = "<?=Url::to(['/member/login'])?>";
+            }else {
+                url = "<?=Url::to(['/member/signup'])?>";
+            }
             $('body').loading();
             $.ajax({
                 type: "get",
-                url: "<?=Url::to(['/member/login'])?>",
+                url: url,
                 success: function (data) {
+                    console.log(data);
                     $('body').loading({done: true});
                     $('#popup-login .wrap-body-popup').html(data);
                     $('#popup-login').modal('show');
@@ -278,22 +282,20 @@ $meta->add(Yii::$app->request->absoluteUrl);
 
         });
 
-        $(document).on('click', '.user-signup-link', function (e) {
-            /*if(checkMobile()){
-                return true;
-            }*/
+        /*$(document).on('click', '.user-signup-link', function (e) {
             e.preventDefault();
             $('body').loading();
             $.ajax({
                 type: "get",
                 url: "<?=Url::to(['/member/signup'])?>",
                 success: function (data) {
+                    console.log(data);
                     $('body').loading({done: true});
                     $('#popup-signup .wrap-body-popup').html(data);
                     $('#popup-signup').modal('show');
                 }
             });
-        });
+        });*/
 
         $('.guest-dropdown').dropdown({
             styleShow: 0,

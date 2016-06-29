@@ -5,12 +5,13 @@ use yii\helpers\Url;
 
 $model = Yii::createObject(RegistrationForm::className());
 ?>
+
 <?php $form = ActiveForm::begin([
     'id' => 'signup-form',
     'action' => Url::to(['/member/signup']),
     'options' => ['class' => 'frmIcon']
 ]); ?>
-    <div class="form-group">
+    <!-- <div class="form-group">
         <input type="password" style="display:none">
         <?= $form->field($model, 'email')->textInput(['class' => 'form-control', 'placeholder' => Yii::t('user', 'Email')])->label(false) ?>
     </div>
@@ -21,7 +22,7 @@ $model = Yii::createObject(RegistrationForm::className());
     </div>
     <div class="footer-modal clearfix">
         <button type="button" class="btn-primary btn-common btn-login" id="btn-register"><?=Yii::t('user', 'Sign Up')?></button>
-    </div>
+    </div> -->
 <?php ActiveForm::end(); ?>
 
 <?= \vsoft\user\widgets\Connect::widget([

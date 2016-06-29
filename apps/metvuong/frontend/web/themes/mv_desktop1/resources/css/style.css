@@ -3923,6 +3923,7 @@ html.mm-opening .mm-slideout {
     /* width: 47%; */
     margin-right: 10px;
 }
+.signup,
 .signin,
 .field-login-form-rememberme,
 .forgot-pass a {
@@ -4404,7 +4405,7 @@ html.mm-opening .mm-slideout {
     overflow: hidden;
     white-space: nowrap;
     color: #00a769;
-    line-height: 100%;
+    line-height: 19px;
 }
 #listing-list .address-listing {
     margin-bottom: 5px;
