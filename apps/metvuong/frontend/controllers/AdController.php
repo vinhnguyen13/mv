@@ -985,7 +985,7 @@ class AdController extends Controller
     						
     						$template = $this->renderPartial('/dashboard/ad/list', ['products' => [$product]]);
     						
-    						return ['success' => true, 'message' => \Yii::t("listing", "Tin đã được kích hoạt thành công."), 'template' => $template];
+    						return ['success' => true, 'amount' => $balance->amount, 'message' => \Yii::t("listing", "Tin đã được kích hoạt thành công."), 'template' => $template];
     					} else {
     						return $this->render('update-status', ['balance' => $balance, 'product' => $product, 'template' => 'post_success']);
     					}

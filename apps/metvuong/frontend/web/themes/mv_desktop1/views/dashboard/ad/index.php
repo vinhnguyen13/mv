@@ -4,7 +4,7 @@ use yii\web\View;
 use yii\helpers\Url;
 use vsoft\ad\models\AdProduct;
 
-$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard-listing.js', ['position' => View::POS_END]);
+$this->registerCss(".inner-popup {font-size: 14px;} .modal .hint {font-weight: 600;} .show-key {margin: 12px 0px 0px 12px;} .show-key li:first-child {margin-bottom: 6px;} .strong {font-size: 15px; font-weight: 700; color: #000;}");
 ?>
 <div class="title-fixed-wrap container">
 	<div class="u-allduan">
@@ -64,7 +64,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
                     <div class="bottom-popup">
                         <div class="text-right">
                             <a href="#" class="btn-cancel btn close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing', 'Cancel')?></a>
-                            <a href="<?= Url::to(['/payment/index']) ?>" class="btn-common btn"><?=Yii::t('listing', 'Nạp keys')?></a>
+                            <a href="<?= Url::to(['/payment/index', 'redirect' => Url::current()]) ?>" class="btn-common btn"><?=Yii::t('listing', 'Nạp keys')?></a>
                         </div>
                     </div>
                 </div>
@@ -82,9 +82,10 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
                         <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
                     </div>
                     <div class="inner-popup">
-                        <ul style="font-size: 15px; color: #333; margin-bottom: 20px;">
-							<li style="margin-bottom: 8px;"><?= sprintf(Yii::t("ad", "Số keys của bạn: %s keys"), '<strong class="current-key">' . Yii::$app->user->identity->balance->amount . '</strong>') ?></li>
-							<li><?= sprintf(Yii::t("ad", "Phí kích hoạt tin đăng là %s keys. Sau khi kích hoạt tin đăng sẽ có thời hạn là %s ngày."), '<strong class="charge-post">' . AdProduct::CHARGE_POST . '</strong>', '<strong>30</strong>') ?></li>
+                    	<div class="hint"><?= sprintf(Yii::t("ad", "Phí đăng tin là %s keys. Sau khi đăng tin, tin sẽ có thời hạn là %s ngày."), '<strong class="charge strong">' . AdProduct::CHARGE_POST . '</strong>', '<strong class="strong">30</strong>') ?></div>
+                        <ul class="show-key">
+							<li><?= sprintf(Yii::t("ad", "Số keys hiện tại: %s keys"), '<strong class="current-key strong"></strong>') ?></li>
+							<li><?= sprintf(Yii::t("ad", "Số keys sau khi đăng tin: %s keys"), '<strong class="after-key strong"></strong>') ?></li>
 						</ul>
                     </div>
                     <div class="bottom-popup">
@@ -108,11 +109,12 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
                         <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
                     </div>
                     <div class="inner-popup">
-                        <ul style="font-size: 15px; color: #333; margin-bottom: 20px;">
-							<li style="margin-bottom: 8px;"><?= sprintf(Yii::t("ad", "Số keys của bạn: %s keys"), '<strong class="current-key">' . Yii::$app->user->identity->balance->amount . '</strong>') ?></li>
-							<li><?= sprintf(Yii::t("ad", "Phí gia hạn tin đăng là %s keys. Sau khi gia hạn tin đăng sẽ có thời hạn là %s ngày."), '<strong class="charge-expired">' . AdProduct::CHARGE_POST . '</strong>', '<strong>30</strong>') ?></li>
+                    	<div class="hint"><?= sprintf(Yii::t("ad", "Phí gia hạn tin đăng là %s keys. Sau khi gia hạn tin đăng sẽ có thời hạn là %s ngày."), '<strong class="charge strong">' . AdProduct::CHARGE_POST . '</strong>', '<strong class="strong">30</strong>') ?></div>
+                        <ul class="show-key">
+							<li><?= sprintf(Yii::t("ad", "Số keys hiện tại: %s keys"), '<strong class="current-key strong"></strong>') ?></li>
+							<li><?= sprintf(Yii::t("ad", "Số keys sau khi gia hạn: %s keys"), '<strong class="after-key strong"></strong>') ?></li>
 						</ul>
-                    </div>
+                    </div>                    
                     <div class="bottom-popup">
                         <div class="text-right">
                             <a href="#" class="btn-cancel btn close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing', 'Cancel')?></a>
@@ -135,18 +137,18 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
                     </div>
                     <div class="inner-popup">
                         <form id="boostListing">
-                        	<div style="margin-bottom: 12px;"><?= sprintf(Yii::t("ad", "Số keys của bạn: %s keys"), '<strong class="current-key">' . Yii::$app->user->identity->balance->amount . '</strong>') ?></div>
-                            <p class="font-600 mgB-10"><?=Yii::t('listing', 'Duration')?> <span class="icon-mv mgL-5 tooltip-show" data-placement="right" title="<?=Yii::t('listing', 'Choose how long you want your promotion to run')?>"><span class="icon-info-circle"></span></span></p>
-                            <div class="clearfix mgB-15">
+                        	<span class="charge hide"><?= AdProduct::CHARGE_BOOST_3 ?></span>
+                        	<div class="hint" style="margin-bottom: 8px;"><?= Yii::t('listing', 'Choose how long you want your promotion to run')?></div>
+                        	<div class="clearfix mgB-15">
                                 <ul class="days-up">
                                     <li>
                                         <label class="radio-inline radio-ui active">
-                                            <input type="radio" name="upgrade-time" id="" value="1" checked="checked"> <?= sprintf(Yii::t("", "%s ngày (%s keys)"), '<span class="day">1</span>', '<span class="key">' . AdProduct::CHARGE_BOOST_1 . '</span>') ?>
+                                            <input type="radio" name="upgrade-time" id="" value="7" checked="checked"> <?= sprintf(Yii::t("", "%s ngày (%s keys)"), '<span class="day">3</span>', '<span class="key">' . AdProduct::CHARGE_BOOST_3 . '</span>') ?>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="radio-inline radio-ui">
-                                            <input type="radio" name="upgrade-time" id="" value="7"> <?= sprintf(Yii::t("", "%s ngày (%s keys)"), '<span class="day">3</span>', '<span class="key">' . AdProduct::CHARGE_BOOST_3 . '</span>') ?>
+                                            <input type="radio" name="upgrade-time" id="" value="1"> <?= sprintf(Yii::t("", "%s ngày (%s keys)"), '<span class="day">1</span>', '<span class="key">' . AdProduct::CHARGE_BOOST_1 . '</span>') ?>
                                         </label>
                                     </li>
                                 </ul>
@@ -158,6 +160,10 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
                                     <input type="text" class="date-picker" readonly='true' />
                                 </div>
                             </div>
+                            <ul class="show-key">
+								<li><?= sprintf(Yii::t("ad", "Số keys hiện tại: %s keys"), '<strong class="current-key strong"></strong>') ?></li>
+								<li><?= sprintf(Yii::t("ad", "Số keys sau khi boost: %s keys"), '<strong class="after-key strong"></strong>') ?></li>
+							</ul>
                         </form>
                     </div>
                     <div class="bottom-popup">
@@ -178,6 +184,65 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
 ?>    
 <script>
 	$(document).ready(function () {
+
+		function showKey(popup, e, self) {
+			var currentKey = balance.get();
+			var charge = Number(popup.find('.charge').text());
+
+			if(currentKey < charge) {
+				$('#charge').modal('toggle');
+				
+				e.preventDefault();
+				e.stopPropagation();
+			} else {
+				popup.find('.current-key').text(currentKey);
+				popup.find('.after-key').text(currentKey - charge);
+
+				popup.find('.btn-common').data('id', self.data('product'));
+			}
+		}
+		
+		$('.wrap-list-duan').on('click', '.btn-active, .btn-expired, .btn-boost', function(e){
+			var self = $(this);
+			
+			showKey($(self.data('target')), e, self);
+		});
+
+		$('.btn-active-listing, .btn-update-expired, .btn-boost-listing').click(function(e){
+			e.preventDefault();
+
+			$('body').loading();
+
+			var self = $(this);
+			var id = self.data('id');
+			var get = {id: id};
+
+			if(self.hasClass('btn-boost-listing')) {
+				var closest = $('.days-up').find('input:checked').closest('.radio-ui');
+				var day = Number(closest.find('.day').text());
+				
+				get.day = day;
+			}
+			
+			$.get(self.attr('href'), get, function(r){
+				$('body').loading({done: true});
+				
+				if(r.success) {
+					$('#p-' + id).replaceWith(r.template);
+					
+					balance.update(r.amount);
+				} else {
+					$('#notify-text').text(r.message);
+					$('#notify').modal().show();
+				}
+				
+				$('#' + self.closest('.popup-common').attr('id')).modal('hide');
+			});
+		});
+
+		$('#update-boost').on('hidden.bs.modal', function () {
+			$(this).find('.radio-ui').eq(0).trigger('click');
+		});
 
         $(document).bind('boost/form_process', function (event, days, rebuildPicker) {
             var checkMoney = days + ' ' + ((days > 1) ? lajax.t('days') :  lajax.t('day'));
@@ -228,7 +293,11 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
 
         $('.days-up li .radio-ui').radio({
             done: function (item) {
-                $(document).trigger('boost/form_process', [$(item).val(), true]);
+                var charge = Number($(item).closest('.radio-ui').find('.key').text());
+                var boostL = $('#boostListing');
+                
+                boostL.find('.charge').text(charge);
+                boostL.find('.after-key').text(balance.get() - charge);
             }
         });
 
