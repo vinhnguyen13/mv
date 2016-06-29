@@ -18,9 +18,9 @@ if(!empty($event)) {
     $code = CouponCode::find()->where(['cp_event_id'=>$event->id, 'type'=>CouponCode::TYPE_MANY])->one();
     ?>
     <div class="wrap-coupon">
-        MetVuong hiện đang chạy Beta, hệ thống sẽ tặng <b><?=intval($code->amount);?></b> Keys <br/>
-        <a data-toggle="tooltip" data-placement="bottom" title="Sao chép đường dẫn" data-title-success="Đã sao chép" class="btn-copy" data-clipboard-text="<?=$code->code;?>">Copy mã của bạn <b><?=$code->code;?></b></a><br/>
-        Sau đó <a href="javascript:;" class="btn-coupon"><b>click vào đây</b></a>, dán mã của bạn vào để nhận Keys miễn phí từ MetVuong. <br/>
+        <p class="mgB-5">MetVuong hiện đang chạy Beta, hệ thống sẽ tặng <b><?=intval($code->amount);?></b> Keys</p>
+        <p class="mgB-5"><a data-toggle="tooltip" data-placement="bottom" title="Sao chép đường dẫn" data-title-success="Đã sao chép" class="btn-copy" data-clipboard-text="<?=$code->code;?>">Copy mã của bạn <b><?=$code->code;?></b></a></p>
+        <p class="mgB-5">Sau đó <a href="javascript:;" class="btn-coupon"><b>click vào đây</b></a>, dán mã của bạn vào để nhận Keys miễn phí từ MetVuong.</p>
     </div>
     <div id="coupon-dialog" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">

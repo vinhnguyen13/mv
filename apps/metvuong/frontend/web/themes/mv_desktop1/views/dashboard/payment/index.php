@@ -7,8 +7,10 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
         <div class="wrap-giao-dich">
             <div class="title-gd mgB-15"><?=Yii::t('payment', 'Your balance')?></div>
             <div class="mgB-30">
-                <?=Yii::t('payment', 'Remaining Keys')?>: <span class="d-ib mgL-20 font-700"><span class="icon-mv mgR-5 color-gold fs-20"><span class="icon-coin-dollar"></span></span><?=number_format($this->params['balance'])?> Keys</span>
-                <a href="javascript:alert('Comming soon!');" class="d-ib btn mgL-20 pdT-5 pdB-5 font-600 fs-13 deposit"><?=Yii::t('payment', 'Buy Keys')?></a>
+                <div class="mgB-20">
+                    <?=Yii::t('payment', 'Remaining Keys')?>: <span class="d-ib mgL-20 font-700"><span class="icon-mv mgR-5 color-gold fs-20"><span class="icon-coin-dollar"></span></span><?=number_format($this->params['balance'])?> Keys</span>
+                    <a href="javascript:alert('Comming soon!');" class="d-ib btn mgL-20 pdT-5 pdB-5 font-600 fs-13 deposit"><?=Yii::t('payment', 'Buy Keys')?></a>
+                </div>
                 <?= $this->render('/coupon/_partials/coupon'); ?>
             </div>
             <div class="title-gd mgB-5"><?=Yii::t('payment', 'Transaction history')?></div>

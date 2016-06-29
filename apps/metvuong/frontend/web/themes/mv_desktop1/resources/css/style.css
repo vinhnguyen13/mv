@@ -13024,12 +13024,8 @@ ul.cardList li {
     margin-bottom: 15px;
 }
 .site-error {
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
     padding-top: 55px;
+    min-height: 768px;
 }
 .wrap_404 {
     height: 100%;

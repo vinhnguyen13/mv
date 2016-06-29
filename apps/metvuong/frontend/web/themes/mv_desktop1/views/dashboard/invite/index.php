@@ -23,6 +23,9 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
 						<label for="">Nội dung:</label>
 						<textarea name="" id="" class="form-control w-100"></textarea>
 					</div>
+					<div class="text-right">
+						<button class="btn-common text-uper btn-bd-radius">invite</button>
+					</div>
 	    		</form>
 	    	</div>
 	    	<div class="tbl-wrap clearfix">
