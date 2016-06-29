@@ -6385,6 +6385,7 @@ padding: 5px 0;
         font-weight: 600;
         line-height: 100%;
     }
+    .statis .title-top,
     .block-dash .title-top,
     .invite-friend .title-top,
     .noti-alert .title-top,
@@ -12422,7 +12423,7 @@ label:hover {
     padding: 15px 10px;
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
+    /* white-space: nowrap; */
 }
 @media (max-width: 985px) {
     .giao-dich {
@@ -13126,13 +13127,13 @@ ul.cardList li {
 .invite-friend .tbl-emu > div span {
     white-space: inherit;
 }
-.invite-friend .wrap-tr-each .tbl-emu {
+.wrap-tr-each .tbl-emu {
     display: table-row;
 }
-.invite-friend .inner-tr {
+.wrap-tr-each .inner-tr {
     display: table;
 }
-.invite-friend .tbl-emu > div {
+.wrap-tr-each .tbl-emu > div {
     display: table-cell;
 }
 .invite-friend .inner-dash {

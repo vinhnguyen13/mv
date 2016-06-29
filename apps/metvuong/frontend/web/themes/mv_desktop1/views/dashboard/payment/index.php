@@ -18,9 +18,10 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
                 <div class="thead clearfix">
                     <div class="pull-left w-10"><span><?=Yii::t('payment', 'ID')?></span></div>
                     <div class="pull-left w-15"><span><?=Yii::t('payment', 'Date/Time')?></span></div>
-                    <div class="pull-left w-30"><span><?=Yii::t('payment', 'Type')?></span></div>
-                    <div class="pull-left w-20"><span><?=Yii::t('payment', 'Status')?></span></div>
-                    <div class="pull-left w-25"><span><?=Yii::t('payment', 'Keys value')?></span></div>
+                    <div class="pull-left w-15"><span><?=Yii::t('payment', 'Type')?></span></div>
+                    <div class="pull-left w-15"><span><?=Yii::t('payment', 'Status')?></span></div>
+                    <div class="pull-left w-15"><span><?=Yii::t('payment', 'Keys value')?></span></div>
+                    <div class="pull-left w-30"><span>Note</span></div>
                 </div>
                 <?php
                 if(count($transactions) > 0) {
@@ -32,11 +33,12 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
                         $amount = $transaction->amount;
                         ?>
                         <div class="clearfix tbl-emu swiper-slide">
-                            <div class="pull-left w-10"><span><?=$transaction->id?></span></div>
-                            <div class="pull-left w-15"><span><?=date('d/m/Y, H:i', $transaction->created_at)?></span></div>
-                            <div class="pull-left w-30"><span><?=\vsoft\ec\models\EcTransactionHistory::getObjectType($transaction->object_type)?></span></div>
-                            <div class="pull-left w-20"><span class="color-cd"><?=\vsoft\ec\models\EcTransactionHistory::getTransactionStatus($transaction->status)?></span></div>
-                            <div class="pull-left w-25"><span><?= $amount > 1 ? $amount." Keys" : $amount." Key" ?></span></div>
+                            <div class="w-10"><span><?=$transaction->id?></span></div>
+                            <div class="w-15"><span><?=date('d/m/Y, H:i', $transaction->created_at)?></span></div>
+                            <div class="w-15"><span><?=\vsoft\ec\models\EcTransactionHistory::getObjectType($transaction->object_type)?></span></div>
+                            <div class="w-15"><span class="color-cd"><?=\vsoft\ec\models\EcTransactionHistory::getTransactionStatus($transaction->status)?></span></div>
+                            <div class="w-15"><span><?= $amount > 1 ? $amount." Keys" : $amount." Key" ?></span></div>
+                            <div class="w-30"><span>abc</span></div>
                         </div>
                     <?php }
                     ?>
