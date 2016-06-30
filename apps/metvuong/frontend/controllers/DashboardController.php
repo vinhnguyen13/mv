@@ -424,7 +424,7 @@ class DashboardController extends Controller
     							'user_id'=>Yii::$app->user->identity->id,
     							'object_id'=>$product->id,
     							'object_type'=>Transaction::OBJECT_TYPE_UPDATE_EXPIRED,
-    							'amount'=>AdProduct::CHARGE_POST,
+    							'amount'=>-AdProduct::CHARGE_POST,
     							'balance'=>$balance->amount,
     							'status'=>Transaction::STATUS_SUCCESS,
     					]);

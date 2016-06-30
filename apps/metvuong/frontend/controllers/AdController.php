@@ -544,7 +544,7 @@ class AdController extends Controller
 						'user_id'=>Yii::$app->user->identity->id,
 						'object_id'=>$product->id,
 						'object_type'=>Transaction::OBJECT_TYPE_POST,
-						'amount'=>AdProduct::CHARGE_POST,
+						'amount'=> -AdProduct::CHARGE_POST,
 						'balance'=>$balance->amount,
 						'status'=>Transaction::STATUS_SUCCESS,
     				]);
@@ -947,7 +947,7 @@ class AdController extends Controller
 							'user_id'=>Yii::$app->user->identity->id,
 							'object_id'=>$product->id,
 							'object_type'=>Transaction::OBJECT_TYPE_BOOST,
-							'amount'=>$chargeBoost[$day],
+							'amount'=>-$chargeBoost[$day],
 							'balance'=>$balance->amount,
 							'status'=>Transaction::STATUS_SUCCESS,
 					]);
@@ -986,7 +986,7 @@ class AdController extends Controller
     							'user_id'=>Yii::$app->user->identity->id,
     							'object_id'=>$product->id,
     							'object_type'=>Transaction::OBJECT_TYPE_POST,
-    							'amount'=>AdProduct::CHARGE_POST,
+    							'amount'=>-AdProduct::CHARGE_POST,
     							'balance'=>$balance->amount,
     							'status'=>Transaction::STATUS_SUCCESS,
     					]);

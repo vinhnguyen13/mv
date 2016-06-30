@@ -16,6 +16,23 @@ use vsoft\ad\models\AdProduct;
 
 class Elastic
 {
+	public static $acronyms = [
+		'hcm,hồ chí minh',
+		'hn,hà nội',
+		'cmt8,cách mạng tháng tám',
+		'xvnt,xô viết nghệ tĩnh',
+		'ntmk,nguyễn thị minh khai',
+		'hagl,hoàng anh gia lai',
+		'1,một',
+		'2,hai',
+		'quận 1,quận nhất',
+	];
+	
+	public static $synonyms = [
+		'1' => 'một',
+		'2' => 'hai',
+	];
+	
     protected $client = null;
     public function __construct(){
         $this->connect();
