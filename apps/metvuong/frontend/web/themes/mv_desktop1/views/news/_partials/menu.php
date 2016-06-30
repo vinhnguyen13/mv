@@ -10,7 +10,7 @@ Yii::t('news', 'Economy');
 <div class="title-top clearfix">
     <h2><?=Yii::t('news','NEWS')?></h2>
 </div>
-<div class="list-menu-news" style="width: 500px;">
+<!-- <div class="list-menu-news" style="width: 500px;">
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
@@ -39,4 +39,4 @@ Yii::t('news', 'Economy');
             preventClicks: false
         });
     });
-</script>
+</script> -->

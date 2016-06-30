@@ -6674,7 +6674,7 @@ footer li a {
         position: static;
         border: none;
         display: block;
-        float: left;
+        /* float: left; */
         width: auto;
     }
     .list-menu-news a {
