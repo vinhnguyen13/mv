@@ -418,7 +418,7 @@ $.fn.dropdown = function (options) {
                     selectItem(itemList, _this);
                 }
             }else { // absolute
-                $('.box-dropdown').find('.val-selected').removeClass('active');
+                //$('.box-dropdown').find('.val-selected').removeClass('active');
                 $('.box-dropdown').find('.dropdown-up-style').removeClass('active');
                 $('.box-dropdown').find('.dropdown-up-style').addClass('hide');
                 sc.settings.closeCallBack();
