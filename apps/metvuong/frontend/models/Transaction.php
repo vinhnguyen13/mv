@@ -11,6 +11,7 @@ namespace frontend\models;
 
 use vsoft\ec\models\EcTransactionHistory;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 class Transaction extends EcTransactionHistory
 {
@@ -28,7 +29,7 @@ class Transaction extends EcTransactionHistory
             $transactionMv = new Transaction();
             $transactionMv->created_at = time();
         }
-        $transactionMv->attributes = $data;
+        $transactionMv->setAttributes($data, false);
         $transactionMv->validate();
         if(!$transactionMv->hasErrors()) {
             return $transactionMv->save();

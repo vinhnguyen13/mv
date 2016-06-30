@@ -208,15 +208,18 @@ class Payment extends Component
             $amout = intval($coupon_history->couponCode->amount);
             $balance = Yii::$app->user->identity->getBalance();
             $balanceValue = !empty($balance->amount) ? ($balance->amount + $amout) : $amout;
-            Transaction::me()->saveTransaction($transaction_code, [
+            $checkUpdate = Transaction::me()->saveTransaction($transaction_code, [
                 'code'=>$transaction_code,
                 'user_id'=>Yii::$app->user->identity->id,
-                'object_id'=>$coupon_history->id,
+                'object_id'=>$coupon_history->couponCode->id,
                 'object_type'=>Transaction::OBJECT_TYPE_GET_KEYS_FROM_COUPON,
                 'amount'=>$amout,
                 'balance'=>$balanceValue,
                 'status'=>Transaction::STATUS_SUCCESS,
             ]);
+            if($checkUpdate == true){
+                $this->updateBalance(Yii::$app->user->id, $amout);
+            }
             $transaction->commit();
             return true;
         } catch (\Exception $e) {
