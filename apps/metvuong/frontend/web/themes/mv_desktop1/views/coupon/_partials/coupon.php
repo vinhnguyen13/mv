@@ -11,7 +11,7 @@ use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 use yii\web\View;
 
-Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_END]);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_HEAD]);
 
 $event = CouponEvent::find()->andWhere(['<','start_date',time()])->andWhere(['>','end_date',time()])->one();
 if(!empty($event)) {
@@ -83,7 +83,7 @@ if(!empty($event)) {
                     url: '<?=\yii\helpers\Url::to(['/coupon/process'])?>',
                     data: $('#frmCoupon').serialize(),
                     success: function (data) {
-                        $('#coupon-dialog .modal-dialog').css('width', '300px');
+                        //$('#coupon-dialog .modal-dialog').css('width', '300px');
                         if(data.error_code == 0){
                             $('#coupon-dialog .inner-popup').append('<div class="alert alert-info">'+data.result+'</div>');
                             $('.code').val('');

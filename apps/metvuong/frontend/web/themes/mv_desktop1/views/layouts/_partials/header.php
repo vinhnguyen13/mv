@@ -273,7 +273,6 @@ $meta->add(Yii::$app->request->absoluteUrl);
                 type: "get",
                 url: url,
                 success: function (data) {
-                    console.log(data);
                     $('body').loading({done: true});
                     $('#popup-login .wrap-body-popup').html(data);
                     $('#popup-login').modal('show');
