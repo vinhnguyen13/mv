@@ -111,10 +111,11 @@ class Chart extends Component
     }
 
     private function pushDataToChart($adProductTypes, $defaultData, $dateRange, $view, $pid){
-        if(!empty($adProductTypes)){
+        if(count($adProductTypes) > 0){
             $tmpDataByPid = [];
             $infoData = [];
             $infoSaved = array();
+
             foreach($adProductTypes as $k => $item){
                 $day = date(self::DATE_FORMAT, $item->time);
                 $color = '#00a769';
@@ -139,7 +140,8 @@ class Chart extends Component
                     $tmpDataByPid[$key]['data'] = $defaultData;
                 }
                 $kDate = array_search($day, $dateRange);
-                $tmpDataByPid[$key]['data'][$kDate]['y']++;
+                $counting = $tmpDataByPid[$key]['data'][$kDate]['y'];
+                $tmpDataByPid[$key]['data'][$kDate]['y'] = $counting + 1;
                 $tmpDataByPid[$key]['data'][$kDate]['url'] = Url::to(['/dashboard/clickchart', 'id'=>$pid, 'date'=>$dateRange[$kDate], 'view'=>$view]);
                 $tmpDataByPid[$key]['color'] = $color;
                 $tmpDataByPid[$key]['type'] = $typeChart;
@@ -152,16 +154,15 @@ class Chart extends Component
 
                     if (array_key_exists($username, $infoSaved)) {
                         $cc = $infoSaved[$username]['count'];
-                        $cc = ($cc + 1);
+                        $cc = $cc + 1;
                         $infoSaved[$username] = [
                             'count' => $cc,
                             'avatar' => $avatar,
                             'email' => $email
                         ];
                     } else {
-                        $cc = 1;
                         $infoSaved[$username] = [
-                            'count' => $cc,
+                            'count' => 1,
                             'avatar' => $avatar,
                             'email' => $email
                         ];
@@ -254,12 +255,17 @@ class Chart extends Component
         $dateTo = new \DateTime($t);
         $to = $dateTo->getTimestamp();
 
-        $dataFinders = $this->getDataFinder($id, $from, $to);
+//        $to = new \DateTime(date('Y-m-d', $from));
+//        $t = date_format($to, 'Y-m-d 23:59:59');
+//        $dateTo = new \DateTime($t);
+//        $to = $dateTo->getTimestamp();
 //        echo "<pre>";
-//        print_r($id.PHP_EOL.$from.PHP_EOL.$to);
-//        print_r($dataFinders);
+//        print_r(date('d-m-Y H:i:s', $from));
+//        print_r(date('d-m-Y H:i:s', $to));
 //        echo "<pre>";
 //        exit();
+        $dataFinders = $this->getDataFinder($id, $from, $to);
+
         if($dataFinders != false) {
             $infoDataFinders = empty($dataFinders) ? null : $dataFinders["infoData"];
             if (!empty($infoDataFinders) && isset($infoDataFinders["finders"])) {

@@ -14,6 +14,7 @@ use vsoft\tracking\models\base\AdProductVisitor;
 use frontend\models\User;
 use Yii;
 use yii\db\mssql\PDO;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
 use vsoft\ad\models\AdBuildingProject;
@@ -220,23 +221,28 @@ class TestController extends \yii\web\Controller
             $dateFrom = new \DateTime($f);
             $from = strtotime("-$i days", $dateFrom->getTimestamp());
 
-
+            $uid_arr = Yii::$app->db->cache(function(){
+                return ArrayHelper::getColumn(User::find()->select(['id'])->orderBy(['id' => SORT_ASC])->limit(30)->asArray()->all(), 'id');
+            });
 
             $rid2 = rand(2, 4);
             for($i2 = $rid2; $i2 >= 0; $i2-- ) {
-                $uid = rand(0, 30);
+//                $uid = rand(1, 30);
+                $uid = $uid_arr[array_rand($uid_arr, 1)];
                 Tracking::find()->productVisitor($uid, $pid, $from);
             }
 
             $rid3 = rand(1, 3);
             for($i3 = $rid3; $i3 >= 0; $i3-- ) {
-                $uid = rand(0, 30);
+//                $uid = rand(1, 30);
+                $uid = $uid_arr[array_rand($uid_arr, 1)];
                 Tracking::find()->productShare($uid, $pid, $from, 2);
             }
 
             $rid = (($rid2 > $rid3) ? $rid2 : $rid3) + 1;
             for($i1 = $rid; $i1 >= 0; $i1-- ) {
-                $uid = rand(0, 30);
+//                $uid = rand(1, 30);
+                $uid = $uid_arr[array_rand($uid_arr, 1)];
                 Tracking::find()->productFinder($uid, $pid, $from);
             }
 

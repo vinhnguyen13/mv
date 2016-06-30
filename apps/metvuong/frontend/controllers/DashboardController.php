@@ -113,13 +113,18 @@ class DashboardController extends Controller
 //            if (($share = \frontend\models\Tracking::find()->countShares($product->id)) === null) {
 //                $share = 0;
 //            }
-        $search_count = $click_count = $fav_count = $share_count= 0;
+
+        $search_count = 0;
+        $click_count = 0;
+        $fav_count = 0;
+        $share_count= 0;
         if(count($finders["finders"]) > 0){
             foreach ($finders["finders"] as $item) {
                 $search_count = $search_count + $item["count"];
             }
 
         }
+
         if(count($visitors["visitors"]) > 0){
             foreach ($visitors["visitors"] as $item) {
                 $click_count = $click_count + $item["count"];
