@@ -85,18 +85,18 @@ class Tracking extends Component
         if($this->checkAccess()) {
             $time = !empty($time) ? $time : time();
             $query = AdProductVisitor::find();
-            $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
+            $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:00", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
             $query->andWhere(['user_id' => $uid]);
             $query->andWhere(['product_id' => (int)$pid]);
             $query->orderBy('time DESC');
             $adProductVisitor = $query->one();
-            if ($adProductVisitor === null) {
+            if (count($adProductVisitor) > 0) {
+                $adProductVisitor->count++;
+            } else {
                 $adProductVisitor = new AdProductVisitor();
                 $adProductVisitor->user_id = $uid;
                 $adProductVisitor->product_id = (int)$pid;
                 $adProductVisitor->count = 1;
-            } else {
-                $adProductVisitor->count++;
             }
             $adProductVisitor->time = $time;
             $adProductVisitor->device = $this->getMobileDetect();
@@ -109,12 +109,14 @@ class Tracking extends Component
         if($this->checkAccess()) {
             $time = !empty($time) ? $time : time();
             $query = AdProductShare::find();
-            $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
+            $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:00", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
             $query->andWhere(['user_id' => $uid]);
             $query->andWhere(['product_id' => (int)$pid]);
             $query->orderBy('time DESC');
             $adProductShare = $query->one();
-            if ($adProductShare === null) {
+            if (count($adProductShare) > 0) {
+                $adProductShare->count++;
+            } else {
                 $adProductShare = new AdProductShare();
                 $adProductShare->user_id = $uid;
                 $adProductShare->product_id = (int)$pid;
@@ -122,8 +124,6 @@ class Tracking extends Component
                 $adProductShare->time = $time;
                 $adProductShare->device = $this->getMobileDetect();
                 $adProductShare->type = $type;
-            } else {
-                $adProductShare->count++;
             }
             $adProductShare->save();
             return !empty($return) ? $adProductShare : true;
@@ -135,17 +135,18 @@ class Tracking extends Component
         if($this->checkAccess()) {
             $time = !empty($time) ? $time : time();
             $query = AdProductFinder::find();
-            $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:01", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
+            $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:00", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
             $query->andWhere(['user_id' => $uid]);
             $query->andWhere(['product_id' => (int)$pid]);
             $query->orderBy('time DESC');
-            if (($adProductFinder = $query->one()) === null) {
+            $adProductFinder = $query->one();
+            if (count($adProductFinder) > 0) {
+                $adProductFinder->count++;
+            } else {
                 $adProductFinder = new AdProductFinder();
                 $adProductFinder->user_id = $uid;
                 $adProductFinder->product_id = (int)$pid;
                 $adProductFinder->count = 1;
-            } else {
-                $adProductFinder->count++;
             }
             $adProductFinder->time = $time;
             $adProductFinder->device = $this->getMobileDetect();
