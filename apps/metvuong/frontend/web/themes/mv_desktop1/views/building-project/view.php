@@ -8,13 +8,15 @@ $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_
 //$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
 $this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
 
+$description = strip_tags($model->description);
+$description = html_entity_decode($description, ENT_HTML5, 'utf-8');
 Yii::$app->view->registerMetaTag([
     'name' => 'keywords',
     'content' => $model->location
 ]);
 Yii::$app->view->registerMetaTag([
     'name' => 'description',
-    'content' => $model->description
+    'content' => $description
 ]);
 
 Yii::$app->view->registerMetaTag([
@@ -23,7 +25,7 @@ Yii::$app->view->registerMetaTag([
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:description',
-    'content' => $model->description
+    'content' => $description
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:type',
@@ -217,7 +219,7 @@ echo $this->render('/ad/_partials/shareSocial',[
         function fbShare(url, title, descr, image, winWidth, winHeight) {
             var winTop = (screen.height / 2) - (winHeight / 2);
             var winLeft = (screen.width / 2) - (winWidth / 2);
-            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url)+ '&p[images][0]=' + image, 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
+            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(url)+ '&p[title]=<?=$model->location?>&p[images][0]=' + image, 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
         }
 
         $('.share-facebook').click(function (){
