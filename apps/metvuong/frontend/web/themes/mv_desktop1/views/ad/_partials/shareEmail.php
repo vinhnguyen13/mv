@@ -34,6 +34,15 @@ use yii\helpers\Url;
                             'action' => Url::to(['/ad/sendmail'])
                         ]);
 
+                        $product = null;
+                        if(isset($pid) && !empty($pid)) {
+                            $product = AdProduct::getDb()->cache(function () use ($pid) {
+                                return AdProduct::find()->where('id = :pid', [':pid' => $pid])->one();
+                            });
+                            $address = $product->getAddress();
+                            $share_form->content = Yii::t('send_email', 'I am interested in') . ' ' . $address . ', ' . Yii::t('send_email','please get back to me as soon as possible with futher information. Thank you!');
+                        }
+
                         if(isset($params['your_email']) && $params['your_email'] == false && !empty($yourEmail)) {
                             echo $f->field($share_form, 'your_email')->hiddenInput(['class'=>'your_email', 'value'=> $yourEmail])->label(false);
                         } else { ?>
@@ -41,10 +50,6 @@ use yii\helpers\Url;
                             <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'value' => isset($params['setValueFromEmail']) ? $yourEmail : "", 'placeholder'=>Yii::t('send_email', 'From email')])->label(false) ?>
                         </div>
                         <?php }
-
-//                        if(isset($params['recipient_email']) && $params['recipient_email'] == false && !empty($recipientEmail)) {
-//                            echo $f->field($share_form, 'recipient_email')->hiddenInput(['class'=>'recipient_email', 'value'=> $recipientEmail])->label(false);
-//                        } else {
                         ?>
                         <div class="frm-item frm-email">
                             <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'value'=> $recipientEmail, 'placeholder'=>Yii::t('send_email', 'To email ...')])->label(false) ?>
@@ -53,19 +58,18 @@ use yii\helpers\Url;
                         <div class="frm-item frm-email hide">
                             <?= $f->field($share_form, 'subject')->hiddenInput(['class'=>'subject2', 'placeholder'=>Yii::t('send_email', 'Subject...')])->label(false)?>
                         </div>
+
                         <div class="frm-item frm-email">
                             <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('send_email', 'Content...')])->label(false) ?>
                         </div>
+
                         <div class="item-send">
                             <?php
                             echo $f->field($share_form, 'type')->hiddenInput(['class' => 'type', 'value'=> 'contact'])->label(false);
                             echo $f->field($share_form, 'from_name')->hiddenInput(['class' => 'from_name', 'value'=> (isset($from_name) && !empty($from_name)) ? $from_name : null])->label(false);
                             echo $f->field($share_form, 'to_name')->hiddenInput(['class' => 'to_name', 'value'=>(isset($to_name) && !empty($to_name)) ? $to_name : null])->label(false);
 
-                            if(isset($pid) && !empty($pid)){
-                                $product = AdProduct::getDb()->cache(function() use($pid){
-                                    return AdProduct::find()->where('id = :pid', [':pid' => $pid])->one();
-                                });
+                            if(isset($pid) && !empty($pid) && $product->id > 0){
                                 $categories = \vsoft\ad\models\AdCategory::getDb()->cache(function(){
                                     return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
                                 });
@@ -83,7 +87,6 @@ use yii\helpers\Url;
                                     }
                                 }
 
-                                $address = $product->getAddress();
                                 $category = ucfirst(Yii::t('ad', $categories[$product->category_id]['name'], null, Yii::$app->language)). " " .mb_strtolower(Yii::t('ad', $product_type, null, Yii::$app->language));
                                 $area = $product->area;
                                 $adProductAdditionInfo = $product->adProductAdditionInfo;
@@ -95,13 +98,15 @@ use yii\helpers\Url;
                                 if (!filter_var($imageUrl, FILTER_VALIDATE_URL))
                                     $imageUrl = Yii::$app->urlManager->hostInfo . $product->representImage;
                                 $detailUrl = $product->urlDetail(true);
+
+
                             ?>
                             <div class="img-show"><div><a href="<?= $detailUrl ?>"><img src="<?= $imageUrl ?>" alt="<?=$address?>"></a></div></div>
                             <div class="infor-send">
                                 <p class="name"><a href="<?= $detailUrl ?>"><?=$address?></a></p>
                                 <p class="address"></p>
                                 <p class="description"><?=StringHelper::truncate($product->content, 150)?></p>
-                                <p class="send-by">BY METVUONG.COM</p>
+                                <p class="send-by"><?=Yii::t('send_email','BY')?> METVUONG.COM</p>
                             </div>
                                 <?= $f->field($share_form, 'pid')->hiddenInput(['class' => 'pid', 'value'=> Yii::$app->params['listing_prefix_id'] . $pid])->label(false); ?>
                                 <?= $f->field($share_form, 'uid')->hiddenInput(['class' => '_address', 'value'=>$user_id])->label(false) ?>
@@ -128,7 +133,7 @@ use yii\helpers\Url;
                                     <p class="name"><a href="<?= Url::to(["building-project/view", 'slug'=>$project->slug], true) ?>"><?=$project_name ?></a></p>
                                     <p class="address"></p>
                                     <p><?=$description ?></p>
-                                    <p class="send-by">BY METVUONG.COM</p>
+                                    <p class="send-by"><?=Yii::t('send_email','BY')?> METVUONG.COM</p>
                                 </div>
                                 <?= $f->field($share_form, 'category')->hiddenInput(['class' => 'category', 'value'=>$description])->label(false) ?>
                                 <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=> $project_name ])->label(false) ?>
