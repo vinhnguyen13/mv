@@ -12618,6 +12618,9 @@ label:hover {
     background: #ececec;
     color: #3c3c3c;
     /* cursor: default; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .option-view-stats li a.btn-visitor {
     background: #a94442;
@@ -13347,5 +13350,16 @@ ul.cardList li {
     }
     .invite-friend .tbl-emu > div span {
         white-space: nowrap;
+    }
+    .wrap-tr-each .inner-tr {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+    }
+    .wrap-tr-each .tbl-emu > div,
+    .wrap-tr-each .tbl-emu {
+        display: block;
     }
 }
