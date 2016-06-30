@@ -25,6 +25,7 @@ use yii\db\Query;
 use yii\helpers\Url;
 use yii\web\Application as WebApplication;
 use yii\web\IdentityInterface;
+use vsoft\ec\models\EcStatisticView;
 
 /**
  * User ActiveRecord model.
@@ -535,6 +536,16 @@ class User extends \dektrium\user\models\User
     {
         $username = !empty($username) ? $username : $this->username;
         return Url::to(['/chat/with', 'username'=>$username]);
+    }
+    
+
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getStatisticView()
+    {
+    	return $this->hasOne(EcStatisticView::className(), ['user_id' => 'id']);
     }
     
     /**

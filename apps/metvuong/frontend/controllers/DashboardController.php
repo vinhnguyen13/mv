@@ -27,6 +27,7 @@ use yii\web\View;
 use frontend\components\Controller;
 use vsoft\ad\models\AdProduct;
 use frontend\models\Transaction;
+use vsoft\ec\models\EcStatisticView;
 
 class DashboardController extends Controller
 {
@@ -41,6 +42,84 @@ class DashboardController extends Controller
     public function actionIndex()
     {
         $this->redirect(Url::to(['dashboard/ad']));
+    }
+    
+    public function actionAcceptViewStatistics() {
+    	$statisticView = Yii::$app->user->identity->statisticView;
+    	$now = time();
+    	
+    	if(!($redirect = \Yii::$app->request->get('redirect'))) {
+    		$redirect = Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()]);
+    	}
+    	
+    	if($statisticView) {
+    		if($statisticView->end_at < $now) {
+    			$balance = Yii::$app->user->identity->balance;
+    			
+    			if($balance->amount >= EcStatisticView::CHARGE) {
+    				$transaction = $balance->getDb()->beginTransaction();
+    				try {
+    					$statisticView->start_at = $now;
+    					$statisticView->end_at = $now + (EcStatisticView::LIMIT_DAY * 86400);
+    					$statisticView->save();
+    					
+    					$balance->amount -= EcStatisticView::CHARGE;
+    					$balance->save();
+    					
+    					$transaction_code = md5(uniqid(rand(), true));
+    					Transaction::me()->saveTransaction($transaction_code, [
+    							'code'=>$transaction_code,
+    							'user_id'=>Yii::$app->user->identity->id,
+    							'object_id'=>$statisticView->id,
+    							'object_type'=>Transaction::OBJECT_TYPE_DASHBOARD,
+    							'amount'=>-EcStatisticView::CHARGE,
+    							'balance'=>$balance->amount,
+    							'status'=>Transaction::STATUS_SUCCESS,
+    					]);
+    					 
+    					$transaction->commit();
+    				} catch(Exception $e) {
+    					$transaction->rollback();
+    				}
+    			}
+    		}
+    	} else {
+    		$balance = Yii::$app->user->identity->balance;
+    		
+    		if($balance->amount >= EcStatisticView::CHARGE) {
+    			$transaction = $balance->getDb()->beginTransaction();
+    			
+    			try {
+    				$statisticView = new EcStatisticView();
+	    			$statisticView->start_at = $now;
+	    			$statisticView->end_at = $now + (EcStatisticView::LIMIT_DAY * 86400);
+	    			$statisticView->user_id = Yii::$app->user->identity->id;
+    				$statisticView->save();
+    				
+    				$balance->amount -= EcStatisticView::CHARGE;
+    				$balance->save();
+    				
+    				$transaction_code = md5(uniqid(rand(), true));
+    				Transaction::me()->saveTransaction($transaction_code, [
+    						'code'=>$transaction_code,
+    						'user_id'=>Yii::$app->user->identity->id,
+    						'object_id'=>$statisticView->id,
+    						'object_type'=>Transaction::OBJECT_TYPE_DASHBOARD,
+    						'amount'=>-EcStatisticView::CHARGE,
+    						'balance'=>$balance->amount,
+    						'status'=>Transaction::STATUS_SUCCESS,
+    				]);
+    			
+    				$transaction->commit();
+    			} catch(Exception $e) {
+    				$transaction->rollback();
+    			}
+    		} else {
+    			return $this->redirect(Url::to(['/payment/index', 'redirect' => $redirect]));
+    		}
+    	}
+    	
+    	return $this->redirect($redirect);
     }
 
     public function actionStatistics()
@@ -58,6 +137,25 @@ class DashboardController extends Controller
 //        }
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Url::to(['member/login']));
+        }
+        
+        
+        $statisticView = Yii::$app->user->identity->statisticView;
+        $balance = Yii::$app->user->identity->balance;
+        $message = '';
+        
+        if(!$statisticView) {
+        	$message = 'Sử dụng trình thống kê thông minh của MetVuong sẽ giúp bạn biết được những khách hàng tiềm năng và có thể liên hệ trực tiếp với họ. Giúp bạn theo dõi được tính hiệu quả của tin đăng từ đó có thể cải thiện tin đăng và nhanh chóng bán được sản phẩm.';
+        } else if($statisticView->end_at < time()) {
+        	$message = 'Thời gian xem thống kê đã hết hạn, bạn cần phải nạp phí để tiếp tục.';
+        }
+        
+        if($message) {
+        	return $this->render('statistics/notify', [
+        		'balance' => $balance,
+        		'statisticView' => $statisticView,
+        		'message' => $message
+        	]);
         }
 
         $id = (int)Yii::$app->request->get("id");
