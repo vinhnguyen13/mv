@@ -4133,6 +4133,7 @@ html.mm-opening .mm-slideout {
     display: inline-block;
     vertical-align: middle;
     margin-bottom: 0;
+    padding-top: 2px;
 }
 .price-item {
     text-transform: uppercase;

@@ -177,13 +177,10 @@ $this->registerCss(".inner-popup {font-size: 14px;} .modal .hint {font-weight: 6
         </div>
     </div>
 </div>
-
-<?php 
-    $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/custom-datepicker.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'jquery-ui');
-    Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery-ui.js', ['position'=>View::POS_END]);
-?>    
 <script>
 	$(document).ready(function () {
+
+        $('.popup-common').appendTo('body');
 
 		function showKey(popup, e, self) {
 			var currentKey = balance.get();
@@ -244,7 +241,7 @@ $this->registerCss(".inner-popup {font-size: 14px;} .modal .hint {font-weight: 6
 			$(this).find('.radio-ui').eq(0).trigger('click');
 		});
 
-        $(document).bind('boost/form_process', function (event, days, rebuildPicker) {
+        /*$(document).bind('boost/form_process', function (event, days, rebuildPicker) {
             var checkMoney = days + ' ' + ((days > 1) ? lajax.t('days') :  lajax.t('day'));
             $('.check-money').find('.day').html(checkMoney);
             var total_budget = $('.total_budget').val();
@@ -288,7 +285,8 @@ $this->registerCss(".inner-popup {font-size: 14px;} .modal .hint {font-weight: 6
                 money: '₫<strong class="money">'+$('.total_budget').val()+'</strong>',
                 day: '<strong class="day">1 '+lajax.t('day')+'</strong>',
                 end: '<strong class="date">'+$.datepicker.formatDate( "M dd, yy", $(".date-picker").datepicker("getDate") )+'</strong>'
-        }));
+        }));*/
+
         $(document).trigger('boost/form_process', [1, true]);
 
         $('.days-up li .radio-ui').radio({
