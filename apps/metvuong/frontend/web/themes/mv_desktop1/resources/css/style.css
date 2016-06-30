@@ -7832,7 +7832,7 @@ padding: 5px 0;
     margin-bottom: 15px;
 }
 .chudautu-infor .wrap-img {
-    /* width: 200px; */
+    width: 200px;
     /* border: 1px solid #BDBDBD; */
     margin-right: 20px;
 }
@@ -8374,7 +8374,7 @@ margin-right: 5px;
 }
 @media ( min-width: 640px ) and ( max-width: 985px ) {
     .infor-duan .list-duan ul {
-        /* margin: 0 -10px; */
+        margin: 0 -10px;
     }
     .wrap-duan-moi .sidebar-col .list-post > li,
     .infor-duan .list-duan ul li {
