@@ -661,26 +661,25 @@ class MemberController extends Controller
         return $response['files'] = array();
     }
 
-    public function actionDeleteImage($orginal, $thumbnail, $deleteLater = false, $folder = 'avatar') {
+    public function actionDeleteImage($orginal, $thumbnail, $folder = 'avatar') {
         $this->checkAccess();
         Yii::$app->response->format = Response::FORMAT_JSON;
-        if(!$deleteLater) {
-            $dir = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder;
-            if($orginal != "default-avatar.jpg" && $thumbnail != "default-avatar.thumb.jpg")
-            {
-                if(file_exists($dir . DIRECTORY_SEPARATOR . $orginal))
-                    unlink($dir . DIRECTORY_SEPARATOR . $orginal);
-                if(file_exists($dir . DIRECTORY_SEPARATOR . $thumbnail))
-                    unlink($dir . DIRECTORY_SEPARATOR . $thumbnail);
-                $model = Yii::createObject([
-                    'class' => ProfileForm::className(),
-                    'scenario' => 'updateavatar',
-                ]);
 
-                return $model->updateAvatar(null);
-            }
+        if($orginal == "default-avatar.jpg" && $thumbnail == "default-avatar.thumb.jpg"){
+            return 'default-avatar';
         }
-        return false;
+
+        $dir = \Yii::getAlias('@store') . DIRECTORY_SEPARATOR . $folder;
+        if(file_exists($dir . DIRECTORY_SEPARATOR . $orginal))
+            unlink($dir . DIRECTORY_SEPARATOR . $orginal);
+        if(file_exists($dir . DIRECTORY_SEPARATOR . $thumbnail))
+            unlink($dir . DIRECTORY_SEPARATOR . $thumbnail);
+        $model = Yii::createObject([
+            'class' => ProfileForm::className(),
+            'scenario' => 'updateavatar',
+        ]);
+
+        return $model->updateAvatar(null);
     }
 
 }

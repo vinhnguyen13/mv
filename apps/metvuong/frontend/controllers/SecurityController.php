@@ -14,6 +14,7 @@ namespace frontend\controllers;
 use dektrium\user\Finder;
 use frontend\models\Account;
 use dektrium\user\models\LoginForm;
+use frontend\models\Profile;
 use frontend\models\User;
 use dektrium\user\Module;
 use dektrium\user\traits\AjaxValidationTrait;
@@ -145,7 +146,18 @@ class SecurityController extends Controller
                 Yii::$app->session->setFlash('danger', Yii::t('user', 'Your account has been blocked.'));
                 $this->action->successUrl = Url::to(['/user/security/login']);
             } else {
-                Yii::$app->user->login($account->user, $this->module->rememberFor);
+                if(Yii::$app->user->login($account->user, $this->module->rememberFor)) {
+                    $profile = Yii::$app->user->identity->profile;
+                    if (!empty($profile) && (empty($profile->avatar) || strpos($profile->avatar, "default-avatar") || !file_exists(Yii::getAlias('@store') . "/avatar/" . $profile['avatar']))) {
+                        if (isset($account['client_id']) && isset($account['user_id'])) {
+                            $img = Profile::get_facebook_user_avatar($account['client_id'], $account['user_id']);
+                            if ($profile->avatar != $img[0]) {
+                                $profile->avatar = empty($img[0]) ? null : $img[0];
+                                $profile->save(false);
+                            }
+                        }
+                    }
+                }
                 $this->action->successUrl = Yii::$app->getUser()->getReturnUrl();
             }
         } else {

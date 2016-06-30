@@ -121,4 +121,48 @@ class Profile extends ActiveRecord
     {
         return !empty($this->name) ? $this->name : $this->user->email;
     }
+
+    public static function get_facebook_user_avatar($fbId, $uid){
+        // fix get link SSL
+        $arrContextOptions=array(
+            "ssl"=>array(
+                "verify_peer"=>false,
+                "verify_peer_name"=>false,
+            ),
+        );
+        $img = file_get_contents("https://graph.facebook.com/" . $fbId . "/picture?type=large", false, stream_context_create($arrContextOptions));
+        $dir = \Yii::getAlias('@store') . "/avatar";
+        $orginal = "u_". $uid. "_" . $fbId . ".jpg";
+        $thumbnail = "u_". $uid. "_" . $fbId . ".thumb.jpg";
+        $orginalPath = $dir. "/" . $orginal;
+        $thumbnailPath = $dir. "/". $thumbnail;
+        $org_result = file_put_contents($orginalPath, $img);
+        $thumb_result = file_put_contents($thumbnailPath, $img);
+        if($org_result > 0 && $thumb_result > 0){
+            return [$orginal, $thumbnail];
+        }
+        return null;
+    }
+
+    static function getUrlContent($url)
+    {
+        $agent = "Mozilla/5.0 (X11; U; Linux i686; en-US) " .
+            "AppleWebKit/532.4 (KHTML, like Gecko) " .
+            "Chrome/4.0.233.0 Safari/532.4";
+        $referer = "http://www.google.com/";
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_REFERER, $referer);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 100);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        $data = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        return ($httpcode >= 200 && $httpcode < 300) ? $data : null;
+    }
 }
