@@ -110,7 +110,8 @@ class Payment extends Component
 
     public function getTransactionWithNganluong($condition){
         $query = new Query();
-        $transaction_nganluong = $query->select('code,user_id,object_id,object_type,b.amount,balance,b.status,b.params,b.created_at,b.updated_at')->from('ec_transaction_nganluong a')
+        $transaction_nganluong = $query->select('code,user_id,object_id,object_type,b.amount,balance,b.status,b.params,b.created_at,b.updated_at,a.payment_method,a.amount amount_vnd')
+            ->from('ec_transaction_nganluong a')
             ->join('INNER JOIN', 'ec_transaction_history b', 'b.code = a.transaction_code')
             ->where($condition)->one();
         if(!empty($transaction_nganluong)){

@@ -2,7 +2,12 @@
 
 namespace vsoft\ec\models;
 
+use frontend\models\NganLuong;
+use frontend\models\Payment;
 use frontend\models\User;
+use vsoft\ad\models\AdProduct;
+use vsoft\coupon\models\Coupon;
+use vsoft\coupon\models\CouponCode;
 use vsoft\ec\models\base\EcTransactionHistoryBase;
 use Yii;
 
@@ -90,15 +95,30 @@ class EcTransactionHistory extends EcTransactionHistoryBase
         return EcTransactionHistory::find()->where('user_id = :u',[':u' => $user_id])->all();
     }
 
+    public function getPaymentMethod($id = null)
+    {
+        $data = [
+            NganLuong::METHOD_BANKING => Yii::t('ec', 'Banking'),
+            NganLuong::METHOD_MOBILE_CARD => Yii::t('ec', 'Mobile Credit'),
+            NganLuong::METHOD_SMS => Yii::t('ec', 'SMS'),
+        ];
+
+        if (isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return null;
+        }
+    }
+
     public function getObjectType()
     {
         $data = [
             self::OBJECT_TYPE_POST => Yii::t('ec', 'Post'),
             self::OBJECT_TYPE_BOOST => Yii::t('ec', 'Boost'),
-            self::OBJECT_TYPE_DASHBOARD => Yii::t('ec', 'View dashboard'),
+            self::OBJECT_TYPE_DASHBOARD => Yii::t('ec', 'Dashboard'),
             self::OBJECT_TYPE_BUY_KEYS => Yii::t('ec', 'Buy Keys'),
             self::OBJECT_TYPE_UPDATE_EXPIRED => Yii::t('ec', 'Update expired'),
-            self::OBJECT_TYPE_GET_KEYS_FROM_COUPON => Yii::t('ec', 'Get Keys from coupon')
+            self::OBJECT_TYPE_GET_KEYS_FROM_COUPON => Yii::t('ec', 'Get Keys')
         ];
 
         if (isset($data[$this->object_type])) {
@@ -126,21 +146,49 @@ class EcTransactionHistory extends EcTransactionHistoryBase
 
     public function getNote()
     {
-        $data = [
-            self::OBJECT_TYPE_POST => Yii::t('ec', 'Post for listing'),
-            self::OBJECT_TYPE_BOOST => Yii::t('ec', 'Boost for listing'),
-            self::OBJECT_TYPE_DASHBOARD => Yii::t('ec', 'View dashboard'),
-            self::OBJECT_TYPE_BUY_KEYS => Yii::t('ec', 'Buy Keys'),
-            self::OBJECT_TYPE_UPDATE_EXPIRED => Yii::t('ec', 'Update expired'),
-            self::OBJECT_TYPE_GET_KEYS_FROM_COUPON => Yii::t('ec', 'Get Keys from coupon')
-        ];
-        if($this->object_type == self::OBJECT_TYPE_BUY_KEYS){
+        switch($this->object_type){
+            case self::OBJECT_TYPE_POST:
+                $object = AdProduct::findOne(['id'=>$this->object_id]);
+                if($object){
+                    return Yii::t('ec', 'Post for listing {product}', ['product'=>'MV'.$object->id]);
+                }
+                break;
+            case self::OBJECT_TYPE_BOOST:
+                $object = AdProduct::findOne(['id'=>$this->object_id]);
+                if($object){
+                    return Yii::t('ec', 'Post for listing {product}', ['product'=>'MV'.$object->id]);
+                }
+                break;
+            case self::OBJECT_TYPE_DASHBOARD:
+                $object = AdProduct::findOne(['id'=>$this->object_id]);
+                if($object){
+                    return Yii::t('ec', 'Post for listing {product}', ['product'=>'MV'.$object->id]);
+                }
+                break;
+            case self::OBJECT_TYPE_BUY_KEYS:
+                $object = Payment::me()->getTransactionWithNganluong(['code'=>$this->code]);
+                if($object){
+                    return Yii::t('ec', 'You use {payment_method} transfer {amount_VND} VND to {amount_keys} Keys', [
+                        'payment_method'=>self::getPaymentMethod($object['payment_method']),
+                        'amount_VND'=>$object['amount_vnd'],
+                        'amount_keys'=>$object['amount']
+                    ]);
+                }
+                break;
+            case self::OBJECT_TYPE_UPDATE_EXPIRED:
+                $object = AdProduct::findOne(['id'=>$this->object_id]);
+                if($object){
+                    return Yii::t('ec', 'Update expired for listing {product}', ['product'=>'MV'.$object->id]);
+                }
+                break;
+            case self::OBJECT_TYPE_GET_KEYS_FROM_COUPON:
+                $object = CouponCode::findOne(['id'=>$this->object_id]);
+                if($object){
+                    return Yii::t('ec', 'Get {amount} Keys from coupon by code {code}', ['amount'=>$object->amount, 'code'=>$object->code]);
+                }
+                break;
 
         }
-        if (isset($data[$this->object_type])) {
-            return $data[$this->object_type];
-        } else {
-            return null;
-        }
+        return null;
     }
 }
