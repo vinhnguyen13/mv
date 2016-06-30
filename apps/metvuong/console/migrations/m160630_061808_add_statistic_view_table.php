@@ -13,7 +13,7 @@ class m160630_061808_add_statistic_view_table extends Migration
 		  `start_at` INT NOT NULL,
 		  `end_at` INT NOT NULL,
 		  PRIMARY KEY (`id`),
-		  CONSTRAINT `ec_statistic_view:user_id&user:id` FOREIGN KEY (`user_id`) REFERENCES `metvuong`.`user`(`id`)
+		  CONSTRAINT `ec_statistic_view:user_id&user:id` FOREIGN KEY (`user_id`) REFERENCES `user`(`id`)
 		);");
     }
 
