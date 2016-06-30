@@ -397,7 +397,11 @@ class DashboardController extends Controller
         $pagination->defaultPageSize = 10;
         $transactions = $query->offset($pagination->offset)->limit($pagination->limit)
             ->orderBy(['id' => SORT_DESC])->all();
-        return $this->render('payment/index', ['transactions' => $transactions, 'pagination' => $pagination]);
+        if(Yii::$app->request->isAjax) {
+            return $this->renderAjax('payment/index', ['transactions' => $transactions, 'pagination' => $pagination]);
+        }else{
+            return $this->render('payment/index', ['transactions' => $transactions, 'pagination' => $pagination]);
+        }
     }
 
     public function actionUpdateExpired($id) {

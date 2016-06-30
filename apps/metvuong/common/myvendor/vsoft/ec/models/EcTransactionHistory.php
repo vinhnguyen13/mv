@@ -90,7 +90,7 @@ class EcTransactionHistory extends EcTransactionHistoryBase
         return EcTransactionHistory::find()->where('user_id = :u',[':u' => $user_id])->all();
     }
 
-    public static function getObjectType($id=null)
+    public function getObjectType()
     {
         $data = [
             self::OBJECT_TYPE_POST => Yii::t('ec', 'Post'),
@@ -101,14 +101,14 @@ class EcTransactionHistory extends EcTransactionHistoryBase
             self::OBJECT_TYPE_GET_KEYS_FROM_COUPON => Yii::t('ec', 'Get Keys from coupon')
         ];
 
-        if ($id !== null && isset($data[$id])) {
-            return $data[$id];
+        if (isset($data[$this->object_type])) {
+            return $data[$this->object_type];
         } else {
-            return $data;
+            return null;
         }
     }
 
-    public static function getTransactionStatus($id=null)
+    public function getTransactionStatus()
     {
         $data = [
             self::STATUS_SUCCESS => Yii::t('ec', 'Success'),
@@ -117,10 +117,30 @@ class EcTransactionHistory extends EcTransactionHistoryBase
             self::STATUS_PROCESSING => Yii::t('ec', 'Processing'),
         ];
 
-        if ($id !== null && isset($data[$id])) {
-            return $data[$id];
+        if (isset($data[$this->status])) {
+            return $data[$this->status];
         } else {
-            return $data;
+            return null;
+        }
+    }
+
+    public function getNote()
+    {
+        $data = [
+            self::OBJECT_TYPE_POST => Yii::t('ec', 'Post for listing'),
+            self::OBJECT_TYPE_BOOST => Yii::t('ec', 'Boost for listing'),
+            self::OBJECT_TYPE_DASHBOARD => Yii::t('ec', 'View dashboard'),
+            self::OBJECT_TYPE_BUY_KEYS => Yii::t('ec', 'Buy Keys'),
+            self::OBJECT_TYPE_UPDATE_EXPIRED => Yii::t('ec', 'Update expired'),
+            self::OBJECT_TYPE_GET_KEYS_FROM_COUPON => Yii::t('ec', 'Get Keys from coupon')
+        ];
+        if($this->object_type == self::OBJECT_TYPE_BUY_KEYS){
+
+        }
+        if (isset($data[$this->object_type])) {
+            return $data[$this->object_type];
+        } else {
+            return null;
         }
     }
 }

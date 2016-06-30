@@ -37,10 +37,10 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
                         <div class="clearfix tbl-emu swiper-slide">
                             <div class="w-10"><span><?=$transaction->id?></span></div>
                             <div class="w-15"><span><?=date('d/m/Y, H:i', $transaction->created_at)?></span></div>
-                            <div class="w-15"><span><?=Transaction::getObjectType($transaction->object_type)?></span></div>
-                            <div class="w-15"><span class="color-cd"><?=Transaction::getTransactionStatus($transaction->status)?></span></div>
+                            <div class="w-15"><span><?=$transaction->getObjectType($transaction->object_type)?></span></div>
+                            <div class="w-15"><span class="color-cd"><?=$transaction->getTransactionStatus($transaction->status)?></span></div>
                             <div class="w-15"><span><?= abs($amount) > 1 ? $amount." Keys" : $amount." Key" ?></span></div>
-                            <div class="w-30"><span>abc</span></div>
+                            <div class="w-30"><span><?=$transaction->getNote($transaction->object_type)?></span></div>
                         </div>
                     <?php }
                     ?>
