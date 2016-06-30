@@ -71,7 +71,7 @@ use yii\helpers\Url;
     <script>
         $(document).ready(function () {
             $('.menuUser li a').click(function (e) {
-                $('body').find('#update-boost, #update-expired, #update-status, #charge, #notify').remove();
+                $('body').find('#update-boost, #update-expired, #update-status, #charge, #notify, #coupon-dialog, #popup_email').remove();
                 $('body').loading();
                 $('.menuUser li a').removeClass('active');
                 $(this).addClass('active');

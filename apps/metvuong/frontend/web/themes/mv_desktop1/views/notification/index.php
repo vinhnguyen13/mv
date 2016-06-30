@@ -110,6 +110,7 @@ echo $this->renderAjax('/ad/_partials/shareEmail', [
     'params' => ['your_email' => false, 'recipient_email' => false]]);?>
 <script>
 	$(document).ready(function () {
+		$('.popup-common').appendTo('body');
 		$(document).on('click', '.item a', function(){
 			var _itemObj = $(this).closest('.item');
 			if(_itemObj.hasClass('unread')){

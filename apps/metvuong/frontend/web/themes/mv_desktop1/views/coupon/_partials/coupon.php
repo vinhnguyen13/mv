@@ -59,6 +59,9 @@ if(!empty($event)) {
     </div>
     <script>
         $(document).ready(function () {
+
+            $('.popup-common').appendTo('body');
+
             var clipboard = new Clipboard('.btn-copy');
 
             clipboard.on('success', function(e) {

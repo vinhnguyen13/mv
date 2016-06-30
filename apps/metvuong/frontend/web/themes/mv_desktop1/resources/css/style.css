@@ -12516,6 +12516,8 @@ label:hover {
 #frmListVisit .wrap-modal .popup_enable img {
     display: block;
     margin: 0 auto 5px;
+    width: 128px;
+    height: 128px;
 }
 .txt-location,
 .map-location {
