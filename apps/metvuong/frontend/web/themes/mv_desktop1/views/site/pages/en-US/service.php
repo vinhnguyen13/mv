@@ -1,6 +1,6 @@
 <div class="container">
 	<div class="wrap-content-page">
-		<p class="text-uper color-cd fs-15 font-600">MetVuong.com Scoring system</p>
+		<p class="font-600 fs-20 text-decor">MetVuong.com Scoring system</p>
 		<p>Every listing in Metvuong is assigned a score out of 100, and all of our search results will be based off of this score. It reflects the quality of the listing, as well as the recency of the listing, thus higher quality listings will be listed above poor listings, and newer listings will be listed higher than old ones. However, the original quality of the listing will be valued much more than when it was posted. As people post more listings, their reputation as an agent will also impact the listing scores.
 		    
 		</p>

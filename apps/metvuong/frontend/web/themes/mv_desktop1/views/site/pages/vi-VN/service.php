@@ -3,7 +3,7 @@ use yii\helpers\Url;
 ?>
 <div class="container">
 	<div class="wrap-content-page">
-		<p class="text-uper color-cd fs-15 font-600">Hệ thống chấm điểm của MetVuong.com:</p>
+		<p class="font-600 fs-20 text-decor">Hệ thống chấm điểm của MetVuong.com:</p>
 		<p>Mỗi tin đăng trên MetVuong.com được hệ thống chấm số điểm tương ứng và cao nhất là 100, các số điểm được sắp xếp theo thứ tự nhằm đảm bảo cho việc tìm kiếm tin chất lượng. Những tin đăng đạt số điểm cao sẽ luôn được hiển thị trong nhóm đầu, rất dễ dàng cho khách hàng tìm kiếm, những tin chưa chất lượng có điểm số thấp hoặc tin cũ sẽ trôi dần xuống. Vì vậy, nếu bạn là một Môi giới uy tín (được đánh giá nhiều sao, nhiều người yêu thích) và tin đăng đầy đủ, chính xác thì sản phẩm của bạn đạt điểm tối ưu và nằm trong nhóm dẫn đầu của danh sách tin.</p>
 		<p><strong>Mã số (ID) tin:&nbsp;</strong></p>
 		<p>Mỗi tin đăng trên MetVuong.com có một mã số duy nhất, được kí hiệu bằng MV(dãy số), mã số này được sử dụng để tìm kiếm tin nhanh nhất bằng các cách:</p>
