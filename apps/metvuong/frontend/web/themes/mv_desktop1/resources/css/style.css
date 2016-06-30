@@ -7149,6 +7149,7 @@ padding: 5px 0;
     }
     .wrap-news {
         padding-top: 0;
+        overflow: hidden;
     }
     .swiper-button-prev,
     .swiper-button-next {
@@ -7626,6 +7627,7 @@ padding: 5px 0;
     .infor-duan .wrap-infor-duan {
         padding: 20px 0 0;
         background-color: inherit;
+        overflow: hidden;
     }
     .infor-duan .list-duan ul {
         margin: 0;
@@ -8363,8 +8365,8 @@ margin-right: 5px;
         padding: 0 20px;
     }
     .detail-duan-moi .col-right,
-    .detail-duan-moi .col-left{
-        padding: 0 20px;
+    .detail-duan-moi .col-left {
+        padding: 0 10px;
     }
     .wrap-duan-moi {
         padding-left: 0;
@@ -10791,9 +10793,9 @@ label:hover {
         border: none;
     }
     .wrap-swiper .icons-detail li {
-        /* display: inline-block; */
+        display: inline-block;
         margin: 0 10px 15px;
-        float: left;
+        /* float: left; */
     }
     .wrap-swiper .icons-detail a span {
         /* display: none; */
@@ -11593,6 +11595,10 @@ label:hover {
     }
     .logo-search-box img {
         width: 90%;
+    }
+    .chudautu-infor .wrap-img {
+        float: none !important;
+        margin-bottom: 10px;
     }
 }
 .title-frm {

@@ -37,7 +37,7 @@ $meta->add(Yii::$app->request->absoluteUrl);
                         <li class="<?=!empty($this->params['menuSell']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/post']) ?>"><span class="icon-mv"><span class="icon-key"></span></span><?=Yii::t('general', 'Sell')?></a></li>
                         <li class="<?=!empty($this->params['menuProject']) ? 'active' : '' ;?>"><a href="<?=Url::to(['building-project/index']);?>"><span class="icon-mv"><span class="icon-fill-1"></span></span><?=Yii::t('general', 'New Project')?></a></li>
                         <li class="<?=!empty($this->params['menuNews']) ? 'active' : '' ;?>"><a href="<?=Url::to(['news/index']);?>"><span class="icon-mv"><span class="icon-group"></span></span><?=Yii::t('general', 'News')?></a></li>
-                        <li class="<?=!empty($this->params['menuPricing']) ? 'active' : '' ;?>"><a href="<?=Url::to(['/payment/package'])?>"><span class="icon-mv"><span class="icon-pricing-icon"></span></span><?=Yii::t('general', 'Pricing')?></a></li>
+                        <li class="<?=!empty($this->params['menuPricing']) ? 'active' : '' ;?>"><a href="<?=Url::to(['site/page', 'view'=>'service'])?>"><span class="icon-mv"><span class="icon-pricing-icon"></span></span><?=Yii::t('general', 'Service')?></a></li>
                     </ul>
                 </div>
             </div>
@@ -87,12 +87,12 @@ $meta->add(Yii::$app->request->absoluteUrl);
                                 <span id="notifyChat" class="notifi"><?=$this->params['notify_chat'];?></span>
                             <?php }?>
                     </a></li>
-                    <li>
+                    <!-- <li>
                         <a class="invite-item <?= !empty($this->params['menuInvite']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/invite', 'username' => Yii::$app->user->identity->getUsername()])?>">
                             <div><span class="icon-mv"><span class="icon-invite-friend"></span></span></div>
                             <?= Yii::t('activity', 'Invite friend') ?>
                         </a>
-                    </li>
+                    </li> -->
                     <li>
                         <a class="favorite-item <?= !empty($this->params['menuFavorite']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/favorite', 'username' => Yii::$app->user->identity->getUsername()])?>" href="#">
                             <div><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span></div>
