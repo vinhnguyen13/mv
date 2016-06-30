@@ -1,5 +1,7 @@
 <?php 
 use yii\web\View;
+use frontend\models\Transaction;
+
 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.jquery.min.js', ['position' => View::POS_END]);
 ?>
 <div class="title-fixed-wrap container">
@@ -20,8 +22,8 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
                     <div class="pull-left w-15"><span><?=Yii::t('payment', 'Date/Time')?></span></div>
                     <div class="pull-left w-15"><span><?=Yii::t('payment', 'Type')?></span></div>
                     <div class="pull-left w-15"><span><?=Yii::t('payment', 'Status')?></span></div>
-                    <div class="pull-left w-15"><span><?=Yii::t('payment', 'Keys value')?></span></div>
-                    <div class="pull-left w-30"><span>Note</span></div>
+                    <div class="pull-left w-15"><span><?=Yii::t('payment', 'Amount')?></span></div>
+                    <div class="pull-left w-30"><span><?=Yii::t('payment', 'Note')?></span></div>
                 </div>
                 <?php
                 if(count($transactions) > 0) {
@@ -35,8 +37,8 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
                         <div class="clearfix tbl-emu swiper-slide">
                             <div class="w-10"><span><?=$transaction->id?></span></div>
                             <div class="w-15"><span><?=date('d/m/Y, H:i', $transaction->created_at)?></span></div>
-                            <div class="w-15"><span><?=\vsoft\ec\models\EcTransactionHistory::getObjectType($transaction->object_type)?></span></div>
-                            <div class="w-15"><span class="color-cd"><?=\vsoft\ec\models\EcTransactionHistory::getTransactionStatus($transaction->status)?></span></div>
+                            <div class="w-15"><span><?=Transaction::getObjectType($transaction->object_type)?></span></div>
+                            <div class="w-15"><span class="color-cd"><?=Transaction::getTransactionStatus($transaction->status)?></span></div>
                             <div class="w-15"><span><?= $amount > 1 ? $amount." Keys" : $amount." Key" ?></span></div>
                             <div class="w-30"><span>abc</span></div>
                         </div>

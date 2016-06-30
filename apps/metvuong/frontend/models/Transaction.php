@@ -9,31 +9,15 @@
 namespace frontend\models;
 
 
-use vsoft\ec\models\base\EcTransactionHistoryBase;
+use vsoft\ec\models\EcTransactionHistory;
 use Yii;
 
-class Transaction extends EcTransactionHistoryBase
+class Transaction extends EcTransactionHistory
 {
-    const STATUS_PENDING = 0;
-    const STATUS_PROCESSING = 1;
-    const STATUS_SUCCESS = 2;
-    const STATUS_FAIL = -2;
-    const STATUS_CANCELED = -1;
-
-    const OBJECT_TYPE_POST  = 1;
-    const OBJECT_TYPE_BOOST  = 2;
-    const OBJECT_TYPE_DASHBOARD  = 3;
-    const OBJECT_TYPE_BUY_KEYS  = 4;
-    const OBJECT_TYPE_UPDATE_EXPIRED  = 5;
 
     public static function me()
     {
         return Yii::createObject(self::className());
-    }
-
-    public function getUser()
-    {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
     }
 
     public function saveTransaction($transactionCode, $data){

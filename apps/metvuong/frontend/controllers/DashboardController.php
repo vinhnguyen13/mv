@@ -11,7 +11,6 @@ use frontend\models\ProfileForm;
 use frontend\models\UserActivity;
 use vsoft\coupon\models\CouponCode;
 use vsoft\coupon\models\CouponHistory;
-use vsoft\ec\models\EcTransactionHistory;
 use vsoft\express\components\ImageHelper;
 use vsoft\news\models\Status;
 use vsoft\tracking\models\base\AdProductFinder;
@@ -392,38 +391,13 @@ class DashboardController extends Controller
     {
         $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuPayment' => true, 'isDashboard' => true], $this->view->params);
         $this->checkAccess();
-        $query = EcTransactionHistory::find()->where('user_id = :_uid',[':_uid' => Yii::$app->user->id]);
+        $query = Transaction::find()->where('user_id = :_uid',[':_uid' => Yii::$app->user->id]);
         $count = $query->count();
         $pagination = new Pagination(['totalCount' => $count]);
         $pagination->defaultPageSize = 10;
         $transactions = $query->offset($pagination->offset)->limit($pagination->limit)
             ->orderBy(['id' => SORT_DESC])->all();
         return $this->render('payment/index', ['transactions' => $transactions, 'pagination' => $pagination]);
-    }
-
-    public function actionCreateTransaction()
-    {
-        $this->checkAccess();
-        $user_id = Yii::$app->user->id;
-        $objs = [501,503,516,517,518,520,521,522];
-        $obj_id = array_rand(array_flip($objs), 1);
-        $obj_type = EcTransactionHistory::OBJECT_TYPE_PRODUCT;
-        $amount = array_rand(array_flip([100,200,500,10,20,50]), 1);
-
-//        $act_types = array_keys(EcTransactionHistory::getActionType());
-        $action_type = 1;//array_rand(array_flip($act_types), 1);
-
-        $act_details = array_keys(EcTransactionHistory::getActionDetail());
-        $action_detail= array_rand(array_flip($act_details), 1);
-        if($action_detail == 3) {
-            $obj_id = $user_id;
-            $obj_type = 3;
-        }
-        $status = 1;
-
-        $transaction = EcTransactionHistory::createTransaction($user_id, $obj_id, $obj_type, $amount, $action_type, $action_detail, null, $status, 'json');
-        Yii::$app->response->format = Response::FORMAT_JSON;
-        return ['result' => EcTransactionHistory::getObjectType($transaction->object_type)." ".Yii::t('ec', 'Transaction').EcTransactionHistory::getTransactionStatus($transaction->status) ];
     }
 
     public function actionUpdateExpired($id) {

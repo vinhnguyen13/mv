@@ -4,7 +4,6 @@ namespace vsoft\ec\models;
 
 use frontend\models\User;
 use vsoft\ec\models\base\EcTransactionHistoryBase;
-use vsoft\ec\Module;
 use Yii;
 
 /**
@@ -35,45 +34,18 @@ class EcTransactionHistory extends EcTransactionHistoryBase
     const STATUS_FAIL = -2;
     const STATUS_CANCELED = -1;
 
+    /* object_id from table: ad_product*/
     const OBJECT_TYPE_POST  = 1;
+    /* object_id from table: ad_product*/
     const OBJECT_TYPE_BOOST  = 2;
+    /* object_id from table: */
     const OBJECT_TYPE_DASHBOARD  = 3;
+    /* object_id from Method of NganLuong class: METHOD_BANKING, METHOD_MOBILE_CARD, METHOD_SMS*/
     const OBJECT_TYPE_BUY_KEYS  = 4;
+    /* object_id from table: ad_product*/
     const OBJECT_TYPE_UPDATE_EXPIRED  = 5;
-    
-    public static function getObjectType($id=null)
-    {
-        $data = [
-            self::OBJECT_TYPE_POST => Module::t('ec', 'Post'),
-            self::OBJECT_TYPE_BOOST => Module::t('ec', 'Boost'),
-            self::OBJECT_TYPE_DASHBOARD => Module::t('ec', 'View dashboard'),
-            self::OBJECT_TYPE_BUY_KEYS => Module::t('ec', 'Buy Keys'),
-            self::OBJECT_TYPE_UPDATE_EXPIRED => Module::t('ec', 'Update expired')
-        ];
-
-        if ($id !== null && isset($data[$id])) {
-            return $data[$id];
-        } else {
-            return $data;
-        }
-    }
-
-    public static function getTransactionStatus($id=null)
-    {
-        $data = [
-            self::STATUS_SUCCESS => Module::t('ec', 'Success'),
-            self::STATUS_FAIL => Module::t('ec', 'Failed'),
-            self::STATUS_PENDING => Module::t('ec', 'Pending'),
-            self::STATUS_PROCESSING => Module::t('ec', 'Processing'),
-        ];
-
-        if ($id !== null && isset($data[$id])) {
-            return $data[$id];
-        } else {
-            return $data;
-        }
-    }
-
+    /* object_id from table: cp_history*/
+    const OBJECT_TYPE_GET_KEYS_FROM_COUPON  = 6;
 
     /**
      * @inheritdoc
@@ -116,5 +88,39 @@ class EcTransactionHistory extends EcTransactionHistoryBase
     public function getTransactions($user_id)
     {
         return EcTransactionHistory::find()->where('user_id = :u',[':u' => $user_id])->all();
+    }
+
+    public static function getObjectType($id=null)
+    {
+        $data = [
+            self::OBJECT_TYPE_POST => Yii::t('ec', 'Post'),
+            self::OBJECT_TYPE_BOOST => Yii::t('ec', 'Boost'),
+            self::OBJECT_TYPE_DASHBOARD => Yii::t('ec', 'View dashboard'),
+            self::OBJECT_TYPE_BUY_KEYS => Yii::t('ec', 'Buy Keys'),
+            self::OBJECT_TYPE_UPDATE_EXPIRED => Yii::t('ec', 'Update expired'),
+            self::OBJECT_TYPE_GET_KEYS_FROM_COUPON => Yii::t('ec', 'Get Keys from coupon')
+        ];
+
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
+    }
+
+    public static function getTransactionStatus($id=null)
+    {
+        $data = [
+            self::STATUS_SUCCESS => Yii::t('ec', 'Success'),
+            self::STATUS_FAIL => Yii::t('ec', 'Failed'),
+            self::STATUS_PENDING => Yii::t('ec', 'Pending'),
+            self::STATUS_PROCESSING => Yii::t('ec', 'Processing'),
+        ];
+
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
     }
 }

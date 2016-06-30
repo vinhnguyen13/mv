@@ -55,7 +55,7 @@ class Payment extends Component
                 'object_type'=>Transaction::OBJECT_TYPE_BUY_KEYS,
                 'amount'=>0,
                 'balance'=>0,
-                'status'=>Transaction::STATUS_PENDING,
+                'status'=>Transaction::STATUS_PROCESSING,
             ]);
             return NganLuong::me()->payByMobiCard([
                 'transaction_code' => $transaction_code,
@@ -193,6 +193,31 @@ class Payment extends Component
             }
             $transaction->commit();
             \Yii::$app->getSession()->setFlash('popupsuccess', true);
+            return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+    }
+
+    public function processTransactionByCoupon($coupon_history){
+        $connection = Yii::$app->db;
+        $transaction = $connection->beginTransaction();
+        try {
+            $transaction_code = md5(uniqid(rand(), true));
+            $amout = intval($coupon_history->couponCode->amount);
+            $balance = Yii::$app->user->identity->getBalance();
+            $balanceValue = !empty($balance->amount) ? ($balance->amount + $amout) : $amout;
+            Transaction::me()->saveTransaction($transaction_code, [
+                'code'=>$transaction_code,
+                'user_id'=>Yii::$app->user->identity->id,
+                'object_id'=>$coupon_history->id,
+                'object_type'=>Transaction::OBJECT_TYPE_GET_KEYS_FROM_COUPON,
+                'amount'=>$amout,
+                'balance'=>$balanceValue,
+                'status'=>Transaction::STATUS_SUCCESS,
+            ]);
+            $transaction->commit();
             return true;
         } catch (\Exception $e) {
             $transaction->rollBack();
