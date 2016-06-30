@@ -13179,6 +13179,51 @@ ul.cardList li {
 #coupon-dialog .modal-dialog {
     width: 300px;
 }
+.tabs-s {
+    border-bottom: 2px solid #c3c3c3;
+}
+.tabs-s li {
+    border-right: 1px solid #c7c7c7;
+    width: auto;
+}
+.tabs-s li a {
+    text-transform: uppercase;
+    text-align: center;
+    margin: 0;
+    color: #353535;
+    font-size: 15px;
+    font-weight: 600;
+    border: none;
+    border-right: 1px solid #fff;
+    padding: 15px 40px;
+    line-height: 100%;
+    border-radius: 0px;
+    background: #e8e8e8;
+}
+.tabs-s li:last-child a,
+.tabs-s li:last-child {
+    border-right: none;
+}
+.tabs-s li.active a {
+    background: #757575;
+    color: #fff;
+    border-right: 1px solid #fff;
+}
+.tabs-s.nav-tabs>li.active>a,
+.tabs-s.nav-tabs>li.active>a:focus,
+.tabs-s.nav-tabs>li.active>a:hover {
+    background: #757575;
+    color: #fff;
+    border-right: 1px solid #fff;
+}
+.wrap-content-page .tab-content {
+    padding: 0;
+}
+.wrap-content-page .tab-content .tab-pane {
+    box-shadow: none;
+    border: none;
+    padding: 25px 0;
+}
 @media (max-width: 1200px) {
     .type-payment {
         width: 90%;
