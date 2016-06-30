@@ -346,7 +346,7 @@ $(document).ready(function() {
 		}
 	});
 
-	var typeGet = $('.select-others #type').val();
+	var typeGet = $('#type').val();
 	if ( typeGet == 1 ) {
 		$('.select-price .box-dropdown').price_dt({
 			hinhthuc: 'mua'

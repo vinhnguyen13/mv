@@ -33,6 +33,7 @@ EOD;
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_END]);
 ?>
+
 <div class="result-listing clearfix">
 	<div class="wrap-listing-item">
 		<div class="items-list">
@@ -179,6 +180,7 @@ EOD;
 										</div>
 									</div>
 								</div>
+								<?= Html::activeHiddenInput($searchModel, 'type', ['name' => '']); ?>
 							</div>
 							<button class="btn-submit btn-common <?= $hideSearchForm ? '' : 'active' ?>"><?= Yii::t('ad', 'Search') ?></button>
 						</div>
