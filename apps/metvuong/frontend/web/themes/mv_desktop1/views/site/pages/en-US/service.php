@@ -14,14 +14,14 @@
 		    This is to simplify navigating all of your potential listings, and to easily find the listing that is most suitable for you.
 		    
 		</p>
-		<p><strong>Chìa khóa</strong></p>
+		<p><strong>Keys</strong></p>
 		<p>
-			Trên metvuong.com, tất cả những chức năng trên Metvuong.com sẽ được thanh toán bằng chìa khóa, <strong>1 chìa = 1000 VND</strong>, và bạn có thể dể dàng nạp thên chìa qua nhiều cách khác nhau trên metvuong.com
+			The currency on MetVuong is Key, you can easily buy Keys by following the construction of MetVuong, <strong>1 key = 1.000VND</strong>
 		</p>
 		<p>
 			<img class="w-70" src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/s-1.jpg' ?>" alt="">
 		</p>
-		<p class="font-600 fs-20 text-decor">Chức năng cho người mua/thuê Bất Động Sản</p>
+		<p class="font-600 fs-20 text-decor">The funtions for Buyer/Renter</p>
 		<p><strong>1. Search&nbsp;</strong>
 		    
 		</p>
@@ -63,15 +63,15 @@
 		<p>
 			<img class="w-70" src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/s-6.jpg' ?>" alt="">
 		</p>
-		<p class="font-600">Chia sẻ qua Facebook</p>
+		<p class="font-600">Share on Facebook</p>
 		<p>
 			<img class="w-70" src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/s-7.jpg' ?>" alt="">
 		</p>
-		<p class="font-600">Chia sẻ qua Email</p>
+		<p class="font-600">Share by Email</p>
 		<p>
 			<img class="w-70" src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/s-8.jpg' ?>" alt="">
 		</p>
-		<p class="font-600 fs-20 text-decor">Chức năng cho người cho thuê/bán Bất Động Sản.</p>
+		<p class="font-600 fs-20 text-decor">The funtions for Owner/Agent</p>
 		<p><strong>1. Posting a Listing.&nbsp;</strong>
 		    
 		</p>
