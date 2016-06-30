@@ -82,7 +82,7 @@ class Payment extends Component
                     'created_at' => time(),
                 ])->execute();
         }
-        Yii::$app->db->schema->refresh();
+        
         return true;
     }
 
