@@ -25,6 +25,10 @@ class Payment extends Component
 
     public function payWithNganLuong($redirect){
         if(isset($_POST['nlpayment'])){
+            if(empty($_POST['total_amount']) || empty($_POST['option_payment']) || empty($_POST['bankcode'])){
+                throw new HttpException(500, Yii::t('yii', 'Please fill full data.'));
+                return ['error_code'=>500, 'error_message'=>Yii::t('yii', 'Please fill full data.')];
+            }
             $transaction_code = md5(uniqid(rand(), true));
             $amount = NganLuong::me()->VND2Keys(NganLuong::METHOD_BANKING, $_POST['total_amount']);
             if(!empty($amount) && is_numeric($amount)){

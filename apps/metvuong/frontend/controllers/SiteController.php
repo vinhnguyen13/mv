@@ -79,6 +79,7 @@ class SiteController extends Controller
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
+                'view' => 'error',
             ],
 			'page' => [
 				'class' => 'yii\web\ViewAction',

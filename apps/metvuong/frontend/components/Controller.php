@@ -36,7 +36,7 @@ class Controller extends \yii\web\Controller
 
     public function beforeAction($action)
     {
-        if(Yii::$app->user->isGuest && !in_array($action->id, ['login', 'register', 'error', 'map-image']) && !Yii::$app->request->isAjax){
+        if(!in_array($action->id, ['login', 'register', 'error', 'map-image']) && !Yii::$app->request->isAjax){
             Yii::$app->getUser()->setReturnUrl(Url::current());
         }
         if(in_array($action->id, ['login'])){

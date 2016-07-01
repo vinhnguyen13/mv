@@ -68,7 +68,7 @@ $return =  [
             ],
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error2',
+            'errorAction' => 'site/error',
         ],
         'view' => [
             'theme' => [
