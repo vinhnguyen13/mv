@@ -374,9 +374,8 @@ $count_review = $reviews->count();
                 /**
                  * notification
                  */
-                if(!Yii::$app->user->isGuest && !empty($owner)) {
-					$nameUserTo = !empty($owner) ? $owner->profile->getDisplayName() : (!empty($adContactInfo) ? $adContactInfo->name : null);
-					$nameUserFrom = $user->profile->getDisplayName();
+                if(!Yii::$app->user->isGuest) {
+
                     ?>
                     <script>
                         $(document).ready(function () {
@@ -396,6 +395,8 @@ $count_review = $reviews->count();
                                     success: function (data) {
                                         if(data.statusCode == 200){
 											<?php if(!empty($owner) && !$owner->isMe()){
+											$nameUserTo = !empty($owner) ? $owner->profile->getDisplayName() : (!empty($adContactInfo) ? $adContactInfo->name : null);
+											$nameUserFrom = $user->profile->getDisplayName();
 											?>
                                             	var to_jid = chatUI.genJid('<?=$owner->username?>');
                                             	Chat.sendMessage(to_jid , '{owner} favorite {product}', 'notify', {fromName: '<?=$nameUserFrom;?>', toName: '<?=$nameUserTo;?>', total: data.parameters.msg, product: '<?=$address?>'
