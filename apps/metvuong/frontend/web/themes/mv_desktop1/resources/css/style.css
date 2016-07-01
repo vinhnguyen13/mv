@@ -9957,7 +9957,7 @@ margin-right: 5px;
 }
 @media ( max-width: 1200px ) {
     .list-menu li a {
-        padding: 21px 12px;
+        /* padding: 21px 12px; */
         font-size: 14px;
     }
 }
