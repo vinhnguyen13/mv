@@ -148,7 +148,14 @@ use yii\web\View;
                                     </div>
                                     <div class="item-dropdown hide-dropdown">
                                         <ul class="clearfix">
-                                            <li><a href="#" data-value="2000">2,000</a></li>
+                                            <?php
+                                            $env = YII_ENV;
+                                            if(!empty($env) && in_array($env, [YII_ENV_DEV])) {
+                                                ?>
+                                                <li><a href="#" data-value="2000">2,000</a></li>
+                                                <?php
+                                            }
+                                            ?>
                                             <li><a href="#" data-value="500000">500,000</a></li>
                                             <li><a href="#" data-value="200000">200,000</a></li>
                                             <li><a href="#" data-value="100000">100,000</a></li>

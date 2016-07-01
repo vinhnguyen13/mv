@@ -176,7 +176,7 @@ class NganLuong extends Component
                 200000  => 205,
                 100000  => 100,
                 50000   => 46,
-                2000   => 1,
+                2000   => 2,
             ],
             self::METHOD_MOBILE_CARD => [
                 500000  => 400,
