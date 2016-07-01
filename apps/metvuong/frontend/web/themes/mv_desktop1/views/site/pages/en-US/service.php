@@ -1,12 +1,14 @@
 <div class="container">
+	<div class="title-top">Service</div>
 	<div class="wrap-content-page">
 		<ul class="tabs-s nav nav-tabs" role="tablist">
-			<li role="presentation" class="active"><a href="#htcd" aria-controls="htcd" role="tab" data-toggle="tab">Scoring system</a></li>
-			<li role="presentation"><a href="#mtbds" aria-controls="mtbds" role="tab" data-toggle="tab">for Buyer / Renter</a></li>
-			<li role="presentation"><a href="#tbbds" aria-controls="tbbds" role="tab" data-toggle="tab">for Owner / Agent</a></li>
+			<li role="presentation" class="active"><a href="#htcd" aria-controls="htcd" role="tab" data-toggle="tab">The main funtions on MetVuong</a></li>
+			<li role="presentation"><a href="#mtbds" aria-controls="mtbds" role="tab" data-toggle="tab">Searching for real estate</a></li>
+			<li role="presentation"><a href="#tbbds" aria-controls="tbbds" role="tab" data-toggle="tab">Selling real estate</a></li>
 		</ul>
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane fade in active" id="htcd">
+				<p class="font-600 fs-17 text-decor text-uper">Scoring system</p>
 				<p>Every listing in Metvuong is assigned a score out of 100, and all of our search results will be based off of this score. It reflects the quality of the listing, as well as the recency of the listing, thus higher quality listings will be listed above poor listings, and newer listings will be listed higher than old ones. However, the original quality of the listing will be valued much more than when it was posted. As people post more listings, their reputation as an agent will also impact the listing scores.
 				    
 				</p>
@@ -29,6 +31,7 @@
 				</p>
 			</div>
 			<div role="tabpanel" class="tab-pane fade in" id="mtbds">
+				<p class="font-600 fs-17 text-decor text-uper">for Buyer / Renter</p>
 				<p><strong>1. Search&nbsp;</strong>
 				    
 				</p>
@@ -80,6 +83,7 @@
 				</p>
 			</div>
 			<div role="tabpanel" class="tab-pane fade in" id="tbbds">
+				<p class="font-600 fs-17 text-decor text-uper">for Owner / Agent</p>
 				<p><strong>1. Posting a Listing.&nbsp;</strong>
 				    
 				</p>

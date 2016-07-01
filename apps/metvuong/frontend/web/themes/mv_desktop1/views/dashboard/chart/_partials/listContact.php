@@ -6,7 +6,7 @@ Yii::t('chart','visitors');
 Yii::t('chart','saved');
 Yii::t('chart','shares');
 ?>
-<div class="clearfix mgB-15">
+<div class="clearfix mgB-15 pdL-15 pdR-15">
     <h3><?=Yii::t('chart', $view) ?></h3>
     <p style="color: #4a933a;" class="desTotal"> <?=Yii::t('chart','Total user')?>: <?=count($favourites)?></p>
 </div>
@@ -39,6 +39,3 @@ if(count($favourites) > 0) {
 }
 ?>
 </ul>
-<p class="push-price">
-    <?=Yii::t('chart', 'Để tin đạt hiệu quả hơn vui lòng click vào đây')?> <a href="#" data-toggle="modal" data-target="#upgrade-time" data-product="79110" class="btn-nang-cap mgL-10 btn-up"><?= Yii::t('statistic', 'Up') ?></a>
-</p>

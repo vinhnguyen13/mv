@@ -220,17 +220,18 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
 </div>
 
 
-
 <div class="modal fade popup-common" id="frmListVisit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header title-popup clearfix">
-                <!-- <div class="text-center popup_title"></div> -->
                 <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
             </div>
             <div class="modal-body">
                 <div class="wrap-modal clearfix">
                 </div>
+            </div>
+            <div class="bottom-popup">
+                <p class="push-price fs-13 text-right font-600"><span class="d-ib lh-100"><?=Yii::t('chart', 'Để tin đạt hiệu quả hơn vui lòng click vào đây')?></span> <a href="#" data-toggle="modal" data-target="#upgrade-time" data-product="79110" class="btn-nang-cap btn-up mgL-10"><?= Yii::t('statistic', 'Up') ?></a></p>
             </div>
         </div>
     </div>
