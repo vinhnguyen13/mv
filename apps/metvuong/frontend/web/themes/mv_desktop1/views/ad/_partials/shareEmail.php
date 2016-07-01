@@ -35,12 +35,15 @@ use yii\helpers\Url;
                         ]);
 
                         $product = null;
+                        $types = \vsoft\ad\models\AdProduct::getAdTypes();
                         if(isset($pid) && !empty($pid)) {
                             $product = AdProduct::getDb()->cache(function () use ($pid) {
                                 return AdProduct::find()->where('id = :pid', [':pid' => $pid])->one();
                             });
+                            $product_type = ($product->type == 1 ? 'mua' : 'thuê');
                             $address = $product->getAddress();
-                            $share_form->content = Yii::t('send_email', 'I am interested in') . ' ' . $address . ', ' . Yii::t('send_email','please get back to me as soon as possible with futher information. Thank you!');
+                            $share_form->content = Yii::t('send_email', 'I am interested in') . ' '. (Yii::$app->language == 'vi-VN' ? $product_type." " : '') .
+                                $address . ', ' . Yii::t('send_email','please get back to me as soon as possible with futher information. Thank you!');
                         }
 
                         if(isset($params['your_email']) && $params['your_email'] == false && !empty($yourEmail)) {
@@ -73,8 +76,6 @@ use yii\helpers\Url;
                                 $categories = \vsoft\ad\models\AdCategory::getDb()->cache(function(){
                                     return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
                                 });
-                                $types = \vsoft\ad\models\AdProduct::getAdTypes();
-                                $product_type = $types[$product->type];
 
                                 $user_id = $product->user_id;
                                 if(empty($user_id)){
