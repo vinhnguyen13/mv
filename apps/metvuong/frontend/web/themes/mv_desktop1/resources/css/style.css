@@ -7626,11 +7626,11 @@ padding: 5px 0;
         padding-right: 0;
     }
     .post-listing .title-top {
-        margin: 0 -20px;
-        width: auto;
+    /* margin: 0; */
     }
     .wrap-frm-listing {
         padding-top: 30px;
+        margin: 0 -10px;
     }
     .infor-duan .wrap-infor-duan {
         padding: 20px 0 0;
@@ -10227,7 +10227,8 @@ margin-right: 5px;
 }
 @media ( max-width: 985px ) {
     .post-listing {
-        padding-top: 0
+        padding-top: 0;
+        width: inherit;
     }
     .toggle-num-home label input {
         height: auto;
@@ -10289,7 +10290,7 @@ margin-right: 5px;
         /* overflow-x: hidden; */
     }
     .detail-listing-extra {
-        padding-top: 0;
+        padding-top: 20px;
     }
     .detail-listing-extra .col-right,
     .detail-listing-extra .col-left {
@@ -11502,6 +11503,7 @@ label:hover {
 @media ( max-width: 768px ) {
     .wrap-frm-listing > div {
         width: 100%;
+        padding: 0 10px;
     }
     .checkpoint-listing {
         margin-top: 50px;

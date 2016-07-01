@@ -143,10 +143,8 @@ $count_review = $reviews->count();
 					<div class="swiper-wrapper">
 						<?php foreach ($images as $image): ?>
 						<div class="swiper-slide">
-							<div class="img-show">
-								<div>
-									<img src="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" alt="<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) . ' - ' . $address?>">
-								</div>
+							<div class="pic-intro">
+								<img src="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" alt="<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) . ' - ' . $address?>">
 							</div>
 						</div>
 						<?php endforeach; ?>
