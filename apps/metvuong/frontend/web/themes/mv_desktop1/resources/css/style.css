@@ -4250,6 +4250,7 @@ html.mm-opening .mm-slideout {
     letter-spacing: 0;
     display: inline-block;
     line-height: 100%;
+    margin-top: 5px;
 }
 .wrap-list-duan .push-price .see-detail-listing .icon-mv {
     width: auto;
@@ -8939,6 +8940,9 @@ margin-right: 5px;
     /* border-bottom: 1px solid #DADADA; */
     /* border-left: 1px solid #DADADA; */
 }
+.u-allduan {
+    position: relative;
+}
 .statis {
     padding-left: 240px;
 }
@@ -9013,6 +9017,9 @@ margin-right: 5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+.wrap-list-duan .bottom-feat-box .push-price p {
+    line-height: 100%;
 }
 .wrap-list-duan .bottom-feat-box > .wrap-icon {
     margin-bottom: 7px;

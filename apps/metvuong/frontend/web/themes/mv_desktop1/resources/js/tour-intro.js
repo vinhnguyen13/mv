@@ -341,11 +341,20 @@ function textTour(txtArr, urlPage) {
 	                    content: txtArr[4],
 	                },
 	                {
-	                    selector: ".wrap-list-duan",
-	                    placement: "left",
+	                    selector: ".menuUser li .favorite-item",
+	                    placement: "right",
 	                    content: txtArr[5],
 	                }
-	            ]
+	            ];
+	    if ( $('.wrap-list-duan').length ) {
+	    	var obj = {
+	                    selector: ".wrap-list-duan",
+	                    placement: "left",
+	                    content: txtArr[6],
+	                };
+
+	    	steps.push(obj);
+	    }
 	}else if ( $("#map-wrap").length ) {
 		steps = [
 	                {
