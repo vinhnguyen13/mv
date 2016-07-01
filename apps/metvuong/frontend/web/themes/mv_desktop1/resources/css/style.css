@@ -887,7 +887,7 @@ label {
 }
 .infor-by-up {
     font-size: 14px;
-    /* margin-bottom: 7px; */
+    margin-bottom: 7px;
     display: inline-block;
     vertical-align: middle;
     line-height: 100%;
@@ -3820,19 +3820,19 @@ html.mm-opening .mm-slideout {
 .list-attr-td li {
     float: left;
     color: #3c3c3c;
-    font-size: 13px;
+    font-size: 15px;
     padding-right: 5px;
     margin-right: 5px;
     vertical-align: middle;
-    /* line-height: 19px; */
-    font-weight: 600;
+    font-weight: 400;
+    line-height: 100%;
 }
 .list-attr-td li:last-child {
     margin-right: 0;
     padding-right: 0;
 }
 .list-attr-td li .icon-mv {
-    font-size: 20px;
+    font-size: 25px;
     margin-right: 8px;
     color: #000;
 }
@@ -3840,26 +3840,14 @@ html.mm-opening .mm-slideout {
     margin-left: 1px;
 }
 #listing-list .list-attr-td li .icon-mv {
-    font-size: 15px;
+    font-size: 25px;
 }
 .left-attr-detail .list-attr-td li .icon-mv {
-    font-size: 19px;
-}
-.left-attr-detail .list-attr-td .icon-mv .icon-icon-bathroom {
-    font-size: 20px;
+    font-size: 30px;
 }
 .left-attr-detail .list-attr-td li {
     padding-right: 10px;
     margin-right: 10px;
-}
-.list-attr-td li .icon-mv .icon-icon-bathroom {
-    font-size: 19px;
-    position: relative;
-    top: 0;
-}
-#listing-list .list-attr-td li .icon-mv .icon-icon-bathroom {
-    font-size: 17px;
-    top: 0;
 }
 .list-attr-td li .icon {
     position: relative;
@@ -4118,15 +4106,14 @@ html.mm-opening .mm-slideout {
     line-height: 32px;
 }
 .list-attr-td {
-    margin-bottom: 14px;
-    height: 22px; /*fix firefox*/
-    overflow: hidden;
+    margin-bottom: 10px;
+     /*fix firefox*/
 }
 #listing-list .info-item .list-attr-td {
     display: inline-block;
     vertical-align: middle;
     margin-bottom: 0;
-    padding-top: 2px;
+    padding-top: 0;
 }
 .price-item {
     text-transform: uppercase;
@@ -4139,11 +4126,7 @@ html.mm-opening .mm-slideout {
     /* padding: 6px 10px; */
 }
 .price-item .icon-mv {
-    font-size: 18px;
-    line-height: 100%;
-    position: absolute;
-    top: 2px;
-    left: 0;
+    font-size: 25px;
     color: #000;
 }
 .price-attr {
@@ -4157,13 +4140,13 @@ html.mm-opening .mm-slideout {
     margin-right: 10px;
     float: none;
     margin-bottom: 0;
-    padding: 0 0 0 17px;
+    padding: 0 0 0 0;
 }
 .right-attr-detail {
     overflow: hidden;
 }
 .right-attr-detail .price-item {
-    font-size: 20px;
+    font-size: 25px;
     margin-bottom: 0;
     /* padding: 8px 15px; */
 }
@@ -4392,7 +4375,7 @@ html.mm-opening .mm-slideout {
 }
 .address-listing {
     font-size: 15px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-weight: 600;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -9400,7 +9383,7 @@ margin-right: 5px;
     content: "\e94b";
 }
 .icon-pricing:before {
-    content: "\e94a";
+    content: "\e94d";
 }
 .icon-ben-xe-tram-xe:before {
     content: "\e939";
@@ -9587,13 +9570,13 @@ margin-right: 5px;
     content: "\e91a";
 }
 .icon-page-1-copy:before {
-    content: "\e91b";
+    content: "\e94a";
 }
 .icon-close-icon:before {
     content: "\e91c";
 }
 .icon-bed-search:before {
-    content: "\e91d";
+    content: "\e92e";
 }
 .icon-fill-2-fill-6-fill-8:before {
     content: "\e91e";
@@ -10800,7 +10783,7 @@ label:hover {
         height: auto;
         text-align: center;
         padding: 15px 0 0;
-        margin-bottom: 15px;
+        margin-bottom: 5px;
         background: #00CE77;
         border: none;
     }
@@ -11527,8 +11510,6 @@ label:hover {
         margin-bottom: 5px;
     }
     .list-attr-td {
-        overflow: hidden;
-        float: none;
     }
     .box-item .address-feat {
         height: auto;
@@ -11569,7 +11550,7 @@ label:hover {
         height: 100%;
     }
     .box-chat-footer {
-        top: 0;
+        /* top: 0; */
         height: 100%;
     }
     .box-chat-footer.show-hide-chat {
@@ -11746,7 +11727,7 @@ label:hover {
         -moz-box-shadow: 0px 0px 10px #ABABAB;
         -ms-box-shadow: 0px 0px 10px #ABABAB;
         padding: 0;
-        height: 343px;
+        height: 360px;
     }
     #listing-list .info-item {
         padding: 0 15px 15px;
@@ -11759,7 +11740,7 @@ label:hover {
         margin: 0 -10px;
     }
     #listing-list .info-item .price-item {
-        font-size: 17px;
+        font-size: 21px;
     }
 }
 @media (max-width: 985px) {
@@ -11849,11 +11830,6 @@ label:hover {
     .tienich-frm li {
         width: 33.333%;
     }
-}
-.icon-icon-bathroom {
-    font-size: 25px;
-    position: relative;
-    top: -2px;
 }
 .icon-cho-gui-xe:before,
 .icon-parking:before {
@@ -13396,7 +13372,7 @@ ul.cardList li {
         margin-bottom: 0;
     }
     .box-feature-item .list-attr-td li .icon-mv {
-        font-size: 17px;
+        font-size: 25px;
     }
     .logo-bct {
         position: static;
