@@ -285,7 +285,7 @@ $count_review = $reviews->count();
 						</ul>
 					</div>
 					<div class="right-attr-detail">
-						<p class="price-item"><?= StringHelper::formatCurrency($product->price) . ' ' . Yii::t('ad', 'VND') ?></p>
+						<p class="price-item"><?= StringHelper::formatCurrency($product->price) . ' <span>' . Yii::t('ad', 'VND').'</span>' ?></p>
 					</div>
 				</div>
 
