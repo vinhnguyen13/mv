@@ -6,7 +6,7 @@ use yii\helpers\Url;
 	<div class="wrap-content-page">
 		<ul class="tabs-s nav nav-tabs" role="tablist">
 			<li role="presentation" class="active"><a href="#mtbds" aria-controls="mtbds" role="tab" data-toggle="tab">Cho người mua / thuê</a></li>
-			<li role="presentation"><a href="#tbbds" aria-controls="tbbds" role="tab" data-toggle="tab">Cho chủ nhà / mô giới</a></li>
+			<li role="presentation"><a href="#tbbds" aria-controls="tbbds" role="tab" data-toggle="tab">Cho chủ nhà / môi giới</a></li>
 			<li role="presentation"><a href="#htcd" aria-controls="htcd" role="tab" data-toggle="tab">Chức năng chính của metvuong</a></li>
 		</ul>
 		<div class="tab-content">

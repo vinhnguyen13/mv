@@ -4,7 +4,7 @@
 		<ul class="tabs-s nav nav-tabs" role="tablist">
 			<li role="presentation" class="active"><a href="#mtbds" aria-controls="mtbds" role="tab" data-toggle="tab">for Buyer / Renter</a></li>
 			<li role="presentation"><a href="#tbbds" aria-controls="tbbds" role="tab" data-toggle="tab">for Owner / Agent</a></li>
-			<li role="presentation"><a href="#htcd" aria-controls="htcd" role="tab" data-toggle="tab">The main funtions on MetVuong</a></li>
+			<li role="presentation"><a href="#htcd" aria-controls="htcd" role="tab" data-toggle="tab">The main functions on MetVuong</a></li>
 		</ul>
 		<div class="tab-content">
 			<div role="tabpanel" class="tab-pane fade in active" id="mtbds">

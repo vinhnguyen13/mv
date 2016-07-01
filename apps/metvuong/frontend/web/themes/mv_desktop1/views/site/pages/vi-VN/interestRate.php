@@ -13,13 +13,12 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 <div class="title-fixed-wrap container">
     <div class="tool-cacu">
         <div class="news_blocks_contain">
-            <div class="title-top"> Tính lãi suất vay vốn </div>
+            <div class="title-top"> Tính lãi suất vay vốn</div>
             <div class="sum"> Cho phép bạn tính toán tiền tiết kiệm khi gửi một số tiền theo một kỳ hạn nhất định và so sánh lãi suất, tiền được hưởng giữa các ngân hàng </div>
-            <table class="funding-tbl">
-                <tbody id="thongTinVayVon">
-                <tr>
-                    <td class="label"> Ngày bắt đầu </td>
-                    <td>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">Ngày bắt đầu</label>
+                    <div class="col-sm-10">
                         <?=\yii\jui\DatePicker::widget([
                             'language' => 'en',
                             'dateFormat' => 'yyyy-MM-dd',
@@ -29,7 +28,57 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                             ]
                         ]);
                         ?>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">Số tiền vay</label>
+                    <div class="col-sm-10 ver-c">
+                        <input type="text" id="soTienVay" name="soTienVay" value="">
+                        VND
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">Hình thức trả nợ</label>
+                    <div class="col-sm-10 ver-c">
+                        <select id="hinhThucTraNo" name="hinhThucTraNo">
+                            <option value=""> Chọn hình thức trả nợ </option>
+                            <option value="4"> Trả gốc đều hàng tháng, trả lãi theo dư nợ giảm dần </option>
+                            <option value="3"> Trả theo phương thức niêm kim cố định </option>
+                            <option value="2"> Trả gốc cuối kỳ, trả lãi hàng tháng theo dư nợ thực tế. </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">Lãi suất</label>
+                    <div class="col-sm-10 ver-c">
+                        <input type="text" id="laiSuat" name="laiSuat" value="">
+                        <select id="theoThoiGian" name="theoThoiGian">
+                            <option value="thang"> Theo tháng </option>
+                            <option value="nam"> Theo năm </option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label">Thời gian</label>
+                    <div class="col-sm-10 ver-c">
+                        <input type="text" name="thoiGianVay" id="thoiGianVay" value=""> Tháng
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="" class="col-sm-2 control-label"></label>
+                    <div class="col-sm-10 ver-c">
+                        <a href="#" onclick="Tools.loan_calculate();" class="btn-form btn-common btn-bd-radius"> Tính nhanh</a>
+                    </div>
+                </div>
+            </form>
 
+            <!-- <table class="funding-tbl">
+                <tbody id="thongTinVayVon">
+                <tr>
+                    <td class="label"> Ngày bắt đầu </td>
+                    <td>
+                        
+            
                     </td>
                 </tr>
                 <tr>
@@ -69,7 +118,8 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
                     <td> <a href="#" onclick="Tools.loan_calculate();" class="btn-form btn-common"> Tính nhanh <span class="arrow-icon"> </span> </a> </td>
                 </tr>
                 </tbody>
-            </table>
+            </table> -->
+
             <div class="tool-hdr black-hdr"> Kết quả </div>
             <article>
                 <table class="funding-tbl">

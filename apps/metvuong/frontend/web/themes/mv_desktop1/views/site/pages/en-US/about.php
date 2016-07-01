@@ -6,7 +6,7 @@ $themeBaseUrl = Yii::$app->view->theme->baseUrl;
 		<div class="title-top">ABOUT US</div>
 		<div class="inner-page">
 			<div class="text-center logo-search-box wrap-img">
-				<img src="<?=$themeBaseUrl?>/resources/images/logo.png" alt="">
+				<img src="<?=$themeBaseUrl?>/resources/images/logo.png" alt="" class="w-30">
 			</div>
 			<p>
 				<a href="/"><strong>Metvuong.com</strong></a> is an online real estate community in Vietnam. We provide information for millions of luxury apartments, townhouses and mansions for rent and for sale across the country. We commit to providing customers with updated information of highest quality by strictly controlling the content of listings.

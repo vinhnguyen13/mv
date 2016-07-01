@@ -1259,13 +1259,6 @@ label {
     border-bottom: solid 0.5px #ededed;
     background: #fff;
 }
-.page-faqs .title-top,
-.page-terms .title-top,
-.detail-news .title-top {
-    position: fixed;
-    top: 41px;
-    left: 0;
-}
 .page-faqs,
 .page-terms,
 .noti-alert,
@@ -13252,6 +13245,26 @@ ul.cardList li {
     border: none;
     padding: 25px 0;
 }
+.site-contact {
+    padding-top: 50px;
+}
+.site-contact .inner-block {
+    width: 50%;
+    padding-top: 30px;
+    font-size: 13px;
+    padding-bottom: 50px;
+}
+#contactform-body {
+    border-radius: 0px;
+}
+.tool-cacu .form-group {
+    font-size: 13px;
+}
+.tool-cacu .form-group select,
+.tool-cacu .form-group input {
+    border: 1px solid #979797;
+    height: 30px;
+}
 @media (max-width: 1200px) {
     .type-payment {
         width: 90%;
@@ -13259,6 +13272,28 @@ ul.cardList li {
     }
 }
 @media (max-width: 985px) {
+    .site-contact .inner-block {
+        width: 90%;
+    }
+    .page-about-us .inner-page,
+    .page-terms .inner-page > div {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    .list-phuluc .wrap-slide-show .slide-show {
+        padding-left: 15px;
+    }
+    .list-phuluc li > a {
+        padding: 20px 0 10px 0;
+    }
+    .list-phuluc li {
+        margin-bottom: 0;
+    }
+    .tool-cacu,
+    .site-contact,
+    .page-terms, .page-faqs, .page-about-us {
+        padding-top: 0;
+    }
     .wrap-content-page {
         padding: 20px 0;
     }
