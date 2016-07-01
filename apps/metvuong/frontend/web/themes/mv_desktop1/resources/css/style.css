@@ -4143,7 +4143,7 @@ html.mm-opening .mm-slideout {
     padding: 0 0 0 0;
 }
 .right-attr-detail {
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 .right-attr-detail .price-item {
     font-size: 25px;
