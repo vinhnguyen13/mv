@@ -36,7 +36,7 @@ $alt = $catType . ' - ' . $product->getAddress($product->show_home_no);
                         echo $toilet_no ? '<li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>' . $toilet_no . ' </li>' : '';
                     } ?>
 				</ul>
-		        <p class="price-item"><?= StringHelper::formatCurrency($product->price) . ' <span>' . Yii::t('ad', 'VND').'</span>' ?></p>
+		        <p class="price-item"><?= StringHelper::formatCurrency($product->price) . ' <span class="txt-unit">' . Yii::t('ad', 'VND').'</span>' ?></p>
 		    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product->updated_at) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: 95</span></p>
 		    </div>
 		</a>
