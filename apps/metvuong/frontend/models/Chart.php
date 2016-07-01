@@ -146,7 +146,10 @@ class Chart extends Component
                 $tmpDataByPid[$key]['color'] = $color;
                 $tmpDataByPid[$key]['type'] = $typeChart;
 
-                $user = User::findIdentity($item->user_id);
+                $user_id = $item->user_id;
+                $user = Yii::$app->db->cache(function() use($user_id){
+                    return User::findIdentity($user_id);
+                });
                 if($user) {
                     $username = $user->username;
                     $email = empty($user->profile->public_email) ? $user->email : $user->profile->public_email;
