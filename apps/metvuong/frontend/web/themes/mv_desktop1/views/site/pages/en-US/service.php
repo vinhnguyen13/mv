@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container page-s">
 	<div class="title-top">Service</div>
 	<div class="wrap-content-page">
 		<ul class="tabs-s nav nav-tabs" role="tablist">

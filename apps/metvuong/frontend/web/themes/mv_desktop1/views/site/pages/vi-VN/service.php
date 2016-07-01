@@ -1,7 +1,7 @@
 <?php
 use yii\helpers\Url;
 ?>
-<div class="container">
+<div class="container page-s">
 	<div class="title-top">Dịch vụ</div>
 	<div class="wrap-content-page">
 		<ul class="tabs-s nav nav-tabs" role="tablist">

@@ -6389,6 +6389,7 @@ padding: 5px 0;
         font-weight: 600;
         line-height: 100%;
     }
+    .page-s .title-top,
     .statis .title-top,
     .block-dash .title-top,
     .invite-friend .title-top,
@@ -12445,7 +12446,7 @@ label:hover {
         padding-left: 0;
     }
     .wrap-giao-dich {
-        padding-top: 50px;
+        padding-top: 20px;
     }
 }
 @media ( max-width: 500px ) {
@@ -13273,6 +13274,7 @@ ul.cardList li {
     }
     .inner-dash {
         padding-left: 0;
+        padding-top: 20px;
     }
     .frm-invite {
         width: 70%;
