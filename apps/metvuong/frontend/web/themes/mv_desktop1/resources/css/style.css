@@ -5827,6 +5827,9 @@ html.mm-opening .mm-slideout {
     .search-wrap-home {
         /* margin-top: -120px; */
     }
+    .wrap-swiper .icons-detail .popover {
+        top: -40px !important;
+    }
 }
 .news-item ul {
     margin: 0 -20px;
@@ -10712,7 +10715,7 @@ label:hover {
 .wrap-swiper .icons-detail .popover {
     max-width: inherit;
     min-width: 300px;
-    top: -40px !important;
+    /* top: -40px !important; */
 }
 .wrap-swiper .popover.left>.arrow {
     top: 65px !important;
@@ -13201,7 +13204,7 @@ ul.cardList li {
 }
 .tabs-s {
     border-bottom: 2px solid #c3c3c3;
-    background: #e8e8e8;
+    /* background: #e8e8e8; */
 }
 .tabs-s li {
     border-right: 1px solid #c7c7c7;
@@ -13216,10 +13219,14 @@ ul.cardList li {
     font-weight: 600;
     border: none;
     border-right: 1px solid #fff;
-    padding: 15px 40px;
-    line-height: 100%;
+    padding: 0 15px;
     border-radius: 0px;
     background: #e8e8e8;
+    height: 45px;
+    line-height: 45px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 .tabs-s li:last-child a,
 .tabs-s li:last-child {
@@ -13256,12 +13263,18 @@ ul.cardList li {
         padding: 20px 0;
     }
     .tabs-s li {
-        width: 33.333%;
+        /* width: 33.333%; */
+        float: none;
+        display: table-cell;
+        background: #e8e8e8;
     }
     .tabs-s li a {
-        font-size: 13px;
-        padding: 10px 0;
-        line-height: 15px;
+        font-size: 12px;
+        padding: 10px 15px;
+        line-height: 17px;
+        height: 100%;
+        text-overflow: inherit;
+        white-space: inherit;
     }
     .wrap-content-page .tab-pane img {
         width: 100%;
@@ -13407,6 +13420,9 @@ ul.cardList li {
     }
 }
 @media (max-width: 460px) {
+    .tabs-s li a {
+        padding: 10px 0;
+    }
     .tab-payment li a {
         font-size: 12px;
     }
