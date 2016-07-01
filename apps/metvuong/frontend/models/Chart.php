@@ -29,12 +29,15 @@ class Chart extends Component
     const TYPE_FINDER = 2;
     const TYPE_SAVED = 3;
 
-    protected $filter = [
-        'week' => -6,
-        '2week' => -13,
-        'month' => -30,
-        'quarter' => -90,
-    ];
+    public static function filter()
+    {
+        return [
+            'week' => -6,
+            '2week' => -13,
+            'month' => -30,
+            'quarter' => -90,
+        ];
+    }
 
     public static function find()
     {
@@ -42,14 +45,18 @@ class Chart extends Component
     }
 
     // finder
-    public function getDataFinder($pid, $from, $to){
+    public function getDataFinder($pid, $from, $to, $limit=null){
 //        echo "<pre>";
 //        print_r(date('d-m-Y H:i:s', $from));
 //        print_r(date('d-m-Y H:i:s', $to));
 //        echo "<pre>";
 //        exit();
 
-        $adProductFinders = AdProductFinder::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->orderBy('time DESC')->all();
+        $adProductFinders = AdProductFinder::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->orderBy('time DESC');
+        if(!empty($limit)){
+            $adProductFinders = $adProductFinders->limit($limit);
+        }
+        $adProductFinders = $adProductFinders->all();
         $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
         $defaultData = array_map(function ($key, $date) {
             return ['y' => 0];
@@ -247,9 +254,9 @@ class Chart extends Component
             $useDate = new \DateTime($useDate);
         }*/
         $useDate = new \DateTime(date('Y-m-d', time()));
-        if(!isset($this->filter[$filter]))
+        if(!isset(Chart::filter()[$filter]))
             return null;
-        $days = $this->filter[$filter]." days";
+        $days = Chart::filter()[$filter]." days";
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
         $from = strtotime($days, $dateFrom->getTimestamp());
@@ -291,9 +298,9 @@ class Chart extends Component
             $useDate = new \DateTime($useDate);
         }*/
         $useDate = new \DateTime(date('Y-m-d', time()));
-        if(!isset($this->filter[$filter]))
+        if(!isset(Chart::filter()[$filter]))
             return null;
-        $days = $this->filter[$filter]." days";
+        $days = Chart::filter()[$filter]." days";
 
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
@@ -322,9 +329,9 @@ class Chart extends Component
             $useDate = new \DateTime($useDate);
         }*/
         $useDate = new \DateTime(date('Y-m-d', time()));
-        if(!isset($this->filter[$filter]))
+        if(!isset(Chart::filter()[$filter]))
             return null;
-        $days = $this->filter[$filter]." days";
+        $days = Chart::filter()[$filter]." days";
 
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);
@@ -355,9 +362,9 @@ class Chart extends Component
             $useDate = new \DateTime($useDate);
         }*/
         $useDate = new \DateTime(date('Y-m-d', time()));
-        if(!isset($this->filter[$filter]))
+        if(!isset(Chart::filter()[$filter]))
             return null;
-        $days = $this->filter[$filter]." days";
+        $days = Chart::filter()[$filter]." days";
 
         $f = date_format($useDate, 'Y-m-d 00:00:00');
         $dateFrom = new \DateTime($f);

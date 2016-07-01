@@ -86,7 +86,7 @@ class Tracking extends Component
             $time = !empty($time) ? $time : time();
             $query = AdProductVisitor::find();
             $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:00", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
-            $query->andWhere(['user_id' => $uid]);
+            $query->andWhere(['user_id' => (int)$uid]);
             $query->andWhere(['product_id' => (int)$pid]);
             $query->orderBy('time DESC');
             $adProductVisitor = $query->one();
@@ -110,7 +110,7 @@ class Tracking extends Component
             $time = !empty($time) ? $time : time();
             $query = AdProductShare::find();
             $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:00", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
-            $query->andWhere(['user_id' => $uid]);
+            $query->andWhere(['user_id' => (int)$uid]);
             $query->andWhere(['product_id' => (int)$pid]);
             $query->orderBy('time DESC');
             $adProductShare = $query->one();
@@ -118,7 +118,7 @@ class Tracking extends Component
                 $adProductShare->count++;
             } else {
                 $adProductShare = new AdProductShare();
-                $adProductShare->user_id = $uid;
+                $adProductShare->user_id = (int)$uid;
                 $adProductShare->product_id = (int)$pid;
                 $adProductShare->count = 1;
                 $adProductShare->time = $time;
@@ -136,7 +136,7 @@ class Tracking extends Component
             $time = !empty($time) ? $time : time();
             $query = AdProductFinder::find();
             $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:00", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
-            $query->andWhere(['user_id' => $uid]);
+            $query->andWhere(['user_id' => (int)$uid]);
             $query->andWhere(['product_id' => (int)$pid]);
             $query->orderBy('time DESC');
             $adProductFinder = $query->one();
@@ -144,7 +144,7 @@ class Tracking extends Component
                 $adProductFinder->count++;
             } else {
                 $adProductFinder = new AdProductFinder();
-                $adProductFinder->user_id = $uid;
+                $adProductFinder->user_id = (int)$uid;
                 $adProductFinder->product_id = (int)$pid;
                 $adProductFinder->count = 1;
             }

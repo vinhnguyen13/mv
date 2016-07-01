@@ -169,7 +169,7 @@ class DashboardController extends Controller
             $this->goHome();
 
         $filter = Yii::$app->request->get("filter");
-        if(empty($filter))
+        if(empty($filter) || !isset(Chart::filter()[$filter]))
             $filter = "week";
 
         $date = Yii::$app->request->get("date");
