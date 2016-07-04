@@ -42,7 +42,7 @@ use yii\helpers\Url;
                             });
                             $product_type = ($product->type == 1 ? 'mua' : 'thuê');
                             $address = $product->getAddress();
-                            $share_form->content = Yii::t('send_email', 'I am interested in') . ' '. (Yii::$app->language == 'vi-VN' ? $product_type." " : '') .
+                            $content_text = Yii::t('send_email', 'I am interested in') . ' '. (Yii::$app->language == 'vi-VN' ? $product_type." " : '') .
                                 $address . ', ' . Yii::t('send_email','please get back to me as soon as possible with futher information. Thank you!');
                         }
 
@@ -63,6 +63,7 @@ use yii\helpers\Url;
                         </div>
 
                         <div class="frm-item frm-email">
+                            <input type="hidden" class="content_text" value="<?=$content_text?>">
                             <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('send_email', 'Content...')])->label(false) ?>
                         </div>
 

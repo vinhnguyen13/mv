@@ -527,11 +527,14 @@ $count_review = $reviews->count();
                                 $('#popup_email .popup_title').text('<?=Yii::t('send_email','SHARE VIA EMAIL')?>');
                                 $('#share_form .type').attr('value', 'share');
                                 $('#share_form .recipient_email').attr('value', '');
+                                $('#share_form .content').prop('value', '');
 
                             } else if(type == 'contact'){
                                 $('#popup_email .popup_title').text('<?=Yii::t('send_email','CONTACT')?>');
                                 $('#share_form .type').attr('value', 'contact');
                                 $('#share_form .recipient_email').attr('value', '<?=$rep_email?>');
+                                var content_text = $('#share_form .content_text').val();
+                                $('#share_form .content').prop('value', content_text);
                             }
                             var url = $(this).data("url");
                             if(url != undefined && url.length > 0) {
