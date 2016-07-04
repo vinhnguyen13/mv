@@ -42,8 +42,11 @@ use yii\helpers\Url;
                             });
                             $product_type = ($product->type == 1 ? 'mua' : 'thuê');
                             $address = $product->getAddress();
-                            $content_text = Yii::t('send_email', 'I am interested in') . ' '. (Yii::$app->language == 'vi-VN' ? $product_type." " : '') .
-                                $address . ', ' . Yii::t('send_email','please get back to me as soon as possible with futher information. Thank you!');
+                            if(isset($params['default_text']) && !empty($params['default_text'])) {
+                                $content_text = Yii::t('send_email', 'I am interested in') . ' ' . (Yii::$app->language == 'vi-VN' ? $product_type . " " : '') .
+                                    $address . ', ' . Yii::t('send_email', 'please get back to me as soon as possible with futher information. Thank you!');?>
+                                <input type="hidden" class="content_text" value="<?=$content_text?>">
+                            <?php }
                         }
 
                         if(isset($params['your_email']) && $params['your_email'] == false && !empty($yourEmail)) {
@@ -63,7 +66,6 @@ use yii\helpers\Url;
                         </div>
 
                         <div class="frm-item frm-email">
-                            <input type="hidden" class="content_text" value="<?=$content_text?>">
                             <?= $f->field($share_form, 'content')->textarea(['class'=>'content', 'cols' => 30, 'rows' => 5, 'placeholder'=>Yii::t('send_email', 'Content...')])->label(false) ?>
                         </div>
 

@@ -299,7 +299,7 @@ $count_review = $reviews->count();
                         'recipientEmail' => strtolower(trim($rep_email)),
                         'to_name' => empty($owner) ? "" : (empty($owner->profile->name) ? $owner->username : $owner->profile->name),
                         'username' => empty($owner) ? null : $owner->username,
-                        'params' => ['your_email' => false, 'recipient_email' => false]]);
+                        'params' => ['your_email' => false, 'recipient_email' => false, 'default_text' => true]]);
                 ?>
 
 				<div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -345,7 +345,9 @@ $count_review = $reviews->count();
                                             Yii::t('report', 'It is inappropriate');
                                             Yii::t('report', 'It insults or attacks someone based on their religion, ethnicity or sexual orientation');
                                             Yii::t('report', 'It describes buying or selling drugs, guns or regulated products');
-                                            $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\ad\models\ReportType::report_product])->all();
+                                            $report_list = Yii::$app->db->cache(function(){
+                                                return \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\ad\models\ReportType::report_product])->all();
+                                            });
 //			                                echo \yii\helpers\Html::radioList('optionsRadios', 1, ArrayHelper::map($report_list, 'id', 'name'));
                                             if(count($report_list) > 0){
                                             ?>
