@@ -3845,6 +3845,9 @@ html.mm-opening .mm-slideout {
 .left-attr-detail .list-attr-td li .icon-mv {
     font-size: 30px;
 }
+.right-attr-detail .price-item .icon-mv {
+    font-size: 30px;
+}
 .left-attr-detail .list-attr-td li {
     padding-right: 10px;
     margin-right: 10px;
@@ -4151,7 +4154,7 @@ html.mm-opening .mm-slideout {
     /* overflow: hidden; */
 }
 .right-attr-detail .price-item {
-    font-size: 25px;
+    font-size: 29px;
     margin-bottom: 0;
     /* padding: 8px 15px; */
 }
@@ -12600,6 +12603,7 @@ label:hover {
     .wrap-tr-each .swiper-wrapper {
         display: block;
     }
+    .tbl-wrap .swiper-button-prev, .tbl-wrap .swiper-button-next,
     .tbl-wrap .swiper-pagination {
         display: none;
     }

@@ -16,7 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?php if($model->isNewRecord) echo $form->field($model, 'product_id')->textInput() ?>
 
-    <?= $form->field($model, 'type')->textInput() ?>
+    <?= $form->field($model, 'type')->dropDownList(\vsoft\ad\models\ReportType::getReportName()) ?>
 
     <?= $form->field($model, 'description')->textarea(['row' => 3]) ?>
 

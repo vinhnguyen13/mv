@@ -39,7 +39,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $ad_product->getAddress();
                 },
             ],
-            'type',
+            [
+                'attribute' => 'type',
+                'value' => function ($model) {
+                    return \vsoft\ad\models\ReportType::getReportName($model->type);
+                },
+            ],
+//            'type',
 //            'description',
             'ip',
             [
