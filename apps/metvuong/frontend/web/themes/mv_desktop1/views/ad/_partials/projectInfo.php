@@ -8,7 +8,7 @@ use yii\helpers\Url;
 		</span>
 		<div class="overflow-all">
 			<p class="name-duan"><?= $project->name ?></p>
-			<p class="address-listing"><?= $project->location ?></p>
+			<div class="address-listing"><p><?= $project->location ?></p></div>
 		</div>
 	</a>
 </div>

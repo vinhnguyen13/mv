@@ -81,8 +81,8 @@ if(!empty($jid_id)){
 		$('.wrap-chat-list').slimscroll({
 			alwaysVisible: true,
 			height: '100%'
-		});
-
+		});   
+		
 		var timer = 0;
 		$(document).unbind('chat/withAnother').bind('chat/withAnother', function (event, user) {
 			if(user){

@@ -24,6 +24,7 @@ $(document).ready(function() {
     });
     $(document).on('click', '.box-chat-footer .title-top', function () {
         $(this).closest('.item-box-chat').toggleClass('toggle-show-hide');
+        $('body').toggleClass('body-chat');
     });
 
     if ( !checkMobile() ) {

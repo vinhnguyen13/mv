@@ -984,6 +984,10 @@ label {
 .post-listing form button {
     line-height: 100%;
 }
+#preview {
+    padding: 10px 50px;
+    font-size: 15px;
+}
 .post-listing .step-txt {
     font-weight: 400;
     font-size: 15px;
@@ -2350,6 +2354,10 @@ label {
     /* font-weight: 600; */
     position: relative;
 }
+#settings-user li a.active {
+    color: #00a769;
+    font-weight: 600;
+}
 #settings-user li.num-gold a {
     font-size: 17px !important;
 }
@@ -2364,6 +2372,9 @@ label {
     width: 40px;
     font-size: 25px;
     color: #009455;
+}
+#settings-user .active .icon-heart-icon-listing:before {
+    content: "\e91f";
 }
 #settings-user li.flag-vn,
 #settings-user li.flag-us {
@@ -3000,8 +3011,8 @@ html.mm-opening .mm-slideout {
     -moz-border-radius: 0px;
     -ms-border-radius: 0px;
     border: 1px solid #B3B3B3;
-    border-left: none;
-    border-right: none;
+    /* border-left: none; */
+    /* border-right: none; */
     font-size: 14px;
 }
 .type-input-chat .sm-chat {
@@ -7721,7 +7732,7 @@ padding: 5px 0;
     font-size: 20px;
 }
 .detail-listing-dt .infor-listing .list-attr-td {
-    margin-bottom: 14px;
+    margin-bottom: 10px;
 }
 .detail-listing-dt .price-td {
     line-height: 100%;
@@ -9680,6 +9691,12 @@ margin-right: 5px;
     height: 350px;
     bottom: 0;
 }
+.body-chat {
+    overflow: hidden;
+}
+.body-chat .box-chat-footer {
+    position: fixed !important;
+}
 .toggle-show-hide .box-chat-footer {
     top: 0;
 }
@@ -10300,7 +10317,7 @@ margin-right: 5px;
     .chat-list {
         width: 100%;
         border: none;
-        padding: 0px 0 0 0;
+        padding: 70px 0 0 0;
     }
     .chat-list .item {
         padding-right: 0;
@@ -10320,9 +10337,11 @@ margin-right: 5px;
     }
     .search-history {
         padding-right: 0;
-        position: relative;
-        top: 0;
+        top: 15px;
         left: 0;
+        width: 100%;
+        right: inherit;
+        margin: 0;
     }
     .noti-alert {
         padding: 0 0 0 0;
@@ -11566,6 +11585,7 @@ label:hover {
         top: 100%;
         bottom: inherit;
         margin-top: -38px;
+        position: fixed !important;
     }
     .wrap-items-chat .item-box-chat {
         margin-left: 0;
@@ -12987,7 +13007,7 @@ ul.cardList li {
 }
 .detail-listing-extra .left-attr-detail,
 #review-listing .left-attr-detail {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 .payment-gr .hemi-intro-popover,
 .post-listing .hemi-intro-popover,
@@ -13273,6 +13293,14 @@ ul.cardList li {
     }
 }
 @media (max-width: 985px) {
+    .wrap-history {
+        position: fixed;
+        height: 100%;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 77px 10px 0;
+    }
     .site-contact .inner-block {
         width: 90%;
     }

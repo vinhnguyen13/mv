@@ -337,8 +337,8 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="error-hint" style="display: none;"><?= Yii::t('ad', 'Có lỗi xảy ra, vui lòng kiểm tra lại: ') ?> <span id="error-fields"></span></div>
-					<div class="text-right col-xs-12 pdT-50">
-						<button id="preview" type="button" class="btn-common"><?= Yii::t('ad', 'Preview') ?> <span class="icon-mv"><span class="icon-angle-right"></span></span></button>
+					<div class="text-right col-xs-12 text-center">
+						<button id="preview" type="button" class="btn-common text-uper btn-bd-radius"><?= Yii::t('ad', 'Preview') ?></button>
 					</div>
 					<?= Html::activeHiddenInput($product, 'lat') ?>
 					<?= Html::activeHiddenInput($product, 'lng') ?>

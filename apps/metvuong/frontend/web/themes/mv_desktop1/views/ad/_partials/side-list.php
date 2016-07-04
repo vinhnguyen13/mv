@@ -80,7 +80,7 @@
 						</div>
 						<div class="info-item clearfix">
 							<div class="address-listing">
-								<?= $address ?>
+								<p><?= $address ?></p>
 							</div>
 							<p class="infor-by-up">
 								<strong><?= ucfirst(Yii::t('ad', $categories[$product['category_id']]['name'])) ?> <?= mb_strtolower($types[$product['type']], 'utf8') ?></strong>
