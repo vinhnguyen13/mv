@@ -9,7 +9,9 @@ use yii\helpers\Html;
 
 $this->title = $name;
 $return_url = Yii::$app->getUser()->getReturnUrl();
-
+if($message == "Not Found"){
+    $return_url = "javascript:history.back()";
+}
 ?>
 <div class="site-error">
 	<div class="wrap_404">

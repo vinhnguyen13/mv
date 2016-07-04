@@ -38,7 +38,7 @@
                     <td style="background: #00a769;padding: 10px 30px;">
                         <table cellspacing="0" cellpadding="0" border="0" width="100%">
                             <tbody><tr>
-                                <td><a href="#"><img style="width: 150px;" alt="" src="<?=\yii\helpers\Url::home(true)?>images/logo-white.png"></a></td>
+                                <td><a href="<?=\yii\helpers\Url::home(true)?>"><img style="width: 150px;" alt="" src="<?=\yii\helpers\Url::home(true)?>images/logo-white.png"></a></td>
                                 <td style="text-align:right; color: #fff;font-size: 14px;font-weight: bold;">Kênh mua sắm bất động sản hàng đầu Việt Nam!</td>
                             </tr>
                             </tbody></table>
