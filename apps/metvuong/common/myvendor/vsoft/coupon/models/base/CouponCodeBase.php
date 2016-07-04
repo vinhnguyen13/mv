@@ -37,7 +37,7 @@ class CouponCodeBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cp_event_id', 'status', 'count', 'type', 'created_at', 'updated_at', 'amount_type', 'amount', 'amount_type'], 'integer'],
+            [['cp_event_id', 'status', 'count', 'type', 'created_at', 'updated_at', 'amount_type'], 'integer'],
             [['amount'], 'number'],
             [['amount'], 'required'],
             [['code'], 'string', 'max' => 32],
