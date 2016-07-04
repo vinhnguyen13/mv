@@ -10,12 +10,12 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
             <div class="title-gd mgB-15"><?=Yii::t('payment', 'Your balance')?></div>
             <div class="mgB-30">
                 <div class="mgB-20">
-                    <?=Yii::t('payment', 'Remaining Keys')?>: <span class="d-ib mgL-20 font-700"><span class="icon-mv mgR-5 fs-20"><span class="icon-coin-dollar"></span></span><?=number_format($this->params['balance'])?> Keys</span>
-                    <a href="<?=\yii\helpers\Url::to(['payment/index'])?>" class="d-ib btn mgL-20 pdT-5 pdB-5 font-600 fs-13 deposit"><?=Yii::t('payment', 'Buy Keys')?></a>
+                    <?=Yii::t('payment', 'Remaining Keys')?>: <span class="d-ib mgL-10 mgR-10 font-700"><span class="icon-mv mgR-5 fs-20"><span class="icon-coin-dollar"></span></span><?=number_format($this->params['balance'])?> Keys</span>
+                    <a href="<?=\yii\helpers\Url::to(['payment/index'])?>" class="d-ib btn pdT-5 pdB-5 font-600 fs-13 deposit"><?=Yii::t('payment', 'Buy Keys')?></a>
                 </div>
                 <?= $this->render('/coupon/_partials/coupon'); ?>
             </div>
-            <div class="title-gd mgB-5"><?=Yii::t('payment', 'Transaction history')?></div>
+            <div class="title-gd mgB-10"><?=Yii::t('payment', 'Transaction history')?></div>
             <div class="tbl-wrap clearfix">
                 <div class="thead clearfix">
                     <div class="pull-left w-10"><span><?=Yii::t('payment', 'ID')?></span></div>
@@ -47,6 +47,8 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
                     </div>
                     </div>
                     <div class="swiper-pagination"></div>
+                    <div class="swiper-button-next"><span class=""></span></div>
+                    <div class="swiper-button-prev"><span class=""></span></div>
                     <?php
                 } else {?>
                 <div class="clearfix tbl-emu">
@@ -75,6 +77,8 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
                 swiper = new Swiper('.wrap-tr-each.swiper-container', {
                     pagination: '.swiper-pagination',
                     paginationClickable: true,
+                    nextButton: '.swiper-button-next',
+                    prevButton: '.swiper-button-prev',
                     spaceBetween: 0
                 });        
             }else if ( wWindow > 500 && swiper != undefined ) {

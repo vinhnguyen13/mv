@@ -71,12 +71,6 @@ $meta->add(Yii::$app->request->absoluteUrl);
                         <a href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="fs-14"><span class="icon-mv mgR-5"><span class="icon-coin-dollar"></span></span><?=$this->params['balance']?> Keys</a>
                     </li>
                     <li><a href="<?=Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()])?>"><span class="icon-mv"><span class="icon-barometer"></span></span><?=Yii::t('ad', 'Dashboard')?></a></li>
-                    <li>
-                        <a class="pay-item <?= !empty($this->params['menuPayment']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>">
-                            <div><span class="icon-mv"><span class="icon-coin-dollar"></span></span></div>
-                            <?= Yii::t('ad', 'Payment') ?>
-                        </a>
-                    </li>
                     <li><a href="<?=Url::to(['/notification/index', 'username'=> Yii::$app->user->identity->getUsername()])?>" class="wrapNotifyOther"><span class="icon-mv"><span class="icon-icons-bell"></span></span><?=Yii::t('activity', 'Notification')?>
                             <?php if(!empty($this->params['notify_other'])){?>
                                 <span id="notifyOther" class="notifi"><?=$this->params['notify_other'];?></span>
