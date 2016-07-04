@@ -1,0 +1,75 @@
+.wrap-listing-item {
+    width: 44%;
+}
+.wrap-map-listing {
+    padding-right: 44%;
+}
+#listing-list > ul > li {
+    float: left;
+    width: 50%;
+    padding: 0 5px 5px 0;
+}
+#listing-list > ul > li a {
+    height: 190px;
+    overflow: hidden;
+    padding: 0;
+    position: relative;
+    border: none;
+}
+#listing-list > ul > li a .pic-intro {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+#listing-list .info-item {
+    position: absolute;
+    z-index: 2;
+    padding: 15px 10px 5px 10px;
+    bottom: 0;
+    width: 100%;
+    background: -webkit-linear-gradient(rgba(0,0,0,0),rgba(0,0,0,.5));
+    background: linear-gradient(rgba(0,0,0,0),rgba(0, 0, 0, 0.48));
+    color: #fff;
+}
+#listing-list > ul {
+    padding: 10px 0 0 5px;
+}
+#listing-list .list-attr-td li,
+#listing-list .list-attr-td li .icon-mv,
+#listing-list .price-item .icon-mv,
+#listing-list .infor-by-up {
+    color: #fff;
+}
+#listing-list .date-post {
+    color: #ccc;
+}
+#listing-list .vip .address-listing,
+#listing-list .address-listing {
+    color: #fff;
+    font-size: 17px;
+}
+#listing-list .infor-by-up,
+#listing-list .price-attr {
+    margin: 0 0 0 0;
+    line-height: 100%;
+}
+#listing-list .infor-by-up {
+    margin-bottom: 8px;
+}
+#listing-list .price-attr {
+    margin-bottom: 5px;
+}
+@media ( min-width: 1366px ) and ( max-width: 1400px ) {
+    .wrap-listing-item {
+        width: 50%;
+    }
+    .wrap-map-listing {
+        padding-right: 50%;
+    }
+    .detail-listing-dt {
+        width: 49%;
+    }
+}

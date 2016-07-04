@@ -4421,7 +4421,7 @@ html.mm-opening .mm-slideout {
     font-size: 13px;
     float: right;
     line-height: 100%;
-    margin-top: 5px;
+    /* margin-top: 5px; */
 }
 .id-duan span {
     font-weight: 600;
@@ -7775,7 +7775,7 @@ padding: 5px 0;
     max-width: 100%;
 }
 .infor-bds {
-    min-height: 500px;
+    /* min-height: 500px; */
 }
 .editor h1,
 .editor h2,
@@ -13286,6 +13286,32 @@ ul.cardList li {
     border: 1px solid #979797;
     height: 30px;
 }
+.listing-post-by-project {
+    margin-top: 50px;
+}
+.listing-post-by-project .title-list {
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #00a769;
+    border-bottom: 2px solid #00a769;
+    margin-bottom: 25px;
+    padding-bottom: 5px;
+}
+.listing-post-by-project .title-list .view-more {
+    margin: 0;
+    text-transform: capitalize;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 25px;
+}
+.listing-post-by-project .listing-item > li {
+    width: 50%;
+}
+.wrap-duan-moi .listing-post-by-project .item {
+    border: none;
+    padding: 0;
+    margin: 0;
+}
 @media (max-width: 1200px) {
     .type-payment {
         width: 90%;
@@ -13437,9 +13463,18 @@ ul.cardList li {
     }
     .wrap-listing-item #listing-list > ul > li a.vip {
         margin: 0;
+        border: 3px solid #d40000;
     }
 }
 @media (max-width: 768px) {
+    .listing-post-by-project .listing-item > li {
+        width: 100%;
+    }
+    .address-listing p {
+        text-overflow: inherit;
+        overflow: inherit;
+        white-space: inherit;
+    }
     .bg-bank {
         background: none;
     }
@@ -13490,6 +13525,9 @@ ul.cardList li {
     }
 }
 @media (max-width: 460px) {
+    .listing-post-by-project .title-list {
+        font-size: 16px;
+    }
     .tabs-s li a {
         padding: 10px 0;
     }
