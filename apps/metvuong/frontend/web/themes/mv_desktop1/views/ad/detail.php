@@ -32,9 +32,9 @@ use vsoft\ad\models\AdFacility;
 
 	$types = AdProduct::getAdTypes();
 
-    $user_id = $product->user_id;
-	$owner = \vsoft\ad\models\AdProduct::getDb()->cache(function() use($user_id){
-        return \frontend\models\User::findOne($user_id);
+    $oid = $product->user_id;
+	$owner = \vsoft\ad\models\AdProduct::getDb()->cache(function() use($oid){
+        return \frontend\models\User::findOne($oid);
     });
 
     $rep_email = empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email);
@@ -48,6 +48,7 @@ use vsoft\ad\models\AdFacility;
 		 */
 		if($adContactInfo && $adContactInfo->email){
 			$user = $adContactInfo->getUserInfo();
+
 			if(!empty($user)){
 				$url = $user->urlProfile();
 			}
@@ -110,7 +111,7 @@ Yii::$app->view->registerMetaTag([
 ]);
 
 if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']['all'] == true) && !Yii::$app->user->isGuest && ($product->user_id != Yii::$app->user->id)) {
-    Tracking::find()->productVisitor($user->id, $product->id, time());
+    Tracking::find()->productVisitor(Yii::$app->user->id, $product->id, time());
 }
 
 //$userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
