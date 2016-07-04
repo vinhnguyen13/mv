@@ -1574,9 +1574,9 @@ label {
     padding: 5px 10px;
     font-size: 14px;
     text-transform: capitalize;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    /* overflow: hidden; */
+    /* text-overflow: ellipsis; */
+    /* white-space: nowrap; */
     position: relative;
 }
 .item-dropdown li a.disable {
@@ -13440,6 +13440,12 @@ ul.cardList li {
     }
 }
 @media (max-width: 768px) {
+    .bg-bank {
+        background: none;
+    }
+    .bg-bank > .w-50 {
+        width: 100%;
+    }
     .noti-pay,
     .type-payment .input-couple,
     #NLpayBank > .w-50 {
@@ -13510,12 +13516,6 @@ ul.cardList li {
     }
     .item-payment {
         font-size: 13px;
-    }
-    .bg-bank {
-        background: none;
-    }
-    .bg-bank > .w-50 {
-        width: 100%;
     }
 }
 @media (max-width: 500px) {
