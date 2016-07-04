@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = 'Product Reports';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="ad-product-report-index">
 
@@ -42,6 +43,8 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'type',
                 'value' => function ($model) {
+                    if($model->type == -1)
+                        return $model->description;
                     return \vsoft\ad\models\ReportType::getReportName($model->type);
                 },
             ],

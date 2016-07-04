@@ -356,8 +356,8 @@ $count_review = $reviews->count();
                                                 <?php foreach($report_list as $key_report => $report){?>
                                                 <label><input type="radio" name="optionsRadios" value="<?=$report->id?>" <?=$key_report == 0 ? "checked" : ""?>> <?= Yii::t('report', $report->name)?></label>
                                                 <?php } ?>
-				                                <label><input type="radio" name="optionsRadios" value="-1"> <?=Yii::t('listing', 'Something else')?> </label>
-				                                <textarea class="pd-5 mgB-5" name="description" id="description" cols="30" rows="5" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
+				                                <label><input type="radio" name="optionsRadios" class="something_else" value="-1"> <?=Yii::t('listing', 'Something else')?> </label>
+				                                <textarea class="pd-5 mgB-5 something_else_text hide" name="description" id="description" cols="30" rows="5" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
 				                                <input type="hidden" id="pid" name="pid" value="<?=$product->id?>">
 				                                <input type="hidden" id="uid" name="uid" value="<?=empty(Yii::$app->user->id) ? 0 : Yii::$app->user->id?>">
 				                                <div class="text-right">
@@ -558,6 +558,11 @@ $count_review = $reviews->count();
 	                            } else {
 	                                $('#popup-login').modal('show');
 	                            }
+                        });
+
+                        $(document).on('click','.something_else', function () {
+                            $('.something_else_text').removeClass('hide');
+                            $('.something_else_text').focus();
                         });
 
                         $(document).on('click', '#report-form .send_report', function () {
