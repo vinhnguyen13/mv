@@ -359,7 +359,7 @@ $count_review = $reviews->count();
 				                                <label><input type="radio" name="optionsRadios" value="-1"> <?=Yii::t('listing', 'Something else')?> </label>
 				                                <textarea class="pd-5 mgB-5" name="description" id="description" cols="30" rows="5" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
 				                                <input type="hidden" id="pid" name="pid" value="<?=$product->id?>">
-				                                <input type="hidden" id="uid" name="uid" value="<?=empty($user->id) ? 0 : $user->id?>">
+				                                <input type="hidden" id="uid" name="uid" value="<?=empty(Yii::$app->user->id) ? 0 : Yii::$app->user->id?>">
 				                                <div class="text-right">
 				                                    <button class="btn-common send_report"><?=Yii::t('listing', 'Send report')?></button>
 				                                </div>
