@@ -7,19 +7,29 @@ AddDefaultCharset utf-8
 #SetEnvIf Request_URI ^/development require_auth=true
 #SetEnvIf Request_URI ^/service-packages require_auth=true
 #SetEnvIf Request_URI ^/member require_auth=true
-#
 #SetEnvIf Request_URI ^/nha-dat-ban require_auth=true
 #SetEnvIf Request_URI ^/nha-dat-cho-thue require_auth=true
 #SetEnvIf Request_URI ^/dang-tin require_auth=true
 #SetEnvIf Request_URI ^/du-an require_auth=true
 #SetEnvIf Request_URI ^/goi-gia require_auth=true
-#
 
-# Authorization for ALL
+#AuthName "Restricted Area - Authorization Required"
+#AuthUserFile /var/www/live/ttgweb/apps/metvuong/.htpasswd
+#AuthType Basic
+
+#Order deny,allow
+#Require valid-user
+
+#Deny from all
+#Allow from env=!require_auth
+#Satisfy Any
+
+
+
 #Order deny,allow
 #Deny from all
 #AuthName "Restricted Area - Authorization Required"
-#AuthUserFile /var/www/ttgweb/apps/metvuong/.htpasswd
+#AuthUserFile /var/www/stage/ttgweb/apps/metvuong/.htpasswd
 #AuthType Basic
 #Require valid-user
 #Satisfy Any
