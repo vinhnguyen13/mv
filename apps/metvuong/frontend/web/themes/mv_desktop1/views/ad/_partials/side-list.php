@@ -82,10 +82,10 @@
 							<div class="address-listing">
 								<p><?= $address ?></p>
 							</div>
-							<p class="infor-by-up">
+							<!-- <p class="infor-by-up">
 								<strong><?= ucfirst(Yii::t('ad', $categories[$product['category_id']]['name'])) ?> <?= mb_strtolower($types[$product['type']], 'utf8') ?></strong>
-							</p>
-							<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product['id'] ?></span></p>
+							</p> -->
+							<!-- <p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product['id'] ?></span></p> -->
 							<div class="clearfix price-attr">
 								<p class="price-item"><span class="icon-mv"><span class="icon-pricing"></span></span> <?= StringHelper::formatCurrency($product['price']) . ' <span class="txt-unit">' . Yii::t('ad', 'VND').'</span>' ?></p>
 								<ul class="clearfix list-attr-td">

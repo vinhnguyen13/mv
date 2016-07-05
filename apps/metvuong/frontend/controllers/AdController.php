@@ -45,6 +45,8 @@ use frontend\models\MapSearch;
 use yii\db\Query;
 use frontend\models\Transaction;
 use frontend\models\NganLuong;
+use vsoft\ad\models\AdProductAutoSave;
+use vsoft\ad\models\AdProductAutoSaveImages;
 
 class AdController extends Controller
 {
@@ -60,6 +62,71 @@ class AdController extends Controller
 		return parent::beforeAction($action);
 	}
 
+	public function actionAutoSave() {
+		if(Yii::$app->request->isPost && !Yii::$app->user->isGuest) {
+			$post = \Yii::$app->request->post();
+			
+			if(isset($post['AdProduct']) && isset($post['AdProductAdditionInfo']) && isset($post['AdContactInfo'])) {
+				
+				$data = array_merge($post['AdProduct'], $post['AdProductAdditionInfo'], $post['AdContactInfo']);
+				
+				$product = new AdProductAutoSave();
+				$product->load($data, '');
+					
+				if(!empty($post['start_edit'])) {
+					$product->stay_time = time() - $post['start_edit'];
+				}
+					
+				if($product->validate()) {
+					$product->user_id = Yii::$app->user->id;
+					$product->ip = Yii::$app->request->userIP;
+					$product->save();
+						
+					if(!empty($post['images']) && is_array($post['images'])) {
+						$this->autoSaveImage($post['images'], $product->id);
+					}
+						
+					return $product->id;
+				}
+			}
+		}
+	}
+	
+	public function autoSaveImage($addImages, $productId) {
+		$helper = new AdImageHelper();
+		
+		$tempFolder = $helper->getTempFolderPath(Yii::createObject(Session::className())->getId());
+		
+		$helper->adFolderName = 'auto-save';
+		
+		$now = time();
+		
+		$newFolderAbsolute = $helper->getAbsoluteUploadFolderPath($now);
+		$newFolder = $helper->getUploadFolderPath($newFolderAbsolute);
+		
+		$newFolderAbsoluteUrl = str_replace(DIRECTORY_SEPARATOR, '/', $newFolderAbsolute);
+		
+		if(!file_exists($newFolder)) {
+			mkdir($newFolder, 0777, true);
+		}
+		
+		foreach($addImages as $k => $image) {
+			$original = $tempFolder . DIRECTORY_SEPARATOR . $image;
+			if(file_exists($original)) {
+				copy($original, $newFolder . DIRECTORY_SEPARATOR . $image);
+			}
+		
+			$adImage = new AdProductAutoSaveImages();
+			$adImage->user_id = Yii::$app->user->id;
+			$adImage->product_id = $productId;
+			$adImage->file_name = $image;
+			$adImage->uploaded_at = $now;
+			$adImage->order = $k;
+			$adImage->folder = $newFolderAbsoluteUrl;
+			$adImage->save(false);
+		}
+	}
+	
 	public function actionEncodeGeometry() {
 
 		if(Yii::$app->request->isPost) {

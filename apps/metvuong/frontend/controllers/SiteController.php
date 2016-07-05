@@ -165,6 +165,13 @@ class SiteController extends Controller
 		}
 	}
 
+    public function actionViewDistrictFooter()
+    {
+        if(Yii::$app->request->isAjax){
+            return $this->renderAjax('_partials/viewDistrict');
+        }
+    }
+
 	/**
      * Displays contact page.
      *

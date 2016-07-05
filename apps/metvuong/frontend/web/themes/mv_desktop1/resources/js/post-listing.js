@@ -620,6 +620,7 @@ $(document).ready(function(){
 				balance.update(r.amount);
 				
 				window.onbeforeunload = function() {};
+				window.onunload = function() {};
 			} else {
 				
 			}
@@ -653,6 +654,19 @@ $(document).ready(function(){
 	window.onbeforeunload = function() {
 		if(form.data != form.el.serialize()) {
 			return lajax.t("Are you sure you want to navigate away from this page and discard all changes ?");
+		}
+	};
+	
+	window.onunload = function() {
+		if(isNewRecord) {
+			var disabled = form.el.find(':input:disabled').prop('disabled', false);
+			
+			$.ajax({
+				url: form.el.data('auto-save'),
+				data: form.el.serialize(),
+				type: 'POST',
+				async: false
+			});
 		}
 	};
 
@@ -1016,10 +1030,10 @@ $(document).ready(function(){
 			width = cl.outerWidth();
 			
 			if(Number(cl.css('margin-top').replace('px', '')) == 0) {
-				$window.on('scroll', wScroll);
-				wScroll();
+				//$window.on('scroll', wScroll);
+				//wScroll();
 			} else {
-				$window.off('scroll', wScroll);
+				//$window.off('scroll', wScroll);
 			}
 		}
 		

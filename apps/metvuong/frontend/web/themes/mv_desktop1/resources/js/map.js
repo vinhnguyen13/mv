@@ -1232,11 +1232,11 @@ var m2Map = {
 		var wWrapList = $('.wrap-listing-item .inner-wrap').outerWidth();
 		var detailListing = $('.detail-listing');
 		
-		detailListingWrap.loading({full: false});
+		detailListingWrap.loading({full: false}).addClass('show-detail');
 		
-		detailListingWrap.css({
+		/*detailListingWrap.css({
 			right: wWrapList +'px'
-		});
+		});*/
 		
 		google.maps.event.removeListener(m2Map.closeDetailListener);
 		m2Map.closeDetailListener = m2Map.map.addListener('click', m2Map.closeDetail);
@@ -1273,9 +1273,11 @@ var m2Map = {
 		
 		var wWrapList = $('.wrap-listing-item .inner-wrap').outerWidth();
 		
-		detailListingWrap.css({
+		/*detailListingWrap.css({
 			right: -wWrapList + 'px'
-		});
+		});*/
+
+		detailListingWrap.removeClass('show-detail');
 		
 		form.af.filter(s.did).val('');
 		m2Map.pushState();
