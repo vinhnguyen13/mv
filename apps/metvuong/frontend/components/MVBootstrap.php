@@ -92,7 +92,7 @@ class MVBootstrap implements BootstrapInterface
             Yii::t('url', 'nha-dat-ban', [], $language).'/<id:\d+>-<slug>' => 'ad/detail1',
         	Yii::t('url', 'nha-dat-cho-thue', [], $language).'/<id:\d+>-<slug>' => 'ad/detail2',
             Yii::t('url', 'bat-dong-san', [], $language).'/update/<id:\d+>' => 'ad/update',
-            Yii::t('url', 'thanh-vien', [], $language).'/<usrn>/avatar' => 'member/avatar',
+            'member/<usrn>/avatar' => 'member/avatar',
             Yii::t('url', 'tro-chuyen', [], $language).'/with/<username>' => 'chat/with',
             Yii::t('url', 'goi-gia', [], $language).'' => 'payment/package',
 
