@@ -47,23 +47,23 @@ $this->registerCss("table td {padding: 6px; vertical-align: middle;} table td.td
  		</tr>
  		<tr>
  			<td class="td-label">Thuộc dự án</td>
- 			<td><?= $model->project->name ?></td>
+ 			<td><?= $model->project ? $model->project->name : '' ?></td>
  		</tr>
  		<tr>
  			<td class="td-label">Tỉnh/Thành phố</td>
- 			<td><?= $model->city->name ?></td>
+ 			<td><?= $model->city ? $model->city->name : '' ?></td>
  		</tr>
  		<tr>
  			<td class="td-label">Quận/Huyện</td>
- 			<td><?= $model->district->name ?></td>
+ 			<td><?= $model->district ? $model->district->name : '' ?></td>
  		</tr>
  		<tr>
  			<td class="td-label">Phường/Xã</td>
- 			<td><?= $model->ward->name ?></td>
+ 			<td><?= $model->ward ? $model->ward->name : '' ?></td>
  		</tr>
  		<tr>
  			<td class="td-label">Đường/Phố</td>
- 			<td><?= $model->street->name ?></td>
+ 			<td><?= $model->street ? $model->street->name : '' ?></td>
  		</tr>
  		<tr>
  			<td class="td-label">Số nhà</td>
@@ -75,7 +75,7 @@ $this->registerCss("table td {padding: 6px; vertical-align: middle;} table td.td
  		</tr>
  		<tr>
  			<td class="td-label">Giá</td>
- 			<td><?= StringHelper::formatCurrency($model->price) ?></td>
+ 			<td><?= $model->price ? StringHelper::formatCurrency($model->price) : '' ?></td>
  		</tr>
  		<tr>
  			<td class="td-label">Nội dung</td>
