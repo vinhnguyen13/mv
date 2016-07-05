@@ -93,7 +93,8 @@ use vsoft\ad\models\AdImages;
 				<?php $form = ActiveForm::begin([
 						'options' => [
 							'class' => 'clearfix',
-							'autocomplete' => 'off'
+							'autocomplete' => 'off',
+							'data-auto-save' => Url::to(['/ad/auto-save'])
 						]
 					]) ?>
 					<div class="group-frm">
@@ -499,6 +500,7 @@ use vsoft\ad\models\AdImages;
 								</div>	
 							</div>
 							<div class="text-center">
+								<input type="hidden" name="start_edit" value="<?= time() ?>" />
 								<button id="back" type="button" class="btn-common"><?= Yii::t('ad', 'Back') ?></button>
 								<button id="post" type="button" class="btn-common"><?= $product->isNewRecord ? Yii::t('ad', 'Post') : Yii::t('ad', 'Update') ?></button>
 							</div>
