@@ -70,61 +70,23 @@ class AdController extends Controller
 				
 				$data = array_merge($post['AdProduct'], $post['AdProductAdditionInfo'], $post['AdContactInfo']);
 				
-				if(empty($post['asid'])) {
-					$product = new AdProductAutoSave();
-					$product->load($data, '');
+				$product = new AdProductAutoSave();
+				$product->load($data, '');
 					
-					if(!empty($post['start_edit'])) {
-						$product->stay_time = time() - $post['start_edit'];
-					}
+				if(!empty($post['start_edit'])) {
+					$product->stay_time = time() - $post['start_edit'];
+				}
 					
-					if($product->validate()) {
-						$product->user_id = Yii::$app->user->id;
-						$product->ip = Yii::$app->request->userIP;
-						$product->save();
-							
-						if(!empty($post['images']) && is_array($post['images'])) {
-							$this->autoSaveImage($post['images'], $product->id);
-						}
-					
-						return $product->id;
-					}
-				} else {
-					$product = AdProductAutoSave::findOne($post['asid']);
-					
-					if($product && Yii::$app->user->id == $product->user_id) {
-						$product->load($data, '');
+				if($product->validate()) {
+					$product->user_id = Yii::$app->user->id;
+					$product->ip = Yii::$app->request->userIP;
+					$product->save();
 						
-						if(!empty($post['start_edit'])) {
-							$product->stay_time = time() - $post['start_edit'];
-						}
-						
-						$product->save();
-							
-						$images = AdProductAutoSaveImages::find()->indexBy('file_name')->where(['product_id' => $product->id])->all();
-						$savedImages = ArrayHelper::map($images, 'id', 'file_name');
-						
-						if(!empty($post['images']) && is_array($post['images'])) {
-							$addImages = array_diff($post['images'], $savedImages);
-							$deleteImages = array_diff($savedImages, $post['images']);
-							
-							if(!empty($addImages)) {
-								$this->autoSaveImage($addImages, $product->id);
-							}
-							
-							if(!empty($deleteImages)) {
-								foreach ($deleteImages as $deleteImage) {
-									$images[$deleteImage]->delete();
-								}
-							}
-						} else {
-							foreach ($savedImages as $deleteImage) {
-								$images[$deleteImage]->delete();
-							}
-						}
-							
-						return $product->id;
+					if(!empty($post['images']) && is_array($post['images'])) {
+						$this->autoSaveImage($post['images'], $product->id);
 					}
+						
+					return $product->id;
 				}
 			}
 		}
@@ -631,20 +593,6 @@ class AdController extends Controller
     					$adImage->order = $k;
     					$adImage->folder = $newFolderAbsoluteUrl;
     					$adImage->save(false);
-    				}
-    			}
-    			
-    			if(!empty($post['asid'])) {
-    				$autoSave = AdProductAutoSave::findOne($post['asid']);
-    				
-    				if($autoSave) {
-    					$autoSaveImages = AdProductAutoSaveImages::findAll(['product_id' => $autoSave->id]);
-    					
-    					foreach ($autoSaveImages as $autoSaveImage) {
-    						$autoSaveImage->delete();
-    					}
-    					
-    					$autoSave->delete();
     				}
     			}
     			

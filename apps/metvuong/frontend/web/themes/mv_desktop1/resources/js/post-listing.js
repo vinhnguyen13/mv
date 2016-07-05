@@ -620,6 +620,7 @@ $(document).ready(function(){
 				balance.update(r.amount);
 				
 				window.onbeforeunload = function() {};
+				window.onunload = function() {};
 			} else {
 				
 			}
@@ -652,23 +653,20 @@ $(document).ready(function(){
 	
 	window.onbeforeunload = function() {
 		if(form.data != form.el.serialize()) {
-			
-			if(isNewRecord) {
-				var disabled = form.el.find(':input:disabled').prop('disabled', false);
-				
-				$.ajax({
-					url: form.el.data('auto-save'),
-					data: form.el.serialize(),
-					type: 'POST',
-					success: function(r) {
-						form.el.append('<input type="hidden" name="asid" value="' + r + '" />');
-					}
-				});
-				
-				disabled.prop('disabled', true);
-			}
-			
 			return lajax.t("Are you sure you want to navigate away from this page and discard all changes ?");
+		}
+	};
+	
+	window.onunload = function() {
+		if(isNewRecord) {
+			var disabled = form.el.find(':input:disabled').prop('disabled', false);
+			
+			$.ajax({
+				url: form.el.data('auto-save'),
+				data: form.el.serialize(),
+				type: 'POST',
+				async: false
+			});
 		}
 	};
 
