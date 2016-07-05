@@ -555,6 +555,7 @@ class AdController extends Controller
     			$product->user_id = Yii::$app->user->id;
     			$totalImage = empty($post['images']) ? 0 : count($post['images']);
     			$product->score = AdProduct::calcScore($product, $additionInfo, $contactInfo, $totalImage);
+    			$product->ip = Yii::$app->request->userIP;
     			$product->save(false);
     			
     			$additionInfo->product_id = $product->id;
