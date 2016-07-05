@@ -113,7 +113,7 @@ class AdController extends Controller
 		foreach($addImages as $k => $image) {
 			$original = $tempFolder . DIRECTORY_SEPARATOR . $image;
 			if(file_exists($original)) {
-				copy($original, $newFolder . DIRECTORY_SEPARATOR . $image);
+				rename($original, $newFolder . DIRECTORY_SEPARATOR . $image);
 			}
 		
 			$adImage = new AdProductAutoSaveImages();

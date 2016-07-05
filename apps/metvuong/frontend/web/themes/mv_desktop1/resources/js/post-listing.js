@@ -658,7 +658,7 @@ $(document).ready(function(){
 	};
 	
 	window.onunload = function() {
-		if(isNewRecord) {
+		if(isNewRecord && form.data != form.el.serialize()) {
 			var disabled = form.el.find(':input:disabled').prop('disabled', false);
 			
 			$.ajax({
