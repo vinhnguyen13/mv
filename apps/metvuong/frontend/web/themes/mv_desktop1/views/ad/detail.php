@@ -631,22 +631,22 @@ $count_review = $reviews->count();
 								<li><strong><?= Yii::t('ad', 'Project') ?>:</strong> <a href="<?= Url::to(["building-project/view", 'slug'=> $product->projectBuilding->slug]); ?>"><?= $product->projectBuilding->name ?></a></li>
 								<?php endif; ?>
 								<?php if($adProductAdditionInfo && $adProductAdditionInfo->facade_width): ?>
-								<li><strong><?= Yii::t('ad', 'Facade') ?>:</strong> <?= $adProductAdditionInfo->facade_width ?>m</li>
+								<li><strong><?= Yii::t('ad', 'Facade') ?>:</strong><p><?= $adProductAdditionInfo->facade_width ?>m</p></li>
 								<?php endif; ?>
 								<?php if($adProductAdditionInfo && $adProductAdditionInfo->land_width): ?>
-								<li><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <?= $adProductAdditionInfo->land_width ?>m</li>
+								<li><strong><?= Yii::t('ad', 'Entry width') ?>:</strong> <p><?= $adProductAdditionInfo->land_width ?>m</p></li>
 								<?php endif; ?>
 								<?php if($adProductAdditionInfo && $adProductAdditionInfo->floor_no): ?>
-								<li><strong><?= $product->projectBuilding ? Yii::t('ad', 'Floor plan') : Yii::t('ad', 'Number of storeys') ?>:</strong> <?= $adProductAdditionInfo->floor_no ?>  <?= Yii::t('ad', 'storeys') ?></li>
+								<li><strong><?= $product->projectBuilding ? Yii::t('ad', 'Floor plan') : Yii::t('ad', 'Number of storeys') ?>:</strong> <p><?= $adProductAdditionInfo->floor_no ?>  <?= Yii::t('ad', 'storeys') ?></p></li>
 								<?php endif; ?>
 								<?php if($adProductAdditionInfo && $adProductAdditionInfo->home_direction): ?>
-								<li><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <?= $directionList[$adProductAdditionInfo->home_direction] ?></li>
+								<li><strong><?= Yii::t('ad', 'House direction') ?>:</strong> <p><?= $directionList[$adProductAdditionInfo->home_direction] ?></p></li>
 								<?php endif; ?>
 								<?php if($adProductAdditionInfo && $adProductAdditionInfo->facade_direction): ?>
-								<li><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <?= $directionList[$adProductAdditionInfo->facade_direction] ?></li>
+								<li><strong><?= Yii::t('ad', 'Balcony direction') ?>:</strong> <p><?= $directionList[$adProductAdditionInfo->facade_direction] ?></p></li>
 								<?php endif; ?>
 								<?php if($adProductAdditionInfo && $adProductAdditionInfo->interior): ?>
-								<li><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <?= $adProductAdditionInfo->interior ?></li>
+								<li><strong><?= Yii::t('ad', 'Furniture') ?>:</strong> <p><?= $adProductAdditionInfo->interior ?></p></li>
 								<?php endif; ?>
 							</ul>
 		                </div>

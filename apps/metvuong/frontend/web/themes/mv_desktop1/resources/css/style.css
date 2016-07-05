@@ -5601,11 +5601,15 @@ html.mm-opening .mm-slideout {
 .list-tienich-detail li {
     float: left;
     width: 50%;
-    margin-bottom: 5px;
+    min-height: 40px;
 }
 .list-tienich-detail li strong {
-    display: inline-block;
-    width: 45%;
+    float: left;
+    padding-right: 10px;
+}
+.list-tienich-detail li p,
+.list-tienich-detail li a {
+    overflow: hidden;
 }
 #signup-form label {
     font-size: 13px;
@@ -11507,7 +11511,7 @@ label:hover {
     }
     .wrap-frm-listing .checkpoint-listing {
         position: fixed;
-        top: 76px;
+        top: 76px !important;
         left: 0;
         z-index: 990;
         background: #fff;
