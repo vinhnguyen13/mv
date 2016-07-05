@@ -164,7 +164,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                         <a class="btn-common mgR-10" href="<?=Url::to(['ad/index1', 'project_building_id'=>$model->id])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Buy')?></a>
                         <a class="btn-common" href="<?=Url::to(['ad/index2', 'project_building_id'=>$model->id])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Rent')?></a>
                     </div> -->
-                    <div class="listing-post-by-project">
+                    <div class="listing-post-by-project hide">
                         <div class="title-list clearfix">Tin rao của dự án này <a href="#" class="view-more pull-right">Xem thêm <span class="icon-mv"><span class="icon-angle-right"></span></span></a></div>
                         <ul class="clearfix listing-item">
                             <li class="col-xs-12 col-sm-6 col-lg-4">
