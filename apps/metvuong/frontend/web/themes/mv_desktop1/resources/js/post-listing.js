@@ -1030,10 +1030,10 @@ $(document).ready(function(){
 			width = cl.outerWidth();
 			
 			if(Number(cl.css('margin-top').replace('px', '')) == 0) {
-				//$window.on('scroll', wScroll);
-				//wScroll();
+				$window.on('scroll', wScroll);
+				wScroll();
 			} else {
-				//$window.off('scroll', wScroll);
+				$window.off('scroll', wScroll);
 			}
 		}
 		

@@ -15,8 +15,6 @@ $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/swiper.mi
 $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/jquery.mmenu.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'jquery.mmenu');
 $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/rippler.min.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'rippler');
 $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/style.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'style');
-//$this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/demo-listing.css", ['depends' => [\yii\bootstrap\BootstrapAsset::className()],], 'demo');
-
 
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.min.js', ['position'=>View::POS_HEAD]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap.js', ['position'=>View::POS_HEAD]);
