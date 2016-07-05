@@ -167,13 +167,20 @@ if(!Yii::$app->user->isGuest) {
 
             $(document).on('click', '.chat-now', function (e) {
                 user = $(this).attr('data-chat-user');
+                var wWindow = $(window).outerWidth();
                 if (user) {
                     $(document).trigger('chat/showBoxChat', [user]);
+                    if ( wWindow <= 460 ) {
+                        $('body').addClass('body-chat');
+                    }else {
+                        $('body').removeClass('body-chat');
+                    }
                 }
                 return false;
             });
             $(document).on('click', '.item-box-chat .close-box', function (e) {
                 $(document).trigger('chat/showHideMultiBox');
+                $('body').removeClass('body-chat');
             });
             $(document).on('click', '.typingMsg', function (e) {
                 var chatBoxExist = $(this).closest('.item-box-chat');

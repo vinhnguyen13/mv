@@ -32,9 +32,9 @@ use vsoft\ad\models\AdFacility;
 
 	$types = AdProduct::getAdTypes();
 
-    $user_id = $product->user_id;
-	$owner = \vsoft\ad\models\AdProduct::getDb()->cache(function() use($user_id){
-        return \frontend\models\User::findOne($user_id);
+    $oid = $product->user_id;
+	$owner = \vsoft\ad\models\AdProduct::getDb()->cache(function() use($oid){
+        return \frontend\models\User::findOne($oid);
     });
 
     $rep_email = empty($owner) ? "" : (empty($owner->profile->public_email) ? $owner->email : $owner->profile->public_email);
@@ -48,6 +48,7 @@ use vsoft\ad\models\AdFacility;
 		 */
 		if($adContactInfo && $adContactInfo->email){
 			$user = $adContactInfo->getUserInfo();
+
 			if(!empty($user)){
 				$url = $user->urlProfile();
 			}
@@ -110,7 +111,7 @@ Yii::$app->view->registerMetaTag([
 ]);
 
 if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']['all'] == true) && !Yii::$app->user->isGuest && ($product->user_id != Yii::$app->user->id)) {
-    Tracking::find()->productVisitor($user->id, $product->id, time());
+    Tracking::find()->productVisitor(Yii::$app->user->id, $product->id, time());
 }
 
 //$userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
@@ -355,10 +356,10 @@ $count_review = $reviews->count();
                                                 <?php foreach($report_list as $key_report => $report){?>
                                                 <label><input type="radio" name="optionsRadios" value="<?=$report->id?>" <?=$key_report == 0 ? "checked" : ""?>> <?= Yii::t('report', $report->name)?></label>
                                                 <?php } ?>
-				                                <label><input type="radio" name="optionsRadios" value="-1"> <?=Yii::t('listing', 'Something else')?> </label>
-				                                <textarea class="pd-5 mgB-5" name="description" id="description" cols="30" rows="5" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
+				                                <label><input type="radio" name="optionsRadios" class="something_else" value="-1"> <?=Yii::t('listing', 'Something else')?> </label>
+				                                <textarea class="pd-5 mgB-5 something_else_text hide" name="description" id="description" cols="30" rows="5" placeholder="<?=Yii::t('profile','Content')?>"></textarea>
 				                                <input type="hidden" id="pid" name="pid" value="<?=$product->id?>">
-				                                <input type="hidden" id="uid" name="uid" value="<?=empty($user->id) ? 0 : $user->id?>">
+				                                <input type="hidden" id="uid" name="uid" value="<?=empty(Yii::$app->user->id) ? 0 : Yii::$app->user->id?>">
 				                                <div class="text-right">
 				                                    <button class="btn-common send_report"><?=Yii::t('listing', 'Send report')?></button>
 				                                </div>
@@ -557,6 +558,11 @@ $count_review = $reviews->count();
 	                            } else {
 	                                $('#popup-login').modal('show');
 	                            }
+                        });
+
+                        $(document).on('click','.something_else', function () {
+                            $('.something_else_text').removeClass('hide');
+                            $('.something_else_text').focus();
                         });
 
                         $(document).on('click', '#report-form .send_report', function () {

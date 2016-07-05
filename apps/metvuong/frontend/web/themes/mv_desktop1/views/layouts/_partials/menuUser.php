@@ -5,25 +5,12 @@ use yii\helpers\Url;
     <div class="container">
         <div class="menuUser">
             <ul class="clearfix">
-                <li><a class="profile-item <?= !empty($this->params['menuUpdateProfile']) ? 'active' : ''; ?>" href="<?= Url::to(['member/update-profile', 'username' => Yii::$app->user->identity->getUsername()]) ?>">
-                        <div>
-                            <span class="icon-mv"><span class="icon-settings"></span></span>
-                        </div>
-                        <?= Yii::t('user', 'Profile') ?>
-                    </a>
-                </li>
                 <li>
                     <a class="dashboard-item <?= !empty($this->params['menuDashboard']) ? 'active' : ''; ?>" href="<?= Url::to(['/dashboard/ad', 'username' => Yii::$app->user->identity->getUsername()]) ?>">
                         <div>
                             <span class="icon-mv"><span class="icon-barometer"></span></span>
                         </div>
                         <?= Yii::t('ad', 'Dashboard') ?>
-                    </a>
-                </li>
-                <li>
-                    <a class="pay-item <?= !empty($this->params['menuPayment']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>">
-                        <div><span class="icon-mv"><span class="icon-coin-dollar"></span></span></div>
-                        <?= Yii::t('ad', 'Payment') ?>
                     </a>
                 </li>
                 <li>
@@ -47,18 +34,32 @@ use yii\helpers\Url;
                         </div><?= Yii::t('chat', 'Chat') ?>
                     </a>
                 </li>
-                <li style="display: none">
-                    <a class="invite-item <?= !empty($this->params['menuInvite']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/invite', 'username' => Yii::$app->user->identity->getUsername()])?>">
-                        <div><span class="icon-mv"><span class="icon-invite-friend"></span></span></div>
-                        <?= Yii::t('activity', 'Invite friend') ?>
-                    </a>
-                </li>
                 <li>
                     <a class="favorite-item <?= !empty($this->params['menuFavorite']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/favorite', 'username' => Yii::$app->user->identity->getUsername()])?>" href="#">
                         <div><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span></div>
                         <?= Yii::t('activity', 'Favorites') ?>
                     </a>
                 </li>
+                <li>
+                    <a class="pay-item <?= !empty($this->params['menuPayment']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/payment', 'username'=> Yii::$app->user->identity->getUsername()])?>">
+                        <div><span class="icon-mv"><span class="icon-coin-dollar"></span></span></div>
+                        <?= Yii::t('ad', 'Payment') ?>
+                    </a>
+                </li>
+                <li><a class="profile-item <?= !empty($this->params['menuUpdateProfile']) ? 'active' : ''; ?>" href="<?= Url::to(['member/update-profile', 'username' => Yii::$app->user->identity->getUsername()]) ?>">
+                        <div>
+                            <span class="icon-mv"><span class="icon-settings"></span></span>
+                        </div>
+                        <?= Yii::t('user', 'Profile') ?>
+                    </a>
+                </li>
+                <li style="display: none">
+                    <a class="invite-item <?= !empty($this->params['menuInvite']) ? 'active' : ''; ?>" href="<?=Url::to(['/dashboard/invite', 'username' => Yii::$app->user->identity->getUsername()])?>">
+                        <div><span class="icon-mv"><span class="icon-invite-friend"></span></span></div>
+                        <?= Yii::t('activity', 'Invite friend') ?>
+                    </a>
+                </li>
+                
                 <li>
                     <a data-method="post" href="<?=Url::to(['/member/logout'])?>">
                         <div><span class="icon-mv"><span class="icon-sign-out"></span></span></div>

@@ -40,7 +40,7 @@ if(count($products) > 0) {
                         <div class="address-feat clearfix">
                             <p class="date-post"><?=Yii::t('listing','Listing date')?>: <strong><?= date("d/m/Y H:i", $product->created_at) ?></strong></p>
                             <div class="address-listing">
-                                <a title="<?= $product->getAddress($product->show_home_no) ?>" href="<?= $product->urlDetail(); ?>"><?= $product->getAddress($product->show_home_no) ?></a>    
+                                <p><a title="<?= $product->getAddress($product->show_home_no) ?>" href="<?= $product->urlDetail(); ?>"><?= $product->getAddress($product->show_home_no) ?></a></p>
                             </div>
                             <p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
                             <ul class="clearfix list-attr-td">

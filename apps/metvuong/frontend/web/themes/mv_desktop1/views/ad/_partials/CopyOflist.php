@@ -35,7 +35,7 @@ $types = AdProduct::getAdTypes();
 				<!-- <p class="date-post"><?= Yii::t('statistic', 'Date of posting') ?>:
 					<strong><?= date("d/m/Y H:i", $product->updated_at) ?></strong></p> -->
 				<div class="address-listing">
-					<?= $product->getAddress($product->show_home_no) ?>
+					<p><?= $product->getAddress($product->show_home_no) ?></p>
 				</div>
 				<p class="infor-by-up">
 					<strong><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) ?></strong>

@@ -21,7 +21,7 @@ $alt = $catType . ' - ' . $product->getAddress($product->show_home_no);
 			</div>
 			<div class="info-item clearfix">
 				<div class="address-listing">
-					<!-- <span class="icon-mv mgR-5" style=""><span class="icon-star-full"></span></span> --><?= $product->getAddress($product->show_home_no) ?>
+					<p><?= $product->getAddress($product->show_home_no) ?></p>
 				</div>
 				<p class="infor-by-up">
 					<strong><?= $catType ?></strong>

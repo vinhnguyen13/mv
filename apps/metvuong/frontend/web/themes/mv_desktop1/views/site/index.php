@@ -154,7 +154,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
                     </ul>
                 </div>
             </div>
-            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
+            <div class=" col-md-2  col-sm-4  col-xs-12">
                 <div class="keyword_col">
                     <h2><a href="#" title="Nhà đất tại Hà Nội">Nhà Đất Hà Nội</a></h2>
                     <ul class="keyword_child_location clearfix">
@@ -190,7 +190,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
                     </ul>
                 </div>
             </div>
-            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
+            <div class=" col-md-2  col-sm-4  col-xs-12">
                 <div class="keyword_col">
                     <h2><a href="#" title="Nhà đất tại Bình Dương">Nhà Đất Bình Dương</a></h2>
                     <ul class="keyword_child_location clearfix">
@@ -224,7 +224,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
                     </ul>
                 </div>
             </div>
-            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
+            <div class=" col-md-2  col-sm-4  col-xs-12">
                 <div class="keyword_col">
                     <h2><a href="#" title="Nhà đất tại Đà Nẵng">Nhà Đất Đà Nẵng</a></h2>
                     <ul class="keyword_child_location clearfix">
@@ -253,7 +253,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
                     </ul>
                 </div>
             </div>
-            <div class=" col-md-2  col-sm-4  col-xs-12 disable">
+            <div class=" col-md-2  col-sm-4  col-xs-12">
                 <div class="keyword_col">
                     <h2><a href="#" title="Nhà đất tại Long An">Nhà Đất Long An</a></h2>
                     <ul class="keyword_child_location clearfix">
