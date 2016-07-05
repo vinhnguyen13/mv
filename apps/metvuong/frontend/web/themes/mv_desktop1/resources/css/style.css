@@ -887,7 +887,7 @@ label {
 }
 .infor-by-up {
     font-size: 14px;
-    margin-bottom: 7px;
+    margin-bottom: 11px;
     display: inline-block;
     vertical-align: middle;
     line-height: 100%;
@@ -4149,7 +4149,7 @@ html.mm-opening .mm-slideout {
     color: #000;
 }
 .price-attr {
-    margin: 9px 0 10px 0;
+    margin: 0 0 10px 0;
 }
 #listing-list .info-item .price-item {
     border: none;
@@ -4405,7 +4405,7 @@ html.mm-opening .mm-slideout {
     white-space: nowrap;
 }
 #listing-list .address-listing {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 #listing-list .vip .address-listing {
     color: #006D45;
