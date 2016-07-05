@@ -28,4 +28,20 @@ class AutoSaveController extends Controller {
     		throw new NotFoundHttpException('The requested page does not exist.');
     	}
     }
+
+
+    public function actionDelete($id)
+    {
+    	
+    	$autoSave = AdProductAutoSaveSearch::findOne($id);
+    	$images = $autoSave->images;
+    	
+    	foreach ($images as $image) {
+    		$image->delete();
+    	}
+    	
+    	$autoSave->delete();
+    
+    	return $this->redirect(['index']);
+    }
 }
