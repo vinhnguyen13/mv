@@ -32,7 +32,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
             </div>
             <div class="col-xs-12 col-md-9 col-left">
                 <div class="user-avatar">
-                    <div class="wrap-img avatar"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" /></div>
+                    <div class="wrap-img avatar pic-intro"><img id="profileAvatar" data-toggle="modal" data-target="#avatar" src="<?=$model->avatar?>" alt="metvuong avatar" /></div>
                     <div class="overflow-all">
                         <p class="name-user fs-18 font-600" >
                             <?= $model->name ?>
