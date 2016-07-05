@@ -34,7 +34,12 @@ class CouponCodeController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'roles' => ['@']
+                        'roles' => ['@'],
+                        'matchCallback' => function () {
+                            return (Yii::$app->user->can('/'.$this->module->id.'/*') ||
+                                Yii::$app->user->can('/'.$this->id.'/*') ||
+                                Yii::$app->user->can('/'.$this->id.'/'.$this->action->id));
+                        },
                     ]
                 ]
             ],
