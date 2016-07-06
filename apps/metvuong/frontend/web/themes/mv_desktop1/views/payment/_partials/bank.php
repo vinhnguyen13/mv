@@ -41,7 +41,7 @@ use yii\web\View;
                             <td>
                                 <div class="box-dropdown dropdown-common">
                                     <div class="val-selected style-click">
-                                        <span class="selected" data-placeholder="Chọn phương thức thanh toán">Chọn phương thức thanh toán</span>
+                                        <span class="selected" data-placeholder="<?=Yii::t('payment', 'Choose a payment method')?>"><?=Yii::t('payment', 'Choose a payment method')?></span>
                                         <span class="arrowDownFillFull"></span>
                                     </div>
                                     <div class="item-dropdown hide-dropdown">
@@ -62,7 +62,7 @@ use yii\web\View;
                             <td>
                                 <div class="box-dropdown dropdown-common">
                                     <div class="val-selected style-click">
-                                        <span class="selected" data-placeholder="Chọn ngân hàng">Chọn ngân hàng</span>
+                                        <span class="selected" data-placeholder="<?=Yii::t('payment', 'Choose a bank')?>"><?=Yii::t('payment', 'Choose a bank')?></span>
                                         <span class="arrowDownFillFull"></span>
                                     </div>
                                     <div class="item-dropdown hide-dropdown">
@@ -143,7 +143,7 @@ use yii\web\View;
                             <td>
                                 <div class="box-dropdown dropdown-common">
                                     <div class="val-selected style-click">
-                                        <span class="selected" data-placeholder="Chọn số tiền">Chọn số tiền</span>
+                                        <span class="selected" data-placeholder="<?=Yii::t('payment', 'Choose a amount')?>"><?=Yii::t('payment', 'Choose a amount')?></span>
                                         <span class="arrowDownFillFull"></span>
                                     </div>
                                     <div class="item-dropdown hide-dropdown">

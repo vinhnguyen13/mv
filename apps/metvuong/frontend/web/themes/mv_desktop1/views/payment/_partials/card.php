@@ -23,14 +23,6 @@ $f = ActiveForm::begin([
             <p class="mgB-10"><span class="color-red d-ib pdR-10 font-700 text-decor"><?=Yii::t('payment', 'Note')?>:</span>
                 <?=Yii::t('payment', 'The amount of keys added to your account will be after a <b>10%</b> service charge and <b>10%</b> VAT on top. E.g. Buying 100.000 VND through Mobile Credit will add 81.000 VND worth of Keys to your account.')?>
             </p>
-            <div class="clearfix">
-                <ul class="val-payment">
-                    <li><span>500,000 VND</span>=<span>400 <?=Yii::t('payment', 'Keys')?></span></li>
-                    <li><span>200,000 VND</span>=<span>160 <?=Yii::t('payment', 'Keys')?></span></li>
-                    <li><span>100,000 VND</span>=<span>80 <?=Yii::t('payment', 'Keys')?></span></li>
-                    <li><span>50,000 VND</span>=<span>40 <?=Yii::t('payment', 'Keys')?></span></li>
-                </ul>
-            </div>
         </div>
 
         <table align="center" class="w-50">
