@@ -44,7 +44,7 @@ class SiteController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                         'matchCallback' => function () {
-                            return (Yii::$app->user->can('/'.$this->id.'/*') || Yii::$app->user->can('/'.$this->id.'/'.$this->action->id)) ;
+                            return 1;(Yii::$app->user->can('/'.$this->id.'/*') || Yii::$app->user->can('/'.$this->id.'/'.$this->action->id)) ;
                         },
                     ],
                 ],
