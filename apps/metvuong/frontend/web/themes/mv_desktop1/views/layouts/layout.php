@@ -17,6 +17,7 @@
         <?php $this->beginContent('@app/views/layouts/_partials/footer.php'); ?><?php $this->endContent();?>
     <?php }
     $this->beginContent('@app/views/layouts/_partials/tutorial.php');$this->endContent();
+    $this->beginContent('@app/views/layouts/_partials/betaAutoGetCoupon.php');$this->endContent();
     ?>
 </div>
 <?php $this->endContent();?>
