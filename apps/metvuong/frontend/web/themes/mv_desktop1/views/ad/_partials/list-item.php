@@ -13,7 +13,7 @@ $catType = ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) . '
 $alt = $catType . ' - ' . $product->getAddress($product->show_home_no);
 
 ?>
-<li class="col-xs-12 col-sm-6 col-lg-4">
+
 	<div class="item">
 		<a data-id="<?= $product->id ?>" class="clearfix" href="<?= $product->urlDetail(); ?>" title="<?= $alt ?>">
 			<div class="pic-intro">
@@ -41,4 +41,3 @@ $alt = $catType . ' - ' . $product->getAddress($product->show_home_no);
 		    </div>
 		</a>
 	</div>
-</li>

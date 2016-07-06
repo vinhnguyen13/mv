@@ -200,6 +200,7 @@ class Ad extends Component
         $query->innerJoin('ad_product_saved', 'ad_product_saved.product_id = ad_product.id');
 //        $query->where(['status' => 1, 'verified' => 1, 'is_expired' => 0]);
         $query->andWhere('ad_product_saved.user_id IN ('.Yii::$app->user->id.')');
+        $query->andWhere('ad_product_saved.saved_at != 0');
         $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
         $query->groupBy('ad_product.id');
         $products = $query->orderBy(['ad_product.score'=>SORT_DESC])->limit(6)->all();

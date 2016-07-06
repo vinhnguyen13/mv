@@ -14,23 +14,53 @@ $categories = $categoriesDb->cache(function($categoriesDb){
 });
 $types = AdProduct::getAdTypes();
 $products = Ad::find()->listingFavorite();
-if(!empty($products)) {
-	?>
-	<div class="title-fixed-wrap container">
-		<div class="favori block-dash">
-			<div class="title-top">Favorites</div>
-			<div class="inner-dash">
-				<ul class="clearfix listing-item">
-					<?php
-
-					foreach ($products as $product):
-					?>
+?>
+<div class="title-fixed-wrap container">
+	<div class="favori block-dash">
+		<div class="title-top"><?=Yii::t('activity', 'Favorites')?></div>
+		<div class="inner-dash">
+			<ul class="clearfix listing-item">
+			<?php
+			if(!empty($products)) {
+				foreach ($products as $product):
+				?>
+					<li class="col-xs-12 col-sm-6 col-lg-4">
 						<?=$this->render('/ad/_partials/list-item', ['product' => $product, 'categories'=>$categories, 'types'=>$types]);?>
-					<?php endforeach; ?>
-				</ul>
-			</div>
+						<span class="dele-favori icon-mv" data-pid="<?=$product->id;?>"><span class="icon-close-icon"></span></span>
+					</li>
+				<?php endforeach;
+			}else {
+				?>
+				<li class="col-xs-12 col-sm-6 col-lg-4">
+					<?=Yii::t('common', '{object} no data', ['object'=>Yii::t('activity', 'Favorites')])?>
+				</li>
+				<?php
+			}
+				?>
+			</ul>
 		</div>
 	</div>
-	<?php
-}
-?>
+</div>
+<script>
+	$(document).ready(function () {
+		$(document).on('click', '.listing-item .dele-favori', function (e) {
+			$(this).parent().remove();
+			var pid = $(this).attr('data-pid');
+			if($('.listing-item .item').length == 0){
+				location.reload();
+			}
+			if(pid) {
+				$.ajax({
+					type: "post",
+					dataType: 'json',
+					url: '<?=\yii\helpers\Url::to(['/ad/favorite'])?>',
+					data: {id: pid, stt: 0},
+					success: function (data) {
+
+					}
+				});
+			}
+			return false;
+		});
+	});
+</script>
