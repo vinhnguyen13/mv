@@ -46,12 +46,12 @@ use yii\helpers\Url;
 				</p>
 			</div>
 			<div role="tabpanel" class="tab-pane fade in" id="tbbds">
-				<p><strong>1. Đăng tin.</strong></p>
+				<p><strong>1. Đăng tin. (30 ngày: 5 Keys)</strong></p>
 				<p style="margin-left:40px"><span class="font-700">a.</span> Không giống như hầu hết các trang mạng đăng tin bất động sản truyền thống khác , Metvuong.com đã xây dựng cách đăng tin rõ ràng, chi tiết và hệ thống đánh giá tin đăng của bạn với hàng trăm ngàn dữ liệu để đảm bảo tin là chính xác. Chúng tôi cũng có thang điểm cho tin đăng nhằm xác định vị trí và tần suất xuất hiện của tin trên kết quả tìm kiếm. Tại MetVuong.com, chúng tôi có các nhà khoa học dữ liệu làm việc trên cơ sở so sánh rất nhiều kho dữ liệu của chúng tôi để đảm bảo rằng bạn tìm được sản phẩm phù hợp nhất.</p>
 				<p>
 					<img class="w-70" src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/s-9.jpg' ?>" alt="">
 				</p>
-				<p><strong>2. Boost tin đăng</strong></p>
+				<p><strong>2. Boost tin đăng (1 ngày: 3 Keys, 3 ngày: 5 Keys)</strong></p>
 				<p style="margin-left:40px"><span class="font-700">a.</span> Theo thứ tự sắp xếp, tin đăng cũ sẽ bị trôi dần xuống dưới của danh sách và giảm dần điểm, để thiết lập lại vị trí dẫn đầu và đạt số điểm cao, bạn hãy boost tin đăng theo hướng dẫn để tin của bạn luôn có nhiều khách hàng quan tâm</p>
 				<p style="margin-left:40px"><span class="font-700">b.</span> Tin đăng boost sẽ được xuất hiện trên đầu danh sách và hiển thị trong nhiều kết quả tìm kiếm có liên quan của người dùng</p>
 				<p style="margin-left:40px"><span class="font-700">c.</span> Tin đăng boost sẽ được làm nổi bật trên danh sách, nhằm thu hút người tìm kiếm.</p>
@@ -59,7 +59,7 @@ use yii\helpers\Url;
 				<p>
 					<img class="w-70" src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/s-10.jpg' ?>" alt="">
 				</p>
-				<p><strong>3. Dashboard</strong></p>
+				<p><strong>3. Dashboard (30 ngày: 15 Keys)</strong></p>
 				<p>Dashboard cung cấp cho bạn các số liệu khách hàng đã tương tác với tin đăng của bạn như: a) Có bao nhiêu người tìm kiếm danh sách của bạn b) Có bao nhiêu người yêu thích danh sách của bạn c) Có bao nhiêu người chia sẻ danh sách của bạn... Tất cả những dữ liệu quan trọng này bao gồm thông tin của khách hàng như email, điện thoại sẽ giúp bạn liên hệ với các khách hàng tiềm năng một cách nhanh chóng.</p>
 				<p>
 					<img class="w-70" src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/s-11.jpg' ?>" alt="">
