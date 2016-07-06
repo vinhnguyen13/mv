@@ -11060,6 +11060,7 @@ label:hover {
     .detail-listing .no-gallery {
         width: 100%;
         height: auto;
+        margin-bottom: 0;
     }
     .list-tienich-detail li strong {
         display: block;
