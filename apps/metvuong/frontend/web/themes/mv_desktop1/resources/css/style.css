@@ -1254,14 +1254,14 @@ label {
     text-align: center;
     padding: 7px 0;
     font-size: 15px;
-    text-transform: uppercase;
     position: relative;
     /* top: 39px; */
     /* left: 0; */
     width: 100%;
     z-index: 100;
-    border-bottom: solid 0.5px #ededed;
+    border-bottom: solid 0.5px #DADADA;
     background: #fff;
+    text-transform: uppercase;
 }
 .page-faqs,
 .page-terms,
@@ -1520,7 +1520,7 @@ label {
 .option-show-listing {
     margin-bottom: 10px;
     padding: 0 0;
-    border-bottom: solid 1px #BDBDBD;
+    border-bottom: solid 1px #ccc;
 }
 .dropdown-select .arrowDown {
     position: absolute;
@@ -1599,6 +1599,7 @@ label {
 }
 .infor-duan-suggest .img-intro {
 
+margin-bottom: 0;
 }
 .item-listing {
     /* padding: 25px 20px; */
@@ -3254,6 +3255,9 @@ html.mm-opening .mm-slideout {
     -moz-box-shadow: 0px 0px 10px #ABABAB;
     -ms-box-shadow: 0px 0px 10px #ABABAB;
 }
+.box-feature-item .listing-item .item > a {
+    height: 370px;
+}
 .listing-item .item > a:hover {
     color: inherit;
     box-shadow: 0px 0px 10px #777777;
@@ -4145,7 +4149,7 @@ html.mm-opening .mm-slideout {
     font-size: 14px;
 }
 .price-item .icon-mv {
-    font-size: 23px;
+    font-size: 25px;
     color: #000;
 }
 .price-attr {
@@ -6379,12 +6383,12 @@ padding: 5px 0;
 @media (min-width: 985px) {
     .title-top {
         text-align: left;
-        padding: 0 0 10px 0;
-        font-size: 22px;
+        padding: 15px 30px;
+        font-size: 19px;
         background: inherit;
-        border-bottom: solid 1px #00a769;
+        border-bottom: solid 1px #DADADA;
         margin: 0 0 0 0;
-        font-weight: 600;
+        font-weight: 400;
         line-height: 100%;
     }
     .page-s .title-top,
@@ -6393,7 +6397,7 @@ padding: 5px 0;
     .invite-friend .title-top,
     .noti-alert .title-top,
     .u-allduan .title-top {
-        display: none;
+        /* display: none; */
     }
     .post-listing .title-top {
         display: block;
@@ -7946,7 +7950,8 @@ padding: 5px 0;
     line-height: 30px;
 }
 .infor-duan-suggest {
-    padding: 15px 15px 10px;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
 }
 .infor-duan-suggest a {
     display: block;
@@ -10078,7 +10083,7 @@ margin-right: 5px;
 }
 .edit-user-tt .title-top,
 .chat-history .title-top {
-    display: none;
+    /* display: none; */
 }
 .chat-history .chat-real .title-top {
     display: block;

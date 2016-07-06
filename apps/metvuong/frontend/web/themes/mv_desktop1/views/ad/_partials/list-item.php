@@ -27,15 +27,19 @@ $alt = $catType . ' - ' . $product->getAddress($product->show_home_no);
 					<strong><?= $catType ?></strong>
 				</p>
 				<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-				<ul class="clearfix list-attr-td">
-                    <?php if(empty($product->area) && empty($room_no) && empty($toilet_no)){ ?>
-                        <li><?=Yii::t('listing','updating')?></li>
-                    <?php } else {
-                        echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm<sup>2</sup> </li>' : '';
-                        echo $room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $room_no . ' </li>' : '';
-                        echo $toilet_no ? '<li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>' . $toilet_no . ' </li>' : '';
-                    } ?>
-				</ul>
+				<?php if(empty($product->area) && empty($room_no) && empty($toilet_no)){ ?>
+                    
+                <?php } else {
+                	?>
+					<ul class="clearfix list-attr-td">
+                	<?php
+                    echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm<sup>2</sup> </li>' : '';
+                    echo $room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $room_no . ' </li>' : '';
+                    echo $toilet_no ? '<li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>' . $toilet_no . ' </li>' : '';
+                    ?>
+					</ul>
+                    <?php
+                } ?>
 		        <p class="price-item"><?= StringHelper::formatCurrency($product->price) . ' <span class="txt-unit">' . Yii::t('ad', 'VND').'</span>' ?></p>
 		    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product->updated_at) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: 95</span></p>
 		    </div>

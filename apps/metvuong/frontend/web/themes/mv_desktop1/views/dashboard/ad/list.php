@@ -64,15 +64,19 @@ $count_product = count($products);
                                 ID: <span><?= Yii::$app->params['listing_prefix_id'] . $product->id; ?></span>
                             </p>
                             <a href="<?=$product->urlDetail(true)?>" class="see-detail-listing fs-13 font-600 color-cd-hover pull-right"><span class="text-decor"><?=Yii::t('statistic', 'Go detail page')?></span><span class="icon-mv mgL-10 fs-17"><span class="icon-angle-right"></span></span></a>
-                            <ul class="clearfix list-attr-td">
-                                <?php if(empty($product->area) && empty($room_no) && empty($toilet_no)){ ?>
-                                    <li><span><?=Yii::t('listing','updating')?></span></li>
-                                <?php } else {
-                                    echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
-                                    echo $room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $room_no . ' </li>' : '';
-                                    echo $toilet_no ? '<li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span> ' . $toilet_no . ' </li>' : '';
-                                } ?>
-                            </ul>
+                            <?php if(empty($product->area) && empty($room_no) && empty($toilet_no)){ ?>
+                                
+                            <?php } else {
+                                ?>
+                                <ul class="clearfix list-attr-td">
+                                <?php
+                                echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
+                                echo $room_no ? '<li> <span class="icon-mv"><span class="icon-bed-search"></span></span>' . $room_no . ' </li>' : '';
+                                echo $toilet_no ? '<li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span> ' . $toilet_no . ' </li>' : '';
+                                ?>
+                                </ul>
+                                <?php
+                            } ?>
                         </div>
                         <div class="bottom-feat-box clearfix">
                             <div class="pull-right push-price">

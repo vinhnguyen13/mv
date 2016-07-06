@@ -43,15 +43,19 @@ if(count($products) > 0) {
                                 <p><a title="<?= $product->getAddress($product->show_home_no) ?>" href="<?= $product->urlDetail(); ?>"><?= $product->getAddress($product->show_home_no) ?></a></p>
                             </div>
                             <p class="id-duan">ID:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-                            <ul class="clearfix list-attr-td">
-                                <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
-                                <li><?=Yii::t('listing','updating')?></li>
-                                <?php } else {
-                                    echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
-                                    echo $product->adProductAdditionInfo->room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
-                                    echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
-                                } ?>
-                            </ul>
+                            <?php if(empty($product->area) && empty($product->adProductAdditionInfo->room_no) && empty($product->adProductAdditionInfo->toilet_no)){ ?>
+                            
+                            <?php } else {
+                                ?>
+                                <ul class="clearfix list-attr-td">
+                                <?php
+                                echo $product->area ? '<li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>' . $product->area . 'm2 </li>' : '';
+                                echo $product->adProductAdditionInfo->room_no ? '<li><span class="icon-mv"><span class="icon-bed-search"></span></span>' . $product->adProductAdditionInfo->room_no . ' </li>' : '';
+                                echo $product->adProductAdditionInfo->toilet_no ? '<li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>' . $product->adProductAdditionInfo->toilet_no . ' </li>' : '';
+                                ?>
+                                </ul>
+                                <?php
+                            } ?>
                         </div>
                         <div class="bottom-feat-box clearfix">
                             <p><?=Yii::t('listing','Price')?> <strong><?= StringHelper::formatCurrency($product->price) ?> vnd</strong></p>
