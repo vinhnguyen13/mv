@@ -316,34 +316,34 @@ function textTour(txtArr, urlPage) {
 	}else if ( $(".menuUser ul").length ) {
 		steps = [
 	                {
-	                    selector: ".menuUser li .profile-item",
-	                    placement: "right",
-	                    content: txtArr[0]
-	                },
-	                {
 	                    selector: ".menuUser li .dashboard-item",
 	                    placement: "right",
-	                    content: txtArr[1],
-	                },
-	                {
-	                    selector: ".menuUser li .pay-item",
-	                    placement: "right",
-	                    content: txtArr[2],
+	                    content: txtArr[0],
 	                },
 	                {
 	                    selector: ".menuUser li .noti-item",
 	                    placement: "right",
-	                    content: txtArr[3],
+	                    content: txtArr[1],
 	                },
 	                {
 	                    selector: ".menuUser li .mess-item",
 	                    placement: "right",
-	                    content: txtArr[4],
+	                    content: txtArr[2],
 	                },
 	                {
 	                    selector: ".menuUser li .favorite-item",
 	                    placement: "right",
-	                    content: txtArr[5],
+	                    content: txtArr[3],
+	                },
+	                {
+	                    selector: ".menuUser li .pay-item",
+	                    placement: "right",
+	                    content: txtArr[4],
+	                },
+	                {
+	                    selector: ".menuUser li .profile-item",
+	                    placement: "right",
+	                    content: txtArr[5]
 	                }
 	            ];
 	    if ( $('.wrap-list-duan').length ) {

@@ -34,13 +34,18 @@ class AutoSaveController extends Controller {
     {
     	
     	$autoSave = AdProductAutoSaveSearch::findOne($id);
-    	$images = $autoSave->images;
     	
-    	foreach ($images as $image) {
-    		$image->delete();
+    	if($autoSave) {
+    		$images = $autoSave->images;
+    		
+    		if($images) {
+    			foreach ($images as $image) {
+    				$image->delete();
+    			}
+    		}
+    		 
+    		$autoSave->delete();
     	}
-    	
-    	$autoSave->delete();
     
     	return $this->redirect(['index']);
     }

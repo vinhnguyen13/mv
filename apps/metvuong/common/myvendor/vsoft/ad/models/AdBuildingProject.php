@@ -305,10 +305,12 @@ class AdBuildingProject extends ABP
 //        return $projects;
 //    }
 
-    public static function getTopProject($limit = 10){
-        $projects = self::find()->where('status = :s', [':s' => 1])
-            ->orderBy(['click' => SORT_DESC])->limit($limit)
-            ->all();
+    public static function getTopProject($limit = 10, $current_id = null){
+        $projects = self::find()->where('status = :s', [':s' => 1]);
+        if($current_id){
+            $projects = $projects->andWhere(['!=', 'id', $current_id]);
+        }
+        $projects = $projects->orderBy(['click' => SORT_DESC])->limit($limit)->all();
         return $projects;
     }
     

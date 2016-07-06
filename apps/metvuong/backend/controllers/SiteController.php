@@ -8,6 +8,15 @@ use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
 
+use yii\base\ExitException;
+use yii\base\Model;
+use yii\base\Module as Module2;
+use yii\helpers\Json;
+use yii\web\NotFoundHttpException;
+use yii\web\Response;
+use yii\web\UploadedFile;
+use yii\widgets\ActiveForm;
+
 /**
  * Site controller
  */
@@ -19,26 +28,31 @@ class SiteController extends Controller
     public function behaviors()
     {
         return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['login', 'error'],
-                        'allow' => true,
-                    ],
-                    [
-                        'actions' => ['logout', 'index', 'clear-cache'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    'delete'  => ['post'],
+                    'confirm' => ['post'],
+                    'block'   => ['post'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['index'],
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function () {
+                            return 1;(Yii::$app->user->can('/'.$this->id.'/*') || Yii::$app->user->can('/'.$this->id.'/'.$this->action->id)) ;
+                        },
+                    ],
+                ],
+            ],
+//            'as access' => [
+//                'class' => 'mdm\admin\components\AccessControl',
+//                'allowActions' => [/*'*'*/]
+//            ],
         ];
     }
 

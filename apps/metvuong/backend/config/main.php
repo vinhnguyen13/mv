@@ -10,7 +10,12 @@ return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
-    'bootstrap' => ['log'],
+    'bootstrap' => [
+        'log',
+        'acl' => [
+            'class' => 'backend\components\MVAcl',
+        ],
+    ],
     'modules' => [
         'user' => [
             'class' => 'dektrium\user\Module',

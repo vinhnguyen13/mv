@@ -36,7 +36,8 @@ if($action == 'site/index' && (!isset($cookie['Homepage']) || empty($cookie['Hom
     </script>
     <?php
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
-} else if(($action == 'dashboard/ad' || $action == 'dashboard/payment' || $action == 'chat/index' || $action == 'notification/index' || $action == 'dashboard/favorite') && (!isset($cookie['Dashboard']) || empty($cookie['Dashboard']))){
+}
+if(($action == 'dashboard/ad' || $action == 'dashboard/payment' || $action == 'chat/index' || $action == 'notification/index' || $action == 'dashboard/favorite') && (!isset($cookie['Dashboard']) || empty($cookie['Dashboard']))){
     $txtArr = [
         Yii::t("tutorial","<p class='mgB-5'>Cập nhật trạng thái các tin đăng của bạn gồm có:</p><p class='mgB-5'>Lượt tìm kiếm tin đăng,</p><p class='mgB-5'>Lượt yêu thích,</p><p>Lượt chia sẻ.</p>"),
         Yii::t("tutorial","Trang thông báo sẽ cho bạn xem lịch sử của những người đã xem hoặc thích một tin đăng của bạn, và từ trang này bạn có thể liên lạc họ qua email hoặc tin nhắn."),
@@ -65,7 +66,8 @@ if($action == 'site/index' && (!isset($cookie['Homepage']) || empty($cookie['Hom
     </script>
     <?php
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
-} else if($action == 'dashboard/statistics' && (!isset($cookie['Statistic']) || empty($cookie['Statistic']))){
+}
+if($action == 'dashboard/statistics' && (!isset($cookie['Statistic']) || empty($cookie['Statistic']))){
     $txtArr = [
         Yii::t("tutorial","<p class='mgB-5'>Ở đây bạn có thể theo dõi rõ diễn tiến tin đăng của bạn, dựa trên các số liệu như số lượng các lượt tìm kiếm, yêu thích, chia sẻ hiển thị theo các khoảng thời gian.</p><p class='mgB-5'> Bạn cũng có thể liện hệ với những người đang tìm kiếm sản phẩm của bạn bằng cách nhấp vào tài khoản của khách để gửi tin nhắn hoặc Chat với họ.</p>")
     ];
@@ -78,7 +80,8 @@ if($action == 'site/index' && (!isset($cookie['Homepage']) || empty($cookie['Hom
     </script>
     <?php
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
-} else if($action == 'ad/index1' && (!isset($cookie['BuyListing']) || empty($cookie['BuyListing']))){
+}
+if($action == 'ad/index1' && (!isset($cookie['BuyListing']) || empty($cookie['BuyListing']))){
     $txtArr = [
         Yii::t("tutorial","Để tìm sản phẩm cho bán theo tên thành phố, quận, phường, đường, mã số… bạn hãy gõ vào thanh tìm kiếm ngay hàng đầu và kết quả sẽ tự động thay đổi trên bản đồ và danh sách tiềm năng."),
         Yii::t("tutorial","Bản đồ lớn sẽ cho phép bạn nhìn thấy địa điểm trong danh sách tiềm năng của bạn, bạn có thể nhấp vào để xem cụ thể các địa điểm."),
@@ -93,7 +96,8 @@ if($action == 'site/index' && (!isset($cookie['Homepage']) || empty($cookie['Hom
     </script>
     <?php
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
-} else if($action == 'ad/index2' && (!isset($cookie['RentListing']) || empty($cookie['RentListing']))){
+}
+if($action == 'ad/index2' && (!isset($cookie['RentListing']) || empty($cookie['RentListing']))){
     $txtArr = [
         Yii::t("tutorial","Để tìm sản phẩm cho thuê theo tên thành phố, quận, phường, đường, mã số… bạn hãy gõ vào thanh tìm kiếm ngay hàng đầu và kết quả sẽ tự động thay đổi trên bản đồ và danh sách tiềm năng"),
         Yii::t("tutorial","Bản đồ lớn sẽ cho phép bạn nhìn thấy địa điểm trong danh sách tiềm năng của bạn, bạn có thể nhấp vào để xem cụ thể các địa điểm."),
@@ -109,7 +113,7 @@ if($action == 'site/index' && (!isset($cookie['Homepage']) || empty($cookie['Hom
     <?php
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
 }
-else if($action == 'ad/post' && (!isset($cookie['Post']) || empty($cookie['Post']))){
+if($action == 'ad/post' && (!isset($cookie['Post']) || empty($cookie['Post']))){
     $txtArr = [
         Yii::t("tutorial","<p class='mgB-5'>Đây là trang để bạn đăng tin sản phẩm cho thuê hoặc bán của bạn.</p><p class='mgB-5'>Metvuong.com khuyến khích bạn đăng các thông tin chi tiết và chính xác, với các tin chất lượng, bạn sẽ đạt số điểm cao và điều đó có nghĩa là sẽ có nhiều khách hàng tiềm năng sẽ liên hệ với bạn trong thời gian ngắn nhất.</p><p class='mgB-5'>Nếu bạn cung cấp thông tin mà sau khi xác minh là chưa chính xác thì chúng tôi sẽ hạ điểm số hoặc loại bỏ tin đăng.</p>")
     ];
@@ -123,7 +127,8 @@ else if($action == 'ad/post' && (!isset($cookie['Post']) || empty($cookie['Post'
     <?php
     $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/tour-intro.js', ['position'=>View::POS_END]);
 }
-else if($action == 'payment/index' && (!isset($cookie['Payment']) || empty($cookie['Payment']))){
+
+if($action == 'payment/index' && (!isset($cookie['Payment']) || empty($cookie['Payment']))){
     $txtArr = [
         Yii::t("tutorial","Metvuong.com có đầy đủ các hệ thống thanh toán để tối đa hóa sự tiện lợi của bạn, chỉ cần chọn số chìa khóa bạn muốn mua và phương thức thanh toán. Mua sỉ sẽ có chiết khấu tốt hơn.")
     ];

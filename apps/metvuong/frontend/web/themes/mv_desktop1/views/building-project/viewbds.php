@@ -321,7 +321,7 @@ echo $this->render('/ad/_partials/shareSocial',[
         $.ajax({
             type: "get",
             dataType: 'html',
-            url: '<?=Url::to(['building-project/load-sidebar'])?>'+'?limit=6',
+            url: '<?=Url::to(['building-project/load-sidebar'])?>'+'?limit=6&current_id=<?=$model->id?>',
             success: function (data) {
                 $(".sidebar-col").html(data);
                 $('.sidebar-col').loading({done: true});

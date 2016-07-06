@@ -147,13 +147,15 @@ class SecurityController extends Controller
                 $this->action->successUrl = Url::to(['/user/security/login']);
             } else {
                 if(Yii::$app->user->login($account->user, $this->module->rememberFor)) {
-                    $profile = Yii::$app->user->identity->profile;
-                    if (!empty($profile) && (empty($profile->avatar) || strpos($profile->avatar, "default-avatar") || !file_exists(Yii::getAlias('@store') . "/avatar/" . $profile['avatar']))) {
-                        if (isset($account['client_id']) && isset($account['user_id'])) {
-                            $img = Profile::get_facebook_user_avatar($account['client_id'], $account['user_id']);
-                            if ($profile->avatar != $img[0]) {
-                                $profile->avatar = empty($img[0]) ? null : $img[0];
-                                $profile->save(false);
+                    if(isset($account['provider']) && $account['provider'] == 'facebook') {
+                        $profile = Yii::$app->user->identity->profile;
+                        if (!empty($profile) && (empty($profile->avatar) || strpos($profile->avatar, "default-avatar") || !file_exists(Yii::getAlias('@store') . "/avatar/" . $profile['avatar']))) {
+                            if (isset($account['client_id']) && isset($account['user_id'])) {
+                                $img = Profile::get_facebook_user_avatar($account['client_id'], $account['user_id']);
+                                if ($profile->avatar != $img[0]) {
+                                    $profile->avatar = empty($img[0]) ? null : $img[0];
+                                    $profile->save(false);
+                                }
                             }
                         }
                     }
