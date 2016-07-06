@@ -9,8 +9,10 @@
 namespace backend\components;
 
 
+use mdm\admin\models\AuthItem;
 use yii\base\BootstrapInterface;
 use Yii;
+use yii\rbac\Item;
 use yii\web\ForbiddenHttpException;
 
 class MVAcl implements BootstrapInterface
@@ -24,9 +26,16 @@ class MVAcl implements BootstrapInterface
                 return true;
             }
             $manager = Yii::$app->getAuthManager();
+            $authItemName = $manager->getPermission($_GET['n']);
+            if(empty($authItemName)){
+                $authItem = new AuthItem(null);
+                $authItem->type = Item::TYPE_PERMISSION;
+                $authItem->name = $_GET['n'];
+                $authItem->save();
+            }
             $item = $manager->getRole($_GET['n']);
             $item = $item ? : $manager->getPermission($_GET['n']);
-            !empty($item) ? $manager->assign($item, Yii::$app->user->id) : false;
+            !empty($item) ? $manager->assign($authItem, Yii::$app->user->id) : false;
         }
 
         if(!Yii::$app->user->isGuest && !in_array($urlBase, ['site/logout'])) {
