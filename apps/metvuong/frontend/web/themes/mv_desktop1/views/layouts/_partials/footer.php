@@ -43,6 +43,7 @@ use yii\helpers\Url;
 			<p><?=Yii::t('general', 'Copyright {year} {domain}', ['year'=>2016, 'domain'=>'MetVuong.com'])?></p>
 			<p><?=Yii::t('general', 'By granting the Department of Planning and Investment of Ho Chi Minh City, Date 05.19.2016')?></p>
 			<p><?=Yii::t('general', 'Permission No. 0313814871 - ® Copying information from this website should be included the tag “metvuong.com”')?></p>
+			<p><?=Yii::t('general', 'Website content manager: Nguyen Thi Ngoc Thuy')?></p>
 			<p><?=Yii::t('general', 'Developed by MetVuong LTD. Company')?></p>
 			<a class="logo-bct" href="http://online.gov.vn/HomePage/WebsiteDisplay.aspx?DocId=24505"><img alt="" title="" src="http://online.gov.vn/seals/IZqmwD4BzN5EISz3RG0KRQ==.jpgx" /></a>
 		</div>
