@@ -20,20 +20,8 @@ if(!empty($event)) {
     $history = CouponHistory::find()->where(['cp_code_id' => $code->id, 'user_id' => Yii::$app->user->id])->asArray()->one();
     if(count($history) == 0) {
         ?>
-        <div class="wrap-coupon bg-warning">
-            <p class="mgB-5">MetVuong hiện đang chạy Beta, hệ thống sẽ tặng <b><?= intval($code->amount); ?></b> Keys
-            </p>
-
-            <p class="mgB-5"><a href="#" data-toggle="tooltip" data-placement="bottom" title="Sao chép key"
-                                data-title-success="Đã sao chép" class="btn-copy"
-                                data-clipboard-text="<?= $code->code; ?>">Copy mã của bạn <b><?= $code->code; ?></b></a>
-            </p>
-
-            <p class="mgB-5">Sau đó <a href="javascript:;" class="btn-coupon text-decor"><b>click vào đây</b></a>, dán
-                mã của bạn vào để nhận Keys miễn phí từ MetVuong.</p>
-        </div>
-        <div id="coupon-dialog" class="modal fade popup-common" tabindex="-1" role="dialog"
-             aria-labelledby="myModalLabel">
+        <a href="javascript:;" class="d-ib btn pdT-5 pdB-5 font-600 fs-13 btn-coupon"><?=Yii::t('coupon', 'Coupon')?></a>
+        <div id="coupon-dialog" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -46,6 +34,12 @@ if(!empty($event)) {
 
                             <div class="inner-popup">
                                 <div class="input-couple mgB-20 clearfix">
+                                    <div class="wrap-coupon bg-warning">
+                                        <p class="mgB-5"><?=Yii::t('coupon', 'MetVuong launch Beta, the system will give you {amount} Keys', ['amount'=>'<b>'.intval($code->amount).'</b>'])?></p>
+                                        <p class="mgB-5">
+                                            <?=Yii::t('coupon', 'Copy and paste your code {code} and paste below to get Keys from MetVuong.', ['code'=>'<a href="#" data-toggle="tooltip" data-placement="bottom" title="Sao chép key" data-title-success="Đã sao chép" class="btn-copy" data-clipboard-text="'.$code->code.'"><b>'.$code->code.'</b></a>'])?>
+                                        </p>
+                                    </div>
                                     <?php
                                     $f = ActiveForm::begin([
                                         'id' => 'frmCoupon',
@@ -54,7 +48,6 @@ if(!empty($event)) {
                                         'action' => ''
                                     ]);
                                     ?>
-                                    <p class="mgB-10"><?= Yii::t('coupon', 'Input code') ?>:</p>
                                     <input name="code" type="text" class="d-ib form-control code">
                                     <?php $f->end(); ?>
                                 </div>
@@ -90,6 +83,7 @@ if(!empty($event)) {
                 $('.btn-coupon').click(function () {
                     $('#coupon-dialog .inner-popup .alert').remove();
                     $('#coupon-dialog').modal('toggle');
+                    $('#coupon-dialog .modal-dialog').css('width', '700px');
                 });
                 $(document).on('click', '#coupon-dialog .coupon', function (e) {
                     $('.input-couple').loading({full: false});
@@ -100,7 +94,6 @@ if(!empty($event)) {
                         url: '<?=\yii\helpers\Url::to(['/coupon/process'])?>',
                         data: $('#frmCoupon').serialize(),
                         success: function (data) {
-                            //$('#coupon-dialog .modal-dialog').css('width', '300px');
                             if (data.error_code == 0) {
                                 $('#coupon-dialog .inner-popup').append('<div class="alert alert-info">' + data.result + '</div>');
                                 $('.code').val('');
