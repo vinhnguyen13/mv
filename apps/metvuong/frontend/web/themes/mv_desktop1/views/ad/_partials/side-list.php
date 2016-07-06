@@ -45,6 +45,7 @@
 					$address[] = $street['pre'] . ' ' . $street['name'];
 				}
 				
+				/*
 				if(isset($searchModel->wards[$product['ward_id']])) {
 					$ward = $searchModel->wards[$product['ward_id']];
 					
@@ -56,6 +57,7 @@
 					
 					$address[] = trim($district['pre'] . ' ' . $district['name']);
 				}
+				*/
 				
 				$address = implode(', ', array_filter($address));
 				
