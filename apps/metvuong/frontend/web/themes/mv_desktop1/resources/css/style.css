@@ -13235,11 +13235,12 @@ ul.cardList li {
 .dele-favori {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 15px;
     font-size: 22px;
     padding: 5px 7px;
     opacity: .6;
     cursor: pointer;
+    color: #fff;
 }
 .dele-favori:hover {
     opacity: 1;
