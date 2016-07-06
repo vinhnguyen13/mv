@@ -184,13 +184,17 @@ use yii\web\View;
                                 <input type="text" id="fullname" name="buyer_mobile" class="field-check form-control" value="<?=$profile->mobile?>">
                             </td>
                         </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <div class="text-left">
+                                    <input type="submit" name="nlpayment" value="<?=Yii::t('payment', 'Submit');?>" class="btn-common btn-bd-radius"/>
+                                </div>
+                            </td>
+                        </tr>
                     </table>
                 </div>
             </div>
-            <div class="mgT-20 text-left">
-                <input type="submit" name="nlpayment" value="<?=Yii::t('payment', 'Submit');?>" class="btn-common btn-bd-radius"/>
-            </div>
-            
             <?php 
                 $f->end(); 
                 $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.jquery.min.js', ['position' => View::POS_END]);

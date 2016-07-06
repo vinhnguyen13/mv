@@ -12503,6 +12503,9 @@ label:hover {
     /* white-space: nowrap; */
 }
 @media (max-width: 985px) {
+    .type-payment .innner-block {
+        padding: 0;
+    }
     .giao-dich {
         padding-left: 0;
     }
@@ -13475,7 +13478,7 @@ ul.cardList li {
         margin-bottom: 20px;
     }
     .keyword_wrapper {
-        display: none;
+        /* display: none; */
     }
     .txt-location .name-cty,
     .box-about > div {
@@ -13829,6 +13832,12 @@ ul.cardList li {
 
 }
 @media (max-width: 985px) {
+    .right-attr-detail .price-item {
+        font-size: 25px;
+    }
+    .right-attr-detail .price-item .icon-mv {
+        font-size: 25px;
+    }
     .wrap-listing-item {
         width: 100%;
     }
@@ -13850,6 +13859,12 @@ ul.cardList li {
     }
     #listing-list > ul > li {
         margin-bottom: 20px;
+    }
+    .wrap-swiper .icons-detail li {
+        width: auto;
+        padding: 0;
+        float: none;
+        height: auto;
     }
 }
 @media (max-width: 768px) {
