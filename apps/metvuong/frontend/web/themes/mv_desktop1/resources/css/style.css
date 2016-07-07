@@ -6803,6 +6803,9 @@ padding: 5px 0;
         float: left;
         width: auto;
     }
+    .page-news .title-top {
+        padding: 0;
+    }
     .page-s .title-top {
         float: none;
         padding: 0;
