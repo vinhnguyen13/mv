@@ -272,7 +272,7 @@ class Tracking extends Component
                     $chart_stats->save();
                     break;
                 case 'favorite':
-                    $chart_stats->favorite = $this->countFavourites($pid);
+                    $chart_stats->favorite = $chart_stats->favorite + 1;
                     $chart_stats->save();
                     break;
                 case 'share':
@@ -304,7 +304,7 @@ class Tracking extends Component
                     $chart_stats->search = 0;
                     $chart_stats->visit = 0;
                     $chart_stats->share = 0;
-                    $chart_stats->favorite = $this->countFavourites($pid);
+                    $chart_stats->favorite = 1;
                     $chart_stats->save();
                     break;
                 case 'share':

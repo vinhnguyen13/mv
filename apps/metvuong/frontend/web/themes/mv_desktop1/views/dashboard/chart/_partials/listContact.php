@@ -9,7 +9,7 @@ Yii::t('chart','shares');
 ?>
 <div class="clearfix mgB-15">
     <h3><?=Yii::t('chart', $view) ?> : <?=$dateParam?></h3>
-    <p style="color: #4a933a;" class="desTotal"> <?=Yii::t('chart','Total user')?>: <?=$totalUser?></p>
+    <p style="color: #4a933a;" class="desTotal"><strong><?=Yii::t('chart','Total user')?>: <?=$totalUser?></strong></p>
 </div>
 <ul class="clearfix listContact">
 <?php

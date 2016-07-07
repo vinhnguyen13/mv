@@ -240,7 +240,6 @@ class DashboardController extends Controller
             'finders' => $finders,
             'favorites' => $favorites,
             'shares' => $shares,
-            'view' => '_partials/finder',
             'search_count' => $search_count,
             'click_count' => $click_count,
             'fav_count' => $fav_count,
@@ -331,20 +330,16 @@ class DashboardController extends Controller
 
             $data = null;
             if($view == "finders") {
-                $data = Chart::find()->getDataFinder($id, $from, $to, 9);
+                $data = Chart::find()->getDataFinder($id, $from, $to, Chart::LIMIT_ITEM);
             }
             if ($view == "visitors"){
-                $data = Chart::find()->getDataVisitor($id, $from, $to, 9);
+                $data = Chart::find()->getDataVisitor($id, $from, $to, Chart::LIMIT_ITEM);
             }
             if ($view == "saved"){
-                $data = Chart::find()->getDataSaved($id, $from, $to, 9);
-                echo "<pre>";
-                print_r($data);
-                echo "<pre>";
-                exit();
+                $data = Chart::find()->getDataSaved($id, $from, $to, Chart::LIMIT_ITEM);
             }
             if ($view == "shares"){
-                $data = Chart::find()->getDataShare($id, $from, $to, 9);
+                $data = Chart::find()->getDataShare($id, $from, $to, Chart::LIMIT_ITEM);
             }
             return $this->renderAjax('chart/_partials/listContact',['view' => $view, 'data' => $data, 'totalUser' => $total, 'dateParam' => $dateParam, 'from' => $from, 'to' => $to, 'pid' => $id]);
         }
@@ -362,35 +357,21 @@ class DashboardController extends Controller
             $last_id = Yii::$app->request->get('last_id');
             $data = null;
             if($view == "finders") {
-                $data = Chart::find()->getDataFinder($pid, $from, $to, 9, $last_id);
+                $data = Chart::find()->getDataFinder($pid, $from, $to, Chart::LIMIT_ITEM, $last_id);
             }
             if ($view == "visitors"){
-                $data = Chart::find()->getDataVisitor($pid, $from, $to, 9, $last_id);
+                $data = Chart::find()->getDataVisitor($pid, $from, $to, Chart::LIMIT_ITEM, $last_id);
             }
             if ($view == "saved"){
-                $data = Chart::find()->getDataSaved($pid, $from, $to, 9, $last_id);
+                $data = Chart::find()->getDataSaved($pid, $from, $to, Chart::LIMIT_ITEM, $last_id);
             }
             if ($view == "shares"){
-                $data = Chart::find()->getDataShare($pid, $from, $to, 9, $last_id);
+                $data = Chart::find()->getDataShare($pid, $from, $to, Chart::LIMIT_ITEM, $last_id);
             }
             $html = null;
             $count_data = count($data) > 0 ? count($data) : 0;
             if($count_data > 0){
                 return $this->renderAjax('chart/_partials/listContact_item',['view' => $view, 'data' => $data]);
-//                foreach ($data as $key => $val) {
-//                    $user_id = $val["user_id"];
-//                    $user = Yii::$app->db->cache(function() use($user_id){
-//                        return User::findIdentity($user_id);
-//                    });
-//                    $username = $user->username;
-//                    $email = empty($user->profile->public_email) ? $user->email : $user->profile->public_email;
-//                    $avatar = $user->profile->getAvatarUrl();
-//
-//                    $html .= '<li class="'.$val['_id']->{'$id'}.'"><a href="#popup-user-inter"><img src="'.$avatar.'" alt="'.$username.'">'.$username.'</a>';
-//                    $html .= '<div class="crt-item"><a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="'.$email.'" data-original-title="Send email"><span class="icon-mv fs-16"><span class="icon-mail-profile"></span></span></a>';
-//                    $html .= '<a href="#" class="chat-now tooltip-show" data-chat-user="'.$username.'" data-placement="bottom" title="" data-original-title="Send message"><span class="icon-mv fs-18"><span class="icon-bubbles-icon"></span></span></a>';
-//                    $html .= '</div></li>';
-//                }
             }
             return $html;
         }

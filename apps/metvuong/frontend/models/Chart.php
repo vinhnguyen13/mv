@@ -30,6 +30,7 @@ class Chart extends Component
     const TYPE_VISITOR = 1;
     const TYPE_FINDER = 2;
     const TYPE_SAVED = 3;
+    const LIMIT_ITEM = 12;
 
     public static function filter()
     {
@@ -48,11 +49,6 @@ class Chart extends Component
 
     // finder
     public function getDataFinder($pid, $from, $to, $limit=null, $last_id=null){
-//        echo "<pre>";
-//        print_r(date('d-m-Y H:i:s', $from));
-//        print_r(date('d-m-Y H:i:s', $to));
-//        echo "<pre>";
-//        exit();
         $query = new Query;
         $query->from(AdProductFinder::collectionName())
             ->where(['between', 'time', $from, $to])
@@ -65,18 +61,7 @@ class Chart extends Component
             $query = $query->limit($limit);
         }
         return $query->orderBy('_id DESC')->all();
-//        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
-//        $defaultData = array_map(function ($key, $date) {
-//            return ['y' => 0];
-//        }, array_keys($dateRange), $dateRange);
-//
-//        $pushDataToChart = $this->pushDataToChart($adProductFinders, $defaultData, $dateRange, 'finders', $pid);
-//        $result = array_merge($pushDataToChart, ['from' => $from, 'to' => $to, 'pid' => $pid]);
-//        return $result;
-//        if(count($adProductFinders) > 0){
-//            return $this->pushDataToChart($adProductFinders, $defaultData, $dateRange, 'finders');
-//        }
-//        return false;
+
     }
 
     // visitor
@@ -93,18 +78,6 @@ class Chart extends Component
             $query = $query->limit($limit);
         }
         return $query->orderBy('_id DESC')->all();
-
-//        $adProductVisitors = AdProductVisitor::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->orderBy('time DESC')->all();
-//        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
-//        $defaultData = array_map(function ($key, $date) {
-//            return ['y' => 0];
-//        }, array_keys($dateRange), $dateRange);
-//
-//        return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, 'visitors', $pid);
-//        if(count($adProductVisitors) > 0){
-//            return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, 'visitors', $pid);
-//        }
-//        return false;
     }
 
     public function getDataShare($pid, $from, $to, $limit=null, $last_id=null){
@@ -120,17 +93,6 @@ class Chart extends Component
             $query = $query->limit($limit);
         }
         return $query->orderBy('_id DESC')->all();
-//        $adProductShares = AdProductShare::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->orderBy('time DESC')->all();
-//        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
-//        $defaultData = array_map(function ($key, $date) {
-//            return ['y' => 0];
-//        }, array_keys($dateRange), $dateRange);
-//
-//        return $this->pushDataToChart($adProductShares, $defaultData, $dateRange, 'shares', $pid);
-//        if(count($adProductShares) > 0){
-//            return $this->pushDataToChart($adProductShares, $defaultData, $dateRange, 'shares', $pid);
-//        }
-//        return false;
     }
 
     // saved
@@ -146,18 +108,6 @@ class Chart extends Component
             $query = $query->limit($limit);
         }
         return $query->orderBy('saved_at DESC')->all();
-
-//        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
-//        $defaultData = array_map(function ($key, $date) {
-//            return ['y' => 0];
-//        }, array_keys($dateRange), $dateRange);
-//
-//        return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange, 'saved', $pid);
-//
-//        if(count($adProductSaveds) > 0){
-//            return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange, 'saved', $pid);
-//        }
-//        return false;
     }
 
     private function pushDataToChart($adProductTypes, $defaultData, $dateRange, $view, $pid){
@@ -289,155 +239,4 @@ class Chart extends Component
 
     }
 
-    public function getFinderWithLastTime($id, $filter){
-        /*if(empty($useDate)) {
-            $finder = AdProductFinder::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
-            if (count($finder) > 0)
-                $useDate = new \DateTime(date('Y-m-d', $finder->time));
-            else
-                $useDate = new \DateTime(date('Y-m-d', time()));
-        } else {
-            $useDate = new \DateTime($useDate);
-        }*/
-        $useDate = new \DateTime(date('Y-m-d', time()));
-        if(!isset(Chart::filter()[$filter]))
-            return null;
-        $days = Chart::filter()[$filter]." days";
-        $f = date_format($useDate, 'Y-m-d 00:00:00');
-        $dateFrom = new \DateTime($f);
-        $from = strtotime($days, $dateFrom->getTimestamp());
-
-        $t = date_format($useDate, 'Y-m-d 23:59:59');
-        $dateTo = new \DateTime($t);
-        $to = $dateTo->getTimestamp();
-
-        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
-        $query = new Query;
-        $query->from(ChartStats::collectionName())
-            ->where(['product_id' => $id])
-            ->andWhere(['IN', 'date', $dateRange]);
-        $chart_stats = $query->orderBy('created_at')->all();
-        if(count($chart_stats) > 0){
-            return $chart_stats;
-
-        }
-
-
-//        $to = new \DateTime(date('Y-m-d', $from));
-//        $t = date_format($to, 'Y-m-d 23:59:59');
-//        $dateTo = new \DateTime($t);
-//        $to = $dateTo->getTimestamp();
-//        echo "<pre>";
-//        print_r(date('d-m-Y H:i:s', $from));
-//        print_r(date('d-m-Y H:i:s', $to));
-//        echo "<pre>";
-//        exit();
-//        $dataFinders = $this->getDataFinder($id, $from, $to);
-//
-//        if($dataFinders != false) {
-//            $infoDataFinders = empty($dataFinders) ? null : $dataFinders["infoData"];
-//            if (!empty($infoDataFinders) && isset($infoDataFinders["finders"])) {
-//                $infoDataFinders["from"] = $from;
-//                $infoDataFinders["to"] = $to;
-//            }
-//            return $infoDataFinders;
-//        }
-        return null;
-    }
-
-    public function getVisitorWithLastTime($id, $filter){
-        /*if(empty($useDate)) {
-            $visitor = AdProductVisitor::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
-            if (count($visitor) > 0)
-                $useDate = new \DateTime(date('Y-m-d', $visitor->time));
-            else
-                $useDate = new \DateTime(date('Y-m-d', time()));
-        } else {
-            $useDate = new \DateTime($useDate);
-        }*/
-        $useDate = new \DateTime(date('Y-m-d', time()));
-        if(!isset(Chart::filter()[$filter]))
-            return null;
-        $days = Chart::filter()[$filter]." days";
-
-        $f = date_format($useDate, 'Y-m-d 00:00:00');
-        $dateFrom = new \DateTime($f);
-        $from = strtotime($days, $dateFrom->getTimestamp());
-
-        $t = date_format($useDate, 'Y-m-d 23:59:59');
-        $dateTo = new \DateTime($t);
-        $to = $dateTo->getTimestamp();
-
-        $dataVisitors = $this->getDataVisitor($id, $from, $to);
-        $infoDataVisitors = empty($dataVisitors) ? null : $dataVisitors["infoData"];
-        if(!empty($infoDataVisitors) && isset($infoDataVisitors["visitors"])){
-            $infoDataVisitors["from"] = $from;
-            $infoDataVisitors["to"] = $to;
-        }
-        return $infoDataVisitors;
-    }
-    public function getShareWithLastTime($id, $filter){
-        /*if(empty($useDate)) {
-            $share = AdProductShare::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
-            if (count($share) > 0)
-                $useDate = new \DateTime(date('Y-m-d', $share->time));
-            else
-                $useDate = new \DateTime(date('Y-m-d', time()));
-        } else {
-            $useDate = new \DateTime($useDate);
-        }*/
-        $useDate = new \DateTime(date('Y-m-d', time()));
-        if(!isset(Chart::filter()[$filter]))
-            return null;
-        $days = Chart::filter()[$filter]." days";
-
-        $f = date_format($useDate, 'Y-m-d 00:00:00');
-        $dateFrom = new \DateTime($f);
-        $from = strtotime($days, $dateFrom->getTimestamp());
-
-        $t = date_format($useDate, 'Y-m-d 23:59:59');
-        $dateTo = new \DateTime($t);
-        $to = $dateTo->getTimestamp();
-
-        $dataShares = $this->getDataShare($id, $from, $to);
-        $infoDataShares = empty($dataShares) ? null : $dataShares["infoData"];
-        if(!empty($infoDataShares) && isset($infoDataShares["shares"])){
-            $infoDataShares["from"] = $from;
-            $infoDataShares["to"] = $to;
-        }
-        return $infoDataShares;
-    }
-
-    public function getSavedWithLastTime($id, $filter )
-    {
-        /*if(empty($useDate)) {
-            $saved = AdProductSaved::find()->where(['product_id' => $id])->orderBy('saved_at DESC')->one();
-            if (count($saved) > 0)
-                $useDate = new \DateTime(date('Y-m-d', $saved->saved_at));
-            else
-                $useDate = new \DateTime(date('Y-m-d', time()));
-        } else {
-            $useDate = new \DateTime($useDate);
-        }*/
-        $useDate = new \DateTime(date('Y-m-d', time()));
-        if(!isset(Chart::filter()[$filter]))
-            return null;
-        $days = Chart::filter()[$filter]." days";
-
-        $f = date_format($useDate, 'Y-m-d 00:00:00');
-        $dateFrom = new \DateTime($f);
-        $from = strtotime($days, $dateFrom->getTimestamp());
-
-        $t = date_format($useDate, 'Y-m-d 23:59:59');
-        $dateTo = new \DateTime($t);
-        $to = $dateTo->getTimestamp();
-
-        $dataSaved = Chart::find()->getDataSaved($id, $from, $to);
-        $infoDataFavourites = empty($dataSaved) ? null : $dataSaved["infoData"];
-        if(!empty($infoDataFavourites) && isset($infoDataFavourites["saved"])){
-            $infoDataFavourites["from"] = $from;
-            $infoDataFavourites["to"] = $to;
-        }
-        return $infoDataFavourites;
-    }
 }
