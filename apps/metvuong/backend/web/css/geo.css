@@ -1,0 +1,34 @@
+select {
+	padding: 4px 8px;
+}
+
+#logs {
+	margin-top: 12px;	
+}
+
+#logs > div {
+	margin: 2px 0;
+}
+
+#logs > div > span {
+	display: inline-block;
+	background-color: black;
+	color: #fff;
+	padding: 2px 8px;
+}
+
+#logs .level-2 > span {
+	margin-left: 80px;
+}
+
+#logs .level-3 > span {
+	margin-left: 160px;
+}
+
+#logs .level-4 > span {
+	margin-left: 240px;
+}
+
+#logs .level-5 > span {
+	margin-left: 320px;
+}

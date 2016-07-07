@@ -1,17 +1,16 @@
 <?php
 use vsoft\ad\models\AdProduct;
-use yii\web\View;
 use yii\helpers\Url;
 
-Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_HEAD]);
 
 $id = $product->id;
 $address = $product->getAddress();
 $urlDetail = $product->urlDetail(true);
 
-$finderFrom = (!empty($finders) && isset($finders["from"])) ? $finders["from"] : 0;
-$finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
+$finderFrom = (!empty($from) && isset($from)) ? $from : 0;
+$finderTo = (!empty($to) && isset($to)) ? $to : 0;
 
+$data = [$finders, $visitors, $favorites, $shares];
 ?>
 
 <div class="title-fixed-wrap">
@@ -23,9 +22,9 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
         	<section class="clearfix mgB-40">
                 <div class="pull-right fs-13 mgB-15">
                     <div class="clearfix d-ib ver-c">
-                        <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id, 'filter'=>'week']) ?>" class="show-view-chart<?=($filter=='week' ? ' active' : '')?>"><?=Yii::t('statistic','Week')?></a>
-                        <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id, 'filter'=>'2week']) ?>" class="show-view-chart<?=($filter=='2week' ? ' active' : '')?>"><?=Yii::t('statistic','Two weeks')?></a>
-                        <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id, 'filter'=>'month']) ?>" class="show-view-chart<?=($filter=='month' ? ' active' : '')?>"><?=Yii::t('statistic','Month')?></a>
+                        <a href="<?= Url::to(['dashboard/statistics', 'id' => $product->id, 'filter'=>'week'], true) ?>" class="show-view-chart<?=($filter=='week' ? ' active' : '')?>"><?=Yii::t('statistic','Week')?></a>
+                        <a href="<?= Url::to(['dashboard/statistics', 'id' => $product->id, 'filter'=>'2week'], true) ?>" class="show-view-chart<?=($filter=='2week' ? ' active' : '')?>"><?=Yii::t('statistic','Two weeks')?></a>
+                        <a href="<?= Url::to(['dashboard/statistics', 'id' => $product->id, 'filter'=>'month'], true) ?>" class="show-view-chart<?=($filter=='month' ? ' active' : '')?>"><?=Yii::t('statistic','Month')?></a>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -33,7 +32,7 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
                     <div class="wrap-chart clearfix">
         				<div class="wrap-img">
                             <div class="wrapChart">
-                                <?=$this->render('/dashboard/chart/'.$view, ['id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail]);?>
+                                <?=$this->render('/dashboard/chart/_partials/finder', ['id' => $id, 'from' => $finderFrom, 'to' => $finderTo, 'address' => $address, 'urlDetail' => $urlDetail, 'filter' => $filter, 'dataChart' => $data, 'categories' => $categories]);?>
                             </div>
                         </div>
         			</div>
@@ -84,6 +83,7 @@ $finderTo = (!empty($finders) && isset($finders["to"])) ? $finders["to"] : 0;
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header title-popup clearfix">
+                <?=Yii::t('statistic','Statistic')?>
                 <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
             </div>
             <div class="modal-body">
@@ -118,14 +118,6 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
         $('.option-view-stats .radio-ui').radio({
             done: function (item) {
                 var index = item.parent().parent().index();
-
-//                var series = chart.series[index];
-//                if (series.visible) {
-//                    series.hide();
-//                } else {
-//                    series.show();
-//                }
-
                 chart.series[index].show();
                 for ( var i = 0; i < chart.series.length; i++ ) {
                     if ( i != index && i > 0) {

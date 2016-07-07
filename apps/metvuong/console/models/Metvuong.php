@@ -18,6 +18,7 @@ use vsoft\coupon\models\CouponCode;
 use vsoft\express\components\AdImageHelper;
 use Yii;
 use yii\base\Component;
+use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -87,21 +88,44 @@ class Metvuong extends Component
                 ];
 
                 $subjectEmail = "Thông báo tin đăng từ metvuong.com";
-                $status = \Yii::$app->mailer->compose(['html'=>'contactEmail-html'], ['params' => $params])
-                    ->setFrom(Yii::$app->params['adminEmail'])
-                    ->setTo([$email])
-                    ->setSubject($subjectEmail)
-                    ->send();
-                $status > 0 ? print_r("\nsent to {$email}") : "Send mail error.";
-                // Count email marketing has sent
-                Metvuong::markEmail($email, $status);
-
+                $transport = self::transport();
+                Yii::$app->mailer->setTransport($transport);
+                try {
+                    $status = \Yii::$app->mailer->compose(['html' => 'contactEmail-html'], ['params' => $params])
+                        ->setFrom(Yii::$app->params['adminEmail'])
+                        ->setTo([$email])
+                        ->setSubject($subjectEmail)
+                        ->send();
+                    $status > 0 ? print_r("\n {$transport['username']} sent to {$email}") : "Send mail error.";
+                    // Count email marketing has sent
+                    Metvuong::markEmail($email, $status);
+                    usleep(300000);
+                } catch (Exception $ex) {
+                    print_r("\n Error .");
+                }
             }
             print_r("\n--------------------\nSend email finish.");
         } else
             print_r("No contact info.");
     }
 
+    public static function transport(){
+        $transport = [
+            'class' => 'Swift_SmtpTransport',
+            'host' => 'smtp.gmail.com',
+            'username' => '',
+            'password' => '',
+            'port' => '587',
+            'encryption' => 'tls',
+        ];
+        $sender = Yii::$app->params['sender'];
+        $k = array_rand($sender);
+        $transport = ArrayHelper::merge(
+            $transport,
+            $sender[$k]
+        );
+        return $transport;
+    }
     public static function markEmail($email, $status)
     {
         $markEmail = MarkEmail::find()->where('email = :e',[':e' => $email])->one();

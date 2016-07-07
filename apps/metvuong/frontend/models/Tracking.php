@@ -8,21 +8,19 @@
 
 namespace frontend\models;
 use kartik\helpers\Enum;
-use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductSaved;
 use vsoft\express\models\SysEmail;
 use vsoft\tracking\models\base\AdProductFinder;
 use vsoft\tracking\models\base\AdProductShare;
 use vsoft\tracking\models\base\AdProductVisitor;
+use vsoft\tracking\models\base\ChartStats;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
-use yii\web\Cookie;
 use yii\web\NotFoundHttpException;
-use yii\web\Response;
 
 class Tracking extends Component
 {
@@ -92,15 +90,19 @@ class Tracking extends Component
             $adProductVisitor = $query->one();
             if (count($adProductVisitor) > 0) {
                 $adProductVisitor->count++;
+                $adProductVisitor->save();
             } else {
                 $adProductVisitor = new AdProductVisitor();
                 $adProductVisitor->user_id = $uid;
                 $adProductVisitor->product_id = (int)$pid;
                 $adProductVisitor->count = 1;
+                $adProductVisitor->time = $time;
+                $adProductVisitor->device = $this->getMobileDetect();
+                if($adProductVisitor->save()){
+                    // save chart_stats
+                    $this->saveChartStats($pid, date("d-m-Y", $time), 'visit');
+                }
             }
-            $adProductVisitor->time = $time;
-            $adProductVisitor->device = $this->getMobileDetect();
-            $adProductVisitor->save();
             return !empty($return) ? $adProductVisitor : true;
         }
         return false;
@@ -116,6 +118,7 @@ class Tracking extends Component
             $adProductShare = $query->one();
             if (count($adProductShare) > 0) {
                 $adProductShare->count++;
+                $adProductShare->save();
             } else {
                 $adProductShare = new AdProductShare();
                 $adProductShare->user_id = (int)$uid;
@@ -124,8 +127,13 @@ class Tracking extends Component
                 $adProductShare->time = $time;
                 $adProductShare->device = $this->getMobileDetect();
                 $adProductShare->type = $type;
+                if($adProductShare->save()){
+                    // save chart_stats
+                    $this->saveChartStats($pid, date("d-m-Y", $time), 'share');
+                }
+
             }
-            $adProductShare->save();
+
             return !empty($return) ? $adProductShare : true;
         }
         return false;
@@ -142,20 +150,23 @@ class Tracking extends Component
             $adProductFinder = $query->one();
             if (count($adProductFinder) > 0) {
                 $adProductFinder->count++;
+                $adProductFinder->save();
             } else {
                 $adProductFinder = new AdProductFinder();
                 $adProductFinder->user_id = (int)$uid;
                 $adProductFinder->product_id = (int)$pid;
                 $adProductFinder->count = 1;
+                $adProductFinder->time = $time;
+                $adProductFinder->device = $this->getMobileDetect();
+                if($adProductFinder->save()){
+                    // save chart_stats
+                    $this->saveChartStats($pid, date("d-m-Y", $time), 'search');
+                }
             }
-            $adProductFinder->time = $time;
-            $adProductFinder->device = $this->getMobileDetect();
-            $adProductFinder->save();
             return !empty($return) ? $adProductFinder : true;
         }
         return false;
     }
-
 
     public function getProductTracking($from, $to, $pids = []){
         $filtered = array();
@@ -244,6 +255,69 @@ class Tracking extends Component
         $sysEmail->time = time();
         $sysEmail->ip = Yii::$app->request->userIP;
         return $sysEmail->save();
+    }
+
+    public function saveChartStats($pid, $date, $view)
+    {
+        $chart_stats = ChartStats::find()->where(['product_id' => (int)$pid, 'date' => $date])->one();
+        if(count($chart_stats) > 0){
+            $chart_stats->created_at = strtotime($date);
+            switch($view){
+                case 'search':
+                    $chart_stats->search = $chart_stats->search + 1;
+                    $chart_stats->save();
+                    break;
+                case 'visit':
+                    $chart_stats->visit = $chart_stats->visit + 1;
+                    $chart_stats->save();
+                    break;
+                case 'favorite':
+                    $chart_stats->favorite = $chart_stats->favorite + 1;
+                    $chart_stats->save();
+                    break;
+                case 'share':
+                    $chart_stats->share = $chart_stats->share + 1;
+                    $chart_stats->save();
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            $chart_stats = new ChartStats();
+            $chart_stats->date = $date;
+            $chart_stats->product_id = (int)$pid;
+            $chart_stats->created_at = strtotime($date);
+            switch($view){
+                case 'search':
+                    $chart_stats->search = 1;
+                    $chart_stats->visit = 0;
+                    $chart_stats->share = 0;
+                    $chart_stats->save();
+                    break;
+                case 'visit':
+                    $chart_stats->search = 0;
+                    $chart_stats->visit = 1;
+                    $chart_stats->share = 0;
+                    $chart_stats->save();
+                    break;
+                case 'favorite':
+                    $chart_stats->search = 0;
+                    $chart_stats->visit = 0;
+                    $chart_stats->share = 0;
+                    $chart_stats->favorite = 1;
+                    $chart_stats->save();
+                    break;
+                case 'share':
+                    $chart_stats->search = 0;
+                    $chart_stats->visit = 0;
+                    $chart_stats->share = 1;
+                    $chart_stats->save();
+                    break;
+                default:
+                    break;
+            }
+
+        }
     }
 
 }
