@@ -16,6 +16,7 @@ use Yii;
  * @property string $color
  * @property integer $order
  * @property integer $status
+ * @property integer $pre
  *
  * @property AdBuildingProject[] $adBuildingProjects
  * @property AdDistrict[] $adDistricts
@@ -38,7 +39,7 @@ class AdCity extends \yii\db\ActiveRecord
     {
         return [
             [['code', 'name'], 'required'],
-            [['geometry'], 'string'],
+            [['geometry', 'pre'], 'string'],
             [['order', 'status'], 'integer'],
             [['code'], 'string', 'max' => 4],
             [['name', 'slug', 'center', 'color'], 'string', 'max' => 32]
