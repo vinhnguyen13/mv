@@ -1,4 +1,5 @@
 <?php
+use frontend\models\User;
 use yii\helpers\Url;
 
 Yii::t('chart','finders');
@@ -7,35 +8,40 @@ Yii::t('chart','saved');
 Yii::t('chart','shares');
 ?>
 <div class="clearfix mgB-15 pdL-15 pdR-15">
-    <h3><?=Yii::t('chart', $view) ?></h3>
-    <p style="color: #4a933a;" class="desTotal"> <?=Yii::t('chart','Total user')?>: <?=count($favourites)?></p>
+    <h3><?=Yii::t('chart', $view) ?> : <?=$dateParam?></h3>
+    <p style="color: #4a933a;" class="desTotal"> <?=Yii::t('chart','Total user')?>: <?=$totalUser?></p>
 </div>
-<ul class="clearfix">
+<ul class="clearfix listContact">
 <?php
-if(count($favourites) > 0) {
-    foreach ($favourites as $key => $val) {
-        $classPopupUser = 'popup_enable';
-        ?>
-        <li>
-            <a class="<?=$classPopupUser?>" href="#popup-user-inter">
-                <img src="<?=$val['avatar']?>"> <?=$key?>
-            </a>
-
-            <div class="crt-item">
-                <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$val['email']?>" data-original-title="Send email">
-                    <span class="icon-mv fs-16"><span class="icon-mail-profile"></span></span>
-                </a>
-                <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$key?>" data-placement="bottom" title="" data-original-title="Send message">
-                    <span class="icon-mv fs-18"><span class="icon-bubbles-icon"></span></span>
-                </a>
-            </div>
-        </li>
-<!--        $li = '<li><a class="'.$classPopupUser.'" href="#popup-user-inter" data-email="'.$val["email"].'" data-ava="'.Url::to($val['avatar'], true).'">'.-->
-<!--            '<img src="'.$val['avatar'].'"> '.$key.'</a>'.-->
-<!--            '<span class="pull-right">'.$val['count'].'</span></li>';-->
-<!--        $html .= $li;-->
-    <?php
-    }
-}
+echo $this->render('listContact_item',['view' => $view, 'data' => $data]);
 ?>
 </ul>
+<input type="button" class="btn-common pull-right _loadmore" value="<?=Yii::t('statistic', 'Load more')?>" data-url="<?=Url::to(['dashboard/clickchart-load-more', 'view' => $view, 'from' => $from, 'to' => $to, 'pid' => $pid], true)?>">
+<script>
+    $(document).ready(function () {
+        var countLi = $('.listContact li').length;
+        var totalUser = <?=$totalUser?>;
+        if(countLi == totalUser)
+            $('._loadmore').remove();
+
+        $('._loadmore').click(function () {
+            $('body').loading();
+            var last_id = $('.listContact>li:last').prop('class');
+            l(last_id);
+            var url = $(this).data('url');
+            $.ajax({
+                type: "get",
+                dataType: 'html',
+                url: url + '&last_id=' + last_id,
+                success: function (data) {
+                    $('.listContact').append(data);
+                    countLi = $('.listContact li').length;
+                    if (countLi == totalUser)
+                        $('._loadmore').remove();
+                    $('body').loading({done: true});
+                }
+            });
+        });
+
+    });
+</script>

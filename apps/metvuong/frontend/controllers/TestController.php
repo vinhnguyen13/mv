@@ -222,7 +222,7 @@ class TestController extends \yii\web\Controller
             $from = strtotime("-$i days", $dateFrom->getTimestamp());
 
             $uid_arr = Yii::$app->db->cache(function(){
-                return ArrayHelper::getColumn(User::find()->select(['id'])->orderBy(['id' => SORT_ASC])->limit(30)->asArray()->all(), 'id');
+                return ArrayHelper::getColumn(User::find()->select(['id'])->orderBy(['id' => SORT_ASC])->asArray()->all(), 'id');
             });
 
             $rid2 = rand(2, 4);
@@ -239,7 +239,7 @@ class TestController extends \yii\web\Controller
                 Tracking::find()->productShare($uid, $pid, $from, 2);
             }
 
-            $rid = (($rid2 > $rid3) ? $rid2 : $rid3) + 1;
+            $rid = (($rid2 > $rid3) ? $rid2 : $rid3) + 3;
             for($i1 = $rid; $i1 >= 0; $i1-- ) {
 //                $uid = rand(1, 30);
                 $uid = $uid_arr[array_rand($uid_arr, 1)];

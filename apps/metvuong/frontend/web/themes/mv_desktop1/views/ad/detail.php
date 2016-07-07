@@ -111,7 +111,9 @@ Yii::$app->view->registerMetaTag([
 ]);
 
 if(isset(Yii::$app->params['tracking']['all']) && (Yii::$app->params['tracking']['all'] == true) && !Yii::$app->user->isGuest && ($product->user_id != Yii::$app->user->id)) {
-    Tracking::find()->productVisitor(Yii::$app->user->id, $product->id, time());
+    if($product->status == 1) {
+        Tracking::find()->productVisitor(Yii::$app->user->id, $product->id, time());
+    }
 }
 
 //$userId = Yii::$app->user->identity ? Yii::$app->user->identity->id : null;
@@ -235,13 +237,13 @@ $count_review = $reviews->count();
 						</a>
 					</li>
 					<li class="color-2">
-						<a href="#" class="share-facebook" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'product_user_id' => $product->user_id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true)?>">
+						<a href="#" class="share-facebook" data-url="<?=$product->status == 1 ? Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'product_user_id' => $product->user_id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_FACEBOOK], true) : ''?>">
 							<span class="icon-mv"><span class="icon-facebook"></span></span>
 							<span><?= Yii::t('ad', 'Share Facebook') ?></span>
 						</a>
 					</li>
 					<li class="color-3">
-						<a href="#" data-toggle="modal" data-url="<?=Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'product_user_id' => $product->user_id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_EMAIL], true)?>"
+						<a href="#" data-toggle="modal" data-url="<?=$product->status == 1 ? Url::to(['/ad/tracking-share', 'product_id' => $product->id, 'product_user_id' => $product->user_id, 'type' => \vsoft\tracking\models\base\AdProductShare::SHARE_EMAIL], true) : ''?>"
                            data-target="#popup_email" data-type="share" class="email-btn">
 							<span class="icon-mv fs-18"><span class="icon-mail-profile"></span></span>
 							<span><?= Yii::t('ad', 'Share Email') ?></span>

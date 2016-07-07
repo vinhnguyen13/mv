@@ -15,16 +15,18 @@ use vsoft\tracking\models\base\AdProductFinder;
 use vsoft\tracking\models\base\AdProductShare;
 use vsoft\tracking\models\base\AdProductVisitor;
 use vsoft\tracking\models\AdProductVisitorSearch;
+use vsoft\tracking\models\base\ChartStats;
 use Yii;
 use yii\base\Component;
 use yii\helpers\Url;
+use yii\mongodb\Query;
 use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 
 class Chart extends Component
 {
-    const DATE_FORMAT = 'd/m/Y';
+    const DATE_FORMAT = 'd-m-Y';
     const TYPE_VISITOR = 1;
     const TYPE_FINDER = 2;
     const TYPE_SAVED = 3;
@@ -45,24 +47,32 @@ class Chart extends Component
     }
 
     // finder
-    public function getDataFinder($pid, $from, $to, $limit=null){
+    public function getDataFinder($pid, $from, $to, $limit=null, $last_id=null){
 //        echo "<pre>";
 //        print_r(date('d-m-Y H:i:s', $from));
 //        print_r(date('d-m-Y H:i:s', $to));
 //        echo "<pre>";
 //        exit();
-
-        $adProductFinders = AdProductFinder::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->orderBy('time DESC');
-        if(!empty($limit)){
-            $adProductFinders = $adProductFinders->limit($limit);
+        $query = new Query;
+        $query->from(AdProductFinder::collectionName())
+            ->where(['between', 'time', $from, $to])
+            ->andWhere(['product_id' => $pid]);
+        if(!empty($last_id)) {
+            $oid = new \MongoId($last_id);
+            $query = $query->andWhere(['<', '_id', $oid]);
         }
-        $adProductFinders = $adProductFinders->all();
-        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
-        $defaultData = array_map(function ($key, $date) {
-            return ['y' => 0];
-        }, array_keys($dateRange), $dateRange);
-
-        return $this->pushDataToChart($adProductFinders, $defaultData, $dateRange, 'finders', $pid);
+        if(!empty($limit)){
+            $query = $query->limit($limit);
+        }
+        return $query->orderBy('_id DESC')->all();
+//        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
+//        $defaultData = array_map(function ($key, $date) {
+//            return ['y' => 0];
+//        }, array_keys($dateRange), $dateRange);
+//
+//        $pushDataToChart = $this->pushDataToChart($adProductFinders, $defaultData, $dateRange, 'finders', $pid);
+//        $result = array_merge($pushDataToChart, ['from' => $from, 'to' => $to, 'pid' => $pid]);
+//        return $result;
 //        if(count($adProductFinders) > 0){
 //            return $this->pushDataToChart($adProductFinders, $defaultData, $dateRange, 'finders');
 //        }
@@ -70,28 +80,53 @@ class Chart extends Component
     }
 
     // visitor
-    public function getDataVisitor($pid, $from, $to){
-        $adProductVisitors = AdProductVisitor::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->orderBy('time DESC')->all();
-        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
-        $defaultData = array_map(function ($key, $date) {
-            return ['y' => 0];
-        }, array_keys($dateRange), $dateRange);
+    public function getDataVisitor($pid, $from, $to, $limit=null, $last_id=null){
+        $query = new Query;
+        $query->from(AdProductVisitor::collectionName())
+            ->where(['between', 'time', $from, $to])
+            ->andWhere(['product_id' => $pid]);
+        if(!empty($last_id)) {
+            $oid = new \MongoId($last_id);
+            $query = $query->andWhere(['<', '_id', $oid]);
+        }
+        if(!empty($limit)){
+            $query = $query->limit($limit);
+        }
+        return $query->orderBy('_id DESC')->all();
 
-        return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, 'visitors', $pid);
+//        $adProductVisitors = AdProductVisitor::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->orderBy('time DESC')->all();
+//        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
+//        $defaultData = array_map(function ($key, $date) {
+//            return ['y' => 0];
+//        }, array_keys($dateRange), $dateRange);
+//
+//        return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, 'visitors', $pid);
 //        if(count($adProductVisitors) > 0){
 //            return $this->pushDataToChart($adProductVisitors, $defaultData, $dateRange, 'visitors', $pid);
 //        }
 //        return false;
     }
 
-    public function getDataShare($pid, $from, $to){
-        $adProductShares = AdProductShare::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->orderBy('time DESC')->all();
-        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
-        $defaultData = array_map(function ($key, $date) {
-            return ['y' => 0];
-        }, array_keys($dateRange), $dateRange);
-
-        return $this->pushDataToChart($adProductShares, $defaultData, $dateRange, 'shares', $pid);
+    public function getDataShare($pid, $from, $to, $limit=null, $last_id=null){
+        $query = new Query;
+        $query->from(AdProductShare::collectionName())
+            ->where(['between', 'time', $from, $to])
+            ->andWhere(['product_id' => $pid]);
+        if(!empty($last_id)) {
+            $oid = new \MongoId($last_id);
+            $query = $query->andWhere(['<', '_id', $oid]);
+        }
+        if(!empty($limit)){
+            $query = $query->limit($limit);
+        }
+        return $query->orderBy('_id DESC')->all();
+//        $adProductShares = AdProductShare::find()->where(['between', 'time', $from, $to])->andWhere(['product_id' => (int)$pid])->orderBy('time DESC')->all();
+//        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
+//        $defaultData = array_map(function ($key, $date) {
+//            return ['y' => 0];
+//        }, array_keys($dateRange), $dateRange);
+//
+//        return $this->pushDataToChart($adProductShares, $defaultData, $dateRange, 'shares', $pid);
 //        if(count($adProductShares) > 0){
 //            return $this->pushDataToChart($adProductShares, $defaultData, $dateRange, 'shares', $pid);
 //        }
@@ -99,18 +134,26 @@ class Chart extends Component
     }
 
     // saved
-    public function getDataSaved($pid, $from, $to){
-        $adProductSaveds = AdProductSaved::find()->where(['between', 'saved_at', $from, $to])
+    public function getDataSaved($pid, $from, $to, $limit=null, $last_id=null){
+        $query = AdProductSaved::find()->where(['between', 'saved_at', $from, $to])
             ->andWhere(['product_id' => $pid])
-            ->andWhere('saved_at > :sa',[':sa' => 0])
-            ->orderBy('saved_at DESC')->all();
+            ->andWhere('saved_at > :sa',[':sa' => 0]);
+        if(!empty($last_id)) {
+            $oid = new \MongoId($last_id);
+            $query = $query->andWhere(['<', '_id', $oid]);
+        }
+        if(!empty($limit)){
+            $query = $query->limit($limit);
+        }
+        return $query->orderBy('saved_at DESC')->all();
 
-        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
-        $defaultData = array_map(function ($key, $date) {
-            return ['y' => 0];
-        }, array_keys($dateRange), $dateRange);
-
-        return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange, 'saved', $pid);
+//        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
+//        $defaultData = array_map(function ($key, $date) {
+//            return ['y' => 0];
+//        }, array_keys($dateRange), $dateRange);
+//
+//        return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange, 'saved', $pid);
+//
 //        if(count($adProductSaveds) > 0){
 //            return $this->pushDataToChart($adProductSaveds, $defaultData, $dateRange, 'saved', $pid);
 //        }
@@ -118,20 +161,22 @@ class Chart extends Component
     }
 
     private function pushDataToChart($adProductTypes, $defaultData, $dateRange, $view, $pid){
+        $last_id = null;
         if(count($adProductTypes) > 0){
             $tmpDataByPid = [];
             $infoData = [];
             $infoSaved = array();
-
             foreach($adProductTypes as $k => $item){
                 $day = date(self::DATE_FORMAT, $item->time);
                 $color = '#00a769';
                 $typeChart = 'column';
 
                 if($view == 'finders'){
+                    $last_id = $item->_id->{'$id'};
                     $color = '#337ab7';
                     $typeChart = 'column';
                 }elseif($view == 'visitors'){
+                    $last_id = $item->_id->{'$id'};
                     $color = '#a94442';
                     $typeChart = 'line';
                 }elseif($view == 'saved'){
@@ -139,6 +184,7 @@ class Chart extends Component
                     $color = '#00a769';
                     $typeChart = 'line';
                 }elseif($view == 'shares'){
+                    $last_id = $item->_id->{'$id'};
                     $color = '#8a6d3b';
                     $typeChart = 'line';
                 }
@@ -195,7 +241,7 @@ class Chart extends Component
                 $infoData[$view] = array();
             }
         }
-        return ['dataChart'=>$tmpDataByPid, 'categories'=>$dateRange, 'infoData' => $infoData];
+        return ['dataChart'=>$tmpDataByPid, 'categories'=>$dateRange, 'infoData' => $infoData, 'last_id' => $last_id];
     }
 
     public function getContacts(){
@@ -243,7 +289,7 @@ class Chart extends Component
 
     }
 
-    public function getFinderWithLastTime($id, $useDate, $filter){
+    public function getFinderWithLastTime($id, $filter){
         /*if(empty($useDate)) {
             $finder = AdProductFinder::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
             if (count($finder) > 0)
@@ -265,6 +311,18 @@ class Chart extends Component
         $dateTo = new \DateTime($t);
         $to = $dateTo->getTimestamp();
 
+        $dateRange = Util::me()->dateRange($from, $to, '+1 day', self::DATE_FORMAT);
+        $query = new Query;
+        $query->from(ChartStats::collectionName())
+            ->where(['product_id' => $id])
+            ->andWhere(['IN', 'date', $dateRange]);
+        $chart_stats = $query->orderBy('created_at')->all();
+        if(count($chart_stats) > 0){
+            return $chart_stats;
+
+        }
+
+
 //        $to = new \DateTime(date('Y-m-d', $from));
 //        $t = date_format($to, 'Y-m-d 23:59:59');
 //        $dateTo = new \DateTime($t);
@@ -274,20 +332,20 @@ class Chart extends Component
 //        print_r(date('d-m-Y H:i:s', $to));
 //        echo "<pre>";
 //        exit();
-        $dataFinders = $this->getDataFinder($id, $from, $to);
-
-        if($dataFinders != false) {
-            $infoDataFinders = empty($dataFinders) ? null : $dataFinders["infoData"];
-            if (!empty($infoDataFinders) && isset($infoDataFinders["finders"])) {
-                $infoDataFinders["from"] = $from;
-                $infoDataFinders["to"] = $to;
-            }
-            return $infoDataFinders;
-        }
+//        $dataFinders = $this->getDataFinder($id, $from, $to);
+//
+//        if($dataFinders != false) {
+//            $infoDataFinders = empty($dataFinders) ? null : $dataFinders["infoData"];
+//            if (!empty($infoDataFinders) && isset($infoDataFinders["finders"])) {
+//                $infoDataFinders["from"] = $from;
+//                $infoDataFinders["to"] = $to;
+//            }
+//            return $infoDataFinders;
+//        }
         return null;
     }
 
-    public function getVisitorWithLastTime($id, $useDate, $filter){
+    public function getVisitorWithLastTime($id, $filter){
         /*if(empty($useDate)) {
             $visitor = AdProductVisitor::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
             if (count($visitor) > 0)
@@ -318,7 +376,7 @@ class Chart extends Component
         }
         return $infoDataVisitors;
     }
-    public function getShareWithLastTime($id, $useDate, $filter){
+    public function getShareWithLastTime($id, $filter){
         /*if(empty($useDate)) {
             $share = AdProductShare::find()->where(['product_id' => $id])->orderBy('time DESC')->one();
             if (count($share) > 0)
@@ -350,7 +408,7 @@ class Chart extends Component
         return $infoDataShares;
     }
 
-    public function getSavedWithLastTime($id, $useDate, $filter )
+    public function getSavedWithLastTime($id, $filter )
     {
         /*if(empty($useDate)) {
             $saved = AdProductSaved::find()->where(['product_id' => $id])->orderBy('saved_at DESC')->one();

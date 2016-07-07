@@ -101,11 +101,12 @@ class Ad extends Component
             Yii::$app->response->format = Response::FORMAT_JSON;
             $post = Yii::$app->request->post();
             if(!empty($post['id'])){
+                $time = time();
                 if(($adSaved = AdProductSaved::findOne(['product_id'=>$post['id'], 'user_id'=>Yii::$app->user->id])) === null){
                     $adSaved = new AdProductSaved();
                     $adSaved->product_id = $post['id'];
                     $adSaved->user_id = Yii::$app->user->id;
-                    $adSaved->saved_at = time();
+                    $adSaved->saved_at = $time;
                 }else{
                     $adSaved->saved_at = !empty($post['stt']) ? time() : 0;
                 }
@@ -119,6 +120,11 @@ class Ad extends Component
                             'buddy' => $adSaved->product->user_id,
                             'saved_at' => $adSaved->saved_at,
                         ], $adSaved->product_id);
+
+                        // save chart_stats favorite
+                        if($adSaved->saved_at > 0){
+                            Tracking::find()->saveChartStats($adSaved->product_id, date("d-m-Y", $time), 'favorite');
+                        }
                     }
                 }
                 return ['statusCode'=>200, 'parameters'=>['msg'=>Yii::$app->session->getFlash('notify_other')]];

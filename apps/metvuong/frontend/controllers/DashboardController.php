@@ -15,12 +15,14 @@ use vsoft\express\components\ImageHelper;
 use vsoft\news\models\Status;
 use vsoft\tracking\models\base\AdProductFinder;
 use vsoft\tracking\models\base\AdProductVisitor;
+use vsoft\tracking\models\base\ChartStats;
 use Yii;
 use yii\data\Pagination;
 use yii\db\mssql\PDO;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
+use yii\mongodb\Query;
 use yii\web\Response;
 use yii\web\UploadedFile;
 use yii\web\View;
@@ -125,20 +127,18 @@ class DashboardController extends Controller
     public function actionStatistics()
     {
         $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuDashboard' => true, 'isDashboard' => true], $this->view->params);
-//        $uids = [1,2,3,4,5];
-//        $pids = [1,1,1,1,1,1,1,1,1];
-//        $times = Util::me()->dateRange(strtotime('-30 days'), strtotime('+1 days'), '+1 day', 'd-m-Y H:i:s');
-//        foreach($pids as $pid){
-//            $uid = array_rand(array_flip($uids), 1);
-//            $time = array_rand(array_flip($times), 1);
-//            $time = strtotime($time);
-//            $ck = Tracking::find()->productVisitor($uid, $pid, $time);
-//            var_dump($ck);
-//        }
+
         if (Yii::$app->user->isGuest) {
             return $this->redirect(Url::to(['member/login']));
         }
-        
+
+        $id = (int)Yii::$app->request->get("id");
+        $product = Yii::$app->db->cache(function() use($id){
+            return AdProduct::findOne($id);
+        });
+
+        if($product && Yii::$app->user->id != $product->user_id)
+            $this->goHome();
         
         $statisticView = Yii::$app->user->identity->statisticView;
         $balance = Yii::$app->user->identity->balance;
@@ -158,105 +158,98 @@ class DashboardController extends Controller
         	]);
         }
 
-        $id = (int)Yii::$app->request->get("id");
-        $product = AdProduct::findOne($id);
-        $finders = null;
-        $visitors = null;
-        $favourites = null;
-        $shares = null;
-
-        if(Yii::$app->user->id != $product->user_id)
-            $this->goHome();
-
         $filter = Yii::$app->request->get("filter");
         if(empty($filter) || !isset(Chart::filter()[$filter]))
             $filter = "week";
 
-        $date = Yii::$app->request->get("date");
-        if($date == "undefined-undefined-")
-            $date = null;
+        $useDate = new \DateTime(date('Y-m-d', time()));
+        if(!isset(Chart::filter()[$filter]))
+            return null;
 
-        $finders = Chart::find()->getFinderWithLastTime($id, $date, $filter);
-        $visitors = Chart::find()->getVisitorWithLastTime($id, $date, $filter);
-        $shares = Chart::find()->getShareWithLastTime($id, $date, $filter);
-        $favourites = Chart::find()->getSavedWithLastTime($id, $date, $filter);
+        $days = Chart::filter()[$filter]." days";
+        $f = date_format($useDate, 'Y-m-d 00:00:00');
+        $dateFrom = new \DateTime($f);
+        $from = strtotime($days, $dateFrom->getTimestamp());
 
-        if(empty($finders) && empty($visitors) && empty($shares) && empty($favourites)) {
-            Yii::$app->session->setFlash('danger', Yii::t('statistic', '<div class="text-center">Not found data with filter.</div>'));
-            return $this->render('/_systems/_alert', [
-                'title'  => Yii::t('statistic', 'Invalid or expired link'),
-                'module' => $this->module,
-            ]);
-        }
-//        if(Yii::$app->request->isAjax){
-//            return $this->renderAjax('statistics/index', [
-//                'product' => $product,
-//                'visitors' => $visitors,
-//                'finders' => $finders,
-//                'favourites' => $favourites,
-//                'shares' => $shares,
-//                'view' => '_partials/finder'
-//            ]);
-//        }else{
+        $t = date_format($useDate, 'Y-m-d 23:59:59');
+        $dateTo = new \DateTime($t);
+        $to = $dateTo->getTimestamp();
 
-//            if (($search = \frontend\models\Tracking::find()->countFinders($product->id)) === null) {
-//                $search = 0;
-//            }
-//            if (($click = \frontend\models\Tracking::find()->countVisitors($product->id)) === null) {
-//                $click = 0;
-//            }
-//            if (($fav = \frontend\models\Tracking::find()->countFavourites($product->id)) === null) {
-//                $fav = 0;
-//            }
-//            if (($share = \frontend\models\Tracking::find()->countShares($product->id)) === null) {
-//                $share = 0;
-//            }
+        $dateRange = Util::me()->dateRange($from, $to, '+1 day', Chart::DATE_FORMAT);
+        $query = new Query;
+        $query->from(ChartStats::collectionName())
+            ->where(['product_id' => $id])
+            ->andWhere(['IN', 'date', $dateRange]);
+        $chart_stats = $query->orderBy('created_at')->all();
+
+        $finders = null;
+        $visitors = null;
+        $favorites = null;
+        $shares = null;
 
         $search_count = 0;
         $click_count = 0;
         $fav_count = 0;
         $share_count= 0;
-        if(count($finders["finders"]) > 0){
-            foreach ($finders["finders"] as $item) {
-                $search_count = $search_count + $item["count"];
-            }
 
+        if(count($chart_stats) > 0){
+            foreach($dateRange as $kDate => $d){
+                $finders['data'][$kDate]['y'] = 0;
+                $visitors['data'][$kDate]['y'] = 0;
+                $favourites['data'][$kDate]['y'] = 0;
+                $shares['data'][$kDate]['y'] = 0;
+                foreach ($chart_stats as $stats) {
+                    if (isset($stats['date']) && $stats['date'] == $d) {
+                        if (isset($stats['search'])) {
+                            $finders['data'][$kDate]['y'] = $stats['search'];
+                            $finders['data'][$kDate]['url'] = Url::to(['/dashboard/clickchart', 'id' => $id, 'date' => $d, 'view' => 'finders']);
+                            $finders['color'] = '#337ab7';
+                            $finders['type'] = 'column';
+                            $search_count = $search_count + $stats['search'];
+                        }
+                        if (isset($stats['visit'])) {
+                            $visitors['data'][$kDate]['y'] = $stats['visit'];
+                            $visitors['data'][$kDate]['url'] = Url::to(['/dashboard/clickchart', 'id' => $id, 'date' => $d, 'view' => 'visitors']);
+                            $visitors['color'] = '#a94442';
+                            $visitors['type'] = 'line';
+                            $click_count = $click_count + $stats['visit'];
+                        }
+                        if (isset($stats['favorite'])) {
+                            $favorites['data'][$kDate]['y'] = $stats['favorite'];
+                            $favorites['data'][$kDate]['url'] = Url::to(['/dashboard/clickchart', 'id' => $id, 'date' => $d, 'view' => 'saved']);
+                            $favorites['color'] = '#00a769';
+                            $favorites['type'] = 'line';
+                            $fav_count = $fav_count + $stats['favorite'];
+
+                        }
+                        if (isset($stats['share'])) {
+                            $shares['data'][$kDate]['y'] = $stats['share'];
+                            $shares['data'][$kDate]['url'] = Url::to(['/dashboard/clickchart', 'id' => $id, 'date' => $d, 'view' => 'shares']);
+                            $shares['color'] = '#8a6d3b';
+                            $shares['type'] = 'line';
+                            $share_count = $share_count + $stats['share'];
+                        }
+                    }
+                }
+            }
         }
 
-        if(count($visitors["visitors"]) > 0){
-            foreach ($visitors["visitors"] as $item) {
-                $click_count = $click_count + $item["count"];
-            }
-
-        }
-        if(count($favourites["saved"]) > 0){
-            foreach ($favourites["saved"] as $item) {
-                $fav_count = $fav_count + $item["count"];
-            }
-
-        }
-        if(count($shares["shares"]) > 0){
-            foreach ($shares["shares"]as $item) {
-                $share_count = $share_count + $item["count"];
-            }
-
-        }
         return $this->render('statistics/index', [
             'product' => $product,
             'visitors' => $visitors,
             'finders' => $finders,
-            'favourites' => $favourites,
+            'favorites' => $favorites,
             'shares' => $shares,
             'view' => '_partials/finder',
             'search_count' => $search_count,
             'click_count' => $click_count,
             'fav_count' => $fav_count,
             'share_count' => $share_count,
-            'from' => $finders["from"],
-            'to' => $finders["to"],
-            'filter' => $filter
+            'from' => $from,
+            'to' => $to,
+            'filter' => $filter,
+            'categories' => $dateRange
         ]);
-//        }
     }
 
     public function actionUpgrade()
@@ -321,12 +314,13 @@ class DashboardController extends Controller
 
             $id = (int)Yii::$app->request->get("id");
             $dateParam = Yii::$app->request->get("date");
-            $dateArr = explode('/', $dateParam);
-            $date = $dateArr[2]."-".$dateArr[1]."-".$dateArr[0];
-            $view = Yii::$app->request->get('view', '_partials/finder');
+            $view = Yii::$app->request->get('view', 'finders');
+            $total = Yii::$app->request->get('total');
 
-            $useDate = new \DateTime($date);
-
+//            $dateArr = explode('/', $dateParam);
+//            $date = $dateArr[2]."-".$dateArr[1]."-".$dateArr[0];
+//            $view = Yii::$app->request->get('view', '_partials/finder');
+            $useDate = new \DateTime($dateParam);
             $f = date_format($useDate, 'Y-m-d 00:00:00');
             $dateFrom = new \DateTime($f);
             $from = $dateFrom->getTimestamp();
@@ -335,27 +329,68 @@ class DashboardController extends Controller
             $dateTo = new \DateTime($t);
             $to = $dateTo->getTimestamp();
 
+            $data = null;
             if($view == "finders") {
-                $data = Chart::find()->getDataFinder($id, $from, $to);
-                $infoData = empty($data) ? null : $data["infoData"];
-                $favourites = empty($infoData["finders"]) ? null : $infoData["finders"];
-//                $html = "<li>finders</li>";
-            } else if ($view == "visitors"){
-                $data = Chart::find()->getDataVisitor($id, $from, $to);
-                $infoData = empty($data) ? null : $data["infoData"];
-                $favourites = empty($infoData["visitors"]) ? null : $infoData["visitors"];
-            } else if ($view == "saved"){
-                $data = Chart::find()->getDataSaved($id, $from, $to);
-                $infoData = empty($data) ? null : $data["infoData"];
-                $favourites = empty($infoData["saved"]) ? null : $infoData["saved"];
-            }else if ($view == "shares"){
-                $data = Chart::find()->getDataShare($id, $from, $to);
-                $infoData = empty($data) ? null : $data["infoData"];
-                $favourites = empty($infoData["shares"]) ? null : $infoData["shares"];
+                $data = Chart::find()->getDataFinder($id, $from, $to, 9);
             }
-            return $this->renderAjax('chart/_partials/listContact',['view'=>$view, 'favourites'=>$favourites ]);
+            if ($view == "visitors"){
+                $data = Chart::find()->getDataVisitor($id, $from, $to, 9);
+            }
+            if ($view == "saved"){
+                $data = Chart::find()->getDataSaved($id, $from, $to, 9);
+            }
+            if ($view == "shares"){
+                $data = Chart::find()->getDataShare($id, $from, $to, 9);
+            }
+            return $this->renderAjax('chart/_partials/listContact',['view' => $view, 'data' => $data, 'totalUser' => $total, 'dateParam' => $dateParam, 'from' => $from, 'to' => $to, 'pid' => $id]);
         }
         return false;
+    }
+
+    public function actionClickchartLoadMore()
+    {
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_HTML;
+            $view = Yii::$app->request->get('view', 'finders');
+            $pid = (int)Yii::$app->request->get('pid');
+            $from = (int)Yii::$app->request->get('from');
+            $to = (int)Yii::$app->request->get('to');
+            $last_id = Yii::$app->request->get('last_id');
+            $data = null;
+            if($view == "finders") {
+                $data = Chart::find()->getDataFinder($pid, $from, $to, 9, $last_id);
+            }
+            if ($view == "visitors"){
+                $data = Chart::find()->getDataVisitor($pid, $from, $to, 9, $last_id);
+            }
+            if ($view == "saved"){
+                $data = Chart::find()->getDataSaved($pid, $from, $to, 9, $last_id);
+            }
+            if ($view == "shares"){
+                $data = Chart::find()->getDataShare($pid, $from, $to, 9, $last_id);
+            }
+            $html = null;
+            $count_data = count($data) > 0 ? count($data) : 0;
+            if($count_data > 0){
+                return $this->renderAjax('chart/_partials/listContact_item',['view' => $view, 'data' => $data]);
+//                foreach ($data as $key => $val) {
+//                    $user_id = $val["user_id"];
+//                    $user = Yii::$app->db->cache(function() use($user_id){
+//                        return User::findIdentity($user_id);
+//                    });
+//                    $username = $user->username;
+//                    $email = empty($user->profile->public_email) ? $user->email : $user->profile->public_email;
+//                    $avatar = $user->profile->getAvatarUrl();
+//
+//                    $html .= '<li class="'.$val['_id']->{'$id'}.'"><a href="#popup-user-inter"><img src="'.$avatar.'" alt="'.$username.'">'.$username.'</a>';
+//                    $html .= '<div class="crt-item"><a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="'.$email.'" data-original-title="Send email"><span class="icon-mv fs-16"><span class="icon-mail-profile"></span></span></a>';
+//                    $html .= '<a href="#" class="chat-now tooltip-show" data-chat-user="'.$username.'" data-placement="bottom" title="" data-original-title="Send message"><span class="icon-mv fs-18"><span class="icon-bubbles-icon"></span></span></a>';
+//                    $html .= '</div></li>';
+//                }
+            }
+            return $html;
+        }
+        return null;
     }
 
     public function actionAd()
