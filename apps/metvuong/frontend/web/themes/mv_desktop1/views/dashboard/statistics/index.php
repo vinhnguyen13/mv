@@ -83,6 +83,7 @@ $data = [$finders, $visitors, $favorites, $shares];
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header title-popup clearfix">
+                Thống kê
                 <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
             </div>
             <div class="modal-body">

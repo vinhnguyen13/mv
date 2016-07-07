@@ -7,7 +7,7 @@ Yii::t('chart','visitors');
 Yii::t('chart','saved');
 Yii::t('chart','shares');
 ?>
-<div class="clearfix mgB-15 pdL-15 pdR-15">
+<div class="clearfix mgB-15">
     <h3><?=Yii::t('chart', $view) ?> : <?=$dateParam?></h3>
     <p style="color: #4a933a;" class="desTotal"> <?=Yii::t('chart','Total user')?>: <?=$totalUser?></p>
 </div>
