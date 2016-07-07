@@ -171,11 +171,11 @@ use vsoft\ad\models\AdImages;
 								<div class="form-group col-xs-12 col-sm-6 fild-address"<?= in_array($product->category_id, AdCategory::$landType) ? ' style="display: none;"' : '' ?>>
 									<label for="<?= Html::getInputId($product, 'home_no') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('home_no') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">4</span>') ?></span></label>
 									<?= Html::activeTextInput($product, 'home_no', ['class' => 'form-control', 'placeholder' => '...', 'disabled' => $disabledHome]) ?>
-									<div class="help-block"></div>
 									<label class="checkbox-inline fs-13 checkbox-ui">
 										<?= Html::activeCheckbox($product, 'show_home_no', ['label' => false, 'disabled' => $disabledHome ]) ?>
 										<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= $product->getAttributeLabel('show_home_no') ?>
 									</label>
+									<div class="help-block"></div>
 								</div>
 							</div>
 						</div>
