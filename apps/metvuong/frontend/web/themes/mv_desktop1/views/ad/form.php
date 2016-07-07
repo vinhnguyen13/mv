@@ -175,6 +175,7 @@ use vsoft\ad\models\AdImages;
 										<?= Html::activeCheckbox($product, 'show_home_no', ['label' => false, 'disabled' => $disabledHome ]) ?>
 										<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= $product->getAttributeLabel('show_home_no') ?>
 									</label>
+									<div class="help-block"></div>
 								</div>
 							</div>
 						</div>

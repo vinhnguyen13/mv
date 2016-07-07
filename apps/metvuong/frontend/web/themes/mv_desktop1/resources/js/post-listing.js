@@ -381,6 +381,10 @@ $(document).ready(function(){
 			} else {
 				self.hideError(self.fields.email);
 			}
+			
+			if(self.fields.homeNo.val().length > 32) {
+				self.showError(self.fields.homeNo, lajax.t('Số nhà không được nhiều hơn 32 ký tự'));
+			}
 
 			if(self.hasError(self.fields.email)) {
 				self.fields.email.prop('disabled', false);
@@ -622,7 +626,13 @@ $(document).ready(function(){
 				window.onbeforeunload = function() {};
 				window.onunload = function() {};
 			} else {
-				
+				for(var fn in r.errors) {
+					var f = r.errors[fn]
+					
+					for(var er in f) {
+						alert(f[er]);
+					}
+				}
 			}
 		});
 		
