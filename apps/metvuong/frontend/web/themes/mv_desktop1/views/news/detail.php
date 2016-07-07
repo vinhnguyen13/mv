@@ -96,7 +96,7 @@ $_brief = str_replace("'", "\'", $news["brief"]);
                     <div class="detail-content">
                         <div class="box-content">
                             <div><?=$news["content"]?></div>
-                            <div id="social<?=$news["id"]?>" class="share-social mgT-10 wrap-img">
+                            <div id="social<?=$news["id"]?>" class="share-social mgT-10 wrap-img hide">
                                 <div class="fb-like" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-layout="button_count" style="margin-right: 10px;"></div>
                                 <div class="fb-send" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-show-faces="false" style="margin-right: 10px;"></div>
                                 <a class="fb-share" data-href="<?= \yii\helpers\Url::to(['news/view', 'id' => $news["id"], 'slug' => $news["slug"]], true) ?>" data-layout="button_count"><?=Yii::t('news','Share on Facebook')?></a><br>
