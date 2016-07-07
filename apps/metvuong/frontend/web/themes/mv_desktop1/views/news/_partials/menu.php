@@ -8,7 +8,7 @@ Yii::t('news', 'Business');
 Yii::t('news', 'Economy');
 ?>
 <div class="title-top clearfix">
-    <div class="title-top"><?=Yii::t('news','NEWS')?></div>
+    <?=Yii::t('news','NEWS')?>
 </div>
 <div class="list-menu-news hide">
     <div class="swiper-container">

@@ -5355,12 +5355,6 @@ html.mm-opening .mm-slideout {
 .page-news {
     padding-top: 34px;*/;
 }
-.page-news .title-top {
-    padding: 0;
-    position: fixed;
-    top: 41px;
-    left: 0;
-}
 .list-menu-news .swiper-slide {
     width: auto;
 }
