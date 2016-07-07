@@ -626,7 +626,13 @@ $(document).ready(function(){
 				window.onbeforeunload = function() {};
 				window.onunload = function() {};
 			} else {
-				
+				for(var fn in r.errors) {
+					var f = r.errors[fn]
+					
+					for(var er in f) {
+						alert(f[er]);
+					}
+				}
 			}
 		});
 		
