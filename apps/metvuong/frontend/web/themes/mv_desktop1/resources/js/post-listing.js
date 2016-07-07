@@ -381,6 +381,10 @@ $(document).ready(function(){
 			} else {
 				self.hideError(self.fields.email);
 			}
+			
+			if(self.fields.homeNo.val().length > 32) {
+				self.showError(self.fields.homeNo, lajax.t('Số nhà không được nhiều hơn 32 ký tự'));
+			}
 
 			if(self.hasError(self.fields.email)) {
 				self.fields.email.prop('disabled', false);
