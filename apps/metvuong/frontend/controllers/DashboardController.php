@@ -192,12 +192,12 @@ class DashboardController extends Controller
         $fav_count = 0;
         $share_count= 0;
 
-        if(count($chart_stats) > 0){
-            foreach($dateRange as $kDate => $d){
-                $finders['data'][$kDate]['y'] = 0;
-                $visitors['data'][$kDate]['y'] = 0;
-                $favourites['data'][$kDate]['y'] = 0;
-                $shares['data'][$kDate]['y'] = 0;
+        foreach($dateRange as $kDate => $d) {
+            $finders['data'][$kDate]['y'] = 0;
+            $visitors['data'][$kDate]['y'] = 0;
+            $favorites['data'][$kDate]['y'] = 0;
+            $shares['data'][$kDate]['y'] = 0;
+            if (count($chart_stats) > 0) {
                 foreach ($chart_stats as $stats) {
                     if (isset($stats['date']) && $stats['date'] == $d) {
                         if (isset($stats['search'])) {
@@ -338,6 +338,10 @@ class DashboardController extends Controller
             }
             if ($view == "saved"){
                 $data = Chart::find()->getDataSaved($id, $from, $to, 9);
+                echo "<pre>";
+                print_r($data);
+                echo "<pre>";
+                exit();
             }
             if ($view == "shares"){
                 $data = Chart::find()->getDataShare($id, $from, $to, 9);

@@ -261,7 +261,6 @@ class Tracking extends Component
     {
         $chart_stats = ChartStats::find()->where(['product_id' => (int)$pid, 'date' => $date])->one();
         if(count($chart_stats) > 0){
-            $chart_stats->favorite = $this->countFavourites($pid);
             $chart_stats->created_at = strtotime($date);
             switch($view){
                 case 'search':
@@ -273,6 +272,7 @@ class Tracking extends Component
                     $chart_stats->save();
                     break;
                 case 'favorite':
+                    $chart_stats->favorite = $this->countFavourites($pid);
                     $chart_stats->save();
                     break;
                 case 'share':
@@ -287,7 +287,6 @@ class Tracking extends Component
             $chart_stats->date = $date;
             $chart_stats->product_id = (int)$pid;
             $chart_stats->created_at = strtotime($date);
-            $chart_stats->favorite = $this->countFavourites($pid);
             switch($view){
                 case 'search':
                     $chart_stats->search = 1;
@@ -302,6 +301,10 @@ class Tracking extends Component
                     $chart_stats->save();
                     break;
                 case 'favorite':
+                    $chart_stats->search = 0;
+                    $chart_stats->visit = 0;
+                    $chart_stats->share = 0;
+                    $chart_stats->favorite = $this->countFavourites($pid);
                     $chart_stats->save();
                     break;
                 case 'share':
