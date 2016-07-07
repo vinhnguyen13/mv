@@ -18,7 +18,7 @@ if($count_data > 0) {
         $username = $user->username;
         $email = empty($user->profile->public_email) ? $user->email : $user->profile->public_email;
         $avatar = $user->profile->getAvatarUrl();
-        $_id = $val['_id']->{'$id'};
+        $_id = $view=='saved' ? $val['saved_at'] : $val['_id']->{'$id'};
         ?>
         <li class="<?=$_id?>">
             <a href="#popup-user-inter">

@@ -101,13 +101,12 @@ class Chart extends Component
             ->andWhere(['product_id' => $pid])
             ->andWhere('saved_at > :sa',[':sa' => 0]);
         if(!empty($last_id)) {
-            $oid = new \MongoId($last_id);
-            $query = $query->andWhere(['<', '_id', $oid]);
+            $query = $query->andWhere(['<', 'saved_at', $last_id]);
         }
         if(!empty($limit)){
             $query = $query->limit($limit);
         }
-        return $query->orderBy('saved_at DESC')->all();
+        return $query->orderBy('saved_at DESC')->asArray()->all();
     }
 
     private function pushDataToChart($adProductTypes, $defaultData, $dateRange, $view, $pid){
