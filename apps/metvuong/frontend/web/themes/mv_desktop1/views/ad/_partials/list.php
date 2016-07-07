@@ -13,6 +13,10 @@ $categories = $categoriesDb->cache(function($categoriesDb){
 $types = AdProduct::getAdTypes();
 
 foreach ($products as $product):
-	echo $this->render('/ad/_partials/list-item', ['product' => $product, 'categories'=>$categories, 'types'=>$types]);
+?>
+    <li class="col-xs-12 col-sm-6 col-lg-4">
+	    <?=$this->render('/ad/_partials/list-item', ['product' => $product, 'categories'=>$categories, 'types'=>$types]);?>
+    </li>
+<?php
 endforeach;
 ?>

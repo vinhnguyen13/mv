@@ -112,6 +112,7 @@ class MVBootstrap implements BootstrapInterface
             '<username>/'.Yii::t('url', 'thong-bao', [], $language).'/'.Yii::t('url', 'cap-nhat', [], $language) => 'notification/update',
             '<username>/'.Yii::t('url', 'danh-sach-tin-dang', [], $language) => 'dashboard/ad',
             '<username>/'.Yii::t('url', 'payment', [], $language) => 'dashboard/payment',
+            '<username>/'.Yii::t('url', 'favorite', [], $language) => 'dashboard/favorite',
             '<username>/'.Yii::t('url', 'tro-chuyen', [], $language) => 'chat/index',
 
         ];

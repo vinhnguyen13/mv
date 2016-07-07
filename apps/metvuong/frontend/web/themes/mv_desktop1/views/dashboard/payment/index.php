@@ -6,6 +6,7 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
 ?>
 <div class="title-fixed-wrap container">
     <div class="giao-dich">
+        <div class="title-top">Payment</div>
         <div class="wrap-giao-dich">
             <div class="title-gd mgB-15"><?=Yii::t('payment', 'Your balance')?></div>
             <div class="mgB-30">

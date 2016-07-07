@@ -59,7 +59,7 @@
 				</p>
 			</div>
 			<div role="tabpanel" class="tab-pane fade in" id="tbbds">
-				<p><strong>1. Posting a Listing.&nbsp;</strong>
+				<p><strong>1. Posting a Listing.&nbsp; (30 days: 5 Keys)</strong>
 				    
 				</p>
 				<p style="margin-left: 40px;"><strong></strong><strong>a.</strong> Unlike most other websites and traditional way of posting your real estate property;&nbsp;Metvuong.com’s intricate posting method evaluates your posting information with hundred of thousands of data to make sure it is accurate.&nbsp; We also assign a numerical valuation to your listing so the more information you provide the higher your listing will appear on the search results.&nbsp; At&nbsp;Metvuong.com, we have data scientists diligently working on our data bases to assure that result of your searches will match to the most relevant buyers.&nbsp;
@@ -68,7 +68,7 @@
 				<p>
 					<img class="w-70" src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/s-9.jpg' ?>" alt="">
 				</p>
-				<p><strong>2. Boosting a Listing&nbsp;</strong>
+				<p><strong>2. Boosting a Listing&nbsp; (1 day: 3 Keys, 3 days: 5 Keys)</strong>
 				    
 				</p>
 				<p style="margin-left: 40px;"><strong></strong><strong>a.</strong> Over time, a listings score will naturally decay, so Boosting your listing will reset your score to it's original value, making it have a higher ranking for searches&nbsp;
@@ -86,7 +86,7 @@
 				<p>
 					<img class="w-70" src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/s-10.jpg' ?>" alt="">
 				</p>
-				<p><strong>3. Dashboard&nbsp;</strong>
+				<p><strong>3. Dashboard&nbsp; (30 days: 15 Keys)</strong>
 				    
 				</p>
 				<p><strong></strong>Dashboard provides you with analytics on who has viewed or interacted with your listing.&nbsp; We can provide you with the following data: &nbsp;a.) &nbsp;how many people searched for your listings, &nbsp;b.) &nbsp;how clicked on your listings, who saved it as their favorite, and who shared your listings with their peers.&nbsp; All these vital data can specifically lead out to potentially interested customers.
