@@ -10,7 +10,7 @@ Yii::t('news', 'Economy');
 <div class="title-top clearfix">
     <h2><?=Yii::t('news','NEWS')?></h2>
 </div>
-<div class="list-menu-news">
+<div class="list-menu-news hide">
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
@@ -28,6 +28,7 @@ Yii::t('news', 'Economy');
     <div class="swiper-button-next"><span></span></div>
     <div class="swiper-button-prev"><span></span></div>
 </div>
+<div class="clearfix"></div>
 <script type="text/javascript">
     $(document).ready(function () {
         var swiper = new Swiper('.list-menu-news .swiper-container', {

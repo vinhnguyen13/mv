@@ -91,6 +91,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
             <!-- <div class="title-sub"><?= Yii::t('general', 'LIÊN HỆ') ?></div> -->
             <div class="clearfix">
                 <div class="box-about">
+                    <p class="color-cd text-uper mgB-10 fs-20">Về metvuong</p>
                     <p class="fs-14 lh-24 text-justify"><?=Yii::t('general',"Metvuong.com là phương bất động sản. Tìm kiếm hay mua và bán Bất động sản sẽ dễ dàng hơn bao giờ hết với <a href='/' class='text-decor color-cd'>metvuong.com</a>. Với hệ thống thông tin bát nháo hiện nay, ta dễ dàng thất lạc trong hàng đống dữ liệu. Nhưng với <a href='/' class='text-decor color-cd'>metvuong.com</a>, mọi rắc rối sẽ không còn nữa. Việc tìm, thuê hay mua bán một căn nhà hay một căn hộ chưa bao giờ dễ dàng như thế. Chuẩn xác và đơn giản, bất động sản chẳng còn là một vấn đề nan giải.")?></p>
                 </div>
                 <div class="wrap-img map-location">

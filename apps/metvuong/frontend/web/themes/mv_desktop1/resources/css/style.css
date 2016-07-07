@@ -4845,7 +4845,7 @@ html.mm-opening .mm-slideout {
     /* height: auto !important; */
 }
 .wrap-detail-article {
-    padding: 15px 0;
+    /* padding: 15px 0; */
     color: #3c3c3c;
     font-size: 14px;
     line-height: 20px;
@@ -6817,7 +6817,7 @@ padding: 5px 0;
     .wrap-news {
         /* padding-left: 0; */
         /* padding-right: 0; */
-        margin-top: 20px;
+        /* margin-top: 20px; */
     }
     .wrap-news {
         padding-right: 50px;
@@ -6985,7 +6985,8 @@ padding: 5px 0;
     .page-news .title-top h2 {
         margin: 0;
         padding: 0;
-        font-size: 20px;
+        font-size: 30px;
+        font-weight: 600;
     }
     .wrap-infor-duan .wrap-item {
         border: none;
