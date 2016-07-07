@@ -4,7 +4,9 @@
  * User: Nhut Tran
  * Date: 4/8/2016 11:26 AM
  */
+use vsoft\tracking\models\base\ChartStats;
 use yii\helpers\Url;
+use yii\mongodb\Query;
 use yii\widgets\LinkPager;
 use vsoft\ad\models\AdProduct;
 
@@ -15,17 +17,30 @@ $count_product = count($products);
         $categories = \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray( true )->all();
         $types = \vsoft\ad\models\AdProduct::getAdTypes ();
         foreach ($products as $product) {
-            if (($search = \frontend\models\Tracking::find()->countFinders($product->id)) === null) {
-                $search = 0;
-            }
-            if (($click = \frontend\models\Tracking::find()->countVisitors($product->id)) === null) {
-                $click = 0;
-            }
-            if (($fav = \frontend\models\Tracking::find()->countFavourites($product->id)) === null) {
-                $fav = 0;
-            }
-            if (($share = \frontend\models\Tracking::find()->countShares($product->id)) === null) {
-                $share = 0;
+            $search_count = 0;
+            $click_count = 0;
+            $fav_count = 0;
+            $share_count= 0;
+            $query = new Query;
+            $query->from(ChartStats::collectionName())
+                ->where(['product_id' => $product->id]);
+            $chart_stats = $query->orderBy('created_at')->all();
+            if (count($chart_stats) > 0) {
+                foreach ($chart_stats as $stats) {
+                    if (isset($stats['search'])) {
+                        $search_count = $search_count + $stats['search'];
+                    }
+                    if (isset($stats['visit'])) {
+                        $click_count = $click_count + $stats['visit'];
+                    }
+                    if (isset($stats['favorite'])) {
+                        $fav_count = $fav_count + $stats['favorite'];
+
+                    }
+                    if (isset($stats['share'])) {
+                        $share_count = $share_count + $stats['share'];
+                    }
+                }
             }
             $thumb = $product->representImage;
             if(strpos($thumb, "default")){
@@ -124,19 +139,19 @@ $count_product = count($products);
                             </div>
                             <div class="wrap-icon">
                                 <span class="icon-mv"><span class="icon-icons-search"></span></span>
-                                <strong><?= $search ?></strong><?= Yii::t('statistic', 'Search') ?>
+                                <strong><?= $search_count ?></strong><?= Yii::t('statistic', 'Search') ?>
                             </div>
                             <div class="wrap-icon">
                                 <span class="icon-mv"><span class="icon-eye-copy"></span></span>
-                                <strong><?= $click ?></strong><?= Yii::t('statistic', 'Click') ?>
+                                <strong><?= $click_count ?></strong><?= Yii::t('statistic', 'Click') ?>
                             </div>
                             <div class="wrap-icon">
                                 <span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
-                                <strong><?= $fav ?></strong><?= Yii::t('statistic', 'Favourite') ?>
+                                <strong><?= $fav_count ?></strong><?= Yii::t('statistic', 'Favourite') ?>
                             </div>
                             <div class="wrap-icon">
                                 <span class="icon-mv"><span class="icon-share-social"></span></span>
-                                <strong><?= $share ?></strong><?=Yii::t('statistic','Share')?>
+                                <strong><?= $share_count ?></strong><?=Yii::t('statistic','Share')?>
                             </div>
                         </div>
                     </div>
