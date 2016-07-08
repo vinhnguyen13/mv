@@ -133,6 +133,7 @@ class AdProduct extends AP
             'source' => 'Source',
             'rating' => 'Rating',
             'product_main_id' => 'Main ID',
+        	'start_date' => 'Ngày đăng tin'
         ];
     }
 

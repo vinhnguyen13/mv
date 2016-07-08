@@ -18,6 +18,10 @@ $this->registerCss('.filter-col {margin-right: 12px;} .container {max-width: non
 
 
 $script = <<<EOD
+	if(!getCookie('cols')) {
+		setCookie('cols', '2,10,12,13,14,15,16,17,18,19,21,22');
+	}
+
 	$('.price').keyup(function(){
 		formatCurrency($(this));
 	}).each(function(){
@@ -123,7 +127,6 @@ $script = <<<EOD
 					$(this).children().eq(index).show();
 				});
 			} else {
-				setCookie(index, '');
 				$('tr').each(function(){
 					$(this).children().eq(index).hide();
 				});
@@ -144,7 +147,7 @@ $type = [
 $directionList = AdProductAdditionInfo::directionList();
 $projectList = ArrayHelper::map(\vsoft\craw\models\AdBuildingProject::find()->where(['city_id' =>  1])->orderBy(['city_id' => SORT_ASC, 'name' => SORT_ASC])->all(), 'name', 'name');
 ?>
-<div class="cms-show-index">
+<div class="cms-show-index" style="position: relative;">
 	<div style="text-align: center; position: absolute; width: 100%;"><a style="font-size: 20px; display: inline-block; margin-top: 22px;" href="<?= Url::to(['/craw/manager']) ?>">Reset Filter</a></div>
 	<h2 class="title">Danh sách tin craw</h2>
     <?= GridView::widget([
@@ -246,12 +249,15 @@ $projectList = ArrayHelper::map(\vsoft\craw\models\AdBuildingProject::find()->wh
 			],
 
 			['attribute' => 'mobile', 'value' => 'adContactInfo.mobile',
-			'filter' => Html::activeDropDownList($filterModel, 'mobileFilter', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả'])
+			'filter' => Html::activeDropDownList($filterModel, 'mobileFilter', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả']).
+					Html::activeTextInput($filterModel, 'mobileSearch', ['class' => 'form-control'])
 			],
 
 			['attribute' => 'email', 'value' => 'adContactInfo.email',
-			'filter' => Html::activeDropDownList($filterModel, 'emailFilter', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả'])
+			'filter' => Html::activeDropDownList($filterModel, 'emailFilter', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả']) .
+					Html::activeTextInput($filterModel, 'emailSearch', ['class' => 'form-control'])
 			],
+			'start_date:date'
 		],
     ]); ?>
     <?php if($import == 'true'){?>

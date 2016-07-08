@@ -44,9 +44,11 @@ class AdProductSearch extends AdProduct
     public $phone;
     public $phoneFilter;
     public $mobile;
+    public $mobileSearch;
     public $mobileFilter;
     public $email;
     public $emailFilter;
+    public $emailSearch;
     public $file_name;
 
     public function rules()
@@ -55,10 +57,14 @@ class AdProductSearch extends AdProduct
             [['ward', 'category', 'project', 'category_id', 'district', 'city', 'street', 'type', 'homeNoFilter', 'areaMin', 'areaMax', 'areaFilter', 'priceMin', 'priceMax',
             'priceFilter', 'content', 'facadeWidth', 'facadeFilter', 'landWidth', 'landFilter',
             'homeDirection', 'homeDirectionFilter', 'facadeDirection', 'facadeDirectionFilter', 'floor', 'floorFilter', 'room', 'roomFilter',
-            'toilet', 'toiletFilter', 'interior', 'wardFilter', 'name', 'nameFilter', 'address', 'addressFilter', 'mobile', 'mobileFilter', 'phone', 'phoneFilter',
-            'email', 'emailFilter', 'streetFilter', 'file_name'], 'safe'],
+            'toilet', 'toiletFilter', 'interior', 'wardFilter', 'name', 'nameFilter', 'address', 'addressFilter', 'mobile', 'mobileFilter', 'mobileSearch', 'phone', 'phoneFilter',
+            'email', 'emailFilter', 'emailSearch', 'streetFilter', 'file_name'], 'safe'],
         ];
     }
+    
+   	public function formName() {
+   		return '';
+   	}
     
     public function search($params)
     {
@@ -191,12 +197,14 @@ class AdProductSearch extends AdProduct
     	$query->andFilterWhere(['like', 'ad_building_project.name', $this->project]);
     	$query->andFilterWhere(['like', 'ad_city.name', $this->city]);
     	$query->andFilterWhere(['like', 'CONCAT(ad_street.pre, " ", ad_street.name)', $this->street]);
+    	$query->andFilterWhere(['like', 'email', $this->emailSearch]);
+    	$query->andFilterWhere(['like', 'mobile', $this->mobileSearch]);
     	
     	if($this->homeNoFilter) {
     		if($this->homeNoFilter == '1') {
-    			$query->andWhere(['IS NOT', 'home_no', null]);
+    			$query->andWhere(['IS NOT', 'ad_product.home_no', null]);
     		} else {
-    			$query->andWhere(['home_no' => null]);
+    			$query->andWhere(['ad_product.home_no' => null]);
     		}
     	}
     	
@@ -266,17 +274,17 @@ class AdProductSearch extends AdProduct
     	
     	if($this->wardFilter) {
     		if($this->wardFilter == '1') {
-    			$query->andWhere(['IS NOT', 'ward_id', null]);
+    			$query->andWhere(['IS NOT', 'ad_product.ward_id', null]);
     		} else {
-    			$query->andWhere(['ward_id' => null]);
+    			$query->andWhere(['ad_product.ward_id' => null]);
     		}
     	}
 
     	if($this->streetFilter) {
     		if($this->streetFilter == '1') {
-    			$query->andWhere(['IS NOT', 'street_id', null]);
+    			$query->andWhere(['IS NOT', 'ad_product.street_id', null]);
     		} else {
-    			$query->andWhere(['street_id' => null]);
+    			$query->andWhere(['ad_product.street_id' => null]);
     		}
     	}
     	
