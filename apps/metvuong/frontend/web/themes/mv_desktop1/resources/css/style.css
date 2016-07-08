@@ -1254,11 +1254,11 @@ label {
     text-align: center;
     padding: 7px 0;
     font-size: 15px;
-    position: relative;
+    /* position: relative; */
     /* top: 39px; */
     /* left: 0; */
     width: 100%;
-    z-index: 100;
+    /* z-index: 100; */
     border-bottom: solid 0.5px #DADADA;
     background: #fff;
     text-transform: uppercase;
