@@ -257,26 +257,26 @@ class Tracking extends Component
         return $sysEmail->save();
     }
 
-    public function saveChartStats($pid, $date, $view)
+    public function saveChartStats($pid, $date, $view, $no=1)
     {
         $chart_stats = ChartStats::find()->where(['product_id' => (int)$pid, 'date' => $date])->one();
         if(count($chart_stats) > 0){
             $chart_stats->created_at = strtotime($date);
             switch($view){
                 case 'search':
-                    $chart_stats->search = $chart_stats->search + 1;
+                    $chart_stats->search = $chart_stats->search + $no;
                     $chart_stats->save();
                     break;
                 case 'visit':
-                    $chart_stats->visit = $chart_stats->visit + 1;
+                    $chart_stats->visit = $chart_stats->visit + $no;
                     $chart_stats->save();
                     break;
                 case 'favorite':
-                    $chart_stats->favorite = $chart_stats->favorite + 1;
+                    $chart_stats->favorite = $chart_stats->favorite + $no;
                     $chart_stats->save();
                     break;
                 case 'share':
-                    $chart_stats->share = $chart_stats->share + 1;
+                    $chart_stats->share = $chart_stats->share + $no;
                     $chart_stats->save();
                     break;
                 default:
@@ -289,14 +289,14 @@ class Tracking extends Component
             $chart_stats->created_at = strtotime($date);
             switch($view){
                 case 'search':
-                    $chart_stats->search = 1;
+                    $chart_stats->search = $no;
                     $chart_stats->visit = 0;
                     $chart_stats->share = 0;
                     $chart_stats->save();
                     break;
                 case 'visit':
                     $chart_stats->search = 0;
-                    $chart_stats->visit = 1;
+                    $chart_stats->visit = $no;
                     $chart_stats->share = 0;
                     $chart_stats->save();
                     break;
@@ -304,13 +304,13 @@ class Tracking extends Component
                     $chart_stats->search = 0;
                     $chart_stats->visit = 0;
                     $chart_stats->share = 0;
-                    $chart_stats->favorite = 1;
+                    $chart_stats->favorite = $no;
                     $chart_stats->save();
                     break;
                 case 'share':
                     $chart_stats->search = 0;
                     $chart_stats->visit = 0;
-                    $chart_stats->share = 1;
+                    $chart_stats->share = $no;
                     $chart_stats->save();
                     break;
                 default:
@@ -318,6 +318,19 @@ class Tracking extends Component
             }
 
         }
+    }
+
+    public static function syncFavorite($pid){
+        ChartStats::updateAll(['favorite' => 0],['product_id' => (int)$pid]);
+        $adProSaveds = AdProductSaved::find()->where('saved_at > :sa',[':sa' => 0])->andWhere(['product_id'=>$pid])->orderBy(['saved_at' => SORT_ASC])->asArray()->all();
+        foreach ($adProSaveds as $ads) {
+            $saved_at = (int)$ads['saved_at'];
+            $date = date(Chart::DATE_FORMAT, $saved_at);
+            $chart_stats = ChartStats::find()->where(['product_id' => (int)$pid, 'date' => $date])->one();
+            $chart_stats->favorite = $chart_stats->favorite + 1;
+            $chart_stats->save();
+        }
+        return 'synchronized';
     }
 
 }

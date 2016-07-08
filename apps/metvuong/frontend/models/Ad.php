@@ -12,6 +12,7 @@ use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductRating;
 use vsoft\ad\models\AdProductSaved;
 use frontend\models\UserActivity;
+use vsoft\tracking\models\base\ChartStats;
 use Yii;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
@@ -108,12 +109,13 @@ class Ad extends Component
                     $adSaved->user_id = Yii::$app->user->id;
                     $adSaved->saved_at = $time;
                 }else{
+                    $saved_at = $adSaved->saved_at;
                     $adSaved->saved_at = !empty($post['stt']) ? time() : 0;
                 }
                 $adSaved->validate();
                 if(!$adSaved->hasErrors()){
-                    $adSaved->save();
                     if(Yii::$app->user->id != $adSaved->product->user_id) {
+                        $adSaved->save();
                         UserActivity::me()->saveActivity(UserActivity::ACTION_AD_FAVORITE, [
                             'owner' => Yii::$app->user->id,
                             'product' => $adSaved->product_id,
@@ -122,8 +124,17 @@ class Ad extends Component
                         ], $adSaved->product_id);
 
                         // save chart_stats favorite
-                        if($adSaved->saved_at > 0){
-                            Tracking::find()->saveChartStats($adSaved->product_id, date("d-m-Y", $time), 'favorite');
+                        if($adSaved->saved_at > 0)
+                            Tracking::find()->saveChartStats($adSaved->product_id, date("d-m-Y", $time), 'favorite', 1);
+                        else {
+                            // kiem tra product duoc favorite ngay nao va -1 favorite
+                            $chart_stats_pid = ChartStats::find()->where(['product_id' => $adSaved->product_id, 'date' => date(Chart::DATE_FORMAT, $saved_at)])
+                                ->andWhere(['>', 'favorite', 0])->orderBy(['created_at' => SORT_DESC])->one();
+                            if(count($chart_stats_pid) > 0) {
+                                $chart_stats_pid->favorite = $chart_stats_pid->favorite - 1;
+                                $chart_stats_pid->save();
+                            }
+                            Tracking::find()->saveChartStats($adSaved->product_id, date("d-m-Y", $time), 'favorite', 0);
                         }
                     }
                 }
