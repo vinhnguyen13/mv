@@ -29,9 +29,9 @@ class Metvuong extends Component
     {
         $contacts = AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
                 ->where('email is not null')
-                ->andWhere("email NOT IN (select email from mark_email where status = 1)")
+                ->andWhere("email NOT IN (select email from mark_email)")
                 ->andWhere("email NOT IN (select email from user where updated_at > created_at )")
-                ->groupBy('email')->orderBy('count(product_id) desc')->limit(100)->all();
+                ->groupBy('email')->orderBy('count(product_id) desc')->limit(2)->all();
 
         if(count($contacts) > 0) {
             $coupon = CouponCode::getDb()->cache(function() use($code){
@@ -88,15 +88,15 @@ class Metvuong extends Component
                 ];
 
                 $subjectEmail = "Thông báo tin đăng từ metvuong.com";
-                $transport = self::transport();
-                Yii::$app->mailer->setTransport($transport);
                 try {
-                    $status = \Yii::$app->mailer->compose(['html' => 'contactEmail-html'], ['params' => $params])
-                        ->setFrom(Yii::$app->params['adminEmail'])
+                    $mailer = new \common\components\Mailer();
+                    $mailer->viewPath = '@common/mail';
+                    $status = $mailer->compose(['html' => 'contactEmail-html'], ['params' => $params])
+                        ->setFrom(Yii::$app->params['noreplyEmail'])
                         ->setTo([$email])
                         ->setSubject($subjectEmail)
                         ->send();
-                    $status > 0 ? print_r("\n {$transport['username']} sent to {$email}") : "Send mail error.";
+                    $status > 0 ? print_r("\n {$mailer->transport['username']} sent to {$email}") : "Send mail error.";
                     // Count email marketing has sent
                     Metvuong::markEmail($email, $status);
                     usleep(300000);
