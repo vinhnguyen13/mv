@@ -7,6 +7,7 @@ use Yii;
 use yii\helpers\Url;
 use common\models\AdProduct as AP;
 use vsoft\express\components\AdImageHelper;
+use frontend\models\Elastic;
 
 
 class AdProduct extends AP
@@ -54,6 +55,7 @@ class AdProduct extends AP
 			[['category_id', 'project_building_id', 'user_id', 'city_id', 'district_id', 'ward_id', 'street_id', 'type', 'price', 'price_type', 'start_date', 'end_date', 'score', 'view', 'verified', 'created_at', 'updated_at', 'status', 'owner', 'show_home_no'], 'integer'],
 			[['price_input', 'lng', 'lat'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/'],
 			[['area'], 'limitArea'],
+			[['home_no'], 'validateHomeNo'],
 			[['home_no'], 'string', 'max' => 32],
 			[['content'], 'string', 'max' => 3200]
 		];
@@ -62,6 +64,12 @@ class AdProduct extends AP
 	public function limitArea($attribute, $params) {
 		if($this->category->limit_area && $this->$attribute > $this->category->limit_area) {
 			$this->addError($attribute, Yii::t('ad', sprintf('Diện tích không được lớn hơn %s.', $this->category->limit_area)));
+		}
+	}
+	
+	public function validateHomeNo($attribute, $params) {
+		if($this->$attribute && (preg_match_all("/[a-z]/", Elastic::transform($this->$attribute)) > 6 || !preg_match("/[0-9]/", $this->$attribute))) {
+			$this->addError($attribute, Yii::t('ad', 'Số nhà không hợp lệ.'));
 		}
 	}
 	
