@@ -109,6 +109,17 @@ class Chart extends Component
         return $query->orderBy('saved_at DESC')->asArray()->all();
     }
 
+    public function getChartStats($id, $dateRange)
+    {
+        Tracking::syncFavorite($id);
+        $query = new Query;
+        $query->from(ChartStats::collectionName())
+            ->where(['product_id' => $id])
+            ->andWhere(['IN', 'date', $dateRange]);
+        $chart_stats = $query->orderBy('created_at')->all();
+        return $chart_stats;
+    }
+
     private function pushDataToChart($adProductTypes, $defaultData, $dateRange, $view, $pid){
         $last_id = null;
         if(count($adProductTypes) > 0){

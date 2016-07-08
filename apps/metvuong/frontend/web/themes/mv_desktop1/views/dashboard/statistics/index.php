@@ -91,7 +91,7 @@ $data = [$finders, $visitors, $favorites, $shares];
                 </div>
             </div>
             <div class="bottom-popup">
-                <p class="push-price fs-13 text-right font-600"><span class="d-ib lh-100"><?=Yii::t('chart', 'Để tin đạt hiệu quả hơn vui lòng click vào đây')?></span> <a href="#" data-toggle="modal" data-target="#upgrade-time" data-product="79110" class="btn-nang-cap btn-up mgL-10"><?= Yii::t('statistic', 'Up') ?></a></p>
+                <p class="push-price fs-13 text-right font-600"><span class="d-ib lh-100"><?=Yii::t('chart', 'Để tin đạt hiệu quả hơn vui lòng click vào đây')?></span> <a href="#" data-toggle="modal" data-target="#upgrade-time" data-product="<?=$id?>" class="btn-nang-cap mgL-10 btn-boost"><?= Yii::t('statistic', 'Up') ?></a></p>
             </div>
         </div>
     </div>

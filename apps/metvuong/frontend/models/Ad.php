@@ -109,7 +109,7 @@ class Ad extends Component
                     $adSaved->user_id = Yii::$app->user->id;
                     $adSaved->saved_at = $time;
                 }else{
-                    $saved_at = $adSaved->saved_at;
+//                    $saved_at = $adSaved->saved_at;
                     $adSaved->saved_at = !empty($post['stt']) ? time() : 0;
                 }
                 $adSaved->validate();
@@ -123,19 +123,23 @@ class Ad extends Component
                             'saved_at' => $adSaved->saved_at,
                         ], $adSaved->product_id);
 
-                        // save chart_stats favorite
-                        if($adSaved->saved_at > 0)
-                            Tracking::find()->saveChartStats($adSaved->product_id, date("d-m-Y", $time), 'favorite', 1);
-                        else {
-                            // kiem tra product duoc favorite ngay nao va -1 favorite
-                            $chart_stats_pid = ChartStats::find()->where(['product_id' => $adSaved->product_id, 'date' => date(Chart::DATE_FORMAT, $saved_at)])
-                                ->andWhere(['>', 'favorite', 0])->orderBy(['created_at' => SORT_DESC])->one();
-                            if(count($chart_stats_pid) > 0) {
-                                $chart_stats_pid->favorite = $chart_stats_pid->favorite - 1;
-                                $chart_stats_pid->save();
-                            }
-                            Tracking::find()->saveChartStats($adSaved->product_id, date("d-m-Y", $time), 'favorite', 0);
-                        }
+//                         //save chart_stats favorite
+//                        if($adSaved->saved_at > 0)
+//                            Tracking::find()->saveChartStats($adSaved->product_id, date("d-m-Y", $time), 'favorite', 1);
+//                        else {
+//                            // kiem tra product duoc favorite ngay nao va -1 favorite
+//                            $chart_stats_pid = ChartStats::find()->where(['product_id' => $adSaved->product_id, 'date' => date(Chart::DATE_FORMAT, $saved_at)])
+//                                ->andWhere(['>', 'favorite', 0])->orderBy(['created_at' => SORT_DESC])->one();
+//                            if(is_object($chart_stats_pid)) {
+//                                if (count($chart_stats_pid) > 0) {
+//                                    $chart_stats_pid->favorite = $chart_stats_pid->favorite - 1;
+//                                    $chart_stats_pid->save();
+//                                }
+//                            } else {
+//                                Tracking::syncFavorite($adSaved->product_id);
+//                            }
+////                            Tracking::find()->saveChartStats($adSaved->product_id, date("d-m-Y", $time), 'favorite', 0);
+//                        }
                     }
                 }
                 return ['statusCode'=>200, 'parameters'=>['msg'=>Yii::$app->session->getFlash('notify_other')]];

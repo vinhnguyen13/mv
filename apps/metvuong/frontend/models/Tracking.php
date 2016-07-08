@@ -321,16 +321,50 @@ class Tracking extends Component
     }
 
     public static function syncFavorite($pid){
-        ChartStats::updateAll(['favorite' => 0],['product_id' => (int)$pid]);
-        $adProSaveds = AdProductSaved::find()->where('saved_at > :sa',[':sa' => 0])->andWhere(['product_id'=>$pid])->orderBy(['saved_at' => SORT_ASC])->asArray()->all();
-        foreach ($adProSaveds as $ads) {
-            $saved_at = (int)$ads['saved_at'];
-            $date = date(Chart::DATE_FORMAT, $saved_at);
-            $chart_stats = ChartStats::find()->where(['product_id' => (int)$pid, 'date' => $date])->one();
-            $chart_stats->favorite = $chart_stats->favorite + 1;
-            $chart_stats->save();
+        $date_range = array();
+        $adProSaveds = AdProductSaved::find()->where(['product_id'=>(int)$pid])->orderBy(['saved_at' => SORT_ASC])->asArray()->all();
+        if(count($adProSaveds) > 0) {
+            foreach ($adProSaveds as $ads) {
+                $saved_at = (int)$ads['saved_at'];
+                $date = date(Chart::DATE_FORMAT, $saved_at);
+                if($saved_at == 0)
+                    $date = date(Chart::DATE_FORMAT, time());
+
+                if (array_key_exists($date, $date_range)) {
+                    $in = $date_range[$date];
+                    $date_range[$date] = $in + 1;
+                }
+                else {
+                    $date_range[$date] = ($saved_at == 0 ? 0 : 1);
+                }
+            }
         }
-        return 'synchronized';
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            if(count($date_range) > 0){
+                foreach ($date_range as $key => $val) {
+                    $chart_stats = ChartStats::find()->where(['product_id' => (int)$pid, 'date' => $key])->one();
+                    if(is_object($chart_stats) && count($chart_stats) > 0) {
+                        $chart_stats->favorite = $val;
+                        $chart_stats->save();
+                    } else {
+                        $chart_stats = new ChartStats();
+                        $chart_stats->date = $key;
+                        $chart_stats->product_id = (int)$pid;
+                        $chart_stats->created_at = strtotime($key);
+                        $chart_stats->favorite = $val;
+                        $chart_stats->save();
+                    }
+                }
+            }
+            $transaction->commit();
+            return 'synchronized';
+
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+        return 'failed';
     }
 
 }
