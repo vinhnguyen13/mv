@@ -64,9 +64,25 @@ $(document).ready(function() {
 		autoFill: $('#map-search-wrap').find('.auto-fill'),
 		fields: null,
 		filterFields: function(e) {
+			e.preventDefault();
+			
 			form.fields.filter(function () {
 		        return !this.value;
 		    }).prop('disabled', true);
+			
+			var serialize = decodeURIComponent(form.el.serialize());
+			var paramValues = serialize.split('&');
+			var convertPV = [];
+			
+			for(var i in paramValues) {
+				paramValue = paramValues[i].split('=');
+				
+				if(fieldsMapping[paramValue[0]]) {
+					convertPV.push(fieldsMapping[paramValue[0]] + '_' + paramValue[1]);
+				}
+			}
+			
+			window.location = actionId + '/' + convertPV.join('/');
 		},
 		sortSubmit: function() {
 			form.el.submit();
@@ -76,7 +92,7 @@ $(document).ready(function() {
 			form.showSearchList();
 			form.listSearchEl.find('.hint-wrap').show();
 			
-			var searchHistory = getCookie('sh');
+			var searchHistory = getCookie('sh1');
 			
 			if(searchHistory) {
 				form.listSearchEl.find('.center').show();
@@ -87,7 +103,7 @@ $(document).ready(function() {
 				form.listSearchUl.html('');
 				
 				for(var i = 0; i < lsLength; i++) {
-					form.listSearchUl.append('<li><a class="search-item" href="javascript:;" data-id="' + listSearch[i].i + '" data-type="' + listSearch[i].t + '">' + decodeURIComponent(listSearch[i].v) + '</a></li>');
+					form.listSearchUl.append('<li><a class="search-item" href="javascript:;" data-slug="' + listSearch[i].s + '" data-id="' + listSearch[i].i + '" data-type="' + listSearch[i].t + '">' + decodeURIComponent(listSearch[i].v) + '</a></li>');
 				}
 			} else {
 				form.listSearchEl.find('.center').hide();
@@ -157,7 +173,7 @@ $(document).ready(function() {
 						for(var i = 0; i < response.length; i++) {
 		        			var area = response[i];
 		        			
-		        			form.listSearchUl.append('<li><a class="search-item" href="javascript:;" data-id="' + area.id + '" data-type="' + area.type + '">' + area.full_name + '</a></li>');
+		        			form.listSearchUl.append('<li><a class="search-item" href="javascript:;" data-slug="' + area.slug + '" data-id="' + area.id + '" data-type="' + area.type + '">' + area.full_name + '</a></li>');
 		        		}
 						form.showSearchList();
 						form.listSearchEl.find('.hint-wrap').hide();
@@ -184,14 +200,19 @@ $(document).ready(function() {
 			var val = self.text();
 			var type = self.data('type');
 			var id = self.data('id');
+			var slug = self.data('slug');
 			
 			form.mapSearchEl.data('val', val).val(val);
 			
 			form.autoFill.val('').filter('#' + type + '_id').val(id);
 			
+			// Replace actionId
+			$segments = actionId.split('/');
+			actionId = '/' + $segments[1] + '/' + slug;
+			
 			// push search history
 			
-			var searchHistory = getCookie('sh');
+			var searchHistory = getCookie('sh1');
 			var listSearch = searchHistory ? JSON.parse(searchHistory) : [];
 			var isExist = false;
 			
@@ -211,10 +232,10 @@ $(document).ready(function() {
 					listSearch.pop();
 				}
 				
-				listSearch.unshift({v: encodeURIComponent(val), i: id, t: type});
+				listSearch.unshift({v: encodeURIComponent(val), i: id, t: type, s: slug});
 			}
 			
-			setCookie('sh', JSON.stringify(listSearch));
+			setCookie('sh1', JSON.stringify(listSearch));
 		},
 		showSearchList: function() {
 			if(form.listSearchEl.hasClass('hide')) {

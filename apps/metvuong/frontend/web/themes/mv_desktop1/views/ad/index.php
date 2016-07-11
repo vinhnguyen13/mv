@@ -4,6 +4,7 @@
 	use yii\helpers\Html;
 	use vsoft\ad\models\AdProduct;
 	use yii\web\View;
+use frontend\models\MapSearch;
 	
 	$db = Yii::$app->getDb();
 	
@@ -16,13 +17,20 @@
 	$resourceApi = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=desktop.loadedResource&libraries=geometry';
 	
 	$autoFillValue = $searchModel->getAutoFillValue();
-	$actionId = ($searchModel->type == AdProduct::TYPE_FOR_SELL) ? Yii::t('url', 'nha-dat-ban') : Yii::t('url', 'nha-dat-cho-thue');
+	$actionId = '/' . (($searchModel->type == AdProduct::TYPE_FOR_SELL) ? Yii::t('url', 'nha-dat-ban') : Yii::t('url', 'nha-dat-cho-thue'));
+	
+	if($slug != MapSearch::$defaultSlug) {
+		$actionId .= '/' . $slug;
+	}
+	
 	$loadProjectUrl = Url::to(['/ad/get-project']);
+	$fieldsMapping = json_encode(array_flip(MapSearch::$fieldsMapping));
 	
 	$script = <<<EOD
 	var resources = ['$resourceHistoryJs', '$resourceListingMap', '$resourceApi'];
 	var actionId = '$actionId';
 	var loadProjectUrl = '$loadProjectUrl';
+	var fieldsMapping = $fieldsMapping;
 EOD;
 	
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl.'/resources/css/map.css');
@@ -38,7 +46,8 @@ EOD;
 	<div class="wrap-listing-item">
 		<div class="items-list">
 			<div class="inner-wrap">
-				<form id="search-form" action="/<?= $actionId ?>" method="get">
+				<form id="search-form" action="<?= $actionId ?>" method="get">
+					<?= Html::activeHiddenInput($searchModel, 'type', ['class' => 'auto-fill']); ?>
 					<div class="search-subpage">
 						<div class="advande-search clearfix">
 							<div class="toggle-search"<?= $hideSearchForm ? ' style="display: none"' : '' ?>>

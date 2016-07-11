@@ -227,10 +227,12 @@ $(document).ready(function() {
 				listSearch.pop();
 			}
 			
-			listSearch.unshift({v: encodeURIComponent(val), i: id, t: type});
+			var slug = $(this).attr('href').split('/')[2];
+			
+			listSearch.unshift({v: encodeURIComponent(val), i: id, t: type, s: slug});
 		}
 		
-		setCookie('sh', JSON.stringify(listSearch));
+		setCookie('sh1', JSON.stringify(listSearch));
     });
 
     $('.suggest-search .content-suggest .btn-close').on('click', function (e) {

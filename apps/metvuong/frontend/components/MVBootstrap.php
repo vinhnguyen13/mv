@@ -59,7 +59,7 @@ class MVBootstrap implements BootstrapInterface
             $rules_1 = ArrayHelper::merge($rules1, $rules2);
             $rules_2 = ArrayHelper::merge($rules3, $rules4);
             $apiRules = ['class' => 'yii\rest\UrlRule', 'controller' => 'map'];
-            
+
             Yii::$app->set('urlManager', [
                 'class' => 'yii\web\UrlManager',
                 'enablePrettyUrl' => true,
@@ -84,13 +84,23 @@ class MVBootstrap implements BootstrapInterface
             Yii::t('url', 'du-an', [], $language) => 'building-project/index',
             Yii::t('url', 'du-an', [], $language).'/<slug>' => 'building-project/view',
 
-            Yii::t('url', 'nha-dat-ban', [], $language) => 'ad/index1',
-            Yii::t('url', 'nha-dat-cho-thue', [], $language) => 'ad/index2',
             Yii::t('url', 'dang-tin', [], $language) => 'ad/post',
             Yii::t('url', 'bat-dong-san', [], $language).'/redirect' => 'ad/redirect',
             Yii::t('url', 'bat-dong-san', [], $language).'/post-listing' => 'ad/post-listing',
             Yii::t('url', 'nha-dat-ban', [], $language).'/<id:\d+>-<slug>' => 'ad/detail1',
         	Yii::t('url', 'nha-dat-cho-thue', [], $language).'/<id:\d+>-<slug>' => 'ad/detail2',
+        	[
+        		'pattern' => Yii::t('url', 'nha-dat-ban', [], $language) . '/<params:.+>',
+        		'route' => 'ad/index1',
+        		'defaults' => ['params' => null]
+        	],
+            Yii::t('url', 'nha-dat-ban', [], $language) => 'ad/index1',
+        	[
+        		'pattern' => Yii::t('url', 'nha-dat-cho-thue', [], $language) . '/<params:.+>',
+        		'route' => 'ad/index2',
+        		'defaults' => ['params' => null]
+        	],
+            Yii::t('url', 'nha-dat-cho-thue', [], $language) => 'ad/index2',
             Yii::t('url', 'bat-dong-san', [], $language).'/update/<id:\d+>' => 'ad/update',
             'member/<usrn>/avatar' => 'member/avatar',
             Yii::t('url', 'tro-chuyen', [], $language).'/with/<username>' => 'chat/with',

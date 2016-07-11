@@ -13,6 +13,8 @@ use Yii;
 use Elasticsearch\ClientBuilder;
 use yii\base\Exception;
 use vsoft\ad\models\AdProduct;
+use common\components\Slug;
+use common\components\common\components;
 
 class Elastic
 {
@@ -214,6 +216,12 @@ class Elastic
     	$str = preg_replace('/(ỳ|ý|ỵ|ỷ|ỹ)/', 'y', $str);
     	$str = preg_replace('/(đ)/', 'd', $str);
     	return $str;
+    }
+    
+    public static function slug($str) {
+    	$slug = new Slug();
+    	
+    	return $slug->slugify($str);
     }
     
     public static function buildParams($v) {

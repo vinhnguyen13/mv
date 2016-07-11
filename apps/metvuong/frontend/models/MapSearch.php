@@ -9,6 +9,7 @@ use vsoft\ad\models\AdStreet;
 use vsoft\ad\models\AdWard;
 use vsoft\ad\models\AdBuildingProject;
 use vsoft\ad\models\AdDistrict;
+use frontend\components\SearchUrlManager;
 
 class MapSearch extends AdProduct {
 	
@@ -38,6 +39,27 @@ class MapSearch extends AdProduct {
 	public $streets;
 	public $wards;
 	public $districts;
+	
+	public static $defaultSlug = 'ho-chi-minh-quan-1';
+	public static $fieldsMapping = [
+		'cat' => 'category_id',
+		'bed' => 'room_no',
+		'bath' => 'toilet_no',
+		'pmin' => 'price_min',
+		'pmax' => 'price_max',
+		'smin' => 'size_min',
+		'smax' => 'size_max',
+		'sort' => 'order_by',
+		'rect' => 'rect',
+		'rm' => 'rm',
+		'ra' => 'ra',
+		'rl' => 'rl',
+		'iz' => 'iz',
+		'z' => 'z',
+		'c' => 'c',
+		'did' => 'did',
+		'p' => 'page'
+	];
 	
 	function rules() {
 		return array_merge(parent::rules(), [
@@ -166,7 +188,7 @@ class MapSearch extends AdProduct {
 		$listQuery = clone $query;
 			
 		$countQuery = clone $listQuery;
-		$pages = new Pagination(['totalCount' => $countQuery->count(), 'defaultPageSize' => \Yii::$app->params['listingLimit'], 'route' => '/ad/index' . $this->type]);
+		$pages = new Pagination(['totalCount' => $countQuery->count(), 'defaultPageSize' => \Yii::$app->params['listingLimit'], 'route' => '/ad/index' . $this->type, 'urlManager' => new SearchUrlManager()]);
 		$pages->setPageSize(\Yii::$app->params['listingLimit']);
 				
 		$listQuery->offset($pages->offset);

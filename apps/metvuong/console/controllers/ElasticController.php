@@ -6,6 +6,7 @@ use frontend\models\Elastic;
 use yii\db\ActiveRecord;
 use vsoft\ad\models\AdProduct;
 use yii\db\Query;
+use common\models\SlugSearch;
 
 class ElasticController extends Controller {
 	
@@ -43,9 +44,10 @@ class ElasticController extends Controller {
 				$totalRent = 0;
 			}
 			
-			$cityTermBulk = array_merge($cityTermBulk, $this->buildTerm($city['id'], $city['id'], $city['name'], $city['name'], $totalSell, $totalRent, $city['slug']));
+			$citySlug = SlugSearch::find()->where(['table' => 'ad_city', 'value' => $city['id']])->one()->slug;
+			$cityTermBulk = array_merge($cityTermBulk, $this->buildTerm($city['id'], $city['id'], $city['name'], $city['name'], $totalSell, $totalRent, $citySlug));
 		}
-		
+
 		$this->batchInsert($indexName, 'city', $cityTermBulk);
 		
 		foreach ($cities as $city) {
@@ -63,13 +65,13 @@ class ElasticController extends Controller {
 				
 				$districtName = $district['pre'] ? trim($district['pre'] . ' ' . $district['name']) : $district['name'];
 				$districtFullName = $districtName . ', ' . $city['name'];
-				$districtSlug = $city['slug'] . '/' . $district['slug'];
+				$districtSlug = SlugSearch::find()->where(['table' => 'ad_district', 'value' => $district['id']])->one()->slug;
 				
 				$districtTermBulk = array_merge($districtTermBulk, $this->buildTerm($district['id'], $city['id'], $districtName, $districtFullName, $totalSell, $totalRent, $districtSlug));
 				
-				$this->buildTermsBelongDistrict('ad_ward', $city['id'], $district['id'], $districtFullName, $indexName, 'ward', $countByWard, $districtSlug, 'w');
-				$this->buildTermsBelongDistrict('ad_street', $city['id'], $district['id'], $districtFullName, $indexName, 'street', $countByStreet, $districtSlug, 's');
-				$this->buildTermsBelongDistrict('ad_building_project', $city['id'], $district['id'], $districtFullName, $indexName, 'project_building', $countByProjectBuilding, $districtSlug, 'p');
+				$this->buildTermsBelongDistrict('ad_ward', $city['id'], $district['id'], $districtFullName, $indexName, 'ward', $countByWard);
+				$this->buildTermsBelongDistrict('ad_street', $city['id'], $district['id'], $districtFullName, $indexName, 'street', $countByStreet);
+				$this->buildTermsBelongDistrict('ad_building_project', $city['id'], $district['id'], $districtFullName, $indexName, 'project_building', $countByProjectBuilding);
 			}
 			
 			$this->batchInsert($indexName, 'district', $districtTermBulk);
@@ -98,7 +100,7 @@ class ElasticController extends Controller {
 		return $query->all();
 	}
 	
-	public function buildTermsBelongDistrict($table, $cityId, $districtId, $districtFullName, $indexName, $type, $counts, $districtSlug, $p) {
+	public function buildTermsBelongDistrict($table, $cityId, $districtId, $districtFullName, $indexName, $type, $counts) {
 		$terms = $this->getAreas($table, ['district_id' => $districtId]);
 		
 		$termBulk = [];
@@ -107,6 +109,7 @@ class ElasticController extends Controller {
 			$name = $term['name'];
 			$name = empty($term['pre']) ? $name : $term['pre'] . ' ' . $name;
 			$fullName = $name . ', ' . $districtFullName;
+			$slug = SlugSearch::find()->where(['table' => $table, 'value' => $term['id']])->one()->slug;
 			
 			if(isset($counts[$term['id']])) {
 				$totalSell = $counts[$term['id']][AdProduct::TYPE_FOR_SELL_TOTAL];
@@ -116,7 +119,7 @@ class ElasticController extends Controller {
 				$totalRent = 0;
 			}
 			
-			$buildTerm = $this->buildTerm($term['id'], $cityId, $name, $fullName, $totalSell, $totalRent, $districtSlug . '/' . $p . '_' . $term['id']);
+			$buildTerm = $this->buildTerm($term['id'], $cityId, $name, $fullName, $totalSell, $totalRent, $slug);
 			
 			$buildTerm[1]['district_id'] = intval($districtId);
 			

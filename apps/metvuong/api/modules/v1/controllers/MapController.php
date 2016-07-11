@@ -17,6 +17,7 @@ class MapController extends Controller {
 		foreach ($result['hits']['hits'] as $k => $hit) {
 			$response[$k]['full_name'] = $hit['_source']['full_name'];
 			$response[$k]['type'] = $hit['_type'];
+			$response[$k]['slug'] = $hit['_source']['slug'];
 			$response[$k]['id'] = $hit['_id'];
 		}
 		
