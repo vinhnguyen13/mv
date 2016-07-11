@@ -183,7 +183,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade in active" id="tab-can-mua">
                                 <?php
-                                $slug = SlugSearch::find()->where(['table' => 'ad_building_project', 'id' => $model->id])->one()->slug;
+                                $slug = SlugSearch::find()->where(['table' => 'ad_building_project', 'value' => $model->id])->one()->slug;
                                 if(!empty($sell_products)) {
                                     ?>
                                     <ul class="clearfix listing-item">
