@@ -13419,6 +13419,9 @@ ul.cardList li {
     }
 }
 @media (max-width: 985px) {
+    .listing-contai {
+        z-index: inherit;
+    }
     .wrap-history {
         position: fixed;
         height: 100%;
