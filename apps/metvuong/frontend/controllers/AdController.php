@@ -316,6 +316,11 @@ class AdController extends Controller
     		}
     	}
     	
+    	if(isset($_GET['building_project_id'])) {
+    		$_GET['project_building_id'] = $_GET['building_project_id'];
+    		unset($_GET['building_project_id']);
+    	}
+    	
     	$mapSearch = new MapSearch();
     	
     	$mapSearch->type = $type;
