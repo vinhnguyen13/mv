@@ -129,7 +129,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                     </div>
                     <div class="text-center mgT-40">
                     	<?php 
-                    		$slug = SlugSearch::find()->where(['table' => 'ad_building_project', 'id' => $model->id])->one()->slug;
+                    		$slug = SlugSearch::find()->where(['table' => 'ad_building_project', 'value' => $model->id])->one()->slug;
                     	?>
                         <a class="btn-common mgR-10" href="<?=Url::to(['ad/index1', 'params'=>$slug])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Buy')?></a>
                         <a class="btn-common" href="<?=Url::to(['ad/index2', 'params'=>$slug])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Rent')?></a>
