@@ -13359,6 +13359,31 @@ ul.cardList li {
 .listing-post-by-project {
     margin-top: 50px;
 }
+.listing-post-by-project .nav-tabs {
+    border-bottom: 2px solid #00a769;
+    margin-bottom: 30px;
+}
+.listing-post-by-project .nav-tabs>li {
+    width: auto;
+}
+.listing-post-by-project .nav-tabs>li>a {
+    padding: 7px 45px;
+    font-weight: 600;
+    font-size: 14px;
+}
+.listing-post-by-project .nav-tabs>li>a:hover,
+.listing-post-by-project .nav-tabs>li.active>a {
+    background: #00a769;
+    color: #fff;
+}
+.listing-post-by-project .tab-content {
+    padding: 0;
+}
+.listing-post-by-project .tab-content .tab-pane {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+}
 .listing-post-by-project .title-list {
     font-size: 20px;
     text-transform: uppercase;
