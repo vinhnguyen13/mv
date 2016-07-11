@@ -13370,6 +13370,7 @@ ul.cardList li {
     padding: 7px 45px;
     font-weight: 600;
     font-size: 14px;
+    border: none;
 }
 .listing-post-by-project .nav-tabs>li>a:hover,
 .listing-post-by-project .nav-tabs>li.active>a {
