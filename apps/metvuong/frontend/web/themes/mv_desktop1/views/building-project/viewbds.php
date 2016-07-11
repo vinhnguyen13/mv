@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
 use yii\web\View;
+use common\models\SlugSearch;
 
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
 
