@@ -12,6 +12,7 @@ use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductRating;
 use vsoft\ad\models\AdProductSaved;
 use frontend\models\UserActivity;
+use vsoft\tracking\models\base\ChartStats;
 use Yii;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
@@ -108,12 +109,13 @@ class Ad extends Component
                     $adSaved->user_id = Yii::$app->user->id;
                     $adSaved->saved_at = $time;
                 }else{
+//                    $saved_at = $adSaved->saved_at;
                     $adSaved->saved_at = !empty($post['stt']) ? time() : 0;
                 }
                 $adSaved->validate();
                 if(!$adSaved->hasErrors()){
-                    $adSaved->save();
                     if(Yii::$app->user->id != $adSaved->product->user_id) {
+                        $adSaved->save();
                         UserActivity::me()->saveActivity(UserActivity::ACTION_AD_FAVORITE, [
                             'owner' => Yii::$app->user->id,
                             'product' => $adSaved->product_id,
@@ -121,10 +123,23 @@ class Ad extends Component
                             'saved_at' => $adSaved->saved_at,
                         ], $adSaved->product_id);
 
-                        // save chart_stats favorite
-                        if($adSaved->saved_at > 0){
-                            Tracking::find()->saveChartStats($adSaved->product_id, date("d-m-Y", $time), 'favorite');
-                        }
+//                         //save chart_stats favorite
+//                        if($adSaved->saved_at > 0)
+//                            Tracking::find()->saveChartStats($adSaved->product_id, date("d-m-Y", $time), 'favorite', 1);
+//                        else {
+//                            // kiem tra product duoc favorite ngay nao va -1 favorite
+//                            $chart_stats_pid = ChartStats::find()->where(['product_id' => $adSaved->product_id, 'date' => date(Chart::DATE_FORMAT, $saved_at)])
+//                                ->andWhere(['>', 'favorite', 0])->orderBy(['created_at' => SORT_DESC])->one();
+//                            if(is_object($chart_stats_pid)) {
+//                                if (count($chart_stats_pid) > 0) {
+//                                    $chart_stats_pid->favorite = $chart_stats_pid->favorite - 1;
+//                                    $chart_stats_pid->save();
+//                                }
+//                            } else {
+//                                Tracking::syncFavorite($adSaved->product_id);
+//                            }
+////                            Tracking::find()->saveChartStats($adSaved->product_id, date("d-m-Y", $time), 'favorite', 0);
+//                        }
                     }
                 }
                 return ['statusCode'=>200, 'parameters'=>['msg'=>Yii::$app->session->getFlash('notify_other')]];
@@ -210,6 +225,19 @@ class Ad extends Component
         $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
         $query->groupBy('ad_product.id');
         $products = $query->orderBy(['ad_product.score'=>SORT_DESC])->limit(6)->all();
+        return $products;
+    }
+
+    public function listingOfBuilding($building_id, $type){
+        $query = AdProductSearch::find();
+        $query->select('ad_product.id, ad_product.updated_at, ad_product.show_home_no, ad_product.home_no, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.street_id, ad_product.lat, ad_product.lng,
+			ad_product.price, ad_product.area, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no, ad_product.created_at, ad_product.category_id, ad_product.type, ad_images.file_name,
+			 ad_images.folder');
+        $query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
+        $query->andWhere('ad_product.type = '.$type.' AND ad_product.project_building_id = '.$building_id);
+        $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
+        $query->groupBy('ad_product.id');
+        $products = $query->orderBy(['ad_product.updated_at'=>SORT_DESC])->limit(4)->all();
         return $products;
     }
 }

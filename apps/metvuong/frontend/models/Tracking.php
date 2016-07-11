@@ -257,26 +257,26 @@ class Tracking extends Component
         return $sysEmail->save();
     }
 
-    public function saveChartStats($pid, $date, $view)
+    public function saveChartStats($pid, $date, $view, $no=1)
     {
         $chart_stats = ChartStats::find()->where(['product_id' => (int)$pid, 'date' => $date])->one();
         if(count($chart_stats) > 0){
             $chart_stats->created_at = strtotime($date);
             switch($view){
                 case 'search':
-                    $chart_stats->search = $chart_stats->search + 1;
+                    $chart_stats->search = $chart_stats->search + $no;
                     $chart_stats->save();
                     break;
                 case 'visit':
-                    $chart_stats->visit = $chart_stats->visit + 1;
+                    $chart_stats->visit = $chart_stats->visit + $no;
                     $chart_stats->save();
                     break;
                 case 'favorite':
-                    $chart_stats->favorite = $chart_stats->favorite + 1;
+                    $chart_stats->favorite = $chart_stats->favorite + $no;
                     $chart_stats->save();
                     break;
                 case 'share':
-                    $chart_stats->share = $chart_stats->share + 1;
+                    $chart_stats->share = $chart_stats->share + $no;
                     $chart_stats->save();
                     break;
                 default:
@@ -289,14 +289,14 @@ class Tracking extends Component
             $chart_stats->created_at = strtotime($date);
             switch($view){
                 case 'search':
-                    $chart_stats->search = 1;
+                    $chart_stats->search = $no;
                     $chart_stats->visit = 0;
                     $chart_stats->share = 0;
                     $chart_stats->save();
                     break;
                 case 'visit':
                     $chart_stats->search = 0;
-                    $chart_stats->visit = 1;
+                    $chart_stats->visit = $no;
                     $chart_stats->share = 0;
                     $chart_stats->save();
                     break;
@@ -304,13 +304,13 @@ class Tracking extends Component
                     $chart_stats->search = 0;
                     $chart_stats->visit = 0;
                     $chart_stats->share = 0;
-                    $chart_stats->favorite = 1;
+                    $chart_stats->favorite = $no;
                     $chart_stats->save();
                     break;
                 case 'share':
                     $chart_stats->search = 0;
                     $chart_stats->visit = 0;
-                    $chart_stats->share = 1;
+                    $chart_stats->share = $no;
                     $chart_stats->save();
                     break;
                 default:
@@ -318,6 +318,53 @@ class Tracking extends Component
             }
 
         }
+    }
+
+    public static function syncFavorite($pid){
+        $date_range = array();
+        $adProSaveds = AdProductSaved::find()->where(['product_id'=>(int)$pid])->orderBy(['saved_at' => SORT_ASC])->asArray()->all();
+        if(count($adProSaveds) > 0) {
+            foreach ($adProSaveds as $ads) {
+                $saved_at = (int)$ads['saved_at'];
+                $date = date(Chart::DATE_FORMAT, $saved_at);
+                if($saved_at == 0)
+                    $date = date(Chart::DATE_FORMAT, time());
+
+                if (array_key_exists($date, $date_range)) {
+                    $in = $date_range[$date];
+                    $date_range[$date] = $in + 1;
+                }
+                else {
+                    $date_range[$date] = ($saved_at == 0 ? 0 : 1);
+                }
+            }
+        }
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            if(count($date_range) > 0){
+                foreach ($date_range as $key => $val) {
+                    $chart_stats = ChartStats::find()->where(['product_id' => (int)$pid, 'date' => $key])->one();
+                    if(is_object($chart_stats) && count($chart_stats) > 0) {
+                        $chart_stats->favorite = $val;
+                        $chart_stats->save();
+                    } else {
+                        $chart_stats = new ChartStats();
+                        $chart_stats->date = $key;
+                        $chart_stats->product_id = (int)$pid;
+                        $chart_stats->created_at = strtotime($key);
+                        $chart_stats->favorite = $val;
+                        $chart_stats->save();
+                    }
+                }
+            }
+            $transaction->commit();
+            return 'synchronized';
+
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
+        }
+        return 'failed';
     }
 
 }

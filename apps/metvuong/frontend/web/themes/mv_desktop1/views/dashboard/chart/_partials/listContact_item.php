@@ -21,7 +21,7 @@ if($count_data > 0) {
         $_id = $view=='saved' ? $val['saved_at'] : $val['_id']->{'$id'};
         ?>
         <li class="<?=$_id?>">
-            <a href="#popup-user-inter">
+            <a href="<?=\yii\helpers\Url::to(['member/profile','username' => $username], true)?>" title="<?=$username?>">
                 <img src="<?=$avatar ?>" alt="<?=$username?>"><?=$username?>
             </a>
 

@@ -1254,11 +1254,11 @@ label {
     text-align: center;
     padding: 7px 0;
     font-size: 15px;
-    position: relative;
+    /* position: relative; */
     /* top: 39px; */
     /* left: 0; */
     width: 100%;
-    z-index: 100;
+    /* z-index: 100; */
     border-bottom: solid 0.5px #DADADA;
     background: #fff;
     text-transform: uppercase;
@@ -13359,6 +13359,32 @@ ul.cardList li {
 .listing-post-by-project {
     margin-top: 50px;
 }
+.listing-post-by-project .nav-tabs {
+    border-bottom: 2px solid #00a769;
+    margin-bottom: 30px;
+}
+.listing-post-by-project .nav-tabs>li {
+    width: auto;
+}
+.listing-post-by-project .nav-tabs>li>a {
+    padding: 7px 45px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+}
+.listing-post-by-project .nav-tabs>li>a:hover,
+.listing-post-by-project .nav-tabs>li.active>a {
+    background: #00a769;
+    color: #fff;
+}
+.listing-post-by-project .tab-content {
+    padding: 0;
+}
+.listing-post-by-project .tab-content .tab-pane {
+    box-shadow: none;
+    border: none;
+    padding: 0;
+}
 .listing-post-by-project .title-list {
     font-size: 20px;
     text-transform: uppercase;
@@ -13393,6 +13419,9 @@ ul.cardList li {
     }
 }
 @media (max-width: 985px) {
+    .listing-contai {
+        z-index: inherit;
+    }
     .wrap-history {
         position: fixed;
         height: 100%;

@@ -176,11 +176,7 @@ class DashboardController extends Controller
         $to = $dateTo->getTimestamp();
 
         $dateRange = Util::me()->dateRange($from, $to, '+1 day', Chart::DATE_FORMAT);
-        $query = new Query;
-        $query->from(ChartStats::collectionName())
-            ->where(['product_id' => $id])
-            ->andWhere(['IN', 'date', $dateRange]);
-        $chart_stats = $query->orderBy('created_at')->all();
+        $chart_stats = Chart::find()->getChartStats($id, $dateRange);
 
         $finders = null;
         $visitors = null;
@@ -587,4 +583,9 @@ class DashboardController extends Controller
             return $this->render('favorite/index');
         }
     }
+
+    public function actionSyncFavorite($pid){
+        return Tracking::syncFavorite($pid);
+    }
+
 }

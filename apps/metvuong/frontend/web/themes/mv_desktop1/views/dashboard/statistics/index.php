@@ -91,7 +91,84 @@ $data = [$finders, $visitors, $favorites, $shares];
                 </div>
             </div>
             <div class="bottom-popup">
-                <p class="push-price fs-13 text-right font-600"><span class="d-ib lh-100"><?=Yii::t('chart', 'Để tin đạt hiệu quả hơn vui lòng click vào đây')?></span> <a href="#" data-toggle="modal" data-target="#upgrade-time" data-product="79110" class="btn-nang-cap btn-up mgL-10"><?= Yii::t('statistic', 'Up') ?></a></p>
+                <p class="push-price fs-13 text-right font-600"><span class="d-ib lh-100"><?=Yii::t('chart', 'Để tin đạt hiệu quả hơn vui lòng click vào đây')?></span> <a href="#" data-toggle="modal" data-target="#update-boost" data-product="<?=$id?>" class="btn-nang-cap mgL-10 btn-boost"><?= Yii::t('statistic', 'Up') ?></a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="charge" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wrap-popup">
+                    <div class="title-popup">
+                        <?=Yii::t('listing', 'Thông báo')?>
+                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                    </div>
+                    <div class="inner-popup">
+                        <div><?= Yii::t('listing', 'Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.') ?></div>
+                    </div>
+                    <div class="bottom-popup">
+                        <div class="text-right">
+                            <a href="#" class="btn-cancel btn close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing', 'Cancel')?></a>
+                            <a href="<?= Url::to(['/payment/index', 'redirect' => Url::current()]) ?>" class="btn-common btn"><?=Yii::t('listing', 'Nạp keys')?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="update-boost" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-href="<?= Url::to(['/ad/boost']) ?>">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wrap-popup">
+                    <div class="title-popup">
+                        <?=Yii::t('listing', 'Boost listing')?>
+                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                    </div>
+                    <div class="inner-popup">
+                        <form id="boostListing">
+                            <span class="charge hide"><?= AdProduct::CHARGE_BOOST_3 ?></span>
+                            <style>.inner-popup {font-size: 14px;} .modal .hint {font-weight: 600;} .show-key {margin: 12px 0px 0px 12px;} .show-key li:first-child {margin-bottom: 6px;} .strong {font-size: 15px; font-weight: 700; color: #000;}</style>
+                            <div class="hint" style="margin-bottom: 8px;"><?= Yii::t('listing', 'Choose how long you want your promotion to run')?></div>
+                            <div class="clearfix mgB-15">
+                                <ul class="days-up">
+                                    <li>
+                                        <label class="radio-inline radio-ui active">
+                                            <input type="radio" name="upgrade-time" id="" value="7" checked="checked"> <?= sprintf(Yii::t("", "%s ngày (%s keys)"), '<span class="day">3</span>', '<span class="key">' . AdProduct::CHARGE_BOOST_3 . '</span>') ?>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label class="radio-inline radio-ui">
+                                            <input type="radio" name="upgrade-time" id="" value="1"> <?= sprintf(Yii::t("", "%s ngày (%s keys)"), '<span class="day">1</span>', '<span class="key">' . AdProduct::CHARGE_BOOST_1 . '</span>') ?>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="date-select mgB-15" style="display: none;">
+                                <?=Yii::t('listing', 'Run this ad until')?>
+                                <div class="wrap-calen">
+                                    <span class="icon-mv"><span class="icon-calendar"></span></span>
+                                    <input type="text" class="date-picker" readonly='true' />
+                                </div>
+                            </div>
+                            <ul class="show-key">
+                                <li><?= sprintf(Yii::t("ad", "Số keys hiện tại: %s keys"), '<strong class="current-key strong"></strong>') ?></li>
+                                <li><?= sprintf(Yii::t("ad", "Số keys sau khi boost: %s keys"), '<strong class="after-key strong"></strong>') ?></li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="bottom-popup">
+                        <div class="text-right">
+                            <a href="#" class="btn-cancel btn close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing', 'Cancel')?></a>
+                            <a href="<?= Url::to(['/ad/boost']) ?>" class="btn-common btn btn-boost-listing"><?=Yii::t('listing', 'Boost')?></a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -149,6 +226,80 @@ echo $this->renderAjax('/ad/_partials/shareEmail',[
                 window.location = goto;
             }
         });
+
+
+        $('.popup-common').appendTo('body');
+
+        function showKey(popup, e, self) {
+            var currentKey = balance.get();
+            var charge = Number(popup.find('.charge').text());
+
+            if(currentKey < charge) {
+                $('#charge').modal('toggle');
+
+                e.preventDefault();
+                e.stopPropagation();
+            } else {
+                popup.find('.current-key').text(currentKey);
+                popup.find('.after-key').text(currentKey - charge);
+
+                popup.find('.btn-common').data('id', self.data('product'));
+            }
+        }
+
+        $(document).on('click', '.btn-active, .btn-expired, .btn-boost', function(e){
+            var self = $(this);
+            showKey($(self.data('target')), e, self);
+        });
+
+        $('.btn-active-listing, .btn-update-expired, .btn-boost-listing').click(function(e){
+            e.preventDefault();
+
+            $('body').loading();
+
+            var self = $(this);
+            var id = self.data('id');
+            var get = {id: id};
+
+            if(self.hasClass('btn-boost-listing')) {
+                var closest = $('.days-up').find('input:checked').closest('.radio-ui');
+                var day = Number(closest.find('.day').text());
+
+                get.day = day;
+            }
+
+            $.get(self.attr('href'), get, function(r){
+                $('body').loading({done: true});
+
+                if(r.success) {
+                    $('#p-' + id).replaceWith(r.template);
+
+                    balance.update(r.amount);
+                } else {
+                    $('#notify-text').text(r.message);
+                    $('#notify').modal().show();
+                }
+
+                $('#' + self.closest('.popup-common').attr('id')).modal('hide');
+            });
+        });
+
+        $('#update-boost').on('hidden.bs.modal', function () {
+            $(this).find('.radio-ui').eq(0).trigger('click');
+        });
+
+        $(document).trigger('boost/form_process', [1, true]);
+
+        $('.days-up li .radio-ui').radio({
+            done: function (item) {
+                var charge = Number($(item).closest('.radio-ui').find('.key').text());
+                var boostL = $('#boostListing');
+
+                boostL.find('.charge').text(charge);
+                boostL.find('.after-key').text(balance.get() - charge);
+            }
+        });
+
     });
 
 </script>

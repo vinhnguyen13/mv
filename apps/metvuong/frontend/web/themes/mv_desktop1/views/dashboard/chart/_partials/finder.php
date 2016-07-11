@@ -48,7 +48,7 @@ Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js',
                         }
                         else {
                             if(this.y > 0)
-                                tooltip = '<a href="#"><b class="chart_result" onclick="clickTooltip(\''+this.point.url+'\')">' + this.y + ' <?=Yii::t('chart','user')?> </b></a><br/>';
+                                tooltip = '<a href="#"><b class="chart_result" onclick="clickTooltip(\''+this.point.url+'&total='+this.y+'\')">' + this.y + ' <?=Yii::t('chart','user')?> </b></a><br/>';
                             else
                                 tooltip = '<b class="chart_result">' + this.y + ' <?=Yii::t('chart','user')?></b><br/>';
                         }

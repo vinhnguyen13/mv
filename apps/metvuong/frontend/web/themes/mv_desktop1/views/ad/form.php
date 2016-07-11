@@ -133,7 +133,7 @@ use vsoft\ad\models\AdImages;
 									<span class="icon-mv"><span class="icon-close-icon"></span></span>
 									<?php endif; ?>
 									<div id="search-list" class="hide">
-										<span class="search-hint">Nhập tên dự án và chọn từ gợi ý dưới đây</span>
+										<span class="search-hint"><?= Yii::t('ad', 'Nhập tên dự án và chọn từ gợi ý dưới đây') ?></span>
 										<ul></ul>
 									</div>
 								</div>
@@ -169,7 +169,7 @@ use vsoft\ad\models\AdImages;
 									<div class="help-block"></div>
 								</div>
 								<div class="form-group col-xs-12 col-sm-6 fild-address"<?= in_array($product->category_id, AdCategory::$landType) ? ' style="display: none;"' : '' ?>>
-									<label for="<?= Html::getInputId($product, 'home_no') ?>" class="fs-13 mgB-5"><?= $product->getAttributeLabel('home_no') ?><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">4</span>') ?></span></label>
+									<label for="<?= Html::getInputId($product, 'home_no') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('home_no') ?></span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">4</span>') ?></span></label>
 									<?= Html::activeTextInput($product, 'home_no', ['class' => 'form-control', 'placeholder' => '...', 'disabled' => $disabledHome]) ?>
 									<label class="checkbox-inline fs-13 checkbox-ui">
 										<?= Html::activeCheckbox($product, 'show_home_no', ['label' => false, 'disabled' => $disabledHome ]) ?>

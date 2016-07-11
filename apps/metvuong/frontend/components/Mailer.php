@@ -220,12 +220,12 @@ class Mailer extends Component
     {
         try {
             /** @var \yii\mail\BaseMailer $mailer */
-            $mailer = Yii::$app->mailer;
+            $mailer = new \common\components\Mailer();
             $mailer->viewPath = $this->viewPath;
             $mailer->getView()->theme = Yii::$app->view->theme;
 
             if ($this->sender === null) {
-                $this->sender = isset(Yii::$app->params['adminEmail']) ? Yii::$app->params['adminEmail'] : 'no-reply@example.com';
+                $this->sender = isset(Yii::$app->params['noreplyEmail']) ? Yii::$app->params['noreplyEmail'] : 'no-reply@example.com';
             }
 
             return $mailer->compose(['html' => $view, 'text' => 'text/' . $view], $params)

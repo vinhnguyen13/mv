@@ -834,8 +834,9 @@ class AdController extends Controller
                 // send to
 //                $subjectEmail = "Metvuong.com - {$from_name} {$type_email} tin {$model->pid}";
                 $subjectEmail = "Có Người Muốn {$type_email} {$category} của bạn ở {$address}";
-                $result = Yii::$app->mailer->compose(['html' => "../mail/vi-VN/product_share_contact"], ['contact' => $model, 'profile_url' => $profile_url, 'token_url' => $token_url])
-                ->setFrom(Yii::$app->params['adminEmail'])
+				$mailer = new \common\components\Mailer();
+                $result = $mailer->compose(['html' => "../mail/vi-VN/product_share_contact"], ['contact' => $model, 'profile_url' => $profile_url, 'token_url' => $token_url])
+                ->setFrom(Yii::$app->params['noreplyEmail'])
                 ->setTo([trim($model->recipient_email)])
                 ->setSubject($subjectEmail)
                 ->send();
