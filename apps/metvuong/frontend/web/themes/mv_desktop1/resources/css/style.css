@@ -4129,9 +4129,6 @@ html.mm-opening .mm-slideout {
      /*fix firefox*/
 }
 #listing-list .info-item .list-attr-td {
-    /* display: inline-block; */
-    /* vertical-align: middle; */
-    margin-bottom: 0;
     padding-top: 0;
     float: left;
 }
@@ -4162,7 +4159,6 @@ html.mm-opening .mm-slideout {
     /* vertical-align: middle; */
     margin-right: 10px;
     /* float: none; */
-    margin-bottom: 0;
     padding: 0 0 0 0;
 }
 .right-attr-detail {
@@ -13265,6 +13261,7 @@ ul.cardList li {
     opacity: .6;
     cursor: pointer;
     color: #fff;
+    background: rgba(0, 0, 0, 0.31);
 }
 .dele-favori:hover {
     opacity: 1;
@@ -13787,7 +13784,6 @@ ul.cardList li {
     margin-bottom: 8px;
 }
 #listing-list .price-attr {
-    margin-bottom: 5px;
 }
 
 .wrap-listing-item {
