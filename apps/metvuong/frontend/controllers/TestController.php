@@ -26,7 +26,6 @@ class TestController extends \yii\web\Controller
     {
         $user = User::findOne(1);
         $mailer = new Mailer();
-        
         $chk = $mailer->sendWelcomeMessage($user, null, true);
         echo "<pre>";
         print_r($chk);

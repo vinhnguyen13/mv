@@ -29,9 +29,7 @@ class Chat extends Component
         if (!Yii::$app->user->isGuest) {
             $user_id = $this->getJid(Yii::$app->user->identity->username);
             $db = Yii::$app->getDb();
-            $tigUser = $db->cache(function() use ($user_id){
-                return TigUsers::findOne(['user_id'=>$user_id]);
-            });
+            $tigUser = TigUsers::findOne(['user_id'=>$user_id]);
             if(empty($tigUser)){
                 $tigUser = new TigUsers();
                 $tigUser->user_id = $user_id;

@@ -207,7 +207,7 @@ $(document).ready(function() {
     	var id = parentLi.data('id');
     	var val = parentLi.find('span').text();
     	var type = parentLi.data('type');
-    	var searchHistory = getCookie('sh');
+    	var searchHistory = getCookie('sh1');
 		var listSearch = searchHistory ? JSON.parse(searchHistory) : [];
 		var isExist = false;
 		
@@ -227,10 +227,12 @@ $(document).ready(function() {
 				listSearch.pop();
 			}
 			
-			listSearch.unshift({v: encodeURIComponent(val), i: id, t: type});
+			var slug = $(this).attr('href').split('/')[2];
+			
+			listSearch.unshift({v: encodeURIComponent(val), i: id, t: type, s: slug});
 		}
 		
-		setCookie('sh', JSON.stringify(listSearch));
+		setCookie('sh1', JSON.stringify(listSearch));
     });
 
     $('.suggest-search .content-suggest .btn-close').on('click', function (e) {

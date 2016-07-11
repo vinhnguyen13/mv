@@ -53,4 +53,25 @@ class AdDistrict extends AD
 		
 		return $items;
 	}
+	
+	public static function getListSlugByCity($cityId) {
+		$items = [];
+		
+		if($cityId) {
+			$districts = self::find()->orderBy('name')->where('`city_id` = :city_id', [':city_id' => $cityId])->all();
+
+			usort($districts, function($a, $b) {
+				return strnatcmp($a['name'], $b['name']);
+			});
+			
+			foreach($districts as $district) {
+				$items[] = [
+					'slug' => $district['slug'],
+					'name' => $district['pre'] ? "{$district['pre']} {$district['name']}" : $district['name']
+				];
+			}
+		}
+		
+		return $items;
+	}
 }

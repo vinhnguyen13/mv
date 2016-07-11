@@ -1,6 +1,7 @@
 <?php
 use yii\helpers\Url;
 use yii\web\View;
+use common\models\SlugSearch;
 
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
 
@@ -182,13 +183,14 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade in active" id="tab-can-mua">
                                 <?php
+                                $slug = SlugSearch::find()->where(['table' => 'ad_building_project', 'value' => $model->id])->one()->slug;
                                 if(!empty($sell_products)) {
                                     ?>
                                     <ul class="clearfix listing-item">
                                         <?=$this->render('/ad/_partials/list', ['products' => $sell_products]);?>
                                     </ul>
                                     <div class="text-center">
-                                        <a href="<?= Url::to(['/ad/index1', 'project_building_id'=>$model->id]) ?>" class="btn-common btn-view-more"><?=Yii::t('general', 'View more')?></a>
+                                        <a href="<?= Url::to(['/ad/index1', 'params'=>$slug]) ?>" class="btn-common btn-view-more"><?=Yii::t('general', 'View more')?></a>
                                     </div>
                                     <?php
                                 }else {
@@ -210,7 +212,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                         <?=$this->render('/ad/_partials/list', ['products' => $rent_products]);?>
                                     </ul>
                                     <div class="text-center">
-                                        <a href="<?= Url::to(['/ad/index2', 'project_building_id'=>$model->id]) ?>" class="btn-common btn-view-more"><?=Yii::t('general', 'View more')?></a>
+                                        <a href="<?= Url::to(['/ad/index2', 'params'=>$slug]) ?>" class="btn-common btn-view-more"><?=Yii::t('general', 'View more')?></a>
                                     </div>
                                 <?php
                                 }else {

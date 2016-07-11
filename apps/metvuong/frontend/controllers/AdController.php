@@ -47,6 +47,7 @@ use frontend\models\Transaction;
 use frontend\models\NganLuong;
 use vsoft\ad\models\AdProductAutoSave;
 use vsoft\ad\models\AdProductAutoSaveImages;
+use common\models\SlugSearch;
 
 class AdController extends Controller
 {
@@ -287,6 +288,39 @@ class AdController extends Controller
     }
     
     public function listing($type) {
+    	$params = array_filter(explode('/', Yii::$app->request->get('params', MapSearch::$defaultSlug)));
+    	
+    	if(strpos($params[0], '_') !== FALSE) {
+    		array_unshift($params, MapSearch::$defaultSlug);
+    	}
+    	
+    	$slug = array_shift($params);
+    	$slugSearch = SlugSearch::findOne(['slug' => $slug]);
+    	
+    	if(!$slugSearch) {
+    		throw new \yii\web\NotFoundHttpException();
+    	}
+    	
+    	$keyId = str_replace("ad_", "", $slugSearch->table) . "_id";
+    	if(!isset($_GET[$keyId])) {
+    		$_GET[$keyId] = $slugSearch->value;
+    	}
+    	
+    	$fieldsMapping = MapSearch::$fieldsMapping;
+    	
+    	foreach ($params as $param) {
+    		$pos = strpos($param, '_');
+    		$fmKey = substr($param, 0, $pos);
+    		if(isset($fieldsMapping[$fmKey]) && !isset($_GET[$fieldsMapping[$fmKey]])) {
+    			$_GET[$fieldsMapping[$fmKey]] = substr($param, $pos + 1);
+    		}
+    	}
+    	
+    	if(isset($_GET['building_project_id'])) {
+    		$_GET['project_building_id'] = $_GET['building_project_id'];
+    		unset($_GET['building_project_id']);
+    	}
+    	
     	$mapSearch = new MapSearch();
     	
     	$mapSearch->type = $type;
@@ -317,7 +351,7 @@ class AdController extends Controller
     		 
 		$mapSearch->fetchValues();
     		 
-		return $this->render('index', ['searchModel' => $mapSearch, 'list' => $list]);
+		return $this->render('index', ['searchModel' => $mapSearch, 'list' => $list, 'slug' => $slug]);
     }
     
     public function actionSavedListing() {
