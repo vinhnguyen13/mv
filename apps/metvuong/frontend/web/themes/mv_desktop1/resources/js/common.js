@@ -207,7 +207,7 @@ $(document).ready(function() {
     	var id = parentLi.data('id');
     	var val = parentLi.find('span').text();
     	var type = parentLi.data('type');
-    	var searchHistory = getCookie('sh');
+    	var searchHistory = getCookie('sh1');
 		var listSearch = searchHistory ? JSON.parse(searchHistory) : [];
 		var isExist = false;
 		
