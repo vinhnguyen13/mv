@@ -227,4 +227,17 @@ class Ad extends Component
         $products = $query->orderBy(['ad_product.score'=>SORT_DESC])->limit(6)->all();
         return $products;
     }
+
+    public function listingOfBuilding($building_id, $type){
+        $query = AdProductSearch::find();
+        $query->select('ad_product.id, ad_product.updated_at, ad_product.show_home_no, ad_product.home_no, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.street_id, ad_product.lat, ad_product.lng,
+			ad_product.price, ad_product.area, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no, ad_product.created_at, ad_product.category_id, ad_product.type, ad_images.file_name,
+			 ad_images.folder');
+        $query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
+        $query->andWhere('ad_product.type = '.$type.' AND ad_product.project_building_id = '.$building_id);
+        $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
+        $query->groupBy('ad_product.id');
+        $products = $query->orderBy(['ad_product.updated_at'=>SORT_DESC])->limit(4)->all();
+        return $products;
+    }
 }

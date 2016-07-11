@@ -165,201 +165,64 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                         <a class="btn-common" href="<?=Url::to(['ad/index2', 'project_building_id'=>$model->id])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Rent')?></a>
                     </div> -->
                     <div class="listing-post-by-project">
+                        <?php
+                        $categoriesDb = \vsoft\ad\models\AdCategory::getDb();
+                        $categories = $categoriesDb->cache(function($categoriesDb){
+                            return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
+                        });
+                        $types = \vsoft\ad\models\AdProduct::getAdTypes();
+                        $sell_products = \frontend\models\Ad::find()->listingOfBuilding($model->id, \vsoft\ad\models\AdProduct::TYPE_FOR_SELL);
+                        $rent_products = \frontend\models\Ad::find()->listingOfBuilding($model->id, \vsoft\ad\models\AdProduct::TYPE_FOR_RENT);
+                        ?>
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#tab-can-mua" aria-controls="home" role="tab" data-toggle="tab">Cần mua</a></li>
-                            <li role="presentation"><a href="#tab-can-thue" aria-controls="home" role="tab" data-toggle="tab">Cần thuê</a></li>
+                            <li role="presentation" class="active"><a href="#tab-can-mua" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('ad', 'For Sell')?></a></li>
+                            <li role="presentation"><a href="#tab-can-thue" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('ad', 'For Rent')?></a></li>
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane fade in active" id="tab-can-mua">
-                                <ul class="clearfix listing-item">
-                                    <li class="col-xs-12 col-sm-6 col-lg-4">
-                                        <div class="item">
-                                            <a class="clearfix" href="#" title="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh">
-                                                <div class="pic-intro">
-                                                    <img alt="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh" src="http://file4.batdongsan.com.vn/resize/350x280/2016/03/27/20160327100308-658c.jpg">
-                                                </div>
-                                                <div class="info-item clearfix">
-                                                    <div class="address-listing">
-                                                        <p>Phường Tân Phong, Quận 7, Hồ Chí Minh aaaaaaaaaaaa</p>
-                                                    </div>
-                                                    <p class="infor-by-up">
-                                                        <strong>Căn hộ chung cư cho thuê</strong>
-                                                    </p>
-                                                    <p class="id-duan">Mã tin:<span>MV24704</span></p>
-                                                    <ul class="clearfix list-attr-td">
-                                                        <li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>100m<sup>2</sup> </li><li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 </li><li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 </li>                </ul>
-                                                    <p class="price-item">23 <span class="txt-unit">triệu</span> <span class="txt-unit">VNĐ</span></p>
-                                                    <p class="date-post">đăng 68 ngày trước<span class="pull-right">Điểm: 95</span></p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li class="col-xs-12 col-sm-6 col-lg-4">
-                                        <div class="item">
-                                            <a class="clearfix" href="#" title="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh">
-                                                <div class="pic-intro">
-                                                    <img alt="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh" src="http://file4.batdongsan.com.vn/resize/350x280/2016/03/27/20160327100308-658c.jpg">
-                                                </div>
-                                                <div class="info-item clearfix">
-                                                    <div class="address-listing">
-                                                        <p>Phường Tân Phong, Quận 7, Hồ Chí Minh</p>
-                                                    </div>
-                                                    <p class="infor-by-up">
-                                                        <strong>Căn hộ chung cư cho thuê</strong>
-                                                    </p>
-                                                    <p class="id-duan">Mã tin:<span>MV24704</span></p>
-                                                    <ul class="clearfix list-attr-td">
-                                                        <li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>100m<sup>2</sup> </li><li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 </li><li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 </li>                </ul>
-                                                    <p class="price-item">23 <span class="txt-unit">triệu</span> <span class="txt-unit">VNĐ</span></p>
-                                                    <p class="date-post">đăng 68 ngày trước<span class="pull-right">Điểm: 95</span></p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li class="col-xs-12 col-sm-6 col-lg-4">
-                                        <div class="item">
-                                            <a class="clearfix" href="#" title="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh">
-                                                <div class="pic-intro">
-                                                    <img alt="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh" src="http://file4.batdongsan.com.vn/resize/350x280/2016/03/27/20160327100308-658c.jpg">
-                                                </div>
-                                                <div class="info-item clearfix">
-                                                    <div class="address-listing">
-                                                        <p>Phường Tân Phong, Quận 7, Hồ Chí Minh</p>
-                                                    </div>
-                                                    <p class="infor-by-up">
-                                                        <strong>Căn hộ chung cư cho thuê</strong>
-                                                    </p>
-                                                    <p class="id-duan">Mã tin:<span>MV24704</span></p>
-                                                    <ul class="clearfix list-attr-td">
-                                                        <li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>100m<sup>2</sup> </li><li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 </li><li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 </li>                </ul>
-                                                    <p class="price-item">23 <span class="txt-unit">triệu</span> <span class="txt-unit">VNĐ</span></p>
-                                                    <p class="date-post">đăng 68 ngày trước<span class="pull-right">Điểm: 95</span></p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li class="col-xs-12 col-sm-6 col-lg-4">
-                                        <div class="item">
-                                            <a class="clearfix" href="#" title="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh">
-                                                <div class="pic-intro">
-                                                    <img alt="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh" src="http://file4.batdongsan.com.vn/resize/350x280/2016/03/27/20160327100308-658c.jpg">
-                                                </div>
-                                                <div class="info-item clearfix">
-                                                    <div class="address-listing">
-                                                        <p>Phường Tân Phong, Quận 7, Hồ Chí Minh</p>
-                                                    </div>
-                                                    <p class="infor-by-up">
-                                                        <strong>Căn hộ chung cư cho thuê</strong>
-                                                    </p>
-                                                    <p class="id-duan">Mã tin:<span>MV24704</span></p>
-                                                    <ul class="clearfix list-attr-td">
-                                                        <li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>100m<sup>2</sup> </li><li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 </li><li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 </li>                </ul>
-                                                    <p class="price-item">23 <span class="txt-unit">triệu</span> <span class="txt-unit">VNĐ</span></p>
-                                                    <p class="date-post">đăng 68 ngày trước<span class="pull-right">Điểm: 95</span></p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="text-center">
-                                    <a href="" class="btn-common btn-view-more">Xem thêm</a>
-                                </div>
+                                <?php
+                                if(!empty($sell_products)) {
+                                    ?>
+                                    <ul class="clearfix listing-item">
+                                        <?=$this->render('/ad/_partials/list', ['products' => $sell_products]);?>
+                                    </ul>
+                                    <div class="text-center">
+                                        <a href="<?= Url::to(['/ad/index1', 'project_building_id'=>$model->id]) ?>" class="btn-common btn-view-more"><?=Yii::t('general', 'View more')?></a>
+                                    </div>
+                                    <?php
+                                }else {
+                                    ?>
+                                    <ul class="clearfix listing-item">
+                                        <li class="col-xs-12 col-sm-6 col-lg-4">
+                                            <?=Yii::t('common', '{object} no data', ['object'=>Yii::t('ad', 'For Sell')])?>
+                                        </li>
+                                    </ul>
+                                    <?php
+                                }
+                                ?>
                             </div>
                             <div role="tabpanel" class="tab-pane fade in" id="tab-can-thue">
-                                <ul class="clearfix listing-item">
-                                    <li class="col-xs-12 col-sm-6 col-lg-4">
-                                        <div class="item">
-                                            <a class="clearfix" href="#" title="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh">
-                                                <div class="pic-intro">
-                                                    <img alt="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh" src="http://file4.batdongsan.com.vn/resize/350x280/2016/03/27/20160327100308-658c.jpg">
-                                                </div>
-                                                <div class="info-item clearfix">
-                                                    <div class="address-listing">
-                                                        <p>Phường Tân Phong, Quận 7, Hồ Chí Minh</p>
-                                                    </div>
-                                                    <p class="infor-by-up">
-                                                        <strong>Căn hộ chung cư cho thuê</strong>
-                                                    </p>
-                                                    <p class="id-duan">Mã tin:<span>MV24704</span></p>
-                                                    <ul class="clearfix list-attr-td">
-                                                        <li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>100m<sup>2</sup> </li><li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 </li><li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 </li>                </ul>
-                                                    <p class="price-item">23 <span class="txt-unit">triệu</span> <span class="txt-unit">VNĐ</span></p>
-                                                    <p class="date-post">đăng 68 ngày trước<span class="pull-right">Điểm: 95</span></p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li class="col-xs-12 col-sm-6 col-lg-4">
-                                        <div class="item">
-                                            <a class="clearfix" href="#" title="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh">
-                                                <div class="pic-intro">
-                                                    <img alt="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh" src="http://file4.batdongsan.com.vn/resize/350x280/2016/03/27/20160327100308-658c.jpg">
-                                                </div>
-                                                <div class="info-item clearfix">
-                                                    <div class="address-listing">
-                                                        <p>Phường Tân Phong, Quận 7, Hồ Chí Minh</p>
-                                                    </div>
-                                                    <p class="infor-by-up">
-                                                        <strong>Căn hộ chung cư cho thuê</strong>
-                                                    </p>
-                                                    <p class="id-duan">Mã tin:<span>MV24704</span></p>
-                                                    <ul class="clearfix list-attr-td">
-                                                        <li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>100m<sup>2</sup> </li><li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 </li><li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 </li>                </ul>
-                                                    <p class="price-item">23 <span class="txt-unit">triệu</span> <span class="txt-unit">VNĐ</span></p>
-                                                    <p class="date-post">đăng 68 ngày trước<span class="pull-right">Điểm: 95</span></p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li class="col-xs-12 col-sm-6 col-lg-4">
-                                        <div class="item">
-                                            <a class="clearfix" href="#" title="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh">
-                                                <div class="pic-intro">
-                                                    <img alt="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh" src="http://file4.batdongsan.com.vn/resize/350x280/2016/03/27/20160327100308-658c.jpg">
-                                                </div>
-                                                <div class="info-item clearfix">
-                                                    <div class="address-listing">
-                                                        <p>Phường Tân Phong, Quận 7, Hồ Chí Minh</p>
-                                                    </div>
-                                                    <p class="infor-by-up">
-                                                        <strong>Căn hộ chung cư cho thuê</strong>
-                                                    </p>
-                                                    <p class="id-duan">Mã tin:<span>MV24704</span></p>
-                                                    <ul class="clearfix list-attr-td">
-                                                        <li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>100m<sup>2</sup> </li><li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 </li><li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 </li>                </ul>
-                                                    <p class="price-item">23 <span class="txt-unit">triệu</span> <span class="txt-unit">VNĐ</span></p>
-                                                    <p class="date-post">đăng 68 ngày trước<span class="pull-right">Điểm: 95</span></p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                    <li class="col-xs-12 col-sm-6 col-lg-4">
-                                        <div class="item">
-                                            <a class="clearfix" href="#" title="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh">
-                                                <div class="pic-intro">
-                                                    <img alt="Căn hộ chung cư cho thuê - Phường Tân Phong, Quận 7, Hồ Chí Minh" src="http://file4.batdongsan.com.vn/resize/350x280/2016/03/27/20160327100308-658c.jpg">
-                                                </div>
-                                                <div class="info-item clearfix">
-                                                    <div class="address-listing">
-                                                        <p>Phường Tân Phong, Quận 7, Hồ Chí Minh</p>
-                                                    </div>
-                                                    <p class="infor-by-up">
-                                                        <strong>Căn hộ chung cư cho thuê</strong>
-                                                    </p>
-                                                    <p class="id-duan">Mã tin:<span>MV24704</span></p>
-                                                    <ul class="clearfix list-attr-td">
-                                                        <li> <span class="icon-mv"><span class="icon-page-1-copy"></span></span>100m<sup>2</sup> </li><li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 </li><li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 </li>                </ul>
-                                                    <p class="price-item">23 <span class="txt-unit">triệu</span> <span class="txt-unit">VNĐ</span></p>
-                                                    <p class="date-post">đăng 68 ngày trước<span class="pull-right">Điểm: 95</span></p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                                <div class="text-center">
-                                    <a href="" class="btn-common btn-view-more">Xem thêm</a>
-                                </div>
+                                <?php
+                                if(!empty($rent_products)) {
+                                ?>
+                                    <ul class="clearfix listing-item">
+                                        <?=$this->render('/ad/_partials/list', ['products' => $rent_products]);?>
+                                    </ul>
+                                    <div class="text-center">
+                                        <a href="<?= Url::to(['/ad/index2', 'project_building_id'=>$model->id]) ?>" class="btn-common btn-view-more"><?=Yii::t('general', 'View more')?></a>
+                                    </div>
+                                <?php
+                                }else {
+                                    ?>
+                                    <ul class="clearfix listing-item">
+                                        <li class="col-xs-12 col-sm-6 col-lg-4">
+                                            <?=Yii::t('common', '{object} no data', ['object'=>Yii::t('ad', 'For Sell')])?>
+                                        </li>
+                                    </ul>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
