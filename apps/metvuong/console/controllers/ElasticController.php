@@ -44,8 +44,7 @@ class ElasticController extends Controller {
 				$totalRent = 0;
 			}
 			
-			$citySlug = SlugSearch::find()->where(['table' => 'ad_city', 'value' => $city['id']])->one()->slug;
-			$cityTermBulk = array_merge($cityTermBulk, $this->buildTerm($city['id'], $city['id'], $city['name'], $city['name'], $totalSell, $totalRent, $citySlug));
+			$cityTermBulk = array_merge($cityTermBulk, $this->buildTerm($city['id'], $city['id'], $city['name'], $city['name'], $totalSell, $totalRent, $city['slug']));
 		}
 
 		$this->batchInsert($indexName, 'city', $cityTermBulk);
@@ -65,9 +64,8 @@ class ElasticController extends Controller {
 				
 				$districtName = $district['pre'] ? trim($district['pre'] . ' ' . $district['name']) : $district['name'];
 				$districtFullName = $districtName . ', ' . $city['name'];
-				$districtSlug = SlugSearch::find()->where(['table' => 'ad_district', 'value' => $district['id']])->one()->slug;
 				
-				$districtTermBulk = array_merge($districtTermBulk, $this->buildTerm($district['id'], $city['id'], $districtName, $districtFullName, $totalSell, $totalRent, $districtSlug));
+				$districtTermBulk = array_merge($districtTermBulk, $this->buildTerm($district['id'], $city['id'], $districtName, $districtFullName, $totalSell, $totalRent, $district['slug']));
 				
 				$this->buildTermsBelongDistrict('ad_ward', $city['id'], $district['id'], $districtFullName, $indexName, 'ward', $countByWard);
 				$this->buildTermsBelongDistrict('ad_street', $city['id'], $district['id'], $districtFullName, $indexName, 'street', $countByStreet);
@@ -87,13 +85,21 @@ class ElasticController extends Controller {
 		
 		$query = new Query();
 		
+		if($countBy == 'project_building_id') {
+			$table = 'ad_building_project';
+		} else {
+			$table = 'ad_' . str_replace('_id', '', $countBy);
+		}
+		
 		$query->from('ad_product');
 		$query->where($where);
 		$query->select([
 			$countBy,
+			"`slug_search`.`slug` `slug`",
 			"SUM(CASE WHEN `type` = 1 THEN 1 ELSE 0 END) AS " . AdProduct::TYPE_FOR_SELL_TOTAL,
 			"SUM(CASE WHEN `type` = 2 THEN 1 ELSE 0 END) AS " . AdProduct::TYPE_FOR_RENT_TOTAL
 		]);
+		$query->leftJoin('slug_search', "`$countBy` = `slug_search`.`value` AND `slug_search`.`table` = '$table'");
 		$query->groupBy($countBy);
 		$query->indexBy($countBy);
 		
@@ -109,7 +115,6 @@ class ElasticController extends Controller {
 			$name = $term['name'];
 			$name = empty($term['pre']) ? $name : $term['pre'] . ' ' . $name;
 			$fullName = $name . ', ' . $districtFullName;
-			$slug = SlugSearch::find()->where(['table' => $table, 'value' => $term['id']])->one()->slug;
 			
 			if(isset($counts[$term['id']])) {
 				$totalSell = $counts[$term['id']][AdProduct::TYPE_FOR_SELL_TOTAL];
@@ -119,7 +124,7 @@ class ElasticController extends Controller {
 				$totalRent = 0;
 			}
 			
-			$buildTerm = $this->buildTerm($term['id'], $cityId, $name, $fullName, $totalSell, $totalRent, $slug);
+			$buildTerm = $this->buildTerm($term['id'], $cityId, $name, $fullName, $totalSell, $totalRent, $term['slug']);
 			
 			$buildTerm[1]['district_id'] = intval($districtId);
 			

@@ -8,92 +8,11 @@ use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdBuildingProject;
 use vsoft\ad\models\AdCity;
 use frontend\models\Elastic;
-use common\models\SlugSearch;
 use common\models\common\models;
 use vsoft\ad\models\AdDistrict;
 use yii\db\Query;
 
 class ProductController extends Controller {
-	
-	private $slugs = [];
-	private $connection;
-	
-	public function actionSlugSearch() {
-		$this->connection = \Yii::$app->db;
-		
-		$cities = AdCity::find()->select('id, name')->asArray(true)->all();
-		
-		foreach ($cities as $city) {
-			$citySlug = $this->uniqueSlug(Elastic::slug($city['name']));
-			$this->saveSlug(['slug' => $citySlug, 'table' => 'ad_city', 'value' => $city['id']]);
-			$this->connection->createCommand()->update('ad_city', ['slug' => $citySlug], 'id = ' . $city['id'])->execute();
-			
-			$districts = AdDistrict::find()->select('id, pre, name')->where(['city_id' => $city['id']])->asArray(true)->all();
-			
-			foreach ($districts as $district) {
-				$districtName = ctype_digit($district['name']) ? $district['pre'] . " " . $district['name'] : $district['name'];
-				
-				$districtSlug = $citySlug . '-' . Elastic::slug($districtName);
-				$districtSlug = $this->uniqueSlug($districtSlug);
-				$this->saveSlug(['slug' => $districtSlug, 'table' => 'ad_district', 'value' => $district['id']]);
-				$this->connection->createCommand()->update('ad_district', ['slug' => $districtSlug], 'id = ' . $district['id'])->execute();
-				
-				$this->saveSlugBelongDistrict('ad_ward', $district['id'], $districtSlug);
-				$this->saveSlugBelongDistrict('ad_street', $district['id'], $districtSlug);
-			}
-		}
-		
-		$projects = AdBuildingProject::find()->select('id, name, slug')->asArray(true)->all();
-		
-		foreach ($projects as $project) {
-			$projectSlug = Elastic::slug($project['name']);
-			$projectSlugUnique = $this->uniqueSlug($projectSlug);
-			
-			if($projectSlug != $projectSlugUnique) {
-				echo $projectSlug . " exist" . "\n";
-			}
-			
-			$this->saveSlug(['slug' => $projectSlugUnique, 'table' => 'ad_building_project', 'value' => $project['id']]);
-			
-			if($project['slug'] != $projectSlugUnique) {
-				echo $project['id'] . 'Khac ' . $project['slug'] . ' * ' . $projectSlugUnique;
-			} else {
-				$this->connection->createCommand()->update('ad_building_project', ['slug' => $projectSlugUnique], 'id = ' . $project['id'])->execute();
-			}
-		}
-	}
-	
-	function saveSlugBelongDistrict($table, $districtId, $districtSlug) {
-		$items = (new Query())->from($table)->where(['district_id' => $districtId])->select('id, pre, name')->all();
-		
-		foreach ($items as $item) {
-			$itemName = $item['pre'] . " " . $item['name'];
-			
-			$itemSlug = $districtSlug . '-' . Elastic::slug($itemName);
-			$itemSlug = $this->uniqueSlug($itemSlug);
-			
-			$this->saveSlug(['slug' => $itemSlug, 'table' => $table, 'value' => $item['id']]);
-			$this->connection->createCommand()->update($table, ['slug' => $itemSlug], 'id = ' . $item['id'])->execute();
-		}
-	}
-	
-	function saveSlug($data) {
-		$slug = new SlugSearch();
-		$slug->load($data, '');
-		$slug->save(false);
-	}
-	
-	function uniqueSlug($slug, $increase = 0) {
-		$checkSlug = $increase ? $slug . '-' . $increase : $slug;
-	
-		if(in_array($checkSlug, $this->slugs)) {
-			return $this->uniqueSlug($slug, ++$increase);
-		} else {
-			$this->slugs[] = $checkSlug;
-			
-			return $checkSlug;
-		}
-	}
 	
 	public function actionCheckLatLng() {
 		$projects = AdBuildingProject::find()->asArray(true)->all();

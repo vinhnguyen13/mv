@@ -10,6 +10,8 @@ use yii\helpers\ArrayHelper;
 use common\models\AdBuildingProject as ABP;
 use yii\helpers\Url;
 use yii\db\Query;
+use common\models\SlugSearch;
+use common\models\common\models;
 
 
 class AdBuildingProject extends ABP
@@ -152,11 +154,27 @@ class AdBuildingProject extends ABP
 	}
 	
 	public function beforeSave($insert) {
-		if($this->progress) {
-			$this->progress = json_encode($this->progress, JSON_UNESCAPED_UNICODE);
-		}
+		if (parent::beforeSave($insert)) {
+			if($this->progress) {
+				$this->progress = json_encode($this->progress, JSON_UNESCAPED_UNICODE);
+			}
+			
+			if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
+				$this->slug = $this->slug . '-' . $this->city->name;
 		
-		return parent::beforeSave($insert);
+				if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
+					$this->slug = $this->slug . '-' . $this->district->name;
+					 
+					if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
+						$this->slug = $this->slug . uniqid();
+					}
+				}
+			}
+		
+			return true;
+		} else {
+			return false;
+		}
 	}
 	
 	public function formatMultiline($field) {
@@ -325,4 +343,35 @@ class AdBuildingProject extends ABP
     	
     	return [];
     }
+    
+	public function beforeSave($insert)
+	{
+	    if (parent::beforeSave($insert)) {
+	        if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
+	        	$this->slug = $this->slug . '-' . $this->city->name;
+	        	
+	        	if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
+	        		$this->slug = $this->slug . '-' . $this->district->name;
+	        		
+	        		if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
+	        			$this->slug = $this->slug . uniqid();
+	        		}
+	        	}
+	        }
+	    	
+	        return true;
+	    } else {
+	        return false;
+	    }
+	}
+	
+	public function afterSave($insert, $changedAttributes) {
+		if($insert) {
+			$slugSearch = new SlugSearch();
+			$slugSearch->slug = $this->slug;
+			$slugSearch->table = 'ad_building_project';
+			$slugSearch->value = $this->id;
+			$slugSearch->save(false);
+		}
+	}
 }
