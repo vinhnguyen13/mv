@@ -343,27 +343,6 @@ class AdBuildingProject extends ABP
     	
     	return [];
     }
-    
-	public function beforeSave($insert)
-	{
-	    if (parent::beforeSave($insert)) {
-	        if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
-	        	$this->slug = $this->slug . '-' . $this->city->name;
-	        	
-	        	if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
-	        		$this->slug = $this->slug . '-' . $this->district->name;
-	        		
-	        		if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
-	        			$this->slug = $this->slug . uniqid();
-	        		}
-	        	}
-	        }
-	    	
-	        return true;
-	    } else {
-	        return false;
-	    }
-	}
 	
 	public function afterSave($insert, $changedAttributes) {
 		if($insert) {
