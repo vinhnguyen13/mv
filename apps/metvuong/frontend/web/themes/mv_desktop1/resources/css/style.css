@@ -4453,8 +4453,17 @@ html.mm-opening .mm-slideout {
     /* margin-top: 50px; */
     padding-top: 50px;
 }
+.profile-user .col-left {
+    padding-left: 0;
+}
 .profile-user .title-top {
     margin-bottom: 30px;
+    padding: 0;
+    border: none;
+}
+.profile-user .sidebar-col .id-duan {
+    float: none;
+    margin-bottom: 10px;
 }
 .btn-chat {
     padding: 6px 55px 3px;
@@ -5236,6 +5245,9 @@ html.mm-opening .mm-slideout {
     font-size: 13px;
     position: relative;
     line-height: 23px;
+}
+.wrap-duan-moi .item .info-item {
+    height: 135px;
 }
 .wrap-duan-moi .infor-address-duan {
     font-weight: 600;
@@ -6090,6 +6102,9 @@ padding: 5px 0;
         z-index: 10;
         padding: 0;
         margin: 0;
+    }
+    .search-subpage .hemi-intro-popover {
+        left: 0px !important;
     }
     .search-subpage .frm-item {
         float: left;
