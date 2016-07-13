@@ -7,7 +7,7 @@ $jid_id = Yii::$app->dbChat->createCommand('SELECT jid_id FROM tig_ma_jids tmj W
 if(!empty($jid_id)){
 	$sql = 'SELECT tbl.* '.
 		'FROM (SELECT owner_id, buddy_id, ts, body, direction, IF(owner_id = :jid_id, buddy_id, owner_id) AS withuser FROM tig_ma_msgs tmm WHERE :jid_id IN (owner_id, buddy_id) AND (owner_id != buddy_id) ORDER BY ts DESC) as tbl '.
-		'GROUP BY tbl.withuser ORDER BY tbl.ts DESC';
+		'GROUP BY tbl.withuser ORDER BY tbl.ts DESC LIMIT 5';
 	$msgs = Yii::$app->dbChat->createCommand($sql)->bindValues([':jid_id'=>$jid_id['jid_id']])->queryAll();
 }
 ?>
