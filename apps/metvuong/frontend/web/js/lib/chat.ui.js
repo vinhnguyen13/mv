@@ -7,7 +7,7 @@
         //BOSH_SERVICE: 'http://metvuong.com:5280/wating',
         BOSH_SERVICE: 'ws://metvuong.com:5290/wating',
         connect: function() {
-            Chat.connect(chatUI.genJid(xmpp_jid), xmpp_key, chatUI.BOSH_SERVICE, xmpp_debug);
+            Chat.connect(chatUI.genJid(xmpp_jid), xmpp_key, xmpp_url, xmpp_debug);
         },
         genJid: function(jid) {
             return jid+'@'+xmpp_dm;

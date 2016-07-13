@@ -10,6 +10,14 @@ if(!Yii::$app->user->isGuest) {
         "var xmpp_debug = ".$debug.";".
         "var chat_url = '".Url::to(['chat/with'])."';"
     ;
+    if(Yii::$app->request->isSecureConnection){
+//        $BOSH_SERVICE = 'https://metvuong.com:5291/wating';
+        $BOSH_SERVICE = 'wss://metvuong.com:5291/wating';
+    }else{
+//        $BOSH_SERVICE = 'http://metvuong.com:5280/wating';
+        $BOSH_SERVICE = 'ws://metvuong.com:5290/wating';
+    }
+    $script .= "var xmpp_url = '".$BOSH_SERVICE."';";
 
     Yii::$app->getView()->registerJs($script, View::POS_HEAD);
 
