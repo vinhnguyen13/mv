@@ -28,7 +28,9 @@ class AdImageHelper {
 	public function makeFolderSizes($parentFolder) {
 		foreach(self::$sizes as $size) {
 			$folder = $parentFolder . DIRECTORY_SEPARATOR . self::makeFolderName($size);
-			mkdir($folder, 0777);
+			if(!is_dir($folder)){
+				mkdir($folder, 0777);
+			}
 		}
 	}
 	
