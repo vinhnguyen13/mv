@@ -12,6 +12,7 @@ use yii\helpers\Url;
 use yii\db\Query;
 use common\models\SlugSearch;
 use common\models\common\models;
+use common\components\Slug;
 
 
 class AdBuildingProject extends ABP
@@ -160,10 +161,12 @@ class AdBuildingProject extends ABP
 			}
 			
 			if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
-				$this->slug = $this->slug . '-' . $this->city->name;
+				$slug = new Slug();
+				
+				$this->slug = $this->slug . '-' . $slug->slugify($this->city->name);
 		
 				if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
-					$this->slug = $this->slug . '-' . $this->district->name;
+					$this->slug = $this->slug . '-' . $slug->slugify($this->district->name);
 					 
 					if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
 						$this->slug = $this->slug . uniqid();
