@@ -95,9 +95,7 @@ class ProductController extends Controller {
 
     public function actionDownloadImage()
     {
-        $images = \Yii::$app->db->cache( function() {
-            return AdImages::find()->where('folder = :f', [':f' => ''])->orWhere(['folder' => null])->limit(1000)->all();
-        });
+        $images = AdImages::find()->where('folder = :f', [':f' => ''])->orWhere(['folder' => null])->limit(1000)->all();
         if(count($images) > 0){
             $no = 0;
             foreach ($images as $image) {
