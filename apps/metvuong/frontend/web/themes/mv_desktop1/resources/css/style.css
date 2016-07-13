@@ -2476,6 +2476,7 @@ margin-bottom: 0;
 .list-noti .avatar a {
     width: 40px;
     height: 40px;
+    overflow: hidden;
 }
 .list-noti .avatar a img {
     width: 100%;
@@ -2483,7 +2484,7 @@ margin-bottom: 0;
 }
 .user-edit span img {
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 #settings-user li .wrap-img {
     float: left;
@@ -6583,6 +6584,9 @@ padding: 5px 0;
     }
     .user-edit .wrap-img {
         float: left;
+        width: 35px;
+        height: 35px;
+        overflow: hidden;
     }
     .user-edit .wrapNotifyTotal > div span {
         display: block;
