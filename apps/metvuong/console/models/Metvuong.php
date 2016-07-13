@@ -163,6 +163,8 @@ class Metvuong extends Component
             $filePath = $folder . DIRECTORY_SEPARATOR . $fileName;
             $content = file_get_contents($link);
             file_put_contents($filePath, $content);
+
+            $helper->makeFolderSizes($folder);
             $helper->resize($filePath);
 
             $folderColumn = str_replace("\\", "/", $folderColumn);
