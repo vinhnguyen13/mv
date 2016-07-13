@@ -116,6 +116,10 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'image' => [
+            'class' => 'yii\image\ImageDriver',
+            'driver' => 'GD',  //GD or Imagick
+        ],
         'i18n' => [
             'translations' => [
                 '*' => [
