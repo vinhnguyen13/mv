@@ -136,9 +136,9 @@ foreach ($categories as $category) {
             }else{
                 $('.wrap_project').hide();
                 $('.wrap_city').show();
-                $('.region_city').select2("val", "");
             }
-
+            $('.region_city').select2("val", "");
+            $('.region_project').select2("val", "");
         });
 
         $(document).on('change', '.region_city', function (e) {
