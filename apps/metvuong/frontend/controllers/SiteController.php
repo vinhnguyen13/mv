@@ -386,7 +386,7 @@ class SiteController extends Controller
 			if(!empty($project_building_id)){
 				$where[] = "project_building_id = $project_building_id";
 			}
-			$city = Yii::$app->request->post('city', 1);
+			$city = Yii::$app->request->post('city');
 			if(!empty($city)){
 				$where[] = "city_id = $city";
 				$district = Yii::$app->request->post('district');
