@@ -389,18 +389,18 @@ class SiteController extends Controller
 			$city = Yii::$app->request->post('city', 1);
 			if(!empty($city)){
 				$where[] = "city_id = $city";
-			}
-			$district = Yii::$app->request->post('district');
-			if(!empty($district)){
-				$where[] = "district_id = $district";
-			}
-			$wards = Yii::$app->request->post('wards');
-			if(!empty($wards)){
-				$where[] = "ward_id = $wards";
-			}
-			$streets = Yii::$app->request->post('streets');
-			if(!empty($streets)){
-				$where[] = "street_id = $streets";
+				$district = Yii::$app->request->post('district');
+				if(!empty($district)){
+					$where[] = "district_id = $district";
+				}
+				$wards = Yii::$app->request->post('wards');
+				if(!empty($wards)){
+					$where[] = "ward_id = $wards";
+				}
+				$streets = Yii::$app->request->post('streets');
+				if(!empty($streets)){
+					$where[] = "street_id = $streets";
+				}
 			}
 			$sql = "SELECT SUM(price) as sum, SUM(area) as sum_area, COUNT(*) as total FROM ad_product";
 			if(!empty($where)){
