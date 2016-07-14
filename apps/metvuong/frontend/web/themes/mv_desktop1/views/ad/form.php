@@ -129,9 +129,6 @@ use vsoft\ad\models\AdImages;
 								<?= Html::activeHiddenInput($product, 'project_building_id') ?>
 								<div id="project-wrap"<?= $projectWrapClass ?>>
 									<input <?= $projectMaskAttr ?>type="text" class="form-control" id="projectMask" placeholder="..." value="<?= $projectMaskVal ?>" />
-									<?php if(!$expiredEdit): ?>
-									<span class="icon-mv"><span class="icon-close-icon"></span></span>
-									<?php endif; ?>
 									<div id="search-list" class="hide">
 										<span class="search-hint"><?= Yii::t('ad', 'Nhập tên dự án và chọn từ gợi ý dưới đây') ?></span>
 										<ul></ul>

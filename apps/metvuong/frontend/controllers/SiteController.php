@@ -382,6 +382,10 @@ class SiteController extends Controller
 			if(!empty($category)){
 				$where[] = "category_id = $category";
 			}
+			$project_building_id = Yii::$app->request->post('project_building_id');
+			if(!empty($project_building_id)){
+				$where[] = "project_building_id = $project_building_id";
+			}
 			$city = Yii::$app->request->post('city', 1);
 			if(!empty($city)){
 				$where[] = "city_id = $city";
@@ -398,7 +402,7 @@ class SiteController extends Controller
 			if(!empty($streets)){
 				$where[] = "street_id = $streets";
 			}
-			$sql = "SELECT SUM(price) as sum, COUNT(*) as total FROM ad_product";
+			$sql = "SELECT SUM(price) as sum, SUM(area) as sum_area, COUNT(*) as total FROM ad_product";
 			if(!empty($where)){
 				$sql .= " WHERE ".implode(' AND ', $where);
 			}
