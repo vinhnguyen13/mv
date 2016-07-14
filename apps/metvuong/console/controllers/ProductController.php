@@ -93,9 +93,9 @@ class ProductController extends Controller {
         Metvuong::sendMailContact($this->code);
     }
 
-    public function actionDownloadImage()
+    public function actionDownloadImage($limit = 100)
     {
-        $images = AdImages::find()->where('folder = :f', [':f' => ''])->orWhere(['folder' => null])->limit(1000)->all();
+        $images = AdImages::find()->where('folder = :f', [':f' => ''])->orWhere(['folder' => null])->limit($limit)->all();
         if(count($images) > 0){
             $no = 0;
             foreach ($images as $image) {
