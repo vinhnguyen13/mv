@@ -184,18 +184,32 @@ class MapSearch extends AdProduct {
 		}
 		
 		if($this->rm || $this->rl) {
-			$sort = $this->order_by ? $this->order_by : '-score';
-			$doa = StringHelper::startsWith($sort, '-') ? 'desc' : 'asc';
-			$sort = str_replace('-', '', $sort);
+			$sortBy = $this->order_by ? $this->order_by : '-score';
+			$doa = StringHelper::startsWith($sortBy, '-') ? 'desc' : 'asc';
+			$sortBy = str_replace('-', '', $sortBy);
 			
 			$sort = [
 				[
 					"boost_sort" => ["order" => "desc"]		
-				],
-				[
-					$sort => ["order" => $doa]
 				]
 			];
+			
+			if($sortBy == 'score') {
+				$sort[] = [
+					"_script" => [
+						"type" => "number",
+						"script" => [
+							"inline" => "doc['score'].value - ((current_time - doc['start_date'].value) * 0.00001157407)",
+							"params" => [
+								"current_time" => time()
+							]
+						],
+						"order" => "desc"
+					]
+				];
+			} else {
+				$sort[] = [$sortBy => ["order" => $doa]];
+			}
 		}
 		
 		if($this->rm) {
