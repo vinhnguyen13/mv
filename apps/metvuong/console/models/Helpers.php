@@ -7,11 +7,54 @@
 
 namespace console\models;
 
-
+use common\components\Slug;
+use vsoft\craw\models\AdCity;
+use vsoft\craw\models\AdDistrict;
 use Yii;
 
 class Helpers
 {
+    public static function getCityId($city_name)
+    {
+        if(!empty($city_name)) {
+            $city_slug = Slug::me()->slugify($city_name);
+            $city = AdCity::getDb()->cache(function () use ($city_slug) {
+                return AdCity::find()->select(['id', 'name', 'slug'])->where("slug like '%{$city_slug}'")->asArray()->all();
+            });
+            $count = count($city);
+            if($count == 1)
+                return $city[0];
+            if($count > 1)
+                return 500;
+        }
+        return null;
+    }
+
+    public static function getDistrictId($district_name, $city_id)
+    {
+        if(!empty($city_id) && !empty($district_name)) {
+            $district_slug = Slug::me()->slugify($district_name);
+            $district = AdDistrict::getDb()->cache(function() use($district_slug, $city_id){
+                return AdDistrict::find()->select(['id', 'name', 'slug', 'pre'])->where("slug like '%{$district_slug}' AND city_id = {$city_id}")->asArray()->all();
+            });
+            $count = count($district);
+            if($count == 1)
+                return $district[0];
+            else if($count > 1)
+                return 500;
+            else {
+                $sql = "SELECT `id`, `name`, slug, pre FROM ad_district WHERE (`name` LIKE '".$district_name."' OR '".$district_name."' LIKE CONCAT(pre, ' ', name)) AND `city_id` = ".$city_id. " LIMIT 1";
+                $district = AdDistrict::getDb()->createCommand($sql)->queryAll();
+                if($district) {
+                    return $district[0];
+                } else {
+                    return null;
+                }
+            }
+        }
+        return null;
+    }
+
     public static function writeFileJson($filePath, $data)
     {
         $handle = fopen($filePath, 'w') or die('Cannot open file:  ' . $filePath);
@@ -49,19 +92,12 @@ class Helpers
         Helpers::writeFileJson($file_name, $log_data);
     }
 
-    public static function setZeroCurrentPage($types, $path_folder){
-        foreach ($types as $key_type => $type) {
-            $path_folder = $path_folder."/".$type."/";
-            $filename = "bds_log_{$type}.json";
-            $file = $path_folder.$filename;
-            if(file_exists($file)){
-                $file_log = Helpers::loadLog($file, $filename);
-                if(!empty($file_log["current_page"])){
-                    $file_log["current_page"] = 0;
-                    Helpers::writeLog($file_log, $path_folder, $filename);
-                }
-            }
+    public static function moveFile($fromFilePath, $toFilePath, $folder)
+    {
+        if(!is_dir($folder)){
+            mkdir($folder, 0777);
         }
+        return rename($fromFilePath, $toFilePath);
     }
 
     public static function getUrlContent($url)
@@ -84,34 +120,6 @@ class Helpers
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
         return ($httpcode >= 200 && $httpcode < 300) ? $data : null;
-    }
-
-    public static function writeToFile($filePath, $data, $mode = 'a')
-    {
-        $handle = fopen($filePath, $mode) or die('Cannot open file:  ' . $filePath);
-        $int = fwrite($handle, $data);
-        fclose($handle);
-        return $int;
-    }
-
-    public static function writeFileLogFail($type, $log){
-        $file_name = Yii::getAlias('@console') . "/data/bds_html/{$type}/bds_log_fail";
-        if(!file_exists($file_name)){
-            fopen($file_name, "w");
-        }
-        if( strpos(file_get_contents($file_name),$log) === false) {
-            Helpers::writeToFile($file_name, $log, 'a');
-        }
-    }
-
-    public static function writeFileLogUrlSuccess($type, $log, $path_folder){
-        $file_name = $path_folder."{$type}/bds_log_urls";
-        if(!file_exists($file_name)){
-            fopen($file_name, "w");
-        }
-        if( strpos(file_get_contents($file_name),$log) === false) {
-            Helpers::writeToFile($file_name, $log, 'a');
-        }
     }
 
     public static function beginWith($haystack, $needle) {
