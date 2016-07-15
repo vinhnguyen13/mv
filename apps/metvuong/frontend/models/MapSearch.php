@@ -84,7 +84,7 @@ class MapSearch extends AdProduct {
 		} else if($this->street_id) {
 			$must[] = [
 				"term" => [
-					"city_id" => intval($this->street_id)
+					"street_id" => intval($this->street_id)
 				]	
 			];
 		} else if($this->ward_id) {

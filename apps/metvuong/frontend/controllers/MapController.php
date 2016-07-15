@@ -46,21 +46,40 @@ class MapController extends ActiveController {
 		}
 		
 		if($mapSearch->ra) {
-			$areas = ArrayHelper::map($result['aggregations']['ra']['buckets'], "key", "doc_count");
+			$allowArea = [
+				'city' => ['id'],
+				'district' => ['id', 'city_id'],
+				'ward' => ['id', 'district_id', 'city_id'],
+				'street' => ['id']
+			];
 			
-			if(isset($areas[0])) {
-				unset($areas[0]);
+			if(in_array($mapSearch->ra, array_keys($allowArea))) {
+				$allowKey = $allowArea[$mapSearch->ra];
+				$key = $mapSearch->ra_k;
+				
+				if(in_array($key, $allowKey)) {
+					$areas = ArrayHelper::map($result['aggregations']['ra']['buckets'], "key", "doc_count");
+						
+					if(isset($areas[0])) {
+						unset($areas[0]);
+					}
+						
+					$table = 'ad_' . $mapSearch->ra;
+					$value = ($key == 'id') ? $mapSearch->getAttribute($mapSearch->ra . '_id') : $mapSearch->getAttribute($key);
+					
+					$areasDb = (new Query())->select("id, center, geometry, name, pre")->from($table)->where([$key => $value])->all();
+						
+					foreach ($areasDb as &$area) {
+						if(isset($areas[$area['id']])) {
+							$area['total'] = $areas[$area['id']];
+						} else {
+							$area['total'] = 0;
+						}
+					}
+						
+					$response['ra'] = $areasDb;
+				}
 			}
-			
-			$table = 'ad_' . $mapSearch->ra;
-			
-			$areasDb = (new Query())->select("id, center, geometry, name, pre")->from($table)->where(['id' => array_keys($areas)])->all();
-			
-			foreach ($areasDb as &$area) {
-				$area['total'] = $areas[$area['id']];
-			}
-			
-			$response['ra'] = $areasDb;
 		}
 		
 		if($mapSearch->rm) {
