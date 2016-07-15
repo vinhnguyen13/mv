@@ -48,7 +48,7 @@ class BuildingProjectController extends Controller
         $model->update();
 		if($model) {
             if($model->is_crawl == 1)
-                return $this->render('viewbds', ['model' => $model]);
+                return $this->render('view', ['model' => $model]);
 
             return $this->render('view', ['model' => $model]);
 		} else {

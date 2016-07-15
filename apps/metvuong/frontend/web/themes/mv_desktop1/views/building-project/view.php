@@ -9,15 +9,15 @@ $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_
 //$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
 $this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
 
-$description = strip_tags($model->description);
-$description = html_entity_decode($description, ENT_HTML5, 'utf-8');
+$tabProject = json_decode(strip_tags($model->data_html), true);
+$tongquan = html_entity_decode($tabProject["tong-quan"], ENT_HTML5, 'utf-8');
 Yii::$app->view->registerMetaTag([
     'name' => 'keywords',
     'content' => $model->location
 ]);
 Yii::$app->view->registerMetaTag([
     'name' => 'description',
-    'content' => $description
+    'content' => $tongquan
 ]);
 
 Yii::$app->view->registerMetaTag([
@@ -26,7 +26,7 @@ Yii::$app->view->registerMetaTag([
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:description',
-    'content' => $description
+    'content' => $tongquan
 ]);
 Yii::$app->view->registerMetaTag([
     'property' => 'og:type',
@@ -39,14 +39,22 @@ Yii::$app->view->registerMetaTag([
 ]);
 
 $lbl_updating = Yii::t('general', 'Updating');
+$tabKeys = [
+    'tong-quan' => Yii::t('project','General'),
+    'vi-tri' => Yii::t('project','Position'),
+    'ha-tang' => Yii::t('project','Facility'),
+    'thiet-ke' => Yii::t('project','Design'),
+    'tien-do' => Yii::t('project','Progress'),
+    'ban-hang' => Yii::t('project','Business'),
+    'ho-tro' => Yii::t('project','Support'),
+];
 $user = Yii::$app->user->identity;
 $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->profile->public_email) ? $user->email : $user->profile->public_email));
 ?>
-
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="detail-duan-moi">
-            <!-- <div class="title-top"><?= $model->name?></div> -->
+            <!-- <div class="title-top"><?=empty($model->name) ? Yii::t('project', 'Project') : $model->name?></div> -->
             <div class="wrap-duan-moi row">
                 <div class="col-xs-12 col-md-9 col-left">
                     <div class="gallery-detail swiper-container">
@@ -60,7 +68,8 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                         <div class="swiper-slide">
                                             <div class="img-show">
                                                 <div>
-                                                    <img src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>"
+                                                    <img
+                                                        src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>"
                                                         alt="<?= $model->location ?>">
                                                 </div>
                                             </div>
@@ -72,7 +81,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                 <div class="swiper-slide">
                                     <div class="img-show">
                                         <div>
-                                            <img src="<?=$logoUrl?>" alt="<?=$model->location?>">
+                                            <img src="<?=$logoUrl?>" alt="<?=$logoUrl?>">
                                         </div>
                                     </div>
                                 </div>
@@ -84,55 +93,140 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                     </div>
                     <div class="item infor-address-duan">
                         <p><?=Yii::t('project', $model->investment_type) ?></p>
-                        <strong><?= $model->name?></strong>
+                        <strong><?= $model->name ?></strong>
                         <?= empty($model->location) ? $lbl_updating : $model->location ?>
                         <ul class="pull-right icons-detail">
                             <li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td"></a></li>
+                            <!--<li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
                             <li><a href="#" data-toggle="modal" data-target="#popup-map" class="icon icon-map-loca"></a></li>
                         </ul>
                     </div>
-                    <div class="item infor-time">
-                        <p><strong><?=Yii::t('project','Investor')?>: </strong> <?= empty($model->investors[0]->name) ? $lbl_updating : $model->investors[0]->name ?></p>
-                        <p><strong><?=Yii::t('project', 'Start date')?>: </strong> <?=empty($model->start_date) ? $lbl_updating : date('d/m/Y', $model->start_date) ?></p>
-                        <p><strong><?=Yii::t('project', 'Finish time')?>:</strong> <?=empty($model->estimate_finished) ? $lbl_updating : $model->estimate_finished ?></p>
-                    </div>
-                    <div class="item detail-infor">
-                        <p class="title-attr-duan"><?=Yii::t('ad', 'Description')?></p>
-                        <p><?=$model->description ?></p>
-                    </div>
-                    <div class="item infor-attr">
-                        <p class="title-attr-duan"><?=Yii::t('project', 'Project information')?></p>
-                        <ul class="clearfix">
-                            <li><strong><?=Yii::t('project', 'Facade width')?>:</strong><?=!empty($model->facade_width) ? $model->facade_width : $lbl_updating?></li>
-                            <li><strong><?=Yii::t('project', 'Floor')?>:</strong><?=!empty($model->floor_no) ? $model->floor_no : $lbl_updating?></li>
-                            <li><strong><?=Yii::t('project', 'Lift')?>:</strong><?=!empty($model->lift) ? $model->lift : $lbl_updating?></li>
-                        </ul>
-                    </div>
-                    <div class="item tien-ich-duan">
-                        <p class="title-attr-duan"><?=Yii::t('project', 'Facility')?></p>
-                        <?php
-                        $facilityListId = explode(",", $model->facilities);
-                        $facilities = \vsoft\ad\models\AdFacility::find()->where(['id' => $facilityListId])->all();
-                        $count_facilities = count($facilities);
-                        if($count_facilities > 0){
+                    <?php
+                    if(count($model->investors) > 0){
+                        $investor = $model->investors[0];
+                        $image = $investor->logo;
+                        if(empty($investor->logo))
+                            $image = \vsoft\ad\models\AdImages::defaultImage();?>
+                        <div class="item chudautu-infor">
+                            <div class="title-section"><?=Yii::t('project', 'Investor')?></div>
+                            <div class="clearfix">
+                                <div class="wrap-img pull-left">
+                                    <img src="<?=(filter_var($image, FILTER_VALIDATE_URL) === FALSE) ? Yii::getAlias('@store') . "/building-project-images/" . $investor->logo : $investor->logo ?>" alt="<?=$investor->name?>">
+                                </div>
+                                <div class="infor-detail-chudautu">
+                                    <ul>
+                                        <li>
+                                            <strong id=""><?=Yii::t('project','Address')?></strong>:
+                                            <?=empty($investor->address) ? $lbl_updating : $investor->address ?></li>
+                                        <li>
+                                            <strong id=""><?=Yii::t('project','Phone')?></strong>:
+                                            <?=empty($investor->phone) ? $lbl_updating : $investor->phone ?>
+                                            |
+                                            <strong id=""><?=Yii::t('project','Fax')?></strong>:
+                                            <span><?=empty($investor->fax) ? $lbl_updating : $investor->fax ?></span>
+                                        </li>
+                                        <li>
+                                            <strong id=""><?=Yii::t('project','Website')?></strong>:
+                                            <span><?=empty($investor->website) ? $lbl_updating : "<a href=\"//".$investor->website."\">".$investor->website."</a>" ?></span>
+                                        </li>
+                                        <li>
+                                            <strong id=""><?=Yii::t('project','Email')?></strong>:
+                                            <span><?=empty($investor->email) ? $lbl_updating : $investor->email ?></span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    <?php }
+                    if(count($tabProject) > 0){
                         ?>
-                        <ul class="clearfix">
-                            <?php foreach($facilities as $facility){ ?>
-                            <li>
-                                <div><p><span class="icon-ti icon-sport"></span><?= $facility->name ?></p></div>
-                            </li>
+                        <div class="infor-bds">
+                            <ul class="tabProject clearfix">
+                                <?php
+                                foreach($tabProject as $key => $tabValue){
+                                    ?>
+                                    <li class="">
+                                        <a href="javascript:void(0)" rel="nofollow" style="white-space:nowrap;"><?=$tabKeys[$key]?></a>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                            <?php
+                            foreach($tabProject as $key => $tabValue){
+                                ?>
+                                <div class="editor" style="display:none;clear: both">
+                                    <div class="a1">
+                                        <?=$tabValue?>
+                                    </div>
+                                </div>
                             <?php } ?>
+                        </div>
+                    <?php } ?>
+                    <!-- <div class="text-center mgT-40">
+                        <a class="btn-common mgR-10" href="<?=Url::to(['ad/index1', 'project_building_id'=>$model->id])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Buy')?></a>
+                        <a class="btn-common" href="<?=Url::to(['ad/index2', 'project_building_id'=>$model->id])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Rent')?></a>
+                    </div> -->
+                    <div class="listing-post-by-project">
+                        <?php
+                        $categoriesDb = \vsoft\ad\models\AdCategory::getDb();
+                        $categories = $categoriesDb->cache(function($categoriesDb){
+                            return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
+                        });
+                        $types = \vsoft\ad\models\AdProduct::getAdTypes();
+                        $sell_products = \frontend\models\Ad::find()->listingOfBuilding($model->id, \vsoft\ad\models\AdProduct::TYPE_FOR_SELL);
+                        $rent_products = \frontend\models\Ad::find()->listingOfBuilding($model->id, \vsoft\ad\models\AdProduct::TYPE_FOR_RENT);
+                        ?>
+                        <!-- Nav tabs -->
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a href="#tab-can-mua" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('ad', 'For Sell')?></a></li>
+                            <li role="presentation"><a href="#tab-can-thue" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('ad', 'For Rent')?></a></li>
                         </ul>
-                        <?php } else {?>
-                        <p><?=$lbl_updating;?></p>
-                        <?php }?>
-                    </div>
-                    <div class="text-center mgT-40">
-                    	<?php 
-                    		$slug = SlugSearch::find()->where(['table' => 'ad_building_project', 'value' => $model->id])->one()->slug;
-                    	?>
-                        <a class="btn-common mgR-10" href="<?=Url::to(['ad/index1', 'params'=>$slug])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Buy')?></a>
-                        <a class="btn-common" href="<?=Url::to(['ad/index2', 'params'=>$slug])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Rent')?></a>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane fade in active" id="tab-can-mua">
+                                <?php
+                                $slug = SlugSearch::find()->where(['table' => 'ad_building_project', 'value' => $model->id])->one()->slug;
+                                if(!empty($sell_products)) {
+                                    ?>
+                                    <ul class="clearfix listing-item">
+                                        <?=$this->render('/ad/_partials/list', ['products' => $sell_products]);?>
+                                    </ul>
+                                    <div class="text-center">
+                                        <a href="<?= Url::to(['/ad/index1', 'params'=>$slug]) ?>" class="btn-common btn-view-more"><?=Yii::t('general', 'View more')?></a>
+                                    </div>
+                                    <?php
+                                }else {
+                                    ?>
+                                    <ul class="clearfix listing-item">
+                                        <li class="col-xs-12 col-sm-6 col-lg-4">
+                                            <?=Yii::t('common', '{object} no data', ['object'=>Yii::t('ad', 'For Sell')])?>
+                                        </li>
+                                    </ul>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                            <div role="tabpanel" class="tab-pane fade in" id="tab-can-thue">
+                                <?php
+                                if(!empty($rent_products)) {
+                                    ?>
+                                    <ul class="clearfix listing-item">
+                                        <?=$this->render('/ad/_partials/list', ['products' => $rent_products]);?>
+                                    </ul>
+                                    <div class="text-center">
+                                        <a href="<?= Url::to(['/ad/index2', 'params'=>$slug]) ?>" class="btn-common btn-view-more"><?=Yii::t('general', 'View more')?></a>
+                                    </div>
+                                    <?php
+                                }else {
+                                    ?>
+                                    <ul class="clearfix listing-item">
+                                        <li class="col-xs-12 col-sm-6 col-lg-4">
+                                            <?=Yii::t('common', '{object} no data', ['object'=>Yii::t('ad', 'For Rent')])?>
+                                        </li>
+                                    </ul>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-12 col-md-3 col-right sidebar-col">
@@ -142,13 +236,6 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
         </div>
     </div>
 </div>
-
-<?= $this->renderAjax('/ad/_partials/shareEmail',[
-    'popup_email_name' => 'popup_email_share',
-    'project' => $model,
-    'yourEmail' => $email,
-    'recipientEmail' => null,
-    'params' => ['your_email' => false, 'recipient_email' => true] ])?>
 
 <div id="popup-map" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
@@ -181,6 +268,18 @@ echo $this->render('/ad/_partials/shareSocial',[
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $('.tabProject li').eq(0).addClass('tabActiveProject');
+        $('.wrap-duan-moi .editor').eq(0).show();
+        $('.tabProject li a').on('click', function (e) {
+            e.preventDefault();
+            var _this = $(this),
+                indexItem = _this.parent().index();
+            $('.tabProject li').removeClass('tabActiveProject');
+            _this.parent().addClass('tabActiveProject');
+            $('.wrap-duan-moi .editor').hide();
+            $('.wrap-duan-moi .editor').eq(indexItem).velocity("fadeIn", { duration: 200 });
+        });
+
         var swiper = new Swiper('.swiper-container', {
             pagination: '.swiper-pagination',
             paginationClickable: true,
@@ -230,6 +329,7 @@ echo $this->render('/ad/_partials/shareSocial',[
             fbShare('<?=Url::to(["building-project/view", 'slug'=>$model->slug], true) ?>', '<?=$model->name ?>', '<?=$description ?>', '<?= $imageUrl ?>', 800, 600);
             $('#popup-share-social').modal('hide');
         });
+
 
     });
 </script>
