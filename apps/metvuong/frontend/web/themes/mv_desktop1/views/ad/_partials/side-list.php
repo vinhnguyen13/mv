@@ -8,6 +8,9 @@
 	use vsoft\ad\models\AdImages;
 	use vsoft\ad\models\AdProduct;
 	use vsoft\express\components\StringHelper;
+	use yii\data\Pagination;
+	use frontend\components\SearchUrlManager;
+use frontend\models\Tracking;
 	
 	$db = Yii::$app->getDb();
 	
@@ -17,77 +20,55 @@
 	
 	$types = AdProduct::getAdTypes();
 	
-	$products = $list['products'];
-	$pages = $list['pages'];
+	$limit = \Yii::$app->params['listingLimit'];
+	$page = $searchModel->page ? $searchModel->page : 1;
+	$offset = ($page - 1) * $limit;
+	
+	$products = $list['hits'];
+	$total = $list['total'];
+	
+	$now = time();
+	
+	$pages = new Pagination(['totalCount' => $total, 'defaultPageSize' => $limit, 'route' => '/ad/index' . $searchModel->type, 'urlManager' => new SearchUrlManager()]);
+	
+	if(\Yii::$app->params['tracking']['all']) {
+		$tracking = (!empty($searchModel->project_building_id) || ((!empty($searchModel->ward_id) || !empty($searchModel->street_id)) && (!empty($searchModel->room_no) || !empty($searchModel->price_min) || !empty($searchModel->price_max)))) && \Yii::$app->user->identity;
+		$userId = \Yii::$app->user->id;
+	}
 ?>
 
 <?php if($products): ?>
 <div id="has-result">
 	<div class="top-listing clearfix">
-		<p><span id="count-from"><?= $pages->offset + 1 ?></span> - <span id="count-to"><?= $pages->offset + count($products) ?></span> <?= sprintf(Yii::t('ad', 'of %s listings'), '<span id="count-total">' . $pages->totalCount . '</span>') ?></p>
+		<p><span id="count-from"><?= $offset + 1 ?></span> - <span id="count-to"><?= $offset + count($products) ?></span> <?= sprintf(Yii::t('ad', 'of %s listings'), '<span id="count-total">' . $total . '</span>') ?></p>
 	</div>
 	<div id="listing-list" class="wrap-lazy">
 		<ul class="clearfix">
-			<?php foreach ($products as $k => $product): ?>
+			<?php foreach ($products as $k => $hit): ?>
 			<?php
-				/*
-				 * Get address
-				 */
-				$address = [];
+			
+				$product = $hit['_source'];
 				
-				if($product['show_home_no'] && $product['home_no']) {
-					$address[] = $product['home_no'];
+				if($tracking && $product['user_id'] != $userId) {
+					Tracking::find()->productFinder($userId, $product['id'], time());
 				}
-				
-				if(isset($searchModel->streets[$product['street_id']])) {
-					$street = $searchModel->streets[$product['street_id']];
-					
-					$address[] = $street['pre'] . ' ' . $street['name'];
-				}
-				
-				/*
-				if(isset($searchModel->wards[$product['ward_id']])) {
-					$ward = $searchModel->wards[$product['ward_id']];
-					
-					$address[] = $ward['pre'] . ' ' . $ward['name'];
-				}
-				
-				if(isset($searchModel->districts[$product['district_id']])) {
-					$district = $searchModel->districts[$product['district_id']];
-					
-					$address[] = trim($district['pre'] . ' ' . $district['name']);
-				}
-				*/
-				
-				$address = implode(', ', array_filter($address));
-				
-				/*
-				 * Get image
-				 */
-				$image = AdImages::find()->orderBy('`order` ASC')->where(['product_id' => $product['id']])->one();
-				$imateUrl = $image ? $image->getUrl(AdImages::SIZE_THUMB) : AdImages::defaultImage();
-				
 				/*
 				 * Get Url
 				 */
-				$urlDetail = Url::to(['/ad/detail' . $product['type'], 'id' => $product['id'], 'slug' => \common\components\Slug::me()->slugify($address)]);
+				$urlDetail = Url::to(['/ad/detail' . $searchModel->type, 'id' => $product['id'], 'slug' => \common\components\Slug::me()->slugify($product['address'])]);
 				
-				$alt = ucfirst(Yii::t('ad', $categories[$product['category_id']]['name'])) . ' ' . mb_strtolower($types[$product['type']], 'utf8') . ' - ' . $address;
+				$alt = ucfirst(Yii::t('ad', $categories[$product['category_id']]['name'])) . ' ' . mb_strtolower($types[$product['type']], 'utf8') . ' - ' . $product['address'];
 			?>
 			<li class="col-xs-12 col-sm-6 col-lg-4">
 				<div class="item">
-					<a data-id="<?= $product['id'] ?>" class="clearfix<?php if($k < 3 && $product['boost_time']) echo ' vip' ?>" href="<?= $urlDetail ?>" title="<?= $alt ?>">
+					<a data-id="<?= $product['id'] ?>" class="clearfix<?php if($product['boost_sort']) echo ' vip' ?>" href="<?= $urlDetail ?>" title="<?= $alt ?>">
 						<div class="pic-intro">
-							<img src="<?= $imateUrl ?>" alt="<?= $alt ?>" />
+							<img src="<?= $product['img'] ? $product['img'] : AdImages::defaultImage() ?>" alt="<?= $alt ?>" />
 						</div>
 						<div class="info-item clearfix">
 							<div class="address-listing">
-								<p><?= $address ?></p>
+								<p><?= $product['address'] ?></p>
 							</div>
-							<!-- <p class="infor-by-up">
-								<strong><?= ucfirst(Yii::t('ad', $categories[$product['category_id']]['name'])) ?> <?= mb_strtolower($types[$product['type']], 'utf8') ?></strong>
-							</p> -->
-							<!-- <p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product['id'] ?></span></p> -->
 							<div class="clearfix price-attr">
 								<p class="price-item"><span class="icon-mv"><span class="icon-pricing"></span></span> <?= StringHelper::formatCurrency($product['price']) . ' <span class="txt-unit">' . Yii::t('ad', 'VND').'</span>' ?></p>
 								<?php if($product['area'] || $product['room_no'] || $product['toilet_no']) : ?>
@@ -96,11 +77,9 @@
 			                    	<?php if($product['room_no']): ?><li><span class="icon-mv"><span class="icon-bed-search"></span></span><?= $product['room_no'] ?> </li><?php endif; ?>
 			                    	<?php if($product['toilet_no']): ?><li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span><?= $product['toilet_no'] ?> </li><?php endif; ?>
 			                    	</ul>
-			                    <?php else: ?>
-			                    	
 			                    <?php endif; ?>
 							</div>
-					    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['start_date']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?= $product['score'] ?></span></p>
+					    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['start_date']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?= round($product['score'] - 0.00001157407 * ($now - $product['start_date'])) ?></span></p>
 					    </div>
 					</a>
 				</div>
@@ -108,13 +87,13 @@
 			<?php endforeach; ?>
 		</ul>
 		<nav class="text-center dt-pagination">
-            <?php
-                echo LinkPager::widget([
-                    'pagination' => $pages,
+			<?php 
+				echo LinkPager::widget([
+					'pagination' => $pages,
 					'maxButtonCount' => 5
-                ]);
-            ?>
-            </nav>
+				]);
+			?>
+		</nav>
 		</div>
 	</div>
 <?php else: ?>

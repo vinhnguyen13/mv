@@ -8,6 +8,7 @@ use yii\helpers\Url;
 use common\models\AdProduct as AP;
 use vsoft\express\components\AdImageHelper;
 use frontend\models\Elastic;
+use yii\helpers\ArrayHelper;
 
 
 class AdProduct extends AP
@@ -41,6 +42,8 @@ class AdProduct extends AP
 	
 	const TYPE_FOR_SELL_TOTAL = 'total_sell';
 	const TYPE_FOR_RENT_TOTAL = 'total_rent';
+	
+	const BOOST_SORT_LIMIT = 4;
 	
 	private $oldAttr = [];
 	private static $elasticUpdateFields = ['city', 'district', 'ward', 'street', 'project_building'];
@@ -230,45 +233,193 @@ class AdProduct extends AP
 	
 	public function afterSave($insert, $changedAttributes) {
 		$totalType = ($this->type == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
+		
 		if($insert) {
-			foreach(self::$elasticUpdateFields as $field) {
-				$attr = $field . '_id';
-				if($this->attributes[$attr]) {
-					$this->updateElasticCounter($field, $this->attributes[$attr], $totalType);
+			if($this->status == self::STATUS_ACTIVE) {
+				foreach(self::$elasticUpdateFields as $field) {
+					$attr = $field . '_id';
+					if($this->attributes[$attr]) {
+						$this->updateElasticCounter($field, $this->attributes[$attr], $totalType);
+					}
 				}
+					
+				$this->insertEsProduct();
 			}
 		} else {
-			if($this->oldAttr['type'] != $this->attributes['type']) {
-				if($this->oldAttr['type'] == self::TYPE_FOR_SELL) {
-					$oldTotalType = self::TYPE_FOR_SELL_TOTAL;
-					$newTotalType = self::TYPE_FOR_RENT_TOTAL;
-				} else {
-					$oldTotalType = self::TYPE_FOR_RENT_TOTAL;
-					$newTotalType = self::TYPE_FOR_SELL_TOTAL;
+			$before = ($this->oldAttr['status'] == self::STATUS_ACTIVE && !$this->oldAttr['is_expired']);
+			$after = ($this->status == self::STATUS_ACTIVE && !$this->is_expired);
+			
+			if($after && !$before) {
+				foreach(self::$elasticUpdateFields as $field) {
+					$attr = $field . '_id';
+					if($this->attributes[$attr]) {
+						$this->updateElasticCounter($field, $this->attributes[$attr], $totalType);
+					}
+				}
+					
+				$this->insertEsProduct();
+			} else if(!$after && $before) {
+				foreach(self::$elasticUpdateFields as $field) {
+					$attr = $field . '_id';
+					if($this->attributes[$attr]) {
+						$this->updateElasticCounter($field, $this->attributes[$attr], $totalType, false);
+					}
 				}
 				
-				foreach(self::$elasticUpdateFields as $field) {
-					$attr = $field . '_id';
-					$this->updateElasticCounter($field, $this->oldAttr[$attr], $oldTotalType, false);
-					$this->updateElasticCounter($field, $this->attributes[$attr], $newTotalType);
-				}
-			} else {
-				foreach(self::$elasticUpdateFields as $field) {
-					$attr = $field . '_id';
-					if($this->oldAttr[$attr] != $this->attributes[$attr]) {
-						if($this->attributes[$attr]) {
-							$this->updateElasticCounter($field, $this->attributes[$attr], $totalType);
-						}
-						
-						if($this->oldAttr[$attr]) {
-							$this->updateElasticCounter($field, $this->oldAttr[$attr], $totalType, false);
+				$this->removeEsProduct();
+			} else if($after && $before) {
+				if($this->oldAttr['type'] != $this->attributes['type']) {
+					if($this->oldAttr['type'] == self::TYPE_FOR_SELL) {
+						$oldTotalType = self::TYPE_FOR_SELL_TOTAL;
+						$newTotalType = self::TYPE_FOR_RENT_TOTAL;
+					} else {
+						$oldTotalType = self::TYPE_FOR_RENT_TOTAL;
+						$newTotalType = self::TYPE_FOR_SELL_TOTAL;
+					}
+					
+					foreach(self::$elasticUpdateFields as $field) {
+						$attr = $field . '_id';
+						$this->updateElasticCounter($field, $this->oldAttr[$attr], $oldTotalType, false);
+						$this->updateElasticCounter($field, $this->attributes[$attr], $newTotalType);
+					}
+				} else {
+					foreach(self::$elasticUpdateFields as $field) {
+						$attr = $field . '_id';
+						if($this->oldAttr[$attr] != $this->attributes[$attr]) {
+							if($this->attributes[$attr]) {
+								$this->updateElasticCounter($field, $this->attributes[$attr], $totalType);
+							}
+							
+							if($this->oldAttr[$attr]) {
+								$this->updateElasticCounter($field, $this->oldAttr[$attr], $totalType, false);
+							}
 						}
 					}
 				}
+				
+				$this->updateEsProduct();
 			}
 		}
 		
+		$this->oldAttr = $this->attributes;
+		
 		parent::afterSave($insert, $changedAttributes);
+	}
+	
+	public function updateEsProduct() {
+		$change = array_diff($this->attributes, $this->oldAttr);
+		
+		$query = Elastic::buildQueryProduct();
+		$query->where(['`ad_product`.`id`' => $this->id]);
+		
+		$product = $query->one();
+		
+		$bulk = Elastic::buildProductDocument($product);
+		
+		$newAttrs = $bulk[1];
+		
+		$indexName = \Yii::$app->params['indexName']['product'];
+		
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/" . $this->id . "?pretty");
+		
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		
+		$result = json_decode(curl_exec($ch), true);
+
+		if($result['found']) {
+			$newLocation = $newAttrs['location'];
+			unset($newAttrs['location']);
+			$oldLocation = $result['_source']['location'];
+			unset($result['_source']['location']);
+			
+			$changedAttrs = array_diff($newAttrs, $result['_source']);
+			
+			if(array_diff($newLocation, $oldLocation)) {
+				$changedAttrs['location'] = $newLocation;
+			}
+
+			if(isset($changedAttrs['boost_time'])) {
+				if($changedAttrs['boost_time'] == 0) {
+					$changedAttrs['boost_sort'] = 0;
+				} else {
+					$changedAttrs['boost_sort'] = time();
+					
+					$params = [
+						"query" => [
+							"filtered" => [
+								"filter" => [
+									"range" => [
+										"boost_sort" => ["gt" => 0]
+									]
+								]
+							]
+						],
+						"size" => self::BOOST_SORT_LIMIT,
+						"sort" => ["boost_sort"]
+					];
+					
+					$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['product'] . '/_search');
+					curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+					curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+						
+					$boostResult = json_decode(curl_exec($ch), true);
+					
+					$hits = $boostResult['hits']['hits'];
+					
+					if($boostResult['hits']['total'] == self::BOOST_SORT_LIMIT && !in_array($this->id, ArrayHelper::getColumn($hits, '_id'))) {
+						$indexName = \Yii::$app->params['indexName']['product'];
+						$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/" . $hits[0]['_id'] . "/_update");
+						$update = [
+							"doc" => ["boost_sort" => 0]
+						];
+						curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+						curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+						curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($update));
+						curl_exec($ch);
+						curl_close($ch);
+					}
+				}
+			}
+			
+			$update = [
+				"doc" => $changedAttrs
+			];
+			
+			$indexName = \Yii::$app->params['indexName']['product'];
+			$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/" . $this->id . "/_update");
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($update));
+			curl_exec($ch);
+			curl_close($ch);
+		} else {
+			$this->insertEsProduct();
+		}
+	}
+	
+	public function removeEsProduct() {
+		$indexName = \Yii::$app->params['indexName']['product'];
+		
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/" . $this->id . "?pretty");
+		
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_exec($ch);
+		curl_close($ch);
+	}
+	
+	public function insertEsProduct() {
+		$query = Elastic::buildQueryProduct();
+		$query->where(['`ad_product`.`id`' => $this->id]);
+		
+		$product = $query->one();
+			
+		$indexName = \Yii::$app->params['indexName']['product'];
+		$bulk = Elastic::buildProductDocument($product);
+		
+		Elastic::insertProducts($indexName, Elastic::$productEsType, $bulk);
 	}
 	
 	public static function updateElasticCounter($type, $id, $totalType, $increase = true) {

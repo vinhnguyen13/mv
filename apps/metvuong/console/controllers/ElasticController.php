@@ -10,6 +10,12 @@ use common\models\SlugSearch;
 
 class ElasticController extends Controller {
 	
+	public static $where = [
+		'`ad_product`.`status`' => 1,
+		'`ad_product`.`is_expired`' => 0,
+		//'`ad_product`.`verified`' => 1
+	];
+	
 	public function actionBuildIndex() {
 		$indexName = \Yii::$app->params['indexName']['countTotal'];
 		
@@ -77,11 +83,7 @@ class ElasticController extends Controller {
 	}
 	
 	private function countProducts($countBy) {
-		$where = [
-			'status' => 1,
-			'is_expired' => 0,
-			//'verified' => 1	
-		];
+		$where = self::$where;
 		
 		$query = new Query();
 		

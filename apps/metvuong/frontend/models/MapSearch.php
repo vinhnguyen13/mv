@@ -72,96 +72,198 @@ class MapSearch extends AdProduct {
 		return '';
 	}
 	
-	public function search($args) {
-		$this->load($args);
-
-		$query = new Query();
-
-		$query->select('ad_product.boost_time, ad_product.show_home_no, ad_product.home_no, ad_product.street_id, ad_product.ward_id, ad_product.district_id, ad_product.id, ad_product.area, ad_product.price, ad_product.lng, ad_product.lat, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no');
-		$query->from('ad_product');
-		$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
-		
-		$where = [
-			'ad_product.status' => 1,
-			'ad_product.is_expired' => 0,
-			//'ad_product.verified' => 1
-		];
-		$totalInitWhere = count($where);
-		
-		if($this->street_id) {
-			$where['ad_product.street_id'] = intval($this->street_id);
-		}
-		
-		if($this->ward_id) {
-			$where['ad_product.ward_id'] = intval($this->ward_id);
-		}
+	public function search() {
+		$must = [];
 		
 		if($this->project_building_id) {
-			$where['ad_product.project_building_id'] = intval($this->project_building_id);
+			$must[] = [
+				"term" => [
+					"project_building_id" => intval($this->project_building_id)
+				]
+			];
+		} else if($this->street_id) {
+			$must[] = [
+				"term" => [
+					"city_id" => intval($this->street_id)
+				]	
+			];
+		} else if($this->ward_id) {
+			$must[] = [
+				"term" => [
+					"ward_id" => intval($this->ward_id)
+				]	
+			];
+		} else if($this->district_id) {
+			$must[] = [
+				"term" => [
+					"district_id" => intval($this->district_id)
+				]	
+			];
+		} else if($this->city_id) {
+			$must[] = [
+				"term" => [
+					"city_id" => intval($this->city_id)
+				]	
+			];
 		}
 		
-		if(count($where) == $totalInitWhere) {
-			if(!$this->district_id && !$this->city_id) {
-				$this->district_id = self::DEFAULT_DISTRICT;
-				$where['ad_product.district_id'] = self::DEFAULT_DISTRICT;
-			} else if($this->district_id) {
-				$where['ad_product.district_id'] = intval($this->district_id);
-			}
-		}
-
-		if(count($where) == $totalInitWhere) {
-			if($this->city_id) {
-				$where['ad_product.city_id'] = intval($this->city_id);
-			} else {
-				$where['ad_product.city_id'] = AdProduct::DEFAULT_CITY;
-			}
-		}
-		
-		if($this->type) {
-			$where['ad_product.type'] = intval($this->type);
-		} else {
-			$where['ad_product.type'] = AdProduct::TYPE_FOR_SELL;
-		}
+		$must[] = [
+			"term" => [
+				"type" => intval($this->type)
+			]
+		];
 		
 		if($this->category_id) {
-			$where['ad_product.category_id'] = explode(',', $this->category_id);
+			$must[] = [
+				"terms" => [
+					"category_id" => array_map('intval', explode(',', $this->category_id))
+				]
+			];
 		}
 		
-		if($this->owner) {
-			$where['ad_product.owner'] = intval($this->owner);
-		}
-		
-		$query->where($where);
-		
+		$priceRange = [];
 		if($this->price_min) {
-			$query->andWhere(['>=', 'ad_product.price', intval($this->price_min)]);
+			$priceRange['gte'] = intval($this->price_min);
 		}
-			
 		if($this->price_max) {
-			$query->andWhere(['<=', 'ad_product.price', intval($this->price_max)]);
+			$priceRange['lte'] = intval($this->price_max);
+		}
+		if(!empty($priceRange)) {
+			$must[] = [
+				"range" => [
+					"price" => $priceRange
+				]
+			];
 		}
 		
+		
+		$sizeRange = [];
 		if($this->size_min) {
-			$query->andWhere(['>=', 'ad_product.area', intval($this->size_min)]);
+			$sizeRange['gte'] = intval($this->size_min);
 		}
-		
 		if($this->size_max) {
-			$query->andWhere(['<=', 'ad_product.area', intval($this->size_max)]);
+			$sizeRange['lte'] = intval($this->size_max);
 		}
-		
-		if($this->created_before) {
-			$query->andWhere(['>=', 'ad_product.created_at', strtotime($this->created_before)]);
+		if(!empty($sizeRange)) {
+			$must[] = [
+				"range" => [
+					"area" => $sizeRange
+				]
+			];
 		}
 		
 		if($this->room_no) {
-			$query->andWhere(['>=', 'ad_product_addition_info.room_no', intval($this->room_no)]);
+			$must[] = [
+				"range" => [
+					"room_no" => [
+						"gte" => intval($this->room_no)
+					]
+				]
+			];
 		}
 		
 		if($this->toilet_no) {
-			$query->andWhere(['>=', 'ad_product_addition_info.toilet_no', intval($this->toilet_no)]);
+			$must[] = [
+				"range" => [
+					"toilet_no" => [
+						"gte" => intval($this->toilet_no)
+					]
+				]
+			];
 		}
 		
-		return $query;
+		$aggs = [];
+		
+		if($this->ra) {
+			$aggs["ra"] = [
+				"terms" => [
+					"field" => $this->ra . '_id',
+					"size" => 1000
+				]	
+			];
+		}
+		
+		if($this->rm || $this->rl) {
+			$sort = $this->order_by ? $this->order_by : '-score';
+			$doa = StringHelper::startsWith($sort, '-') ? 'desc' : 'asc';
+			$sort = str_replace('-', '', $sort);
+			
+			$sort = [
+				[
+					"boost_sort" => ["order" => "desc"]		
+				],
+				[
+					$sort => ["order" => $doa]
+				]
+			];
+		}
+		
+		if($this->rm) {
+			$aggs["rm"] = [
+				"top_hits" => [
+					"_source" => [
+						"include" => ["id", "address", "price", "area", "room_no", "toilet_no", "location", "img"]
+					],
+					"size" => 500,
+					"sort" => $sort
+				]
+			];
+		}
+		
+		if($this->rl) {
+			$limit = \Yii::$app->params['listingLimit'];
+			$page = $this->page ? $this->page : 1;
+			$offset = ($page - 1) * $limit;
+			
+			$aggs["rl"] = [
+				"top_hits" => [
+					"_source" => [
+						"include" => ["id", "boost_sort", "user_id", "category_id", "type", "address", "price", "area", "room_no", "toilet_no", "start_date", "score", "img"]
+					],
+					"size" => $limit,
+					"from" => $offset,
+					"sort" => $sort
+				]
+			];
+		}
+		
+		if($this->rect && !$this->ra) {
+			$rect = array_map('floatval', explode(',', $this->rect));
+		
+			$must[] = [
+				"geo_bounding_box" => [
+					"location" => [
+						"bottom_left" => [
+							"lat" => $rect[0],
+							"lon" => $rect[1]
+						],
+						"top_right" => [
+							"lat" => $rect[2],
+							"lon" => $rect[3]
+						]
+					]
+				]
+			];
+		}
+		
+		$params = [
+			"query" => [
+				"bool" => [
+					"must" => $must
+				]
+			],
+			"size" => 0,
+			"aggs" => $aggs
+		];
+
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['product'] . '/_search');
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			
+		$result = json_decode(curl_exec($ch), true);
+		
+		return $result;
 	}
 	
 	public function getAutoFillValue() {

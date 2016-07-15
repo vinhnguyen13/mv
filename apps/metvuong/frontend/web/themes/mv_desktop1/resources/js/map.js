@@ -275,7 +275,17 @@ Area.prototype.nextZoomLevel = function() {
  * Products
  */
 function Product(attrs) {
-	this.attrs = attrs;
+	this.attrs = {
+		toilet_no: attrs[0],
+		area: attrs[1],
+		f: attrs[2],
+		a: attrs[3],
+		price: '' + attrs[4],
+		room_no: attrs[5],
+		lat: attrs[6].lat,
+		lng: attrs[6].lon,
+		id: attrs[7]	
+	};
 }
 
 Product.prototype.getMarkerKey = function() {
@@ -288,11 +298,7 @@ Product.prototype.getPosition = function() {
 
 Product.prototype.getImage = function() {
 	if(this.attrs.f) {
-		if(this.attrs.d) {
-			return '/store/' + this.attrs.d + '/240x180/' + this.attrs.f;
-		} else {
-			return this.attrs.f.replace('745x510', '350x280');
-		}
+		return this.attrs.f;
 	} else {
 		return '/themes/metvuong2/resources/images/default-ads.jpg';
 	}
