@@ -10,7 +10,6 @@ class SearchUrlManager extends UrlManager {
 	public $enableStrictParsing = false;
 	
 	public function createUrl($params) {
-		
 		if(isset($params['params'])) {
 			$action = ($params[0] == '/ad/index1') ? \Yii::t('url', 'nha-dat-ban') : \Yii::t('url', 'nha-dat-cho-thue');
 			

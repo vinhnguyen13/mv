@@ -9,6 +9,8 @@ use vsoft\express\components\StringHelper;
 use frontend\models\MapSearch;
 use yii\web\Request;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
+use yii\db\yii\db;
 
 class MapController extends ActiveController {
 	
@@ -31,10 +33,65 @@ class MapController extends ActiveController {
 	
 	public function actionGet() {
 		$mapSearch = new MapSearch();
-		//$mapSearch->type = $this->getType();
+		$mapSearch->load(\Yii::$app->request->get());
 		
-		$query = $mapSearch->search(\Yii::$app->request->get());
-		 
+		$response = [];
+		
+		$result = $mapSearch->search();
+		
+		if($mapSearch->rl) {
+			$list = $result['aggregations']['rl']['hits'];
+				
+			$response['rl'] = $this->renderPartial('@frontend/web/themes/mv_desktop1/views/ad/_partials/side-list', ['searchModel' => $mapSearch, 'list' => $list]);
+		}
+		
+		if($mapSearch->ra) {
+			$allowArea = [
+				'city' => ['id'],
+				'district' => ['id', 'city_id'],
+				'ward' => ['id', 'district_id', 'city_id'],
+				'street' => ['id']
+			];
+			
+			if(in_array($mapSearch->ra, array_keys($allowArea))) {
+				$allowKey = $allowArea[$mapSearch->ra];
+				$key = $mapSearch->ra_k;
+				
+				if(in_array($key, $allowKey)) {
+					$areas = ArrayHelper::map($result['aggregations']['ra']['buckets'], "key", "doc_count");
+						
+					if(isset($areas[0])) {
+						unset($areas[0]);
+					}
+						
+					$table = 'ad_' . $mapSearch->ra;
+					$value = ($key == 'id') ? $mapSearch->getAttribute($mapSearch->ra . '_id') : $mapSearch->getAttribute($key);
+					
+					$areasDb = (new Query())->select("id, center, geometry, name, pre")->from($table)->where([$key => $value])->all();
+						
+					foreach ($areasDb as &$area) {
+						if(isset($areas[$area['id']])) {
+							$area['total'] = $areas[$area['id']];
+						} else {
+							$area['total'] = 0;
+						}
+					}
+						
+					$response['ra'] = $areasDb;
+				}
+			}
+		}
+		
+		if($mapSearch->rm) {
+			$products = [];
+			
+			foreach ($result['aggregations']['rm']['hits']['hits'] as $hit) {
+				$products[] = array_values($hit['_source']);
+			}
+			
+			$response['rm'] = $products;
+		}
+/*		 
 		$response = [];
 		 
 		if($mapSearch->ra) {
@@ -139,7 +196,7 @@ class MapController extends ActiveController {
 				$response['rl'] = $this->renderPartial('@frontend/web/themes/mv_desktop1/views/ad/_partials/side-list', ['searchModel' => $mapSearch, 'list' => $list]);
 			}
 		}
-		
+	*/	
 		return $response;
 	}
 	

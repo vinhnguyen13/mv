@@ -36,27 +36,31 @@ foreach ($categories as $category) {
                 <form id="frmAvg">
                     <div class="title-frm">Thành phố / Quận-Huyện / Phường-Xã</div>
                     <div class="row region">
-                        <div class="form-group col-xs-12 col-sm-6">
+                        <div class="form-group col-xs-12 col-sm-6 wrap_type">
                             <label>Hình thức</label>
                             <?=Html::dropDownList('type', null, [AdProduct::TYPE_FOR_SELL => Yii::t('ad', 'Sell'),AdProduct::TYPE_FOR_RENT => Yii::t('ad', 'Rent'),], ['class' => 'form-control search region_type', 'prompt' => "..."])?>
                         </div>
-                        <div class="form-group col-xs-12 col-sm-6">
+                        <div class="form-group col-xs-12 col-sm-6 wrap_category">
                             <label>Loại BDS</label>
                             <?=Html::dropDownList('category', null, $categoriesDropDown, ['class' => 'form-control search region_category', 'prompt' => "..."])?>
                         </div>
-                        <div class="form-group col-xs-12 col-sm-6">
+                        <div class="form-group col-xs-12 col-sm-6 wrap_project" style="display: none;">
+                            <label>Dự Án</label>
+                            <?=Html::dropDownList('project_building_id', null, [], ['class' => 'form-control search region_project', 'prompt' => "..."])?>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6 wrap_city">
                             <label>Thành Phố </label>
                             <?=Html::dropDownList('city', null, $citiesDropdown, ['class' => 'form-control search region_city', 'prompt' => "..."])?>
                         </div>
-                        <div class="form-group col-xs-12 col-sm-6" style="display: none;">
+                        <div class="form-group col-xs-12 col-sm-6 wrap_district" style="display: none;">
                             <label>Quận </label>
                             <?=Html::dropDownList('district', null, $districtDropdown, ['class' => 'form-control search region_district', 'prompt' => "..."])?>
                         </div>
-                        <div class="form-group col-xs-12 col-sm-6" style="display: none;">
+                        <div class="form-group col-xs-12 col-sm-6 wrap_wards" style="display: none;">
                             <label>Phường </label>
                             <?=Html::dropDownList('wards', null, [], ['class' => 'form-control search region_wards', 'prompt' => "..."])?>
                         </div>
-                        <div class="form-group col-xs-12 col-sm-6" style="display: none;">
+                        <div class="form-group col-xs-12 col-sm-6 wrap_streets" style="display: none;">
                             <label>Đường </label>
                             <?=Html::dropDownList('streets', null, [], ['class' => 'form-control search region_streets', 'prompt' => "..."])?>
                         </div>
@@ -96,8 +100,46 @@ foreach ($categories as $category) {
             }
         };
         $('.region_city').select2();
-
-
+        $('.region_project').select2({
+            width: '100%',
+            ajax: {
+                url: '/map/search-project',
+                dataType: 'json',
+                delay: 250,
+                data: function (params) {
+                    return {
+                        v: params.term, // search term
+                        page: params.page
+                    };
+                },
+                processResults: function (data, params) {
+                    return {
+                        results: $.map(data, function (item) {
+                            return {
+                                text: item.full_name,
+                                slug: item.full_name,
+                                id: item.id
+                            }
+                        })
+                    };
+                },
+                cache: true
+            },
+        });
+        $(document).on('change', '.region_category', function (e) {
+            if($('.region_category').val() == 6){
+                $('.wrap_project').show();
+                $('.wrap_city').hide();
+                $('.wrap_district').hide();
+                $('.wrap_wards').hide();
+                $('.wrap_streets').hide();
+            }else{
+                $('.wrap_project').hide();
+                $('.wrap_city').show();
+            }
+            $('.region_city').select2("val", "");
+            $('.region_project').select2("val", "");
+        });
 
         $(document).on('change', '.region_city', function (e) {
             var form = $('.region');
@@ -118,15 +160,16 @@ foreach ($categories as $category) {
         });
 
         $(document).on('click', '.btn-tinhnhanh', function (e) {
-            if($('.region_city').val()) {
+            if($('.region_city').val() || $('.region_project').val()) {
                 $.post('/site/avg', $('#frmAvg').serialize(), function (response) {
-                    var html = '<table class="savings-tbl"><tbody><tr class="savings-tlt"><td>Điều kiện</td><td>Avg</td></tr>';
+                    var html = '<table class="savings-tbl"><tbody><tr class="savings-tlt"><td>Điều kiện</td><td>Giá Trung Bình</td><td>Giá Trung Bình/m2</td><td>Listing</td></tr>';
                     var text = [];
                     func.pushOptionTextToArray('region_category', text);
                     func.pushOptionTextToArray('region_city', text);
                     func.pushOptionTextToArray('region_district', text);
                     var avg = response.sum / response.total;
-                    html += '<tr><td class="saving_table saving_table_left">' + text.join(', ') + '</td><td class="saving_table">' + $.number(avg) + ' VND</td></tr>';
+                    var avg_m2 = response.sum / response.sum_area;
+                    html += '<tr><td class="saving_table saving_table_left">' + text.join(', ') + '</td><td class="saving_table">' + $.number(avg) + ' VND</td><td class="saving_table">' + $.number(avg_m2) + ' VND</td><td class="saving_table">' + $.number(response.total) + '</td></tr>';
                     html += '</tbody></table>';
                     $('#inKetQua').html(html);
                 });

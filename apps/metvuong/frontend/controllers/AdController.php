@@ -322,8 +322,12 @@ class AdController extends Controller
     	}
     	
     	$mapSearch = new MapSearch();
+    	$mapSearch->load(Yii::$app->request->get());
     	
     	$mapSearch->type = $type;
+    	$mapSearch->rl = 1;
+    	$mapSearch->rm = null;
+    	$mapSearch->ra = null;
     	
     	$this->view->params['body'] = [
 			'class' => 'ad-listing'
@@ -334,24 +338,11 @@ class AdController extends Controller
 			$this->view->params['menuRent'] = ($type==2) ? true : false;
 		}
     		 
-		$query = $mapSearch->search(Yii::$app->request->get());
-    	
-		if($mapSearch->rect && $mapSearch->rm) {
-			$rect = explode(',', $mapSearch->rect);
-    	
-			$query->andWhere(['>=', 'ad_product.lat', $rect[0]]);
-			$query->andWhere(['<=', 'ad_product.lat', $rect[2]]);
-			$query->andWhere(['>=', 'ad_product.lng', $rect[1]]);
-			$query->andWhere(['<=', 'ad_product.lng', $rect[3]]);
-		}
-		
-		$mapSearch->sort($query);
-    		 
-		$list = $mapSearch->getList($query);
+		$result = $mapSearch->search();
     		 
 		$mapSearch->fetchValues();
     		 
-		return $this->render('index', ['searchModel' => $mapSearch, 'list' => $list, 'slug' => $slug]);
+		return $this->render('index', ['searchModel' => $mapSearch, 'list' => $result['aggregations']['rl']['hits'], 'slug' => $slug]);
     }
     
     public function actionSavedListing() {
@@ -487,11 +478,6 @@ class AdController extends Controller
     			if($product->validate() && $additionInfo->validate() && $contactInfo->validate()) {
     				$totalImage = empty($post['images']) ? 0 : count($post['images']);
     				
-    				$product->score = AdProduct::calcScore($product, $additionInfo, $contactInfo, $totalImage);
-    				$product->save(false);
-    				$additionInfo->save(false);
-    				$contactInfo->save(false);
-    				
     				$oldImages = ArrayHelper::map($product->adImages, 'file_name', 'id');
     				
     				if(isset($post['images'])) {
@@ -545,6 +531,11 @@ class AdController extends Controller
     					$product->adImages[$id]->delete();
     				}
     				
+    				$product->score = AdProduct::calcScore($product, $additionInfo, $contactInfo, $totalImage);
+    				$product->save(false);
+    				$additionInfo->save(false);
+    				$contactInfo->save(false);
+    				
     				$result['template'] = $this->renderPartial('_partials/update-success', ['product' => $product]);
     				$result['url'] = $product->urlDetail();
     			} else {
@@ -590,6 +581,8 @@ class AdController extends Controller
     			$totalImage = empty($post['images']) ? 0 : count($post['images']);
     			$product->score = AdProduct::calcScore($product, $additionInfo, $contactInfo, $totalImage);
     			$product->ip = Yii::$app->request->userIP;
+    			$product->status = AdProduct::STATUS_PENDING;
+    			$product->is_expired = 0;
     			$product->save(false);
     			
     			$additionInfo->product_id = $product->id;
@@ -1038,7 +1031,8 @@ class AdController extends Controller
 					$balance->save(false);
 					
 					$boost_time = $day * 86400;
-					$product->boost_time = $product->boost_time ? $product->boost_time + $boost_time : time() + $boost_time;
+					$product->boost_time = $product->boost_time ? $product->boost_time + $boost_time : $now + $boost_time;
+					$product->boost_start_time = $now;
 					if($product->boost_time > $product->end_date) {
 						$product->end_date = $product->boost_time;
 					}

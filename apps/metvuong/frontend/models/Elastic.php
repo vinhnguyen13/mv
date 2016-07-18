@@ -15,9 +15,99 @@ use yii\base\Exception;
 use vsoft\ad\models\AdProduct;
 use common\components\Slug;
 use common\components\common\components;
+use yii\db\Query;
 
 class Elastic
 {
+	public static $productEsType = 'all';
+	public static $properties = [
+		'id' => [
+			'type' => 'integer',
+			'index' => 'no'
+		],
+		'category_id' => [
+			'type' => 'byte'
+		],
+		'project_building_id' => [
+			'type' => 'integer'
+		],
+		'project_building' => [
+			'type' => 'string',
+			'index' => 'no'
+		],
+		'user_id' => [
+			'type' => 'integer'
+		],
+		'city_id' => [
+			'type' => 'integer'
+		],
+		'district_id' => [
+			'type' => 'integer'
+		],
+		'ward_id' => [
+			'type' => 'integer'
+		],
+		'street_id' => [
+			'type' => 'integer'
+		],
+		'address' => [
+			'type' => 'string',
+			'index' => 'no'
+		],
+		'type' => [
+			'type' => 'byte'
+		],
+		'area' => [
+			'type' => 'integer'
+		],
+		'price' => [
+			'type' => 'long'
+		],
+		'location' => [
+			'type' => 'geo_point'
+		],
+		'score' => [
+			'type' => 'byte'
+		],
+		'start_date' => [
+			'type' => 'integer'
+		],
+		'boost_time' => [
+			'type' => 'integer'
+		],
+		'boost_start_time' => [
+			'type' => 'integer'
+		],
+		'boost_sort' => [
+			'type' => 'integer'
+		],
+		'facade_width' => [
+			'type' => 'float'
+		],
+		'land_width' => [
+			'type' => 'float'
+		],
+		'home_direction' => [
+			'type' => 'byte'
+		],
+		'facade_direction' => [
+			'type' => 'byte'
+		],
+		'floor_no' => [
+			'type' => 'byte'
+		],
+		'room_no' => [
+			'type' => 'byte'
+		],
+		'toilet_no' => [
+			'type' => 'byte'
+		],
+		'img' => [
+			'type' => 'string',
+			'index' => 'no'
+		]
+	];
+	
 	public static $acronyms = [
 		'hcm,hồ chí minh',
 		'hn,hà nội',
@@ -38,6 +128,65 @@ class Elastic
     protected $client = null;
     public function __construct(){
         $this->connect();
+    }
+    
+    public static function buildProductDocument($product) {
+    	foreach ($product as $k => &$v) {
+    		if(is_numeric($v) && $k != 'address') {
+    			$v = floatval($v);
+    		}
+    	}
+    	
+    	$product['location'] = [
+    		'lat' => $product['lat'],
+    		'lon' => $product['lng']
+    	];
+    	
+    	$document = [];
+    	
+    	foreach (self::$properties as $field => $mapping) {
+    		if(empty($product[$field])) {
+    			if($mapping['type'] == 'string') {
+    				$document[$field] = "";
+    			} else {
+    				$document[$field] = 0;
+    			}
+    		} else {
+    			$document[$field] = $product[$field];
+    		}
+    	}
+    	
+    	$index = [
+			'index' => [
+				'_id' => intval($product['id'])
+			]
+		];
+    	
+    	return [$index, $document];
+    }
+    
+    public static function buildQueryProduct() {
+    	$query = new Query();
+    	$query->select("`ad_product`.`id`, `ad_product`.`category_id`, `ad_product`.`project_building_id`, `ad_building_project`.`name` `project_building`,
+							`ad_product`.`user_id`, `ad_product`.`city_id`, `ad_product`.`district_id`, `ad_product`.`ward_id`, `ad_product`.`street_id`, `ad_product`.`type`,
+							`ad_product`.`area`, `ad_product`.`price`, `ad_product`.`lat`, `ad_product`.`lng`, `ad_product`.`score`, `ad_product`.`start_date`, `ad_product`.`boost_time`,
+							`ad_product`.`boost_start_time`, `ad_product_addition_info`.`facade_width`, `ad_product_addition_info`.`land_width`, `ad_product_addition_info`.`home_direction`,
+							`ad_product_addition_info`.`facade_direction`, `ad_product_addition_info`.`floor_no`, `ad_product_addition_info`.`room_no`, `ad_product_addition_info`.`toilet_no`");
+    	$query->addSelect([
+    			"CONCAT_WS(', ', IF(`ad_product`.`show_home_no` = 1 AND `ad_product`.`home_no`, `ad_product`.`home_no`, NULL), IF(`ad_product`.`street_id` IS NOT NULL, CONCAT(`ad_street`.`pre`, ' ', `ad_street`.`name`), NULL)) `address`",
+    			"IF(`ad_images`.`folder` != '' OR `ad_images`.`folder` IS NULL, CONCAT('/store/', `ad_images`.`folder`, '/240x180/', `ad_images`.`file_name`), REPLACE(`ad_images`.`file_name`, '745x510', '350x280')) `img`"
+    	]);
+    		
+    	$query->from("`ad_product`");
+    	$query->leftJoin("`ad_building_project`", "`ad_building_project`.`id` = `ad_product`.`project_building_id`");
+    	$query->leftJoin("`ad_city`", "`ad_city`.`id` = `ad_product`.`city_id`");
+    	$query->leftJoin("`ad_district`", "`ad_district`.`id` = `ad_product`.`district_id`");
+    	$query->leftJoin("`ad_ward`", "`ad_ward`.`id` = `ad_product`.`ward_id`");
+    	$query->leftJoin("`ad_street`", "`ad_street`.`id` = `ad_product`.`street_id`");
+    	$query->leftJoin("`ad_product_addition_info`", "`ad_product_addition_info`.`product_id` = `ad_product`.`id`");
+    	$query->leftJoin("`ad_images`", "`ad_images`.`product_id` = `ad_product`.`id` AND `ad_images`.`order` = 0");
+    	
+    	return $query;
     }
 
     public function connect(){
@@ -523,5 +672,23 @@ class Elastic
 		}, $correctText);
 		
 		return $correctText;
+	}
+	
+	public static function insertProducts($indexName, $type, $bulk) {
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/$type/_bulk?pretty");
+		
+		$temp = [];
+		
+		foreach ($bulk as $b) {
+			$temp[] = json_encode($b);
+		}
+		
+		$bulk = implode("\n", $temp) . "\n";
+		
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $bulk);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_exec($ch);
+		curl_close($ch);
 	}
 }
