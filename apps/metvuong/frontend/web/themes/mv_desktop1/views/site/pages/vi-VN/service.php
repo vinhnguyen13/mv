@@ -76,7 +76,7 @@ use yii\helpers\Url;
 					<p>Điều này giúp việc tìm kiếm trở nên dễ dàng hơn và nhanh hơn cho bạn.</p>
 					<p><strong>Chìa khóa</strong></p>
 					<p>
-						Trên metvuong.com, tất cả những chức năng trên Metvuong.com sẽ được thanh toán bằng chìa khóa, <strong>1 chìa = 1000 VND</strong>, và bạn có thể dể dàng nạp thêm chìa qua nhiều cách khác nhau trên metvuong.com
+						Trên metvuong.com, tất cả những chức năng trên Metvuong.com sẽ được thanh toán bằng chìa khóa, <strong>1 chìa = 1000 VND</strong>, và bạn có thể dễ dàng nạp thêm chìa qua nhiều cách khác nhau trên metvuong.com
 					</p>
 					<p>
 						<img class="w-70" src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/s-1.jpg' ?>" alt="">
