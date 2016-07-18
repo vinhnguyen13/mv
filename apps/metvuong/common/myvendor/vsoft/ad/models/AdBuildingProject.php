@@ -160,16 +160,18 @@ class AdBuildingProject extends ABP
 				$this->progress = json_encode($this->progress, JSON_UNESCAPED_UNICODE);
 			}
 			
-			if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
-				$slug = new Slug();
-				
-				$this->slug = $this->slug . '-' . $slug->slugify($this->city->name);
-		
+			if($insert) {
 				if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
-					$this->slug = $this->slug . '-' . $slug->slugify($this->district->name);
-					 
+					$slug = new Slug();
+				
+					$this->slug = $this->slug . '-' . $slug->slugify($this->city->name);
+				
 					if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
-						$this->slug = $this->slug . uniqid();
+						$this->slug = $this->slug . '-' . $slug->slugify($this->district->name);
+				
+						if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
+							$this->slug = $this->slug . uniqid();
+						}
 					}
 				}
 			}
