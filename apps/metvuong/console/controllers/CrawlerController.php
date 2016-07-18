@@ -2,6 +2,10 @@
 namespace console\controllers;
 
 use console\models\Batdongsan;
+use console\models\batdongsan\CopyListing;
+use console\models\batdongsan\CopyProject;
+use console\models\batdongsan\ImportProject;
+use console\models\batdongsan\Project;
 use console\models\BatdongsanV2;
 use console\models\Homefinder;
 use console\models\Muaban_net;
@@ -63,9 +67,27 @@ class CrawlerController extends Controller
 
     // price = 1 get products have price  > 0
     // build = true build elastic
-    public function actionCopytomain($price=1, $build='build=false')
+//    public function actionCopytomain($price=1, $build='build=false')
+//    {
+//        BatdongsanV2::find()->copyToMainDb($price, $build);
+//    }
+
+    public $valid;
+    public $city;
+    public function options()
     {
-        BatdongsanV2::find()->copyToMainDb($price, $build);
+        return ['valid','city'];
+    }
+    public function optionAliases()
+    {
+        return ['valid' => 'valid', 'city' => 'city'];
+    }
+
+    // php yii crawler/copytomain -valid=1
+    public function actionCopytomain()
+    {
+        $validate = intval($this->valid);
+        CopyListing::find()->copyToMainDB($validate);
     }
 
     // Agent Batdongsan
@@ -89,14 +111,29 @@ class CrawlerController extends Controller
     }
 
     // Get Projects
-    public function actionProjectbds(){
-        BatdongsanV2::find()->getProjects();
+//    public function actionProjectbds(){
+//        BatdongsanV2::find()->getProjects();
+//    }
+//    public function actionImportprojectbds(){
+//        BatdongsanV2::find()->importProjects();
+//    }
+//    public function actionCopyProject(){
+//        BatdongsanV2::find()->copyProjects();
+//    }
+
+    public function actionProject()
+    {
+        Project::find()->getProjects();
     }
-    public function actionImportprojectbds(){
-        BatdongsanV2::find()->importProjects();
+
+    public function actionImportProject()
+    {
+        ImportProject::find()->importProjects();
     }
-    public function actionCopyProject(){
-        BatdongsanV2::find()->copyProjects();
+
+    public function actionCopyProject()
+    {
+        CopyProject::find()->copyProjects();
     }
 
     // db chinh

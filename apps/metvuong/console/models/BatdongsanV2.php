@@ -33,22 +33,21 @@ class BatdongsanV2 extends Component
 {
 //    const DOMAIN = 'http://webcache.googleusercontent.com/search?q=cache:batdongsan.com.vn';
     const DOMAIN = 'batdongsan.com.vn';
-    protected $domain = 'http://batdongsan.com.vn';
+    public $domain = 'http://batdongsan.com.vn';
 
-    protected $types = ['nha-dat-ban-quan-1','nha-dat-ban-quan-2','nha-dat-ban-quan-3','nha-dat-ban-quan-4','nha-dat-ban-quan-5','nha-dat-ban-quan-6',
+    public $types = ['nha-dat-ban-quan-1','nha-dat-ban-quan-2','nha-dat-ban-quan-3','nha-dat-ban-quan-4','nha-dat-ban-quan-5','nha-dat-ban-quan-6',
         'nha-dat-ban-quan-7','nha-dat-ban-quan-8', 'nha-dat-ban-quan-9','nha-dat-ban-quan-10','nha-dat-ban-quan-11','nha-dat-ban-quan-12',
         'nha-dat-ban-binh-chanh','nha-dat-ban-binh-tan','nha-dat-ban-binh-thanh','nha-dat-ban-can-gio','nha-dat-ban-cu-chi','nha-dat-ban-go-vap',
         'nha-dat-ban-hoc-mon','nha-dat-ban-nha-be','nha-dat-ban-tan-binh','nha-dat-ban-tan-phu','nha-dat-ban-phu-nhuan','nha-dat-ban-thu-duc'];
 
-    protected $rent_types = ['nha-dat-cho-thue-quan-1','nha-dat-cho-thue-quan-2','nha-dat-cho-thue-quan-3','nha-dat-cho-thue-quan-4','nha-dat-cho-thue-quan-5','nha-dat-cho-thue-quan-6',
+    public $rent_types = ['nha-dat-cho-thue-quan-1','nha-dat-cho-thue-quan-2','nha-dat-cho-thue-quan-3','nha-dat-cho-thue-quan-4','nha-dat-cho-thue-quan-5','nha-dat-cho-thue-quan-6',
         'nha-dat-cho-thue-quan-7','nha-dat-cho-thue-quan-8', 'nha-dat-cho-thue-quan-9','nha-dat-cho-thue-quan-10','nha-dat-cho-thue-quan-11','nha-dat-cho-thue-quan-12',
         'nha-dat-cho-thue-binh-chanh','nha-dat-cho-thue-binh-tan','nha-dat-cho-thue-binh-thanh','nha-dat-cho-thue-can-gio','nha-dat-cho-thue-cu-chi','nha-dat-cho-thue-go-vap',
         'nha-dat-cho-thue-hoc-mon','nha-dat-cho-thue-nha-be','nha-dat-cho-thue-tan-binh','nha-dat-cho-thue-tan-phu','nha-dat-cho-thue-phu-nhuan','nha-dat-cho-thue-thu-duc'];
-    protected $time_start = 0;
-    protected $time_end = 0;
+    public $time_start = 0;
+    public $time_end = 0;
 
-    protected $projects=['khu-can-ho','cao-oc-van-phong','khu-do-thi-moi','khu-thuong-mai-dich-vu','khu-phuc-hop','khu-dan-cu','khu-du-lich-nghi-duong','khu-cong-nghiep','du-an-khac'];
-//    protected $projects=['khu-do-thi-moi'];
+    public $projects=['khu-can-ho','cao-oc-van-phong','khu-do-thi-moi','khu-thuong-mai-dich-vu','khu-phuc-hop','khu-dan-cu','khu-du-lich-nghi-duong','khu-cong-nghiep','du-an-khac'];
 
     public $tabProject = [
         1 => 'tong-quan',
@@ -705,11 +704,12 @@ class BatdongsanV2 extends Component
                                     $contactArray[$count_file] = $value[$filename]["contact"];
 
                                     $project_id = null;
-                                    $home_no = null;
-                                    $city_id = null;
-                                    $district_id = null;
-                                    $ward_id = null;
-                                    $street_id = null;
+                                    $city_id = $this->getCityId2($value[$filename]["city"]);
+                                    $district_id = $this->getDistrictId2($value[$filename]["district"], $city_id);
+                                    $ward_id = $this->getWardId2($value[$filename]["ward"], $district_id);
+                                    $street_id = $this->getStreetId2($value[$filename]["street"], $district_id);
+                                    $home_no = $value[$filename]["home_no"];
+
                                     $lat = $value[$filename]["lat"];
                                     $lng = $value[$filename]["lng"];
 
@@ -729,16 +729,10 @@ class BatdongsanV2 extends Component
                                             $street_id = $project->street_id;
                                             $home_no = $project->home_no;
                                             $lat = $project->lat;
-                                            $lng - $project->lng;
+                                            $lng = $project->lng;
                                             $count_project++;
                                             print_r(" - " . $project_name);
                                         }
-                                    } else {
-                                        $city_id = $this->getCityId2($value[$filename]["city"]);
-                                        $district_id = $this->getDistrictId2($value[$filename]["district"], $city_id);
-                                        $ward_id = $this->getWardId2($value[$filename]["ward"], $district_id);
-                                        $street_id = $this->getStreetId2($value[$filename]["street"], $district_id);
-                                        $home_no = $value[$filename]["home_no"];
                                     }
 
                                     $area = $value[$filename]["dientich"];
