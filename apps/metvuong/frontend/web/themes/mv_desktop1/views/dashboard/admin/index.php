@@ -29,6 +29,7 @@ if(!empty($dateRange)){
     $query->select(['count(*) total', $month_year." today"])->from('user')
         ->where(['>', 'created_at', $from])
         ->andWhere(['<', 'created_at', $to])
+        ->andWhere('updated_at > created_at')
         ->groupBy('today')->orderBy('created_at DESC');
     $stats_register = $query->all();
     $totalRegister = 0;
@@ -45,6 +46,7 @@ if(!empty($dateRange)){
     $query->select(['count(*) total', $month_year." today"])->from('user')
         ->where(['>', 'updated_at', $from])
         ->andWhere(['<', 'updated_at', $to])
+        ->andWhere('updated_at > created_at')
         ->groupBy('today')->orderBy('updated_at DESC');
     $stats_login = $query->all();
     $totalLogin = 0;
