@@ -162,13 +162,15 @@ class Metvuong extends Component
             $fileName = uniqid() . '.' . $ext[$length];
             $filePath = $folder . DIRECTORY_SEPARATOR . $fileName;
             $content = file_get_contents($link);
-            file_put_contents($filePath, $content);
+            if($content) {
+                file_put_contents($filePath, $content);
 
-            $helper->makeFolderSizes($folder);
-            $helper->resize($filePath);
+                $helper->makeFolderSizes($folder);
+                $helper->resize($filePath);
 
-            $folderColumn = str_replace("\\", "/", $folderColumn);
-            return [$fileName, $folderColumn];
+                $folderColumn = str_replace("\\", "/", $folderColumn);
+                return [$fileName, $folderColumn];
+            }
         }
         return null;
     }
