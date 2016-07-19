@@ -3917,7 +3917,7 @@ html.mm-opening .mm-slideout {
 }
 .infor-agent {
     margin-bottom: 20px;
-    display: inline-block;
+    /* display: inline-block; */
 }
 .chat-btn,
 .email-btn {
@@ -11819,10 +11819,6 @@ label:hover {
 }
 #listing-list > ul > li a.vip {
     border: 3px solid #d40000;
-    border-top: none;
-}
-#listing-list > ul > li:first-child a.vip {
-    border-top: 3px solid #d40000;
 }
 @media (max-width: 985px) {
     #listing-list .pic-intro {
@@ -13841,6 +13837,12 @@ ul.cardList li {
     #listing-list > ul > li {
         width: 100%;
         padding: 0;
+    }
+    #listing-list > ul > li a.vip {
+        border-top: none;
+    }
+    #listing-list > ul > li:first-child a.vip {
+        border-top: 3px solid #d40000;
     }
     #listing-list > ul > li a .pic-intro {
         position: static;
