@@ -19,22 +19,27 @@ class BatdongsanController extends Controller
     // get listing nha-dat-ban
     public function actionListing()
     {
-        Listing::find()->parse();
+        if($this->city == 'hcm')
+            $this->city = 'ho-chi-minh';
+        Listing::find()->parse($this->city);
     }
     // get listing nha-dat-cho-thue
     public function actionRentListing()
     {
-        Listing::find()->parseRent();
+        if($this->city == 'hcm')
+            $this->city = 'ho-chi-minh';
+        Listing::find()->parseRent($this->city);
     }
 
     public $valid;
+    public $city;
     public function options()
     {
-        return ['valid'];
+        return ['valid','city'];
     }
     public function optionAliases()
     {
-        return ['valid' => 'valid'];
+        return ['valid' => 'valid', 'city' => 'city'];
     }
     // php yii batdongsan/copy-listing -valid=1
     public function actionCopyListing()
