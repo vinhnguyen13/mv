@@ -31,6 +31,8 @@ use frontend\models\Tracking;
 	
 	$pages = new Pagination(['totalCount' => $total, 'defaultPageSize' => $limit, 'route' => '/ad/index' . $searchModel->type, 'urlManager' => new SearchUrlManager()]);
 	
+	$tracking = false;
+	
 	if(\Yii::$app->params['tracking']['all']) {
 		$tracking = (!empty($searchModel->project_building_id) || ((!empty($searchModel->ward_id) || !empty($searchModel->street_id)) && (!empty($searchModel->room_no) || !empty($searchModel->price_min) || !empty($searchModel->price_max)))) && \Yii::$app->user->identity;
 		$userId = \Yii::$app->user->id;

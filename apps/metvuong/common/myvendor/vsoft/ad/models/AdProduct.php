@@ -111,15 +111,19 @@ class AdProduct extends AP
 	}
 	
 	public function beforeSave($insert) {
+		$now = time();
+		
 		if($insert) {
-			$now = time();
-			
 			$this->created_at = $this->created_at ? $this->created_at : $now;
 			$this->updated_at = $this->updated_at ? $this->updated_at : $now;
 			$this->start_date = $this->start_date ? $this->start_date : $now;
 			$this->end_date = $now + (self::EXPIRED * 30);
 		} else {
-			$this->updated_at = time();
+			$this->updated_at = $now;
+			
+			if($this->end_date < $now) {
+				$this->is_expired = 1;
+			}
 		}
 		
 		if($this->area) {

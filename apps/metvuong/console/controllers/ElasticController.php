@@ -32,7 +32,7 @@ class ElasticController extends Controller {
 		
 		$this->createIndex($indexName);
 		
-		$this->build('city_id', ['`name` AS `full_name`', '`ad_city`.`id` AS `city_id`']);
+		$this->build('city_id', ['`name`', '`name` AS `full_name`', '`ad_city`.`id` AS `city_id`']);
 		$this->build('district_id', [
 			"`ad_district`.`city_id`",
 			"@district_name:=TRIM(CONCAT(`ad_district`.`pre`, ' ', `ad_district`.`name`)) AS `name`",

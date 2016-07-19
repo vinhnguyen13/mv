@@ -11,6 +11,8 @@ use frontend\models\Elastic;
 use common\models\common\models;
 use vsoft\ad\models\AdDistrict;
 use yii\db\Query;
+use yii\db\yii\db;
+use yii\helpers\ArrayHelper;
 
 class ProductController extends Controller {
 	
@@ -23,32 +25,168 @@ class ProductController extends Controller {
 		}
 	}
 	
-	public function actionCheckExpired() {
+	public function actionUpdate() {
+		$this->checkExpired();
+		$this->checkEndBoost();
+	}
+	
+	public function checkExpired() {
 		$now = time();
-		$products = AdProduct::find()->where("`end_date` < {$now} AND `is_expired` = 0")->limit(1000)->asArray(true)->all();
+		$limit = 1000;
 		
-		$connection = \Yii::$app->db;
+		$updateCounter = [
+			'city' => [],
+			'district' => [],
+			'ward' => [],
+			'street' => [],
+			'project_building' => []
+		];
 		
-		foreach ($products as $product) {
-			$connection->createCommand()->update('ad_product', ['is_expired' => 1], 'id = ' . $product['id'])->execute();
+		$deleteProducts = [];
+		
+		for($i = 0; true; $i += $limit) {
+			$products = (new Query())->select("`id`, `type`, `city_id`, `district_id`, `ward_id`, `street_id`, `project_building_id`")->from('ad_product')->where("`end_date` < {$now} AND `is_expired` = 0 AND `status` = " . AdProduct::STATUS_ACTIVE)->limit($limit)->offset($i)->all();
 			
-			$totalType = ($product['type'] == AdProduct::TYPE_FOR_SELL) ? AdProduct::TYPE_FOR_SELL_TOTAL : AdProduct::TYPE_FOR_RENT_TOTAL;
+			$deleteProducts = array_merge($deleteProducts, ArrayHelper::getColumn($products, 'id'));
 			
-			AdProduct::updateElasticCounter('city', $product['city_id'], $totalType, false);
-			AdProduct::updateElasticCounter('district', $product['district_id'], $totalType, false);
-			
-			if($product['ward_id']) {
-				AdProduct::updateElasticCounter('ward', $product['ward_id'], $totalType, false);
+			foreach ($products as $product) {
+				foreach ($updateCounter as $type => &$bulk) {
+					$termId = $product[$type . '_id'];
+					
+					if($termId) {
+						if(isset($bulk[$termId])) {
+							if($product['type'] == AdProduct::TYPE_FOR_SELL) {
+								$bulk[$termId][AdProduct::TYPE_FOR_SELL_TOTAL] += 1;
+							} else {
+								$bulk[$termId][AdProduct::TYPE_FOR_RENT_TOTAL] += 1;
+							}
+						} else {
+							if($product['type'] == AdProduct::TYPE_FOR_SELL) {
+								$bulk[$termId][AdProduct::TYPE_FOR_SELL_TOTAL] = 1;
+							} else {
+								$bulk[$termId][AdProduct::TYPE_FOR_RENT_TOTAL] = 1;
+							}
+						}
+					}
+				}
 			}
-			if($product['street_id']) {
-				AdProduct::updateElasticCounter('street', $product['street_id'], $totalType, false);
-			}
-			if($product['project_building_id']) {
-				AdProduct::updateElasticCounter('project_building', $product['project_building_id'], $totalType, false);
+			
+			if(count($products) < $limit) {
+				break;
 			}
 		}
 		
-		echo 'Update Total: ' . count($products);
+		if(!empty($deleteProducts)) {
+			/*
+			 * Delete DB
+			 */
+			$connection = \Yii::$app->db;
+			$connection->createCommand()->update('ad_product', ['is_expired' => 1], ['id' => $deleteProducts])->execute();
+			
+			/*
+			 * Delete Product Elastic
+			*/
+			$deleteBulk = array_map(function($deleteProduct){
+				return '{"delete":{"_id":"' . $deleteProduct . '"}}';
+			}, $deleteProducts);
+			
+			$deleteBulk = implode("\n", $deleteBulk) . "\n";
+		
+			$indexName = \Yii::$app->params['indexName']['product'];
+			$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/_bulk");
+		
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $deleteBulk);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_exec($ch);
+			curl_close($ch);
+		
+			/*
+			 * Update Counter
+			*/
+			$updateBulk = [];
+			foreach ($updateCounter as $type => $uc) {
+				foreach ($uc as $id => $total) {
+					foreach ($total as $t => $count) {
+						$updateBulk[] = '{ "update" : { "_id" : "' . $id . '", "_type" : "' . $type . '"} }';
+						$updateBulk[] = '{ "script" : { "inline": "ctx._source.' . $t . ' -= ' . $count . '"} }';
+					}
+				}
+			}
+			$updateBulk = implode("\n", $updateBulk) . "\n";
+			$indexName = \Yii::$app->params['indexName']['countTotal'];
+			$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/_bulk");
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $updateBulk);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_exec($ch);
+			curl_close($ch);
+		}
+	}
+	
+	public function checkEndBoost() {
+		$now = time();
+		$limit = 1000;
+		
+		$endBoosts = [];
+		
+		for($i = 0; true; $i += $limit) {
+			$products = (new Query())->select("`id`")->from('ad_product')->where("`boost_time` < $now AND `boost_time` > 0" )->limit($limit)->offset($i)->all();
+				
+			$endBoosts = array_merge($endBoosts, ArrayHelper::getColumn($products, 'id'));
+				
+			if(count($products) < $limit) {
+				break;
+			}
+		}
+		
+		$connection = \Yii::$app->db;
+		$connection->createCommand()->update('ad_product', ['boost_time' => 0, 'boost_start_time' => null], ['id' => $endBoosts])->execute();
+		
+		/*
+		 * Update Product Elastic
+		 */
+		
+		$params = [
+			"query" => [
+				"filtered" => [
+					"filter" => [
+						"range" => [
+							"boost_sort" => ["gt" => 0]
+						]
+					]
+				]
+			],
+			"sort" => ["boost_sort"]
+		];
+		
+		$indexName = \Yii::$app->params['indexName']['product'];
+			
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . $indexName . '/_search');
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		
+		$boostResult = json_decode(curl_exec($ch), true);
+		
+		
+		$updateBoosts = array_intersect($endBoosts, ArrayHelper::getColumn($boostResult['hits']['hits'], '_id'));
+		$updateBulk = [];
+		
+		foreach ($updateBoosts as $id) {
+			$updateBulk[] = '{ "update" : { "_id" : "' . $id . '" } }';
+			$updateBulk[] = '{ "doc" : {"boost_sort" : 0, "boost_time": 0, "boost_start_time": 0} }';
+		}
+		
+		$updateBulk = implode("\n", $updateBulk) . "\n";
+		
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/_bulk");
+		
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $updateBulk);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_exec($ch);
+		curl_close($ch);
 	}
 
     public function actionCheckScore(){
