@@ -348,7 +348,32 @@ class AdProduct extends AP
 					$changedAttrs['boost_sort'] = 0;
 				} else {
 					$changedAttrs['boost_sort'] = time();
-					
+					/*
+					$params = [
+						"query" => [
+							"filtered" => [
+								"filter" => [
+									"bool" => [
+										"must" => [
+											[
+												"range" => [
+														"boost_start_time" => ["gt" => 0]
+												]
+											],
+											[
+												"term" => [
+													"type" => $this->type
+												]
+											]
+										]
+									]
+								]
+							]
+						],
+						"size" => self::BOOST_SORT_LIMIT,
+						"sort" => ["boost_sort"]
+					];
+					*/
 					$params = [
 						"query" => [
 							"filtered" => [
