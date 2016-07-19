@@ -326,8 +326,12 @@ class AdController extends Controller
     	
     	$mapSearch->type = $type;
     	$mapSearch->rl = 1;
+    	
+    	if(!$mapSearch->rm) {
+    		$mapSearch->rect = null;
+    	}
+    	
     	$mapSearch->rm = null;
-    	$mapSearch->ra = null;
     	
     	$this->view->params['body'] = [
 			'class' => 'ad-listing'
