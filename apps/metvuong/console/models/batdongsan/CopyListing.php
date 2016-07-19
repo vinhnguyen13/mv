@@ -27,21 +27,17 @@ class CopyListing extends Component
     }
 
     /* End date = Start date Db Crawl + 30 days */
-    public function copyToMainDB($validate=0){
+    public function copyToMainDB($validate=0, $limit=300){
         $begin = time();
-        $models = \vsoft\craw\models\AdProduct::find()
-            ->where(['not', ['file_name' => null]])
-            ->andWhere(['product_main_id' => 0]);
+        $sql = "file_name is not null and product_main_id = 0 ";
 
         if($validate == 1) {
-            $models = $models->andWhere('price > :p',[':p' => 0])
-                ->andWhere('area > :a',[':a' => 0])
-                ->andWhere('city_id > :c',[':c' => 0])
-                ->andWhere('district_id > :d',[':d' => 0])
-                ->andWhere('ward_id > :w',[':w' => 0])
-                ->andWhere('street_id > :s',[':s' => 0]);
+            $sql = $sql ." and price > 0 and area > 0 and city_id > 0 and district_id > 0 and ward_id > 0 and street_id > 0 and (is_expired is null or is_expired = 0)";
         }
-        $models = $models->limit(300)->orderBy(['id' => SORT_ASC])->all();
+
+        $models = $models = \vsoft\craw\models\AdProduct::find()
+            ->where($sql)->limit($limit)->orderBy(['id' => SORT_ASC])->all();
+
         if(count($models) > 0){
             $no = 0;
             foreach ($models as $key=>$model) {
@@ -81,6 +77,12 @@ class CopyListing extends Component
                 }
 
                 $end_date = strtotime('+30 days', $model->start_date);
+                if($end_date < time()) {
+                    $model->is_expired = 1;
+                    $model->save(false);
+                    print_r(" is expired");
+                    continue;
+                }
 
                 $record = [
                     'category_id' => $model->category_id,
