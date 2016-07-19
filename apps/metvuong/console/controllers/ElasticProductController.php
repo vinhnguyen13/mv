@@ -47,7 +47,12 @@ class ElasticProductController extends Controller {
 			}
 		}
 
-		$productsBoost = (new Query())->from('`ad_product`')->where(ElasticController::$where)->andWhere(['>', 'boost_start_time', 0])->limit(AdProduct::BOOST_SORT_LIMIT)->orderBy('boost_start_time DESC')->all();
+		$this->updateBoost(AdProduct::TYPE_FOR_SELL);
+		$this->updateBoost(AdProduct::TYPE_FOR_RENT);
+	}
+	
+	public function updateBoost($type) {
+		$productsBoost = (new Query())->from('`ad_product`')->where(ElasticController::$where)->andWhere(['type' => $type])->andWhere(['>', 'boost_start_time', 0])->limit(AdProduct::BOOST_SORT_LIMIT)->orderBy('boost_start_time DESC')->all();
 		foreach ($productsBoost as $productBoost) {
 			$indexName = \Yii::$app->params['indexName']['product'];
 			$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/" . $productBoost['id'] . "/_update");
