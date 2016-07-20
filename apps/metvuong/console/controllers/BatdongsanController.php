@@ -33,19 +33,25 @@ class BatdongsanController extends Controller
 
     public $valid;
     public $city;
+    public $limit;
     public function options()
     {
-        return ['valid','city'];
+        return ['valid','city','limit'];
     }
     public function optionAliases()
     {
-        return ['valid' => 'valid', 'city' => 'city'];
+        return ['valid' => 'valid', 'city' => 'city', 'limit' => 'limit'];
     }
     // php yii batdongsan/copy-listing -valid=1
     public function actionCopyListing()
     {
         $validate = intval($this->valid);
-        CopyListing::find()->copyToMainDB($validate);
+        $copy_limit = $this->limit == null ? 300 : (intval($this->limit) > 300 ? 300 : intval($this->limit));
+        if($copy_limit > 0)
+            CopyListing::find()->copyToMainDB($validate,$copy_limit);
+        else {
+            print_r("\n How many listing to copy? \n Ex: php yii crawler/copytomain -valid=1 -limit=300\n");
+        }
     }
 
     // get project

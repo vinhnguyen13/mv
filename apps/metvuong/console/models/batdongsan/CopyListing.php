@@ -214,7 +214,7 @@ class CopyListing extends Component
                                 "lon" => empty($lng) ? 0 : $lng,
                             ],
                             "score" => empty($score) ? 0 : $score,
-                            "start_date" => $record['price'],
+                            "start_date" => $record['start_date'],
                             "boost_time" => 0,
                             "boost_start_time" => 0,
                             "boost_sort" => 0,

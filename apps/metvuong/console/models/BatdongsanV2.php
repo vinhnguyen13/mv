@@ -23,7 +23,6 @@ use vsoft\ad\models\AdWard;
 use vsoft\craw\models\AdAgent;
 use vsoft\craw\models\AdBuildingProject;
 use vsoft\craw\models\AdInvestor;
-use vsoft\craw\models\AdProductToolMap;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
@@ -228,7 +227,7 @@ class BatdongsanV2 extends Component
                     }
 
                     if ($checkExists == false) {
-                        $res = $this->getProjectDetail($type, $item->href, $product_type, $path_folder);
+                        $res = $this->getProductDetail($type, $item->href, $product_type, $path_folder);
                         if (!empty($res)) {
                             $log["files"][$sequence_id] = $res;
                             $log["last_id"] = $sequence_id;
@@ -251,7 +250,7 @@ class BatdongsanV2 extends Component
         return null;
     }
 
-    public function getProjectDetail($type, $href, $product_type, $path_folder)
+    public function getProductDetail($type, $href, $product_type, $path_folder)
     {
         $folder = $product_type == 1 ? "files" : "rent_files";
         $page = $this->getUrlContent(self::DOMAIN . $href);
@@ -688,9 +687,13 @@ class BatdongsanV2 extends Component
                             }
                             $filename = $files[$i];
                             $filePath = $path . "/" . $filename;
-                            if (in_array($filename, $log_import["files"])) {
+//                            if (in_array($filename, $log_import["files"])) {
+//                                continue;
+//                            }
+                            if($this->checkFileNameExists($filename)){
                                 continue;
-                            } else {
+                            }
+                            else {
                                 if (file_exists($filePath)) {
                                     print_r("\n" . $count_file . " {$type}: {$filename}");
                                     $value = $this->parseDetail($filePath);
@@ -2907,6 +2910,15 @@ class BatdongsanV2 extends Component
         $from = '/'.preg_quote($from, '/').'/';
 
         return preg_replace($from, $to, $subject, 1);
+    }
+
+    public function checkFileNameExists($file_name){
+        if(!empty($file_name)) {
+            $productCount = \vsoft\craw\models\AdProduct::find()->where(['file_name' => $file_name])->count();
+            if ($productCount > 0)
+                return true;
+        }
+        return false;
     }
 
 }
