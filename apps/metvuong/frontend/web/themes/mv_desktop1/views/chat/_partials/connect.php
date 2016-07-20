@@ -11,7 +11,7 @@ if(!Yii::$app->user->isGuest) {
         "var chat_url = '".Url::to(['chat/with'])."';"
     ;
     if(Yii::$app->request->isSecureConnection){
-//        $BOSH_SERVICE = 'https://metvuong.com:5291/wating';
+//        $BOSH_SERVICE = 'https://metvuong.com:5281/wating';
         $BOSH_SERVICE = 'wss://metvuong.com:5291/wating';
     }else{
 //        $BOSH_SERVICE = 'http://metvuong.com:5280/wating';
