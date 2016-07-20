@@ -17,6 +17,26 @@ class ElasticController extends Controller {
 		//'`ad_product`.`verified`' => 1
 	];
 	
+	public function actionListIndex() {
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/_cat/indices?v');
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		
+		$result = curl_exec($ch);
+		
+		echo $result;
+	}
+	
+	public function actionDeleteIndex($indexName) {
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . $indexName);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		
+		$result = curl_exec($ch);
+		
+		echo $result;
+	}
+	
 	public function actionBuildIndex() {
 		$indexName = \Yii::$app->params['indexName']['countTotal'];
 		
