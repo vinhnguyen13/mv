@@ -78,11 +78,6 @@ class ProductController extends Controller {
 		}
 		
 		if(!empty($deleteProducts)) {
-			/*
-			 * Delete DB
-			 */
-			$connection = \Yii::$app->db;
-			$connection->createCommand()->update('ad_product', ['is_expired' => 1], ['id' => $deleteProducts])->execute();
 			
 			/*
 			 * Delete Product Elastic
@@ -106,10 +101,12 @@ class ProductController extends Controller {
 			 * Update Counter
 			*/
 			$updateBulk = [];
+			$retryOnConflict = Elastic::RETRY_ON_CONFLICT;
+			
 			foreach ($updateCounter as $type => $uc) {
 				foreach ($uc as $id => $total) {
 					foreach ($total as $t => $count) {
-						$updateBulk[] = '{ "update" : { "_id" : "' . $id . '", "_type" : "' . $type . '"} }';
+						$updateBulk[] = '{ "update" : { "_id" : "' . $id . '", "_type" : "' . $type . '", "_retry_on_conflict": ' . $retryOnConflict . ' } }';
 						$updateBulk[] = '{ "script" : { "inline": "ctx._source.' . $t . ' -= ' . $count . '"} }';
 					}
 				}
@@ -122,6 +119,12 @@ class ProductController extends Controller {
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_exec($ch);
 			curl_close($ch);
+			
+			/*
+			 * Delete DB
+			 */
+			$connection = \Yii::$app->db;
+			$connection->createCommand()->update('ad_product', ['is_expired' => 1], ['id' => $deleteProducts])->execute();
 		}
 	}
 	
@@ -131,83 +134,52 @@ class ProductController extends Controller {
 		
 		$endBoosts = [];
 		
-		for($i = 0; true; $i += $limit) {
-			$products = (new Query())->select("`id`")->from('ad_product')->where("`boost_time` < $now AND `boost_time` > 0" )->limit($limit)->offset($i)->all();
-				
-			$endBoosts = array_merge($endBoosts, ArrayHelper::getColumn($products, 'id'));
-				
-			if(count($products) < $limit) {
-				break;
-			}
-		}
-		
-		/*
-		 * Update DB
-		 */
 		$connection = \Yii::$app->db;
-		$connection->createCommand()->update('ad_product', ['boost_time' => 0, 'boost_start_time' => null], ['id' => $endBoosts])->execute();
+		$transaction = $connection->beginTransaction();
 		
-		/*
-		 * Update Elastic
-		 */
-		$updateBulk = [];
-		
-		foreach ($endBoosts as $id) {
-			$updateBulk[] = '{ "update" : { "_id" : "' . $id . '" } }';
-			$updateBulk[] = '{ "doc" : {"boost_sort" : 0, "boost_time": 0, "boost_start_time": 0} }';
-		}
-		
-		$updateBulk = implode("\n", $updateBulk) . "\n";
-		
-		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/_bulk");
-		
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $updateBulk);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_exec($ch);
-		curl_close($ch);
-		/*
-		$params = [
-			"query" => [
-				"filtered" => [
-					"filter" => [
-						"range" => [
-							"boost_sort" => ["gt" => 0]
-						]
-					]
-				]
-			],
-			"sort" => ["boost_sort"]
-		];
-		
-		$indexName = \Yii::$app->params['indexName']['product'];
+		try {
+			for($i = 0; true; $i += $limit) {
+				$products = $connection->createCommand("SELECT `id` FROM `ad_product` WHERE `boost_time` < $now AND `boost_time` > 0 LIMIT $i,1000 FOR UPDATE")->queryAll();
 			
-		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . $indexName . '/_search');
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		
-		$boostResult = json_decode(curl_exec($ch), true);
-		
-		
-		$updateBoosts = array_intersect($endBoosts, ArrayHelper::getColumn($boostResult['hits']['hits'], '_id'));
-		$updateBulk = [];
-		
-		foreach ($updateBoosts as $id) {
-			$updateBulk[] = '{ "update" : { "_id" : "' . $id . '" } }';
-			$updateBulk[] = '{ "doc" : {"boost_sort" : 0, "boost_time": 0, "boost_start_time": 0} }';
+				$endBoosts = array_merge($endBoosts, ArrayHelper::getColumn($products, 'id'));
+			
+				if(count($products) < $limit) {
+					break;
+				}
+			}
+			
+			if(!empty($endBoosts)) {
+				/*
+				 * Update DB
+				 */
+				$connection = \Yii::$app->db;
+				$connection->createCommand()->update('ad_product', ['boost_time' => 0, 'boost_start_time' => null], ['id' => $endBoosts])->execute();
+					
+				/*
+				 * Update Elastic
+				*/
+				$updateBulk = [];
+					
+				foreach ($endBoosts as $id) {
+					$updateBulk[] = '{ "update" : { "_id" : "' . $id . '" } }';
+					$updateBulk[] = '{ "doc" : {"boost_sort" : 0, "boost_time": 0, "boost_start_time": 0} }';
+				}
+					
+				$updateBulk = implode("\n", $updateBulk) . "\n";
+					
+				$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/_bulk");
+					
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $updateBulk);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_exec($ch);
+				curl_close($ch);
+			}
+			
+			$transaction->commit();
+		} catch (\Exception $e) {
+			$transaction->rollBack();
 		}
-		
-		$updateBulk = implode("\n", $updateBulk) . "\n";
-		
-		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/_bulk");
-		
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $updateBulk);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_exec($ch);
-		curl_close($ch);
-		*/
 	}
 	
 	public function checkBoostSort() {

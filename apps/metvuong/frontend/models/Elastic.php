@@ -19,6 +19,7 @@ use yii\db\Query;
 
 class Elastic
 {
+	const RETRY_ON_CONFLICT = 3;
 	public static $productEsType = 'all';
 	public static $properties = [
 		'id' => [

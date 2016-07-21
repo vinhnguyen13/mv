@@ -464,7 +464,7 @@ class AdProduct extends AP
 	public static function updateElasticCounter($type, $id, $totalType, $increase = true) {
 		$sign = $increase ? '+' : '-';
 		$script = '{"script" : "ctx._source.' . $totalType . $sign . '=1"}';
-		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/" . \Yii::$app->params['indexName']['countTotal'] . "/$type/$id/_update");
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/" . \Yii::$app->params['indexName']['countTotal'] . "/$type/$id/_update?retry_on_conflict=" . Elastic::RETRY_ON_CONFLICT);
 			
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $script);
@@ -706,32 +706,33 @@ class AdProduct extends AP
 					]
 				]
 			],
-			"size" => self::BOOST_SORT_LIMIT + 1,
-			"sort" => ["boost_start_time"]
+			"size" => self::BOOST_SORT_LIMIT + self::BOOST_SORT_LIMIT,
+			"sort" => ["boost_start_time" => ["order" => "desc"]]
 		];
 			
 		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['product'] . '/_search');
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		
 		$boostResult = json_decode(curl_exec($ch), true);
 		
 		$products = $boostResult['hits']['hits'];
-		
-		if($boostResult['hits']['total'] > self::BOOST_SORT_LIMIT) {
-			$firstProduct = $products[0];
+
+		if($products) {
+
+			$removeBoostSortProducts = array_splice($products, 4);
 			
-			if($firstProduct['_source']['boost_sort'] != 0) {
-				self::_updateEs($firstProduct['_id'], ['boost_sort' => 0]);
+			foreach ($products as $product) {
+				if(!$product['_source']['boost_sort']) {
+					self::_updateEs($product['_id'], ['boost_sort' => $product['_source']['boost_start_time']]);
+				}
 			}
 			
-			array_shift($products);
-		}
-		
-		foreach ($products as $product) {
-			if($product['_source']['boost_start_time'] > $product['_source']['boost_sort']) {
-				self::_updateEs($product['_id'], ['boost_sort' => $product['_source']['boost_start_time']]);
+			foreach ($removeBoostSortProducts as $product) {
+				if($product['_source']['boost_sort']) {
+					self::_updateEs($product['_id'], ['boost_sort' => 0]);
+				}
 			}
 		}
 	}
