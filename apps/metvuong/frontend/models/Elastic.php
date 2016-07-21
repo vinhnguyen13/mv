@@ -692,4 +692,59 @@ class Elastic
 		curl_exec($ch);
 		curl_close($ch);
 	}
+	
+	public static function countProducts($products) {
+		$updateCounter = [
+			'city' => [],
+			'district' => [],
+			'ward' => [],
+			'street' => [],
+			'project_building' => []
+		];
+		
+		foreach ($products as $product) {
+			foreach ($updateCounter as $type => &$bulk) {
+				$termId = $product[$type . '_id'];
+					
+				if($termId) {
+					if(isset($bulk[$termId])) {
+						if($product['type'] == AdProduct::TYPE_FOR_SELL) {
+							$bulk[$termId][AdProduct::TYPE_FOR_SELL_TOTAL] += 1;
+						} else {
+							$bulk[$termId][AdProduct::TYPE_FOR_RENT_TOTAL] += 1;
+						}
+					} else {
+						if($product['type'] == AdProduct::TYPE_FOR_SELL) {
+							$bulk[$termId][AdProduct::TYPE_FOR_SELL_TOTAL] = 1;
+						} else {
+							$bulk[$termId][AdProduct::TYPE_FOR_RENT_TOTAL] = 1;
+						}
+					}
+				}
+			}
+		}
+		
+		/*
+		 * Update Counter
+		 */
+		$updateBulk = [];
+		$retryOnConflict = Elastic::RETRY_ON_CONFLICT;
+			
+		foreach ($updateCounter as $type => $uc) {
+			foreach ($uc as $id => $total) {
+				foreach ($total as $t => $count) {
+					$updateBulk[] = '{ "update" : { "_id" : "' . $id . '", "_type" : "' . $type . '", "_retry_on_conflict": ' . $retryOnConflict . ' } }';
+					$updateBulk[] = '{ "script" : { "inline": "ctx._source.' . $t . ' -= ' . $count . '"} }';
+				}
+			}
+		}
+		$updateBulk = implode("\n", $updateBulk) . "\n";
+		$indexName = \Yii::$app->params['indexName']['countTotal'];
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/_bulk");
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $updateBulk);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_exec($ch);
+		curl_close($ch);
+	}
 }
