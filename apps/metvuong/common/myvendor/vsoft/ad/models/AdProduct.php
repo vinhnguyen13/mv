@@ -9,7 +9,6 @@ use common\models\AdProduct as AP;
 use vsoft\express\components\AdImageHelper;
 use frontend\models\Elastic;
 use yii\helpers\ArrayHelper;
-use common\models\AdProduct;
 
 
 class AdProduct extends AP
