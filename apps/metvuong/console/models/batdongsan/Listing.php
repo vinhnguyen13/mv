@@ -7,10 +7,10 @@
 
 namespace console\models\batdongsan;
 
-
-use console\models\BatdongsanV2;
 use console\models\Helpers;
 use keltstr\simplehtmldom\SimpleHTMLDom;
+use vsoft\craw\models\AdProduct;
+use vsoft\craw\models\AdProductFile;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
@@ -102,250 +102,222 @@ class Listing extends Component
 
     public function parse($city=null)
     {
-        try {
-            $time_start = time();
-            $this->getPages(1, $city);
-            $time_end = time();
-            print_r("\nTime: ");
-            print_r($time_end - $time_start);
-        } catch(Exception $e) {
-            $currentBuffers = ob_get_clean();
-            ob_end_clean(); // Let's end and clear ob...
-            echo "<br />Some error occured: " . $e->getMessage();
+        if($city) {
+            try {
+                $time_start = time();
+                $this->getPages(1, $city);
+                $time_end = time();
+                print_r("\nTime: ");
+                print_r($time_end - $time_start);
+
+            } catch (Exception $e) {
+                $currentBuffers = ob_get_clean();
+                ob_end_clean(); // Let's end and clear ob...
+                echo "<br />Some error occured: " . $e->getMessage();
+            }
         }
     }
 
     public function parseRent($city=null)
     {
-        try {
-            $time_start = time();
-            $this->getPages(2, $city);
-            $time_end = time();
-            print_r("\nTime: ");
-            print_r($time_end - $time_start);
-        } catch(Exception $e){
-            $currentBuffers = ob_get_clean();
-            ob_end_clean(); // Let's end and clear ob...
-            echo "<br />Some error occured: " . $e->getMessage();
+        if($city) {
+            try {
+                $time_start = time();
+                $this->getPages(2, $city);
+                $time_end = time();
+                print_r("\nTime: ");
+                print_r($time_end - $time_start);
+
+            } catch (Exception $e) {
+                $currentBuffers = ob_get_clean();
+                ob_end_clean(); // Let's end and clear ob...
+                echo "<br />Some error occured: " . $e->getMessage();
+            }
         }
     }
 
+    // $product_type == 1 nha-dat-ban; $product_type == 2 nha-dat-cho-thue
     public function getPages($product_type, $city=null)
     {
-        $cities = $this->sale_types;
-        if(!empty($city)) {
-            if(array_key_exists($city, $this->sale_types)) {
-                $cities = array();
-                $cities[$city] = $this->sale_types[$city];
-            } else {
-                print_r("\n Sorry, city not in crawl sale listing.\n");
-            }
-        }
-        $path_folder = Yii::getAlias('@console') . "/data/bds_html/sales/";
-        $bds_city_log = Helpers::loadLog($path_folder, "bds_city_log.json");
-
-        if($product_type == 2){
-            $cities = $this->rent_types;
-            if(!empty($city)) {
-                if(array_key_exists($city, $this->rent_types)) {
-                    $cities = array();
-                    $cities[$city] = $this->rent_types[$city];
-                } else {
-                    print_r("\n Sorry, city not in crawl rent listing.\n");
-                }
-            }
-            $path_folder = Yii::getAlias('@console') . "/data/bds_html/rents/";
-            $bds_city_log = Helpers::loadLog($path_folder, "bds_rent_city_log.json");
-            $bds_log = Helpers::loadLog($path_folder, "bds_rent_log.json");
-        }
-
-        if(empty($bds_city_log["city"])){
-            $bds_city_log["city"] = array();
-        }
-        if(empty($bds_log["type"])){
-            $bds_log["type"] = array();
-        }
-
-        $break_city = false;
-        foreach($cities as $key_city => $types) {
-            if(in_array($key_city, $bds_city_log["city"]))
-                continue;
-            $path_folder = $path_folder.$key_city."/";
-            $bds_log_name = "bds_{$key_city}_log.json";
-            $bds_log = Helpers::loadLog($path_folder, $bds_log_name);
-            $last_type = empty($bds_log["last_type_index"]) ? 0 : ($bds_log["last_type_index"] + 1);
+        $types = null;
+        $path_folder = null;
+        $count_type = 0;
+        $bds_log_name = "bds_log.json";
+        if($product_type == 1) {
+            $types = Listing::find()->sale_types[$city];
             $count_type = count($types);
-
-            if($last_type >= $count_type) {
-                $bds_log["type"] = array();
-                unset($bds_log["last_type_index"]);
-                $last_type = 0;
-
-                if($product_type == 1) {
-                    Helpers::writeLog($bds_log, $path_folder, $bds_log_name);
-                } else {
-                    Helpers::writeLog($bds_log, $path_folder, $bds_log_name);
-                }
-                $this->setZeroCurrentPage($types, $path_folder);
+            if($count_type <= 0) {
+                print_r("{$city} no value in sale_types");
+                return;
             }
+            $path_folder = Yii::getAlias('@console') . "/data/bds_html/{$city}/";
+            $bds_log = Helpers::loadLog($path_folder, $bds_log_name);
+        }
 
-            foreach ($types as $key_type => $type) {
-                if ($key_type >= $last_type) {
-                    $url = self::DOMAIN . '/' . $type;
-                    $page = Helpers::getUrlContent($url);
-                    if (!empty($page)) {
-                        $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
-                        $pagination = $html->find('.container-default .background-pager-right-controls a');
-                        $count_page = count($pagination);
-                        $last_page = (int)str_replace("/" . $type . "/p", "", $pagination[$count_page - 1]->href);
-                        if ($count_page > 0) {
-                            $log = Helpers::loadLog($path_folder . $type . "/", "bds_log_{$type}.json");
-                            $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"] + 1);
-                            $current_page_add = $current_page + 4; // +4 => total pages to run that are 5.
-                            if ($current_page_add > $last_page)
-                                $current_page_add = $last_page;
+        if ($product_type == 2) {
+            $types = Listing::find()->rent_types[$city];
+            $count_type = count($types);
+            if($count_type <= 0) {
+                print_r("{$city} no value in rent_types");
+                return;
+            }
+            $bds_log_name = "bds_rent_log.json";
+            $path_folder = Yii::getAlias('@console') . "/data/bds_html/{$city}/rents/";
+            $bds_log = Helpers::loadLog($path_folder, $bds_log_name);
+        }
 
-                            if ($current_page <= $last_page) {
-                                for ($i = $current_page; $i <= $current_page_add; $i++) {
-                                    $log = Helpers::loadLog($path_folder . "/" . $type . "/", "bds_log_{$type}.json");
-                                    $sequence_id = empty($log["last_id"]) ? 0 : ($log["last_id"] + 1);
-                                    $list_return = $this->getListProject($type, $i, $sequence_id, $log, $product_type, $path_folder);
-                                    if (!empty($list_return["data"])) {
-                                        $list_return["data"]["current_page"] = $i;
-                                        Helpers::writeLog($list_return["data"], $path_folder . "/" . $type . "/", "bds_log_{$type}.json");
-                                        print_r("\n\n{$type}: Page " . $i . " done!\n");
-                                    }
-                                    sleep(3);
-                                    ob_flush();
-                                }
+        $write_log = false;
+        $last_type = empty($bds_log["last_type_index"]) ? 0 : ($bds_log["last_type_index"] + 1);
+        if($last_type >= ($count_type-1)) {
+            unset($bds_log["last_type_index"]);
+            $last_type = 0;
+            Helpers::writeLog($bds_log, $path_folder, $bds_log_name);
+        } // last change
 
-                                if ($current_page != $current_page_add) {
-                                    $break_city = true;
-                                    break;
-                                }
+        for($t=$last_type; $t < $count_type; $t++) {
+            $type = $types[$t];
+            $url = self::DOMAIN . '/' . $type;
+            $page = Helpers::getUrlContent($url);
+            if (!empty($page)) {
+                $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
+                $pagination = $html->find('.container-default .background-pager-right-controls a');
+                $count_page = count($pagination);
+                $last_page = (int)str_replace("/" . $type . "/p", "", $pagination[$count_page - 1]->href);
+                if ($count_page > 0) {
+                    $log = Helpers::loadLog($path_folder . $type . "/", "bds_log_{$type}.json");
+                    $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"] + 1);
+                    $current_page_add = $current_page + 4; // +4 => total pages to run that are 5.
+                    if ($current_page_add > $last_page)
+                        $current_page_add = $last_page;
 
-                            } else {
-                                $log['current_page'] = 0;
-                                Helpers::writeLog($log, $path_folder . "/" . $type . "/", "bds_log_{$type}.json");
-                                print_r("\nLast file of {$type} done.");
-                            }
-                        } else {
-                            echo "\nCannot find listing. End page!" . Listing::DOMAIN . "/" . $type;
+                    if ($current_page <= $last_page) {
+                        for ($i = $current_page; $i <= $current_page_add; $i++) {
+                            $this->getListProject($type, $i, $product_type, $path_folder, $city);
+                            $log["current_page"] = $i;
+                            Helpers::writeLog($log, $path_folder . $type . "/", "bds_log_{$type}.json");
+                            print_r("\n\n{$type}: Page " . $i . " done!\n");
                         }
+
+                        if($last_page == $current_page_add) {
+                            $write_log = true;
+                            $log["current_page"] = 0;
+                            Helpers::writeLog($log, $path_folder . $type . "/", "bds_log_{$type}.json");
+                        }
+                        else
+                            break;
+
                     } else {
-                        echo "\nCannot access in get pages of " . Listing::DOMAIN . "/" . $type;
+                        $write_log = true;
+                        $log['current_page'] = 0;
+                        Helpers::writeLog($log, $path_folder . $type . "/", "bds_log_{$type}.json");
+                        print_r("\nLast file of {$type} finish.");
                     }
-
-                    if (!in_array($type, $bds_log["type"])) {
-                        array_push($bds_log["type"], $type);
-                    }
-                    $bds_log["last_type_index"] = $key_type;
-                    Helpers::writeLog($bds_log, $path_folder, $bds_log_name);
-                    print_r("\nTYPE: {$type} DONE!\n");
+                } else {
+                    echo "\nCannot find listing. End page!" . Listing::DOMAIN . "/" . $type;
                 }
-            }  // end foreach types
-
-            if($break_city)
-                break;
-
-            if (!in_array($key_city, $bds_city_log["city"])) {
-                array_push($bds_city_log["city"], $key_city);
+            } else {
+                echo "\nCannot access in get pages of " . Listing::DOMAIN . "/" . $type;
             }
 
-            Helpers::writeLog($bds_city_log, $path_folder, "bds_rent_log.json");
-            print_r("\nTYPE: {$key_city} DONE!\n");
-        } // end foreach city_types
+            if($write_log) {
+                $bds_log["last_type_index"] = $t;
+                Helpers::writeLog($bds_log, $path_folder, $bds_log_name);
+                print_r("\nTYPE: {$type} DONE!\n");
+            }
+        }  // end foreach types
     }
 
-    public function getListProject($type, $current_page, $sequence_id, $log, $product_type, $path_folder)
+    public function getListProject($type, $current_page, $product_type, $path_folder, $city)
     {
         $href = "/".$type."/p".$current_page;
-
         $page = Helpers::getUrlContent(self::DOMAIN . $href);
         if(!empty($page)) {
             $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
             $list = $html->find('div.p-title a');
             if (count($list) > 0) {
+                $item_no = 0;
                 // about 20 listing
                 foreach ($list as $item) {
-                    $productId = 0;
+                    $productId = '';
                     if (preg_match('/pr(\d+)/', self::DOMAIN . $item->href, $matches)) {
                         if(!empty($matches[1])){
                             $productId = $matches[1];
                         }
                     }
                     $checkExists = false;
-                    if(!empty($productId) && !empty($log["files"])) {
-                        $checkExists = ImportListing::checkFileNameExists($productId.""); // in_array($productId, $log["files"]);
+                    if(!empty($productId)) {
+                        $checkExists = AdProductFile::checkFileExists($productId); // in_array($productId, $log["files"]);
+                    }
+                    if ($checkExists == false) {
+                        $return_detail = $this->getProductDetail($type, $item->href, $product_type, $path_folder, $productId, $city);
+                        if(!empty($return_detail))
+                            $item_no++;
+                    } else {
+                        print_r(PHP_EOL.$productId . " exists");
                     }
 
-                    if ($checkExists == false) {
-                        $res = $this->getProductDetail($type, $item->href, $product_type, $path_folder);
-                        if (!empty($res)) {
-                            $log["files"][$sequence_id] = $res;
-                            $log["last_id"] = $sequence_id;
-//                            $sequence_id = $sequence_id + 1;
-                        }
-                    } else {
-                        print_r($productId . " exists\n");
-                    }
-                }
-                return ['data' => $log];
+                } // end foreach list item
+                return $item_no;
             } else {
-                echo "\nCannot find listing. End page!".Listing::DOMAIN;
-                $this->writeFileLogFail($type, "\nCannot find listing: $href"."\n");
+                echo "\nCannot find listing. End page! ".Listing::DOMAIN;
             }
 
         } else {
             echo "\nCannot access in get List Project of ".Listing::DOMAIN;
-            $this->writeFileLogFail($type, "\nCannot access: $href"."\n");
         }
         return null;
     }
 
-    public function getProductDetail($type, $href, $product_type, $path_folder)
+    public function getProductDetail($type, $href, $product_type, $path_folder, $productId, $city)
     {
+        $url = self::DOMAIN.$href;
         $folder = $product_type == 1 ? "files" : "rent_files";
-        $page = Helpers::getUrlContent(self::DOMAIN . $href);
-        $matches = array();
-        if (preg_match('/pr(\d+)/', self::DOMAIN . $href, $matches)) {
-            if(!empty($matches[1])){
-                $product_id = $matches[1];
-            }
+        $path = $path_folder . $type. DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR;
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+            echo "\nDirectory {$path} was created";
         }
 
-        if(!empty($product_id)) {
-            $path = $path_folder."{$type}/{$folder}/";
-            if (!is_dir($path)) {
-                mkdir($path, 0777, true);
-                echo "\nDirectory {$path} was created";
+        $ad_product_file_path = $city . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . $folder;
+        $ad_crawl_product = AdProduct::find()->where(['file_name' => $productId])->one();
+        if(count($ad_crawl_product) > 0){
+            $ad_product_file = new AdProductFile();
+            $ad_product_file->file = $ad_crawl_product->file_name;
+            $ad_product_file->path = $ad_product_file_path;
+            $ad_product_file->created_at = time();
+            $ad_product_file->is_import = 1;
+            $ad_product_file->imported_at = $ad_crawl_product->created_at;
+            $ad_product_file->product_tool_id = $ad_crawl_product->id;
+            if($ad_crawl_product->product_main_id > 0) {
+                $ad_product_file->is_copy = 1;
+                $ad_product_file->copied_at = $ad_crawl_product->updated_at;
+                $ad_product_file->product_main_id = $ad_crawl_product->product_main_id;
             }
-            $res = Helpers::writeFileJson($path . $product_id, $page);
-            if ($res) {
-                $this->writeFileLogUrlSuccess($type, self::DOMAIN . $href . "\n", $path_folder);
-                return $product_id;
-            } else {
-                return null;
-            }
-        }
-        else {
-            echo "\nError go to detail at " .Listing::DOMAIN.$href;
-            $this->writeFileLogFail($type, "\nCannot find detail: ".Listing::DOMAIN.$href."\n");
+            $ad_product_file->vendor_link = $url;
+            $ad_product_file->save(false);
             return null;
-        }
-    }
-
-    public function setZeroCurrentPage($types, $path_folder){
-        foreach ($types as $key_type => $type) {
-            $path_folder = $path_folder."/".$type."/";
-            $filename = "bds_log_{$type}.json";
-            $file = $path_folder.$filename;
-            if(file_exists($file)){
-                $file_log = Helpers::loadLog($file, $filename);
-                if(!empty($file_log["current_page"])){
-                    $file_log["current_page"] = 0;
-                    Helpers::writeLog($file_log, $path_folder, $filename);
+        } else {
+            $page = Helpers::getUrlContent($url);
+            sleep(3);
+            ob_flush();
+            if (!empty($page) && !empty($productId)) {
+                $res = Helpers::writeFileJson($path . $productId, $page);
+                if ($res) {
+                    // log product file
+                    $ad_product_file = new AdProductFile();
+                    $ad_product_file->file = $productId;
+                    $ad_product_file->path = $ad_product_file_path;
+                    $ad_product_file->created_at = time();
+                    $ad_product_file->vendor_link = $url;
+                    $ad_product_file->save(false);
+                    return $productId;
+                } else {
+                    return null;
                 }
+            } else {
+                $this->writeFileLogFail("\nFailed at ".Listing::DOMAIN.$href."\n", $path_folder . $type. DIRECTORY_SEPARATOR );
+                echo "\nError go to detail at " . Listing::DOMAIN . $href;
+                return null;
             }
         }
     }
@@ -358,8 +330,8 @@ class Listing extends Component
         return $int;
     }
 
-    public function writeFileLogFail($type, $log){
-        $file_name = Yii::getAlias('@console') . "/data/bds_html/{$type}/bds_log_fail";
+    public function writeFileLogFail($log, $path_folder){
+        $file_name = $path_folder."bds_log_fail";
         if(!file_exists($file_name)){
             fopen($file_name, "w");
         }
@@ -368,8 +340,8 @@ class Listing extends Component
         }
     }
 
-    public function writeFileLogUrlSuccess($type, $log, $path_folder){
-        $file_name = $path_folder."{$type}/bds_log_urls";
+    public function writeFileLogUrlSuccess($log, $path_folder){
+        $file_name = $path_folder."/bds_log_urls";
         if(!file_exists($file_name)){
             fopen($file_name, "w");
         }
@@ -377,5 +349,4 @@ class Listing extends Component
             $this->writeToFile($file_name, $log, 'a');
         }
     }
-
 }

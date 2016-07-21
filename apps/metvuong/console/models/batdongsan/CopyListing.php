@@ -8,6 +8,7 @@
 namespace console\models\batdongsan;
 
 
+use console\models\Helpers;
 use console\models\Metvuong;
 use frontend\models\Elastic;
 use vsoft\ad\models\AdContactInfo;
@@ -76,20 +77,12 @@ class CopyListing extends Component
                     continue;
                 }
 
-//                $is_expired = $model->end_date > time() ? 0 : 1;
-//                $is_expired = 0;
                 $content = $model->content;
                 if(empty($content)){
                     $content = $model->address;
                 }
 
                 $end_date = $model->start_date + 30 * 86400;
-//                if($end_date < time()) {
-//                    $model->is_expired = 1;
-//                    $model->save(false);
-//                    print_r(" is expired");
-//                    continue;
-//                }
 
                 $record = [
                     'category_id' => $model->category_id,
@@ -118,7 +111,7 @@ class CopyListing extends Component
                 ];
 
                 $product = new AdProduct($record);
-                $record['score'] = AdProduct::calcScore($product, $adProductAdditionInfo, $adContactInfo, count($productImages));
+                $score = AdProduct::calcScore($product, $adProductAdditionInfo, $adContactInfo, count($productImages));
                 $connection = AdProduct::getDb();
                 try {
                     $connection->createCommand()

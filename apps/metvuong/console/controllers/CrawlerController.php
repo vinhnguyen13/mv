@@ -5,6 +5,7 @@ use console\models\Batdongsan;
 use console\models\batdongsan\CopyListing;
 use console\models\batdongsan\CopyProject;
 use console\models\batdongsan\ImportProject;
+use console\models\batdongsan\Listing;
 use console\models\batdongsan\Project;
 use console\models\BatdongsanV2;
 use console\models\Homefinder;
@@ -44,16 +45,39 @@ class CrawlerController extends Controller
     // Sale Batdongsan
     public function actionBatdongsan()
     {
-        BatdongsanV2::find()->parse();
-    }
-    public function actionImportbatdongsan()
-    {
-//        BatdongsanV2::find()->importData(1);
+//        BatdongsanV2::find()->parse();
+        if(!empty($this->city) && isset(Listing::find()->sale_types[$this->city])) {
+            Listing::find()->parse($this->city);
+        }
+        else {
+            print_r("\nParam: city undefined ! \nEx: php yii crawler/batdongsan -city=ho-chi-minh\n");
+        }
+
     }
     public function actionImportbatdongsan2()
     {
         BatdongsanV2::find()->importDataForTool(1);
     }
+
+
+    // Rent Batdongsan
+    public function actionRentbatdongsan()
+    {
+//        BatdongsanV2::find()->parseRent();
+        if(!empty($this->city) && isset(Listing::find()->rent_types[$this->city])) {
+            Listing::find()->parseRent($this->city);
+        }
+        else {
+            print_r("\nParam: city undefined ! \nEx: php yii crawler/rentbatdongsan -city=ho-chi-minh\n");
+        }
+    }
+
+    public function actionImportrentbds()
+    {
+        BatdongsanV2::find()->importDataForTool(2);
+    }
+
+
     public function actionUpdatebatdongsan()
     {
         // update address from Google API Geocode
@@ -105,27 +129,6 @@ class CrawlerController extends Controller
     {
         BatdongsanV2::find()->importAgent();
     }
-    // Rent Batdongsan
-    public function actionRentbatdongsan()
-    {
-        BatdongsanV2::find()->parseRent();
-    }
-
-    public function actionImportrentbds()
-    {
-        BatdongsanV2::find()->importDataForTool(2);
-    }
-
-    // Get Projects
-//    public function actionProjectbds(){
-//        BatdongsanV2::find()->getProjects();
-//    }
-//    public function actionImportprojectbds(){
-//        BatdongsanV2::find()->importProjects();
-//    }
-//    public function actionCopyProject(){
-//        BatdongsanV2::find()->copyProjects();
-//    }
 
     public function actionProject()
     {
