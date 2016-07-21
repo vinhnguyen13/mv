@@ -9,6 +9,7 @@ use common\models\AdProduct as AP;
 use vsoft\express\components\AdImageHelper;
 use frontend\models\Elastic;
 use yii\helpers\ArrayHelper;
+use common\models\AdProduct;
 
 
 class AdProduct extends AP
@@ -798,17 +799,20 @@ class AdProduct extends AP
 			/*
 			 * Update Counter
 			 */
-			if(isset($changes['type'])) {
-				$oldTotalType = ($ollAttrs['type'] == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
-				$newTotalType = ($newAttrs['type'] == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
+			
+			if($this->status == self::STATUS_ACTIVE && $this->is_expired == 0) {
+				if(isset($changes['type'])) {
+					$oldTotalType = ($ollAttrs['type'] == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
+					$newTotalType = ($newAttrs['type'] == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
 				
-				self::updateElasticCounters($ollAttrs, $oldTotalType, false);
-				self::updateElasticCounters($newAttrs, $newTotalType);
-			} else {
-				$totalType = ($this->type == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
+					self::updateElasticCounters($ollAttrs, $oldTotalType, false);
+					self::updateElasticCounters($newAttrs, $newTotalType);
+				} else {
+					$totalType = ($this->type == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
 				
-				self::updateElasticCounters(array_diff_assoc($ollAttrs, $newAttrs), $totalType, false);
-				self::updateElasticCounters($changes, $totalType);
+					self::updateElasticCounters(array_diff_assoc($ollAttrs, $newAttrs), $totalType, false);
+					self::updateElasticCounters($changes, $totalType);
+				}
 			}
 		}
 	}

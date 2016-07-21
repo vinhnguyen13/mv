@@ -85,18 +85,17 @@ class ImportProject extends Component
                     if ($counter > 0) {
                         $filename = null;
                         for ($i = 0; $i <= $last_file_index; $i++) {
-                            if ($no > 300) {
+                            if ($no > 1) {
                                 $break_type = true;
                                 break;
                             }
 
                             $filename = $files[$i];
-                            $filePath = $path . $type. "/files/" . $filename;
-
                             if (in_array($filename, $log_import["files"])) {
                                 continue;
                             }
                             else {
+                                $filePath = $path . $type. "/files/" . $filename;
                                 if (file_exists($filePath)) {
                                     $value = $this->parseProjectDetail($path . $type. "/files/" , $filename);
                                     if (count($value) <= 0 || empty($value)) {
