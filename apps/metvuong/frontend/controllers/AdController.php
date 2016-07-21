@@ -48,6 +48,7 @@ use frontend\models\NganLuong;
 use vsoft\ad\models\AdProductAutoSave;
 use vsoft\ad\models\AdProductAutoSaveImages;
 use common\models\SlugSearch;
+use vsoft\ad\models\Balance;
 
 class AdController extends Controller
 {
@@ -536,7 +537,7 @@ class AdController extends Controller
     				}
     				
     				$product->score = AdProduct::calcScore($product, $additionInfo, $contactInfo, $totalImage);
-    				$product->save(false);
+    				$product->updateWithEs(false);
     				$additionInfo->save(false);
     				$contactInfo->save(false);
     				
@@ -585,8 +586,9 @@ class AdController extends Controller
     			$totalImage = empty($post['images']) ? 0 : count($post['images']);
     			$product->score = AdProduct::calcScore($product, $additionInfo, $contactInfo, $totalImage);
     			$product->ip = Yii::$app->request->userIP;
+    			$product->start_date = $product->created_at = time();
+    			$product->end_date = $product->start_date + AdProduct::EXPIRED;
     			$product->status = AdProduct::STATUS_PENDING;
-    			$product->is_expired = 0;
     			$product->save(false);
     			
     			$additionInfo->product_id = $product->id;
@@ -628,6 +630,23 @@ class AdController extends Controller
     				}
     			}
     			
+    			/*
+    			 * Charge fee
+    			 */
+    			$balance = Yii::$app->user->identity->balance;
+    			$chargeResult = $balance->charge($product, ['status' => AdProduct::STATUS_ACTIVE], AdProduct::CHARGE_POST, Transaction::OBJECT_TYPE_POST);
+    			
+    			if($chargeResult == Balance::CHARGE_OK) {
+    				$template = 'post_success';
+    				
+    				$product->status = AdProduct::STATUS_ACTIVE;
+    				$product->save(false);
+    				$product->insertEs();
+    			} else {
+    				$template = 'post_pending';
+    			}
+    			
+    			/*
     			$balance = Yii::$app->user->identity->balance;
     			
     			if($balance->amount >= AdProduct::CHARGE_POST) {
@@ -652,7 +671,7 @@ class AdController extends Controller
     			} else {
     				$template = 'post_pending';
     			}
-    			
+    			*/
     			$result['template'] = $this->renderPartial('_partials/' . $template, ['balance' => $balance, 'product' => $product]);
     			$result['amount'] = $balance->amount;
     			$result['url'] = $product->urlDetail();
@@ -1008,8 +1027,37 @@ class AdController extends Controller
 		return $response;
     }
     
-    public function actionBoost($day, $id) {
+    public function actionBoost($id, $day) {
     	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    	
+    	if(Yii::$app->user->identity && ($product = AdProduct::findOne($id))) {
+    		$chargeBoost = [
+    			1 => AdProduct::CHARGE_BOOST_1,
+    			3 => AdProduct::CHARGE_BOOST_3
+    		];
+    		
+    		if(isset($chargeBoost[$day]) && $product->user_id == Yii::$app->user->identity->id) {
+    			$boostTime = $day * 86400;
+    			
+    			if($product->canBoost($boostTime)) {
+    				$balance = Yii::$app->user->identity->balance;
+    				
+    				$chargeResult = $balance->charge($product, [], $chargeBoost[$day], Transaction::OBJECT_TYPE_BOOST, 'boost', [$boostTime]);
+    				
+    				if($chargeResult == Balance::CHARGE_OK) {
+    					$template = $this->renderPartial('/dashboard/ad/list', ['products' => [$product]]);
+    						
+    					return ['success' => true, 'amount' => $balance->amount, 'message' => \Yii::t("listing", "Tin đã được boost thành công."), 'template' => $template];
+    				} else {
+    					return ['success' => false, 'message' => \Yii::t("listing", "Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.")];
+    				}
+    			} else {
+    				return ['success' => false, 'message' => sprintf(\Yii::t("listing", "Thời gian boost không được nhiều hơn 30 ngày (tối đa đến ngày %s)."), date('d-m-Y', time() + 86400 * 30))];
+    			}
+    		}
+    	}
+    	
+    	/*
     	
     	if(Yii::$app->user->identity) {
     		$chargeBoost = [
@@ -1061,13 +1109,51 @@ class AdController extends Controller
     			}
     		}
     	}
+    	*/
     }
     
     public function actionUpdateStatus($id) {
-    	if(Yii::$app->user->identity) {
-    		$product = AdProduct::findOne($id);
+    	$status = \Yii::$app->request->get('status', AdProduct::STATUS_ACTIVE);
+    	
+    	if(Yii::$app->user->identity && ($product = AdProduct::findOne($id))) {
     		
-    		if($product && $product->user_id == Yii::$app->user->identity->id) {
+    		$allowStatus = [AdProduct::STATUS_ACTIVE, AdProduct::STATUS_DELETE, AdProduct::STATUS_INACTIVE];
+    		
+    		if($product->user_id == Yii::$app->user->identity->id && in_array($status, $allowStatus) && $product->status != AdProduct::STATUS_DELETE) {
+    			
+    			if($product->status != $status) {
+    				$success = true;
+    				$balance = Yii::$app->user->identity->balance;
+    				
+    				if($product->status == AdProduct::STATUS_PENDING && $status == AdProduct::STATUS_ACTIVE) {
+    					$start = time();
+    					$end = $start + AdProduct::EXPIRED;
+    					
+    					$chargeResult = $balance->charge($product, ['start_date' => $start, 'end_date' => $end], AdProduct::CHARGE_POST, Transaction::OBJECT_TYPE_POST, 'updateStatus', [$status]);
+    					
+    					if($chargeResult != Balance::CHARGE_OK) {
+    						$success = false;
+    					}
+    				} else {
+    					$product->updateStatus($status);
+    				}
+    				
+    				if(Yii::$app->request->isAjax) {
+    					Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    					
+    					$template = $success ? $this->renderPartial('/dashboard/ad/list', ['products' => [$product]]) : '';
+    					$message = $success ? \Yii::t("listing", "Tin đã được kích hoạt thành công.") : \Yii::t("listing", "Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.");
+    					
+    					$response = ['success' => $success, 'amount' => $balance->amount, 'message' => $message, 'template' => $template];
+    				} else {
+    					$template = $success ? 'post_success' : 'post_pending';
+    					
+    					$response = $this->render('update-status', ['balance' => $balance, 'product' => $product, 'template' => $template]);
+    				}
+    				
+    				return $response;
+    			}
+    			/*
     			if($product->status == AdProduct::STATUS_PENDING) {
 					$balance = Yii::$app->user->identity->balance;
     				
@@ -1119,6 +1205,7 @@ class AdController extends Controller
     					echo \Yii::t("listing", "Tin đã được cập nhật trạng thái trước đó, không cần phải cập nhật lại.");
     				}
     			}
+    			*/
     		}
     	}
     }

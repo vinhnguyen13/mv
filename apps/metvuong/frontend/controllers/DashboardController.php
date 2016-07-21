@@ -30,6 +30,7 @@ use frontend\components\Controller;
 use vsoft\ad\models\AdProduct;
 use frontend\models\Transaction;
 use vsoft\ec\models\EcStatisticView;
+use vsoft\ad\models\Balance;
 
 class DashboardController extends Controller
 {
@@ -524,12 +525,21 @@ class DashboardController extends Controller
     }
 
     public function actionUpdateExpired($id) {
-    	if(Yii::$app->user->identity && Yii::$app->request->isAjax) {
+    	if(Yii::$app->user->identity && Yii::$app->request->isAjax && ($product = AdProduct::findOne($id))) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     		
-    		$product = AdProduct::findOne($id);
-    		if($product && $product->user_id == Yii::$app->user->identity->id) {
-    			if($product->is_expired == 1) {
+    		if($product->user_id == Yii::$app->user->identity->id && $product->canUpdateExpired()) {
+    			$balance = Yii::$app->user->identity->balance;
+    			$chargeResult = $balance->charge($product, [], AdProduct::CHARGE_POST, Transaction::OBJECT_TYPE_UPDATE_EXPIRED, $action = 'updateExpired', []);
+    			
+    			if($chargeResult == Balance::CHARGE_OK) {
+    				$template = $this->renderPartial('/dashboard/ad/list', ['products' => [$product]]);
+    				
+    				return ['success' => true, 'amount' => $balance->amount, 'message' => \Yii::t("listing", "Tin đã được gia hạn thành công."), 'template' => $template];
+    			} else {
+    				return ['success' => false, 'message' => \Yii::t("listing", "Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.")];
+    			}
+    				/*
     				$balance = Yii::$app->user->identity->balance;
     
     				if($balance->amount >= AdProduct::CHARGE_POST) {
@@ -557,7 +567,8 @@ class DashboardController extends Controller
     				} else {
     					return ['success' => false, 'message' => \Yii::t("listing", "Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.")];
     				}
-    			}
+    				*/
+    			
     		}
     	}
     }

@@ -35,7 +35,8 @@ class AdProduct extends AP
 	const STATUS_INACTIVE = 0;
 	const STATUS_ACTIVE = 1;
 	
-	const EXPIRED = 86400;
+	const EXPIRED = 2592000;
+	const BOOST_LIMIT = 2592000;
 	
 	const DEFAULT_CITY = 1;
 	const DEFAULT_DISTRICT = 10;
@@ -111,29 +112,32 @@ class AdProduct extends AP
 	}
 	
 	public function beforeSave($insert) {
-		$now = time();
-		
-		if($insert) {
-			$this->created_at = $this->created_at ? $this->created_at : $now;
-			$this->updated_at = $this->updated_at ? $this->updated_at : $now;
-			$this->start_date = $this->start_date ? $this->start_date : $now;
-			$this->end_date = $now + (self::EXPIRED * 30);
-		} else {
-			$this->updated_at = $now;
+		if (parent::beforeSave($insert)) {
 			
-			if($this->end_date < $now) {
-				$this->is_expired = 1;
+			if($insert) {
+				if($this->area) {
+					$this->area = str_replace(',', '.', $this->area);
+				}
+			} else {
+				$this->updated_at = time();
+				
+				if(empty($this->oldAttributes['area'])) {
+					if($this->area) {
+						$this->area = str_replace(',', '.', $this->area);
+					}
+				} else {
+					if($this->area != $this->oldAttributes['area']) {
+						$this->area = str_replace(',', '.', $this->area);
+					}
+				}
 			}
+			
+			$this->oldAttr = $this->oldAttributes;
+			
+			return true;
+		} else {
+			return false;
 		}
-		
-		if($this->area) {
-			$this->area = str_replace(',', '.', $this->area);
-		}
-		
-		// Cast to int to detect changedAttribute in afterSave EVENT
-		$this->oldAttr = $this->oldAttributes;
-		
-		return parent::beforeSave($insert);
 	}
 
 	public function getAddress($showHomeNo = true, $showCity = true) {
@@ -236,6 +240,10 @@ class AdProduct extends AP
     }
 	
 	public function afterSave($insert, $changedAttributes) {
+		$this->oldAttr = $this->attributes;
+		
+		return parent::afterSave($insert, $changedAttributes);
+		/*
 		$totalType = ($this->type == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
 		
 		if($insert) {
@@ -308,6 +316,7 @@ class AdProduct extends AP
 		$this->oldAttr = $this->attributes;
 		
 		parent::afterSave($insert, $changedAttributes);
+		*/
 	}
 	
 	public function updateEsProduct() {
@@ -427,7 +436,7 @@ class AdProduct extends AP
 			$this->insertEsProduct();
 		}
 	}
-	
+	/*
 	public function removeEsProduct() {
 		$indexName = \Yii::$app->params['indexName']['product'];
 		
@@ -438,7 +447,8 @@ class AdProduct extends AP
 		curl_exec($ch);
 		curl_close($ch);
 	}
-	
+	*/
+	/*
 	public function insertEsProduct() {
 		$query = Elastic::buildQueryProduct();
 		$query->where(['`ad_product`.`id`' => $this->id]);
@@ -450,7 +460,7 @@ class AdProduct extends AP
 		
 		Elastic::insertProducts($indexName, Elastic::$productEsType, $bulk);
 	}
-	
+	*/
 	public static function updateElasticCounter($type, $id, $totalType, $increase = true) {
 		$sign = $increase ? '+' : '-';
 		$script = '{"script" : "ctx._source.' . $totalType . $sign . '=1"}';
@@ -553,5 +563,253 @@ class AdProduct extends AP
 		$score += empty($product['owner']) ? 0 : 5;
 		
 		return $score;
+	}
+/*
+ * New -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ */	
+	public function updateExpired() {
+		if($this->canUpdateExpired()) {
+			$this->is_expired = 0;
+			$this->start_date = time();
+			$this->end_date = $this->start_date + self::EXPIRED;
+			$this->save();
+			
+			$this->insertEs();
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public function canUpdateExpired() {
+		return $this->is_expired == 1 && $this->status == AdProduct::STATUS_ACTIVE;
+	}
+	
+	public function insertEs() {
+		/*
+		 * Insert To product Es
+		 */
+		$query = Elastic::buildQueryProduct();
+		$query->where(['`ad_product`.`id`' => $this->id]);
+		$product = $query->one();
+		$bulk = Elastic::buildProductDocument($product);
+		
+		$document = $bulk[1];
+		$indexName = \Yii::$app->params['indexName']['product'];
+		$type = Elastic::$productEsType;
+		
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/$type/" . $this->id);
+		
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($document));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_exec($ch);
+		curl_close($ch);
+		
+		/*
+		 * Increase Counter
+		 */
+		$totalType = ($this->type == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
+		
+		self::updateElasticCounters($this->attributes, $totalType);
+	}
+	
+	public static function updateElasticCounters($attributes, $totalType, $increase = true) {
+		foreach(self::$elasticUpdateFields as $field) {
+			$attr = $field . '_id';
+			
+			if(!empty($attributes[$attr])) {
+				self::updateElasticCounter($field, $attributes[$attr], $totalType, $increase);
+			}
+		}
+	}
+	
+	public function removeEs() {
+		$indexName = \Yii::$app->params['indexName']['product'];
+		
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/" . $this->id);
+		
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_exec($ch);
+		curl_close($ch);
+		
+		/*
+		 * Decrease Counter
+		 */
+		$totalType = ($this->type == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
+		
+		self::updateElasticCounters($this->attributes, $totalType, false);
+	}
+	
+	public function boost($boostTime) {
+		if($this->canBoost($boostTime)) {
+			$this->boost_start_time = time();
+			$currentBoostEnd = $this->boost_time ? $this->boost_time : $this->boost_start_time;
+			$this->boost_time = $currentBoostEnd + $boostTime;
+			
+			if($this->boost_time > $this->end_date) {
+				$this->end_date = $this->boost_time;
+			}
+			
+			$this->save();
+			
+			$changes = [
+				'boost_start_time' => $this->boost_start_time,
+				'boost_time' => $this->boost_time,
+				'boost_sort' => $this->boost_start_time
+			];
+			
+			$this->updateEs($changes);
+			$this->reSortBoost($this->type);
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public function canBoost($boostTime) {
+		$now = time();
+		$currentBoostEnd = $this->boost_time ? $this->boost_time : $now;
+		
+		return $this->status == self::STATUS_ACTIVE && $currentBoostEnd + $boostTime <= $now + AdProduct::BOOST_LIMIT;
+	}
+	
+	public function updateEs($changes) {
+		self::_updateEs($this->id, $changes);
+	}
+	
+	public static function _updateEs($id, $changes) {
+		$indexName = \Yii::$app->params['indexName']['product'];
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/" . $id . "/_update");
+		$update = ["doc" => $changes];
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($update));
+		curl_exec($ch);
+		curl_close($ch);
+	}
+	
+	public static function reSortBoost($type) {
+		$params = [
+			"query" => [
+				"filtered" => [
+					"filter" => [
+						"bool" => [
+							"must" => [
+								["range" => ["boost_start_time" => ["gt" => 0]]],
+								["term" => ["type" => $type]]
+							]
+						]
+					]
+				]
+			],
+			"size" => self::BOOST_SORT_LIMIT + 1,
+			"sort" => ["boost_start_time"]
+		];
+			
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['product'] . '/_search');
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		
+		$boostResult = json_decode(curl_exec($ch), true);
+		
+		$products = $boostResult['hits']['hits'];
+		
+		if($boostResult['hits']['total'] > self::BOOST_SORT_LIMIT) {
+			$firstProduct = $products[0];
+			
+			if($firstProduct['_source']['boost_sort'] != 0) {
+				self::_updateEs($firstProduct['_id'], ['boost_sort' => 0]);
+			}
+			
+			array_shift($products);
+		}
+		
+		foreach ($products as $product) {
+			if($product['_source']['boost_start_time'] > $product['_source']['boost_sort']) {
+				self::_updateEs($product['_id'], ['boost_sort' => $product['_source']['boost_start_time']]);
+			}
+		}
+	}
+	
+	public function updateStatus($status) {
+		$currentStatus = $this->status;
+		
+		$this->status = $status;
+		$this->save();
+		
+		if($currentStatus == self::STATUS_ACTIVE && $status != self::STATUS_ACTIVE) {
+			$this->removeEs();
+		} else if($currentStatus != self::STATUS_ACTIVE && $status == self::STATUS_ACTIVE) {
+			$this->insertEs();
+		}
+		
+		if($currentStatus != self::STATUS_PENDING && $this->boost_start_time > 0) {
+			self::reSortBoost($this->type);
+		}
+	}
+	
+	public function updateWithEs($validate) {
+		$this->save($validate);
+		
+		/*
+		 * Update Elastic
+		 */
+		$indexName = \Yii::$app->params['indexName']['product'];
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/" . $this->id);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$result = json_decode(curl_exec($ch), true);
+		
+		if($result['found']) {
+			$query = Elastic::buildQueryProduct();
+			$query->where(['`ad_product`.`id`' => $this->id]);
+			$product = $query->one();
+			$bulk = Elastic::buildProductDocument($product);
+			$newAttrs = $bulk[1];
+			$ollAttrs = $result['_source'];
+			
+			$newLocation = $newAttrs['location'];
+			unset($newAttrs['location']);
+			$oldLocation = $ollAttrs['location'];
+			unset($ollAttrs['location']);
+				
+			$changes = array_diff_assoc($newAttrs, $ollAttrs);
+			
+			if(isset($changes['boost_sort'])) {
+				unset($changes['boost_sort']);
+			}
+				
+			if(array_diff($newLocation, $oldLocation)) {
+				$changes['location'] = $newLocation;
+			}
+			
+			$this->updateEs($changes);
+			
+			if(isset($changes['type']) && $ollAttrs['boost_sort'] != 0) {
+				self::reSortBoost(self::TYPE_FOR_RENT);
+				self::reSortBoost(self::TYPE_FOR_SELL);
+			}
+			
+			/*
+			 * Update Counter
+			 */
+			if(isset($changes['type'])) {
+				$oldTotalType = ($ollAttrs['type'] == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
+				$newTotalType = ($newAttrs['type'] == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
+				
+				self::updateElasticCounters($ollAttrs, $oldTotalType, false);
+				self::updateElasticCounters($newAttrs, $newTotalType);
+			} else {
+				$totalType = ($this->type == self::TYPE_FOR_SELL) ? self::TYPE_FOR_SELL_TOTAL : self::TYPE_FOR_RENT_TOTAL;
+				
+				self::updateElasticCounters(array_diff_assoc($ollAttrs, $newAttrs), $totalType, false);
+				self::updateElasticCounters($changes, $totalType);
+			}
+		}
 	}
 }

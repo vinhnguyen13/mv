@@ -26,6 +26,7 @@ use yii\helpers\Url;
 use yii\web\Application as WebApplication;
 use yii\web\IdentityInterface;
 use vsoft\ec\models\EcStatisticView;
+use vsoft\ad\models\Balance;
 
 /**
  * User ActiveRecord model.

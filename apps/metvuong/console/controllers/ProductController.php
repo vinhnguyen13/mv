@@ -28,6 +28,7 @@ class ProductController extends Controller {
 	public function actionUpdate() {
 		$this->checkExpired();
 		$this->checkEndBoost();
+		$this->checkBoostSort();
 	}
 	
 	public function checkExpired() {
@@ -140,13 +141,32 @@ class ProductController extends Controller {
 			}
 		}
 		
+		/*
+		 * Update DB
+		 */
 		$connection = \Yii::$app->db;
 		$connection->createCommand()->update('ad_product', ['boost_time' => 0, 'boost_start_time' => null], ['id' => $endBoosts])->execute();
 		
 		/*
-		 * Update Product Elastic
+		 * Update Elastic
 		 */
+		$updateBulk = [];
 		
+		foreach ($endBoosts as $id) {
+			$updateBulk[] = '{ "update" : { "_id" : "' . $id . '" } }';
+			$updateBulk[] = '{ "doc" : {"boost_sort" : 0, "boost_time": 0, "boost_start_time": 0} }';
+		}
+		
+		$updateBulk = implode("\n", $updateBulk) . "\n";
+		
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/_bulk");
+		
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $updateBulk);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_exec($ch);
+		curl_close($ch);
+		/*
 		$params = [
 			"query" => [
 				"filtered" => [
@@ -187,6 +207,12 @@ class ProductController extends Controller {
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_exec($ch);
 		curl_close($ch);
+		*/
+	}
+	
+	public function checkBoostSort() {
+		AdProduct::reSortBoost(AdProduct::TYPE_FOR_SELL);
+		AdProduct::reSortBoost(AdProduct::TYPE_FOR_RENT);
 	}
 
     public function actionCheckScore(){
