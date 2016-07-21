@@ -7,66 +7,28 @@
 
 namespace console\controllers;
 
-use console\models\batdongsan\CopyListing;
-use console\models\batdongsan\CopyProject;
-use console\models\batdongsan\ImportProject;
-use console\models\batdongsan\Listing;
-use console\models\batdongsan\Project;
 use yii\console\Controller;
+use Yii;
+use frontend\models\Payment;
 
-class BatdongsanController extends Controller
+class PaymentController extends Controller
 {
-    // get listing nha-dat-ban
-    public function actionListing()
+    public function actionTest($start = 0, $end = 1000)
     {
-        if($this->city == 'hcm')
-            $this->city = 'ho-chi-minh';
-        Listing::find()->parse($this->city);
-    }
-    // get listing nha-dat-cho-thue
-    public function actionRentListing()
-    {
-        if($this->city == 'hcm')
-            $this->city = 'ho-chi-minh';
-        Listing::find()->parseRent($this->city);
-    }
-
-    public $valid;
-    public $city;
-    public $limit;
-    public function options()
-    {
-        return ['valid','city','limit'];
-    }
-    public function optionAliases()
-    {
-        return ['valid' => 'valid', 'city' => 'city', 'limit' => 'limit'];
-    }
-    // php yii batdongsan/copy-listing -valid=1
-    public function actionCopyListing()
-    {
-        $validate = intval($this->valid);
-        $copy_limit = $this->limit == null ? 300 : (intval($this->limit) > 300 ? 300 : intval($this->limit));
-        if($copy_limit > 0)
-            CopyListing::find()->copyToMainDB($validate,$copy_limit);
-        else {
-            print_r("\n How many listing to copy? \n Ex: php yii crawler/copytomain -valid=1 -limit=300\n");
+        $connection = Yii::$app->db;
+        $transaction = $connection->beginTransaction();
+        try {
+            for($i = $start; $i<=$end; $i ++) {
+                Payment::me()->updateBalance(8, $i);
+                echo $i.PHP_EOL;
+                usleep(5000);
+            }
+            $transaction->commit();
+            print_r('=====DONE !=====');
+            exit;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
         }
-    }
-
-    // get project
-    public function actionProject()
-    {
-        Project::find()->getProjects();
-    }
-
-    public function actionImportProject()
-    {
-        ImportProject::find()->importProjects();
-    }
-
-    public function actionCopyProject()
-    {
-        CopyProject::find()->copyProjects();
     }
 }
