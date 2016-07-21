@@ -150,7 +150,7 @@ class Listing extends Component
                 print_r("{$city} no value in sale_types");
                 return;
             }
-            $path_folder = Yii::getAlias('@console') . "/data/bds_html/{$city}/";
+            $path_folder = Yii::getAlias('@console') . "/data/bds_html/{$city}/sales/";
             $bds_log = Helpers::loadLog($path_folder, $bds_log_name);
         }
 
@@ -167,7 +167,7 @@ class Listing extends Component
         }
 
         $write_log = false;
-        $last_type = isset($bds_log["last_type_index"]) ? 0 : ($bds_log["last_type_index"] + 1);
+        $last_type = empty($bds_log["last_type_index"]) ? 0 : ($bds_log["last_type_index"] + 1);
         if($last_type >= ($count_type-1)) {
             unset($bds_log["last_type_index"]);
             $last_type = 0;
@@ -272,13 +272,14 @@ class Listing extends Component
     {
         $url = self::DOMAIN.$href;
         $folder = $product_type == 1 ? "files" : "rent_files";
+        $sales_rents = $product_type == 1 ? "sales" : "rents";
         $path = $path_folder . $type. "/" . $folder . "/";
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
             echo "\nDirectory {$path} was created";
         }
 
-        $ad_product_file_path = $city . "/" . $type . "/" . $folder;
+        $ad_product_file_path = $city . "/" . $sales_rents . "/" . $type . "/" . $folder;
         $ad_crawl_product = AdProduct::find()->where(['file_name' => $productId])->one();
         if(count($ad_crawl_product) > 0){
             $ad_product_file = new AdProductFile();
