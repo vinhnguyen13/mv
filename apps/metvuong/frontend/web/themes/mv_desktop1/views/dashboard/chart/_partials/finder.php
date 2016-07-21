@@ -1,7 +1,7 @@
 <?php
 use yii\web\View;
 
-Yii::$app->getView()->registerJsFile('http://code.highcharts.com/highcharts.js', ['position' => View::POS_HEAD]);
+Yii::$app->getView()->registerJsFile('//code.highcharts.com/highcharts.js', ['position' => View::POS_HEAD]);
 
 ?>
     <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>

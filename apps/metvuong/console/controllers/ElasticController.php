@@ -17,6 +17,26 @@ class ElasticController extends Controller {
 		//'`ad_product`.`verified`' => 1
 	];
 	
+	public function actionListIndex() {
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/_cat/indices?v');
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		
+		$result = curl_exec($ch);
+		
+		echo $result;
+	}
+	
+	public function actionDeleteIndex($indexName) {
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . $indexName);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		
+		$result = curl_exec($ch);
+		
+		echo $result;
+	}
+	
 	public function actionBuildIndex() {
 		$indexName = \Yii::$app->params['indexName']['countTotal'];
 		
@@ -32,7 +52,7 @@ class ElasticController extends Controller {
 		
 		$this->createIndex($indexName);
 		
-		$this->build('city_id', ['`name` AS `full_name`', '`ad_city`.`id` AS `city_id`']);
+		$this->build('city_id', ['`name`', '`name` AS `full_name`', '`ad_city`.`id` AS `city_id`']);
 		$this->build('district_id', [
 			"`ad_district`.`city_id`",
 			"@district_name:=TRIM(CONCAT(`ad_district`.`pre`, ' ', `ad_district`.`name`)) AS `name`",

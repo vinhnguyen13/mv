@@ -85,7 +85,7 @@ class ImportProject extends Component
                     if ($counter > 0) {
                         $filename = null;
                         for ($i = 0; $i <= $last_file_index; $i++) {
-                            if ($no > 500) {
+                            if ($no > 300) {
                                 $break_type = true;
                                 break;
                             }
