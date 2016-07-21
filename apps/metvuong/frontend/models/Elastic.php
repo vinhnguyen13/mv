@@ -734,7 +734,7 @@ class Elastic
 			foreach ($uc as $id => $total) {
 				foreach ($total as $t => $count) {
 					$updateBulk[] = '{ "update" : { "_id" : "' . $id . '", "_type" : "' . $type . '", "_retry_on_conflict": ' . $retryOnConflict . ' } }';
-					$updateBulk[] = '{ "script" : { "inline": "ctx._source.' . $t . ' -= ' . $count . '"} }';
+					$updateBulk[] = '{ "script" : { "inline": "ctx._source.' . $t . ' += ' . $count . '"} }';
 				}
 			}
 		}
