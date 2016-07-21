@@ -50,8 +50,11 @@ use yii\helpers\Url;
                         }
 
                         if(isset($params['your_email']) && $params['your_email'] == false && !empty($yourEmail)) {
-                            echo $f->field($share_form, 'your_email')->hiddenInput(['class'=>'your_email', 'value'=> $yourEmail])->label(false);
-                        } else { ?>
+                        ?>
+                        <div class="frm-item frm-email hide">
+                            <?= $f->field($share_form, 'your_email')->hiddenInput(['class'=>'your_email', 'value'=> $yourEmail])->label(false);?>
+                        </div>
+                        <?php } else { ?>
                         <div class="frm-item frm-email">
                             <?= $f->field($share_form, 'your_email')->textInput(['class'=>'your_email', 'value' => isset($params['setValueFromEmail']) ? $yourEmail : "", 'placeholder'=>Yii::t('send_email', 'From email')])->label(false) ?>
                         </div>
@@ -59,6 +62,10 @@ use yii\helpers\Url;
                         ?>
                         <div class="frm-item frm-email">
                             <?= $f->field($share_form, 'recipient_email')->textInput(['class'=>'recipient_email', 'value'=> $recipientEmail, 'placeholder'=>Yii::t('send_email', 'To email ...')])->label(false) ?>
+                        </div>
+
+                        <div class="frm-item frm-email">
+                            <?= $f->field($share_form, 'mobile')->textInput(['class'=>'subject2', 'placeholder'=>Yii::t('send_email', 'Mobile')])->label(false)?>
                         </div>
 
                         <div class="frm-item frm-email hide">
@@ -91,7 +98,7 @@ use yii\helpers\Url;
                                     }
                                 }
 
-                                $category = ucfirst(Yii::t('ad', $categories[$product->category_id]['name'], null, Yii::$app->language)). " " .mb_strtolower(Yii::t('ad', $product_type, null, Yii::$app->language));
+                                $category = ucfirst(Yii::t('ad', $categories[$product->category_id]['name'], null, Yii::$app->language));
                                 $area = $product->area;
                                 $adProductAdditionInfo = $product->adProductAdditionInfo;
                                 $room_no = $adProductAdditionInfo->room_no;
@@ -112,7 +119,7 @@ use yii\helpers\Url;
                                 <p class="description"><?=StringHelper::truncate($product->content, 150)?></p>
                                 <p class="send-by"><?=Yii::t('send_email','BY')?> METVUONG.COM</p>
                             </div>
-                                <?= $f->field($share_form, 'pid')->hiddenInput(['class' => 'pid', 'value'=> Yii::$app->params['listing_prefix_id'] . $pid])->label(false); ?>
+                                <?= $f->field($share_form, 'pid')->hiddenInput(['class' => 'pid', 'value'=> $pid])->label(false); ?>
                                 <?= $f->field($share_form, 'uid')->hiddenInput(['class' => '_address', 'value'=>$user_id])->label(false) ?>
                                 <?= $f->field($share_form, 'address')->hiddenInput(['class' => '_address', 'value'=>$address])->label(false) ?>
                                 <?= $f->field($share_form, 'detailUrl')->hiddenInput(['class' => '_detailUrl', 'value'=> $detailUrl ])->label(false) ?>

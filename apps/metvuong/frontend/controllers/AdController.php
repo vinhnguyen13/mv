@@ -18,6 +18,7 @@ use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdProductReport;
 use vsoft\express\components\ImageHelper;
 use vsoft\express\components\StringHelper;
+use vsoft\express\models\SysEmail;
 use vsoft\news\models\CmsShow;
 use vsoft\news\models\Status;
 use vsoft\tracking\models\base\AdProductShare;
@@ -854,54 +855,7 @@ class AdController extends Controller
                 'class'    => ShareForm::className(),
                 'scenario' => 'share',
             ]);
-            $model->load($post);
-            $model->validate();
-            $profile_url = null;
-            $token_url = null;
-            if (!$model->hasErrors()) {
-                $from_name = !empty($model->from_name) ? $model->from_name : $model->your_email;
-                $type_email = $model->type == "share" ? "chia sẻ" : "liên hệ";
-                $category = $model->category;
-                $address = $model->address;
-                if($model->type == "contact") {
-                    $uid = $model->uid;
-                    if($uid > 0) {
-                        $user = Yii::$app->db->cache(function () use ($uid) {
-                            return User::findOne($uid);
-                        });
-                        if (count($user) > 0) {
-                            $profile_url = Url::to(['dashboard/ad', 'username' => $user->username], true);
-                            $token = new Token();
-                            $token->user_id = $model->uid;
-                            $token->code = Yii::$app->security->generateRandomString();
-                            $token->type = Token::TYPE_CRAWL_USER_EMAIL;
-                            $token->created_at = time();
-                            if ($token->save())
-                                $token_url = $token->url;
-                        }
-                    }
-                }
-                // send to
-//                $subjectEmail = "Metvuong.com - {$from_name} {$type_email} tin {$model->pid}";
-                $subjectEmail = "Có Người Muốn {$type_email} {$category} của bạn ở {$address}";
-				$mailer = new \common\components\Mailer();
-                $result = $mailer->compose(['html' => "../mail/vi-VN/product_share_contact"], ['contact' => $model, 'profile_url' => $profile_url, 'token_url' => $token_url])
-                ->setFrom(Yii::$app->params['noreplyEmail'])
-                ->setTo([trim($model->recipient_email)])
-                ->setSubject($subjectEmail)
-                ->send();
-                if($result){
-                    $send_from = isset($post["send_from"]) ? $post["send_from"] : null;
-                    $from_email = trim($model->your_email);
-                    $to_email = trim($model->recipient_email);
-                    $subject = trim($model->subject);
-                    $content = trim($model->content);
-                    Tracking::find()->saveEmailLog($from_name, $from_email, $to_email, $subject, $content, $send_from);
-                }
-                return ['status' => 200, 'result' => $result];
-            } else {
-                return ['status' => 404, 'parameters' => $model->errors];
-            }
+			return $model->send($post);
 		}
         return ['status' => 400, 'parameters' => 'Send mail error. Please, try again later'];
 	}

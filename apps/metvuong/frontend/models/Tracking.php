@@ -244,15 +244,14 @@ class Tracking extends Component
         return 0;
     }
 
-    public function saveEmailLog($from_user, $from_email, $to_email, $subject, $content, $send_from){
+    public function saveEmailLog($data){
         $sysEmail = new SysEmail();
-        $sysEmail->from_user = $from_user; //utf8_encode($from_user);
-        $sysEmail->from_email = $from_email;
-        $sysEmail->to_email = $to_email;
-        $sysEmail->subject = $subject;
-        $sysEmail->content = $content;//utf8_encode($content);
-        $sysEmail->send_from = $send_from;
-        $sysEmail->time = time();
+        if(!empty($data) && is_array($data)){
+            foreach($data as $key=>$value){
+                $sysEmail->setAttribute($key, $value);
+            }
+        }
+        $sysEmail->send_time = time();
         $sysEmail->ip = Yii::$app->request->userIP;
         return $sysEmail->save();
     }

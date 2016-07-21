@@ -154,6 +154,7 @@ class ProfileForm extends Model
     public function updateProfile(){
         $profile = Yii::$app->user->identity->profile;
         if(!empty($profile)) {
+            $firstEmail = $profile->public_email;
             $profile->user_id = $this->user_id;
             $profile->name = $this->name;
             $profile->public_email = $this->public_email;
@@ -163,7 +164,13 @@ class ProfileForm extends Model
             $profile->bio = $this->bio;
             $profile->user->updateAttributes(['aliasname'=>$this->aliasname]);
             $profile->avatar = $this->avatar;
-            return $profile->save(false);
+            if($profile->save(false)){
+                if($firstEmail != $profile->public_email) {
+                    $profile->user->email = $profile->public_email;
+                    $profile->user->save(false);
+                }
+                return true;
+            }
         }
         return false;
     }
