@@ -4,6 +4,7 @@ namespace console\controllers;
 use console\models\Batdongsan;
 use console\models\batdongsan\CopyListing;
 use console\models\batdongsan\CopyProject;
+use console\models\batdongsan\ImportListing;
 use console\models\batdongsan\ImportProject;
 use console\models\batdongsan\Listing;
 use console\models\batdongsan\Project;
@@ -56,7 +57,17 @@ class CrawlerController extends Controller
     }
     public function actionImportbatdongsan2()
     {
-        BatdongsanV2::find()->importDataForTool(1);
+        if(!empty($this->city) && isset(Listing::find()->sale_types[$this->city])) {
+            $import_limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+            if($import_limit > 0)
+                ImportListing::find()->importDataForTool(1, $this->city, $import_limit);
+            else {
+                print_r("\nParam: city undefined ! \nEx: php yii crawler/importbatdongsan -city=ho-chi-minh -limit=1\n");
+            }
+        }
+        else {
+            print_r("\nParam: city undefined ! \nEx: php yii crawler/importbatdongsan -city=ho-chi-minh -limit=1\n");
+        }
     }
 
 
@@ -74,7 +85,18 @@ class CrawlerController extends Controller
 
     public function actionImportrentbds()
     {
-        BatdongsanV2::find()->importDataForTool(2);
+//        BatdongsanV2::find()->importDataForTool(2);
+        if(!empty($this->city) && isset(Listing::find()->sale_types[$this->city])) {
+            $import_limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+            if($import_limit > 0)
+                ImportListing::find()->importDataForTool(2, $this->city, $import_limit);
+            else {
+                print_r("\nParam: city undefined ! \nEx: php yii crawler/importbatdongsan -city=ho-chi-minh -limit=1\n");
+            }
+        }
+        else {
+            print_r("\nParam: city undefined ! \nEx: php yii crawler/importbatdongsan -city=ho-chi-minh -limit=1\n");
+        }
     }
 
 
@@ -112,11 +134,12 @@ class CrawlerController extends Controller
     public function actionCopytomain()
     {
         $validate = intval($this->valid);
-        $copy_limit = $this->limit == null ? 300 : (intval($this->limit) > 300 ? 300 : intval($this->limit));
-        if($copy_limit > 0)
-            CopyListing::find()->copyToMainDB($validate,$copy_limit);
+        $copy_limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+        if($copy_limit > 0) {
+            CopyListing::find()->copyToMainDB($validate, $copy_limit);
+        }
         else {
-            print_r("\n How many listing to copy? \n Ex: php yii crawler/copytomain -valid=1 -limit=300\n");
+            print_r("\n How many listing to copy? \n Ex: php yii crawler/copytomain -valid=1 -limit=1\n");
         }
     }
 

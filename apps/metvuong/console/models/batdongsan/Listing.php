@@ -167,7 +167,7 @@ class Listing extends Component
         }
 
         $write_log = false;
-        $last_type = empty($bds_log["last_type_index"]) ? 0 : ($bds_log["last_type_index"] + 1);
+        $last_type = isset($bds_log["last_type_index"]) ? 0 : ($bds_log["last_type_index"] + 1);
         if($last_type >= ($count_type-1)) {
             unset($bds_log["last_type_index"]);
             $last_type = 0;
@@ -272,13 +272,13 @@ class Listing extends Component
     {
         $url = self::DOMAIN.$href;
         $folder = $product_type == 1 ? "files" : "rent_files";
-        $path = $path_folder . $type. DIRECTORY_SEPARATOR . $folder . DIRECTORY_SEPARATOR;
+        $path = $path_folder . $type. "/" . $folder . "/";
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
             echo "\nDirectory {$path} was created";
         }
 
-        $ad_product_file_path = $city . DIRECTORY_SEPARATOR . $type . DIRECTORY_SEPARATOR . $folder;
+        $ad_product_file_path = $city . "/" . $type . "/" . $folder;
         $ad_crawl_product = AdProduct::find()->where(['file_name' => $productId])->one();
         if(count($ad_crawl_product) > 0){
             $ad_product_file = new AdProductFile();
@@ -315,7 +315,7 @@ class Listing extends Component
                     return null;
                 }
             } else {
-                $this->writeFileLogFail("\nFailed at ".Listing::DOMAIN.$href."\n", $path_folder . $type. DIRECTORY_SEPARATOR );
+                $this->writeFileLogFail("\nFailed at ".Listing::DOMAIN.$href."\n", $path_folder . $type. "/" );
                 echo "\nError go to detail at " . Listing::DOMAIN . $href;
                 return null;
             }
