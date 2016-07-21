@@ -164,10 +164,10 @@ class Project extends Component
             }
             $res = Helpers::writeFileJson($path . $id, $page);
             if ($res) {
-                Listing::find()->writeFileLogUrlSuccess($type, self::DOMAIN . $href . "\n", $path_folder);
+//                Listing::find()->writeFileLogUrlSuccess($type, self::DOMAIN . $href . "\n", $path_folder);
                 return $id;
             } else {
-                Listing::find()->writeFileLogFail($type, self::DOMAIN . $href . "\n", $path_folder);
+//                Listing::find()->writeFileLogFail($type, self::DOMAIN . $href . "\n", $path_folder);
                 return null;
             }
         }
