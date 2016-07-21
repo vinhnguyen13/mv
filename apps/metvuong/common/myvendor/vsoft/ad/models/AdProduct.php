@@ -9,7 +9,8 @@ use common\models\AdProduct as AP;
 use vsoft\express\components\AdImageHelper;
 use frontend\models\Elastic;
 use yii\helpers\ArrayHelper;
-
+use yii\db\Query;
+use yii\db\yii\db;
 
 class AdProduct extends AP
 {
@@ -699,15 +700,13 @@ class AdProduct extends AP
 					"filter" => [
 						"bool" => [
 							"must" => [
-								["range" => ["boost_start_time" => ["gt" => 0]]],
+								["range" => ["boost_sort" => ["gt" => 0]]],
 								["term" => ["type" => $type]]
 							]
 						]
 					]
 				]
-			],
-			"size" => self::BOOST_SORT_LIMIT + self::BOOST_SORT_LIMIT,
-			"sort" => ["boost_start_time" => ["order" => "desc"]]
+			]
 		];
 			
 		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['product'] . '/_search');
@@ -716,23 +715,25 @@ class AdProduct extends AP
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		
 		$boostResult = json_decode(curl_exec($ch), true);
+		$boostSortproducts = ArrayHelper::getColumn($boostResult['hits']['hits'], "_id");
+
+		$boostProductInDb = (new Query())->select('`id`, `boost_start_time`')->from('ad_product')->where(['is_expired' => 0, 'status' => self::STATUS_ACTIVE, 'type' => $type])
+										->andWhere(['>', 'boost_start_time', 0])->orderBy('`boost_start_time` DESC')->limit(self::BOOST_SORT_LIMIT)->indexBy('id')->all();
+
+		$boostProductInDbId = ArrayHelper::getColumn($boostProductInDb, 'id');
 		
-		$products = $boostResult['hits']['hits'];
-
-		if($products) {
-
-			$removeBoostSortProducts = array_splice($products, 4);
-			
-			foreach ($products as $product) {
-				if(!$product['_source']['boost_sort']) {
-					self::_updateEs($product['_id'], ['boost_sort' => $product['_source']['boost_start_time']]);
-				}
+		$addBoost = array_diff($boostProductInDbId, $boostSortproducts);
+		$removeBoost = array_diff($boostSortproducts, $boostProductInDbId);
+		
+		if($addBoost) {
+			foreach ($addBoost as $id) {
+				self::_updateEs($id, ['boost_sort' => $boostProductInDb[$id]['boost_start_time']]);
 			}
-			
-			foreach ($removeBoostSortProducts as $product) {
-				if($product['_source']['boost_sort']) {
-					self::_updateEs($product['_id'], ['boost_sort' => 0]);
-				}
+		}
+		
+		if($removeBoost) {
+			foreach ($removeBoost as $id) {
+				self::_updateEs($id, ['boost_sort' => 0]);
 			}
 		}
 	}

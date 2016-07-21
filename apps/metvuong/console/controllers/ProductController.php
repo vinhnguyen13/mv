@@ -26,9 +26,9 @@ class ProductController extends Controller {
 	}
 	
 	public function actionUpdate() {
-		$this->checkExpired();
-		$this->checkEndBoost();
-		$this->checkBoostSort();
+		if($this->checkExpired() || $this->checkEndBoost()) {
+			$this->checkBoostSort();
+		}
 	}
 	
 	public function checkExpired() {
@@ -126,6 +126,8 @@ class ProductController extends Controller {
 			$connection = \Yii::$app->db;
 			$connection->createCommand()->update('ad_product', ['is_expired' => 1], ['id' => $deleteProducts])->execute();
 		}
+		
+		return count($deleteProducts);
 	}
 	
 	public function checkEndBoost() {
@@ -180,6 +182,8 @@ class ProductController extends Controller {
 		} catch (\Exception $e) {
 			$transaction->rollBack();
 		}
+		
+		return count($endBoosts);
 	}
 	
 	public function checkBoostSort() {
