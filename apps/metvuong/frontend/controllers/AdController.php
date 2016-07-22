@@ -351,6 +351,7 @@ class AdController extends Controller
     		$mapSearch->rect = null;
     	}
     	
+    	$backupRm = $mapSearch->rm;
     	$mapSearch->rm = null;
     	
     	$this->view->params['body'] = [
@@ -363,7 +364,9 @@ class AdController extends Controller
 		}
     		 
 		$result = $mapSearch->search();
-    		 
+    	
+		$mapSearch->rm = $backupRm;
+		
 		$mapSearch->fetchValues();
     		 
 		return $this->render('index', ['searchModel' => $mapSearch, 'list' => $result['aggregations']['rl']['hits'], 'slug' => $slug]);
