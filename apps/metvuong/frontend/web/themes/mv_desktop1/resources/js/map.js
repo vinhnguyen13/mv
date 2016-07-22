@@ -402,7 +402,7 @@ var m2Map = {
 		
 		m2Map.mapOptions = {
 			center: {lat: 10.783091, lng: 106.704899},
-			zoom: 18,
+			zoom: 14, // backup 18
 			clickableIcons: false,
 			zoomControl: false,
 			streetViewControl: false,
