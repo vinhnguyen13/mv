@@ -252,6 +252,8 @@ class Listing extends Component
                         $return_detail = $this->getProductDetail($type, $item->href, $product_type, $path_folder, $productId, $city);
                         if(!empty($return_detail))
                             $item_no++;
+                        sleep(3);
+                        ob_flush();
                     } else {
                         print_r(PHP_EOL.$productId . " exists");
                     }
@@ -270,56 +272,46 @@ class Listing extends Component
 
     public function getProductDetail($type, $href, $product_type, $path_folder, $productId, $city)
     {
-        $url = self::DOMAIN.$href;
+        $url = self::DOMAIN . $href;
         $folder = $product_type == 1 ? "files" : "rent_files";
         $sales_rents = $product_type == 1 ? "sales" : "rents";
-        $path = $path_folder . $type. "/" . $folder . "/";
+        $path = $path_folder . $type . "/" . $folder . "/";
         if (!is_dir($path)) {
             mkdir($path, 0777, true);
             echo "\nDirectory {$path} was created";
         }
 
         $ad_product_file_path = $city . "/" . $sales_rents . "/" . $type . "/" . $folder;
-        $ad_crawl_product = AdProduct::find()->where(['file_name' => $productId])->one();
-        if(count($ad_crawl_product) > 0){
-            $ad_product_file = new AdProductFile();
-            $ad_product_file->file = $ad_crawl_product->file_name;
-            $ad_product_file->path = $ad_product_file_path;
-            $ad_product_file->created_at = time();
-            $ad_product_file->is_import = 1;
-            $ad_product_file->imported_at = $ad_crawl_product->created_at;
-            $ad_product_file->product_tool_id = $ad_crawl_product->id;
-            if($ad_crawl_product->product_main_id > 0) {
-                $ad_product_file->is_copy = 1;
-                $ad_product_file->copied_at = $ad_crawl_product->updated_at;
-                $ad_product_file->product_main_id = $ad_crawl_product->product_main_id;
-            }
-            $ad_product_file->vendor_link = $url;
-            $ad_product_file->save(false);
-            return null;
-        } else {
-            $page = Helpers::getUrlContent($url);
-            sleep(3);
-            ob_flush();
-            if (!empty($page) && !empty($productId)) {
-                $res = Helpers::writeFileJson($path . $productId, $page);
-                if ($res) {
-                    // log product file
-                    $ad_product_file = new AdProductFile();
-                    $ad_product_file->file = $productId;
-                    $ad_product_file->path = $ad_product_file_path;
-                    $ad_product_file->created_at = time();
-                    $ad_product_file->vendor_link = $url;
-                    $ad_product_file->save(false);
-                    return $productId;
-                } else {
-                    return null;
+        $page = Helpers::getUrlContent($url);
+        if (!empty($page) && !empty($productId)) {
+            $res = Helpers::writeFileJson($path . $productId, $page);
+            if ($res) {
+                // product file
+                $ad_product_file = new AdProductFile();
+                $ad_product_file->file = $productId;
+                $ad_product_file->path = $ad_product_file_path;
+                $ad_product_file->created_at = time();
+                $ad_product_file->vendor_link = $url;
+                $ad_crawl_product = AdProduct::find()->where(['file_name' => $productId])->one();
+                if (count($ad_crawl_product) > 0) {
+                    $ad_product_file->is_import = 1;
+                    $ad_product_file->imported_at = $ad_crawl_product->created_at;
+                    $ad_product_file->product_tool_id = $ad_crawl_product->id;
+                    if ($ad_crawl_product->product_main_id > 0) {
+                        $ad_product_file->is_copy = 1;
+                        $ad_product_file->copied_at = $ad_crawl_product->updated_at;
+                        $ad_product_file->product_main_id = $ad_crawl_product->product_main_id;
+                    }
                 }
+                $ad_product_file->save(false);
+                return $productId;
             } else {
-                $this->writeFileLogFail("\nFailed at ".Listing::DOMAIN.$href."\n", $path_folder . $type. "/" );
-                echo "\nError go to detail at " . Listing::DOMAIN . $href;
                 return null;
             }
+        } else {
+            $this->writeFileLogFail("\nFailed at " . Listing::DOMAIN . $href . "\n", $path_folder . $type . "/");
+            echo "\nError go to detail at " . Listing::DOMAIN . $href;
+            return null;
         }
     }
 

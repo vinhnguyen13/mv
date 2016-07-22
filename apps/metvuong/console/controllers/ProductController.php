@@ -1,8 +1,11 @@
 <?php
 namespace console\controllers;
 
+use common\components\Slug;
+use console\models\batdongsan\Listing;
 use console\models\Metvuong;
 use vsoft\ad\models\AdImages;
+use vsoft\craw\models\AdProductFile;
 use yii\console\Controller;
 use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdBuildingProject;
@@ -303,6 +306,78 @@ class ProductController extends Controller {
             print_r(PHP_EOL);
             print_r("Updated {$no} images...");
             print_r(PHP_EOL);
+        }
+    }
+
+    public function actionCopyProductFile()
+    {
+        $start_time = time();
+        $count_log_no_city=0;
+        $count_log_no_district=0;
+        $sql = "SELECT `id`, city_id, district_id, `type`, file_name, product_main_id, created_at, updated_at FROM ad_product where file_name not in (select file from ad_product_file) ";
+        $crawl_products = \vsoft\craw\models\AdProduct::getDb()->createCommand($sql)->queryAll();
+        if(count($crawl_products) > 0){
+            $no = 0;
+            foreach ($crawl_products as $product) {
+                $file_name = $product['file_name'];
+//                print_r(PHP_EOL.$file_name);
+                if(!AdProductFile::checkFileExists($file_name)){
+                    $product_file = new AdProductFile();
+                    $product_file->file = $file_name;
+                    // build path
+                    $path = null;
+                    $city_id = $product['city_id'];
+                    $city = \vsoft\craw\models\AdCity::getDb()->cache(function() use($city_id){
+                        return \vsoft\craw\models\AdCity::find()->select(['name','slug'])->where(['id' => $city_id])->asArray()->one();
+                    });
+                    if(count($city) > 0) {
+                        $path = $city['slug'];
+                        $district_id = $product['district_id'];
+                        $district = \vsoft\craw\models\AdDistrict::getDb()->cache(function() use($district_id){
+                            return \vsoft\craw\models\AdDistrict::find()->select(['name'])->where(['id' => $district_id])->asArray()->one();
+                        });
+                        if(count($district) > 0) {
+                            $district_slug = Slug::me()->slugify($district['name']);
+                            $sales_rents = $product['type'] == "1" ? "sales/nha-dat-ban-{$district_slug}/files" : "rents/nha-dat-cho-thue-{$district_slug}/rent_files";
+                            $path = $path."/".$sales_rents;
+                        } else {
+                            $count_log_no_district++;
+                            continue; }
+                    } else {
+                        $count_log_no_city++;
+                        continue;
+                    }
+
+                    $product_file->path = $path;
+                    $product_file->is_import = 1;
+                    $product_file->product_tool_id = (int)$product['id'];
+                    $product_file->imported_at = (int)$product['created_at'];
+                    $product_file->vendor_link = Listing::DOMAIN."/copy-pr".$file_name;
+                    $product_main_id = (int)$product['product_main_id'];
+                    if($product_main_id > 0) {
+                        $product_file->is_copy = 1;
+                        $product_file->copied_at = $product['updated_at'];
+                        $product_file->product_main_id = $product_main_id;
+                    }
+                    $product_file->created_at = time();
+                    $product_file->save(false);
+                    if ($no > 0 && $no % 100 == 0) {
+                        print_r("\nCopied {$no} files...\n");
+                    }
+                    $no++;
+                }
+            }
+            $end_time = time();
+            $total_time = $end_time - $start_time;
+            print_r("\nCopied {$no} files...{$total_time} seconds");
+            if($count_log_no_city > 0)
+                print_r("\nNo city {$count_log_no_city} files");
+            if($count_log_no_district > 0)
+                print_r("\nNo district {$count_log_no_district} files");
+
+        }
+        else{
+            print_r("Copied all crawl products have file_name to ad_product_file");
         }
     }
 
