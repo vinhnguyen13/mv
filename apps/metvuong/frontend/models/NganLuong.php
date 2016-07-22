@@ -154,7 +154,7 @@ class NganLuong extends Component
             $rs = $call->CardPay($sopin,$soseri,$type_card,$ref_code,$buyer_fullname,$buyer_mobile,$buyer_email);
             if($rs->error_code == '00') {
                 // Cập nhật data tại đây
-                Payment::me()->processTransactionByMobileCard($data['transaction_code'], $rs);
+                Payment::me()->processTransactionByMobileCard(Yii::$app->user->id, $data['transaction_code'], $rs);
                 $return = ['error_code'=>0, 'error_message'=>'You have paid {card_amount} successfully into your account', 'card_amount'=>$rs->card_amount];
             }
             else {

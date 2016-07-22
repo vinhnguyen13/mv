@@ -31,7 +31,7 @@ class CouponController extends Controller
             $code = \Yii::$app->request->post('code');
             $res = CouponHistory::checkCoupon(Yii::$app->user->id, $code);
             if (!empty($res['error_code'] == 0) && !empty($res['result']->couponCode->amount)) {
-                Payment::me()->processTransactionByCoupon($res['result']);
+                Payment::me()->processTransactionByCoupon(Yii::$app->user->id, $res['result']);
                 return ['error_code'=>0, 'result'=>Yii::t('coupon', 'Thank you for using coupon')];
             }
             if($res['error_message']){
