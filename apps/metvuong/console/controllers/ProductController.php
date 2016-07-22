@@ -13,8 +13,51 @@ use vsoft\ad\models\AdDistrict;
 use yii\db\Query;
 use yii\db\yii\db;
 use yii\helpers\ArrayHelper;
+use vsoft\express\components\StringHelper;
 
 class ProductController extends Controller {
+	
+	public function actionDelete($id) {
+		$product = AdProduct::findOne($id);
+		
+		if($product) {
+			$name = $product->street->pre . ' ' . $product->street->name;
+
+			$address = array_filter([
+				$product->home_no,
+				$name
+			]);
+			
+			$message = [];
+			$message[] = "ID: MV" . $id;
+			$message[] = "Address: " . implode(", ", $address);
+			$message[] = "Price: " . $product->price;
+			$message[] = "Area: " . $product->area;
+			$message[] = "Post Date: " . StringHelper::previousTime($product->start_date);
+			$message[] = "Are you sure Delete this product ?";
+			
+			if($this->confirm(implode("\n", $message) . "\n")) {
+				echo "Delete From Elastic And Decrease counter\n";
+				$product->removeEs();
+				
+				echo "Delete Addition Info\n";
+				$product->adProductAdditionInfo->delete();
+				echo "Delete Contact Info\n";
+				$product->adContactInfo->delete();
+
+				echo "Delete Images\n";
+				foreach ($product->adImages as $image) {
+					$image->delete();
+				}
+				
+				echo "Delete Product\n";
+				$product->delete();
+				echo "OK";
+			}
+		} else {
+			echo "MV$id is not exist.";
+		}
+	}
 	
 	public function actionCheckLatLng() {
 		$projects = AdBuildingProject::find()->asArray(true)->all();
