@@ -1336,7 +1336,7 @@ function convertKey ( numKey ) {
     if ( numKey >= 1000 && numKey < 1000000 ) {
         var val = numKey / 1000,
             getNum = val.toString().split('.'),
-            numConverted = getNum[0]+'K'+(getNum[1] != undefined ? getNum[1] : '');
+            numConverted = getNum[0]+'K+';
 
         return numConverted;
     }
