@@ -3,6 +3,7 @@ namespace frontend\components;
 
 use yii\web\UrlManager;
 use frontend\models\MapSearch;
+use vsoft\ad\models\AdCategoryGroup;
 
 class SearchUrlManager extends UrlManager {
 	public $enablePrettyUrl = true;
@@ -21,7 +22,11 @@ class SearchUrlManager extends UrlManager {
 		
 		foreach ($params as $k => $param) {
 			if($k && ($ck = array_search($k, MapSearch::$fieldsMapping)) !== FALSE) {
-				$covnertParams[] = $ck . '_' . $param;
+				if($ck == 'cat') {
+					$covnertParams[] = array_search($param, AdCategoryGroup::slugMap());
+				} else {
+					$covnertParams[] = $ck . '_' . $param;
+				}
 			}
 		}
 		

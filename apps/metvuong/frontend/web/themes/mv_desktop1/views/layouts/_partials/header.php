@@ -32,8 +32,8 @@ $meta->add(Yii::$app->request->absoluteUrl);
                 <div class="wrap-menu">
                     <a href="#" id="hide-menu" class="icon"></a>
                     <ul class="clearfix">
-                        <li class="<?=!empty($this->params['menuBuy']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index1']) ?>"><span class="icon-mv"><span class="icon-icons-search"></span></span><?=Yii::t('general', 'Buy')?></a></li>
-                        <li class="<?=!empty($this->params['menuRent']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index2']) ?>"><span class="icon-mv"><span class="icon-icons-search"></span></span><?=Yii::t('general', 'Rent')?></a></li>
+                        <li class="<?=!empty($this->params['menuBuy']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index1', 'params' => 'ho-chi-minh-quan-1']) ?>"><span class="icon-mv"><span class="icon-icons-search"></span></span><?=Yii::t('general', 'Buy')?></a></li>
+                        <li class="<?=!empty($this->params['menuRent']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index2', 'params' => 'ho-chi-minh-quan-1']) ?>"><span class="icon-mv"><span class="icon-icons-search"></span></span><?=Yii::t('general', 'Rent')?></a></li>
                         <li class="<?=!empty($this->params['menuSell']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/post']) ?>"><span class="icon-mv"><span class="icon-key"></span></span><?=Yii::t('general', 'Sell')?></a></li>
                         <li class="<?=!empty($this->params['menuProject']) ? 'active' : '' ;?>"><a href="<?=Url::to(['building-project/index']);?>"><span class="icon-mv"><span class="icon-fill-1"></span></span><?=Yii::t('general', 'New Project')?></a></li>
                         <li class="<?=!empty($this->params['menuNews']) ? 'active' : '' ;?>"><a href="<?=Url::to(['news/index']);?>"><span class="icon-mv"><span class="icon-group"></span></span><?=Yii::t('general', 'News')?></a></li>
@@ -197,8 +197,8 @@ $meta->add(Yii::$app->request->absoluteUrl);
             </div>
             <ul class="clearfix list-menu">
                 <li class="dt-logo"><a href="/" class="wrap-img"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/logo.png' ?>" alt=""></a></li>
-                <li class="<?=!empty($this->params['menuBuy']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index1']) ?>"><?=Yii::t('general', 'Buy')?></a></li>
-                <li class="<?=!empty($this->params['menuRent']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index2']) ?>"><?=Yii::t('general', 'Rent')?></a></li>
+                <li class="<?=!empty($this->params['menuBuy']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index1', 'params' => 'ho-chi-minh-quan-1']) ?>"><?=Yii::t('general', 'Buy')?></a></li>
+                <li class="<?=!empty($this->params['menuRent']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/index2', 'params' => 'ho-chi-minh-quan-1']) ?>"><?=Yii::t('general', 'Rent')?></a></li>
                 <li class="<?=!empty($this->params['menuSell']) ? 'active' : '' ;?>"><a href="<?= Url::to(['/ad/post']) ?>"><?=Yii::t('general', 'Sell')?></a></li>
                 <li class="<?=!empty($this->params['menuProject']) ? 'active' : '' ;?>"><a href="<?=Url::to(['building-project/index']);?>"><?=Yii::t('general', 'New Project')?></a></li>
                 <li class="<?=!empty($this->params['menuNews']) ? 'active' : '' ;?>"><a href="<?=Url::to(['news/index']);?>"><?=Yii::t('general', 'News')?></a></li>

@@ -443,7 +443,11 @@ var m2Map = {
 			paramValue = paramValues[i].split('=');
 			
 			if(fieldsMapping[paramValue[0]]) {
-				convertPV.push(fieldsMapping[paramValue[0]] + '_' + paramValue[1]);
+				if(paramValue[0] == 'category_id') {
+					convertPV.push(catsSlug[paramValue[1]]);
+				} else {
+					convertPV.push(fieldsMapping[paramValue[0]] + '_' + paramValue[1]);
+				}
 			}
 		}
 
