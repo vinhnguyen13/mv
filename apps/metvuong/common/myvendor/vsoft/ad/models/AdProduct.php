@@ -21,7 +21,14 @@ class AdProduct extends AP
 	
 	const OWNER_HOST = 1;
 	const OWNER_AGENT = 2;
-	
+
+	/*
+	 * STATUS_DELETE: Tin sẽ không hiển thị trong dashboard và search
+	 * STATUS_PENDING: Tin hiển thị trong dashboard nhưng không hiển thị ở search, trạng thái này khi người dùng đăng tin nhưng không có key để active
+	 * STATUS_INACTIVE: Tin hiển thị trong dashboard nhưng không hiển thị ở search, trạng thái này khi người dùng đã bán được nhà và muốn ẩn khỏi search để khỏi bị gọi điện làm phiền
+	 * STATUS_ACTIVE: Tin sẽ được hiển thị trong dashboard và search
+	 */
+	const STATUS_DELETE = -2;
 	const STATUS_PENDING = -1;
 	const STATUS_INACTIVE = 0;
 	const STATUS_ACTIVE = 1;
