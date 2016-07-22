@@ -2,10 +2,18 @@
 <script id="template-download" type="text/x-tmpl">
 {% for (var i=0, file; file=o.files[i]; i++) { %}
     <li class="template-download fade">
+			{% if (!file.error) { %}
         	<input type="hidden" name="{%=o.options.fileInput[0].getAttribute('ref')%}[]" value="{%=file.name%}" />
+			{% } %}
             <span class="preview">
                 {% if (file.thumbnailUrl) { %}
-                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+                    <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery>
+						{% if (file.error) { %}
+						<img class="error" style="width: 40px; height: 40px; margin-top: 20px;" src="{%=file.thumbnailUrl%}">
+						{% } else { %}
+						<img src="{%=file.thumbnailUrl%}">
+						{% } %}
+					</a>
                 {% } %}
             </span>
             {% if (file.error) { %}

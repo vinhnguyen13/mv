@@ -174,7 +174,7 @@ $count_review = $reviews->count();
 						<div class="popover-append hide">
 							<div class="infor-agent clearfix">
                                 <?php if(!empty($owner)) { ?>
-                                    <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="wrap-img">
+                                    <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="wrap-img pic-intro">
                                         <img src="<?= $avatar ?>" alt="<?=$owner->username;?>" /></a>
                                 <?php } else { ?>
                                     <a class="wrap-img"><img src="<?= $avatar ?>" alt="" /></a>
@@ -732,7 +732,7 @@ $count_review = $reviews->count();
 		                <div class="panel-body text-center">
 		            	    <div class="infor-agent clearfix">
 					            <?php if(!empty($owner)) { ?>
-								    <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="wrap-img">
+								    <a href="<?=Url::to(['member/profile', 'username' => $owner->username])?>" class="wrap-img pic-intro">
 					                <img src="<?= $avatar ?>" alt="<?=$owner->username;?>" /></a>
 					            <?php } else { ?>
 					                <a class="wrap-img"><img src="<?= $avatar ?>" alt="" /></a>

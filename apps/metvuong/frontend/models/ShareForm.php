@@ -108,23 +108,25 @@ class ShareForm extends Model
                 $params = ['contact' => $data];
             }
             $mailer = new \common\components\Mailer();
+
+            $track = Tracking::find()->saveEmailLog([
+                'from_name'=>!empty($this->from_name) ? $this->from_name : $this->your_email,
+                'from_email'=>trim($this->your_email),
+                'to_name'=>$to_name,
+                'to_email'=>trim($this->recipient_email),
+                'object_id'=>intval($this->pid),
+                'object_type'=>$typeSendMail,
+                'subject'=>trim($this->subject),
+                'content'=>trim($this->content),
+                'params'=>$data
+            ]);
+            Yii::$app->view->params['tr'] = !empty($track->_id) ? (string) $track->_id : '';
             $result = $mailer->compose($view, $params)
                 ->setFrom(Yii::$app->params['noreplyEmail'])
                 ->setTo([trim($this->recipient_email)])
                 ->setSubject($this->subject)
                 ->send();
             if($result){
-                Tracking::find()->saveEmailLog([
-                    'from_name'=>!empty($this->from_name) ? $this->from_name : $this->your_email,
-                    'from_email'=>trim($this->your_email),
-                    'to_name'=>$to_name,
-                    'to_email'=>trim($this->recipient_email),
-                    'object_id'=>$this->pid,
-                    'object_type'=>$typeSendMail,
-                    'subject'=>trim($this->subject),
-                    'content'=>trim($this->content),
-                    'params'=>$data
-                ]);
                 return ['status' => 200, 'result' => $result];
             }
         } else {

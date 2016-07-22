@@ -6,6 +6,7 @@ use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
+use frontend\models\Tracking;
 use funson86\cms\models\Status;
 use vsoft\news\models\CmsShow;
 use Yii;
@@ -429,4 +430,18 @@ class SiteController extends Controller
         }
         return false;
     }
+
+	public function actionLogo($tr, $tp=1)
+	{
+		Tracking::find()->fromLogo($tr, $tp);
+		$avatarPath = Yii::getAlias('@webroot').( '/images/logo-white.png');
+		$pathinfo = pathinfo($avatarPath);
+		$response = Yii::$app->getResponse();
+		$response->headers->set('Content-Type', 'image/'.$pathinfo['extension']);
+		$response->format = Response::FORMAT_RAW;
+		if ( !is_resource($response->stream = fopen($avatarPath, 'r')) ) {
+			throw new \yii\web\ServerErrorHttpException('file access failed: permission deny');
+		}
+		return $response->send();
+	}
 }

@@ -29,7 +29,7 @@ class SysEmail extends ActiveRecord
             [['to_email'], 'required'],
             [['to_email'], 'email'],
             [['object_id', 'object_type', 'send_time', 'read_time'], 'integer'],
-            [['from_name', 'from_email', 'to_name', 'to_email', 'subject', 'content', 'ip'], 'string'],
+            [['from_name', 'from_email', 'to_name', 'to_email', 'subject', 'content', 'send_ip', 'read_ip'], 'string'],
         ];
     }
     /**
@@ -37,6 +37,6 @@ class SysEmail extends ActiveRecord
      */
     public function attributes()
     {
-        return ['_id', 'from_name', 'from_email', 'to_name', 'to_email', 'object_id', 'object_type', 'subject', 'content', 'params', 'send_time', 'read_time', 'ip'];
+        return ['_id', 'from_name', 'from_email', 'to_name', 'to_email', 'object_id', 'object_type', 'subject', 'content', 'params', 'send_time', 'send_ip', 'read_time', 'read_ip'];
     }
 }
