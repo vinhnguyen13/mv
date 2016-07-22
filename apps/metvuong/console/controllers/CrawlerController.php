@@ -33,16 +33,6 @@ class CrawlerController extends Controller
         echo "cron service runnning";
     }
 
-    // Homefinder
-    public function actionHomefinder()
-    {
-        Homefinder::find()->parse();
-    }
-    public function actionImporthomefinder()
-    {
-        Homefinder::find()->importData_2();
-    }
-
     // Sale Batdongsan
     public function actionBatdongsan()
     {
@@ -91,11 +81,11 @@ class CrawlerController extends Controller
             if($import_limit > 0)
                 ImportListing::find()->importDataForTool(2, $this->city, $import_limit);
             else {
-                print_r("\nParam: city undefined ! \nEx: php yii crawler/importbatdongsan -city=ho-chi-minh -limit=1\n");
+                print_r("\nParam: city undefined ! \nEx: php yii crawler/importrentbds -city=ho-chi-minh -limit=1\n");
             }
         }
         else {
-            print_r("\nParam: city undefined ! \nEx: php yii crawler/importbatdongsan -city=ho-chi-minh -limit=1\n");
+            print_r("\nParam: city undefined ! \nEx: php yii crawler/importrentbds -city=ho-chi-minh -limit=1\n");
         }
     }
 
@@ -184,6 +174,17 @@ class CrawlerController extends Controller
 //        BatdongsanV2::find()->importProjects();
     }
 
+
+    // Homefinder
+    public function actionHomefinder()
+    {
+        Homefinder::find()->parse();
+    }
+    public function actionImporthomefinder()
+    {
+        Homefinder::find()->importData_2();
+    }
+    
     // Muaban.net
     public function actionMuaban()
     {

@@ -167,7 +167,7 @@ class Listing extends Component
         }
 
         $write_log = false;
-        $last_type = empty($bds_log["last_type_index"]) ? 0 : ($bds_log["last_type_index"] + 1);
+        $last_type = isset($bds_log["last_type_index"]) ? ($bds_log["last_type_index"] + 1) : 0;
         if($last_type >= ($count_type-1)) {
             unset($bds_log["last_type_index"]);
             $last_type = 0;
@@ -252,8 +252,8 @@ class Listing extends Component
                         $return_detail = $this->getProductDetail($type, $item->href, $product_type, $path_folder, $productId, $city);
                         if(!empty($return_detail))
                             $item_no++;
-                        sleep(3);
-                        ob_flush();
+//                        sleep(3);
+//                        ob_flush();
                     } else {
                         print_r(PHP_EOL.$productId . " exists");
                     }
