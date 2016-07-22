@@ -83,7 +83,10 @@ class CopyListing extends Component
                     $content = $model->address;
                 }
 
-                $end_date = $model->start_date + 30 * 86400;
+                $is_expired = 0;
+                $end_date = $model->start_date + AdProduct::EXPIRED;
+                if($end_date < time())
+                    $is_expired = 1;
 
                 $record = [
                     'category_id' => $model->category_id,
@@ -108,7 +111,7 @@ class CopyListing extends Component
                     'updated_at' => $model->created_at,
                     'source' => $model->source,
                     'status' => 1,
-                    'is_expired' => 0
+                    'is_expired' => $is_expired
                 ];
 
                 $product = new AdProduct($record);
@@ -203,43 +206,47 @@ class CopyListing extends Component
                             }
                         }
 
-                        $arrElastic[] = [
-                            "index" => [
-                                "_id" => $last_product_id
-                            ]
-                        ];
-                        $arrElastic[] = [
-                            "id" => $last_product_id,
-                            "category_id" => $record['category_id'],
-                            "project_building_id" => $project_id,
-                            "project_building" => $project_id > 0 ? $project->name : "",
-                            "user_id" => 0,
-                            "city_id" => empty($city_id) ? 0 : $city_id,
-                            "district_id" => empty($district_id) ? 0 : $district_id,
-                            "ward_id" => empty($ward_id) ? 0 : $ward_id,
-                            "street_id" => $street_id,
-                            "address" => $address,
-                            "type" => $record['type'],
-                            "area" => $record['area'],
-                            "price" => $record['price'],
-                            "location" => [
-                                "lat" => empty($lat) ? 0 : $lat,
-                                "lon" => empty($lng) ? 0 : $lng,
-                            ],
-                            "score" => empty($score) ? 0 : $score,
-                            "start_date" => $record['start_date'],
-                            "boost_time" => 0,
-                            "boost_start_time" => 0,
-                            "boost_sort" => 0,
-                            "facade_width" => isset($adProductAdditionInfo) &&  empty($adProductAdditionInfo->facade_width) ? 0 : $adProductAdditionInfo->facade_width,
-                            "land_width" => isset($adProductAdditionInfo) &&  empty($adProductAdditionInfo->land_width) ? 0 : $adProductAdditionInfo->land_width,
-                            "home_direction" => isset($adProductAdditionInfo) &&  empty($adProductAdditionInfo->home_direction) ? 0 : $adProductAdditionInfo->home_direction,
-                            "facade_direction" => isset($adProductAdditionInfo) &&  empty($adProductAdditionInfo->facade_direction) ? 0 : $adProductAdditionInfo->facade_direction,
-                            "floor_no" => isset($adProductAdditionInfo) &&  empty($adProductAdditionInfo->floor_no) ? 0 : $adProductAdditionInfo->floor_no,
-                            "room_no" => isset($adProductAdditionInfo) &&  empty($adProductAdditionInfo->room_no) ? 0 : $adProductAdditionInfo->room_no,
-                            "toilet_no" => isset($adProductAdditionInfo) &&  empty($adProductAdditionInfo->toilet_no) ? 0 : $adProductAdditionInfo->toilet_no,
-                            "img" => $first_image_path
-                        ];
+                        if($is_expired == 0) {
+                            $arrElastic[] = [
+                                "index" => [
+                                    "_id" => $last_product_id
+                                ]
+                            ];
+                            $arrElastic[] = [
+                                "id" => $last_product_id,
+                                "category_id" => $record['category_id'],
+                                "project_building_id" => $project_id,
+                                "project_building" => $project_id > 0 ? $project->name : "",
+                                "user_id" => 0,
+                                "city_id" => empty($city_id) ? 0 : $city_id,
+                                "district_id" => empty($district_id) ? 0 : $district_id,
+                                "ward_id" => empty($ward_id) ? 0 : $ward_id,
+                                "street_id" => $street_id,
+                                "address" => $address,
+                                "type" => $record['type'],
+                                "area" => $record['area'],
+                                "price" => $record['price'],
+                                "location" => [
+                                    "lat" => empty($lat) ? 0 : $lat,
+                                    "lon" => empty($lng) ? 0 : $lng,
+                                ],
+                                "score" => empty($score) ? 0 : $score,
+                                "start_date" => $record['start_date'],
+                                "boost_time" => 0,
+                                "boost_start_time" => 0,
+                                "boost_sort" => 0,
+                                "facade_width" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->facade_width) ? 0 : $adProductAdditionInfo->facade_width,
+                                "land_width" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->land_width) ? 0 : $adProductAdditionInfo->land_width,
+                                "home_direction" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->home_direction) ? 0 : $adProductAdditionInfo->home_direction,
+                                "facade_direction" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->facade_direction) ? 0 : $adProductAdditionInfo->facade_direction,
+                                "floor_no" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->floor_no) ? 0 : $adProductAdditionInfo->floor_no,
+                                "room_no" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->room_no) ? 0 : $adProductAdditionInfo->room_no,
+                                "toilet_no" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->toilet_no) ? 0 : $adProductAdditionInfo->toilet_no,
+                                "img" => $first_image_path
+                            ];
+                        } else {
+                            print_r(" - is expired");
+                        }
 
                         if ($no > 0 && $no % 50 == 0) {
                             print_r(PHP_EOL);
