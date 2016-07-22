@@ -509,7 +509,9 @@ $(document).ready(function(){
 				previewEls.noGallery.hide();
 				
 				galleries.each(function(){
-					previewEls.swiperWrapper.append('<div class="swiper-slide"> <div class="img-show"> <div> <img src="' + $(this).find('a').attr('href') + '"> </div> </div> </div>');
+					if(!$(this).find('img').hasClass('error')) {
+						previewEls.swiperWrapper.append('<div class="swiper-slide"> <div class="img-show"> <div> <img src="' + $(this).find('a').attr('href') + '"> </div> </div> </div>');
+					}
 				});
 			} else {
 				previewEls.galleryDetail.hide();
