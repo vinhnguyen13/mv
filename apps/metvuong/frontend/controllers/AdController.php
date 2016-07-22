@@ -932,6 +932,8 @@ class AdController extends Controller
 						$balance->save(false);
 						
 						$product->status = AdProduct::STATUS_ACTIVE;
+						$product->end_date = time() + (AdProduct::EXPIRED * 30);
+						$product->is_expired = 0;
 						$product->save(false);
 						
     					$transaction_code = md5(uniqid(rand(), true));
