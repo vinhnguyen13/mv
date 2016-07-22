@@ -67,17 +67,10 @@ class Payment extends Component
         }
     }
 
-    public function updateBalance($user_id, $amount){
-        $query = new Query();
-        $query->select('id, amount')->from('ec_balance')->where(['user_id'=>$user_id])->limit(1);
-        $balance = $query->one();
-        if(!empty($balance)){
-            $amount += $balance['amount'];
-            Yii::$app->db->createCommand()
-                ->update('ec_balance', [
-                    'amount' => $amount,
-                    'updated_at' => time(),
-                ], 'user_id='.$user_id)->execute();
+    public function updateBalance($user_id, $amount, $plus = '+'){
+        $count = Yii::$app->db->createCommand("SELECT * FROM ec_balance WHERE user_id = $user_id")->queryOne();
+        if(!empty($count)){
+            Yii::$app->db->createCommand("UPDATE `ec_balance` SET `amount` = `amount` $plus $amount, `updated_at` = ".time()." WHERE `user_id` = $user_id")->execute();
         }else{
             Yii::$app->db->createCommand()
                 ->insert('ec_balance', [
@@ -86,11 +79,8 @@ class Payment extends Component
                     'created_at' => time(),
                 ])->execute();
         }
-        
         return true;
     }
-
-
 
     public function transactionNganluong($token, $data){
         $transaction_nganluong = $this->getTransactionNganluong(['token'=>$token]);
@@ -132,7 +122,7 @@ class Payment extends Component
         }
     }
 
-    public function processTransactionByBanking($token){
+    public function processTransactionByBanking($user_id, $token){
         $connection = Yii::$app->db;
         $transaction = $connection->beginTransaction();
         try {
@@ -140,7 +130,8 @@ class Payment extends Component
             if(!empty($getToken->order_code)){
                 $transactionNL = $this->getTransactionWithNganluong(['token'=>$token]);
                 if(!empty($transactionNL['code']) && $transactionNL['status'] != Transaction::STATUS_SUCCESS){
-                    $balance = Yii::$app->user->identity->getBalance();
+                    $user = User::findOne($user_id);
+                    $balance = $user->getBalance();
                     $balanceValue = !empty($balance->amount) ? ($balance->amount + $transactionNL['amount']) : $transactionNL['amount'];
                     $checkUpdate = Yii::$app->db->createCommand()
                         ->update('ec_transaction_history', [
@@ -166,7 +157,7 @@ class Payment extends Component
         }
     }
 
-    public function processTransactionByMobileCard($transaction_code, $rs){
+    public function processTransactionByMobileCard($user_id, $transaction_code, $rs){
         $connection = Yii::$app->db;
         $transaction = $connection->beginTransaction();
         try {
@@ -184,7 +175,8 @@ class Payment extends Component
                 ]);
                 $amout = NganLuong::me()->VND2Keys(NganLuong::METHOD_MOBILE_CARD, $rs->card_amount);
                 $amout = intval($amout);
-                $balance = Yii::$app->user->identity->getBalance();
+                $user = User::findOne($user_id);
+                $balance = $user->getBalance();
                 $balanceValue = !empty($balance->amount) ? ($balance->amount + $amout) : $amout;
                 $checkUpdate = Yii::$app->db->createCommand()
                     ->update('ec_transaction_history', [
@@ -205,17 +197,18 @@ class Payment extends Component
         }
     }
 
-    public function processTransactionByCoupon($coupon_history){
+    public function processTransactionByCoupon($user_id, $coupon_history){
         $connection = Yii::$app->db;
         $transaction = $connection->beginTransaction();
         try {
             $transaction_code = md5(uniqid(rand(), true));
             $amout = intval($coupon_history->couponCode->amount);
-            $balance = Yii::$app->user->identity->getBalance();
+            $user = User::findOne($user_id);
+            $balance = $user->getBalance();
             $balanceValue = !empty($balance->amount) ? ($balance->amount + $amout) : $amout;
             $checkUpdate = Transaction::me()->saveTransaction($transaction_code, [
                 'code'=>$transaction_code,
-                'user_id'=>Yii::$app->user->identity->id,
+                'user_id'=>$user_id,
                 'object_id'=>$coupon_history->couponCode->id,
                 'object_type'=>Transaction::OBJECT_TYPE_GET_KEYS_FROM_COUPON,
                 'amount'=>$amout,
@@ -223,7 +216,7 @@ class Payment extends Component
                 'status'=>Transaction::STATUS_SUCCESS,
             ]);
             if($checkUpdate == true){
-                $this->updateBalance(Yii::$app->user->id, $amout);
+                $this->updateBalance($user_id, $amout);
             }
             $transaction->commit();
             return true;
@@ -240,7 +233,7 @@ class Payment extends Component
      * link http://localhost/payment/success?error_code=00&token=3221723-e66bec1fc53bff03b5aea93c694fdcc7
      */
     public function success($token){
-        return $this->processTransactionByBanking($token);
+        return $this->processTransactionByBanking(Yii::$app->user->id, $token);
     }
 
     public function cancel(){

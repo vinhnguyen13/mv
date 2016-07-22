@@ -33,7 +33,7 @@ class TestController extends \yii\web\Controller
         exit;
     }
 
-    public function actionPayment(){
+    public function actionPayment2(){
         $obj = (object) array(
             'error_code' => '00',
             'merchant_id' => '46893',
@@ -50,7 +50,7 @@ class TestController extends \yii\web\Controller
             'transaction_id' => '61918050',
             'error_message' => 'Nạp thẻ thành công, mệnh giá thẻ = 20000',
         );
-        Payment::me()->processTransactionByMobileCard('89363abaea2f303afc79b682eb2282b2', $obj);
+        Payment::me()->processTransactionByMobileCard(Yii::$app->user->id, '039638a4d07d4717d39efa3468b0efd8', $obj);
         echo "<pre>";
         print_r(5);
         echo "</pre>";

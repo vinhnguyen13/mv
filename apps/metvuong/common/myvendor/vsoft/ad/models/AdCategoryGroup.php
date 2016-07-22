@@ -79,4 +79,24 @@ class AdCategoryGroup extends ACG
 	
 		return parent::beforeSave($insert);
 	}
+	
+	public static function slugMap() {
+		if(\Yii::$app->language == 'vi-VN') {
+			return [
+				'can-ho-chung-cu' => '6',
+				'nha-rieng' => '7,9',
+				'dat' => '10,11',
+				'nha-biet-thu-lien-ke' => '8',
+				'loai-bds-khac' => '12,13,14,15,16,17,18'
+			];
+		} else {
+			return [
+				'apartments' => '6',
+				'houses' => '7,9',
+				'lands' => '10,11',
+				'condos-detached-houses' => '8',
+				'other-types' => '12,13,14,15,16,17,18'
+			];
+		}
+	}
 }

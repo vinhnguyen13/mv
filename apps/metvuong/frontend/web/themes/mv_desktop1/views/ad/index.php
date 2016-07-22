@@ -18,19 +18,23 @@ use frontend\models\MapSearch;
 	
 	$autoFillValue = $searchModel->getAutoFillValue();
 	$actionId = '/' . (($searchModel->type == AdProduct::TYPE_FOR_SELL) ? Yii::t('url', 'nha-dat-ban') : Yii::t('url', 'nha-dat-cho-thue'));
-	
+	$actionId .= '/' . $slug;
+	/*
 	if($slug != MapSearch::$defaultSlug) {
 		$actionId .= '/' . $slug;
 	}
+	*/
 	
 	$loadProjectUrl = Url::to(['/ad/get-project']);
 	$fieldsMapping = json_encode(array_flip(MapSearch::$fieldsMapping));
+	$slugCatsMap = json_encode(array_flip(AdCategoryGroup::slugMap()));
 	
 	$script = <<<EOD
 	var resources = ['$resourceHistoryJs', '$resourceListingMap', '$resourceApi'];
 	var actionId = '$actionId';
 	var loadProjectUrl = '$loadProjectUrl';
 	var fieldsMapping = $fieldsMapping;
+	var catsSlug = $slugCatsMap;
 EOD;
 	
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl.'/resources/css/map.css');

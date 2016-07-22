@@ -50,6 +50,7 @@ use vsoft\ad\models\AdProductAutoSave;
 use vsoft\ad\models\AdProductAutoSaveImages;
 use common\models\SlugSearch;
 use vsoft\ad\models\Balance;
+use vsoft\ad\models\AdCategoryGroup;
 
 class AdController extends Controller
 {
@@ -308,11 +309,11 @@ class AdController extends Controller
     }
     
     public function listing($type) {
-    	$params = array_filter(explode('/', Yii::$app->request->get('params', MapSearch::$defaultSlug)));
-    	
-    	if(strpos($params[0], '_') !== FALSE) {
-    		array_unshift($params, MapSearch::$defaultSlug);
+    	if(! ($params = Yii::$app->request->get('params'))) {
+    		return $this->redirect(Url::current() . '/' . MapSearch::$defaultSlug);
     	}
+    	
+    	$params = array_filter(explode('/', $params));
     	
     	$slug = array_shift($params);
     	$slugSearch = SlugSearch::findOne(['slug' => $slug]);
@@ -324,6 +325,14 @@ class AdController extends Controller
     	$keyId = str_replace("ad_", "", $slugSearch->table) . "_id";
     	if(!isset($_GET[$keyId])) {
     		$_GET[$keyId] = $slugSearch->value;
+    	}
+    	
+    	if($params && strpos($params[0], '_') === FALSE) {
+    		$catSlug = array_shift($params);
+    		$catsSlug = AdCategoryGroup::slugMap();
+    		if(isset($catsSlug[$catSlug])) {
+    			$_GET['category_id'] = $catsSlug[$catSlug];
+    		}
     	}
     	
     	$fieldsMapping = MapSearch::$fieldsMapping;

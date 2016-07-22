@@ -7,6 +7,7 @@
 
 namespace console\controllers;
 
+use vsoft\coupon\models\CouponHistory;
 use yii\console\Controller;
 use Yii;
 use frontend\models\Payment;
@@ -20,7 +21,7 @@ class PaymentController extends Controller
         $transaction = $connection->beginTransaction();
         try {
             for($i = $start; $i<=$end; $i ++) {
-                Payment::me()->updateBalance(8, $i);
+                Payment::me()->updateBalance(8, 100);
                 echo $i.PHP_EOL;
                 usleep(5000);
             }
@@ -31,5 +32,29 @@ class PaymentController extends Controller
             $transaction->rollBack();
             throw $e;
         }
+    }
+
+    public function actionTest2()
+    {
+        $res = CouponHistory::checkCoupon(8, 'I641J3');
+        if (!empty($res['error_code'] == 0) && !empty($res['result']->couponCode->amount)) {
+            Payment::me()->processTransactionByCoupon(8, $res['result']);
+        }
+        echo "<pre>";
+        print_r($res);
+        echo "</pre>";
+        exit;
+    }
+
+    public function actionTest3()
+    {
+        $res = CouponHistory::checkCoupon(8, 'I641J5');
+        if (!empty($res['error_code'] == 0) && !empty($res['result']->couponCode->amount)) {
+            Payment::me()->processTransactionByCoupon(8, $res['result']);
+        }
+        echo "<pre>";
+        print_r($res);
+        echo "</pre>";
+        exit;
     }
 }
