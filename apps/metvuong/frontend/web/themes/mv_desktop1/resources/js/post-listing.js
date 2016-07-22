@@ -509,7 +509,7 @@ $(document).ready(function(){
 				previewEls.noGallery.hide();
 				
 				galleries.each(function(){
-					if(!$(this).find('img').hasClass('error')) {
+					if($(this).find('input').length) {
 						previewEls.swiperWrapper.append('<div class="swiper-slide"> <div class="img-show"> <div> <img src="' + $(this).find('a').attr('href') + '"> </div> </div> </div>');
 					}
 				});
