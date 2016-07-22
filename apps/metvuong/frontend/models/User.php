@@ -546,6 +546,7 @@ class User extends \dektrium\user\models\User
     	if(!$balance) {
     		$balance = new Balance();
     		$balance->user_id = $this->id;
+    		$balance->amount = 0;
     		$balance->save(false);
     	}
     	

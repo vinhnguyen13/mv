@@ -946,12 +946,33 @@ class AdController extends Controller
     							'balance'=>$balance->amount,
     							'status'=>Transaction::STATUS_SUCCESS,
     					]);
-						return $this->render('update-status', ['balance' => $balance, 'product' => $product, 'template' => 'post_success']);
+    					
+    					if(Yii::$app->request->isAjax) {
+    						Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    						
+    						$template = $this->renderPartial('/dashboard/ad/list', ['products' => [$product]]);
+    						
+    						return ['success' => true, 'message' => \Yii::t("listing", "Tin đã được kích hoạt thành công."), 'template' => $template];
+    					} else {
+    						return $this->render('update-status', ['balance' => $balance, 'product' => $product, 'template' => 'post_success']);
+    					}
 					} else {
-						return $this->render('update-status', ['balance' => $balance, 'product' => $product, 'template' => 'post_pending']);
+						if(Yii::$app->request->isAjax) {
+							Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+							
+    						return ['success' => false, 'message' => \Yii::t("listing", "Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.")];
+						} else {
+							return $this->render('update-status', ['balance' => $balance, 'product' => $product, 'template' => 'post_pending']);
+						}
 					}
     			} else {
-    				echo 'Tin đã được cập nhật trạng thái trước đó, không cần phải cập nhật lại.';
+    				if(Yii::$app->request->isAjax) {
+    					Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    					
+						return ['success' => false, 'message' => \Yii::t("listing", "Tin đã được cập nhật trạng thái trước đó, không cần phải cập nhật lại.")];
+    				} else {
+    					echo \Yii::t("listing", "Tin đã được cập nhật trạng thái trước đó, không cần phải cập nhật lại.");
+    				}
     			}
     		}
     	}

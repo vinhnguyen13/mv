@@ -6,6 +6,7 @@
  */
 use yii\helpers\Url;
 use yii\widgets\LinkPager;
+use vsoft\ad\models\AdProduct;
 
 $count_product = count($products);
     if($count_product > 0) {
@@ -35,7 +36,7 @@ $count_product = count($products);
             $room_no = empty($adProductAdditionInfo) ? 0 : $adProductAdditionInfo->room_no;
             $toilet_no = empty($adProductAdditionInfo) ? 0 : $adProductAdditionInfo->toilet_no;
             ?>
-            <li class="col-xs-12 col-md-6 col-sm-6">
+            <li id="p-<?= $product->id ?>" class="col-xs-12 col-md-6 col-sm-6">
                 <div class="item p<?=$product->id?> clearfix">
                     <div class="wrap-img-list">
                         <a class="pic-intro" href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?=Yii::t('statistic', 'View statistic detail')?>">
@@ -73,15 +74,26 @@ $count_product = count($products);
                         </div>
                         <div class="bottom-feat-box clearfix">
                             <div class="pull-right push-price">
-                                <div class="status-duan">
-                                    <?php if ($product->is_expired > 0): ?>
-                                        <div class="wrap-icon status-get-point">
-                                            <div class="mgR-5"><span class="icon icon-inactive-pro"></span>
-                                            </div>
-                                            <strong><?= Yii::t('statistic', 'Inactive Project') ?></strong>
-                                        </div>
-                                    <?php else: ?>
-                                        <div class="wrap-icon status-get-point">
+                            	<?php if($product->status == AdProduct::STATUS_PENDING): ?>
+                            	<div class="status-duan" style="opacity: 0.5">
+                                    <div class="wrap-icon status-get-point">
+										<div class="mgR-5"><span class="icon icon-inactive-pro"></span></div>
+                                        <strong><?= Yii::t('statistic', 'Chưa kích hoạt') ?></strong>
+                                    </div>
+                                </div>
+                                <a href="#"  data-toggle="modal" data-target="#update-status" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-active"><?= Yii::t('statistic', 'Kích hoạt') ?></a>
+                            	<?php else: ?>
+                            		<?php if ($product->is_expired): ?>
+                            		<div class="status-duan" style="opacity: 0.7">
+	                                    <div class="wrap-icon status-get-point">
+											<div class="mgR-5"><span class="icon icon-inactive-pro"></span></div>
+	                                        <strong><?= Yii::t('statistic', 'Tin đã hết hạn') ?></strong>
+	                                    </div>
+	                                </div>
+	                                <a href="#"  data-toggle="modal" data-target="#upgrade-time" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-up"><?= Yii::t('statistic', 'Gia hạn tin đăng') ?></a>
+                            		<?php else: ?>
+                            		<div class="status-duan">
+	                                    <div class="wrap-icon status-get-point">
                                             <div class="mgR-5"><span class="icon icon-active-pro"></span>
                                             </div>
                                             <strong><?= Yii::t('statistic', 'Active Project') ?></strong>
@@ -90,11 +102,12 @@ $count_product = count($products);
                                         <p class="expired"><?= Yii::t('statistic', 'Expired in the last') ?>
                                             <strong><?= $day_number > 1 ? $day_number . " " . Yii::t('statistic', 'days') : $day_number . " " . Yii::t('statistic', 'day') ?></strong>
                                         </p>
-                                    <?php endif; ?>
-                                </div>
-                                <a href="#"  data-toggle="modal" data-target="#upgrade-time" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-up"><?= Yii::t('statistic', 'Up') ?></a>
-                                <div class="clearfix"></div>
-                                <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor">Xem thống kê</span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
+	                                </div>
+	                                <a href="#"  data-toggle="modal" data-target="#upgrade-time" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-up"><?= Yii::t('statistic', 'Up') ?></a>
+	                                <div class="clearfix"></div>
+	                                <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor">Xem thống kê</span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
+	                            	<?php endif; ?>
+                            	<?php endif; ?>
                             </div>
                             <div class="wrap-icon">
                                 <span class="icon-mv"><span class="icon-icons-search"></span></span>

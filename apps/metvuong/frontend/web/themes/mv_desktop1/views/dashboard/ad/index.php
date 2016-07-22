@@ -2,7 +2,9 @@
 use yii\helpers\ArrayHelper;
 use yii\web\View;
 use yii\helpers\Url;
+use vsoft\ad\models\AdProduct;
 
+$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard-listing.js', ['position' => View::POS_END]);
 ?>
 <div class="title-fixed-wrap container">
 	<div class="u-allduan">
@@ -30,7 +32,72 @@ use yii\helpers\Url;
         <?php } ?>
     </div>
 </div>
-
+<div id="notify" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wrap-popup">
+                    <div class="title-popup">
+                        <?=Yii::t('listing', 'Thông báo')?>
+                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                    </div>
+                    <div class="inner-popup">
+                        <div id="notify-text"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="charge" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wrap-popup">
+                    <div class="title-popup">
+                        <?=Yii::t('listing', 'Thông báo')?>
+                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                    </div>
+                    <div class="inner-popup">
+                        <div><?= Yii::t('listing', 'Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.') ?></div>
+                    </div>
+                    <div class="bottom-popup">
+                        <div class="text-right">
+                            <a href="#" class="btn-cancel btn close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing', 'Cancel')?></a>
+                            <a href="<?= Url::to(['/payment/index']) ?>" class="btn-common btn"><?=Yii::t('listing', 'Nạp keys')?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="update-status" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wrap-popup">
+                    <div class="title-popup">
+                        <?=Yii::t('listing', 'Kích hoạt tin đăng')?>
+                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                    </div>
+                    <div class="inner-popup">
+                        <ul style="font-size: 15px; color: #333; margin-bottom: 20px;">
+							<li style="margin-bottom: 8px;"><?= sprintf(Yii::t("ad", "Số keys của bạn: %s keys"), '<strong class="current-key">' . Yii::$app->user->identity->balance->amount . '</strong>') ?></li>
+							<li><?= sprintf(Yii::t("ad", "Phí kích hoạt tin đăng là %s keys. Sau khi kích hoạt tin đăng sẽ có thời hạn là %s ngày."), '<strong class="charge-post">' . AdProduct::CHARGE_POST . '</strong>', '<strong>30</strong>') ?></li>
+						</ul>
+                    </div>
+                    <div class="bottom-popup">
+                        <div class="text-right">
+                            <a href="#" class="btn-cancel btn close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing', 'Cancel')?></a>
+                            <a href="<?= Url::to(['/ad/update-status']) ?>" class="btn-common btn btn-active-listing"><?=Yii::t('listing', 'Kích hoạt')?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <div id="upgrade-time" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
