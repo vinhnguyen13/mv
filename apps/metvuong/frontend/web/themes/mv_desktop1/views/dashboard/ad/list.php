@@ -56,7 +56,7 @@ $count_product = count($products);
             <li id="p-<?= $product->id ?>" class="col-xs-12 col-md-6 col-sm-6">
                 <div class="item p<?=$product->id?> clearfix">
                     <div class="wrap-img-list">
-                        <a class="pic-intro" href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?=Yii::t('statistic', 'View statistic detail')?>">
+                        <a class="pic-intro" href="<?=$product->urlDetail(true)?>" title="<?=Yii::t('statistic', 'View statistic detail')?>">
                             <img src="<?=$thumb ?>" alt="<?=Yii::t('statistic', 'View statistic detail')?>"></a>
                         <a href="<?= Url::to(['/ad/update', 'id' => $product->id]) ?>" class="edit-duan">
                             <span class="icon-mv"><span class="icon-edit-copy-4"></span></span>
@@ -70,9 +70,9 @@ $count_product = count($products);
                                         :</span> <?= date("d/m/Y", $product->created_at) ?></p>
                             </div>
                             <?php if ($product->projectBuilding){ ?>
-                                <p class="loca-duan"><a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>"><?= $product->projectBuilding->name ?></a></p>
+                                <p class="loca-duan"><a href="<?=$product->urlDetail(true)?>"><?= $product->projectBuilding->name ?></a></p>
                             <?php } else { ?>
-                            <p class="loca-duan"><a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" title="<?= $product->address ?>"><?= $product->address ?></a></p>
+                            <p class="loca-duan"><a href="<?=$product->urlDetail(true)?>" title="<?= $product->address ?>"><?= $product->address ?></a></p>
                             <?php } ?>
                             <p class="fs-13 text-cappi"><span><?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= $types[$product->type] ?></span></p>
                             <p class="id-duan">
