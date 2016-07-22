@@ -130,7 +130,25 @@ class AdController extends Controller
 		}
 	}
 	
-	public function actionEncodeGeometry() {
+	public function actionUpdateCenter() {
+		if(Yii::$app->request->isPost) {
+			$connection = \Yii::$app->db;
+			$connection->createCommand()->update('ad_street', ['center' => $_POST['center']], "`district_id` = {$_POST['districtId']} AND `center` IS NULL")->execute();
+		} else {
+			if(isset($_GET['city'])) {
+				Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+			
+				$city = AdCity::find()->where(['id' => $_GET['city']])->asArray(true)->one();
+				$districts = AdDistrict::find()->where(['city_id' => $_GET['city']])->asArray(true)->all();
+			
+				return ['city' => $city, 'districts' => $districts];
+			} else {
+				return $this->render('update-center');
+			}
+		}
+	}
+	
+	private function actionEncodeGeometry() {
 
 		if(Yii::$app->request->isPost) {
 			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
