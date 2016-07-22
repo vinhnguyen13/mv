@@ -13,6 +13,7 @@ use yii\db\Query;
 use common\models\SlugSearch;
 use common\models\common\models;
 use common\components\Slug;
+use frontend\models\Elastic;
 
 
 class AdBuildingProject extends ABP
@@ -356,6 +357,31 @@ class AdBuildingProject extends ABP
 			$slugSearch->table = 'ad_building_project';
 			$slugSearch->value = $this->id;
 			$slugSearch->save(false);
+			
+			$indexName = \Yii::$app->params['indexName']['countTotal'];
+			$type = 'project_building';
+			$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/$type/" . $this->id);
+			
+			$fullName = $this->name . ', ' . $this->district->pre . ' ' . $this->district->name . ', ' . $this->city->name;
+			$searchField = Elastic::standardSearch(str_replace(',', '', $fullName));
+			
+			$document = [
+				'name'	=> $this->name,
+				'slug' => $this->slug,
+				'search_name' => Elastic::standardSearch($this->name),
+				'full_name' => $fullName,
+				'search_field' => $searchField,
+				'search_field_key' => $searchField,
+				AdProduct::TYPE_FOR_SELL_TOTAL => 0,
+				AdProduct::TYPE_FOR_RENT_TOTAL => 0,
+				'city_id' => intval($this->city_id)
+			];
+			
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($document));
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_exec($ch);
+			curl_close($ch);
 		}
 	}
 }

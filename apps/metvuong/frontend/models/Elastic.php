@@ -368,6 +368,16 @@ class Elastic
     	return $str;
     }
     
+    public static function standardSearch($s) {
+    	$s = self::transform($s);
+    	
+    	$s = preg_replace("/([0-9]*)\/([0-9]*)/", "$1/$2 $1 / $2", $s);
+    	$s = preg_replace("/so ([0-9])/", "$1", $s);
+    	$s = preg_replace("/(\S+)-(\S+)/", "$1-$2 $1$2", $s);
+    	
+    	return $s;
+    }
+    
     public static function slug($str) {
     	$slug = new Slug();
     	
