@@ -11,6 +11,8 @@ use yii\mongodb\ActiveRecord;
 
 class SysEmail extends ActiveRecord
 {
+    const OBJECT_TYPE_SHARE     = 1;
+    const OBJECT_TYPE_CONTACT   = 2;
     /**
      * @return string the name of the index associated with this ActiveRecord class.
      */
@@ -26,8 +28,8 @@ class SysEmail extends ActiveRecord
         return [
             [['to_email'], 'required'],
             [['to_email'], 'email'],
-            [['time'], 'integer'],
-            [['from_user', 'from_email', 'to_email', 'subject', 'content', 'send_from', 'ip'], 'string'],
+            [['object_id', 'object_type', 'send_time', 'read_time'], 'integer'],
+            [['from_name', 'from_email', 'to_name', 'to_email', 'subject', 'content', 'ip'], 'string'],
         ];
     }
     /**
@@ -35,6 +37,6 @@ class SysEmail extends ActiveRecord
      */
     public function attributes()
     {
-        return ['_id', 'from_user', 'from_email', 'to_email', 'subject', 'content', 'send_from', 'time', 'ip'];
+        return ['_id', 'from_name', 'from_email', 'to_name', 'to_email', 'object_id', 'object_type', 'subject', 'content', 'params', 'send_time', 'read_time', 'ip'];
     }
 }

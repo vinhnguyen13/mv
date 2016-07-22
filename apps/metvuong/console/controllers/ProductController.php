@@ -1,8 +1,11 @@
 <?php
 namespace console\controllers;
 
+use common\components\Slug;
+use console\models\batdongsan\Listing;
 use console\models\Metvuong;
 use vsoft\ad\models\AdImages;
+use vsoft\craw\models\AdProductFile;
 use yii\console\Controller;
 use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdBuildingProject;
@@ -13,8 +16,51 @@ use vsoft\ad\models\AdDistrict;
 use yii\db\Query;
 use yii\db\yii\db;
 use yii\helpers\ArrayHelper;
+use vsoft\express\components\StringHelper;
 
 class ProductController extends Controller {
+	
+	public function actionDelete($id) {
+		$product = AdProduct::findOne($id);
+		
+		if($product) {
+			$name = $product->street->pre . ' ' . $product->street->name;
+
+			$address = array_filter([
+				$product->home_no,
+				$name
+			]);
+			
+			$message = [];
+			$message[] = "ID: MV" . $id;
+			$message[] = "Address: " . implode(", ", $address);
+			$message[] = "Price: " . $product->price;
+			$message[] = "Area: " . $product->area;
+			$message[] = "Post Date: " . StringHelper::previousTime($product->start_date);
+			$message[] = "Are you sure Delete this product ?";
+			
+			if($this->confirm(implode("\n", $message) . "\n")) {
+				echo "Delete From Elastic And Decrease counter\n";
+				$product->removeEs();
+				
+				echo "Delete Addition Info\n";
+				$product->adProductAdditionInfo->delete();
+				echo "Delete Contact Info\n";
+				$product->adContactInfo->delete();
+
+				echo "Delete Images\n";
+				foreach ($product->adImages as $image) {
+					$image->delete();
+				}
+				
+				echo "Delete Product\n";
+				$product->delete();
+				echo "OK";
+			}
+		} else {
+			echo "MV$id is not exist.";
+		}
+	}
 	
 	public function actionCheckLatLng() {
 		$projects = AdBuildingProject::find()->asArray(true)->all();
@@ -26,9 +72,9 @@ class ProductController extends Controller {
 	}
 	
 	public function actionUpdate() {
-		$this->checkExpired();
-		$this->checkEndBoost();
-		$this->checkBoostSort();
+		if($this->checkExpired() || $this->checkEndBoost()) {
+			$this->checkBoostSort();
+		}
 	}
 	
 	public function checkExpired() {
@@ -78,11 +124,6 @@ class ProductController extends Controller {
 		}
 		
 		if(!empty($deleteProducts)) {
-			/*
-			 * Delete DB
-			 */
-			$connection = \Yii::$app->db;
-			$connection->createCommand()->update('ad_product', ['is_expired' => 1], ['id' => $deleteProducts])->execute();
 			
 			/*
 			 * Delete Product Elastic
@@ -106,10 +147,12 @@ class ProductController extends Controller {
 			 * Update Counter
 			*/
 			$updateBulk = [];
+			$retryOnConflict = Elastic::RETRY_ON_CONFLICT;
+			
 			foreach ($updateCounter as $type => $uc) {
 				foreach ($uc as $id => $total) {
 					foreach ($total as $t => $count) {
-						$updateBulk[] = '{ "update" : { "_id" : "' . $id . '", "_type" : "' . $type . '"} }';
+						$updateBulk[] = '{ "update" : { "_id" : "' . $id . '", "_type" : "' . $type . '", "_retry_on_conflict": ' . $retryOnConflict . ' } }';
 						$updateBulk[] = '{ "script" : { "inline": "ctx._source.' . $t . ' -= ' . $count . '"} }';
 					}
 				}
@@ -122,7 +165,15 @@ class ProductController extends Controller {
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_exec($ch);
 			curl_close($ch);
+			
+			/*
+			 * Delete DB
+			 */
+			$connection = \Yii::$app->db;
+			$connection->createCommand()->update('ad_product', ['is_expired' => 1], ['id' => $deleteProducts])->execute();
 		}
+		
+		return count($deleteProducts);
 	}
 	
 	public function checkEndBoost() {
@@ -131,83 +182,58 @@ class ProductController extends Controller {
 		
 		$endBoosts = [];
 		
-		for($i = 0; true; $i += $limit) {
-			$products = (new Query())->select("`id`")->from('ad_product')->where("`boost_time` < $now AND `boost_time` > 0" )->limit($limit)->offset($i)->all();
-				
-			$endBoosts = array_merge($endBoosts, ArrayHelper::getColumn($products, 'id'));
-				
-			if(count($products) < $limit) {
-				break;
-			}
-		}
-		
-		/*
-		 * Update DB
-		 */
 		$connection = \Yii::$app->db;
-		$connection->createCommand()->update('ad_product', ['boost_time' => 0, 'boost_start_time' => null], ['id' => $endBoosts])->execute();
+		$transaction = $connection->beginTransaction();
 		
-		/*
-		 * Update Elastic
-		 */
-		$updateBulk = [];
-		
-		foreach ($endBoosts as $id) {
-			$updateBulk[] = '{ "update" : { "_id" : "' . $id . '" } }';
-			$updateBulk[] = '{ "doc" : {"boost_sort" : 0, "boost_time": 0, "boost_start_time": 0} }';
-		}
-		
-		$updateBulk = implode("\n", $updateBulk) . "\n";
-		
-		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/_bulk");
-		
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $updateBulk);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_exec($ch);
-		curl_close($ch);
-		/*
-		$params = [
-			"query" => [
-				"filtered" => [
-					"filter" => [
-						"range" => [
-							"boost_sort" => ["gt" => 0]
-						]
-					]
-				]
-			],
-			"sort" => ["boost_sort"]
-		];
-		
-		$indexName = \Yii::$app->params['indexName']['product'];
+		try {
+			for($i = 0; true; $i += $limit) {
+				$products = $connection->createCommand("SELECT `id` FROM `ad_product` WHERE `boost_time` < $now AND `boost_time` > 0 LIMIT $i,1000 FOR UPDATE")->queryAll();
 			
-		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . $indexName . '/_search');
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-		
-		$boostResult = json_decode(curl_exec($ch), true);
-		
-		
-		$updateBoosts = array_intersect($endBoosts, ArrayHelper::getColumn($boostResult['hits']['hits'], '_id'));
-		$updateBulk = [];
-		
-		foreach ($updateBoosts as $id) {
-			$updateBulk[] = '{ "update" : { "_id" : "' . $id . '" } }';
-			$updateBulk[] = '{ "doc" : {"boost_sort" : 0, "boost_time": 0, "boost_start_time": 0} }';
+				$endBoosts = array_merge($endBoosts, ArrayHelper::getColumn($products, 'id'));
+			
+				if(count($products) < $limit) {
+					break;
+				}
+			}
+			
+			if(!empty($endBoosts)) {
+				/*
+				 * Update DB
+				 */
+				$connection = \Yii::$app->db;
+				$connection->createCommand()->update('ad_product', ['boost_time' => 0, 'boost_start_time' => null], ['id' => $endBoosts])->execute();
+					
+				/*
+				 * Update Elastic
+				*/
+				$updateBulk = [];
+					
+				foreach ($endBoosts as $id) {
+					$updateBulk[] = '{ "update" : { "_id" : "' . $id . '" } }';
+					$updateBulk[] = '{ "doc" : {"boost_sort" : 0, "boost_time": 0, "boost_start_time": 0} }';
+				}
+					
+				$updateBulk = implode("\n", $updateBulk) . "\n";
+					
+				$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/_bulk");
+					
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $updateBulk);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_exec($ch);
+				curl_close($ch);
+			}
+			
+			$transaction->commit();
+		} catch (\Exception $e) {
+			$transaction->rollBack();
 		}
 		
-		$updateBulk = implode("\n", $updateBulk) . "\n";
-		
-		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/_bulk");
-		
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $updateBulk);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_exec($ch);
-		curl_close($ch);
-		*/
+		return count($endBoosts);
+	}
+	
+	public function actionCheckBoostSort() {
+		$this->checkBoostSort();
 	}
 	
 	public function checkBoostSort() {
@@ -280,6 +306,78 @@ class ProductController extends Controller {
             print_r(PHP_EOL);
             print_r("Updated {$no} images...");
             print_r(PHP_EOL);
+        }
+    }
+
+    public function actionCopyProductFile()
+    {
+        $start_time = time();
+        $count_log_no_city=0;
+        $count_log_no_district=0;
+        $sql = "SELECT `id`, city_id, district_id, `type`, file_name, product_main_id, created_at, updated_at FROM ad_product where file_name not in (select file from ad_product_file) ";
+        $crawl_products = \vsoft\craw\models\AdProduct::getDb()->createCommand($sql)->queryAll();
+        if(count($crawl_products) > 0){
+            $no = 0;
+            foreach ($crawl_products as $product) {
+                $file_name = $product['file_name'];
+//                print_r(PHP_EOL.$file_name);
+                if(!AdProductFile::checkFileExists($file_name)){
+                    $product_file = new AdProductFile();
+                    $product_file->file = $file_name;
+                    // build path
+                    $path = null;
+                    $city_id = $product['city_id'];
+                    $city = \vsoft\craw\models\AdCity::getDb()->cache(function() use($city_id){
+                        return \vsoft\craw\models\AdCity::find()->select(['name','slug'])->where(['id' => $city_id])->asArray()->one();
+                    });
+                    if(count($city) > 0) {
+                        $path = $city['slug'];
+                        $district_id = $product['district_id'];
+                        $district = \vsoft\craw\models\AdDistrict::getDb()->cache(function() use($district_id){
+                            return \vsoft\craw\models\AdDistrict::find()->select(['name'])->where(['id' => $district_id])->asArray()->one();
+                        });
+                        if(count($district) > 0) {
+                            $district_slug = Slug::me()->slugify($district['name']);
+                            $sales_rents = $product['type'] == "1" ? "sales/nha-dat-ban-{$district_slug}/files" : "rents/nha-dat-cho-thue-{$district_slug}/rent_files";
+                            $path = $path."/".$sales_rents;
+                        } else {
+                            $count_log_no_district++;
+                            continue; }
+                    } else {
+                        $count_log_no_city++;
+                        continue;
+                    }
+
+                    $product_file->path = $path;
+                    $product_file->is_import = 1;
+                    $product_file->product_tool_id = (int)$product['id'];
+                    $product_file->imported_at = (int)$product['created_at'];
+                    $product_file->vendor_link = Listing::DOMAIN."/copy-pr".$file_name;
+                    $product_main_id = (int)$product['product_main_id'];
+                    if($product_main_id > 0) {
+                        $product_file->is_copy = 1;
+                        $product_file->copied_at = $product['updated_at'];
+                        $product_file->product_main_id = $product_main_id;
+                    }
+                    $product_file->created_at = time();
+                    $product_file->save(false);
+                    if ($no > 0 && $no % 100 == 0) {
+                        print_r("\nCopied {$no} files...\n");
+                    }
+                    $no++;
+                }
+            }
+            $end_time = time();
+            $total_time = $end_time - $start_time;
+            print_r("\nCopied {$no} files...{$total_time} seconds");
+            if($count_log_no_city > 0)
+                print_r("\nNo city {$count_log_no_city} files");
+            if($count_log_no_district > 0)
+                print_r("\nNo district {$count_log_no_district} files");
+
+        }
+        else{
+            print_r("Copied all crawl products have file_name to ad_product_file");
         }
     }
 

@@ -46,6 +46,8 @@ class Project extends Component
         if(empty($project_log["type"])){
             $project_log["type"] = array();
         }
+
+        $write_log = false;
         $current_type = empty($project_log["current_type"]) ? 0 : ($project_log["current_type"] + 1);
         $count_type = count($types) - 1;
 
@@ -55,6 +57,7 @@ class Project extends Component
             Helpers::writeLog($project_log, $path_folder, "project.json");
             $current_type = 0;
         }
+
         for($i=$current_type; $i <= $count_type; $i++){
             $type = $types[$i];
             if ($i >= $current_type) {
@@ -75,7 +78,7 @@ class Project extends Component
                         if($log["current_page"] == $last_page) {
                             $log['current_page'] = 0;
                             Helpers::writeLog($log, $path_folder.$type."/", "{$type}.json");
-                            print_r("\nLast file of {$type} done.");
+                            print_r("\nLast file of {$type} finish.");
                         } else {
                             $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"] + 1);
                             $current_page_add = $current_page + 4; // +4 is total pages to run that are 5.
@@ -96,17 +99,22 @@ class Project extends Component
                                     ob_flush();
                                 }
                             }
-                            break; // stop after crawl 5 pages
+                            // stop after crawl 5 pages
+                            if($last_page == $current_page_add)
+                                $write_log = true;
+                            else
+                                break;
                         }
                     }
                 }
 
-                if(!in_array($type, $project_log["type"])) {
-                    array_push($project_log["type"], $type);
+                if($write_log) {
+                    if (!in_array($type, $project_log["type"])) {
+                        array_push($project_log["type"], $type);
+                    }
+                    $project_log["current_type"] = $i;
+                    Helpers::writeLog($project_log, $path_folder, "project.json");
                 }
-                $project_log["current_type"] = $i;
-                Helpers::writeLog($project_log, $path_folder, "project.json");
-
             }
         }
         $this->time_end = time();

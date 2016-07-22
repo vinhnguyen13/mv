@@ -24,8 +24,17 @@ class Helpers
             $count = count($city);
             if($count == 1)
                 return $city[0];
-            if($count > 1)
+            else if($count > 1)
                 return 500;
+            else {
+                $sql = "SELECT `id`, `name`, slug FROM ad_city WHERE `name` LIKE '" . $city_name . "' LIMIT 1";
+                $city = AdCity::getDb()->createCommand($sql)->queryAll();
+                if($city) {
+                    return $city[0];
+                } else {
+                    return null;
+                }
+            }
         }
         return null;
     }

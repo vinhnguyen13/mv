@@ -8,6 +8,7 @@
 namespace console\models\batdongsan;
 
 
+use console\models\Helpers;
 use console\models\Metvuong;
 use frontend\models\Elastic;
 use vsoft\ad\models\AdContactInfo;
@@ -15,6 +16,7 @@ use vsoft\ad\models\AdImages;
 use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\ad\models\AdStreet;
+use vsoft\craw\models\AdProductFile;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
@@ -37,7 +39,7 @@ class CopyListing extends Component
             $sql = $sql ." and price > 0 and area > 0 and city_id > 0 and district_id > 0 and ward_id > 0 and street_id > 0 and (is_expired is null or is_expired = 0)";
         }
 
-        $models = $models = \vsoft\craw\models\AdProduct::find()
+        $models = \vsoft\craw\models\AdProduct::find()
             ->where($sql)->limit($limit)->orderBy(['id' => SORT_ASC])->all();
 
         if(count($models) > 0){
@@ -76,20 +78,12 @@ class CopyListing extends Component
                     continue;
                 }
 
-//                $is_expired = $model->end_date > time() ? 0 : 1;
-//                $is_expired = 0;
                 $content = $model->content;
                 if(empty($content)){
                     $content = $model->address;
                 }
 
                 $end_date = $model->start_date + 30 * 86400;
-//                if($end_date < time()) {
-//                    $model->is_expired = 1;
-//                    $model->save(false);
-//                    print_r(" is expired");
-//                    continue;
-//                }
 
                 $record = [
                     'category_id' => $model->category_id,
@@ -118,7 +112,7 @@ class CopyListing extends Component
                 ];
 
                 $product = new AdProduct($record);
-                $record['score'] = AdProduct::calcScore($product, $adProductAdditionInfo, $adContactInfo, count($productImages));
+                $score = AdProduct::calcScore($product, $adProductAdditionInfo, $adContactInfo, count($productImages));
                 $connection = AdProduct::getDb();
                 try {
                     $connection->createCommand()
@@ -129,6 +123,19 @@ class CopyListing extends Component
                     if ($last_product_id > 0) {
                         $model->product_main_id = $last_product_id;
                         $model->update(false);
+
+                        // update ad_product_file
+                        $product_file = AdProductFile::find()->where(['file' => $model->file_name])->one();
+                        if($product_file)
+                        {
+                            $product_file->is_copy = 1;
+                            $product_file->copied_at = time();
+                            $product_file->product_main_id = $last_product_id;
+                            $product_file->save(false);
+                        } else {
+                            print_r("\nCannot copy because file_name: {$model->file_name} not exists AdProductFile");
+                            continue;
+                        }
 
                         // product additional info
                         $infoRecord = null;
@@ -195,6 +202,12 @@ class CopyListing extends Component
                                 $address = $home_no . " " . $address;
                             }
                         }
+
+                        $arrElastic[] = [
+                            "index" => [
+                                "_id" => $last_product_id
+                            ]
+                        ];
                         $arrElastic[] = [
                             "id" => $last_product_id,
                             "category_id" => $record['category_id'],
@@ -245,6 +258,7 @@ class CopyListing extends Component
              * Ham lưu elastic by Lệnh
              */
             Elastic::insertProducts(\Yii::$app->params['indexName']['product'], Elastic::$productEsType, $arrElastic);
+            Elastic::countProducts($arrElastic);
 
         } else {
             print_r("\nNot found new product. Please, try again!");

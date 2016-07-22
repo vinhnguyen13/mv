@@ -4,7 +4,9 @@ namespace console\controllers;
 use console\models\Batdongsan;
 use console\models\batdongsan\CopyListing;
 use console\models\batdongsan\CopyProject;
+use console\models\batdongsan\ImportListing;
 use console\models\batdongsan\ImportProject;
+use console\models\batdongsan\Listing;
 use console\models\batdongsan\Project;
 use console\models\BatdongsanV2;
 use console\models\Homefinder;
@@ -31,29 +33,63 @@ class CrawlerController extends Controller
         echo "cron service runnning";
     }
 
-    // Homefinder
-    public function actionHomefinder()
-    {
-        Homefinder::find()->parse();
-    }
-    public function actionImporthomefinder()
-    {
-        Homefinder::find()->importData_2();
-    }
-
     // Sale Batdongsan
     public function actionBatdongsan()
     {
-        BatdongsanV2::find()->parse();
-    }
-    public function actionImportbatdongsan()
-    {
-//        BatdongsanV2::find()->importData(1);
+//        BatdongsanV2::find()->parse();
+        if(!empty($this->city) && isset(Listing::find()->sale_types[$this->city])) {
+            Listing::find()->parse($this->city);
+        }
+        else {
+            print_r("\nParam: city undefined ! \nEx: php yii crawler/batdongsan -city=ho-chi-minh\n");
+        }
+
     }
     public function actionImportbatdongsan2()
     {
-        BatdongsanV2::find()->importDataForTool(1);
+        if(!empty($this->city) && isset(Listing::find()->sale_types[$this->city])) {
+            $import_limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+            if($import_limit > 0)
+                ImportListing::find()->importDataForTool(1, $this->city, $import_limit);
+            else {
+                print_r("\nParam: city undefined ! \nEx: php yii crawler/importbatdongsan -city=ho-chi-minh -limit=1\n");
+            }
+        }
+        else {
+            print_r("\nParam: city undefined ! \nEx: php yii crawler/importbatdongsan -city=ho-chi-minh -limit=1\n");
+        }
     }
+
+
+    // Rent Batdongsan
+    public function actionRentbatdongsan()
+    {
+//        BatdongsanV2::find()->parseRent();
+        if(!empty($this->city) && isset(Listing::find()->rent_types[$this->city])) {
+            Listing::find()->parseRent($this->city);
+        }
+        else {
+            print_r("\nParam: city undefined ! \nEx: php yii crawler/rentbatdongsan -city=ho-chi-minh\n");
+        }
+    }
+
+    public function actionImportrentbds()
+    {
+//        BatdongsanV2::find()->importDataForTool(2);
+        if(!empty($this->city) && isset(Listing::find()->sale_types[$this->city])) {
+            $import_limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+            if($import_limit > 0)
+                ImportListing::find()->importDataForTool(2, $this->city, $import_limit);
+            else {
+                print_r("\nParam: city undefined ! \nEx: php yii crawler/importrentbds -city=ho-chi-minh -limit=1\n");
+            }
+        }
+        else {
+            print_r("\nParam: city undefined ! \nEx: php yii crawler/importrentbds -city=ho-chi-minh -limit=1\n");
+        }
+    }
+
+
     public function actionUpdatebatdongsan()
     {
         // update address from Google API Geocode
@@ -88,11 +124,12 @@ class CrawlerController extends Controller
     public function actionCopytomain()
     {
         $validate = intval($this->valid);
-        $copy_limit = $this->limit == null ? 300 : (intval($this->limit) > 300 ? 300 : intval($this->limit));
-        if($copy_limit > 0)
-            CopyListing::find()->copyToMainDB($validate,$copy_limit);
+        $copy_limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+        if($copy_limit > 0) {
+            CopyListing::find()->copyToMainDB($validate, $copy_limit);
+        }
         else {
-            print_r("\n How many listing to copy? \n Ex: php yii crawler/copytomain -valid=1 -limit=300\n");
+            print_r("\n How many listing to copy? \n Ex: php yii crawler/copytomain -valid=1 -limit=1\n");
         }
     }
 
@@ -105,27 +142,6 @@ class CrawlerController extends Controller
     {
         BatdongsanV2::find()->importAgent();
     }
-    // Rent Batdongsan
-    public function actionRentbatdongsan()
-    {
-        BatdongsanV2::find()->parseRent();
-    }
-
-    public function actionImportrentbds()
-    {
-        BatdongsanV2::find()->importDataForTool(2);
-    }
-
-    // Get Projects
-//    public function actionProjectbds(){
-//        BatdongsanV2::find()->getProjects();
-//    }
-//    public function actionImportprojectbds(){
-//        BatdongsanV2::find()->importProjects();
-//    }
-//    public function actionCopyProject(){
-//        BatdongsanV2::find()->copyProjects();
-//    }
 
     public function actionProject()
     {
@@ -158,6 +174,17 @@ class CrawlerController extends Controller
 //        BatdongsanV2::find()->importProjects();
     }
 
+
+    // Homefinder
+    public function actionHomefinder()
+    {
+        Homefinder::find()->parse();
+    }
+    public function actionImporthomefinder()
+    {
+        Homefinder::find()->importData_2();
+    }
+    
     // Muaban.net
     public function actionMuaban()
     {

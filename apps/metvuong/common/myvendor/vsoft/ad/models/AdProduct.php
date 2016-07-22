@@ -9,7 +9,8 @@ use common\models\AdProduct as AP;
 use vsoft\express\components\AdImageHelper;
 use frontend\models\Elastic;
 use yii\helpers\ArrayHelper;
-
+use yii\db\Query;
+use yii\db\yii\db;
 
 class AdProduct extends AP
 {
@@ -464,7 +465,7 @@ class AdProduct extends AP
 	public static function updateElasticCounter($type, $id, $totalType, $increase = true) {
 		$sign = $increase ? '+' : '-';
 		$script = '{"script" : "ctx._source.' . $totalType . $sign . '=1"}';
-		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/" . \Yii::$app->params['indexName']['countTotal'] . "/$type/$id/_update");
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/" . \Yii::$app->params['indexName']['countTotal'] . "/$type/$id/_update?retry_on_conflict=" . Elastic::RETRY_ON_CONFLICT);
 			
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $script);
@@ -699,39 +700,40 @@ class AdProduct extends AP
 					"filter" => [
 						"bool" => [
 							"must" => [
-								["range" => ["boost_start_time" => ["gt" => 0]]],
+								["range" => ["boost_sort" => ["gt" => 0]]],
 								["term" => ["type" => $type]]
 							]
 						]
 					]
 				]
-			],
-			"size" => self::BOOST_SORT_LIMIT + 1,
-			"sort" => ["boost_start_time"]
+			]
 		];
 			
 		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['product'] . '/_search');
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		
 		$boostResult = json_decode(curl_exec($ch), true);
+		$boostSortproducts = ArrayHelper::getColumn($boostResult['hits']['hits'], "_id");
+
+		$boostProductInDb = (new Query())->select('`id`, `boost_start_time`')->from('ad_product')->where(['is_expired' => 0, 'status' => self::STATUS_ACTIVE, 'type' => $type])
+										->andWhere(['>', 'boost_start_time', 0])->orderBy('`boost_start_time` DESC')->limit(self::BOOST_SORT_LIMIT)->indexBy('id')->all();
+
+		$boostProductInDbId = ArrayHelper::getColumn($boostProductInDb, 'id');
 		
-		$products = $boostResult['hits']['hits'];
+		$addBoost = array_diff($boostProductInDbId, $boostSortproducts);
+		$removeBoost = array_diff($boostSortproducts, $boostProductInDbId);
 		
-		if($boostResult['hits']['total'] > self::BOOST_SORT_LIMIT) {
-			$firstProduct = $products[0];
-			
-			if($firstProduct['_source']['boost_sort'] != 0) {
-				self::_updateEs($firstProduct['_id'], ['boost_sort' => 0]);
+		if($addBoost) {
+			foreach ($addBoost as $id) {
+				self::_updateEs($id, ['boost_sort' => $boostProductInDb[$id]['boost_start_time']]);
 			}
-			
-			array_shift($products);
 		}
 		
-		foreach ($products as $product) {
-			if($product['_source']['boost_start_time'] > $product['_source']['boost_sort']) {
-				self::_updateEs($product['_id'], ['boost_sort' => $product['_source']['boost_start_time']]);
+		if($removeBoost) {
+			foreach ($removeBoost as $id) {
+				self::_updateEs($id, ['boost_sort' => 0]);
 			}
 		}
 	}
