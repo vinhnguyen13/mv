@@ -252,8 +252,21 @@ class Tracking extends Component
             }
         }
         $sysEmail->send_time = time();
-        $sysEmail->ip = Yii::$app->request->userIP;
-        return $sysEmail->save();
+        $sysEmail->send_ip = Yii::$app->request->userIP;
+        $sysEmail->save();
+        return $sysEmail;
+    }
+
+    public function fromLogo($tr, $tp){
+        if(!empty($tr)){
+            $sysEmail = SysEmail::findOne($tr);
+            if(!empty($sysEmail)){
+                $sysEmail->read_time = time();
+                $sysEmail->read_ip = Yii::$app->request->userIP;
+                $sysEmail->save(false);
+                return true;
+            }
+        }
     }
 
     public function saveChartStats($pid, $date, $view, $no=1)
