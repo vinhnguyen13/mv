@@ -174,6 +174,8 @@ class Listing extends Component
             Helpers::writeLog($bds_log, $path_folder, $bds_log_name);
         } // last change
 
+        $p = 1;
+        $break_page = false;
         for($t=$last_type; $t < $count_type; $t++) {
             $type = $types[$t];
             $url = self::DOMAIN . '/' . $type;
@@ -192,11 +194,19 @@ class Listing extends Component
 
                     if ($current_page <= $last_page) {
                         for ($i = $current_page; $i <= $current_page_add; $i++) {
+                            if($p > 5) {
+                                $break_page = true;
+                                break;
+                            }
                             $this->getListProject($type, $i, $product_type, $path_folder, $city);
                             $log["current_page"] = $i;
                             Helpers::writeLog($log, $path_folder . $type . "/", "bds_log_{$type}.json");
                             print_r("\n\n{$type}: Page " . $i . " done!\n");
+                            $p++;
                         }
+
+                        if($break_page)
+                            break;
 
                         if($last_page == $current_page_add) {
                             $write_log = true;
