@@ -186,6 +186,10 @@ class ProductController extends Controller {
 		return count($endBoosts);
 	}
 	
+	public function actionCheckBoostSort() {
+		$this->checkBoostSort();
+	}
+	
 	public function checkBoostSort() {
 		AdProduct::reSortBoost(AdProduct::TYPE_FOR_SELL);
 		AdProduct::reSortBoost(AdProduct::TYPE_FOR_RENT);
