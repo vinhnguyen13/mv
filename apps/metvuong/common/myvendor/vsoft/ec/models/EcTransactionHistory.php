@@ -39,7 +39,8 @@ class EcTransactionHistory extends EcTransactionHistoryBase
     const OBJECT_TYPE_BOOST  = 2;
     const OBJECT_TYPE_DASHBOARD  = 3;
     const OBJECT_TYPE_BUY_KEYS  = 4;
-
+    const OBJECT_TYPE_UPDATE_EXPIRED  = 5;
+    
     public static function getObjectType($id=null)
     {
         $data = [
@@ -47,6 +48,7 @@ class EcTransactionHistory extends EcTransactionHistoryBase
             self::OBJECT_TYPE_BOOST => Module::t('ec', 'Boost'),
             self::OBJECT_TYPE_DASHBOARD => Module::t('ec', 'View dashboard'),
             self::OBJECT_TYPE_BUY_KEYS => Module::t('ec', 'Buy Keys'),
+            self::OBJECT_TYPE_UPDATE_EXPIRED => Module::t('ec', 'Update expired')
         ];
 
         if ($id !== null && isset($data[$id])) {

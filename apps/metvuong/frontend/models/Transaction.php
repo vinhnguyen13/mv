@@ -24,6 +24,7 @@ class Transaction extends EcTransactionHistoryBase
     const OBJECT_TYPE_BOOST  = 2;
     const OBJECT_TYPE_DASHBOARD  = 3;
     const OBJECT_TYPE_BUY_KEYS  = 4;
+    const OBJECT_TYPE_UPDATE_EXPIRED  = 5;
 
     public static function me()
     {

@@ -8,6 +8,8 @@ use yii\helpers\Url;
 use yii\widgets\LinkPager;
 use vsoft\ad\models\AdProduct;
 
+$now = time();
+
 $count_product = count($products);
     if($count_product > 0) {
         $categories = \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray( true )->all();
@@ -90,7 +92,7 @@ $count_product = count($products);
 	                                        <strong><?= Yii::t('statistic', 'Tin đã hết hạn') ?></strong>
 	                                    </div>
 	                                </div>
-	                                <a href="#"  data-toggle="modal" data-target="#upgrade-time" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-up"><?= Yii::t('statistic', 'Gia hạn tin đăng') ?></a>
+	                                <a href="#"  data-toggle="modal" data-target="#update-expired" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-expired"><?= Yii::t('statistic', 'Gia hạn tin đăng') ?></a>
                             		<?php else: ?>
                             		<div class="status-duan">
 	                                    <div class="wrap-icon status-get-point">
@@ -102,8 +104,13 @@ $count_product = count($products);
                                         <p class="expired"><?= Yii::t('statistic', 'Expired in the last') ?>
                                             <strong><?= $day_number > 1 ? $day_number . " " . Yii::t('statistic', 'days') : $day_number . " " . Yii::t('statistic', 'day') ?></strong>
                                         </p>
+                                        <?php if($product->boost_time > $now): ?>
+                                        <p class="expired"><?= Yii::t('statistic', 'Được boost đến') ?>
+                                            <strong><?= date("d-m-Y", $product->boost_time) ?></strong>
+                                        </p>
+                                        <?php endif; ?>
 	                                </div>
-	                                <a href="#"  data-toggle="modal" data-target="#upgrade-time" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-up"><?= Yii::t('statistic', 'Up') ?></a>
+	                                <a href="#"  data-toggle="modal" data-target="#update-boost" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-boost"><?= Yii::t('statistic', 'Up') ?></a>
 	                                <div class="clearfix"></div>
 	                                <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-10"><span class="text-decor">Xem thống kê</span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
 	                            	<?php endif; ?>

@@ -905,6 +905,8 @@ class AdController extends Controller
     }
     
     public function actionBoost($day, $id) {
+    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    	
     	if(Yii::$app->user->identity) {
     		$chargeBoost = [
     				1 => AdProduct::CHARGE_BOOST_1,
@@ -914,7 +916,33 @@ class AdController extends Controller
     		$product = AdProduct::findOne($id);
     		 
     		if(isset($chargeBoost[$day]) && $product && $product->user_id == Yii::$app->user->identity->id) {
-    			echo 'OK';
+    			$balance = Yii::$app->user->identity->balance;
+    			
+    			if($balance->amount >= $chargeBoost[$day]) {
+    				$balance->amount -= $chargeBoost[$day];
+					$balance->save(false);
+					
+					$boost_time = $day * 86400;
+					$product->boost_time = $product->boost_time ? $product->boost_time + $boost_time : time() + $boost_time;
+					$product->save(false);
+					
+					$transaction_code = md5(uniqid(rand(), true));
+					Transaction::me()->saveTransaction($transaction_code, [
+							'code'=>$transaction_code,
+							'user_id'=>Yii::$app->user->identity->id,
+							'object_id'=>$product->id,
+							'object_type'=>Transaction::OBJECT_TYPE_BOOST,
+							'amount'=>$chargeBoost[$day],
+							'balance'=>$balance->amount,
+							'status'=>Transaction::STATUS_SUCCESS,
+					]);
+					
+					$template = $this->renderPartial('/dashboard/ad/list', ['products' => [$product]]);
+					
+					return ['success' => true, 'message' => \Yii::t("listing", "Tin đã được boost thành công."), 'template' => $template];
+    			} else {
+    				return ['success' => false, 'message' => \Yii::t("listing", "Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.")];
+    			}
     		}
     	}
     }

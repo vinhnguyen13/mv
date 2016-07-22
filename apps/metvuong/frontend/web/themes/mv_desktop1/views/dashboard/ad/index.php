@@ -98,7 +98,33 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
         </div>
     </div>
 </div>
-<div id="upgrade-time" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div id="update-expired" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="wrap-popup">
+                    <div class="title-popup">
+                        <?=Yii::t('listing', 'Gia hạn tin đăng')?>
+                        <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+                    </div>
+                    <div class="inner-popup">
+                        <ul style="font-size: 15px; color: #333; margin-bottom: 20px;">
+							<li style="margin-bottom: 8px;"><?= sprintf(Yii::t("ad", "Số keys của bạn: %s keys"), '<strong class="current-key">' . Yii::$app->user->identity->balance->amount . '</strong>') ?></li>
+							<li><?= sprintf(Yii::t("ad", "Phí gia hạn tin đăng là %s keys. Sau khi gia hạn tin đăng sẽ có thời hạn là %s ngày."), '<strong class="charge-expired">' . AdProduct::CHARGE_POST . '</strong>', '<strong>30</strong>') ?></li>
+						</ul>
+                    </div>
+                    <div class="bottom-popup">
+                        <div class="text-right">
+                            <a href="#" class="btn-cancel btn close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing', 'Cancel')?></a>
+                            <a href="<?= Url::to(['/dashboard/update-expired']) ?>" class="btn-common btn btn-update-expired"><?=Yii::t('listing', 'Gia hạn')?></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="update-boost" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body">
@@ -109,51 +135,35 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/dashboard
                     </div>
                     <div class="inner-popup">
                         <form id="boostListing">
-                            <p class="font-600 mgB-10"><?=Yii::t('listing', 'Total budget')?> <span class="icon-mv mgL-5 tooltip-show" data-placement="right" title="<?=Yii::t('listing', 'The maximum you`ll spend on your promotion until you stop your ad')?>"><span class="icon-info-circle"></span></span></p>
-                            <select name="total_budget" class="total_budget mgB-10">
-                                <option value="23000">₫23,000</option>
-                                <option value="226000">₫226,000</option>
-                            </select>
+                        	<div style="margin-bottom: 12px;"><?= sprintf(Yii::t("ad", "Số keys của bạn: %s keys"), '<strong class="current-key">' . Yii::$app->user->identity->balance->amount . '</strong>') ?></div>
                             <p class="font-600 mgB-10"><?=Yii::t('listing', 'Duration')?> <span class="icon-mv mgL-5 tooltip-show" data-placement="right" title="<?=Yii::t('listing', 'Choose how long you want your promotion to run')?>"><span class="icon-info-circle"></span></span></p>
                             <div class="clearfix mgB-15">
                                 <ul class="days-up">
                                     <li>
                                         <label class="radio-inline radio-ui active">
-                                            <input type="radio" name="upgrade-time" id="" value="1" checked="checked"> 1 ngày
+                                            <input type="radio" name="upgrade-time" id="" value="1" checked="checked"> <?= sprintf(Yii::t("", "%s ngày (%s keys)"), '<span class="day">1</span>', '<span class="key">' . AdProduct::CHARGE_BOOST_1 . '</span>') ?>
                                         </label>
                                     </li>
                                     <li>
                                         <label class="radio-inline radio-ui">
-                                            <input type="radio" name="upgrade-time" id="" value="7"> 7 ngày
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="radio-inline radio-ui">
-                                            <input type="radio" name="upgrade-time" id="" value="14"> 14 ngày
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label class="radio-inline radio-ui">
-                                            <input type="radio" name="upgrade-time" id="" value="30"> 30 ngày
+                                            <input type="radio" name="upgrade-time" id="" value="7"> <?= sprintf(Yii::t("", "%s ngày (%s keys)"), '<span class="day">3</span>', '<span class="key">' . AdProduct::CHARGE_BOOST_3 . '</span>') ?>
                                         </label>
                                     </li>
                                 </ul>
                             </div>
-                            <div class="date-select mgB-15">
+                            <div class="date-select mgB-15" style="display: none;">
                                 <?=Yii::t('listing', 'Run this ad until')?>
                                 <div class="wrap-calen">
                                     <span class="icon-mv"><span class="icon-calendar"></span></span>
                                     <input type="text" class="date-picker" readonly='true' />
                                 </div>
                             </div>
-                            <div class="check-money">
-                            </div>
                         </form>
                     </div>
                     <div class="bottom-popup">
                         <div class="text-right">
                             <a href="#" class="btn-cancel btn close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing', 'Cancel')?></a>
-                            <a href="#" class="btn-common btn btn-boost"><?=Yii::t('listing', 'Boost')?></a>
+                            <a href="<?= Url::to(['/ad/boost']) ?>" class="btn-common btn btn-boost-listing"><?=Yii::t('listing', 'Boost')?></a>
                         </div>
                     </div>
                 </div>
