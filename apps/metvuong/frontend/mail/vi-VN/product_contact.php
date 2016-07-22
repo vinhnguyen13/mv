@@ -4,7 +4,7 @@ use yii\helpers\Html;
 <a href="<?=\yii\helpers\Url::home(true)?>" style="text-decoration: none;"><p style="color: #00a769;font-size: 16px;font-weight: bold;margin-bottom: 15px;">Thông báo từ metvuong.com</p></a>
 <p style="margin-bottom: 10px;"><strong style="color: #222;font-size: 13px;">Xin chào, <?= $contact['recipient_email'] ?>!</strong></p>
 <p style="font-size: 13px;margin-bottom: 35px;line-height:20px">
-    Tin của bạn đã được chúng tôi đăng trên <a href="<?=\yii\helpers\Url::home(true)?>" style="text-decoration: none;">Metvuong.com</a>,
+    Tin bất động sản của bạn đã được chúng tôi đăng trên <a href="<?=\yii\helpers\Url::home(true)?>" style="text-decoration: none;">Metvuong.com</a>,
     một trong những người sử dụng <a href="<?=\yii\helpers\Url::home(true)?>" style="text-decoration: none;">Metvuong.com</a> đang muốn liên hệ về <?=$contact['category']?> của bạn.
     Họ có những câu hỏi như sau:
 </p>
