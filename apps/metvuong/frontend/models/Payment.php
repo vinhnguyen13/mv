@@ -67,9 +67,17 @@ class Payment extends Component
         }
     }
 
+    public function getBalance($user_id){
+        $balance = Yii::$app->db->createCommand("SELECT * FROM ec_balance WHERE user_id = $user_id")->queryOne();
+        if(!empty($balance)){
+            return $balance;
+        }
+        return false;
+    }
+
     public function updateBalance($user_id, $amount, $plus = '+'){
-        $count = Yii::$app->db->createCommand("SELECT * FROM ec_balance WHERE user_id = $user_id")->queryOne();
-        if(!empty($count)){
+        $balance = $this->getBalance($user_id);
+        if(!empty($balance)){
             Yii::$app->db->createCommand("UPDATE `ec_balance` SET `amount` = `amount` $plus $amount, `updated_at` = ".time()." WHERE `user_id` = $user_id")->execute();
         }else{
             Yii::$app->db->createCommand()
@@ -130,17 +138,18 @@ class Payment extends Component
             if(!empty($getToken->order_code)){
                 $transactionNL = $this->getTransactionWithNganluong(['token'=>$token]);
                 if(!empty($transactionNL['code']) && $transactionNL['status'] != Transaction::STATUS_SUCCESS){
-                    $user = User::findOne($user_id);
-                    $balance = $user->getBalance();
-                    $balanceValue = !empty($balance->amount) ? ($balance->amount + $transactionNL['amount']) : $transactionNL['amount'];
+                    $balance = $this->getBalance($user_id);
+                    $balanceValue = !empty($balance['amount']) ? ($balance['amount'] + $transactionNL['amount']) : $transactionNL['amount'];
                     $checkUpdate = Yii::$app->db->createCommand()
                         ->update('ec_transaction_history', [
                             'status' => Transaction::STATUS_SUCCESS,
                             'balance' => $balanceValue,
+                            'updated_at' => time(),
                         ], 'code=:code', [':code'=>$transactionNL['code']])->execute();
                     Yii::$app->db->createCommand()
                         ->update('ec_transaction_nganluong', [
                             'status' => Transaction::STATUS_SUCCESS,
+                            'updated_at' => time(),
                         ], 'transaction_code=:code', [':code'=>$transactionNL['code']])->execute();
                     if($checkUpdate){
                         $this->updateBalance($transactionNL['user_id'], $transactionNL['amount']);
@@ -172,17 +181,18 @@ class Payment extends Component
                     'buyer_mobile'=>$rs->client_mobile,
                     'type_card'=>$rs->type_card,
                     'status'=>Transaction::STATUS_SUCCESS,
+                    'updated_at' => time(),
                 ]);
                 $amout = NganLuong::me()->VND2Keys(NganLuong::METHOD_MOBILE_CARD, $rs->card_amount);
                 $amout = intval($amout);
-                $user = User::findOne($user_id);
-                $balance = $user->getBalance();
-                $balanceValue = !empty($balance->amount) ? ($balance->amount + $amout) : $amout;
+                $balance = $this->getBalance($user_id);
+                $balanceValue = !empty($balance['amount']) ? ($balance['amount'] + $amout) : $amout;
                 $checkUpdate = Yii::$app->db->createCommand()
                     ->update('ec_transaction_history', [
                         'status' => Transaction::STATUS_SUCCESS,
                         'balance' => $balanceValue,
                         'amount'=>$amout,
+                        'updated_at' => time(),
                     ], 'code=:code', [':code'=>$transactionMV['code']])->execute();
                 if($checkUpdate){
                     $this->updateBalance($transactionMV['user_id'], $amout);
@@ -203,9 +213,8 @@ class Payment extends Component
         try {
             $transaction_code = md5(uniqid(rand(), true));
             $amout = intval($coupon_history->couponCode->amount);
-            $user = User::findOne($user_id);
-            $balance = $user->getBalance();
-            $balanceValue = !empty($balance->amount) ? ($balance->amount + $amout) : $amout;
+            $balance = $this->getBalance($user_id);
+            $balanceValue = !empty($balance['amount']) ? ($balance['amount'] + $amout) : $amout;
             $checkUpdate = Transaction::me()->saveTransaction($transaction_code, [
                 'code'=>$transaction_code,
                 'user_id'=>$user_id,
@@ -214,6 +223,7 @@ class Payment extends Component
                 'amount'=>$amout,
                 'balance'=>$balanceValue,
                 'status'=>Transaction::STATUS_SUCCESS,
+                'updated_at' => time(),
             ]);
             if($checkUpdate == true){
                 $this->updateBalance($user_id, $amout);
