@@ -3260,6 +3260,9 @@ html.mm-opening .mm-slideout {
     float: none;
     margin-bottom: 10px;
 }
+.box-feature-item .listing-item .item .id-duan {
+    float: right;
+}
 .box-feature-item .listing-item .item > a {
     height: 370px;
 }
@@ -11806,6 +11809,9 @@ label:hover {
     }
 }
 @media (max-width: 768px) {
+    .box-feature-item .listing-item .item > a {
+        height: auto;
+    }
     .address-listing a {
         overflow: visible;
         text-overflow: inherit;
@@ -13989,5 +13995,8 @@ ul.cardList li {
         margin-bottom: 0;
         height: 100px;
         width: 50%;
+    }
+    .box-feature-item .listing-item .item .id-duan {
+        float: none;
     }
 }
