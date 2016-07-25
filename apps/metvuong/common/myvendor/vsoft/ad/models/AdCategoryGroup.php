@@ -18,14 +18,6 @@ use yii\data\ActiveDataProvider;
  */
 class AdCategoryGroup extends ACG
 {
-	public static $mapTrans = [
-		'apartments' => 'Căn hộ chung cư',
-		'houses' => 'Nhà riêng',
-		'lands' => 'Đất',
-		'condos/detached houses' => 'Nhà biệt thự, liền kề',
-		'other types' => 'Loại BĐS khác'	
-	];
-	
     public function rules()
     {
     	return [
@@ -109,6 +101,6 @@ class AdCategoryGroup extends ACG
 	}
 	
 	public function getNameTranslate() {
-		return self::$mapTrans[$this->name];
+		return ucfirst(\Yii::t('ad', $this->name));
 	}
 }
