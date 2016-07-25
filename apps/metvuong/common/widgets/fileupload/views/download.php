@@ -9,7 +9,7 @@
                 {% if (file.thumbnailUrl) { %}
                     <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery>
 						{% if (file.error) { %}
-						<img class="error" style="width: 40px; height: 40px; margin-top: 20px;" src="{%=file.thumbnailUrl%}">
+						<img style="width: 40px; height: 40px; margin-top: 20px;" src="{%=file.thumbnailUrl%}">
 						{% } else { %}
 						<img src="{%=file.thumbnailUrl%}">
 						{% } %}

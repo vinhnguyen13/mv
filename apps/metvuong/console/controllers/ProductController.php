@@ -381,4 +381,64 @@ class ProductController extends Controller {
         }
     }
 
+    public function actionMapProduct()
+    {
+        $limit = 1000;
+        $main_products = AdProduct::find()->where("id not in (select product_main_id from db_mv_tool.ad_product where product_main_id != 0)")->orderBy(['id' => SORT_ASC])->limit($limit)->all();
+        if(count($main_products) > 0){
+
+            foreach($main_products as $key => $product ){
+                $sql_where = "CAST(lat AS decimal) = CAST({$product->lat} AS decimal) and CAST(lng AS decimal) = CAST({$product->lng}  AS decimal) ";
+                if(!empty($product->area)){
+                    $sql_where = $sql_where . " and CAST(area AS decimal) = CAST({$product->area} AS decimal)";
+                }
+
+                $crawl_product = \vsoft\craw\models\AdProduct::find()->where([
+                    'content' => $product->content,
+                    'city_id' => $product->city_id,
+                    'district_id' => $product->district_id,
+                    'ward_id' => $product->ward_id,
+                    'street_id' => $product->street_id,
+                    'price' => $product->price,
+                    'type' => $product->type,
+                    'category_id' => $product->category_id,
+                    'start_date' => $product->start_date,
+                    'product_main_id' => 0,
+                ])
+                    ->andWhere($sql_where)
+                    ->orderBy(['id' =>SORT_ASC])->one();
+
+                $file_name = $crawl_product->file_name;
+                if(count($crawl_product) > 0 && !empty($file_name))
+                {
+                    print_r("\n{$product->id} File: {$file_name} ");
+                    $product_file = AdProductFile::find()->where(['file' => $file_name])->one();
+                    if(count($product_file) > 0) {
+                        if($product_file->is_import != 1) {
+                            $product_file->is_import = 1;
+                            $product_file->imported_at = $crawl_product->created_at;
+                            $product_file->product_tool_id = $crawl_product->id;
+                        }
+                        if($crawl_product->product_main_id == 0) {
+                            $crawl_product->product_main_id = $product->id;
+                            $crawl_product->update(false);
+
+                            $product_file->is_copy = 1;
+                            $product_file->copied_at = $product->created_at;
+                            $product_file->product_main_id = $product->id;
+
+                        }
+                        $product_file->updated_at = time();
+                        $res = $product_file->save(false);
+                        if($res)
+                            print_r("copied.");
+                    } else {
+                        print_r("Not found in AdProductFile table.");
+                    }
+                }
+
+            }
+        }
+    }
+
 }
