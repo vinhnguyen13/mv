@@ -393,15 +393,17 @@ var trackingTimeout;
 function tracking() {
 	clearTimeout(trackingTimeout);
 	
+	var serialize = form.fields.filter(function () {
+        return !!this.value;
+    }).serialize();
+	
+	var data = {location: form.mapSearchEl.val(), payload: serialize, _csrf: yii.getCsrfToken()};
+	
 	trackingTimeout = setTimeout(function(){
-		var serialize = form.fields.filter(function () {
-	        return !!this.value;
-	    }).serialize();
-		
 		$.ajax({
 			method: "POST",
 			url: '/listing/tracking',
-			data: {location: form.mapSearchEl.val(), payload: serialize, _csrf: yii.getCsrfToken()}
+			data: data
 		});
 	}, 3000);
 }
