@@ -12,6 +12,7 @@ class m160725_034626_add_tracking_search extends Migration
 		  `session` VARCHAR(32),
 		  `ip` VARCHAR(255),
 		  `type` TINYINT(1),
+		  `location` VARCHAR(255),
 		  `city_id` INT,
 		  `district_id` INT,
 		  `ward_id` INT,
