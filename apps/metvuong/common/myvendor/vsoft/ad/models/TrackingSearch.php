@@ -3,21 +3,29 @@ namespace vsoft\ad\models;
 
 use common\models\TrackingSearch as TS;
 use yii\data\ActiveDataProvider;
+use common\models\User;
 
 class TrackingSearch extends TS {
 	
 	public $category_search;
+	public $finder;
+	public $finder_search;
 	
 	public function rules()
 	{
 		return array_merge(parent::rules(), [
-			[['category_search'], 'safe']
+			[['category_search', 'finder_search'], 'safe']
 		]);
 	}
 	
 	public function getCategory()
 	{
 		return $this->hasOne(AdCategoryGroup::className(), ['categories_id' => 'category_id']);
+	}
+	
+	public function getUser()
+	{
+		return $this->hasOne(User::className(), ['id' => 'user_id']);
 	}
 	
 	public function formName() {
@@ -46,7 +54,8 @@ class TrackingSearch extends TS {
 			'price_max' => 'Giá cao nhất',
 			'size_min' => 'Diện tích nhỏ nhất',
 			'size_max' => 'Diện tích lớn nhất',
-			'category' => 'Loại BĐS'
+			'category' => 'Loại BĐS',
+			'finder' => 'Người tìm'
 		];
 	}
 	
@@ -72,6 +81,7 @@ class TrackingSearch extends TS {
 	public function search($params)
 	{
 		$query = self::find();
+		$query->joinWith(['user']);
 		$query->leftJoin('ad_category_group', 'categories_id = category_id');
 		
 		$dataProvider = new ActiveDataProvider([
@@ -86,7 +96,17 @@ class TrackingSearch extends TS {
     		'asc' => ['ad_category_group.name' => SORT_ASC],
     		'desc' => ['ad_category_group.name' => SORT_DESC]
     	];
-		
+    	
+    	$dataProvider->sort->attributes['finder'] = [
+    		'asc' => ['user.username' => SORT_ASC],
+    		'desc' => ['user.username' => SORT_DESC]
+    	];
+
+    	$query->andFilterWhere([
+    		'or',
+    		['like', 'username', $this->finder_search],
+    		['like', 'ip', $this->finder_search],
+    	]);
 		$query->andFilterWhere(['=', 'category_id', $this->category_search]);
 		$query->andFilterWhere(['like', 'location', $this->location]);
 		$query->andFilterWhere(['=', 'room_no', $this->room_no]);
