@@ -257,7 +257,10 @@ $projectList = ArrayHelper::map(\vsoft\craw\models\AdBuildingProject::find()->wh
 			'filter' => Html::activeDropDownList($filterModel, 'emailFilter', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả']) .
 					Html::activeTextInput($filterModel, 'emailSearch', ['class' => 'form-control'])
 			],
-			'start_date:date'
+			'start_date:date',
+            ['attribute' => 'file_name', 'format' => 'raw', 'value' => function($model){
+                return Html::a($model->file_name, "#");
+            }]
 		],
     ]); ?>
     <?php if($import == 'true'){?>
