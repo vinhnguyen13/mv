@@ -796,19 +796,27 @@ $.fn.price_dt = function (options) {
                 }
                 $('#priceMin').val(valMin);
                 $('#priceMax').val(valMax);
-                /*minmax == 'min-val' ? $('#priceMin').val(valMin) : $('#priceMax').val(valMax);*/
-                $('#priceMin').trigger('change');
-                $('#priceMax').trigger('change');
+
+                if ( valMin > 0 ) {
+                    $('#priceMin').trigger('change');
+                }else if ( valMax > 0 ) {
+                    $('#priceMax').trigger('change');
+                }else {
+                    $('#priceMin, #priceMax').trigger('change');
+                }
             }else if ( el.data('itemMinmax') == 'area' ) {
-                /*minmax == 'min-val' ? $('#dtMin').val(valMin) : $('#dtMax').val(valMax);
-                $('#dtMin').trigger('change');*/
                 if ( valMax < 0 ) {
                     valMax = '';
                 }
                 $('#dtMin').val(valMin);
                 $('#dtMax').val(valMax);
-                $('#dtMin').trigger('change');
-                $('#dtMax').trigger('change');
+                if ( valMin > 0 ) {
+                    $('#dtMin').trigger('change');
+                }else if ( valMax > 0 ) {
+                    $('#dtMax').trigger('change');
+                }else {
+                    $('#dtMin, #dtMax').trigger('change');
+                }
             }
 
             renderTxtShow(minmax, txt);

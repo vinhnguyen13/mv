@@ -332,6 +332,7 @@ $(document).ready(function() {
 	
 	$window.on('resize', desktop.checkToEnable);
 	
+	tracking();
 	
 	/*
 	 * Migrate code
@@ -386,6 +387,24 @@ $(document).ready(function() {
 	
 	$('.select-dt .box-dropdown').price_dt();
 });
+
+var trackingTimeout;
+
+function tracking() {
+	clearTimeout(trackingTimeout);
+	
+	trackingTimeout = setTimeout(function(){
+		var serialize = form.fields.filter(function () {
+	        return !!this.value;
+	    }).serialize();
+		
+		$.ajax({
+			method: "POST",
+			url: '/listing/tracking',
+			data: {payload: serialize, _csrf: yii.getCsrfToken()}
+		});
+	}, 3000);
+}
 
 function toogleScroll() {
 	var hFrm = $('#search-form').outerHeight(),

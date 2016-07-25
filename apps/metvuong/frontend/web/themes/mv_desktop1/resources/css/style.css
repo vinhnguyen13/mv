@@ -3256,6 +3256,10 @@ html.mm-opening .mm-slideout {
     -moz-box-shadow: 0px 0px 10px #ABABAB;
     -ms-box-shadow: 0px 0px 10px #ABABAB;
 }
+.listing-item .item .id-duan {
+    float: none;
+    margin-bottom: 10px;
+}
 .box-feature-item .listing-item .item > a {
     height: 370px;
 }

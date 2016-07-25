@@ -176,7 +176,7 @@ class CopyListing extends Component
 
                         // product image
                         $first_image_path = '';
-                        if (isset($productImages) && count($productImages) > 0) {
+                        if (isset($productImages) && count($productImages) > 0 && $is_expired == 0) {
                             foreach ($productImages as $key_image => $image) {
                                 if (count($image) > 0 && !empty($image)) {
                                     $result = Metvuong::DownloadImage($image->file_name, $image->uploaded_at);
@@ -247,6 +247,8 @@ class CopyListing extends Component
                             ];
                         } else {
                             print_r(" - is expired");
+                            if(count($productImages) == 0)
+                                print_r(" - no image");
                         }
 
                         if ($no > 0 && $no % 50 == 0) {
