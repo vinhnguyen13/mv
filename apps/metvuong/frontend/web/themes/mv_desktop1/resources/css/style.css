@@ -1150,7 +1150,7 @@ label {
     float: left;
     width: 25%;
     text-align: center;
-    margin-bottom: 35px;
+    height: 100px;
 }
 .list-tienich li a {
     display: block;
@@ -4139,7 +4139,7 @@ html.mm-opening .mm-slideout {
     float: left;
     font-size: 18px;
     line-height: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 7px;
     position: relative;
     /* padding: 6px 10px; */
 }
@@ -13546,6 +13546,9 @@ ul.cardList li {
     .news-item ul li {
         padding: 0 10px;
     }
+    .dele-favori {
+        left: 10px;
+    }
     .news-item ul li {
         margin-bottom: 20px;
     }
@@ -13892,6 +13895,12 @@ ul.cardList li {
         border-bottom: 1px solid #e4e4e4;
         margin-bottom: 9px;
     }
+    .detail-listing-extra .wrap-swiper .icons-detail {
+        height: auto;
+    }
+    .detail-listing-extra.detail-listing .gallery-detail {
+        margin-bottom: 0;
+    }
     .wrap-swiper .icons-detail a {
         border: none;
         padding: 0 2px;
@@ -13928,6 +13937,7 @@ ul.cardList li {
         float: none;
     }
     #listing-list .info-item {
+    padding-bottom: 10px;
     }
     #listing-list > ul > li a {
         height: 320px;
@@ -13953,7 +13963,7 @@ ul.cardList li {
     #listing-list .vip .address-listing, #listing-list .address-listing {
         font-size: 17px;
         line-height: 23px;
-        margin-bottom: 5px;
+        margin-bottom: 9px;
         font-weight: 600;
     }
     #listing-list .price-item .icon-mv,
@@ -13961,8 +13971,19 @@ ul.cardList li {
     #listing-list .info-item .price-item {
         font-size: 20px;
     }
+    .wrap-duan-moi .item .info-item {
+        height: auto;
+    }
 }
-
-
-
-
+@media (max-width: 360px) {
+    .id-duan,
+    .box-feature-item .id-duan {
+        float: none;
+        margin-bottom: 12px;
+    }
+    .list-tienich li {
+        margin-bottom: 0;
+        height: 100px;
+        width: 50%;
+    }
+}
