@@ -51,6 +51,7 @@ use vsoft\ad\models\AdProductAutoSaveImages;
 use common\models\SlugSearch;
 use vsoft\ad\models\Balance;
 use vsoft\ad\models\AdCategoryGroup;
+use vsoft\ad\models\TrackingSearch;
 
 class AdController extends Controller
 {
@@ -379,6 +380,13 @@ class AdController extends Controller
 		$mapSearch->fetchValues();
     		 
 		return $this->render('index', ['searchModel' => $mapSearch, 'list' => $result['aggregations']['rl']['hits'], 'slug' => $slug]);
+    }
+    
+    public function actionTracking() {
+    	if(Yii::$app->request->isPost && Yii::$app->request->isAjax && ($payload = Yii::$app->request->post('payload'))) {
+    		parse_str($payload, $params);
+    		TrackingSearch::track($params);
+    	}
     }
     
     public function actionSavedListing() {
