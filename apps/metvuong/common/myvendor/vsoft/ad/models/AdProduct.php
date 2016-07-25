@@ -36,7 +36,7 @@ class AdProduct extends AP
 	const STATUS_INACTIVE = 0;
 	const STATUS_ACTIVE = 1;
 	
-	const EXPIRED = 2592000;
+	const EXPIRED = 5184000;
 	const BOOST_LIMIT = 2592000;
 	
 	const DEFAULT_CITY = 1;

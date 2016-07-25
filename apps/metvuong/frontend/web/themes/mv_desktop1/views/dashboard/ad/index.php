@@ -82,7 +82,7 @@ $this->registerCss(".inner-popup {font-size: 14px;} .modal .hint {font-weight: 6
                         <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
                     </div>
                     <div class="inner-popup">
-                    	<div class="hint"><?= sprintf(Yii::t("ad", "Phí đăng tin là %s keys. Sau khi đăng tin, tin sẽ có thời hạn là %s ngày."), '<strong class="charge strong">' . AdProduct::CHARGE_POST . '</strong>', '<strong class="strong">30</strong>') ?></div>
+                    	<div class="hint"><?= sprintf(Yii::t("ad", "Phí đăng tin là %s keys. Sau khi đăng tin, tin sẽ có thời hạn là %s ngày."), '<strong class="charge strong">' . AdProduct::CHARGE_POST . '</strong>', '<strong class="strong">' . AdProduct::EXPIRED / 86400 . '</strong>') ?></div>
                         <ul class="show-key">
 							<li><?= sprintf(Yii::t("ad", "Số keys hiện tại: %s keys"), '<strong class="current-key strong"></strong>') ?></li>
 							<li><?= sprintf(Yii::t("ad", "Số keys sau khi đăng tin: %s keys"), '<strong class="after-key strong"></strong>') ?></li>

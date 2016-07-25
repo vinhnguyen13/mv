@@ -99,4 +99,8 @@ class AdCategoryGroup extends ACG
 			];
 		}
 	}
+	
+	public function getNameTranslate() {
+		return ucfirst(\Yii::t('ad', $this->name));
+	}
 }

@@ -30,7 +30,7 @@ class CopyListing extends Component
         return Yii::createObject(CopyListing::className());
     }
 
-    /* End date = Start date Db Crawl + 30 days */
+    /* End date = Start date Db Crawl + AdProduct::Expired days */
     public function copyToMainDB($validate=0, $limit=300, $check_expired=0){
         $begin = time();
         $sql = "file_name is not null and product_main_id = 0 ";
@@ -40,7 +40,7 @@ class CopyListing extends Component
         }
 
         if($check_expired == 1)
-            $sql = $sql . " and (start_date + 30 * 86400) >= unix_timestamp() ";
+            $sql = $sql . " and (start_date + ".AdProduct::EXPIRED.") >= unix_timestamp() ";
 
         $models = \vsoft\craw\models\AdProduct::find()
             ->where($sql)->limit($limit)->orderBy(['id' => SORT_ASC])->all();
