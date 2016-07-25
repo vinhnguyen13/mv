@@ -12,6 +12,7 @@ use Yii;
  * @property string $session
  * @property string $ip
  * @property integer $type
+ * @property string $location
  * @property integer $city_id
  * @property integer $district_id
  * @property integer $ward_id
@@ -44,7 +45,7 @@ class TrackingSearch extends \yii\db\ActiveRecord
         return [
             [['user_id', 'type', 'city_id', 'district_id', 'ward_id', 'street_id', 'project_building_id', 'room_no', 'toilet_no', 'price_min', 'price_max', 'size_min', 'size_max', 'created_at'], 'integer'],
             [['session', 'category_id'], 'string', 'max' => 32],
-            [['ip'], 'string', 'max' => 255],
+            [['ip', 'location'], 'string', 'max' => 255],
         ];
     }
 
@@ -59,6 +60,7 @@ class TrackingSearch extends \yii\db\ActiveRecord
             'session' => 'Session',
             'ip' => 'Ip',
             'type' => 'Type',
+            'location' => 'Location',
             'city_id' => 'City ID',
             'district_id' => 'District ID',
             'ward_id' => 'Ward ID',

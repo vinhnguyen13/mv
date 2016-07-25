@@ -385,6 +385,9 @@ class AdController extends Controller
     public function actionTracking() {
     	if(Yii::$app->request->isPost && Yii::$app->request->isAjax && ($payload = Yii::$app->request->post('payload'))) {
     		parse_str($payload, $params);
+    		
+    		$params['location'] = Yii::$app->request->post('location');
+    		
     		TrackingSearch::track($params);
     	}
     }

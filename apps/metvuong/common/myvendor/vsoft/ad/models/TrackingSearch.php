@@ -2,8 +2,54 @@
 namespace vsoft\ad\models;
 
 use common\models\TrackingSearch as TS;
+use yii\data\ActiveDataProvider;
 
 class TrackingSearch extends TS {
+	
+	public $category_search;
+	
+	public function rules()
+	{
+		return array_merge(parent::rules(), [
+			[['category_search'], 'safe']
+		]);
+	}
+	
+	public function getCategory()
+	{
+		return $this->hasOne(AdCategoryGroup::className(), ['categories_id' => 'category_id']);
+	}
+	
+	public function formName() {
+		return '';
+	}
+	
+	public function attributeLabels()
+	{
+		return [
+			'id' => 'ID',
+			'user_id' => 'User ID',
+			'session' => 'Session',
+			'ip' => 'Ip',
+			'type' => 'Type',
+			'location' => 'Location',
+			'city_id' => 'City ID',
+			'district_id' => 'District ID',
+			'ward_id' => 'Ward ID',
+			'street_id' => 'Street ID',
+			'project_building_id' => 'Project Building ID',
+			'category_id' => 'Category ID',
+			'room_no' => 'Phòng ngủ',
+			'toilet_no' => 'Phòng tắm',
+			'created_at' => 'Thời gian',
+			'price_min' => 'Giá thấp nhất',
+			'price_max' => 'Giá cao nhất',
+			'size_min' => 'Diện tích nhỏ nhất',
+			'size_max' => 'Diện tích lớn nhất',
+			'category' => 'Loại BĐS'
+		];
+	}
+	
 	public static function track($data) {
 		$ip = \Yii::$app->request->userIP;
 		$now = time();
@@ -21,5 +67,35 @@ class TrackingSearch extends TS {
 			$trackingSearch->created_at = $now;
 			$trackingSearch->save(false);
 		}
+	}
+	
+	public function search($params)
+	{
+		$query = self::find();
+		$query->leftJoin('ad_category_group', 'categories_id = category_id');
+		
+		$dataProvider = new ActiveDataProvider([
+			'query' => $query,
+		]);
+		
+		if ($this->load($params) && !$this->validate()) {
+			return $dataProvider;
+		}
+    	
+    	$dataProvider->sort->attributes['category'] = [
+    		'asc' => ['ad_category_group.name' => SORT_ASC],
+    		'desc' => ['ad_category_group.name' => SORT_DESC]
+    	];
+		
+		$query->andFilterWhere(['=', 'category_id', $this->category_search]);
+		$query->andFilterWhere(['like', 'location', $this->location]);
+		$query->andFilterWhere(['=', 'room_no', $this->room_no]);
+		$query->andFilterWhere(['=', 'toilet_no', $this->toilet_no]);
+		$query->andFilterWhere(['=', 'price_min', $this->price_min]);
+		$query->andFilterWhere(['=', 'price_max', $this->price_max]);
+		$query->andFilterWhere(['=', 'size_min', $this->size_min]);
+		$query->andFilterWhere(['=', 'size_max', $this->size_max]);
+
+		return $dataProvider;
 	}
 }

@@ -401,7 +401,7 @@ function tracking() {
 		$.ajax({
 			method: "POST",
 			url: '/listing/tracking',
-			data: {payload: serialize, _csrf: yii.getCsrfToken()}
+			data: {location: form.mapSearchEl.val(), payload: serialize, _csrf: yii.getCsrfToken()}
 		});
 	}, 3000);
 }
