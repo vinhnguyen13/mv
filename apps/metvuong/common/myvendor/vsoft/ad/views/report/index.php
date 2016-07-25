@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel vsoft\ad\models\AdProductReportSearch */
@@ -16,9 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-<?= Html::a('Create Product Report', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -28,16 +26,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
             [
                 'attribute' => 'user_id',
+                'format' => 'raw',
                 'value' => function ($model) {
                     $user = \frontend\models\User::findOne($model->user_id);
-                    return $user->username;
+                    return Html::a($user->username, Yii::$app->urlManager->hostInfo."/".$user->username);
                 },
             ],
             [
                 'attribute' => 'product_id',
+                'format' => 'html',
                 'value' => function ($model) {
                     $ad_product = \vsoft\ad\models\AdProduct::findOne($model->product_id);
-                    return $ad_product->getAddress();
+                    $link = Url::to(['/ad/detail' . $ad_product->type, 'id' => $ad_product->id, 'slug' => \common\components\Slug::me()->slugify($ad_product->getAddress($ad_product->show_home_no))]);
+                    $link = str_replace("/admin/", "/", $link);
+                    $text = $ad_product->getAddress($ad_product->show_home_no);
+                    $count = \vsoft\ad\models\AdProductReport::find()->where(['product_id' => $model->product_id])->count();
+                    $str_return = Html::a($text, $link);
+                    if($count > 1)
+                        $str_return = $str_return." ".Html::a("({$count})", "#");
+                    return $str_return;
                 },
             ],
             [
@@ -66,7 +73,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => ['datetime', 'php: d/m/Y H:i a']
             ],
 
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 

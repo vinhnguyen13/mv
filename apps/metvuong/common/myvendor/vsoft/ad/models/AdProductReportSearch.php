@@ -41,7 +41,7 @@ class AdProductReportSearch extends AdProductReport
      */
     public function search($params)
     {
-        $query = AdProductReport::find();
+        $query = AdProductReport::find()->groupBy(['product_id']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,

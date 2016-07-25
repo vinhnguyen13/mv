@@ -31,13 +31,16 @@ class CopyListing extends Component
     }
 
     /* End date = Start date Db Crawl + 30 days */
-    public function copyToMainDB($validate=0, $limit=300){
+    public function copyToMainDB($validate=0, $limit=300, $check_expired=0){
         $begin = time();
         $sql = "file_name is not null and product_main_id = 0 ";
 
         if($validate == 1) {
             $sql = $sql ." and price > 0 and area > 0 and city_id > 0 and district_id > 0 and ward_id > 0 and street_id > 0 and (is_expired is null or is_expired = 0)";
         }
+
+        if($check_expired == 1)
+            $sql = $sql . " and (start_date + 30 * 86400) >= unix_timestamp() ";
 
         $models = \vsoft\craw\models\AdProduct::find()
             ->where($sql)->limit($limit)->orderBy(['id' => SORT_ASC])->all();
