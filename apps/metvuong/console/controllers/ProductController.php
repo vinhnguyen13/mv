@@ -384,7 +384,7 @@ class ProductController extends Controller {
     public function actionMapProduct()
     {
         $limit = 1000;
-        $main_products = AdProduct::find()->where("id not in (select product_main_id from db_mv_tool_22_july_2016.ad_product where product_main_id != 0)")->orderBy(['id' => SORT_ASC])->limit($limit)->all();
+        $main_products = AdProduct::find()->where("id not in (select product_main_id from db_mv_tool.ad_product where product_main_id != 0)")->orderBy(['id' => SORT_ASC])->limit($limit)->all();
         if(count($main_products) > 0){
 
             foreach($main_products as $key => $product ){
