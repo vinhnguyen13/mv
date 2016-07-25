@@ -14,6 +14,8 @@ use vsoft\express\components\StringHelper;
 /* @var $searchModel app\models\CmsShowSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
+$this->registerCss('.filter-col {margin-right: 12px;} .container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 28px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;}');
+
 $this->title = Yii::t('cms', 'Tracking Search');
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -33,6 +35,17 @@ foreach ($categoryGroup as $categoryG) {
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
+        	[
+        		'attribute' => 'finder',
+				'value' => function($model) {
+        	 		if($model->user_id) {
+        	 			return $model->user->username;
+        	 		} else {
+        	 			return $model->ip;
+        	 		}
+        		},
+        		'filter' => Html::activeTextInput($searchModel, 'finder_search', ['class' => 'form-control min price'])
+			],
         	'location',
         	 [
 				'attribute' => 'category',
