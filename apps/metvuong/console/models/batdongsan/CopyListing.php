@@ -134,6 +134,7 @@ class CopyListing extends Component
                             $product_file->is_copy = 1;
                             $product_file->copied_at = time();
                             $product_file->product_main_id = $last_product_id;
+                            $product_file->updated_at = time();
                             $product_file->save(false);
                         } else {
                             print_r("\nCannot copy because file_name: {$model->file_name} not exists AdProductFile");
