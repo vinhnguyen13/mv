@@ -405,7 +405,7 @@ function tracking() {
 			url: '/listing/tracking',
 			data: data
 		});
-	}, 3000);
+	}, detr);
 }
 
 function toogleScroll() {

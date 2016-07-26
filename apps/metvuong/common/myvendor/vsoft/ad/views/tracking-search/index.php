@@ -9,12 +9,14 @@ use vsoft\ad\models\AdStreet;
 use vsoft\ad\models\AdWard;
 use vsoft\ad\models\AdCategoryGroup;
 use vsoft\express\components\StringHelper;
+use frontend\models\MapSearch;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CmsShowSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->registerCss('.filter-col {margin-right: 12px;} .container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 28px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;}');
+$this->registerCss('.summary {position: absolute; right: 0px; top: -20px;} .cms-show-index {padding-top: 40px; position: relative;} .filter-col {margin-right: 12px;} .container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 28px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;}');
 
 $this->title = Yii::t('cms', 'Tracking Search');
 $this->params['breadcrumbs'][] = $this->title;
@@ -28,9 +30,10 @@ foreach ($categoryGroup as $categoryG) {
 	$categoryDropDown[implode(',', $categoryG->categories_id)] = $categoryG->nameTranslate;
 }
 
+$mapSort = MapSearch::mapSort();
 ?>
 <div class="cms-show-index">
-
+	<div style="text-align: center; width: 100%; position: absolute; top: -20px;"><a style="font-size: 20px; display: inline-block; margin-top: 22px;" href="<?= Url::to(['/ad/tracking-search']) ?>">Reset Filter</a></div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -70,6 +73,13 @@ foreach ($categoryGroup as $categoryG) {
         	],
         	'size_min',
         	'size_max',
+        	[
+        		'attribute' => 'order_by',
+        		'value' => function($model) use ($mapSort) {
+        			return $model->order_by ? $mapSort[$model->order_by] : null;
+    			},
+    			'filter' => Html::activeDropDownList($searchModel, 'order_by', $mapSort, ['class' => 'form-control', 'prompt' => 'Chọn loại sắp xếp'])
+        	],
         	'created_at:datetime'
         ],
     ]); ?>
