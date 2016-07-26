@@ -121,6 +121,12 @@ class CrawlerController extends Controller
         return ['valid' => 'valid', 'city' => 'city', 'limit' => 'limit', 'check_expired' => 'check_expired'];
     }
 
+    public function actionImportListing()
+    {
+        $import_limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+        ImportListing::find()->importDataForTool($import_limit);
+    }
+
     // php yii crawler/copytomain -valid=1 -limit=300 -check_expired=1
     public function actionCopytomain()
     {
