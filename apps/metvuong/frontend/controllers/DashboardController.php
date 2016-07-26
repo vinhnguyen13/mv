@@ -599,15 +599,4 @@ class DashboardController extends Controller
         return Tracking::syncFavorite($pid);
     }
 
-    public function actionAdmin()
-    {
-        $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuDashboard' => true, 'isDashboard' => true], $this->view->params);
-
-        if(Yii::$app->request->isAjax) {
-            return $this->renderAjax('admin/index');
-        } else {
-            return $this->render('admin/index');
-        }
-    }
-
 }

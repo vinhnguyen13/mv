@@ -9,6 +9,9 @@
         <?php if(!empty($this->params['isDashboard'])){?>
             <?php $this->beginContent('@app/views/layouts/_partials/menuUser.php'); ?><?php $this->endContent();?>
         <?php }?>
+        <?php if(!empty($this->params['isReport'])){?>
+            <?php $this->beginContent('@app/views/layouts/_partials/menuReport.php'); ?><?php $this->endContent();?>
+        <?php }?>
         <div class="contentContainer">
             <?=$content;?>
         </div>
