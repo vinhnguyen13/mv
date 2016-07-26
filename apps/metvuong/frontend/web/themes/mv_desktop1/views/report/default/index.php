@@ -100,9 +100,9 @@ if(!empty($dateRange)){
         	<section class="clearfix mgB-40">
                 <div class="pull-right fs-13 mgB-15">
                     <div class="clearfix d-ib ver-c">
-                        <a href="<?= Url::to(['dashboard/admin', 'filter'=>'week'], true) ?>" class="show-view-chart<?=($filter=='week' ? ' active' : '')?>"><?=Yii::t('statistic','Week')?></a>
-                        <a href="<?= Url::to(['dashboard/admin', 'filter'=>'2week'], true) ?>" class="show-view-chart<?=($filter=='2week' ? ' active' : '')?>"><?=Yii::t('statistic','Two weeks')?></a>
-                        <a href="<?= Url::to(['dashboard/admin', 'filter'=>'month'], true) ?>" class="show-view-chart<?=($filter=='month' ? ' active' : '')?>"><?=Yii::t('statistic','Month')?></a>
+                        <a href="<?= Url::to(['report/index', 'filter'=>'week'], true) ?>" class="show-view-chart<?=($filter=='week' ? ' active' : '')?>"><?=Yii::t('statistic','Week')?></a>
+                        <a href="<?= Url::to(['report/index', 'filter'=>'2week'], true) ?>" class="show-view-chart<?=($filter=='2week' ? ' active' : '')?>"><?=Yii::t('statistic','Two weeks')?></a>
+                        <a href="<?= Url::to(['report/index', 'filter'=>'month'], true) ?>" class="show-view-chart<?=($filter=='month' ? ' active' : '')?>"><?=Yii::t('statistic','Month')?></a>
                     </div>
                 </div>
                 <div class="clearfix"></div>
@@ -110,7 +110,7 @@ if(!empty($dateRange)){
                     <div class="wrap-chart clearfix">
         				<div class="wrap-img">
                             <div class="wrapChart">
-                                <?=$this->render('/dashboard/admin/_partials/chart', ['categories'=>$categories, 'dataChart'=>$dataChart]);?>
+                                <?=$this->render('/report/default/_partials/chart', ['categories'=>$categories, 'dataChart'=>$dataChart]);?>
                             </div>
                         </div>
         			</div>
