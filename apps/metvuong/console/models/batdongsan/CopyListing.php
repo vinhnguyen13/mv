@@ -64,7 +64,12 @@ class CopyListing extends Component
 
                 $crawl_project = $model->project;
                 $project_name = $crawl_project->name;
-                $project = \vsoft\ad\models\AdBuildingProject::find()->where('slug = :s', [':s' => $crawl_project->slug])->orWhere('name = :n', [':n' => $project_name])->one();
+
+                $project = \vsoft\ad\models\AdBuildingProject::find()->where([
+                    'city_id' => $city_id,
+                    'district_id' => $district_id,
+                    'name' => $project_name
+                ])->one();
 
                 if (count($project) > 0) { // lay address theo address project
                     $project_id = $project->id;
@@ -75,6 +80,7 @@ class CopyListing extends Component
                     $home_no = empty($project->home_no) ? (empty($model->home_no) ? null : $model->home_no) : $project->home_no;
                     $lat = empty($project->lat) ? (empty($model->lat) ? null : $model->lat) : $project->lat;
                     $lng = empty($project->lng) ? (empty($model->lng) ? null : $model->lng) : $project->lng;
+                    print_r(" - {$project_name} ");
                 }
 
                 if($city_id <= 0 || $district_id <= 0 || $ward_id <= 0 || $street_id <= 0) {

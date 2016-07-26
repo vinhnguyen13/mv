@@ -163,7 +163,8 @@ class CrawlerController extends Controller
 
     public function actionCopyProject()
     {
-        CopyProject::find()->copyProjects();
+        $limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+        CopyProject::find()->copyProjects($limit);
     }
 
     // db chinh
