@@ -52,6 +52,7 @@ $return =  [
         'user' => [
             'identityClass' => 'frontend\models\User',
             'enableAutoLogin' => true,
+            'authTimeout' => 86400,
             'on afterLogin' => ['frontend\components\Login', 'handleAfterLogin'],
             'loginUrl' => ['member/login'],
         ],

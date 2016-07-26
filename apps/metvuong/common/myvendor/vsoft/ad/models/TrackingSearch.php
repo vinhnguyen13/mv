@@ -119,6 +119,7 @@ class TrackingSearch extends TS {
 		$query->andFilterWhere(['=', 'size_min', $this->size_min]);
 		$query->andFilterWhere(['=', 'size_max', $this->size_max]);
 		$query->andFilterWhere(['=', 'order_by', $this->order_by]);
+		$query->andFilterWhere(['=', 'type', $this->type]);
 
 		return $dataProvider;
 	}

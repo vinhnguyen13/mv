@@ -10240,6 +10240,9 @@ margin-right: 5px;
         padding-top: 0;
         width: inherit;
     }
+    .post-listing .title-top {
+        z-index: 10;
+    }
     .toggle-num-home label input {
         height: auto;
     }
@@ -13836,8 +13839,9 @@ ul.cardList li {
         padding: 0 15px 5px;
     }
     #listing-list .vip .address-listing, #listing-list .address-listing {
-        color: #000;
-        font-size: 19px;
+        color: #00a769;
+        font-size: 17px;
+        font-weight: 400;
     }
     #listing-list .date-post,
     #listing-list .list-attr-td li, #listing-list .list-attr-td li .icon-mv, #listing-list .price-item .icon-mv, #listing-list .infor-by-up {
@@ -13950,8 +13954,7 @@ ul.cardList li {
     }
 }
 @media (max-width: 360px) {
-    .id-duan,
-    .box-feature-item .id-duan {
+    .id-duan {
         float: none;
         margin-bottom: 5px;
     }
@@ -13960,9 +13963,12 @@ ul.cardList li {
         height: 100px;
         width: 50%;
     }
-    .item-sidebar .listing-item .item .id-duan,
-    .box-feature-item .listing-item .item .id-duan {
+    .item-sidebar .listing-item .item .id-duan {
         float: none;
     }
-    
+    .box-feature-item .listing-item .item .id-duan {
+        line-height: 100%;
+        float: none;
+        margin-bottom: 9px;
+    }
 }
