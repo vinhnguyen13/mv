@@ -7,6 +7,8 @@ use common\models\User;
 
 class TrackingSearch extends TS {
 	
+	const DELAY_TRACKING = 3;
+	
 	public $category_search;
 	public $finder;
 	public $finder_search;
@@ -55,7 +57,8 @@ class TrackingSearch extends TS {
 			'size_min' => 'Diện tích nhỏ nhất',
 			'size_max' => 'Diện tích lớn nhất',
 			'category' => 'Loại BĐS',
-			'finder' => 'Người tìm'
+			'finder' => 'Người tìm',
+			'order_by' => 'Sắp xếp'
 		];
 	}
 	
@@ -65,7 +68,7 @@ class TrackingSearch extends TS {
 		
 		$previousTracking = TrackingSearch::find()->asArray(true)->select(['MAX(created_at) `created_at`'])->where(['ip' => $ip])->one();
 	
-		if(!$previousTracking || $now - $previousTracking['created_at'] > 5) {
+		if(!$previousTracking || $now - $previousTracking['created_at'] > self::DELAY_TRACKING) {
 			$trackingSearch = new TrackingSearch();
 			$trackingSearch->load($data, '');
 			if(!\Yii::$app->user->isGuest) {
@@ -115,6 +118,7 @@ class TrackingSearch extends TS {
 		$query->andFilterWhere(['=', 'price_max', $this->price_max]);
 		$query->andFilterWhere(['=', 'size_min', $this->size_min]);
 		$query->andFilterWhere(['=', 'size_max', $this->size_max]);
+		$query->andFilterWhere(['=', 'order_by', $this->order_by]);
 
 		return $dataProvider;
 	}

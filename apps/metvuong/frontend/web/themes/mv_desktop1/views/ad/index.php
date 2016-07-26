@@ -5,6 +5,7 @@
 	use vsoft\ad\models\AdProduct;
 	use yii\web\View;
 use frontend\models\MapSearch;
+use vsoft\ad\models\TrackingSearch;
 	
 	$db = Yii::$app->getDb();
 	
@@ -28,6 +29,7 @@ use frontend\models\MapSearch;
 	$loadProjectUrl = Url::to(['/ad/get-project']);
 	$fieldsMapping = json_encode(array_flip(MapSearch::$fieldsMapping));
 	$slugCatsMap = json_encode(array_flip(AdCategoryGroup::slugMap()));
+	$detr = TrackingSearch::DELAY_TRACKING * 1000;
 	
 	$script = <<<EOD
 	var resources = ['$resourceHistoryJs', '$resourceListingMap', '$resourceApi'];
@@ -35,6 +37,7 @@ use frontend\models\MapSearch;
 	var loadProjectUrl = '$loadProjectUrl';
 	var fieldsMapping = $fieldsMapping;
 	var catsSlug = $slugCatsMap;
+	var detr = $detr;
 EOD;
 	
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl.'/resources/css/map.css');
@@ -196,12 +199,7 @@ EOD;
 					<div id="sort" class="dropdown-select option-show-listing clearfix">
 						<div class="val-selected style-click">
 							<?php
-								$items = [
-									'-score' => Yii::t('ad', 'Point'),
-									'-start_date' => Yii::t('ad', 'Newest'),
-									'-price' =>Yii::t('ad', 'Price (High to Low)'),
-									'price' =>Yii::t('ad', 'Price (Low to Hight)'),
-								];
+								$items = $searchModel->mapSort();
 							?>
 							<?= Html::activeDropDownList($searchModel, 'order_by', $items, ['prompt' => Yii::t('ad', 'Sort by'), 'class' => 'form-control']) ?>
 						</div>

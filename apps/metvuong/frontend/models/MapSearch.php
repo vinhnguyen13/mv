@@ -10,6 +10,7 @@ use vsoft\ad\models\AdWard;
 use vsoft\ad\models\AdBuildingProject;
 use vsoft\ad\models\AdDistrict;
 use frontend\components\SearchUrlManager;
+use \Yii;
 
 class MapSearch extends AdProduct {
 	
@@ -60,6 +61,15 @@ class MapSearch extends AdProduct {
 		'did' => 'did',
 		'p' => 'page'
 	];
+	
+	public static function mapSort() {
+		return [
+			'-score' => Yii::t('ad', 'Point'),
+			'-start_date' => Yii::t('ad', 'Newest'),
+			'-price' =>Yii::t('ad', 'Price (High to Low)'),
+			'price' =>Yii::t('ad', 'Price (Low to Hight)'),
+		];
+	}
 	
 	function rules() {
 		return array_merge(parent::rules(), [

@@ -3256,16 +3256,6 @@ html.mm-opening .mm-slideout {
     -moz-box-shadow: 0px 0px 10px #ABABAB;
     -ms-box-shadow: 0px 0px 10px #ABABAB;
 }
-.listing-item .item .id-duan {
-    float: none;
-    margin-bottom: 10px;
-}
-.box-feature-item .listing-item .item .id-duan {
-    float: right;
-}
-.box-feature-item .listing-item .item > a {
-    height: 370px;
-}
 .listing-item .item > a:hover {
     color: inherit;
     box-shadow: 0px 0px 10px #777777;
@@ -3916,9 +3906,6 @@ html.mm-opening .mm-slideout {
     white-space: inherit;
     line-height: 27px;
 }
-.detail-listing .sidebar-col .address-listing {
-    font-size: 15px;
-}
 .detail-listing .address-feat {
     /* margin-top: 5px; */
 }
@@ -4133,22 +4120,13 @@ html.mm-opening .mm-slideout {
     line-height: 32px;
 }
 .list-attr-td {
-    margin-bottom: 10px;
-     /*fix firefox*/
-}
-#listing-list .info-item .list-attr-td {
-    padding-top: 0;
-    float: left;
+    margin-bottom: 5px;
 }
 .price-item {
     text-transform: uppercase;
-    /* border: solid 1px #8e8e8e; */
-    float: left;
     font-size: 18px;
-    line-height: 100%;
-    margin-bottom: 7px;
     position: relative;
-    /* padding: 6px 10px; */
+    margin-bottom: 3px;
 }
 .price-item .txt-unit {
     font-size: 14px;
@@ -4163,11 +4141,13 @@ html.mm-opening .mm-slideout {
 #listing-list .info-item .price-item {
     border: none;
     font-size: 19px;
-    /* display: inline-block; */
-    /* vertical-align: middle; */
     margin-right: 10px;
-    /* float: none; */
     padding: 0 0 0 0;
+}
+#listing-list .info-item .list-attr-td,
+#listing-list .info-item .price-item {
+    margin-bottom: 8px;
+    float: left;
 }
 .right-attr-detail {
     /* overflow: hidden; */
@@ -4402,20 +4382,14 @@ html.mm-opening .mm-slideout {
 }
 .address-listing {
     font-size: 15px;
-    margin-bottom: 10px;
     font-weight: 600;
     color: #00a769;
-    line-height: 19px;
+    margin-bottom: 5px;
 }
 .address-listing p {
     text-overflow: ellipsis;
-    overflow: hidden;
     white-space: nowrap;
-    line-height: 23px;
-}
-#listing-list .address-listing {
-    margin-bottom: 10px;
-    /* text-shadow: 1px 1px 1px #00a769; */
+    overflow: hidden;
 }
 #listing-list .vip .address-listing {
     color: #006D45;
@@ -4430,8 +4404,12 @@ html.mm-opening .mm-slideout {
     font-weight: 400;
     font-size: 13px;
     float: right;
+    line-height: 25px;
+}
+.item-sidebar .id-duan {
+    float: none;
     line-height: 100%;
-    /* margin-top: 5px; */
+    margin-bottom: 10px;
 }
 .id-duan span {
     font-weight: 600;
@@ -6348,11 +6326,7 @@ padding: 5px 0;
 }
 .date-post {
     font-weight: 400;
-    /* margin-bottom: 5px; */
-    /* margin-top: 5px; */
     color: #999;
-    float: left;
-    width: 100%;
 }
 .wrap-news .date-post {
     margin-bottom: 10px;
@@ -7699,10 +7673,6 @@ padding: 5px 0;
         float: right;
         width: auto;
         margin: 5px 0 0 0;
-    }
-    .detail-listing .address-listing {
-        font-size: 15px;
-        line-height: 20px;
     }
     .detail-listing .infor-listing {
         margin-top: 0;
@@ -10341,6 +10311,7 @@ margin-right: 5px;
     .detail-listing .infor-listing .address-listing {
         font-size: 17px;
         line-height: 20px;
+        margin-bottom: 7px;
     }
     .panel-heading .panel-title a .icon-mv {
         margin-top: 0;
@@ -11862,9 +11833,6 @@ label:hover {
     .item-sidebar .listing-item > li {
         width: 50%;
     }
-    .item-sidebar .listing-item > li .pic-intro {
-        height: 250px;
-    }
 }
 @media (max-width: 768px) {
     .list-per-post .listing-item > li.col-lg-4,
@@ -11978,7 +11946,7 @@ label:hover {
 }
 @media (max-width: 985px) {
     .left-attr-detail .id-duan {
-        display: inline-block;
+        /* display: inline-block; */
     }
     .box-about .wrap-item {
         width: 100%;
@@ -13574,10 +13542,6 @@ ul.cardList li {
     .wrap-img-news {
         height: 180px;
     }
-    .box-feature-item .id-duan {
-        float: right;
-        margin-bottom: 0;
-    }
     .box-feature-item .list-attr-td li .icon-mv {
         font-size: 25px;
     }
@@ -13989,14 +13953,16 @@ ul.cardList li {
     .id-duan,
     .box-feature-item .id-duan {
         float: none;
-        margin-bottom: 12px;
+        margin-bottom: 5px;
     }
     .list-tienich li {
         margin-bottom: 0;
         height: 100px;
         width: 50%;
     }
+    .item-sidebar .listing-item .item .id-duan,
     .box-feature-item .listing-item .item .id-duan {
         float: none;
     }
+    
 }
