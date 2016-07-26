@@ -9,6 +9,7 @@
 namespace frontend\components;
 use frontend\models\Cache;
 use frontend\models\User;
+use frontend\models\UserActivity;
 use frontend\models\UserData;
 use lajax\translatemanager\helpers\Language;
 use Yii;
@@ -36,7 +37,7 @@ class Controller extends \yii\web\Controller
 
     public function beforeAction($action)
     {
-        if(!in_array($action->id, ['login', 'register', 'error', 'map-image']) && !Yii::$app->request->isAjax){
+        if(!in_array($action->id, ['login', 'register', 'error', 'map-image', 'logout']) && !Yii::$app->request->isAjax){
             Yii::$app->getUser()->setReturnUrl(Url::current());
         }
         if(in_array($action->id, ['login'])){
@@ -48,6 +49,22 @@ class Controller extends \yii\web\Controller
         }
         $this->view->params['balance'] = 0;
         if(!Yii::$app->user->isGuest){
+            if(Yii::$app->session->hasFlash('after_login')){
+                UserActivity::me()->saveActivity(UserActivity::ACTION_USER_LOGIN, [
+                    'owner' => Yii::$app->user->id,
+                    'time' => time(),
+                ], null);
+                if(($userData = UserData::findOne(['user_id'=>Yii::$app->user->id])) !== null){
+                    $alert = $userData->alert;
+                    if(!empty($alert[UserData::ALERT_OTHER])){
+                        Yii::$app->session->set("notifyOther",count($alert[UserData::ALERT_OTHER]));
+                    }
+                    if(!empty($alert[UserData::ALERT_CHAT])){
+                        Yii::$app->session->set("notifyChat",count($alert[UserData::ALERT_CHAT]));
+                    }
+                }
+            }
+
             $parseUrl = Yii::$app->urlManager->parseRequest(Yii::$app->request);
             $urlBase = !empty($parseUrl[0]) ? $parseUrl[0] : '';
             if(!empty($urlBase)){

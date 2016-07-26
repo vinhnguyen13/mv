@@ -16,6 +16,7 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
     const ACTION_AD_SEARCH     = 2;
     const ACTION_AD_CLICK      = 3;
     const ACTION_AD_CHAT       = 4;
+    const ACTION_USER_LOGIN    = 5;
 
     const READ_YES      = 1;
     const READ_NO       = 0;
@@ -25,36 +26,27 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
         return Yii::createObject(self::className());
     }
 
-    public function saveActivity($action, $params, $object_id){
+    public function saveActivity($action, $params, $object_id, $identity = null){
         $app = Yii::$app;
         if(!isset($app->params['activity']['enable']) || $app->params['activity']['enable'] == false){
             return false;
         }
-        if(!$app->user->isGuest){
-            $activity = $this;
-            if($action == self::ACTION_AD_FAVORITE){
-                if(($activityExist = self::findOne(['action'=>$action, 'owner_id'=>$app->user->id, 'object_id'=>$object_id])) !== null){
-                    $activity = $activityExist;
-                }
-            }elseif($action == self::ACTION_AD_CLICK){
-                if(($activityExist = self::findOne(['action'=>$action, 'owner_id'=>$app->user->id, 'object_id'=>$object_id])) !== null){
-                    $activity = $activityExist;
-                }
-            }
-
+        $_identity = !empty($identity) ? $identity : $app->user->identity;
+        if(!empty($_identity)){
+            $activity = $this->getActivity($action, $params, $object_id, $_identity);
             $activity->action = $action;
-            $activity->owner_id = $app->user->id;
-            $activity->owner_username = $app->user->identity->username;
-            $activity->message = $activity->getMessage();
+            $activity->owner_id = $_identity->id;
+            $activity->owner_username = $_identity->username;
+            $activity->message = $activity->getMessage($action);
             $activity->params = $params;
             $activity->ip = $app->getRequest()->getUserIP();
-            $activity->object_id = $object_id;
-            $object = $activity->findObject();
-            if(!empty($object['user'])) {
-                $activity->buddy_id = $object['user']->id;
-                $activity->buddy_username = $object['user']->username;
-            }else{
-                return false;
+            $object = $activity->findObject($action, $object_id);
+            if(!empty($object)) {
+                $activity->object_id = $object_id;
+                if (!empty($object['user'])) {
+                    $activity->buddy_id = $object['user']->id;
+                    $activity->buddy_username = $object['user']->username;
+                }
             }
             $activity->parent_id = 0;
             $activity->status = 1;
@@ -77,9 +69,39 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
         return false;
     }
 
-    public function getMessage(){
-        if(!empty($this->action)){
-            switch($this->action){
+    public function getActivity($action, $params, $object_id, $_identity){
+        $activity = $this;
+        if(!empty($action)){
+            switch($action){
+                case self::ACTION_AD_FAVORITE;
+                case self::ACTION_AD_CLICK;
+                case self::ACTION_AD_SEARCH;
+                    if(($activityExist = UserActivity::findOne(['action'=>$action, 'owner_id'=>$_identity->id, 'object_id'=>$object_id])) !== null){
+                        return $activityExist;
+                    }
+                    break;
+                case self::ACTION_AD_CHAT;
+                    if(($activityExist = UserActivity::findOne(['action'=>$action, 'owner_id'=>$_identity->id, 'object_id'=>$object_id])) !== null){
+                        return $activityExist;
+                    }
+                    break;
+                case self::ACTION_USER_LOGIN;
+                    $now = time();
+                    $from = strtotime(date('d-m-Y 00:00:00', $now));
+                    $to = strtotime(date('d-m-Y 23:59:59', $now));
+                    $activityExist = UserActivity::find()->where(['action'=>5, 'owner_id'=>8])->andFilterWhere(['between', 'created', $from, $to])->one();
+                    if(($activityExist) !== null){
+                        return $activityExist;
+                    }
+                    break;
+            }
+        }
+        return $activity;
+    }
+
+    public function getMessage($action){
+        if(!empty($action)){
+            switch($action){
                 case self::ACTION_AD_FAVORITE;
                     Yii::t('activity', '{owner} favorite {product}');
                     return "{owner} favorite {product}";
@@ -88,19 +110,36 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
                     Yii::t('activity', '{owner} view {product}');
                     return "{owner} view {product}";
                     break;
+                case self::ACTION_AD_SEARCH;
+                    Yii::t('activity', '{owner} find {product}');
+                    return "{owner} find {product}";
+                    break;
+                case self::ACTION_AD_CHAT;
+                    Yii::t('activity', '{owner} chat with {buddy}');
+                    return "{owner} chat with {buddy}";
+                    break;
+                case self::ACTION_USER_LOGIN;
+                    Yii::t('activity', '{owner} login at {time}');
+                    return "{owner} login at {time}";
+                    break;
             }
         }
     }
 
-    public function findObject(){
-        if(!empty($this->action)){
-            switch($this->action){
+    public function findObject($action, $object_id){
+        if(!empty($action)){
+            switch($action){
                 case self::ACTION_AD_FAVORITE;
                 case self::ACTION_AD_CLICK;
-                    if(($product = AdProduct::findOne(['id'=>$this->object_id])) !== null && !empty($product->user_id)){
+                case self::ACTION_AD_SEARCH;
+                    if(($product = AdProduct::findOne(['id'=>$object_id])) !== null && !empty($product->user_id)){
                         $object['user'] = User::findOne($product->user_id);
                         return $object;
                     }
+                    break;
+                case self::ACTION_AD_CHAT;
+                    break;
+                case self::ACTION_USER_LOGIN;
                     break;
             }
         }

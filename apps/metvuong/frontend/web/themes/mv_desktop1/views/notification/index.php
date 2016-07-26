@@ -16,6 +16,7 @@ $owner = $current_user = Yii::$app->user->identity;
 		$query = \frontend\models\UserActivity::find();
 //		$query->andWhere(['params.owner'=>[1]]);
 //		$query->andWhere(['NOT IN', 'objects', [5070]]);
+		$query->andWhere(['IN', 'action', [UserActivity::ACTION_AD_CHAT, UserActivity::ACTION_AD_CLICK, UserActivity::ACTION_AD_FAVORITE, UserActivity::ACTION_AD_SEARCH]]);
 		$query->andWhere(['buddy_id' => Yii::$app->user->id]);
 		$query->orderBy('updated DESC');
 		$query->limit(100);

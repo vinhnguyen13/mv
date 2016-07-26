@@ -8,6 +8,7 @@
 
 namespace frontend\components;
 use frontend\models\User;
+use frontend\models\UserActivity;
 use frontend\models\UserData;
 use Yii;
 use yii\helpers\Json;
@@ -26,15 +27,7 @@ class Login extends Component
          */
         if(($user = User::findOne($event->identity->id)) !== null){
             $user->updateAttributes(['updated_at' => time()]);
-        }
-        if(($userData = UserData::findOne(['user_id'=>$event->identity->id])) !== null){
-            $alert = $userData->alert;
-            if(!empty($alert[UserData::ALERT_OTHER])){
-                Yii::$app->session->set("notifyOther",count($alert[UserData::ALERT_OTHER]));
-            }
-            if(!empty($alert[UserData::ALERT_CHAT])){
-                Yii::$app->session->set("notifyChat",count($alert[UserData::ALERT_CHAT]));
-            }
+            \Yii::$app->getSession()->setFlash('after_login', true);
         }
         return $event;
     }

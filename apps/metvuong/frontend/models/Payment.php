@@ -75,10 +75,10 @@ class Payment extends Component
         return false;
     }
 
-    public function updateBalance($user_id, $amount, $plus = '+'){
+    public function updateBalance($user_id, $amount, $operator = '+'){
         $balance = $this->getBalance($user_id);
         if(!empty($balance)){
-            Yii::$app->db->createCommand("UPDATE `ec_balance` SET `amount` = `amount` $plus $amount, `updated_at` = ".time()." WHERE `user_id` = $user_id")->execute();
+            Yii::$app->db->createCommand("UPDATE `ec_balance` SET `amount` = `amount` $operator $amount, `updated_at` = ".time()." WHERE `user_id` = $user_id")->execute();
         }else{
             Yii::$app->db->createCommand()
                 ->insert('ec_balance', [
