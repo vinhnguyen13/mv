@@ -407,7 +407,7 @@ class SiteController extends Controller
 			if(!empty($where)){
 				$sql .= " WHERE ".implode(' AND ', $where);
 			}
-			$result = Yii::$app->db->createCommand($sql)->queryOne();
+			$result = Yii::$app->dbCraw->createCommand($sql)->queryOne();
 			return $result;
 		}
 	}
