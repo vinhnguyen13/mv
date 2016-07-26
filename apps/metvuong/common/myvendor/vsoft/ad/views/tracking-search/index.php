@@ -11,6 +11,7 @@ use vsoft\ad\models\AdCategoryGroup;
 use vsoft\express\components\StringHelper;
 use frontend\models\MapSearch;
 use yii\helpers\Url;
+use vsoft\ad\models\AdProduct;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CmsShowSearch */
@@ -31,6 +32,7 @@ foreach ($categoryGroup as $categoryG) {
 }
 
 $mapSort = MapSearch::mapSort();
+$type = AdProduct::getAdTypes();
 ?>
 <div class="cms-show-index">
 	<div style="text-align: center; width: 100%; position: absolute; top: -20px;"><a style="font-size: 20px; display: inline-block; margin-top: 22px;" href="<?= Url::to(['/ad/tracking-search']) ?>">Reset Filter</a></div>
@@ -49,6 +51,13 @@ $mapSort = MapSearch::mapSort();
         		},
         		'filter' => Html::activeTextInput($searchModel, 'finder_search', ['class' => 'form-control min price'])
 			],
+        	[
+        		'attribute' => 'type',
+        		'value' => function($model) use ($type) {
+        			return $type[$model->type];
+    			},
+    			'filter' => Html::activeDropDownList($searchModel, 'type', $type, ['class' => 'form-control', 'prompt' => 'Hình thức'])
+        	],
         	'location',
         	 [
 				'attribute' => 'category',
