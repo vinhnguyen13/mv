@@ -4,6 +4,7 @@ namespace frontend\components;
 use yii\web\UrlManager;
 use frontend\models\MapSearch;
 use vsoft\ad\models\AdCategoryGroup;
+use yii\helpers\Url;
 
 class SearchUrlManager extends UrlManager {
 	public $enablePrettyUrl = true;
@@ -11,25 +12,23 @@ class SearchUrlManager extends UrlManager {
 	public $enableStrictParsing = false;
 	
 	public function createUrl($params) {
+		$query = $_SERVER['QUERY_STRING'];
 		$action = ($params[0] == '/ad/index1') ? \Yii::t('url', 'nha-dat-ban') : \Yii::t('url', 'nha-dat-cho-thue');
-			
-		$segments = empty($params['params']) ? ['_'] : explode("/", $params['params']);
-		if(strpos($segments[0], '_') === FALSE) {
-			$action .= '/' . $segments[0];
+		$segmentParams = empty($params['params']) ? MapSearch::$defaultSlug : $params['params'];
+		$fieldsMapping = MapSearch::fieldsMapping();
+		$pageParam = array_search('page', $fieldsMapping);
+		$pattern = '/' . $pageParam . '_[0-9]+$/';
+		
+		if(preg_match($pattern, $segmentParams)) {
+			$segmentParams = preg_replace('/' . $pageParam . '_[0-9]+$/', $pageParam . '_' . $params['page'], $segmentParams);
+		} else {
+			$segmentParams .= '/' . $pageParam . '_' . $params['page'];
 		}
 		
-		$covnertParams = [];
-		
-		foreach ($params as $k => $param) {
-			if($k && ($ck = array_search($k, MapSearch::$fieldsMapping)) !== FALSE) {
-				if($ck == 'cat') {
-					$covnertParams[] = array_search($param, AdCategoryGroup::slugMap());
-				} else {
-					$covnertParams[] = $ck . '_' . $param;
-				}
-			}
+		if($query) {
+			$segmentParams .= '?' . $query;
 		}
 		
-		return '/' . $action . '/' . implode('/', $covnertParams);
+		return '/' . $action . '/' . $segmentParams;
 	}
 }

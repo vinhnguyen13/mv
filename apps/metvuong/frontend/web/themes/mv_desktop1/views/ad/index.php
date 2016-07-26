@@ -27,9 +27,10 @@ use vsoft\ad\models\TrackingSearch;
 	*/
 	
 	$loadProjectUrl = Url::to(['/ad/get-project']);
-	$fieldsMapping = json_encode(array_flip(MapSearch::$fieldsMapping));
+	$fieldsMapping = json_encode(array_flip(MapSearch::fieldsMapping()));
 	$slugCatsMap = json_encode(array_flip(AdCategoryGroup::slugMap()));
 	$detr = TrackingSearch::DELAY_TRACKING * 1000;
+	$sortMapping = json_encode(array_flip(MapSearch::sortSlugMapping()));
 	
 	$script = <<<EOD
 	var resources = ['$resourceHistoryJs', '$resourceListingMap', '$resourceApi'];
@@ -37,6 +38,7 @@ use vsoft\ad\models\TrackingSearch;
 	var loadProjectUrl = '$loadProjectUrl';
 	var fieldsMapping = $fieldsMapping;
 	var catsSlug = $slugCatsMap;
+	var sortMapping = $sortMapping;
 	var detr = $detr;
 EOD;
 	

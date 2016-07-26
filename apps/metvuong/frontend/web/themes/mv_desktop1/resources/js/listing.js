@@ -70,23 +70,54 @@ $(document).ready(function() {
 		        return !this.value;
 		    }).prop('disabled', true);
 			
-			var serialize = decodeURIComponent(form.el.serialize());
+			window.location = form.mappingUrl(form.el.serialize());
+		},
+		mappingUrl: function(serialize) {
+			var serialize = decodeURIComponent(serialize);
 			var paramValues = serialize.split('&');
 			var convertPV = [];
 			
-			for(var i in paramValues) {
-				paramValue = paramValues[i].split('=');
+			var paramValuesFiltered = [];
+			var hasMin = false;
+			
+			for(var i = 0; i < paramValues.length; i++) {
+				var paramValue = paramValues[i].split('=');
+				var param = paramValue[0];
+				var value = paramValue[1];
 				
-				if(fieldsMapping[paramValue[0]]) {
-					if(paramValue[0] == 'category_id') {
-						convertPV.push(catsSlug[paramValue[1]]);
+				var min = '_min';
+				var max = '_max';
+				
+				if(param.lastIndexOf(min) == param.length - min.length) {
+					paramValuesFiltered.push(param.replace(min, '') + '=' + value);
+				} else if(param.lastIndexOf(max) == param.length - max.length) {
+					var lastIndex = paramValuesFiltered.length - 1;
+					var lastParamValue = paramValuesFiltered[lastIndex].split('=');
+					var fakeParam = param.replace(max, '');
+					if(lastParamValue[0] == fakeParam) {
+						paramValuesFiltered[lastIndex] = paramValuesFiltered[lastIndex] + '-' + value;
 					} else {
-						convertPV.push(fieldsMapping[paramValue[0]] + '_' + paramValue[1]);
+						paramValuesFiltered.push(fakeParam + '=-' + value);
+					}
+				} else {
+					paramValuesFiltered.push(paramValues[i]);
+				}
+			}
+
+			for(var i = 0; i < paramValuesFiltered.length; i++) {
+				paramValue = paramValuesFiltered[i].split('=');
+			
+				if(paramValue[0] == 'category_id') {
+					convertPV.push(catsSlug[paramValue[1]]);
+				} else {
+					if(fieldsMapping[paramValue[0]]) {
+						var value = (paramValue[0] == 'order_by') ? sortMapping[paramValue[1]] : paramValue[1];
+						convertPV.push(fieldsMapping[paramValue[0]] + '_' + value);
 					}
 				}
 			}
-			
-			window.location = actionId + '/' + convertPV.join('/');
+
+			return actionId + '/' + convertPV.join('/');
 		},
 		sortSubmit: function() {
 			form.el.submit();
