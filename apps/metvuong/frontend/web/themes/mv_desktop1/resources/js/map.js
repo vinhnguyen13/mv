@@ -1450,9 +1450,7 @@ form.formChange = function(e) {
 	
 	form.af.filter(s.rl).val(1);
 	
-	if(t.attr('id') != 'order_by') {
-		tracking();
-	}
+	tracking();
 	
 	if(t.hasClass('search-item')) {
 
