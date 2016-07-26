@@ -11,6 +11,8 @@ use vsoft\ad\models\AdBuildingProject;
 use vsoft\ad\models\AdDistrict;
 use frontend\components\SearchUrlManager;
 use \Yii;
+use common\models\SlugSearch;
+use vsoft\ad\models\AdCategoryGroup;
 
 class MapSearch extends AdProduct {
 	
@@ -42,25 +44,90 @@ class MapSearch extends AdProduct {
 	public $districts;
 	
 	public static $defaultSlug = 'ho-chi-minh-quan-1';
-	public static $fieldsMapping = [
-		'cat' => 'category_id',
-		'bed' => 'room_no',
-		'bath' => 'toilet_no',
-		'pmin' => 'price_min',
-		'pmax' => 'price_max',
-		'smin' => 'size_min',
-		'smax' => 'size_max',
-		'sort' => 'order_by',
-		'rect' => 'rect',
-		'rm' => 'rm',
-		'ra' => 'ra',
-		'rl' => 'rl',
-		'iz' => 'iz',
-		'z' => 'z',
-		'c' => 'c',
-		'did' => 'did',
-		'p' => 'page'
-	];
+	
+	public static function fieldsMapping() {
+		return [
+			\Yii::t('ad', 'phong-ngu') => 'room_no',
+			\Yii::t('ad', 'phong-tam') => 'toilet_no',
+			\Yii::t('ad', 'gia') => 'price',
+			\Yii::t('ad', 'dien-tich') => 'size',
+			\Yii::t('ad', 'sap-xep') => 'order_by',
+			'rect' => 'rect',
+			'rm' => 'rm',
+			'ra' => 'ra',
+			'rl' => 'rl',
+			'iz' => 'iz',
+			'z' => 'z',
+			'c' => 'c',
+			'did' => 'did',
+			\Yii::t('ad', 'trang') => 'page'
+		];
+	}
+	
+	public static function sortSlugMapping() {
+		return [
+			\Yii::t('ad', 'diem') => '-score',
+			\Yii::t('ad', 'moi-nhat') => '-start_date',
+			\Yii::t('ad', 'gia-thap-dan') => '-price',
+			\Yii::t('ad', 'gia-cao-dan') => 'price'
+		];
+	}
+	
+	public static function parseParams($params) {
+		if($slugSearch = SlugSearch::findOne(['slug' => array_shift($params)])) {
+			$get = [];
+			
+			$keyId = ($slugSearch->table == 'ad_building_project') ? 'project_building_id' : str_replace("ad_", "", $slugSearch->table) . "_id";
+			$get[$keyId] = $slugSearch->value;
+			
+			if($params) {
+				if(strpos($params[0], '_') === FALSE) {
+					$catGroupSlugs = AdCategoryGroup::slugMap();
+					$catSlug = array_shift($params);
+					
+					if(isset($catGroupSlugs[$catSlug])) {
+						$get['category_id'] = $catGroupSlugs[$catSlug];
+					}
+				}
+				
+				$fieldsMapping = self::fieldsMapping();
+				
+				foreach ($params as $param) {
+					$pos = strpos($param, '_');
+					$fakeKey = substr($param, 0, $pos);
+					
+					if(isset($fieldsMapping[$fakeKey])) {
+						$realKey = $fieldsMapping[$fakeKey];
+						$value = substr($param, $pos + 1);
+						
+						if(strpos($value, '-') !== FALSE && ctype_digit(str_replace('-', '', $value))) {
+							$range = explode('-', $value);
+					
+							if(!empty($range[0])) {
+								$get[$realKey . '_min'] = $range[0];
+							}
+							
+							if(!empty($range[1])) {
+								$get[$realKey . '_max'] = $range[1];
+							}
+						} else {
+							$get[$realKey] = $value;
+						}
+					}
+				}
+				
+				if(isset($get['order_by'])) {
+					$sortSlugMapping = self::sortSlugMapping();
+					
+					$get['order_by'] = $sortSlugMapping[$get['order_by']];
+				}
+			}
+			
+			return $get;
+		} else {
+			return false;
+		}
+	}
 	
 	public static function mapSort() {
 		return [

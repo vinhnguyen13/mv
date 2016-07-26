@@ -434,24 +434,7 @@ var m2Map = {
 			serialize = form.serialize();
 		}
 
-		serialize = decodeURIComponent(serialize);
-		
-		var paramValues = serialize.split('&');
-		var convertPV = [];
-		
-		for(var i in paramValues) {
-			paramValue = paramValues[i].split('=');
-			
-			if(fieldsMapping[paramValue[0]]) {
-				if(paramValue[0] == 'category_id') {
-					convertPV.push(catsSlug[paramValue[1]]);
-				} else {
-					convertPV.push(fieldsMapping[paramValue[0]] + '_' + paramValue[1]);
-				}
-			}
-		}
-
-		History.pushState({}, document.title, actionId + '/' + convertPV.join('/'));
+		History.pushState({}, document.title, form.mappingUrl(serialize));
 	},
 	initMapRe: function(initZoom, initCenter) {
 		m2Map.mapOptions.center = m2Map.urlValueToLatLng(initCenter);

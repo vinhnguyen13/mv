@@ -315,71 +315,44 @@ class AdController extends Controller
     	}
     	
     	$params = array_filter(explode('/', $params));
+	
+    	$get = MapSearch::parseParams($params);
     	
-    	$slug = array_shift($params);
-    	$slugSearch = SlugSearch::findOne(['slug' => $slug]);
-    	
-    	if(!$slugSearch) {
+    	if(!$get) {
     		throw new \yii\web\NotFoundHttpException();
     	}
     	
-    	$keyId = str_replace("ad_", "", $slugSearch->table) . "_id";
-    	if(!isset($_GET[$keyId])) {
-    		$_GET[$keyId] = $slugSearch->value;
-    	}
-    	
-    	if($params && strpos($params[0], '_') === FALSE) {
-    		$catSlug = array_shift($params);
-    		$catsSlug = AdCategoryGroup::slugMap();
-    		if(isset($catsSlug[$catSlug])) {
-    			$_GET['category_id'] = $catsSlug[$catSlug];
-    		}
-    	}
-    	
-    	$fieldsMapping = MapSearch::$fieldsMapping;
-    	
-    	foreach ($params as $param) {
-    		$pos = strpos($param, '_');
-    		$fmKey = substr($param, 0, $pos);
-    		if(isset($fieldsMapping[$fmKey]) && !isset($_GET[$fieldsMapping[$fmKey]])) {
-    			$_GET[$fieldsMapping[$fmKey]] = substr($param, $pos + 1);
-    		}
-    	}
-    	
-    	if(isset($_GET['building_project_id'])) {
-    		$_GET['project_building_id'] = $_GET['building_project_id'];
-    		unset($_GET['building_project_id']);
-    	}
-    	
+    	$_GET = array_merge($get, $_GET);
+    	 
     	$mapSearch = new MapSearch();
     	$mapSearch->load(Yii::$app->request->get());
-    	
+    	 
     	$mapSearch->type = $type;
     	$mapSearch->rl = 1;
-    	
+    	 
     	if(!$mapSearch->rm) {
     		$mapSearch->rect = null;
     	}
-    	
+    	 
     	$backupRm = $mapSearch->rm;
     	$mapSearch->rm = null;
-    	
+    	 
     	$this->view->params['body'] = [
-			'class' => 'ad-listing'
-		];
-    		 
-		if($type = Yii::$app->request->get('type')) {
-			$this->view->params['menuBuy'] = ($type==1) ? true : false;
-			$this->view->params['menuRent'] = ($type==2) ? true : false;
-		}
-    		 
-		$result = $mapSearch->search();
+    			'class' => 'ad-listing'
+    	];
+    	 
+    	if($type = Yii::$app->request->get('type')) {
+    		$this->view->params['menuBuy'] = ($type==1) ? true : false;
+    		$this->view->params['menuRent'] = ($type==2) ? true : false;
+    	}
+    	 
+    	$result = $mapSearch->search();
+    	 
+    	$mapSearch->rm = $backupRm;
     	
-		$mapSearch->rm = $backupRm;
-		
-		$mapSearch->fetchValues();
-    		 
-		return $this->render('index', ['searchModel' => $mapSearch, 'list' => $result['aggregations']['rl']['hits'], 'slug' => $slug]);
+    	$mapSearch->fetchValues();
+    	 
+    	return $this->render('index', ['searchModel' => $mapSearch, 'list' => $result['aggregations']['rl']['hits'], 'slug' => $params[0]]);
     }
     
     public function actionTracking() {
