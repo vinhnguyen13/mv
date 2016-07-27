@@ -9,8 +9,14 @@ use yii\bootstrap\NavBar;
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
+use yii\helpers\Url;
+use yii\web\View;
+use frontend\models\M2Event;
+use frontend\models\RegistrationForm;
 
 AppAsset::register($this);
+
+$this->registerCss("#popup-campain .error {display: none;} #popup-campain .has-error .error {display: block;}")
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -31,6 +37,7 @@ AppAsset::register($this);
 
     <div id="alert-noti"></div>
 
+    <?php if(Yii::$app->user->isGuest && empty($_COOKIE['rit']) ): ?>
     <div id="popup-campain" class="modal popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -38,22 +45,36 @@ AppAsset::register($this);
                     <div class="wrap-popup">
                         <div class="title-popup">
                             Thông báo
-                            <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
                         </div>
                         <div class="inner-popup">
-                            <p class="mgB-15">Cập nhật thông tin của bạn, để nhận ngay <span class="font-600 text-decor">35 Keys</span> cho việc đăng tin <span class="font-600">VIP</span>.</p>
-                            <p class="mgB-5 font-600">Email</p>
-                            <input type="text" class="form-control" placeholder="abc@gmail.com">
-                            <p class="mgB-5 font-600 mgT-15">Mật khẩu</p>
-                            <input type="password" class="form-control" placeholder="******">
-                            <p class="mgB-5 font-600 mgT-15">Nhập lại mật khẩu</p>
-                            <input type="password" class="form-control" placeholder="******">
-                            <p class="mgB-5 font-600 mgT-15">Số điện thoại</p>
-                            <input type="text" class="form-control" placeholder="012345678">
-                            <div class="text-center mgT-15">
-                                <button class="btn-common btn-bd-radius btn-cancel" data-dismiss="modal" aria-label="Close">Bỏ Qua</button>
-                                <button class="btn-common btn-bd-radius">Nhận Keys</button>
-                            </div>
+                        	<?php $model = Yii::createObject(RegistrationForm::className()); ?>
+                        	<form id="register-in-time" action="<?= Url::to(['/event/register-in-time']) ?>" method="post">
+	                            <p class="mgB-15"><?= sprintf(Yii::t('event', 'Đăng ký ngay bây giờ để nhận %s dùng cho việc đăng tin và boost tin lên top.'), '<span class="font-600 text-decor">' . M2Event::REGISTER_COUPON . ' Keys</span>') ?></p>
+	                            <div class="field-wrap">
+	                            	<p class="mgB-5 font-600"><?= $model->getAttributeLabel('email') ?></p>
+	                            	<?= Html::activeTextInput($model, 'email', ['class' => 'form-control', 'placeholder' => Yii::t('user', 'Email')]) ?>
+	                            	<div class="error"></div>
+	                            </div>
+	                            <div class="field-wrap">
+	                            	<p class="mgB-5 font-600 mgT-15"><?= $model->getAttributeLabel('password') ?></p>
+	                            	<?= Html::activePasswordInput($model, 'password', ['class' => 'form-control', 'placeholder' => Yii::t('user', 'Password')]) ?>
+	                            	<div class="error"></div>
+	                            </div>
+	                            <div class="field-wrap">
+	                            	<p class="mgB-5 font-600 mgT-15"><?= Yii::t('user', 'Nhập lại mật khẩu') ?></p>
+	                            	<input id="register-form-password-confirm" name="passwordConfirm" type="password" class="form-control" placeholder="<?= Yii::t('user', 'Nhập lại mật khẩu') ?>">
+	                            	<div class="error"></div>
+	                            </div>
+	                            <div class="field-wrap">
+	                            	<p class="mgB-5 font-600 mgT-15"><?= Yii::t('ad', 'Mobile') ?></p>
+	                           		<input id="register-form-mobile" name="mobile" type="text" class="form-control" placeholder="<?= Yii::t('ad', 'Mobile') ?>" maxlength="11">
+	                            	<div class="error"></div>
+	                            </div>
+	                            <div class="text-center mgT-15">
+	                                <button type="button" class="btn-common btn-bd-radius btn-cancel" aria-label="Close">Bỏ Qua</button>
+	                                <button type="submit" class="btn-common btn-bd-radius">Nhận Keys</button>
+	                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -61,16 +82,92 @@ AppAsset::register($this);
         </div>
     </div>
     <script>
-        $(window).on('load', function () {
-            setTimeout(function () {
-                $('#popup-campain').modal({backdrop: 'static', keyboard: false});
-                $('#popup-campain').on('hidden.bs.modal', function (e) {
-                    // do something...
-                    console.log(1);
-                })
-            },900);
+    	$(document).ready(function(){
+    		var popupCampain = $('#popup-campain');
+            
+            popupCampain.modal({backdrop: 'static', keyboard: false});
+            popupCampain.find('.btn-cancel').click(function(){
+            	popupCampain.modal('hide');
+            	setServerCookie('rit', 1);
+            });
+            $('#register-in-time').submit(function(e){
+                e.preventDefault();
+                var self = $(this);
+
+				var emailEl = $('#register-form-email');
+				var passwordEl = $('#register-form-password');
+				var confirmPasswordEl = $('#register-form-password-confirm');
+				var mobileEl = $('#register-form-mobile');
+
+				if(!emailEl.val()) {
+					showError(emailEl, lajax.t('Vui lòng nhập địa chỉ email'));
+				} else if(!validateEmail(emailEl.val())) {
+					showError(emailEl, lajax.t('Địa chỉ email không hợp lệ'));
+                } else {
+                	emailEl.closest('.field-wrap').removeClass('has-error');
+                }
+
+				if(!passwordEl.val()) {
+					showError(passwordEl, lajax.t('Vui lòng nhập mật khẩu'));
+				} else if(passwordEl.val().length < 6) {
+					showError(passwordEl, lajax.t('Mật khẩu phải chứa ít nhất 6 ký tự'));
+				} else {
+					passwordEl.closest('.field-wrap').removeClass('has-error');
+				}
+				if(confirmPasswordEl.val() != passwordEl.val()) {
+					showError(confirmPasswordEl, '<?= \Yii::t('user', 'Mật khẩu nhập lại không khớp với mật khẩu ở trên') ?>');
+				} else {
+					confirmPasswordEl.closest('.field-wrap').removeClass('has-error');
+				}
+
+				if(mobileEl.val()) {
+					if(!isDigit(mobileEl.val())) {
+						showError(mobileEl, '<?= \Yii::t('user', 'Số di động không hợp lệ') ?>');
+					} else if(mobileEl.val().length < 7 || mobileEl.val().length > 11) {
+						showError(mobileEl, '<?= \Yii::t('user', 'Số di động phải từ 7 đến 11 số') ?>');
+					} else {
+						mobileEl.closest('.field-wrap').removeClass('has-error');
+					}
+				}
+
+                if(popupCampain.find('.has-error').length == 0) {
+                	var body = $('body').loading();
+                	
+                	$.ajax({
+    					url: self.attr('action'),
+    					data: self.serialize(),
+    					method: 'POST',
+    					success: function(r) {
+    						body.loading({done: true});
+    						if(r.statusCode == 200) {
+    							setServerCookie('rit', 2);
+    							location.reload();
+    						} else {
+        						for(var i in r.parameters) {
+        							showError($('#register-form-' + i), r.parameters[i][0]);
+            					}
+    						}
+    					}
+                    });
+                }
+            });
+
+            function validateEmail(email) { 
+    			var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    			return re.test(email);
+    		};
+
+    		function isDigit(digit) {
+    			return /^\d+$/.test(digit);
+    		};
+
+    		function showError(el, message) {
+    			var fieldWrap = el.closest('.field-wrap').addClass('has-error');
+        		fieldWrap.find('.error').text(message);
+        	}
         });
     </script>
+    <?php endif; ?>
 </body>
 </html>
 <?php $this->endPage() ?>
