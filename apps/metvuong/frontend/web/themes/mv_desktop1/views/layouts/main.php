@@ -46,10 +46,13 @@ AppAsset::register($this);
                             <input type="text" class="form-control" placeholder="abc@gmail.com">
                             <p class="mgB-5 font-600 mgT-15">Mật khẩu</p>
                             <input type="password" class="form-control" placeholder="******">
+                            <p class="mgB-5 font-600 mgT-15">Nhập lại mật khẩu</p>
+                            <input type="password" class="form-control" placeholder="******">
                             <p class="mgB-5 font-600 mgT-15">Số điện thoại</p>
                             <input type="text" class="form-control" placeholder="012345678">
                             <div class="text-center mgT-15">
-                                <button class="btn-common btn-bd-radius text-uper">Nhận Keys</button>
+                                <button class="btn-common btn-bd-radius btn-cancel" data-dismiss="modal" aria-label="Close">Bỏ Qua</button>
+                                <button class="btn-common btn-bd-radius">Nhận Keys</button>
                             </div>
                         </div>
                     </div>
@@ -60,11 +63,11 @@ AppAsset::register($this);
     <script>
         $(window).on('load', function () {
             setTimeout(function () {
-                $('#popup-campain').modal('show');
+                /*$('#popup-campain').modal({backdrop: 'static', keyboard: false});
                 $('#popup-campain').on('hidden.bs.modal', function (e) {
                     // do something...
                     console.log(1);
-                })
+                })*/
             },900);
         });
     </script>

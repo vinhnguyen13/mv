@@ -12117,8 +12117,9 @@ label:hover {
 .bottom-popup .btn-cancel {
     background: #B3B3B3;
 }
-.bottom-popup .btn-cancel:hover {
+.btn-cancel:hover {
     background: #A2A2A2;
+    border: 1px solid #ccc;
 }
 #upgrade-time .inner-popup .icon-info-circle {
     color: #A2A2A2;
