@@ -261,7 +261,7 @@ class TestController extends \yii\web\Controller
 
     public function actionAvg()
     {
-        $arr = [1,3,10,17,21,32,52,83,64,46,97,31];
+        $arr = [1,3,10,17,21,32,52,83,64,46,97,31, 89];
         sort($arr);
         $n = count($arr);
         $average_of_foo = array_sum($arr) / $n;
@@ -278,22 +278,31 @@ class TestController extends \yii\web\Controller
             $Q1 = $arr[$idx_Q1];
         }else{
             $_index = intval($idx_Q1) - 1;
-            $Q1 = $arr[$_index] + (3*($arr[$_index+1] - $arr[($_index)]))/4;
+            $_percent = $idx_Q1 - intval($idx_Q1);
+            $Q1 = $arr[$_index] + (($arr[$_index+1] - $arr[$_index]) * $_percent);
         }
         $idx_Q3 = (3*($n+1))/4;
         if(!is_float($idx_Q3)){
             $Q3 = $arr[$idx_Q3];
         }else{
             $_index = intval($idx_Q3) - 1;
-            $Q3 = $arr[$_index] + (1*($arr[$_index+1] - $arr[($_index)]))/4;
+            $_percent = $idx_Q3 - intval($idx_Q3);
+            $Q3 = $arr[$_index] + (($arr[$_index+1] - $arr[$_index]) * $_percent);
         }
         $INTERQUARTILE_RANGE = $Q3-$Q1;
+
         echo "<pre>";
-        print_r($arr);
         print_r(PHP_EOL);
         print_r("List: ".implode(',', $arr));
         print_r(PHP_EOL);
+        print_r(PHP_EOL);
         print_r("n: ".$n);
+        print_r(PHP_EOL);
+        print_r("(n+1)/2: ".($n+1)/2);
+        print_r(PHP_EOL);
+        print_r("(n+1)/4: ".($n+1)/4);
+        print_r(PHP_EOL);
+        print_r("3*(n+1)/2: ".(3*($n+1))/4);
         print_r(PHP_EOL);
         print_r(PHP_EOL);
         print_r("1. Avg: $average_of_foo");
