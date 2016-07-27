@@ -258,4 +258,58 @@ class TestController extends \yii\web\Controller
         echo "</pre>";
         exit;
     }
+
+    public function actionAvg()
+    {
+        $arr = [1,3,10,17,21,32,52,83,64,46,97,31];
+        sort($arr);
+        $n = count($arr);
+        $average_of_foo = array_sum($arr) / $n;
+
+        $idx_M = ($n+1)/2;
+        if(!is_float($idx_M)){
+            $M = $arr[$idx_M];
+        }else{
+            $_index = intval($idx_M);
+            $M = ($arr[$_index] + $arr[($_index+1)])/2;
+        }
+        $idx_Q1 = ($n+1)/4;
+        if(!is_float($idx_Q1)){
+            $Q1 = $arr[$idx_Q1];
+        }else{
+            $_index = intval($idx_Q1) - 1;
+            $Q1 = $arr[$_index] + (3*($arr[$_index+1] - $arr[($_index)]))/4;
+        }
+        $idx_Q3 = (3*($n+1))/4;
+        if(!is_float($idx_Q3)){
+            $Q3 = $arr[$idx_Q3];
+        }else{
+            $_index = intval($idx_Q3) - 1;
+            $Q3 = $arr[$_index] + (1*($arr[$_index+1] - $arr[($_index)]))/4;
+        }
+        $INTERQUARTILE_RANGE = $Q3-$Q1;
+        echo "<pre>";
+        print_r($arr);
+        print_r(PHP_EOL);
+        print_r("List: ".implode(',', $arr));
+        print_r(PHP_EOL);
+        print_r("n: ".$n);
+        print_r(PHP_EOL);
+        print_r(PHP_EOL);
+        print_r("1. Avg: $average_of_foo");
+        print_r(PHP_EOL);
+        print_r("2. Boxplot");
+        print_r(PHP_EOL);
+        print_r("2.b Median M=x((n+1)/2): $M");
+        print_r(PHP_EOL);
+        print_r("2.d FIRST QUARTILE & THIRD QUARTILE");
+        print_r(PHP_EOL);
+        print_r("Index Q1: $idx_Q1".", Q1: $Q1");
+        print_r(PHP_EOL);
+        print_r("Index Q1: $idx_Q3".", Q3: $Q3");
+        print_r(PHP_EOL);
+        print_r("Q3 - Q1 = $INTERQUARTILE_RANGE");
+        echo "</pre>";
+        exit;
+    }
 }
