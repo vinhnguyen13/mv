@@ -63,11 +63,11 @@ AppAsset::register($this);
     <script>
         $(window).on('load', function () {
             setTimeout(function () {
-                /*$('#popup-campain').modal({backdrop: 'static', keyboard: false});
+                $('#popup-campain').modal({backdrop: 'static', keyboard: false});
                 $('#popup-campain').on('hidden.bs.modal', function (e) {
                     // do something...
                     console.log(1);
-                })*/
+                })
             },900);
         });
     </script>
