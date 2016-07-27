@@ -2455,8 +2455,7 @@ margin-bottom: 0;
 .list-noti .avatar a,
 .chat-list .wrap-img,
 .chat-live .wrap-img,
-.avatar-user-pr .avatar,
-.user-edit .wrap-img {
+.avatar-user-pr .avatar {
     position: static;
     background: none;
     color: inherit;
@@ -2469,6 +2468,9 @@ margin-bottom: 0;
     border: 1px solid #BFBFBF;
     width: 35px;
     height: auto;
+}
+.user-edit .wrap-img {
+    border-radius: 3px;
 }
 #avatar-user div {
     width: auto;
@@ -4959,6 +4961,10 @@ html.mm-opening .mm-slideout {
     display: block;
     margin-bottom: 5px;
 }
+.wrap-news .list-news li div > a.pic-intro {
+    border-radius: 3px;
+    overflow: hidden;
+}
 .wrap-news .list-news li a:hover {
     color: #00a769;
 }
@@ -5465,6 +5471,8 @@ html.mm-opening .mm-slideout {
 }
 .infor-user-settings .avatar {
     width: 120px;
+    overflow: hidden;
+    border-radius: 3px;
 }
 .infor-user-settings .avatar .btn-common {
     display: block;
@@ -6867,7 +6875,10 @@ padding: 5px 0;
         font-size: 18px;
     }
     .wrap-news .list-news li:first-child div > a {
-        width: 60%;
+        width: 54%;
+    }
+    .wrap-news .list-news li:first-child div > a.pic-intro {
+        height: 285px;
     }
     .wrap-news li:first-child div > a.view-more {
         width: auto;
@@ -7238,14 +7249,13 @@ padding: 5px 0;
     height: 100%;
     display: inline-block;
     margin-right: 5px;
-    padding: 2px;
     background: #fff;
-    border: 1px solid #BFBFBF;
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     -ms-border-radius: 3px;
     vertical-align: middle;
+    overflow: hidden;
 }
 .guest-dropdown .arrowDown {
     background-color: inherit;
@@ -8012,6 +8022,11 @@ padding: 5px 0;
 .item-sidebar a {
     display: block;
 }
+.item-hot-sidebar .pic-intro {
+    border-radius: 3px;
+    overflow: hidden;
+    height: 200px;
+}
 .item-sidebar .img-show {
     margin-bottom: 10px;
 }
@@ -8306,6 +8321,7 @@ margin-right: 5px;
     float: left;
     width: 45%;
     margin-right: 4%;
+    border-radius: 3px;
 }
 .list-duan .col-left .wrap-item .info-item {
     overflow: hidden;
@@ -8554,6 +8570,10 @@ margin-right: 5px;
 }
 .item-sidebar .listing-item > li .pic-intro {
     height: 180px;
+}
+.item-sidebar .listing-item .wrap-item-post .pic-intro {
+    border-radius: 3px;
+    overflow: hidden;
 }
 .detail-listing-extra .list-post {
     font-size: 13px;
@@ -9144,6 +9164,8 @@ margin-right: 5px;
 }
 .wrap-item-post {
     position: relative;
+    border-radius: 3px;
+    overflow: hidden;
 }
 #edit-listing {
     stroke: #fff;

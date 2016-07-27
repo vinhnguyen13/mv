@@ -10,6 +10,7 @@ namespace frontend\controllers;
 
 
 use frontend\components\Controller;
+use frontend\models\Report;
 use yii\helpers\ArrayHelper;
 use Yii;
 
@@ -24,12 +25,15 @@ class ReportController extends Controller
 
     public function actionIndex()
     {
+        $filter = Yii::$app->request->get("filter", 'week');
         $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuDashboard' => true, 'isReport' => true], $this->view->params);
 
+        $chart = Report::me()->chart($filter);
+        $data = ArrayHelper::merge($chart, ['filter'=>$filter]);
         if(Yii::$app->request->isAjax) {
-            return $this->renderAjax('default/index');
+            return $this->renderAjax('default/index', $data);
         } else {
-            return $this->render('default/index');
+            return $this->render('default/index', $data);
         }
     }
 }

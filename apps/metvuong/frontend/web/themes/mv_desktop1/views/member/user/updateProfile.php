@@ -45,7 +45,7 @@ Yii::t('time','week');
                         <p class="email-user">
                             <a href="#" class="email-btn">
                                 <span class="icon-mv"><span class="icon-mail-profile"></span></span>
-                                <span class="public_email"><?=empty($model->public_email) ? $user->email : $model->public_email ?></span>
+                                <span class="public_email"><?=$user->email ?></span>
                             </a>
                         </p>
                     </div>
@@ -95,7 +95,7 @@ Yii::t('time','week');
                         ]);
                         $f = ActiveForm::begin([
                             'id' => 'form-edit-ttcn',
-                            'enableAjaxValidation' => true,
+                            'enableAjaxValidation' => false,
                             'enableClientValidation' => true,
                             'action' => Url::to(['member/update-profile', 'username'=>Yii::$app->user->identity->getUsername()])
                         ]);
@@ -109,7 +109,7 @@ Yii::t('time','week');
                         </div>
                         <div class="email-user">
                             <span class="icon-mv"><span class="icon-mail-profile"></span></span>
-                            <?= $f->field($profile_form, 'public_email')->textInput(['value' => empty($model->public_email) ? $user->email : $model->public_email ])->label(false)?>
+                            <?= $f->field($profile_form, 'public_email')->textInput(['value' => $user->email ])->label(false)?>
                             <input type="hidden" name="scenario" value="updateprofile">
                             <input type="hidden" name="profile-form[avatar]" class="avatar-user" value="">
                         </div>
@@ -266,12 +266,15 @@ Yii::t('time','week');
             _this.closest('section').find('.box-edit-show').hide();
         });
 
+
         $('.infor-user-settings .done-profile').on('click', function(e){
             e.preventDefault();
             var _this = $(this);
             _this.closest('section').loading({
                 full: false
             });
+
+            var old_email = '<?=$user->email?>';
             $.ajax({
                 type: 'post',
                 dataType: 'json',
@@ -284,10 +287,24 @@ Yii::t('time','week');
                         $('.infor-user-settings .name').html(data.model.name);
                         $('.infor-user-settings .mobile').html(data.model.mobile);
                         $('.infor-user-settings .mobile').attr("href","tel:"+data.model.mobile);
-                        $('.infor-user-settings .public_email').html(data.model.public_email);
+//                        $('.infor-user-settings .public_email').html(data.model.public_email);
 
                         _this.closest('section').find('.wrap-attr-detail').show();
                         _this.closest('section').find('.box-edit-show').hide();
+
+                    } else if (data.statusCode == 4444) {
+                        $('.user-edit .name-user').html(data.model.name);
+                        $('.infor-user-settings .name').html(data.model.name);
+                        $('.infor-user-settings .mobile').html(data.model.mobile);
+                        $('.infor-user-settings .mobile').attr("href","tel:"+data.model.mobile);
+                        $('#profile-form-public_email').val(old_email);
+                        _this.closest('section').find('.wrap-attr-detail').show();
+                        _this.closest('section').find('.box-edit-show').hide();
+                        $('body').alertBox({
+                            txt: "<?=Yii::t('profile', 'Vui lòng kiểm tra email cũ để xác nhận thay đổi email đăng nhập. Cảm ơn!')?>",
+                            duration: 4000
+                        });
+
                     } else if (data.statusCode == 400) {
                         var arr = [];
                         $.each(data.parameters, function (idx, val) {
@@ -304,6 +321,8 @@ Yii::t('time','week');
                     return false;
                 }
             });
+
+
         });
 
         $('.mtbt .done-profile').on('click', function(){
@@ -438,9 +457,6 @@ Yii::t('time','week');
             if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
                 return false;
             }
-//            if (this.value.length >= this.maxLength) {
-//                return false;
-//            }
         });
 
     });

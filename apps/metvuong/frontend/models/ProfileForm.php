@@ -85,12 +85,15 @@ class ProfileForm extends Model
             'emailTrim' => ['public_email', 'filter', 'filter' => 'trim'],
             'emailRequired' => ['public_email', 'required'],
             'emailPattern' => ['public_email', 'email'],
-//            'emailExist' => [
-//                'public_email',
-//                'exist',
-//                'targetClass' => Yii::$app->getModule('user')->modelMap['User'],
-//                'message' => Yii::t('user', 'There is no user with this email address'),
-//            ],
+            'emailExist' => [
+                'public_email',
+                function($attribute){
+                    $user = Yii::$app->user->identity;
+                    $count_user = User::find()->where('email=:email',[':email'=>$this->public_email])->andWhere('email != :em',[':em' => $user->email])->count('email');
+                    if($count_user > 0)
+                        $this->addError($attribute, Yii::t('profile','Email already exists!'));
+                },
+            ],
 //            'emailUnconfirmed' => [
 //                'public_email',
 //                function ($attribute) {
@@ -157,7 +160,7 @@ class ProfileForm extends Model
             $firstEmail = $profile->public_email;
             $profile->user_id = $this->user_id;
             $profile->name = $this->name;
-            $profile->public_email = $this->public_email;
+//            $profile->public_email = $this->public_email;
             $profile->phone = $this->phone;
             $profile->mobile = $this->mobile;
             $profile->address = $this->address;
@@ -165,14 +168,39 @@ class ProfileForm extends Model
             $profile->user->updateAttributes(['aliasname'=>$this->aliasname]);
             $profile->avatar = $this->avatar;
             if($profile->save(false)){
-                if($firstEmail != $profile->public_email) {
-                    $profile->user->email = $profile->public_email;
-                    $profile->user->save(false);
+                if($firstEmail != $this->public_email) {
+//                    $profile->user->email = $profile->public_email;
+//                    $profile->user->save(false);
+                    // gui den email cu~ xac thuc thay doi email moi
+                    $mailer = new \common\components\Mailer();
+                    $subject = "Metvuong.com - Xác nhận thay đổi email đăng nhập";
+                    $view = ['html' => "@frontend/mail/vi-VN/change_email_user"];
+                    $params['name'] = $profile->name;
+                    $params['old_email'] = $firstEmail;
+                    $params['new_email'] = $this->public_email;
+
+                    // token
+                    $new_token = new Token();
+                    $new_token->user_id = Yii::$app->user->id;
+                    $new_token->code = Yii::$app->security->generateRandomString();
+                    $new_token->type = Token::TYPE_CHANGE_USER_EMAIL;
+                    $new_token->created_at = time();
+                    $new_token->save();
+                    $params['link'] =  Url::to(['/member/change-email', 'id' => md5($new_token->user_id.$new_token->code), 'email' => $params['new_email'], 'code' => $new_token->code], true);
+
+                    $result = $mailer->compose($view, $params)
+                        ->setFrom(Yii::$app->params['noreplyEmail'])
+                        ->setTo([$firstEmail])
+                        ->setSubject($subject)
+                        ->send();
+                    if($result){
+                        return 4444;
+                    }
                 }
-                return true;
+                return 200;
             }
         }
-        return false;
+        return 404;
     }
 
     public static function humanTiming($time)
