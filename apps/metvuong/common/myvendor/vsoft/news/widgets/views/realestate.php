@@ -23,10 +23,8 @@ if(count($news) > 0){
         if($k == 0){
             $banner = \vsoft\news\models\CmsShow::getBanner($n->banner);?>
         <div class="item-hot-sidebar">
-            <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug], true)?>" title="<?=$n->title?>">
-                <div class="img-show">
-                    <div><img src="<?= $banner ?>" alt="<?=$n->title?>"></div>
-                </div>
+            <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug], true)?>" title="<?=$n->title?>" class="pic-intro">
+                <img src="<?= $banner ?>" alt="<?=$n->title?>">
             </a>
             <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n->id, 'slug' => $n->slug], true)?>" title="<?=$n->title?>" class="name-post"><?= StringHelper::truncate($n->title, 60) ?></a>
             <p class="intro-txt" title="<?=$n->brief?>"><?= StringHelper::truncate($n->brief, 180) ?></p>
