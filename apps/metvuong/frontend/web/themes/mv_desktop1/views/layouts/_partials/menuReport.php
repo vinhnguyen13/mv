@@ -6,7 +6,7 @@ use yii\helpers\Url;
         <div class="menuUser menuReport">
             <ul class="clearfix">
                 <li>
-                    <a class="dashboard-item <?= !empty($this->params['menuDashboard']) ? 'active' : ''; ?>" href="<?= Url::to(['/dashboard/ad', 'username' => Yii::$app->user->identity->getUsername()]) ?>">
+                    <a class="dashboard-item <?= !empty($this->params['menuDashboard']) ? 'active' : ''; ?>" href="<?= Url::to(['/report/index', 'username' => Yii::$app->user->identity->getUsername()]) ?>">
                         <div><span class="icon-mv"><span class="icon-barometer"></span></span></div>
                         <?= Yii::t('report', 'User') ?>
                     </a>

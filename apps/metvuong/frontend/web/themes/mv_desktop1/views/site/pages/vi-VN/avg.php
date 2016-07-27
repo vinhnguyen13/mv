@@ -72,17 +72,18 @@ foreach ($categories as $category) {
             <article id="inKetQua">
 
             </article>
+            <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
         </div>
     </div>
 </div>
-
+<script src="//code.highcharts.com/highcharts.js"></script>
+<script src="//code.highcharts.com/highcharts-more.js"></script>
 <script>
     $(document).ready(function () {
         var func = {
             appendDropdown: function(el, items) {
                 el.find("option:not(:first-child)").remove();
                 for(var i in items) {
-                    console.log(items);
                     if(items[i]['pre']) {
                         el.append('<option data-pre="' + items[i]['pre'] + '" value="' + items[i]['id'] + '">' + items[i]['name'] + '</option>');
                     } else {
@@ -129,10 +130,10 @@ foreach ($categories as $category) {
         $(document).on('change', '.region_category', function (e) {
             if($('.region_category').val() == 6){
                 $('.wrap_project').show();
-                $('.wrap_city').hide();
+                /*$('.wrap_city').hide();
                 $('.wrap_district').hide();
                 $('.wrap_wards').hide();
-                $('.wrap_streets').hide();
+                $('.wrap_streets').hide();*/
             }else{
                 $('.wrap_project').hide();
                 $('.wrap_city').show();
@@ -167,15 +168,69 @@ foreach ($categories as $category) {
                     func.pushOptionTextToArray('region_category', text);
                     func.pushOptionTextToArray('region_city', text);
                     func.pushOptionTextToArray('region_district', text);
+                    var ArrayData = $.map(response.list_price.split(','), function(value){
+                        return parseInt(value, 10);
+                        // or return +value; which handles float values as well
+                    });
+                    loadChart([ArrayData]);
+                    console.log(ArrayData);
+//                    loadChart([
+//                        [5700, 2200, 8400, 8000, 3300, 1950, 8320, 8000, 9, 8320, 9000, 8300],
+//                    ]);
                     var avg = response.sum / response.total;
                     var avg_m2 = response.sum / response.sum_area;
-                    html += '<tr><td class="saving_table saving_table_left">' + text.join(', ') + '</td><td class="saving_table">' + $.number(avg) + ' VND</td><td class="saving_table">' + $.number(avg_m2) + ' VND</td><td class="saving_table">' + $.number(response.total) + '</td></tr>';
+                    html += '<tr><td class="saving_table saving_table_left">' + text.join(', ') + '</td><td class="saving_table">' + $.number(avg) + ' VND</td><td class="saving_table">' + $.number(avg_m2) + ' VND</td><td class="saving_table">' + $.number(response.totalListing) + '</td></tr>';
                     html += '</tbody></table>';
                     $('#inKetQua').html(html);
                 });
             }else{
                 alert('Vui lòng chọn Thành Phố');
             }
+
         });
+
+        function loadChart(data){
+            $('#chartAds').highcharts({
+                chart: {
+                    type: 'boxplot'
+                },
+                title: {
+                    text: 'MetVuong Box Plot Chart'
+                },
+                legend: {
+                    enabled: false
+                },
+                xAxis: {
+                    categories: ['1'],
+                    title: {
+                        text: 'Experiment No.'
+                    }
+                },
+                yAxis: {
+                    title: {
+                        text: 'Observations'
+                    }
+                },
+                plotOptions: {
+                    boxplot: {
+                        fillColor: '#F0F0E0',
+                        lineWidth: 2,
+                        medianColor: '#0C5DA5',
+                        medianWidth: 3,
+                        stemColor: '#A63400',
+                        stemDashStyle: 'dot',
+                        stemWidth: 1,
+                        whiskerColor: '#3D9200',
+                        whiskerLength: '20%',
+                        whiskerWidth: 3
+                    }
+                },
+                series: [{
+                    name: 'Observations',
+                    data: data
+                }]
+
+            });
+        }
     });
 </script>
