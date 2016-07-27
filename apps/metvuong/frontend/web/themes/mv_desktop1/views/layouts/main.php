@@ -49,7 +49,7 @@ AppAsset::register($this);
                             <p class="mgB-5 font-600 mgT-15">Số điện thoại</p>
                             <input type="text" class="form-control" placeholder="012345678">
                             <div class="text-center mgT-15">
-                                <button class="btn-common btn-bd-radius">Nhận Keys</button>
+                                <button class="btn-common btn-bd-radius text-uper">Nhận Keys</button>
                             </div>
                         </div>
                     </div>
