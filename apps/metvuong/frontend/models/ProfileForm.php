@@ -160,17 +160,14 @@ class ProfileForm extends Model
             $firstEmail = $profile->public_email;
             $profile->user_id = $this->user_id;
             $profile->name = $this->name;
-//            $profile->public_email = $this->public_email;
             $profile->phone = $this->phone;
             $profile->mobile = $this->mobile;
             $profile->address = $this->address;
             $profile->bio = $this->bio;
             $profile->user->updateAttributes(['aliasname'=>$this->aliasname]);
-            $profile->avatar = $this->avatar;
             if($profile->save(false)){
                 if($firstEmail != $this->public_email) {
-//                    $profile->user->email = $profile->public_email;
-//                    $profile->user->save(false);
+
                     // gui den email cu~ xac thuc thay doi email moi
                     $mailer = new \common\components\Mailer();
                     $subject = "Metvuong.com - Xác nhận thay đổi email đăng nhập";

@@ -43,7 +43,6 @@ $model->public_email = $new_email;
         $('.btn-change-email').click(function(){
             var _this = $(this);
             var new_email = $('#profile-form-public_email').val();
-            l(new_email);
             $('body').loading();
             if(new_email) {
                 $.ajax({
@@ -58,8 +57,16 @@ $model->public_email = $new_email;
                                 txt: "<?=Yii::t('profile', 'Email đăng nhập đã được thay đổi thành')?> "+new_email,
                                 duration: 3000
                             });
-
-                        } else {
+                        }
+                        else if (data.statusCode == 222) {
+                            $('body').loading({done: true});
+                            var arr = [];
+                            var element = 'profile-form-public_email';
+                            arr[element] = ['Email already exists!'];
+                            $('#change-email-form').yiiActiveForm('updateMessages', arr, true);
+                        }
+                        else {
+                            $('body').loading({done: true});
                             _this.html('Try again !');
                         }
                     }
