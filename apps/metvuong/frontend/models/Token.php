@@ -35,6 +35,7 @@ class Token extends ActiveRecord
     const TYPE_CONFIRM_NEW_EMAIL = 2;
     const TYPE_CONFIRM_OLD_EMAIL = 3;
     const TYPE_CRAWL_USER_EMAIL  = 4;
+    const TYPE_CHANGE_USER_EMAIL  = 5;
 
     /** @var \dektrium\user\Module */
     protected $module;

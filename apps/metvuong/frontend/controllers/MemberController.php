@@ -18,6 +18,7 @@ use vsoft\ad\models\MarkEmail;
 use vsoft\express\components\ImageHelper;
 use vsoft\express\components\StringHelper;
 use Yii;
+use yii\base\Exception;
 use yii\base\InvalidParamException;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
@@ -461,25 +462,26 @@ class MemberController extends Controller
                     $post = Yii::$app->request->post();
                     if ($post) {
                         $name = isset($post["profile-form"]["name"]) ? $post["profile-form"]["name"] : null;
-                        if(!empty($name))
+                        if(!empty($name) && $name != $model->name)
                             $model->name = $name;
 
                         $mobile = isset($post["profile-form"]["mobile"]) ? $post["profile-form"]["mobile"] : null;
-                        if(!empty($mobile))
+                        if(!empty($mobile) && $mobile != $model->mobile)
                             $model->mobile = $mobile;
 
                         $public_email = isset($post["profile-form"]["public_email"]) ? $post["profile-form"]["public_email"] : null;
-                        if(!empty($mobile))
-                            $model->public_email = $public_email;
+                        if(!empty($public_email) && $public_email != $model->public_email ) {
+                            $model->public_email = trim($public_email);
+                        }
 
                         $avatar = isset($post["profile-form"]["avatar"]) ? $post["profile-form"]["avatar"] : null;
-                        if(!empty($mobile))
+                        if(!empty($avatar))
                             $model->avatar = $avatar;
 
                         $model->validate();
                         if (!$model->hasErrors()) {
-                            $model->updateProfile();
-                            return ['statusCode' => 200, 'model' => $model];
+                            $statusCode = $model->updateProfile();
+                            return ['statusCode' => $statusCode, 'model' => $model];
                         } else {
                             return ['statusCode' => 400, 'parameters' => $model->errors, 'user' => 'error'];
                         }
@@ -680,6 +682,57 @@ class MemberController extends Controller
         ]);
 
         return $model->updateAvatar(null);
+    }
+
+    public function actionChangeEmail($id, $email, $code)
+    {
+        $token = Token::find()->where(['MD5(CONCAT(user_id, code))' => $id, 'code' => $code, 'type' => Token::TYPE_CHANGE_USER_EMAIL])->one();
+        if($token === null || count($token) == 0){
+            throw new NotFoundHttpException("Not Found. Please, return home page!");
+        }
+
+        $user = $token->user;
+        if (count($user) > 0) {
+            $loginStatus = Yii::$app->getUser()->login($user, 0);
+            if ($loginStatus) {
+                $token->delete();
+                return $this->render('changeEmail', ['new_email' => $email]);
+            }
+        }
+        return $this->redirect(Url::home(true));
+    }
+
+    public function actionConfirmChangeEmail()
+    {
+        $this->checkAccess();
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        if(Yii::$app->request->isAjax) {
+            if(Yii::$app->request->isPost) {
+                $post = Yii::$app->request->post();
+                $new_email = isset($post['profile-form']['public_email']) ? trim($post['profile-form']['public_email']) : null;
+                if(!empty($new_email)){
+                    try {
+                        $user = Yii::$app->user->identity;
+                        if ($user->email != $new_email) {
+                            $user->email = $new_email;
+                            $u = $user->save(false);
+
+                            $profile = $user->profile;
+                            $profile->public_email = $new_email;
+                            $p = $profile->save(false);
+
+                            if($u > 0 && $p > 0)
+                                return $this->redirect(Url::to(['member/update-profile', 'username' => $user->getUsername()]));
+                        }
+                    } catch(Exception $e){
+                        throw new NotFoundHttpException($e->getMessage());
+                    }
+                }
+            } else{
+                return $this->redirect(Url::home(true));
+            }
+        }
+        return $this->redirect(Url::home(true));
     }
 
 }
