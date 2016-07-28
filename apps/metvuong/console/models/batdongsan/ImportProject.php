@@ -9,6 +9,7 @@ namespace console\models\batdongsan;
 
 
 use Collator;
+use common\components\Slug;
 use console\models\Helpers;
 use keltstr\simplehtmldom\SimpleHTMLDom;
 use vsoft\craw\models\AdBuildingProject;
@@ -18,6 +19,7 @@ use vsoft\craw\models\AdStreet;
 use vsoft\craw\models\AdWard;
 use Yii;
 use yii\base\Component;
+use yii\helpers\ArrayHelper;
 use yii\helpers\StringHelper;
 
 class ImportProject extends Component
@@ -35,7 +37,7 @@ class ImportProject extends Component
      *  File in error folder while file none city and none district
      */
 
-    public function importProjects(){
+    public function importProjects($limit = 300){
         $start = time();
         $path = Yii::getAlias('@console') . "/data/bds_html/projects/";
         $file_log = "import_project_log.json";
@@ -54,18 +56,12 @@ class ImportProject extends Component
             $current_type = 0;
         }
 
-        $bulkInsertInvestor = array();
-        $bulkInsertArray = array();
-        $listInvestorProject = [];
-
         $wards = AdWard::getDb()->cache(function (){
             return AdWard::getDb()->createCommand("SELECT id, name, district_id FROM `ad_ward`")->queryAll();
         });
         $streets = AdStreet::getDb()->cache(function () {
             return AdStreet::getDb()->createCommand("SELECT id, name, district_id FROM `ad_street`")->queryAll();
         });
-
-        $investorData = AdInvestor::find()->asArray()->all();
 
         $count_file_insert = 0;
         $count_file_update = 0;
@@ -85,7 +81,7 @@ class ImportProject extends Component
                     if ($counter > 0) {
                         $filename = null;
                         for ($i = 0; $i <= $last_file_index; $i++) {
-                            if ($no > 300) {
+                            if ($no > $limit) {
                                 $break_type = true;
                                 break;
                             }
@@ -108,13 +104,48 @@ class ImportProject extends Component
                                     $home_no = null;
                                     $city = $value[$filename]["city"];
                                     $district = $value[$filename]["district"];
-                                    $project_name = !empty($value[$filename]["name"]) ? $value[$filename]["name"] : null;
-                                    $slug = $value[$filename]["slug"];
-                                    $project = $this->getProjectBySlug($slug);
+                                    if(empty($city) || empty($district)){
+                                        $toFolder = $path."import/error/".$type."/";
+                                        if(!is_dir($toFolder)){
+                                            mkdir($toFolder, 0777, true);
+                                            print_r("\nMake Project Error Folder");
+                                        }
+                                        $re = rename($filePath, $toFolder.$filename);
+                                        if($re) continue;
+                                    }
+
+                                    $city_result = Helpers::getCityId($city);
+                                    if($city_result == 500){
+                                        $toFolder = $path."import/error/".$type."/";
+                                        if(!is_dir($toFolder)){
+                                            mkdir($toFolder, 0777, true);
+                                            print_r("\nMake Error Folder City {$filename}");
+                                        }
+                                        rename($filePath, $toFolder.$filename);
+                                    }
+                                    $city_id = isset($city_result['id']) ? (int)$city_result['id'] : 0;
+                                    $district_id = 0;
+                                    if($city_id > 0){
+                                        $district_result = Helpers::getDistrictId($district, $city_id);
+                                        if($district_result == 500){
+                                            $toFolder = $path."import/error/".$type."/";
+                                            if(!is_dir($toFolder)){
+                                                mkdir($toFolder, 0777, true);
+                                                print_r("\nMake Error Folder District {$filename}");
+                                            }
+                                            rename($filePath, $toFolder.$filename);
+                                        }
+                                        $district_id = isset($district_result['id']) ? (int)$district_result['id'] : 0;
+                                    }
 
                                     $location = $value[$filename]["location"];
-                                    // neu co ton tai trong db crawl
-                                    if (count($project) > 0) {
+                                    $project_name = !empty($value[$filename]["name"]) ? $value[$filename]["name"] : null;
+                                    $slug = $value[$filename]["slug"];
+                                    $lat = $value[$filename]["lat"];
+                                    $lng = $value[$filename]["lng"];
+
+                                    $project = $this->getProject($city_id, $district_id, $project_name, $lat, $lng);
+                                    if (count($project) > 0) { // neu co ton tai trong db crawl
                                         if (!empty($project->district_id)) {
                                             $ws = $this->getWardAndStreet($location, $streets, $wards, $project->district_id);
                                             if (count($ws) > 0) {
@@ -134,47 +165,10 @@ class ImportProject extends Component
                                         $log_import["import_total"] = count($log_import["files"]);
                                         $log_import["import_time"] = date("d-m-Y H:i");
                                         $count_file_update++;
-//                                        print_r("\n". $no . " {$type} - ".$project_name." - {$filename}: ". "updated");
+                                        print_r("\n". $no . " {$type} - ".$project_name." - {$filename}: ". "updated");
                                     }
                                     // add new project
                                     else {
-                                        if(empty($city) && empty($district)){
-                                            $toFolder = $path."import/error/".$type."/";
-                                            if(!is_dir($toFolder)){
-                                                mkdir($toFolder, 0777, true);
-                                                print_r("\nMake Error Folder");
-                                            }
-                                            $re = rename($filePath, $toFolder.$filename);
-                                            if($re) continue;
-                                        }
-
-                                        $city_result = Helpers::getCityId($city);
-                                        if($city_result == 500){
-                                            $toFolder = $path."import/error/".$type."/";
-                                            if(!is_dir($toFolder)){
-                                                mkdir($toFolder, 0777, true);
-                                                print_r("\nMake Error Folder City {$filename}");
-                                            }
-                                            rename($filePath, $toFolder.$filename);
-                                        }
-                                        $city_id = isset($city_result['id']) ? (int)$city_result['id'] : 0;
-                                        $district_id = 0;
-                                        if($city_id > 0){
-                                            $district_result = Helpers::getDistrictId($district, $city_id);
-                                            if($district_result == 500){
-                                                $toFolder = $path."import/error/".$type."/";
-                                                if(!is_dir($toFolder)){
-                                                    mkdir($toFolder, 0777, true);
-                                                    print_r("\nMake Error Folder District {$filename}");
-                                                }
-                                                rename($filePath, $toFolder.$filename);
-                                            }
-                                            $district_id = isset($district_result['id']) ? (int)$district_result['id'] : 0;
-                                        }
-
-                                        if($city_id <= 0 || $district_id <= 0)
-                                            continue;
-
                                         $ws = $this->getWardAndStreet($location, $streets, $wards, $district_id);
                                         if (count($ws) > 0) {
                                             $street_id = (isset($ws["street_id"]) && !empty($ws["street_id"])) ? $ws["street_id"] : null;
@@ -192,8 +186,8 @@ class ImportProject extends Component
                                             'investment_type' => $value[$filename]["investment_type"],
                                             'hotline' => $value[$filename]["hotline"],
                                             'website' => $value[$filename]["website"],
-                                            'lng' => $value[$filename]["lng"],
-                                            'lat' => $value[$filename]["lat"],
+                                            'lng' => $lng,
+                                            'lat' => $lat,
                                             'slug' => $slug,
                                             'status' => $value[$filename]["status"],
                                             'created_at' => $value[$filename]["created_at"],
@@ -204,18 +198,28 @@ class ImportProject extends Component
                                             'street_id' => (int)$street_id,
                                             'ward_id' => (int)$ward_id
                                         ];
-                                        $bulkInsertArray[] = $record;
+                                        $crawl_project = new AdBuildingProject($record);
+                                        $crawl_project->save(false);
+                                        $project_id = $crawl_project->id;
 
-                                        // Check duplicate Investor :D
                                         $investor = $value[$filename]["investor"];
                                         $investor_name = $investor["name"];
-                                        $investor_id = null;
-                                        if (!empty($investor_name)) {
-                                            $checkInvestorExists = count($listInvestorProject) > 0 ? $this->investorExists($investor_name, $listInvestorProject) : false;
-                                            $investor_id = count($investorData) > 0 ? $this->getIdExists($investor_name, $investorData) : null;
-                                            if ($checkInvestorExists == false && empty($investor_id)) {
+                                        $investor_id = 0;
+                                        if(count($investor) > 0 && !empty($investor_name)) {
+                                            // Check duplicate Investor :D
+                                            $crawl_investor = AdInvestor::find()->where([
+                                                'name' => $investor["name"],
+                                                'address' => $investor["address"],
+                                                'phone' => $investor["phone"],
+                                                'fax' => $investor["fax"],
+                                                'website' => $investor["website"],
+                                                'email' => $investor["email"],
+                                            ])->one();
+                                            if(count($crawl_investor) > 0) {
+                                                $investor_id = $crawl_investor->id;
+                                            } else {
                                                 $recordInvestor = [
-                                                    'name' => $investor_name,
+                                                    'name' => $investor["name"],
                                                     'address' => $investor["address"],
                                                     'phone' => $investor["phone"],
                                                     'fax' => $investor["fax"],
@@ -225,17 +229,21 @@ class ImportProject extends Component
                                                     'status' => 1,
                                                     'created_at' => time()
                                                 ];
-                                                $bulkInsertInvestor[] = $recordInvestor;
+                                                $crawl_investor = new AdInvestor($recordInvestor);
+                                                $crawl_investor->save(false);
+                                                $investor_id = $crawl_investor->id;
                                             }
                                         }
 
-                                        $listInvestorProject[$slug] = [
-                                            'investor_id' => $investor_id,
-                                            'investor_name' => $investor_name
-                                        ];
+                                        if($project_id > 0 && $investor_id > 0){
+                                            $investorProject = new AdInvestorBuildingProject();
+                                            $investorProject->investor_id = $investor_id;
+                                            $investorProject->building_project_id = $project_id;
+                                            $investorProject->save(false);
+                                        }
 
                                         $count_file_insert++;
-//                                        print_r("\n" . $no . " {$type} - ".$project_name." - {$filename}");
+                                        print_r("\n" . $no . " {$type} - ".$project_name." - {$filename}");
                                     }
 
                                     if (!in_array($filename, $log_import["files"])) {
@@ -254,15 +262,7 @@ class ImportProject extends Component
                             $no++;
                         } // end file loop
 
-                        $res_insert = $this->insert($bulkInsertArray, $bulkInsertInvestor, $listInvestorProject);
-                        if($res_insert > 0) {
-                            $bulkInsertArray = array();
-                            $bulkInsertInvestor = array();
-                            $listInvestorProject = array();
-                            Helpers::writeLog($log_import, $path . "import/", $type . ".json");
-                        }
-                        if($count_file_update > 0)
-                            Helpers::writeLog($log_import, $path . "import/", $type . ".json");
+                        Helpers::writeLog($log_import, $path . "import/", $type . ".json");
                     }
                 } else {
                     print_r("\nCannot find ".$path.$type."\n");
@@ -288,70 +288,13 @@ class ImportProject extends Component
         print_r("\n"."Time: ");
         print_r($end_time-$start);
         print_r("s");
-
     }
 
-    public function insert($bulkInsertArray, $bulkInsertInvestor, $listInvestorProject){
-        $columnInvestor = ['name', 'address', 'phone', 'fax', 'website', 'email', 'logo', 'status', 'created_at'];
-        $columnNameArray = ['city_id', 'district_id', 'name', 'logo',
-            'location', 'description', 'investment_type', 'hotline', 'website',
-            'lng', 'lat', 'slug', 'status', 'created_at', 'file_name', 'is_crawl', 'data_html',
-            'home_no', 'street_id', 'ward_id'];
-        $insertCountInvestor = 0;
-        if (count($bulkInsertInvestor) > 0) {
-            // below line insert all your record and return number of rows inserted
-            $insertCountInvestor = AdInvestor::getDb()->createCommand()
-                ->batchInsert(AdInvestor::tableName(), $columnInvestor, $bulkInsertInvestor)->execute();
-//            print_r("\n\nInsert {$insertCountInvestor} INVESTOR data ... DONE!");
-        }
-
-        $insertCount = 0;
-        if (count($bulkInsertArray) > 0) {
-            // below line insert all your record and return number of rows inserted
-            $insertCount = AdBuildingProject::getDb()->createCommand()
-                ->batchInsert(AdBuildingProject::tableName(), $columnNameArray, $bulkInsertArray)->execute();
-//            print_r("\nInsert {$insertCount} BUILDING PROJECT data ... DONE");
-        }
-
-        if(count($listInvestorProject) > 0 && $insertCount > 0 && $insertCountInvestor > 0){
-            $bulkInsertInvestorProject = array();
-            foreach($listInvestorProject as $k => $v){
-                $buildingProject = $this->getProjectBySlug($k);
-                $count_new_project = count($buildingProject);
-                if($count_new_project <= 0)
-                    continue;
-
-                $new_investor_id = 0;
-                if (isset($listInvestorProject[$k]['investor_id']) && $listInvestorProject[$k]['investor_id'] > 0)
-                    $new_investor_id = (int)$listInvestorProject[$k]['investor_id'];
-                else {
-                    if (isset($listInvestorProject[$k]['investor_name'])) {
-                        $investor_name = $listInvestorProject[$k]['investor_name'];
-                        $new_ad_investor = AdInvestor::find()->where('name = :n', [':n' => $investor_name])->asArray()->one();
-                        $new_investor_id = (int)$new_ad_investor['id'];
-                    }
-                }
-
-                if($new_investor_id <= 0)
-                    continue;
-
-                $recordInvestorProject = [
-                    'building_project_id' => $buildingProject->id,
-                    'investor_id' => $new_investor_id
-                ];
-                $bulkInsertInvestorProject[] = $recordInvestorProject;
-            }
-
-            if(count($bulkInsertInvestorProject) >0 ) {
-                $columnInvestorProject = ['building_project_id', 'investor_id'];
-                AdInvestorBuildingProject::getDb()->createCommand()->batchInsert(AdInvestorBuildingProject::tableName(), $columnInvestorProject, $bulkInsertInvestorProject)->execute();
-//                if ($insertCountInvestorProject > 0)
-//                    print_r("\nMaps {$insertCountInvestorProject} INVESTOR with BUILDING PROJECT data DONE!");
-            }
-        }
-        return $insertCount;
-    }
-
+    /**
+     * @param $path_folder
+     * @param $filename
+     * @return array|null
+     */
     public function parseProjectDetail($path_folder, $filename){
         $json = array();
         $page = file_get_contents($path_folder . $filename);
@@ -360,22 +303,157 @@ class ImportProject extends Component
         $detail = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
 //        $detail = SimpleHTMLDom::file_get_html($path_folder.$filename);
         if (!empty($detail)) {
+            $detail_innertext = $detail->innertext;
+
             $name = trim($detail->find('h1', 0)->innertext);
             $name = html_entity_decode(trim($name), ENT_HTML5, 'utf-8');
+            if(empty($name)){
+                $str_name = substr($detail_innertext, strpos($detail_innertext, '<h1>'));
+                $str_name = trim(str_replace('<h1>', '', $str_name));
+                $str_name = substr($str_name, 0, strpos($str_name, '</h1>'));
+                $name = trim($str_name);
+            }
+
+            $city = $detail->find('#divCityOptions .current', 0)->innertext;
+            $city = html_entity_decode(trim($city), ENT_HTML5, 'utf-8');
+            $district = $detail->find('#divDistrictOptions .current', 0)->innertext;
+            $district = html_entity_decode(trim($district), ENT_HTML5, 'utf-8');
 
             $lat = $detail->find('#hdLat', 0)->value;
             $long = $detail->find('#hdLong', 0)->value;
             $address = $detail->find('#hdAddress', 0)->value;
             $address = html_entity_decode(trim($address), ENT_HTML5, 'utf-8');
-
-            $city = $detail->find('#divCityOptions .current', 0, true)->innertext;
-            $city = html_entity_decode(trim($city), ENT_HTML5, 'utf-8');
-
-            $district = $detail->find('#divDistrictOptions .current', 0)->innertext;
-            $district = html_entity_decode(trim($district), ENT_HTML5, 'utf-8');
-
-            $logoTop = $detail->find('.prjava img', 0)->src;
             $inv_type = $detail->find('#divCatagoryOptions .current', 0)->innertext;
+
+
+            $investor_name = trim($detail->find('#enterpriseInfo h3', 0)->plaintext);
+            $investor = array();
+            if(!empty($investor_name)) {
+                $investor["name"] = html_entity_decode(trim($investor_name), ENT_HTML5, 'utf-8');
+                $investor_desc = $detail->find('.info .d11 img', 0)->src;
+                $investor["logo"] = strpos($investor_desc, "no-photo") == true ? null : $investor_desc;
+            }
+            // parse investor vi batdongsan thay doi code moi
+            $pre_fix_inv = substr($detail_innertext, 0, strpos($detail_innertext, 'id="enterpriseInfo"'));
+            $str_inv_detail = str_replace($pre_fix_inv . 'id="enterpriseInfo"', '', $detail_innertext);
+            $str_inv_detail = substr($str_inv_detail, 0, strpos($str_inv_detail, 'id="otherProject"'));
+            if(!empty($str_inv_detail))
+            {
+                if(empty($investor["name"])){
+                    $str_name = substr($str_inv_detail, strpos($str_inv_detail, '<span>'));
+                    $str_name = str_replace('<span>', '', $str_name);
+                    $inv_name = trim(substr($str_name, 0, strpos($str_name, '</span>')));
+                    $investor["name"] = html_entity_decode(trim($inv_name), ENT_HTML5, 'utf-8');
+                }
+                if(empty($investor["logo"])){
+                    $str_logo = substr($str_inv_detail, strpos($str_inv_detail, 'LeftMainContent__projectDetail_EnterpriseInfo1_imgLogo" title="'));
+                    $str_logo = trim(str_replace('LeftMainContent__projectDetail_EnterpriseInfo1_imgLogo" title="', '', $str_logo));
+                    $str_logo = substr($str_logo, strpos($str_logo, 'src="'));
+                    $str_logo = trim(str_replace('src="', '', $str_logo));
+                    $str_logo = substr($str_logo, 0, strpos($str_logo, '"'));
+                    $investor['logo'] = trim($str_logo);
+                }
+
+                // investor address
+                $str_inv_address = substr($str_inv_detail, strpos($str_inv_detail, 'LeftMainContent__projectDetail_EnterpriseInfo1_lblAddress">Địa chỉ</span>:'));
+                $str_inv_address = trim(str_replace('LeftMainContent__projectDetail_EnterpriseInfo1_lblAddress">Địa chỉ</span>:', '', $str_inv_address));
+                $inv_address = substr($str_inv_address, 0, strpos($str_inv_address, '</li>'));
+                if(empty($inv_address))
+                    $inv_address = substr($str_inv_address, 0, strpos($str_inv_address, '</div>'));
+                $investor["address"] = html_entity_decode(trim($inv_address), ENT_HTML5, 'utf-8');
+
+                // investor phone
+                $str_inv_phone = substr($str_inv_detail, strpos($str_inv_detail, 'LeftMainContent__projectDetail_EnterpriseInfo1_lblPhone">Điện thoại</span>:'));
+                $str_inv_phone = trim(str_replace('LeftMainContent__projectDetail_EnterpriseInfo1_lblPhone">Điện thoại</span>:', '', $str_inv_phone));
+                $str_inv_phone_li = substr($str_inv_phone, 0, strpos($str_inv_phone, '</li>'));
+                $inv_phone = substr($str_inv_phone_li, 0, strpos($str_inv_phone_li, '|'));
+                if(empty($str_inv_phone_li)) {
+                    $inv_phone = substr($str_inv_phone, 0, strpos($str_inv_phone, '|'));
+                }
+                $investor["phone"] = trim($inv_phone);
+
+                // investor fax
+                $str_inv_fax = substr($str_inv_phone, strpos($str_inv_phone, 'LeftMainContent__projectDetail_EnterpriseInfo1_lblFax">Fax</span>:'));
+                $str_inv_fax = trim(str_replace('LeftMainContent__projectDetail_EnterpriseInfo1_lblFax">Fax</span>:', '', $str_inv_fax));
+                $inv_fax = substr($str_inv_fax, 0, strpos($str_inv_fax, '</li>'));
+                if(empty($inv_fax))
+                    $inv_fax = substr($str_inv_fax, 0, strpos($str_inv_fax, '</div>'));
+                $investor['fax'] = trim($inv_fax);
+
+                // investor website
+                $str_inv_web = substr($str_inv_detail, strpos($str_inv_detail, 'LeftMainContent__projectDetail_EnterpriseInfo1_hplWebpage" title="'));
+                $str_inv_web = trim(str_replace('LeftMainContent__projectDetail_EnterpriseInfo1_hplWebpage" title="', '', $str_inv_web));
+                //">
+                $str_inv_web = substr($str_inv_web, strpos($str_inv_web, '">'));
+                $str_inv_web = trim(str_replace('">', '', $str_inv_web));
+                //</span>
+                $inv_web = substr($str_inv_web, 0, strpos($str_inv_web, '</span>'));
+                $investor['website'] = trim($inv_web);
+
+                // investor email
+                $email = substr($str_inv_detail, strpos($str_inv_detail, "var attr = '"));
+                $email = str_replace("var attr = '", "", $email);
+                $email = substr($email, 0, strpos($email, "var txt ="));
+                $email = str_replace("';", "", $email);
+                $email = trim(html_entity_decode($email));
+                $investor["email"] = $email;
+
+            }
+
+            $pre_fix = substr($detail_innertext, 0, strpos($detail_innertext, 'hdLat'));
+            $str_detail = str_replace($pre_fix . "hdLat", "", $detail_innertext);
+            $str_detail = substr($str_detail, 0, strpos($str_detail, "RightMainContent__projectSearchbox_btnSearch"));
+
+            // parse Lat
+            if(empty($lat)) {
+                $str_lat = substr($str_detail, strpos($str_detail, '" id="hdLat" value="'));
+                $str_lat = str_replace($str_lat . '" id="hdLat" value="', '', $str_detail);
+                $lat = substr($str_lat, 0, strpos($str_lat, '" />'));
+                $lat = str_replace('" id="hdLat" value="', '', $lat);
+            }
+
+            // parse Lng
+            if(empty($long)) {
+                $str_lng = substr($str_detail, strpos($str_detail, '" id="hdLong" value="'));
+                $str_lng = str_replace($str_lng . '" id="hdLong" value="', '', $str_lng);
+                $long = substr($str_lng, 0, strpos($str_lng, '" />'));
+                $long = str_replace('" id="hdLong" value="', '', $long);
+            }
+
+            // parse Address
+            if(empty($address)) {
+                $str_address = substr($str_detail, strpos($str_detail, '" id="hdAddress" value="'));
+                $str_address = str_replace($str_address . '" id="hdAddress" value="', '', $str_address);
+                $address = substr($str_address, 0, strpos($str_address, '" />'));
+                $address = str_replace('" id="hdAddress" value="', '', $address);
+            }
+
+            // parse Investment Type
+            if(empty($inv_type)) {
+                $str_inv_type = substr($str_detail, strpos($str_detail, 'id="divCatagoryOptions"'));
+                $str_inv_type = substr($str_inv_type, strpos($str_inv_type, 'advance-options current">'));
+                $str_inv_type = substr($str_inv_type, 0, strpos($str_inv_type, '</li>'));
+                $inv_type = str_replace('advance-options current">', '', $str_inv_type);
+                $inv_type = html_entity_decode(trim($inv_type), ENT_HTML5, 'utf-8');
+            }
+
+            // parse City
+            if(empty($city)) {
+                $str_city = substr($str_detail, strpos($str_detail, 'id="divCityOptions"'));
+                $str_city = substr($str_city, strpos($str_city, 'advance-options current">'));
+                $str_city = substr($str_city, 0, strpos($str_city, '</li>'));
+                $city = str_replace('advance-options current">', '', $str_city);
+                $city = html_entity_decode(trim($city), ENT_HTML5, 'utf-8');
+            }
+
+            // parse District
+            if(empty($district)) {
+                $str_district = substr($str_detail, strpos($str_detail, 'id="divDistrictOptions"'));
+                $str_district = substr($str_district, strpos($str_district, 'advance-options current">'));
+                $str_district = substr($str_district, 0, strpos($str_district, '</li>'));
+                $district = str_replace('advance-options current">', '', $str_district);
+                $district = html_entity_decode(trim($district), ENT_HTML5, 'utf-8');
+            }
 
             $hotline = $detail->find('.prjinfo li', 2)->innertext;
             if(!empty($hotline)) {
@@ -403,6 +481,7 @@ class ImportProject extends Component
             $slug = trim($slug);
             $slug = substr($slug, 1, strpos($slug, "-pj")-1);
 
+            $logoTop = $detail->find('.prjava img', 0)->src;
             $general = $detail->find('#detail .a1', 0);
             $imgGeneral = $general->find('img', 0);
             if(empty($imgGeneral))
@@ -413,54 +492,6 @@ class ImportProject extends Component
             $description = $general->innertext;
             $description = trim(strip_tags($description));
             $description = trim(StringHelper::truncate($description, 1000));
-
-            $investor_name = trim($detail->find('#enterpriseInfo h3', 0)->plaintext);
-            $investor = array();
-            if($investor_name){
-                $investor["name"] = $investor_name;
-                $investor_desc = $detail->find('.info .d11 img', 0)->src;
-                $investor["logo"] = strpos($investor_desc, "no-photo") == true ? null : $investor_desc;
-                $investor_info = $detail->find('.info .d12 ul li');
-                if(count($investor_info) > 0){
-                    if(!empty($investor_info[0])) {
-                        $investor_address = trim($investor_info[0]->plaintext);
-                        $investor_address = trim(str_replace("Địa chỉ :", "", $investor_address));
-                        $investor_address = $investor_address == "Đang cập nhật" ? null : $investor_address;
-                        $investor["address"] = $investor_address;
-                    }
-
-                    if(!empty($investor_info[1])) {
-                        $investor_phone_fax = trim($investor_info[1]->plaintext);
-                        $investor_phone_fax = trim(str_replace("Điện thoại :", "", $investor_phone_fax));
-
-                        $investor_phone = trim(substr($investor_phone_fax, 0, strpos($investor_phone_fax, "|")));
-                        $investor_phone = $investor_phone == "Đang cập nhật" ? null : $investor_phone;
-                        $investor["phone"] = $investor_phone;
-
-                        $investor_fax = trim(substr($investor_phone_fax, strpos($investor_phone_fax, "Fax"), strlen($investor_phone_fax)-1));
-                        $investor_fax = trim(str_replace("Fax :", "", $investor_fax));
-                        $investor_fax = $investor_fax == "Đang cập nhật" ? null : $investor_fax;
-                        $investor["fax"] = $investor_fax;
-                    }
-
-                    if(!empty($investor_info[2])) {
-                        $investor_web = trim($investor_info[2]->plaintext);
-                        $investor_web = trim(str_replace("Website :", "", $investor_web));
-                        $investor_web = $investor_web == "Đang cập nhật" ? null : $investor_web;
-                        $investor["website"] = $investor_web;
-                    }
-
-                    if(!empty($investor_info[3])) {
-                        $str_email = trim($investor_info[3]->innertext);
-                        $email = substr($str_email, strpos($str_email, "var attr = '"));
-                        $email = str_replace("var attr = '", "", $email);
-                        $email = substr($email, 0, strpos($email, "var txt ="));
-                        $email = str_replace("';", "", $email);
-                        $email = trim(html_entity_decode($email));
-                        $investor["email"] = $email;
-                    }
-                }
-            }
 
             $data_html = array();
             $editors = $detail->find('#detail .editor');
@@ -487,14 +518,15 @@ class ImportProject extends Component
                 'investment_type' => $inv_type,
                 'hotline' => $hotline == "Đang cập nhật" ? null : $hotline,
                 'website' => $website == "Đang cập nhật" ? null : $website,
-                'lng' => $long,
-                'lat' => $lat,
+                'lng' => number_format(floatval($long), 6, '.', ''),
+                'lat' => number_format(floatval($lat), 6, '.', ''),
                 'slug' => $slug,
                 'status' => 1,
                 'created_at' => time(),
                 'data_html' => json_encode($data_html),
                 'investor' => $investor,
             ];
+
             return $json;
         }
         return null;
@@ -661,12 +693,117 @@ class ImportProject extends Component
         return null;
     }
 
-    public function getProjectBySlug($slug){
-        $project = AdBuildingProject::find()->select(['id', 'name', 'slug', 'district_id'])->where('slug = :s', [':s' => $slug])->one();
+    public function getProject($city_id, $district_id, $name, $lat, $lng){
+        $sql_where = "CAST(lat AS decimal) = CAST({$lat} AS decimal) and CAST(lng AS decimal) = CAST({$lng}  AS decimal) ";
+        $project = AdBuildingProject::find()->select(['id', 'name', 'slug'])
+            ->where([
+                'city_id' => $city_id,
+                'district_id' => $district_id,
+                'name' => $name
+            ])
+            ->andWhere($sql_where)
+            ->one();
         if(count($project) > 0){
             return $project;
         }
         return null;
+    }
+
+    public function updateProjectTool($limit=300){
+        $query = AdBuildingProject::find()->where('project_main_id = :pid', [':pid' => 0])
+            ->andWhere("city_id is null or district_id is null");
+        $count = (int)$query->count('id');
+        if($count > 0) {
+            $path = Yii::getAlias('@console') . "/data/bds_html/projects/";
+            $models = $query->limit($limit)->orderBy(['id' => SORT_ASC])->all();
+            $wards = AdWard::getDb()->cache(function (){
+                return AdWard::getDb()->createCommand("SELECT id, name, district_id FROM `ad_ward`")->queryAll();
+            });
+            $streets = AdStreet::getDb()->cache(function () {
+                return AdStreet::getDb()->createCommand("SELECT id, name, district_id FROM `ad_street`")->queryAll();
+            });
+            foreach($models as $model){
+                $arrFile = explode("/", $model->file_name);
+                $type = $arrFile[0];
+                $filename = $arrFile[1];
+                $filePath = $path. $type. "/files/". $filename;
+                if(file_exists($filePath)){
+                    $value = $this->parseProjectDetail($path. $type.  "/files/", $filename);
+                    $city = $value[$filename]["city"];
+                    $district = $value[$filename]["district"];
+
+                    if(empty($city) || empty($district)){
+                        $toFolder = $path."import/error/".$type."/";
+                        if(!is_dir($toFolder)){
+                            mkdir($toFolder, 0777, true);
+                            print_r("\nMake Project Error Folder");
+                        }
+                        $re = copy($filePath, $toFolder.$filename);
+                        if($re) {
+                            print_r("\n{$model->file_name} cannot find city or district");
+                            continue;
+                        }
+                    }
+
+                    $city_result = Helpers::getCityId($city);
+                    if($city_result == 500){
+                        $toFolder = $path."import/error/".$type."/";
+                        if(!is_dir($toFolder)){
+                            mkdir($toFolder, 0777, true);
+                            print_r("\nMake Error Folder City {$filename}");
+                        }
+                        copy($filePath, $toFolder.$filename);
+                    }
+                    $city_id = isset($city_result['id']) ? (int)$city_result['id'] : 0;
+                    $district_id = 0;
+                    if($city_id > 0){
+                        $model->city_id = $city_id;
+                        $district_result = Helpers::getDistrictId($district, $city_id);
+                        if($district_result == 500){
+                            $toFolder = $path."import/error/".$type."/";
+                            if(!is_dir($toFolder)){
+                                mkdir($toFolder, 0777, true);
+                                print_r("\nMake Error Folder District {$filename}");
+                            }
+                            copy($filePath, $toFolder.$filename);
+                        }
+                        $district_id = isset($district_result['id']) ? (int)$district_result['id'] : 0;
+                    }
+
+                    if($city_id == 0 || $district_id == 0){
+                        continue;
+                    }
+                    $model->district_id = $district_id;
+
+                    if(!empty($value[$filename]['investment_type']))
+                        $model->investment_type = $value[$filename]['investment_type'];
+
+                    if(!empty($value[$filename]['lat']))
+                        $model->lat = $value[$filename]['lat'];
+
+                    if(!empty($value[$filename]['lng']))
+                        $model->lng = $value[$filename]['lng'];
+
+                    $location = $value[$filename]["location"];
+                    if(!empty($location))
+                        $model->location = $location;
+
+                    $ws = $this->getWardAndStreet($location, $streets, $wards, $district_id);
+                    if (count($ws) > 0) {
+                        $model->street_id = (int)(isset($ws["street_id"]) && !empty($ws["street_id"])) ? $ws["street_id"] : null;
+                        if(empty($model->street_id) && $model->name == "Cape Pearl" && $city_id == 1 && $district_id == 3)
+                            $model->street_id = 587; // Thanh Đa
+
+                        $model->ward_id = (int)(isset($ws["ward_id"]) && !empty($ws["ward_id"])) ? $ws["ward_id"] : null;
+                        $model->home_no = (int)(isset($ws["home_no"]) && !empty($ws["home_no"])) ? $ws["home_no"] : null;
+                    }
+
+                    if($model->save(false)){
+                        print_r("\nUpdated Tool ID: {$model->id} - {$model->file_name}");
+                    }
+                }
+            }
+        }
     }
 
 }
