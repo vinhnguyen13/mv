@@ -66,7 +66,7 @@ class Avg extends Component
             print_r(PHP_EOL);
             print_r("Index Q1: $idx_Q1" . " --> Q1: " . ($Q1));
             print_r(PHP_EOL);
-            print_r("Index Q1: $idx_Q3" . " --> Q3: " . ($Q3));
+            print_r("Index Q3: $idx_Q3" . " --> Q3: " . ($Q3));
             print_r(PHP_EOL);
             print_r("IQR = Q3 - Q1 = " . ($INTERQUARTILE_RANGE));
             echo "</pre>";

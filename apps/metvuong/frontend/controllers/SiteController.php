@@ -9,6 +9,7 @@ use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\Tracking;
 use funson86\cms\models\Status;
+use vsoft\ad\models\AdCategoryGroup;
 use vsoft\news\models\CmsShow;
 use Yii;
 use yii\base\Exception;
@@ -381,7 +382,10 @@ class SiteController extends Controller
 			}
 			$category = Yii::$app->request->post('category');
 			if(!empty($category)){
-				$where[] = "category_id = $category";
+				$categoryGroup = AdCategoryGroup::findOne($category);
+				if(!empty($categoryGroup->categories_id) && is_array($categoryGroup->categories_id)) {
+					$where[] = "category_id IN (".implode(',', $categoryGroup->categories_id).") ";
+				}
 			}
 			$project_building_id = Yii::$app->request->post('project_building_id');
 			if(!empty($project_building_id)){

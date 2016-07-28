@@ -23,11 +23,15 @@ $citiesDropdown = ArrayHelper::map(AdCity::find()->all(), 'id', 'name');
 
 $districtDropdown = ArrayHelper::map(AdDistrict::find()->all(), 'id', 'name');
 
-$categories = AdCategory::find()->orderBy('order')->all();
-foreach ($categories as $category) {
+$groupCategories = Yii::$app->db->cache(function(){
+    return \vsoft\ad\models\AdCategoryGroup::find()->all();
+});
+foreach ($groupCategories as $category) {
     $categoriesDropDown[$category->id] = ucfirst(Yii::t('ad', $category->name));
 }
-//$categoriesDropDown = ArrayHelper::map($categories, 'id', 'name');
+$groupCategories = Yii::$app->db->cache(function(){
+    return \vsoft\ad\models\AdCategoryGroup::find()->all();
+});
 ?>
 <div class="title-fixed-wrap container">
     <div class="tool-cacu">
