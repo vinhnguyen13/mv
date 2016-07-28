@@ -201,7 +201,7 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
             return hData;
         }
     </script>
-
+    <?=$data['list_price']?>
     <?php
 }
 ?>
