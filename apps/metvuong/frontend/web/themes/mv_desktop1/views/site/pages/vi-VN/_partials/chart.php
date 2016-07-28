@@ -77,7 +77,7 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
         var pointStart = d.getTime();
         var chart,
             binnedData,
-            rawData = [<?=$data['list_price']?>];
+            rawData = [<?=$data['list_price_new']?>];
         binnedData = binData(rawData);
         console.log(binnedData);
         $(function() {
