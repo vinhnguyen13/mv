@@ -418,14 +418,14 @@ class SiteController extends Controller
 			$return = ArrayHelper::merge($result, $resultTotal);
 			if(!empty($return['list_price'])) {
 				$arrPrice = explode(',', $return['list_price']);
-				$dataChart = \frontend\models\Avg::me()->calculation_boxplot($arrPrice);
+				$dataChart = \frontend\models\Avg::me()->calculation_boxplot($arrPrice, YII_DEBUG);
 				$exclude_outlier = 3 * $dataChart['IQR'];
 				$newArrPrice = array_filter($arrPrice, function($element) use ($exclude_outlier, $dataChart) {
 					if($element > ($dataChart['q1']-$exclude_outlier) && $element < ($dataChart['q3']+$exclude_outlier)) {
 						return $element;
 					}
 				});
-				$dataChart2 = \frontend\models\Avg::me()->calculation_boxplot($newArrPrice);
+				$dataChart2 = \frontend\models\Avg::me()->calculation_boxplot($newArrPrice, YII_DEBUG);
 				$data = ArrayHelper::merge($return, ['dataChart'=>$dataChart2, 'list_price_new'=>implode(',',$newArrPrice)]);
 				$data['average_old'] = array_sum($arrPrice) / count($arrPrice);
 				$data['average_new'] = array_sum($newArrPrice) / count($newArrPrice);

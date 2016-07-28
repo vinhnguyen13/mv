@@ -19,7 +19,7 @@ class Avg extends Component
         return Yii::createObject(self::className());
     }
 
-    public function calculation_boxplot($arr){
+    public function calculation_boxplot($arr, $test = false){
         sort($arr);
         $n = count($arr);
 
@@ -47,38 +47,30 @@ class Avg extends Component
             $Q3 = $arr[$_index] + (($arr[$_index+1] - $arr[$_index]) * $_percent);
         }
         $INTERQUARTILE_RANGE = $Q3-$Q1;
-        $average_of_foo = array_sum($arr) / $n;
-        /*echo "<pre>";
-        print_r(PHP_EOL);
-        print_r("List: " . implode(',', $arr));
-        print_r(PHP_EOL);
-        print_r(PHP_EOL);
-        print_r("n: " . $n);
-        print_r(PHP_EOL);
-        print_r("(n+1)/2: " . ($n + 1) / 2);
-        print_r(PHP_EOL);
-        print_r("(n+1)/4: " . ($n + 1) / 4);
-        print_r(PHP_EOL);
-        print_r("3*(n+1)/2: " . (3 * ($n + 1)) / 4);
-        print_r(PHP_EOL);
-        print_r(PHP_EOL);
-        print_r("Total: ".number_format(array_sum($arr)));
-        print_r(PHP_EOL);
-        print_r("1. Avg: ".number_format($average_of_foo));
 
-        print_r(PHP_EOL);
-        print_r("2. Boxplot");
-        print_r(PHP_EOL);
-        print_r("2.b Median M=x((n+1)/2): " . ($M));
-        print_r(PHP_EOL);
-        print_r("2.d FIRST QUARTILE & THIRD QUARTILE");
-        print_r(PHP_EOL);
-        print_r("Index Q1: $idx_Q1" . ", Q1: " . ($Q1));
-        print_r(PHP_EOL);
-        print_r("Index Q1: $idx_Q3" . ", Q3: " . ($Q3));
-        print_r(PHP_EOL);
-        print_r("Q3 - Q1 = " . ($INTERQUARTILE_RANGE));
-        echo "</pre>";*/
+        if($test == true) {
+            echo "<pre>";
+            print_r(PHP_EOL);
+            print_r("List: " . implode(',', $arr));
+            print_r(PHP_EOL);
+            print_r("n: " . $n);
+            print_r(PHP_EOL);
+            print_r("Total: ".number_format(array_sum($arr)));
+            print_r(PHP_EOL);
+            print_r("Avg: ".array_sum($arr) / $n);
+            print_r(PHP_EOL);
+            print_r(PHP_EOL);
+            print_r("----Boxplot---");
+            print_r(PHP_EOL);
+            print_r("Index Median: $idx_M  --> M: " . ($M));
+            print_r(PHP_EOL);
+            print_r("Index Q1: $idx_Q1" . " --> Q1: " . ($Q1));
+            print_r(PHP_EOL);
+            print_r("Index Q1: $idx_Q3" . " --> Q3: " . ($Q3));
+            print_r(PHP_EOL);
+            print_r("IQR = Q3 - Q1 = " . ($INTERQUARTILE_RANGE));
+            echo "</pre>";
+        }
 
         return [
             'low'=>!empty($arr[0]) ? intval($arr[0]) : 0,
