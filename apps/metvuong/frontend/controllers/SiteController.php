@@ -416,7 +416,20 @@ class SiteController extends Controller
 
 //			Yii::$app->response->format = Response::FORMAT_JSON;
 			$return = ArrayHelper::merge($result, $resultTotal);
-			return $this->renderAjax('/site/pages/vi-VN/_partials/chart', ['data'=>$return]);
+			if(!empty($return['list_price'])) {
+				$arrPrice = explode(',', $return['list_price']);
+				$dataChart = \frontend\models\Avg::me()->calculation_boxplot($arrPrice);
+				$exclude_outlier = 1.5 * $dataChart['IQR'];
+				$newArrPrice = array_filter($arrPrice, function($element) use ($exclude_outlier, $dataChart) {
+					if($element > ($dataChart['q1']-$exclude_outlier) && $element < ($dataChart['q3']+$exclude_outlier)) {
+						return $element;
+					}
+				});
+				$dataChart2 = \frontend\models\Avg::me()->calculation_boxplot($newArrPrice);
+				$data = ArrayHelper::merge($return, ['dataChart'=>$dataChart2, 'list_price_new'=>implode(',',$newArrPrice)]);
+				$output = $this->renderAjax('/site/pages/vi-VN/_partials/chart', ['data'=>$data]);
+			}
+			return $output;
 		}
 	}
 

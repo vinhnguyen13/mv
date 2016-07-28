@@ -1,7 +1,5 @@
 <?php
 if(!empty($data['total']) && !empty($data['list_price'])) {
-    $dataChart = explode(',', $data['list_price']);
-    $dataChart = \frontend\models\Avg::me()->calculation_boxplot($dataChart);
     ?>
     <table class="savings-tbl">
         <tbody>
@@ -22,13 +20,8 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
     <div id="chartBoxplot" style="width: 400px; height: 400px; margin: 0 auto"></div>
     <script>
         $(function () {
-            var list_price = <?=json_encode($dataChart)?>;
-            var ArrayData = $.map(list_price, function (value) {
-                return parseInt(value, 10);
-                // or return +value; which handles float values as well
-            });
-            loadChart([ArrayData]);
-            function loadChart(data) {
+            loadChart();
+            function loadChart() {
                 $('#chartBoxplot').highcharts({
                     chart: {
                         type: 'boxplot'
@@ -70,7 +63,7 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
                     },
                     series: [{
                         name: 'Observations',
-                        data: [<?=json_encode($dataChart)?>]
+                        data: [<?=json_encode($data['dataChart'])?>]
                     }]
 
                 });
@@ -201,7 +194,12 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
             return hData;
         }
     </script>
-    <?=$data['list_price']?>
+    <p>
+        <?=$data['list_price']?>
+    </p>
+    <p>
+        <?=$data['list_price_new']?>
+    </p>
     <?php
 }
 ?>

@@ -53,7 +53,8 @@ class Avg extends Component
             'q1'=>($Q1),
             'median'=>($M),
             'q3'=>($Q3),
-            'high'=>!empty($arr[$n-1]) ? intval($arr[$n-1]) : 0
+            'high'=>!empty($arr[$n-1]) ? intval($arr[$n-1]) : 0,
+            'IQR'=>$INTERQUARTILE_RANGE
         ];
     }
 
