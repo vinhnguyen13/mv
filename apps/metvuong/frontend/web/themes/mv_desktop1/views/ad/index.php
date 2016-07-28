@@ -32,6 +32,12 @@ use vsoft\ad\models\TrackingSearch;
 	$detr = TrackingSearch::DELAY_TRACKING * 1000;
 	$sortMapping = json_encode(array_flip(MapSearch::sortSlugMapping()));
 	
+	if(isset($_GET['qs'])) {
+		$referer = 1;
+	} else {
+		$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+	}
+
 	$script = <<<EOD
 	var resources = ['$resourceHistoryJs', '$resourceListingMap', '$resourceApi'];
 	var actionId = '$actionId';
@@ -40,6 +46,7 @@ use vsoft\ad\models\TrackingSearch;
 	var catsSlug = $slugCatsMap;
 	var sortMapping = $sortMapping;
 	var detr = $detr;
+	var referer = '$referer';
 EOD;
 	
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl.'/resources/css/map.css');

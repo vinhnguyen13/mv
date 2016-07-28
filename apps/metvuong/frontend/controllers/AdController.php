@@ -360,6 +360,19 @@ class AdController extends Controller
     		parse_str($payload, $params);
     		
     		$params['location'] = Yii::$app->request->post('location');
+    		$params['is_mobile'] = Yii::$app->request->post('is_mobile');
+    		
+    		if(($referer = Yii::$app->request->post('referer'))) {
+    			$params['referer'] = $referer;
+    			
+    			if($referer != '1') {
+    				$parseReferer = parse_url($referer);
+    				
+    				if($_SERVER['SERVER_NAME'] == $parseReferer['host']) {
+    					$params['referer'] = $parseReferer['path'];
+    				}
+    			}
+    		}
     		
     		TrackingSearch::track($params);
     	}

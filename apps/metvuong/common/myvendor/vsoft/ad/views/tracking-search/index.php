@@ -89,6 +89,37 @@ $type = AdProduct::getAdTypes();
     			},
     			'filter' => Html::activeDropDownList($searchModel, 'order_by', $mapSort, ['class' => 'form-control', 'prompt' => 'Chọn loại sắp xếp'])
         	],
+        	[
+        		'attribute' => 'is_mobile',
+        		'value' => function($model) use ($mapSort) {
+        			return $model->is_mobile ? 'yes' : 'no';
+    			},
+    			'filter' => Html::activeDropDownList($searchModel, 'is_mobile', ['0' => 'no', '1' => 'yes'], ['class' => 'form-control', 'prompt' => 'all'])
+        	],
+        	[
+        		'attribute' => 'referer',
+        		'value' => function($model) use ($mapSort) {
+        			if($model->referer == '1') {
+        				$a = 'Search nhanh';
+        			} else if($model->referer == '/') {
+        				$a = 'Trang Home';
+        			} else if(\yii\helpers\StringHelper::startsWith($model->referer, '/')) {
+        				$a = $model->referer;
+        			} else if(\yii\helpers\StringHelper::startsWith($model->referer, 'http')) {
+        				$a = 'Site khác';
+        			} else {
+        				$a = 'Search tại trang';
+        			}
+        			return $a;
+    			},
+    			'filter' => Html::activeDropDownList($searchModel, 'referer', [
+    				'/' => 'Trang Home',
+    				'1' => 'Search nhanh',
+    				'2' => 'Search tại trang',
+    				'3' => 'Trang khác trong M2',
+    				'4' => 'Site khác',
+    			], ['class' => 'form-control', 'prompt' => 'all'])
+        	],
         	'created_at:datetime'
         ],
     ]); ?>
