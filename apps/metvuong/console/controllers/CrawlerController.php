@@ -140,6 +140,9 @@ class CrawlerController extends Controller
             print_r("\n How many listing to copy? \n Ex: php yii crawler/copytomain -valid=1 -limit=1\n");
         }
     }
+    public function actionUpdateProductTool(){
+        ImportListing::find()->updateProductTool();
+    }
 
     // Agent Batdongsan
     public function actionAgentbatdongsan()
@@ -167,8 +170,7 @@ class CrawlerController extends Controller
         CopyProject::find()->copyProjects($limit);
     }
     public function actionUpdateProjectTool(){
-        $limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
-        ImportProject::find()->updateProjectTool($limit);
+        ImportProject::find()->updateProjectTool();
     }
 
     // db chinh

@@ -424,6 +424,8 @@ class ImportListing extends Component
                         }
                         $content = str_replace('<br/>', PHP_EOL, $content);
                         $content = trim($content);
+                    } else {
+                        $content = 'Tin đang cập nhật.';
                     }
 
                     $record = [
@@ -567,4 +569,117 @@ class ImportListing extends Component
         }
 
     }
+
+    // update lai product tool ko co city, district
+    public function updateProductTool()
+    {
+        $query = AdProduct::find()->where("city_id is null and district_id is null");
+        $count_product = (int)$query->count('id');
+        if($count_product > 0) {
+            $products = $query->select(['file_name'])->orderBy(['file_name' => SORT_ASC])->asArray()->all();
+            $path_folder = Yii::getAlias('@console') . "/data/bds_html/";
+            $in_products = ArrayHelper::getColumn($products, 'file_name');
+            $product_files = AdProductFile::find()->where(['IN', 'file', $in_products])->all();
+            if(count($product_files) > 0) {
+                $no = 1;
+                foreach ($product_files as $product_file) {
+                    $filename = $product_file->file;
+                    $filepath = $path_folder.$product_file->path."/".$filename;
+                    if(file_exists($filepath)){
+                        print_r("\n{$no} {$product_file->path}: {$filename}");
+                        $value = $this->parseDetail($filepath);
+                        if (empty($value)) {
+                            print_r(" Error: no content\n");
+                            continue;
+                        }
+
+                        $product_type = strpos($product_file->path, 'nha-dat-ban') ? 1 : 2;
+                        $project_id = null;
+                        $city_id = null;
+                        $district_id = null;
+
+                        $ad_city = Helpers::getCityId($value[$filename]["city"]);
+                        if (count($ad_city) > 0) {
+                            $city_id = (int)$ad_city['id'];
+                            $district = Helpers::getDistrictId($value[$filename]["district"], $city_id);
+                            if (count($district) > 0) {
+                                $district_id = (int)$district['id'];
+                            }
+                        }
+
+                        $ward_id = $this->getWardId2($value[$filename]["ward"], $district_id);
+                        $street_id = $this->getStreetId2($value[$filename]["street"], $district_id);
+                        $home_no = $value[$filename]["home_no"];
+
+                        $lat = $value[$filename]["lat"];
+                        $lng = $value[$filename]["lng"];
+
+                        $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
+                        // neu co du an thi lay dia chi cua du an gan cho tin dang
+                        if (!empty($project_name)) {
+                            $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
+                            if (count($project) > 0) {
+                                $project_id = $project->id;
+                                $city_id = $project->city_id;
+                                $district_id = $project->district_id;
+                                $ward_id = $project->ward_id;
+                                $street_id = $project->street_id;
+                                $home_no = $project->home_no;
+                                $lat = $project->lat;
+                                $lng = $project->lng;
+                                print_r(" - " . $project_name);
+                            }
+                        }
+
+                        $area = $value[$filename]["dientich"];
+                        $price = $value[$filename]["price"];
+                        $content = null;
+                        $desc = $value[$filename]["description"];
+                        if (!empty($desc)) {
+                            $content = strip_tags($desc, '<br>');
+                            $pos = strpos($content, 'Tìm kiếm theo từ khóa');
+                            if ($pos) {
+                                $content = substr($content, 0, $pos);
+                                $content = str_replace('Tìm kiếm theo từ khóa', '', $content);
+                            }
+                            $content = str_replace('<br/>', PHP_EOL, $content);
+                            $content = trim($content);
+                        } else {
+                            $content = 'Tin đang cập nhật';
+                        }
+
+                        $product = AdProduct::find()->where(['id' => (int)$product_file['product_tool_id'], 'file_name' => $filename])->one();
+                        if(count($product) > 0){
+                            if(empty($product->city_id))
+                                $product->city_id = $city_id;
+
+                            if(empty($product->district_id))
+                                $product->district_id = $district_id;
+
+                            if(empty($product->ward_id))
+                                $product->ward_id = $ward_id;
+
+                            if(empty($product->street_id))
+                                $product->street_id = $street_id;
+
+                            $product->project_building_id = $project_id;
+                            $product->type = $product_type;
+                            $product->home_no = $home_no;
+                            $product->lat = $lat;
+                            $product->lng = $lng;
+                            $product->product_main_id = 0;
+                            $product->area = $area;
+                            $product->price = $price;
+                            $product->content = $content;
+                            if($product->save(false)){
+                                $no++;
+                                print_r(" - updated.");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }
