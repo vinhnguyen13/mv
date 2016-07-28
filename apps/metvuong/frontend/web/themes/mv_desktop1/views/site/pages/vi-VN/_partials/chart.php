@@ -81,7 +81,7 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
         var pointStart = d.getTime();
         var chart,
             binnedData,
-            rawData = [<?=$data['list_price_new']?>];
+            rawData = [<?=implode(',',$data['list_price_new'])?>];
         binnedData = binData(rawData);
         console.log(binnedData);
         $(function() {
@@ -199,11 +199,13 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
         }
     </script>
     <?php if(YII_DEBUG): ?>
-    <p>
-        <?=$data['list_price']?>
+    <p style="max-height: 500px; width: 200px; overflow: scroll;float: left;">
+        <label>Price OLD</label><br>
+        <?=implode('<br>',$data['list_price'])?>
     </p>
-    <p>
-        <?=$data['list_price_new']?>
+    <p style="max-height: 500px; width: 200px; overflow: scroll;float: left;">
+        <label>Price NEW</label><br>
+        <?=implode('<br>',$data['list_price_new'])?>
     </p>
     <?php endif?>
     <?php

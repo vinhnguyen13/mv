@@ -404,7 +404,7 @@ class SiteController extends Controller
 				}
 			}
 			Yii::$app->dbCraw->createCommand('SET group_concat_max_len = 5000000')->execute();
-			$sql = "SELECT SUM(price) as sum, SUM(area) as sum_area, COUNT(*) as total, GROUP_CONCAT(CAST(price/1000000 AS UNSIGNED) ORDER BY price ASC) as list_price FROM ad_product";
+			$sql = "SELECT SUM(price) as sum, SUM(area) as sum_area, COUNT(*) as total, GROUP_CONCAT(CAST(price/1000000 AS UNSIGNED) ORDER BY price ASC) as listprice FROM ad_product";
 			$conditionTotal = $condition = '';
 			if(!empty($where)){
 				$condition .= " WHERE ".implode(' AND ', $where);
@@ -416,8 +416,8 @@ class SiteController extends Controller
 
 //			Yii::$app->response->format = Response::FORMAT_JSON;
 			$return = ArrayHelper::merge($result, $resultTotal);
-			if(!empty($return['list_price'])) {
-				$arrPrice = explode(',', $return['list_price']);
+			if(!empty($return['listprice'])) {
+				$arrPrice = explode(',', $return['listprice']);
 				$dataChart = \frontend\models\Avg::me()->calculation_boxplot($arrPrice, YII_DEBUG);
 				$exclude_outlier = 3 * $dataChart['IQR'];
 				$newArrPrice = array_filter($arrPrice, function($element) use ($exclude_outlier, $dataChart) {
@@ -426,7 +426,7 @@ class SiteController extends Controller
 					}
 				});
 				$dataChart2 = \frontend\models\Avg::me()->calculation_boxplot($newArrPrice, YII_DEBUG);
-				$data = ArrayHelper::merge($return, ['dataChart'=>$dataChart2, 'list_price_new'=>implode(',',$newArrPrice)]);
+				$data = ArrayHelper::merge($return, ['dataChart'=>$dataChart2, 'list_price'=>$arrPrice, 'list_price_new'=>$newArrPrice]);
 				$data['average_old'] = array_sum($arrPrice) / count($arrPrice);
 				$data['average_new'] = array_sum($newArrPrice) / count($newArrPrice);
 				$output = $this->renderAjax('/site/pages/vi-VN/_partials/chart', ['data'=>$data]);
