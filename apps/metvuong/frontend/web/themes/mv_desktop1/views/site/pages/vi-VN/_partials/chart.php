@@ -56,13 +56,13 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
                             fillColor: '#F0F0E0',
                             lineWidth: 2,
                             medianColor: '#0C5DA5',
-                            medianWidth: 43.5,
+                            medianWidth: 3,
                             stemColor: '#A63400',
                             stemDashStyle: 'dot',
                             stemWidth: 1,
                             whiskerColor: '#3D9200',
                             whiskerLength: '20%',
-                            whiskerWidth: 43.5
+                            whiskerWidth: 3
                         }
                     },
                     series: [{
