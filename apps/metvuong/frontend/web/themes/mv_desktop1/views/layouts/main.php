@@ -37,7 +37,7 @@ $this->registerCss("#popup-campain .error {display: none;} #popup-campain .has-e
 
     <div id="alert-noti"></div>
 
-    <?php if(Yii::$app->user->isGuest && empty($_COOKIE['rit']) ): ?>
+    <?php if(!empty(Yii::$app->params['register-in-time']) && (Yii::$app->user->isGuest && empty($_COOKIE['rit']))): ?>
     <div id="popup-campain" class="modal popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
