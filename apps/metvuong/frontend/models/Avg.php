@@ -19,10 +19,9 @@ class Avg extends Component
         return Yii::createObject(self::className());
     }
 
-    public function calculation($arr){
+    public function calculation_boxplot($arr){
         sort($arr);
         $n = count($arr);
-        $average_of_foo = array_sum($arr) / $n;
 
         $idx_M = ($n+1)/2;
         if(!is_float($idx_M)){
@@ -48,41 +47,7 @@ class Avg extends Component
             $Q3 = $arr[$_index] + (($arr[$_index+1] - $arr[$_index]) * $_percent);
         }
         $INTERQUARTILE_RANGE = $Q3-$Q1;
-        if(!Yii::$app->request->isAjax){
-            echo "<pre>";
-            print_r(PHP_EOL);
-            print_r("List: " . implode(',', $arr));
-            print_r(PHP_EOL);
-            print_r(PHP_EOL);
-            print_r("n: " . $n);
-            print_r(PHP_EOL);
-            print_r("(n+1)/2: " . ($n + 1) / 2);
-            print_r(PHP_EOL);
-            print_r("(n+1)/4: " . ($n + 1) / 4);
-            print_r(PHP_EOL);
-            print_r("3*(n+1)/2: " . (3 * ($n + 1)) / 4);
-            print_r(PHP_EOL);
-            print_r(PHP_EOL);
-            print_r("Total: ".number_format(array_sum($arr)));
-            print_r(PHP_EOL);
-            print_r("1. Avg: ".number_format($average_of_foo));
-
-            print_r(PHP_EOL);
-            print_r("2. Boxplot");
-            print_r(PHP_EOL);
-            print_r("2.b Median M=x((n+1)/2): " . number_format($M));
-            print_r(PHP_EOL);
-            print_r("2.d FIRST QUARTILE & THIRD QUARTILE");
-            print_r(PHP_EOL);
-            print_r("Index Q1: $idx_Q1" . ", Q1: " . number_format($Q1));
-            print_r(PHP_EOL);
-            print_r("Index Q1: $idx_Q3" . ", Q3: " . number_format($Q3));
-            print_r(PHP_EOL);
-            print_r("Q3 - Q1 = " . number_format($INTERQUARTILE_RANGE));
-            echo "</pre>";
-            exit;
-        }
-
+        $average_of_foo = array_sum($arr) / $n;
         return [
             'low'=>!empty($arr[0]) ? intval($arr[0]) : 0,
             'q1'=>($Q1),
