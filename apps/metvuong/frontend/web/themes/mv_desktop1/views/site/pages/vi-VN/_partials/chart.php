@@ -5,14 +5,18 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
         <tbody>
         <tr class="savings-tlt">
             <td>Điều kiện</td>
-            <td>Giá Trung Bình</td>
-            <td>Giá Trung Bình/m2</td>
+            <td>Avg (cũ)</td>
+            <td>Avg/m2 (cũ)</td>
+            <td>Avg (mới)</td>
+            <td>Avg/m2 (mới)</td>
             <td>Listing</td>
         </tr>
         <tr>
             <td class="saving_table saving_table_left"></td>
-            <td class="saving_table"><?= number_format($data['sum'] / $data['total']) ?> VND</td>
-            <td class="saving_table"><?= number_format($data['sum'] / $data['sum_area']) ?> VND</td>
+            <td class="saving_table"><?= number_format($data['average_old']*1000000) ?> VND</td>
+            <td class="saving_table"><?= number_format(($data['average_old']*1000000)/($data['sum_area'] / $data['total'])) ?> VND</td>
+            <td class="saving_table"><?= number_format($data['average_new']*1000000) ?> VND</td>
+            <td class="saving_table"><?= number_format(($data['average_new']*1000000)/($data['sum_area'] / $data['total'])) ?> VND</td>
             <td class="saving_table"><?= number_format($data['totalListing']) ?></td>
         </tr>
         </tbody>

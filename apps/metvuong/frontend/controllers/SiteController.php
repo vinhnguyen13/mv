@@ -427,6 +427,8 @@ class SiteController extends Controller
 				});
 				$dataChart2 = \frontend\models\Avg::me()->calculation_boxplot($newArrPrice);
 				$data = ArrayHelper::merge($return, ['dataChart'=>$dataChart2, 'list_price_new'=>implode(',',$newArrPrice)]);
+				$data['average_old'] = array_sum($arrPrice) / count($arrPrice);
+				$data['average_new'] = array_sum($newArrPrice) / count($newArrPrice);
 				$output = $this->renderAjax('/site/pages/vi-VN/_partials/chart', ['data'=>$data]);
 			}
 			return $output;
