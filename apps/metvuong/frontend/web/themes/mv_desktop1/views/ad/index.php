@@ -31,12 +31,10 @@ use vsoft\ad\models\TrackingSearch;
 	$slugCatsMap = json_encode(array_flip(AdCategoryGroup::slugMap()));
 	$detr = TrackingSearch::DELAY_TRACKING * 1000;
 	$sortMapping = json_encode(array_flip(MapSearch::sortSlugMapping()));
+	$pageParam = \Yii::t('ad', 'trang');
 	
-	if(isset($_GET['qs'])) {
-		$referer = 1;
-	} else {
-		$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-	}
+	$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+	$qs = isset($_GET['qs']) ? 'true' : 'false';
 
 	$script = <<<EOD
 	var resources = ['$resourceHistoryJs', '$resourceListingMap', '$resourceApi'];
@@ -47,6 +45,8 @@ use vsoft\ad\models\TrackingSearch;
 	var sortMapping = $sortMapping;
 	var detr = $detr;
 	var referer = '$referer';
+	var pageParam = '$pageParam';
+	var qs = $qs;
 EOD;
 	
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl.'/resources/css/map.css');

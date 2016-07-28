@@ -363,7 +363,14 @@ $(document).ready(function() {
 	
 	$window.on('resize', desktop.checkToEnable);
 	
-	tracking(referer, true);
+	var re = new RegExp("/" + pageParam + "_[0-9]+");
+
+	if(referer.replace(re, "") != window.location.href.replace(re, "")) {
+		referer = qs ? '1' : referer;
+		
+		tracking(referer, true);
+	}
+	
 	
 	/*
 	 * Migrate code

@@ -128,7 +128,7 @@ class TrackingSearch extends TS {
 			if($this->referer == '2') {
 				$query->andWhere("`referer` IS NULL");
 			} else if($this->referer == '3') {
-				$query->andWhere("`referer` LIKE '/%'");
+				$query->andWhere("`referer` != '/' AND `referer` LIKE '/%'");
 			} else if($this->referer == '4') {
 				$query->andWhere("`referer` LIKE 'http%'");
 			} else {

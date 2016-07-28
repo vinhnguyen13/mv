@@ -362,16 +362,16 @@ class AdController extends Controller
     		$params['location'] = Yii::$app->request->post('location');
     		$params['is_mobile'] = Yii::$app->request->post('is_mobile');
     		
-    		$referer = Yii::$app->request->post('referer');
-    		
-    		if($referer && !(StringHelper::startsWith($referer, '/' . Yii::t('url', 'nha-dat-cho-thue')) || StringHelper::startsWith($referer, '/' . Yii::t('url', 'nha-dat-ban')))) {
-    			$params['referer'] = $referer;
-    			
-    			if($referer != '1') {
-    				$parseReferer = parse_url($referer);
-    				
-    				if($_SERVER['SERVER_NAME'] == $parseReferer['host']) {
-    					$params['referer'] = $parseReferer['path'];
+    		if($referer = Yii::$app->request->post('referer')) {
+    			$parseReferer = parse_url($referer);
+
+    			if(!(StringHelper::startsWith($parseReferer['path'], '/' . Yii::t('url', 'nha-dat-cho-thue')) || StringHelper::startsWith($parseReferer['path'], '/' . Yii::t('url', 'nha-dat-ban')))) {
+    				$params['referer'] = $referer;
+    				 
+    				if($referer != '1') {
+    					if($_SERVER['SERVER_NAME'] == $parseReferer['host']) {
+    						$params['referer'] = $parseReferer['path'];
+    					}
     				}
     			}
     		}
