@@ -362,7 +362,9 @@ class AdController extends Controller
     		$params['location'] = Yii::$app->request->post('location');
     		$params['is_mobile'] = Yii::$app->request->post('is_mobile');
     		
-    		if(($referer = Yii::$app->request->post('referer'))) {
+    		$referer = Yii::$app->request->post('referer');
+    		
+    		if($referer && !(StringHelper::startsWith($referer, '/' . Yii::t('url', 'nha-dat-cho-thue')) || StringHelper::startsWith($referer, '/' . Yii::t('url', 'nha-dat-ban')))) {
     			$params['referer'] = $referer;
     			
     			if($referer != '1') {
