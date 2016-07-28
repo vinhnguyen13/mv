@@ -68,6 +68,69 @@ $groupCategories = Yii::$app->db->cache(function(){
                             <label>Đường </label>
                             <?=Html::dropDownList('streets', null, [], ['class' => 'form-control search region_streets', 'prompt' => "..."])?>
                         </div>
+                        <div class="form-group col-xs-12 col-sm-6 num-phongngu">
+                            <label>Phòng ngủ </label>
+                            <div class="box-dropdown dropdown-common">
+                                <div class="val-selected style-click" data-text-add="<?= Yii::t('ad', 'Beds') ?>"><span class="selected">0+ <?= Yii::t('ad', 'Beds') ?></span><span class="arrowDownFillFull"></span></div>
+                                <div class="item-dropdown item-bed-bath hide-dropdown">
+                                    <ul class="clearfix">
+                                        <li><a href="#" data-value="">0+</a></li>
+                                        <li><a href="#" data-value="1">1+</a></li>
+                                        <li><a href="#" data-value="2">2+</a></li>
+                                        <li><a href="#" data-value="3">3+</a></li>
+                                        <li><a href="#" data-value="4">4+</a></li>
+                                        <li><a href="#" data-value="5">5+</a></li>
+                                    </ul>
+                                    <input type="hidden" value="" name="" id="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6 num-phongtam">
+                            <label>Phòng tắm </label>
+                            <div class="box-dropdown dropdown-common">
+                                <div class="val-selected style-click" data-text-add="<?= Yii::t('ad', 'Bath') ?>"><span class="selected">0+ <?= Yii::t('ad', 'Bath') ?></span><span class="arrowDownFillFull"></span></div>
+                                <div class="item-dropdown item-bed-bath hide-dropdown">
+                                    <ul class="clearfix">
+                                        <li><a href="#" data-value="">0+</a></li>
+                                        <li><a href="#" data-value="1">1+</a></li>
+                                        <li><a href="#" data-value="2">2+</a></li>
+                                        <li><a href="#" data-value="3">3+</a></li>
+                                        <li><a href="#" data-value="4">4+</a></li>
+                                        <li><a href="#" data-value="5">5+</a></li>
+                                    </ul>
+                                    <input type="hidden" value="" name="" id="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6 choice_price_dt select-dt">
+                            <label>Diện tích </label>
+                            <div class="box-dropdown" data-item-minmax="area">
+                                <div class="val-selected style-click dt-search">
+                                    <span class="txt-holder-minmax"><?= Yii::t('ad', 'Size') ?></span>
+                                    <div>
+                                        <span class="wrap-min"></span>
+                                        <span class="trolen">+</span>
+                                        <span class="den">-</span>
+                                        <span class="wrap-max"></span>
+                                        <span class="troxuong"><?= Yii::t('ad', 'below') ?></span>
+                                    </div>
+                                    <span class="arrowDownFillFull"></span>
+                                </div>
+                                <div class="item-dropdown hide-dropdown wrap-min-max">
+                                    <div class="box-input clearfix">
+                                        <span class="txt-min min-max active min-val" data-value="" data-text="<?= Yii::t('ad', 'Min') ?>"><?= Yii::t('ad', 'Min') ?></span>
+                                        <span class="text-center"><span></span></span>
+                                        <span class="txt-max min-max max-val" data-value="" data-text="<?= Yii::t('ad', 'Max') ?>"><?= Yii::t('ad', 'Max') ?></span>
+                                        <input type="hidden" id="dtMin" name="size_min">
+                                        <input type="hidden" id="dtMax" name="size_max">
+                                    </div>
+                                    <div class="filter-minmax clearfix">
+                                        <ul data-wrap-minmax="min-val" class="wrap-minmax"></ul>
+                                        <ul data-wrap-minmax="max-val" class="wrap-minmax"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <a href="javascript:;" class="btn-form btn-common btn-tinhnhanh"> Tính nhanh <span class="arrow-icon"> </span> </a>
                 </form>
@@ -83,6 +146,13 @@ $groupCategories = Yii::$app->db->cache(function(){
 <script src="//code.highcharts.com/highcharts-more.js"></script>
 <script>
     $(document).ready(function () {
+        $('#frmAvg .dropdown-common').dropdown({
+            txtAdd: true,
+            styleShow: 0
+        });
+
+        $('#frmAvg .select-dt .box-dropdown').price_dt();
+
         var func = {
             appendDropdown: function(el, items) {
                 el.find("option:not(:first-child)").remove();
