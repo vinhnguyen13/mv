@@ -194,12 +194,14 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
             return hData;
         }
     </script>
+    <?php if(YII_DEBUG): ?>
     <p>
         <?=$data['list_price']?>
     </p>
     <p>
         <?=$data['list_price_new']?>
     </p>
+    <?php endif?>
     <?php
 }
 ?>
