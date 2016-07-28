@@ -48,7 +48,7 @@ class Avg extends Component
             $Q3 = $arr[$_index] + (($arr[$_index+1] - $arr[$_index]) * $_percent);
         }
         $INTERQUARTILE_RANGE = $Q3-$Q1;
-        if(Yii::$app->request->isAjax) {
+        if(!Yii::$app->request->isAjax){
             echo "<pre>";
             print_r(PHP_EOL);
             print_r("List: " . implode(',', $arr));
@@ -82,6 +82,14 @@ class Avg extends Component
             echo "</pre>";
             exit;
         }
+
+        return [
+            'low'=>!empty($arr[0]) ? intval($arr[0]) : 0,
+            'q1'=>($Q1),
+            'median'=>($M),
+            'q3'=>($Q3),
+            'high'=>!empty($arr[$n-1]) ? intval($arr[$n-1]) : 0
+        ];
     }
 
 }

@@ -72,7 +72,6 @@ foreach ($categories as $category) {
             <article id="inKetQua">
 
             </article>
-            <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
         </div>
     </div>
 </div>
@@ -161,76 +160,25 @@ foreach ($categories as $category) {
         });
 
         $(document).on('click', '.btn-tinhnhanh', function (e) {
+            $('.group-frm').loading({full: false});
             if($('.region_city').val() || $('.region_project').val()) {
                 $.post('/site/avg', $('#frmAvg').serialize(), function (response) {
-                    var html = '<table class="savings-tbl"><tbody><tr class="savings-tlt"><td>Điều kiện</td><td>Giá Trung Bình</td><td>Giá Trung Bình/m2</td><td>Listing</td></tr>';
+                    $('#inKetQua').html(response);
                     var text = [];
                     func.pushOptionTextToArray('region_category', text);
                     func.pushOptionTextToArray('region_city', text);
                     func.pushOptionTextToArray('region_district', text);
-                    var ArrayData = $.map(response.list_price.split(','), function(value){
-                        return parseInt(value, 10);
-                        // or return +value; which handles float values as well
-                    });
-                    loadChart([ArrayData]);
-                    console.log(ArrayData);
-//                    loadChart([
-//                        [5700, 2200, 8400, 8000, 3300, 1950, 8320, 8000, 9, 8320, 9000, 8300],
-//                    ]);
-                    var avg = response.sum / response.total;
-                    var avg_m2 = response.sum / response.sum_area;
-                    html += '<tr><td class="saving_table saving_table_left">' + text.join(', ') + '</td><td class="saving_table">' + $.number(avg) + ' VND</td><td class="saving_table">' + $.number(avg_m2) + ' VND</td><td class="saving_table">' + $.number(response.totalListing) + '</td></tr>';
-                    html += '</tbody></table>';
-                    $('#inKetQua').html(html);
+                    $('#inKetQua').find('.saving_table_left').html(text.join(', '));
+                    $('body').loading({done:true});
+                    return false;
                 });
             }else{
                 alert('Vui lòng chọn Thành Phố');
+                $('body').loading({done:true});
             }
 
         });
 
-        function loadChart(data){
-            $('#chartAds').highcharts({
-                chart: {
-                    type: 'boxplot'
-                },
-                title: {
-                    text: 'MetVuong Box Plot Chart'
-                },
-                legend: {
-                    enabled: false
-                },
-                xAxis: {
-                    categories: ['1'],
-                    title: {
-                        text: 'Experiment No.'
-                    }
-                },
-                yAxis: {
-                    title: {
-                        text: 'Observations'
-                    }
-                },
-                plotOptions: {
-                    boxplot: {
-                        fillColor: '#F0F0E0',
-                        lineWidth: 2,
-                        medianColor: '#0C5DA5',
-                        medianWidth: 3,
-                        stemColor: '#A63400',
-                        stemDashStyle: 'dot',
-                        stemWidth: 1,
-                        whiskerColor: '#3D9200',
-                        whiskerLength: '20%',
-                        whiskerWidth: 3
-                    }
-                },
-                series: [{
-                    name: 'Observations',
-                    data: data
-                }]
 
-            });
-        }
     });
 </script>
