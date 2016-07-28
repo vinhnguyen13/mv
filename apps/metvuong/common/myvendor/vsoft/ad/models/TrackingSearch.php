@@ -12,11 +12,12 @@ class TrackingSearch extends TS {
 	public $category_search;
 	public $finder;
 	public $finder_search;
+	public $referer_filter;
 	
 	public function rules()
 	{
 		return array_merge(parent::rules(), [
-			[['category_search', 'finder_search'], 'safe']
+			[['category_search', 'finder_search', 'referer_filter'], 'safe']
 		]);
 	}
 	
@@ -124,15 +125,15 @@ class TrackingSearch extends TS {
 		$query->andFilterWhere(['=', 'type', $this->type]);
 		$query->andFilterWhere(['=', 'is_mobile', $this->is_mobile]);
 		
-		if($this->referer) {
-			if($this->referer == '2') {
+		if($this->referer_filter) {
+			if($this->referer_filter == '2') {
 				$query->andWhere("`referer` IS NULL");
-			} else if($this->referer == '3') {
+			} else if($this->referer_filter == '3') {
 				$query->andWhere("`referer` != '/' AND `referer` LIKE '/%'");
-			} else if($this->referer == '4') {
+			} else if($this->referer_filter == '4') {
 				$query->andWhere("`referer` LIKE 'http%'");
 			} else {
-				$query->andFilterWhere(['=', 'referer', $this->referer]);
+				$query->andFilterWhere(['=', 'referer', $this->referer_filter]);
 			}
 		}
 

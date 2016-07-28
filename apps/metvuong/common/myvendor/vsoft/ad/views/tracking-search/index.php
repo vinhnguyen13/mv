@@ -98,21 +98,30 @@ $type = AdProduct::getAdTypes();
         	],
         	[
         		'attribute' => 'referer',
-        		'value' => function($model) use ($mapSort) {
+        		'value' => function($model) use ($mapSort, $searchModel) {
         			if($model->referer == '1') {
         				$a = 'Search nhanh';
         			} else if($model->referer == '/') {
         				$a = 'Trang Home';
         			} else if(\yii\helpers\StringHelper::startsWith($model->referer, '/')) {
-        				$a = $model->referer;
+        				if($searchModel->referer_filter == '3') {
+        					$a = $model->referer;
+        				} else {
+        					$a = 'Trang khác trong M2';
+        				}
         			} else if(\yii\helpers\StringHelper::startsWith($model->referer, 'http')) {
-        				$a = 'Site khác';
+        				if($searchModel->referer_filter == '4') {
+        					$a = $model->referer;
+        				} else {
+        					$a = 'Site khác';
+        				}
         			} else {
         				$a = 'Search tại trang';
         			}
+        			
         			return $a;
     			},
-    			'filter' => Html::activeDropDownList($searchModel, 'referer', [
+    			'filter' => Html::activeDropDownList($searchModel, 'referer_filter', [
     				'/' => 'Trang Home',
     				'1' => 'Search nhanh',
     				'2' => 'Search tại trang',
