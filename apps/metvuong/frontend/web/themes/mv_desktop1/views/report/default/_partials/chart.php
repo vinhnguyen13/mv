@@ -3,7 +3,6 @@
 
 ?>
 <div id="chartAds" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-<script src="//code.highcharts.com/highcharts.js"></script>
 <script>
     $(function () {
         $('#chartAds').highcharts({

@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use common\components\Util;
 use frontend\components\Mailer;
 use Elasticsearch\ClientBuilder;
+use frontend\models\Avg;
 use frontend\models\Elastic;
 use frontend\models\NganLuong;
 use frontend\models\Payment;
@@ -255,6 +256,15 @@ class TestController extends \yii\web\Controller
     public function actionInfo(){
         echo "<pre>";
         print_r(phpinfo());
+        echo "</pre>";
+        exit;
+    }
+
+    public function actionAvg()
+    {
+        $return = Avg::me()->calculation_boxplot([9,1800,1900,1944,1950,1972,2000,2184,2200,2480,2900,3000,3182,3300,3474,3700,5000,5700,5700,5704,6400,6500,6900,7000,7000,7000,7000,7500,7500,7600,8000,8000,8000,8000,8200,8300,8320,8320,8320,8320,8346,8400,8446,8500,8600,8700,8700,8700,8700,8750,8750,8800,8840,8844,8900,9000,9000,9000,10000,10000,10000,10000,11430,12090,12090,12090,15360,15360,15360,15360,15360,15360,15360,15360,15600,16800,17040,17280,17280,17280,17280,17280,17280,17400,17600,17800,17800,17800,17864,17900,17900,18000,18000,18000,18000,18000,18200,18300,18500,18600,18720,18850,19000,19000,19000,19000,19000,19000,19748,19752,19752,20069,20500,20500,22000,22168,22360,22600,23000,25300,27000,27706,28000,36000,37000,37369,37900,38000,38000,38000]);
+        echo "<pre>";
+        print_r($return);
         echo "</pre>";
         exit;
     }

@@ -13,7 +13,7 @@ use vsoft\ad\models\TrackingSearch;
 	
 	$compress = isset(Yii::$app->params['local']) ? '' : '.compress';
 	
-	$resourceListingMap = Yii::$app->view->theme->baseUrl . '/resources/js/map' . $compress . '.js?v=1';
+	$resourceListingMap = Yii::$app->view->theme->baseUrl . '/resources/js/map' . $compress . '.js?v=3';
 	$resourceHistoryJs = Yii::$app->view->theme->baseUrl . '/resources/js/history.js';
 	$resourceApi = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=desktop.loadedResource&libraries=geometry';
 	
@@ -31,7 +31,11 @@ use vsoft\ad\models\TrackingSearch;
 	$slugCatsMap = json_encode(array_flip(AdCategoryGroup::slugMap()));
 	$detr = TrackingSearch::DELAY_TRACKING * 1000;
 	$sortMapping = json_encode(array_flip(MapSearch::sortSlugMapping()));
+	$pageParam = \Yii::t('ad', 'trang');
 	
+	$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
+	$qs = isset($_GET['qs']) ? 'true' : 'false';
+
 	$script = <<<EOD
 	var resources = ['$resourceHistoryJs', '$resourceListingMap', '$resourceApi'];
 	var actionId = '$actionId';
@@ -40,12 +44,15 @@ use vsoft\ad\models\TrackingSearch;
 	var catsSlug = $slugCatsMap;
 	var sortMapping = $sortMapping;
 	var detr = $detr;
+	var referer = '$referer';
+	var pageParam = '$pageParam';
+	var qs = $qs;
 EOD;
 	
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl.'/resources/css/map.css');
 	$this->registerJs($script, View::POS_BEGIN);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-helper.js', ['position'=>View::POS_HEAD]);
-	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing' . $compress . '.js?v=1', ['position' => View::POS_END]);
+	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing' . $compress . '.js?v=3', ['position' => View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_END]);

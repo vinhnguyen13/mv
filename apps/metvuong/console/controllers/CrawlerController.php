@@ -151,20 +151,24 @@ class CrawlerController extends Controller
         BatdongsanV2::find()->importAgent();
     }
 
+    // Project Batdongsan
     public function actionProject()
     {
         Project::find()->getProjects();
     }
-
     public function actionImportProject()
     {
-        ImportProject::find()->importProjects();
+        $limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+        ImportProject::find()->importProjects($limit);
     }
-
     public function actionCopyProject()
     {
         $limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
         CopyProject::find()->copyProjects($limit);
+    }
+    public function actionUpdateProjectTool(){
+        $limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+        ImportProject::find()->updateProjectTool($limit);
     }
 
     // db chinh

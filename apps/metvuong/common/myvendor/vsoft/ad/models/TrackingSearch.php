@@ -12,11 +12,12 @@ class TrackingSearch extends TS {
 	public $category_search;
 	public $finder;
 	public $finder_search;
+	public $referer_filter;
 	
 	public function rules()
 	{
 		return array_merge(parent::rules(), [
-			[['category_search', 'finder_search'], 'safe']
+			[['category_search', 'finder_search', 'referer_filter'], 'safe']
 		]);
 	}
 	
@@ -58,7 +59,9 @@ class TrackingSearch extends TS {
 			'size_max' => 'Diện tích lớn nhất',
 			'category' => 'Loại BĐS',
 			'finder' => 'Người tìm',
-			'order_by' => 'Sắp xếp'
+			'order_by' => 'Sắp xếp',
+			'is_mobile' => 'Di động',
+			'referer' => 'Nguồn đến'
 		];
 	}
 	
@@ -120,6 +123,19 @@ class TrackingSearch extends TS {
 		$query->andFilterWhere(['=', 'size_max', $this->size_max]);
 		$query->andFilterWhere(['=', 'order_by', $this->order_by]);
 		$query->andFilterWhere(['=', 'type', $this->type]);
+		$query->andFilterWhere(['=', 'is_mobile', $this->is_mobile]);
+		
+		if($this->referer_filter) {
+			if($this->referer_filter == '2') {
+				$query->andWhere("`referer` IS NULL");
+			} else if($this->referer_filter == '3') {
+				$query->andWhere("`referer` != '/' AND `referer` LIKE '/%'");
+			} else if($this->referer_filter == '4') {
+				$query->andWhere("`referer` LIKE 'http%'");
+			} else {
+				$query->andFilterWhere(['=', 'referer', $this->referer_filter]);
+			}
+		}
 
 		return $dataProvider;
 	}

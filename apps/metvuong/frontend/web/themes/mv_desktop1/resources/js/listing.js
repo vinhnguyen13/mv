@@ -363,7 +363,14 @@ $(document).ready(function() {
 	
 	$window.on('resize', desktop.checkToEnable);
 	
-	tracking();
+	var re = new RegExp("/" + pageParam + "_[0-9]+");
+
+	if(referer.replace(re, "") != window.location.href.replace(re, "")) {
+		referer = qs ? '1' : referer;
+		
+		tracking(referer, true);
+	}
+	
 	
 	/*
 	 * Migrate code
@@ -421,7 +428,7 @@ $(document).ready(function() {
 
 var trackingTimeout;
 
-function tracking() {
+function tracking(r, notDelay) {
 	clearTimeout(trackingTimeout);
 	
 	var serialize = form.fields.filter(function () {
@@ -430,13 +437,27 @@ function tracking() {
 	
 	var data = {location: form.mapSearchEl.val(), payload: serialize, _csrf: yii.getCsrfToken()};
 	
-	trackingTimeout = setTimeout(function(){
-		$.ajax({
-			method: "POST",
-			url: '/listing/tracking',
-			data: data
-		});
-	}, detr);
+	data.is_mobile = (window.navigator.userAgent.search('Mobi') !== -1) ? 1 : 0;
+	
+	if(r) {
+		data.referer = r;
+	}
+	
+	if(notDelay) {
+		_tracking(data);
+	} else {
+		trackingTimeout = setTimeout(function(){
+			_tracking(data);
+		}, detr);
+	}
+}
+
+function _tracking(data) {
+	$.ajax({
+		method: "POST",
+		url: '/listing/tracking',
+		data: data
+	});
 }
 
 function toogleScroll() {

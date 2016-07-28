@@ -75,14 +75,14 @@ foreach ($categories as $category) {
         </div>
     </div>
 </div>
-
+<script src="//code.highcharts.com/highcharts.js"></script>
+<script src="//code.highcharts.com/highcharts-more.js"></script>
 <script>
     $(document).ready(function () {
         var func = {
             appendDropdown: function(el, items) {
                 el.find("option:not(:first-child)").remove();
                 for(var i in items) {
-                    console.log(items);
                     if(items[i]['pre']) {
                         el.append('<option data-pre="' + items[i]['pre'] + '" value="' + items[i]['id'] + '">' + items[i]['name'] + '</option>');
                     } else {
@@ -129,10 +129,10 @@ foreach ($categories as $category) {
         $(document).on('change', '.region_category', function (e) {
             if($('.region_category').val() == 6){
                 $('.wrap_project').show();
-                $('.wrap_city').hide();
+                /*$('.wrap_city').hide();
                 $('.wrap_district').hide();
                 $('.wrap_wards').hide();
-                $('.wrap_streets').hide();
+                $('.wrap_streets').hide();*/
             }else{
                 $('.wrap_project').hide();
                 $('.wrap_city').show();
@@ -160,22 +160,25 @@ foreach ($categories as $category) {
         });
 
         $(document).on('click', '.btn-tinhnhanh', function (e) {
+            $('.group-frm').loading({full: false});
             if($('.region_city').val() || $('.region_project').val()) {
                 $.post('/site/avg', $('#frmAvg').serialize(), function (response) {
-                    var html = '<table class="savings-tbl"><tbody><tr class="savings-tlt"><td>Điều kiện</td><td>Giá Trung Bình</td><td>Giá Trung Bình/m2</td><td>Listing</td></tr>';
+                    $('#inKetQua').html(response);
                     var text = [];
                     func.pushOptionTextToArray('region_category', text);
                     func.pushOptionTextToArray('region_city', text);
                     func.pushOptionTextToArray('region_district', text);
-                    var avg = response.sum / response.total;
-                    var avg_m2 = response.sum / response.sum_area;
-                    html += '<tr><td class="saving_table saving_table_left">' + text.join(', ') + '</td><td class="saving_table">' + $.number(avg) + ' VND</td><td class="saving_table">' + $.number(avg_m2) + ' VND</td><td class="saving_table">' + $.number(response.total) + '</td></tr>';
-                    html += '</tbody></table>';
-                    $('#inKetQua').html(html);
+                    $('#inKetQua').find('.saving_table_left').html(text.join(', '));
+                    $('body').loading({done:true});
+                    return false;
                 });
             }else{
                 alert('Vui lòng chọn Thành Phố');
+                $('body').loading({done:true});
             }
+
         });
+
+
     });
 </script>

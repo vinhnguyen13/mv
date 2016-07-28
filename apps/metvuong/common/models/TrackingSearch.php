@@ -26,6 +26,8 @@ use Yii;
  * @property integer $size_min
  * @property integer $size_max
  * @property string $order_by
+ * @property string $referer
+ * @property integer $is_mobile
  * @property integer $created_at
  */
 class TrackingSearch extends \yii\db\ActiveRecord
@@ -44,9 +46,9 @@ class TrackingSearch extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['user_id', 'type', 'city_id', 'district_id', 'ward_id', 'street_id', 'project_building_id', 'room_no', 'toilet_no', 'price_min', 'price_max', 'size_min', 'size_max', 'created_at'], 'integer'],
+            [['user_id', 'type', 'city_id', 'district_id', 'ward_id', 'street_id', 'project_building_id', 'room_no', 'toilet_no', 'price_min', 'price_max', 'size_min', 'size_max', 'is_mobile', 'created_at'], 'integer'],
             [['session', 'category_id', 'order_by'], 'string', 'max' => 32],
-            [['ip', 'location'], 'string', 'max' => 255],
+            [['ip', 'location', 'referer'], 'string', 'max' => 255],
         ];
     }
 
@@ -75,6 +77,8 @@ class TrackingSearch extends \yii\db\ActiveRecord
             'size_min' => 'Size Min',
             'size_max' => 'Size Max',
             'order_by' => 'Order By',
+            'referer' => 'Referer',
+            'is_mobile' => 'Is Mobile',
             'created_at' => 'Created At',
         ];
     }

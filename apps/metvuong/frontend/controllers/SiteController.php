@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use frontend\components\MetaExt;
+use frontend\models\Avg;
 use frontend\models\ContactForm;
 use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
@@ -374,7 +375,6 @@ class SiteController extends Controller
 
 	public function actionAvg() {
 		if(Yii::$app->request->isAjax){
-			Yii::$app->response->format = 'json';
 			$type = Yii::$app->request->post('type');
 			if(!empty($type)){
 				$where[] = "type = $type";
@@ -403,12 +403,33 @@ class SiteController extends Controller
 					$where[] = "street_id = $streets";
 				}
 			}
-			$sql = "SELECT SUM(price) as sum, SUM(area) as sum_area, COUNT(*) as total FROM ad_product";
+			Yii::$app->dbCraw->createCommand('SET group_concat_max_len = 5000000')->execute();
+			$sql = "SELECT SUM(price) as sum, SUM(area) as sum_area, COUNT(*) as total, GROUP_CONCAT(CAST(price/1000000 AS UNSIGNED) ORDER BY price ASC) as list_price FROM ad_product";
+			$conditionTotal = $condition = '';
 			if(!empty($where)){
-				$sql .= " WHERE ".implode(' AND ', $where);
+				$condition .= " WHERE ".implode(' AND ', $where);
+				$conditionTotal = $condition;
+				$condition .= " AND price != 0";
 			}
-			$result = Yii::$app->dbCraw->createCommand($sql)->queryOne();
-			return $result;
+			$resultTotal = Yii::$app->dbCraw->createCommand("SELECT COUNT(*) as totalListing FROM ad_product".$conditionTotal)->queryOne();
+			$result = Yii::$app->dbCraw->createCommand($sql.$condition)->queryOne();
+
+//			Yii::$app->response->format = Response::FORMAT_JSON;
+			$return = ArrayHelper::merge($result, $resultTotal);
+			if(!empty($return['list_price'])) {
+				$arrPrice = explode(',', $return['list_price']);
+				$dataChart = \frontend\models\Avg::me()->calculation_boxplot($arrPrice);
+				$exclude_outlier = 1.5 * $dataChart['IQR'];
+				$newArrPrice = array_filter($arrPrice, function($element) use ($exclude_outlier, $dataChart) {
+					if($element > ($dataChart['q1']-$exclude_outlier) && $element < ($dataChart['q3']+$exclude_outlier)) {
+						return $element;
+					}
+				});
+				$dataChart2 = \frontend\models\Avg::me()->calculation_boxplot($newArrPrice);
+				$data = ArrayHelper::merge($return, ['dataChart'=>$dataChart2, 'list_price_new'=>implode(',',$newArrPrice)]);
+				$output = $this->renderAjax('/site/pages/vi-VN/_partials/chart', ['data'=>$data]);
+			}
+			return $output;
 		}
 	}
 
