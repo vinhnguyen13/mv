@@ -15,6 +15,7 @@ use Yii;
 use yii\base\Exception;
 use yii\base\InvalidParamException;
 use yii\base\UserException;
+use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\filters\VerbFilter;
 use yii\helpers\Url;
@@ -377,50 +378,65 @@ class SiteController extends Controller
 	public function actionAvg() {
 		if(Yii::$app->request->isAjax){
 			$type = Yii::$app->request->post('type');
+			$query = new Query();
+			$query->from('ad_product');
+			$query->where('true');
 			if(!empty($type)){
-				$where[] = "type = $type";
+				$query->andWhere(['type' => $type]);
 			}
 			$category = Yii::$app->request->post('category');
 			if(!empty($category)){
 				$categoryGroup = AdCategoryGroup::findOne($category);
 				if(!empty($categoryGroup->categories_id) && is_array($categoryGroup->categories_id)) {
-					$where[] = "category_id IN (".implode(',', $categoryGroup->categories_id).") ";
+					$query->andWhere(['category_id' => $categoryGroup->categories_id]);
 				}
 			}
 			$project_building_id = Yii::$app->request->post('project_building_id');
 			if(!empty($project_building_id)){
-				$where[] = "project_building_id = $project_building_id";
+				$query->andWhere(['project_building_id' => $project_building_id]);
 			}
 			$city = Yii::$app->request->post('city');
 			if(!empty($city)){
-				$where[] = "city_id = $city";
+				$query->andWhere(['city_id' => $city]);
 				$district = Yii::$app->request->post('district');
 				if(!empty($district)){
-					$where[] = "district_id = $district";
+					$query->andWhere(['district_id' => $district]);
 				}
 				$wards = Yii::$app->request->post('wards');
 				if(!empty($wards)){
-					$where[] = "ward_id = $wards";
+					$query->andWhere(['ward_id' => $wards]);
 				}
 				$streets = Yii::$app->request->post('streets');
 				if(!empty($streets)){
-					$where[] = "street_id = $streets";
+					$query->andWhere(['street_id' => $streets]);
 				}
 			}
-			Yii::$app->dbCraw->createCommand('SET group_concat_max_len = 5000000')->execute();
-			$sql = "SELECT SUM(price) as sum, SUM(area) as sum_area, COUNT(*) as total, GROUP_CONCAT(CAST(price/1000000 AS UNSIGNED) ORDER BY price ASC) as listprice FROM ad_product";
-			$conditionTotal = $condition = '';
-			if(!empty($where)){
-				$condition .= " WHERE ".implode(' AND ', $where);
-				$conditionTotal = $condition;
-				$condition .= " AND price != 0";
+			$size_min = Yii::$app->request->post('size_min');
+			$size_max = Yii::$app->request->post('size_max');
+			if(!empty($size_min) && !empty($size_max)){
+				$query->andWhere(['BETWEEN', 'area', $size_min, $size_max]);
 			}
-			$resultTotal = Yii::$app->dbCraw->createCommand("SELECT COUNT(*) as totalListing FROM ad_product".$conditionTotal)->queryOne();
-			$result = Yii::$app->dbCraw->createCommand($sql.$condition)->queryOne();
+			$bathroom = Yii::$app->request->post('bathroom');
+			$bedroom = Yii::$app->request->post('bedroom');
+			if(!empty($bathroom) || !empty($bedroom)){
+				$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
+				if(!empty($bathroom)){
+					$query->andWhere(['>','ad_product_addition_info.room_no', $bathroom]);
+				}
+				if(!empty($bedroom)){
+					$query->andWhere(['>','ad_product_addition_info.toilet_no', $bedroom]);
+				}
+			}
+
+			Yii::$app->dbCraw->createCommand('SET group_concat_max_len = 5000000')->execute();
+			$query2 = new Query();
+			$query2 = $query;
+			$resultTotal = $query2->select('COUNT(*) as totalListing')->one(Yii::$app->dbCraw);
+			$result = $query->select('SUM(price) as sum, SUM(area) as sum_area, COUNT(*) as total, GROUP_CONCAT(CAST(price/1000000 AS UNSIGNED) ORDER BY price ASC) as listprice')->andWhere('price != 0')->one(Yii::$app->dbCraw);
 
 //			Yii::$app->response->format = Response::FORMAT_JSON;
 			$return = ArrayHelper::merge($result, $resultTotal);
-			if(!empty($return['listprice'])) {
+			if(!empty($return['listprice']) && $return['total'] >= 3) {
 				$arrPrice = explode(',', $return['listprice']);
 				$dataChart = \frontend\models\Avg::me()->calculation_boxplot($arrPrice, YII_DEBUG);
 				$exclude_outlier = 3 * $dataChart['IQR'];

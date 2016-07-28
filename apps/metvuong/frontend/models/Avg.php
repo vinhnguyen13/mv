@@ -28,7 +28,7 @@ class Avg extends Component
             $M = $arr[$idx_M - 1];
         }else{
             $_index = intval($idx_M) - 1;
-            $M = ($arr[$_index] + $arr[($_index+1)])/2;
+            $M = !empty($arr[$_index]) ?($arr[$_index] + $arr[($_index+1)])/2 : 0;
         }
         $idx_Q1 = ($n+1)/4;
         if(!is_float($idx_Q1)){
@@ -36,7 +36,7 @@ class Avg extends Component
         }else{
             $_index = intval($idx_Q1) - 1;
             $_percent = $idx_Q1 - intval($idx_Q1);
-            $Q1 = $arr[$_index] + (($arr[$_index+1] - $arr[$_index]) * $_percent);
+            $Q1 = (!empty($arr[$_index]) && !empty($arr[$_index+1])) ? $arr[$_index] + (($arr[$_index+1] - $arr[$_index]) * $_percent) : 0;
         }
         $idx_Q3 = (3*($n+1))/4;
         if(!is_float($idx_Q3)){
@@ -44,7 +44,7 @@ class Avg extends Component
         }else{
             $_index = intval($idx_Q3) - 1;
             $_percent = $idx_Q3 - intval($idx_Q3);
-            $Q3 = $arr[$_index] + (($arr[$_index+1] - $arr[$_index]) * $_percent);
+            $Q3 = (!empty($arr[$_index]) && !empty($arr[$_index+1])) ? $arr[$_index] + (($arr[$_index+1] - $arr[$_index]) * $_percent) : 0;
         }
         $INTERQUARTILE_RANGE = $Q3-$Q1;
 

@@ -81,7 +81,7 @@ $groupCategories = Yii::$app->db->cache(function(){
                                         <li><a href="#" data-value="4">4+</a></li>
                                         <li><a href="#" data-value="5">5+</a></li>
                                     </ul>
-                                    <input type="hidden" value="" name="" id="">
+                                    <input type="hidden" value="" name="bedroom" id="">
                                 </div>
                             </div>
                         </div>
@@ -98,7 +98,7 @@ $groupCategories = Yii::$app->db->cache(function(){
                                         <li><a href="#" data-value="4">4+</a></li>
                                         <li><a href="#" data-value="5">5+</a></li>
                                     </ul>
-                                    <input type="hidden" value="" name="" id="">
+                                    <input type="hidden" value="" name="bathroom" id="">
                                 </div>
                             </div>
                         </div>
@@ -245,6 +245,9 @@ $groupCategories = Yii::$app->db->cache(function(){
                     $('#inKetQua').find('.saving_table_left').html(text.join(', '));
                     $('body').loading({done:true});
                     return false;
+                }).fail(function(response) {
+                    alert('Vui lòng chọn điều kiện khác !');
+                    $('body').loading({done:true});
                 });
             }else{
                 alert('Vui lòng chọn Thành Phố');
