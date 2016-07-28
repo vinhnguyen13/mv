@@ -419,7 +419,7 @@ class SiteController extends Controller
 			if(!empty($return['list_price'])) {
 				$arrPrice = explode(',', $return['list_price']);
 				$dataChart = \frontend\models\Avg::me()->calculation_boxplot($arrPrice);
-				$exclude_outlier = 1.5 * $dataChart['IQR'];
+				$exclude_outlier = 3 * $dataChart['IQR'];
 				$newArrPrice = array_filter($arrPrice, function($element) use ($exclude_outlier, $dataChart) {
 					if($element > ($dataChart['q1']-$exclude_outlier) && $element < ($dataChart['q3']+$exclude_outlier)) {
 						return $element;
@@ -430,8 +430,9 @@ class SiteController extends Controller
 				$data['average_old'] = array_sum($arrPrice) / count($arrPrice);
 				$data['average_new'] = array_sum($newArrPrice) / count($newArrPrice);
 				$output = $this->renderAjax('/site/pages/vi-VN/_partials/chart', ['data'=>$data]);
+				return $output;
 			}
-			return $output;
+			return 'Not yet data !';
 		}
 	}
 
