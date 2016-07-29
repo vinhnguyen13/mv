@@ -107,7 +107,7 @@ $type = AdProduct::getAdTypes();
         				if($searchModel->referer_filter == '3') {
         					$a = $model->referer;
         				} else {
-        					$a = 'Trang khác trong M2';
+        					$a = 'Trang khác';
         				}
         			} else if(\yii\helpers\StringHelper::startsWith($model->referer, 'http')) {
         				if($searchModel->referer_filter == '4') {
@@ -125,7 +125,7 @@ $type = AdProduct::getAdTypes();
     				'/' => 'Trang Home',
     				'1' => 'Search nhanh',
     				'2' => 'Search tại trang',
-    				'3' => 'Trang khác trong M2',
+    				'3' => 'Trang khác',
     				'4' => 'Site khác',
     			], ['class' => 'form-control', 'prompt' => 'all'])
         	],

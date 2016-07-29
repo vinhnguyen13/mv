@@ -23,11 +23,15 @@ $citiesDropdown = ArrayHelper::map(AdCity::find()->all(), 'id', 'name');
 
 $districtDropdown = ArrayHelper::map(AdDistrict::find()->all(), 'id', 'name');
 
-$categories = AdCategory::find()->orderBy('order')->all();
-foreach ($categories as $category) {
+$groupCategories = Yii::$app->db->cache(function(){
+    return \vsoft\ad\models\AdCategoryGroup::find()->all();
+});
+foreach ($groupCategories as $category) {
     $categoriesDropDown[$category->id] = ucfirst(Yii::t('ad', $category->name));
 }
-//$categoriesDropDown = ArrayHelper::map($categories, 'id', 'name');
+$groupCategories = Yii::$app->db->cache(function(){
+    return \vsoft\ad\models\AdCategoryGroup::find()->all();
+});
 ?>
 <div class="title-fixed-wrap container">
     <div class="tool-cacu">
@@ -64,6 +68,69 @@ foreach ($categories as $category) {
                             <label>Đường </label>
                             <?=Html::dropDownList('streets', null, [], ['class' => 'form-control search region_streets', 'prompt' => "..."])?>
                         </div>
+                        <div class="form-group col-xs-12 col-sm-6 num-phongngu">
+                            <label>Phòng ngủ </label>
+                            <div class="box-dropdown dropdown-common">
+                                <div class="val-selected style-click" data-text-add="<?= Yii::t('ad', 'Beds') ?>"><span class="selected">0+ <?= Yii::t('ad', 'Beds') ?></span><span class="arrowDownFillFull"></span></div>
+                                <div class="item-dropdown item-bed-bath hide-dropdown">
+                                    <ul class="clearfix">
+                                        <li><a href="#" data-value="">0+</a></li>
+                                        <li><a href="#" data-value="1">1+</a></li>
+                                        <li><a href="#" data-value="2">2+</a></li>
+                                        <li><a href="#" data-value="3">3+</a></li>
+                                        <li><a href="#" data-value="4">4+</a></li>
+                                        <li><a href="#" data-value="5">5+</a></li>
+                                    </ul>
+                                    <input type="hidden" value="" name="bedroom" id="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6 num-phongtam">
+                            <label>Phòng tắm </label>
+                            <div class="box-dropdown dropdown-common">
+                                <div class="val-selected style-click" data-text-add="<?= Yii::t('ad', 'Bath') ?>"><span class="selected">0+ <?= Yii::t('ad', 'Bath') ?></span><span class="arrowDownFillFull"></span></div>
+                                <div class="item-dropdown item-bed-bath hide-dropdown">
+                                    <ul class="clearfix">
+                                        <li><a href="#" data-value="">0+</a></li>
+                                        <li><a href="#" data-value="1">1+</a></li>
+                                        <li><a href="#" data-value="2">2+</a></li>
+                                        <li><a href="#" data-value="3">3+</a></li>
+                                        <li><a href="#" data-value="4">4+</a></li>
+                                        <li><a href="#" data-value="5">5+</a></li>
+                                    </ul>
+                                    <input type="hidden" value="" name="bathroom" id="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-xs-12 col-sm-6 choice_price_dt select-dt">
+                            <label>Diện tích </label>
+                            <div class="box-dropdown" data-item-minmax="area">
+                                <div class="val-selected style-click dt-search">
+                                    <span class="txt-holder-minmax"><?= Yii::t('ad', 'Size') ?></span>
+                                    <div>
+                                        <span class="wrap-min"></span>
+                                        <span class="trolen">+</span>
+                                        <span class="den">-</span>
+                                        <span class="wrap-max"></span>
+                                        <span class="troxuong"><?= Yii::t('ad', 'below') ?></span>
+                                    </div>
+                                    <span class="arrowDownFillFull"></span>
+                                </div>
+                                <div class="item-dropdown hide-dropdown wrap-min-max">
+                                    <div class="box-input clearfix">
+                                        <span class="txt-min min-max active min-val" data-value="" data-text="<?= Yii::t('ad', 'Min') ?>"><?= Yii::t('ad', 'Min') ?></span>
+                                        <span class="text-center"><span></span></span>
+                                        <span class="txt-max min-max max-val" data-value="" data-text="<?= Yii::t('ad', 'Max') ?>"><?= Yii::t('ad', 'Max') ?></span>
+                                        <input type="hidden" id="dtMin" name="size_min">
+                                        <input type="hidden" id="dtMax" name="size_max">
+                                    </div>
+                                    <div class="filter-minmax clearfix">
+                                        <ul data-wrap-minmax="min-val" class="wrap-minmax"></ul>
+                                        <ul data-wrap-minmax="max-val" class="wrap-minmax"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <a href="javascript:;" class="btn-form btn-common btn-tinhnhanh"> Tính nhanh <span class="arrow-icon"> </span> </a>
                 </form>
@@ -75,14 +142,21 @@ foreach ($categories as $category) {
         </div>
     </div>
 </div>
-
+<script src="//code.highcharts.com/highcharts.js"></script>
+<script src="//code.highcharts.com/highcharts-more.js"></script>
 <script>
     $(document).ready(function () {
+        $('#frmAvg .dropdown-common').dropdown({
+            txtAdd: true,
+            styleShow: 0
+        });
+
+        $('#frmAvg .select-dt .box-dropdown').price_dt();
+
         var func = {
             appendDropdown: function(el, items) {
                 el.find("option:not(:first-child)").remove();
                 for(var i in items) {
-                    console.log(items);
                     if(items[i]['pre']) {
                         el.append('<option data-pre="' + items[i]['pre'] + '" value="' + items[i]['id'] + '">' + items[i]['name'] + '</option>');
                     } else {
@@ -129,10 +203,10 @@ foreach ($categories as $category) {
         $(document).on('change', '.region_category', function (e) {
             if($('.region_category').val() == 6){
                 $('.wrap_project').show();
-                $('.wrap_city').hide();
+                /*$('.wrap_city').hide();
                 $('.wrap_district').hide();
                 $('.wrap_wards').hide();
-                $('.wrap_streets').hide();
+                $('.wrap_streets').hide();*/
             }else{
                 $('.wrap_project').hide();
                 $('.wrap_city').show();
@@ -160,22 +234,28 @@ foreach ($categories as $category) {
         });
 
         $(document).on('click', '.btn-tinhnhanh', function (e) {
+            $('.group-frm').loading({full: false});
             if($('.region_city').val() || $('.region_project').val()) {
                 $.post('/site/avg', $('#frmAvg').serialize(), function (response) {
-                    var html = '<table class="savings-tbl"><tbody><tr class="savings-tlt"><td>Điều kiện</td><td>Giá Trung Bình</td><td>Giá Trung Bình/m2</td><td>Listing</td></tr>';
+                    $('#inKetQua').html(response);
                     var text = [];
                     func.pushOptionTextToArray('region_category', text);
                     func.pushOptionTextToArray('region_city', text);
                     func.pushOptionTextToArray('region_district', text);
-                    var avg = response.sum / response.total;
-                    var avg_m2 = response.sum / response.sum_area;
-                    html += '<tr><td class="saving_table saving_table_left">' + text.join(', ') + '</td><td class="saving_table">' + $.number(avg) + ' VND</td><td class="saving_table">' + $.number(avg_m2) + ' VND</td><td class="saving_table">' + $.number(response.total) + '</td></tr>';
-                    html += '</tbody></table>';
-                    $('#inKetQua').html(html);
+                    $('#inKetQua').find('.saving_table_left').html(text.join(', '));
+                    $('body').loading({done:true});
+                    return false;
+                }).fail(function(response) {
+                    alert('Vui lòng chọn điều kiện khác !');
+                    $('body').loading({done:true});
                 });
             }else{
                 alert('Vui lòng chọn Thành Phố');
+                $('body').loading({done:true});
             }
+
         });
+
+
     });
 </script>
