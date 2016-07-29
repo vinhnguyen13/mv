@@ -41,7 +41,7 @@ class ReportController extends Controller
     public function actionMail()
     {
         $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuDashboard' => true, 'isReport' => true], $this->view->params);
-        $data['sysEmails'] = SysEmail::find()->limit(10)->all();
+        $data['sysEmails'] = SysEmail::find()->orderBy(['send_time' => SORT_DESC])->limit(10)->all();
         if(Yii::$app->request->isAjax) {
             return $this->renderAjax('mail/index', $data);
         } else {
