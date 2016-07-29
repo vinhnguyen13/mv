@@ -447,9 +447,13 @@ class SiteController extends Controller
 				$exclude_outlier = 3 * $dataBoxplot['IQR'];
 				$keyEliminate = $arrAreaM2 = $newArrAreaM2 = [];
 				$newArrPrice = array_filter($arrPrice, function($element, $key) use ($exclude_outlier, $dataBoxplot, $arrArea, &$keyEliminate, &$arrAreaM2, &$newArrAreaM2) {
-					$arrAreaM2[$key] = $element/$arrArea[$key];
+					if(!empty($arrArea[$key])){
+						$arrAreaM2[$key] = $element/$arrArea[$key];
+					}
 					if($element > ($dataBoxplot['q1']-$exclude_outlier) && $element < ($dataBoxplot['q3']+$exclude_outlier)) {
-						$newArrAreaM2[$key] = $element/$arrArea[$key];
+						if(!empty($arrArea[$key])){
+							$newArrAreaM2[$key] = $element/$arrArea[$key];
+						}
 						return $element;
 					}else{
 						$keyEliminate[] = $key;

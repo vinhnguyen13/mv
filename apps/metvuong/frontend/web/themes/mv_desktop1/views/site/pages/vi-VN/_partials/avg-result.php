@@ -64,14 +64,14 @@ if(!empty($data['list_price'])) {
             <?=implode('<br>',$data['list_price_new'])?>
         </p>
         <p style="max-height: 500px; width: 200px; overflow: scroll;float: left;">
-            <label>Price/m<sup>2</sup> OLD</label><br>
+            <label>Price/m<sup>2</sup> OLD <?=count($data['list_price_PM2'])?></label><br>
             <?php
             sort($data['list_price_PM2']);
             echo implode('<br>',$data['list_price_PM2'])
             ?>
         </p>
         <p style="max-height: 500px; width: 200px; overflow: scroll;float: left;">
-            <label>Price/m<sup>2</sup> NEW</label><br>
+            <label>Price/m<sup>2</sup> NEW <?=count($data['list_price_new_PM2'])?></label><br>
             <?php
             sort($data['list_price_new_PM2']);
             echo implode('<br>',$data['list_price_new_PM2'])
