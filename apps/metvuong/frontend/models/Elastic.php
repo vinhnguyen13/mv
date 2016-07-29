@@ -382,6 +382,7 @@ class Elastic
 			}, $word);
 		
 			$correctText = preg_replace("/(?<=$vowel)$consonant(?=$vowel)/u", " $0", $correctText);
+			$correctText = preg_replace("/(?<=\w)(\d+)/", " $1", $correctText);
 	
 			if($correctText != $word) {
 				$correctText = implode(" AND ", explode(" ", $correctText));
@@ -481,5 +482,9 @@ class Elastic
 	
 	public static function standardSearchDistrict($district) {
 		return self::standardSearchlv1(preg_replace("/(Quận)\s(\d+)/", "$1 $2 q$2", $district));
+	}
+	
+	public static function standardSearchWard($ward) {
+		return self::standardSearchlv1(preg_replace("/(Phường)\s(\d+)/", "$1 $2 q$2", $ward));
 	}
 }

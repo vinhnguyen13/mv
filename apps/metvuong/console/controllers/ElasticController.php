@@ -146,9 +146,9 @@ class ElasticController extends Controller {
 				
 				$termsDistrict .= $this->buildTerm($district['id'], $districtDocument);
 
-				$this->buildTermsBelongDistrict($this->tWardTable, $this->tWardId, $this->tWard, $city['id'], $district['id'], $districtFullName, $searchFullName, $indexName);
+				$this->buildTermsBelongDistrict($this->tWardTable, $this->tWardId, $this->tWard, $city['id'], $district['id'], $districtFullName, $searchFullName, $indexName, 'standardSearchWard');
 				$this->buildTermsBelongDistrict($this->tStreetTable, $this->tStreetId, $this->tStreet, $city['id'], $district['id'], $districtFullName, $searchFullName, $indexName);
-				$this->buildTermsBelongDistrict($this->tProjectTable, $this->tProjectId, $this->tProject, $city['id'], $district['id'], $districtFullName, $searchFullName, $indexName, 'buildFullNameProject');
+				$this->buildTermsBelongDistrict($this->tProjectTable, $this->tProjectId, $this->tProject, $city['id'], $district['id'], $districtFullName, $searchFullName, $indexName, 'standardSearch', 'buildFullNameProject');
 			}
 			
 			$this->batchInsert($indexName, $this->tDistrict, $termsDistrict);
@@ -191,7 +191,7 @@ class ElasticController extends Controller {
 		return $query->all();
 	}
 	
-	public function buildTermsBelongDistrict($table, $columnId, $type, $cityId, $districtId, $districtFullName, $searchFullName, $indexName, $fn = 'buildFullName') {
+	public function buildTermsBelongDistrict($table, $columnId, $type, $cityId, $districtId, $districtFullName, $searchFullName, $indexName, $ss = 'standardSearch', $fn = 'buildFullName') {
 		$areas = $this->getAreas($table, ['district_id' => $districtId]);
 		$countAreas = $this->countProducts($columnId, $table);
 		$terms = "";
@@ -206,7 +206,7 @@ class ElasticController extends Controller {
 			}
 				
 			$namePrefix = $area['pre'] . ' ' . $area['name'];
-			$nameFulltext = Elastic::standardSearch($namePrefix);
+			$nameFulltext = call_user_func([Elastic::class, $ss], $namePrefix);
 			
 			$document = [
 				'full_name' => call_user_func([$this, $fn], $area['pre'], $area['name'], $districtFullName),
