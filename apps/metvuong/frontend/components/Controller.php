@@ -7,6 +7,7 @@
  */
 
 namespace frontend\components;
+use common\components\Acl;
 use frontend\models\Cache;
 use frontend\models\User;
 use frontend\models\UserActivity;
@@ -14,6 +15,7 @@ use frontend\models\UserData;
 use lajax\translatemanager\helpers\Language;
 use Yii;
 use yii\helpers\Url;
+use yii\web\ForbiddenHttpException;
 
 class Controller extends \yii\web\Controller
 {
@@ -112,6 +114,19 @@ class Controller extends \yii\web\Controller
             Yii::$app->end();
         }
         return true;
+    }
+
+    protected function checkACL()
+    {
+        $parseUrl = Yii::$app->urlManager->parseRequest(Yii::$app->request);
+        $urlBase = !empty($parseUrl[0]) ? $parseUrl[0] : '';
+        if(!Yii::$app->user->isGuest && !in_array($urlBase, ['site/logout'])) {
+            $permissionName = !empty(Yii::$app->setting->get('aclReport')) ? Yii::$app->setting->get('aclReport') : Acl::ACL_REPORT;
+            if (Yii::$app->user->can($permissionName)) {
+                return true;
+            }
+            throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+        }
     }
 
     protected function checkIsMe()

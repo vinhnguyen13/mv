@@ -21,6 +21,7 @@ class ReportController extends Controller
     public function beforeAction($action)
     {
         $this->checkAccess();
+        $this->checkACL();
         return parent::beforeAction($action);
     }
 
