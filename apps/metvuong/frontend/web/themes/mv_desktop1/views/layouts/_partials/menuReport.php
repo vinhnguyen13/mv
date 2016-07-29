@@ -6,9 +6,15 @@ use yii\helpers\Url;
         <div class="menuUser menuReport">
             <ul class="clearfix">
                 <li>
-                    <a class="dashboard-item <?= !empty($this->params['menuDashboard']) ? 'active' : ''; ?>" href="<?= Url::to(['/report/index', 'username' => Yii::$app->user->identity->getUsername()]) ?>">
+                    <a class="dashboard-item <?= !empty($this->params['menuDashboard']) ? 'active' : ''; ?>" href="<?= Url::to(['/report/index']) ?>">
                         <div><span class="icon-mv"><span class="icon-barometer"></span></span></div>
                         <?= Yii::t('report', 'User') ?>
+                    </a>
+                </li>
+                <li>
+                    <a class="dashboard-item <?= !empty($this->params['menuDashboard']) ? 'active' : ''; ?>" href="<?= Url::to(['/report/mail']) ?>">
+                        <div><span class="icon-mv"><span class="icon-barometer"></span></span></div>
+                        <?= Yii::t('report', 'Mail') ?>
                     </a>
                 </li>
             </ul>
@@ -16,7 +22,7 @@ use yii\helpers\Url;
     </div>
     <script>
         $(document).ready(function () {
-            $('.menuReport li a').click(function (e) {
+            /*$('.menuReport li a').click(function (e) {
                 $('body').loading();
                 $('.menuUser li a').removeClass('active');
                 $(this).addClass('active');
@@ -37,7 +43,7 @@ use yii\helpers\Url;
                 });
 
                 return false;
-            });
+            });*/
         });
     </script>
 <?php }?>

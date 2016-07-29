@@ -129,7 +129,7 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
                 </div>
             </div>
 			<?php
-			$permissionName = !empty(Yii::$app->setting->get('aclAdmin')) ? Yii::$app->setting->get('aclAdmin') : 'Admin';
+			$permissionName = !empty(Yii::$app->setting->get('aclAdmin')) ? Yii::$app->setting->get('aclAdmin') : \common\components\Acl::ACL_ADMIN;
 			if (Yii::$app->user->can($permissionName)) {
 				?>
 				<div class="col-lg-3 item">
