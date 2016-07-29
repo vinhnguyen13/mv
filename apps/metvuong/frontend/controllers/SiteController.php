@@ -431,45 +431,53 @@ class SiteController extends Controller
 			Yii::$app->dbCraw->createCommand('SET group_concat_max_len = 5000000')->execute();
 			$resultTotal = $query->select('COUNT(*) as totalListing')->one(Yii::$app->dbCraw);
 			$result = $query->select([
-				'SUM(price) as sum',
+				'SUM(price) as sum_price',
 				'SUM(area) as sum_area',
 				'COUNT(*) as total',
+				'GROUP_CONCAT(area ORDER BY price ASC) as listarea',
 				'GROUP_CONCAT(CAST(price/1000000 AS UNSIGNED) ORDER BY price ASC) as listprice',
-				'GROUP_CONCAT(CAST(price/area/1000000 AS UNSIGNED) ORDER BY price/area/1000000 ASC) as listpricem2',
+				'GROUP_CONCAT(CAST(price/area AS UNSIGNED) ORDER BY price ASC) as listpricem2',
 				])
 				->andWhere('price != 0')->one(Yii::$app->dbCraw);
 
-//			Yii::$app->response->format = Response::FORMAT_JSON;
-			$return = ArrayHelper::merge($result, $resultTotal);
-			if(!empty($return['listprice']) && $return['total'] >= 3) {
-				$arrPrice = explode(',', $return['listprice']);
+			if(!empty($result['listprice']) && $result['total'] >= 3) {
+				$arrPrice = explode(',', $result['listprice']);
+				$arrArea = explode(',', $result['listarea']);
 				$dataBoxplot = \frontend\models\Avg::me()->calculation_boxplot($arrPrice, YII_DEBUG);
 				$exclude_outlier = 3 * $dataBoxplot['IQR'];
-				$newArrPrice = array_filter($arrPrice, function($element) use ($exclude_outlier, $dataBoxplot) {
+				$keyEliminate = $arrAreaM2 = $newArrAreaM2 = [];
+				$newArrPrice = array_filter($arrPrice, function($element, $key) use ($exclude_outlier, $dataBoxplot, $arrArea, &$keyEliminate, &$arrAreaM2, &$newArrAreaM2) {
+					$arrAreaM2[$key] = $element/$arrArea[$key];
 					if($element > ($dataBoxplot['q1']-$exclude_outlier) && $element < ($dataBoxplot['q3']+$exclude_outlier)) {
+						$newArrAreaM2[$key] = $element/$arrArea[$key];
 						return $element;
+					}else{
+						$keyEliminate[] = $key;
 					}
-				});
+				}, ARRAY_FILTER_USE_BOTH);
+
 				$dataBoxplotNew = \frontend\models\Avg::me()->calculation_boxplot($newArrPrice, YII_DEBUG);
-				$data = ArrayHelper::merge($return, ['dataChart'=>$dataBoxplotNew, 'list_price'=>$arrPrice, 'list_price_new'=>$newArrPrice]);
-				$data['average_old'] = array_sum($arrPrice) / count($arrPrice);
-				$data['average_new'] = array_sum($newArrPrice) / count($newArrPrice);
+				$data['total'] = $result['total'];
+				$data['totalListing'] = $resultTotal['totalListing'];
+				$data['list_price'] = $arrPrice;
+				$data['list_price_new'] = $newArrPrice;
+				$data['dataChart'] = $dataBoxplotNew;
+				$data['average_old'] = (array_sum($arrPrice) / count($arrPrice))*1000000;
+				$data['average_m2_old'] = (array_sum($arrAreaM2) / count($arrAreaM2))*1000000;
+				$data['average_new'] = (array_sum($newArrPrice) / count($newArrPrice))*1000000;
+				$data['average_m2_new'] = (array_sum($newArrAreaM2) / count($newArrAreaM2))*1000000;
+
 
 				/**
 				 * chart for price/m2
 				 */
-				$arrPricePM2 = explode(',', $return['listpricem2']);
-				$dataBoxplotPM2 = \frontend\models\Avg::me()->calculation_boxplot($arrPricePM2);
-				$exclude_outlierPM2 = 3 * $dataBoxplotPM2['IQR'];
-				$newArrPricePM2 = array_filter($arrPricePM2, function($element) use ($exclude_outlierPM2, $dataBoxplotPM2) {
-					if($element > ($dataBoxplotPM2['q1']-$exclude_outlierPM2) && $element < ($dataBoxplotPM2['q3']+$exclude_outlierPM2)) {
-						return $element;
-					}
-				});
-				$dataBoxplotNewPM2 = \frontend\models\Avg::me()->calculation_boxplot($newArrPricePM2);
+				$dataBoxplotNewPM2 = \frontend\models\Avg::me()->calculation_boxplot($newArrAreaM2);
+
 				$data['dataChartPM2'] = $dataBoxplotNewPM2;
-				$data['list_price_new_PM2'] = $newArrPricePM2;
-				$data['list_price_PM2'] = $arrPricePM2;
+				$data['list_price_new_PM2'] = $newArrAreaM2;
+				$data['list_price_PM2'] = $arrAreaM2;
+				$data['average_m2_old_PM2'] = (array_sum($arrAreaM2) / count($arrAreaM2)) * 1000000;
+				$data['average_m2_new_PM2'] = (array_sum($newArrAreaM2) / count($newArrAreaM2)) * 1000000;
 				/**
 				 * remove if release
 				 */

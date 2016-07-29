@@ -1,5 +1,5 @@
 <?php
-if(!empty($data['total']) && !empty($data['list_price'])) {
+if(!empty($data['list_price'])) {
     ?>
     <table class="savings-tbl">
         <tbody>
@@ -13,10 +13,10 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
         </tr>
         <tr>
             <td class="saving_table saving_table_left"></td>
-            <td class="saving_table"><?= number_format($data['average_old']*1000000) ?> VND</td>
-            <td class="saving_table"><?= number_format(($data['average_old']*1000000)/($data['sum_area'] / $data['total'])) ?> VND</td>
-            <td class="saving_table"><?= number_format($data['average_new']*1000000) ?> VND</td>
-            <td class="saving_table"><?= number_format(($data['average_new']*1000000)/($data['sum_area'] / $data['total'])) ?> VND</td>
+            <td class="saving_table"><?= number_format($data['average_old']) ?> VND</td>
+            <td class="saving_table"><?= number_format(($data['average_m2_old'])) ?> VND</td>
+            <td class="saving_table"><?= number_format($data['average_new']) ?> VND</td>
+            <td class="saving_table"><?= number_format(($data['average_m2_new'])) ?> VND</td>
             <td class="saving_table"><?= number_format($data['totalListing']) ?></td>
         </tr>
         </tbody>
@@ -65,12 +65,21 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
         </p>
         <p style="max-height: 500px; width: 200px; overflow: scroll;float: left;">
             <label>Price/m<sup>2</sup> OLD</label><br>
-            <?=implode('<br>',$data['list_price_PM2'])?>
+            <?php
+            sort($data['list_price_PM2']);
+            echo implode('<br>',$data['list_price_PM2'])
+            ?>
         </p>
         <p style="max-height: 500px; width: 200px; overflow: scroll;float: left;">
             <label>Price/m<sup>2</sup> NEW</label><br>
-            <?=implode('<br>',$data['list_price_new_PM2'])?>
+            <?php
+            sort($data['list_price_new_PM2']);
+            echo implode('<br>',$data['list_price_new_PM2'])
+            ?>
         </p>
+        <?= number_format($data['average_m2_old_PM2']) ?> VND
+        <br>
+        <?= number_format($data['average_m2_new_PM2']) ?> VND
     <?php endif?>
     <?php
 }
