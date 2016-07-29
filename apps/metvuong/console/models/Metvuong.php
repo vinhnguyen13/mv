@@ -25,13 +25,13 @@ use yii\helpers\Url;
 
 class Metvuong extends Component
 {
-    public static function sendMailContact($code=null)
+    public static function sendMailContact($code=null, $limit=100)
     {
         $contacts = AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
                 ->where('email is not null')
                 ->andWhere("email NOT IN (select email from mark_email)")
                 ->andWhere("email NOT IN (select email from user where updated_at > created_at )")
-                ->groupBy('email')->orderBy('count(product_id) desc')->limit(2)->all();
+                ->groupBy('email')->orderBy('count(product_id) desc')->limit($limit)->all();
 
         if(count($contacts) > 0) {
             $coupon = CouponCode::getDb()->cache(function() use($code){
