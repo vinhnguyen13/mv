@@ -105,7 +105,7 @@ $type = AdProduct::getAdTypes();
         				$a = 'Trang Home';
         			} else if(\yii\helpers\StringHelper::startsWith($model->referer, '/')) {
         				if($searchModel->referer_filter == '3') {
-        					$a = $model->referer;
+        					$a = urldecode($model->referer);
         				} else {
         					$a = 'Trang khác';
         				}

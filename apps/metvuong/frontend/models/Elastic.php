@@ -190,172 +190,6 @@ class Elastic
     	return $query;
     }
 
-    public function connect(){
-        if(!empty(Yii::$app->params['elastic']['config']['hosts'])){
-            $hosts = Yii::$app->params['elastic']['config']['hosts'];
-            $singleHandler  = ClientBuilder::singleHandler();
-            $multiHandler   = ClientBuilder::multiHandler();
-            if(empty($this->client)){
-                $this->client = ClientBuilder::create()           // Instantiate a new ClientBuilder
-                ->setHosts($hosts)      // Set the hosts
-                ->setHandler($singleHandler)
-                ->build();              // Build the client object
-            }
-            return $this->client;
-        }
-        return false;
-    }
-
-    public function index($params){
-//         $params = [
-//             'index' => 'my_index',
-//             'type' => 'my_type',
-//             'id' => 'my_id',
-//             'body' => [ 'testField' => 'abc']
-//         ];
-        // Document will be indexed to my_index/my_type/my_id
-        $response = $this->client->index($params);
-        return $response;
-    }
-
-    public function delete(){
-        $params = [
-            'index' => 'my_index',
-            'type' => 'my_type',
-            'id' => 'my_id'
-        ];
-        // Delete doc at /my_index/my_type/my_id
-        $response = $this->client->delete($params);
-        return $response;
-    }
-
-    public function update(){
-        $params = [
-            'index' => 'listing',
-            'type' => 'store',
-            'id' => '28',
-            'body' => [
-                'doc' => [
-                    'title' => 'Ứng dụng công nghệ Holongram vào trình diễn dự án tại Việt Nam'
-                ]
-            ]
-        ];
-        // Update doc at /my_index/my_type/my_id
-        $response = $this->client->update($params);
-        return $response;
-    }
-
-    public function search($params){
-//         $params = [
-//             'index' => 'listing',
-//             'type' => 'store',
-//             'body' => [
-//                 'query' => [
-//                     /*'match' => [
-//                         'title' => 'long'
-//                     ]*/
-//                     /*'bool' => [
-//                         'must' => [
-//                             [ 'match' => [ 'title' => 'long' ] ],
-//                         ]
-//                     ]*/
-//                     /*'filtered' => [
-//                         'filter' => [
-//                             'term' => [ 'title' => 'long' ]
-//                         ],
-//                         'query' => [
-//                             'match' => [ 'title' => 'long' ]
-//                         ]
-//                     ]*/
-//                     /*'filtered' => [
-//                         'query' => [
-//                             'query_string' => [
-//                                 'query' => 'long',
-//                                 "default_operator" => "OR",
-//                                 "fields" => ["title"]
-//                             ]
-//                         ]
-//                     ],
-//                     'regexp' => [
-//                         'title' => [
-//                             'value' => '.*long.*'
-//                         ]
-//                     ],*/
-//                     /*'filtered' => [
-//                         'query' => [
-//                             'query_string' => [
-//                                 'query' => 'Ứng dụng công nghệ', // words want to find
-//                                 "default_operator" => "OR", // OR/AND query words
-//                                 "fields" => ["title", "content"], // select fields
-// //                                "default_field" => "_all", // all filed
-//                             ]
-//                         ]
-//                     ],*/
-//                     'regexp' => [
-//                         'title' => [
-//                             'value' => '.*long.*'
-//                         ]
-//                     ]
-//                 ]
-//             ]
-//         ];
-        $results = $this->client->search($params);
-        return $results;
-    }
-
-    public function findOne($index, $type, $id, $function = 'getSource'){
-        /**
-         * must have 2 field
-         */
-        $params = [
-            'index' => $index,
-            'type' => $type,
-            'id' => $id,
-        ];
-        // Document will be indexed to my_index/my_type/my_id
-        try{
-
-            if($this->client->transport->getConnection()->ping()){
-                $chk = $this->client->exists($params);
-                if(!empty($chk)){
-        //            $result = $client->get($params);
-                    $result = $this->client->$function($params);
-                    return $result;
-                }
-                return false;
-            }
-        }catch (Exception $e){
-
-        }
-    }
-
-
-    public function userData(){
-        try{
-            $this->connect();
-            if($this->client->transport->getConnection()->ping()){
-                $params = [
-                    'index' => 'users',
-                    'type' => 'store',
-                    'id' => '28',
-                    'body' => [
-                        'doc' => [
-                            'title' => 'Ứng dụng công nghệ Holongram vào trình diễn dự án tại Việt Nam'
-                        ]
-                    ]
-                ];
-                $this->client->index($params);
-            }
-        }catch (Exception $e){
-
-        }
-    }
-    
-    public function bulk($params) {
-    	$results = $this->client->bulk($params);
-    	return $results;
-    }
-
     public static function transform($str) {
     	$str = trim(mb_strtolower($str, 'UTF-8'));
     	$str = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str);
@@ -368,16 +202,6 @@ class Elastic
     	return $str;
     }
     
-    public static function standardSearch($s) {
-    	$s = self::transform($s);
-    	
-    	$s = preg_replace("/([0-9]*)\/([0-9]*)/", "$1/$2 $1 / $2", $s);
-    	$s = preg_replace("/so ([0-9])/", "$1", $s);
-    	$s = preg_replace("/(\S+)-(\S+)/", "$1-$2 $1$2", $s);
-    	
-    	return $s;
-    }
-    
     public static function slug($str) {
     	$slug = new Slug();
     	
@@ -385,212 +209,87 @@ class Elastic
     }
     
     public static function buildParams($v) {
-
-    	$v = preg_replace("/so ([0-9]|mot|hai|ba|bon|nam|sau|bay|tam|chin|muoi)/", "$1", $v);
-    	$v = preg_replace("/([0-9]*)\/([0-9]*)/", "$1 / $2", $v);
+    	/*
+    	 * escape for elasticsearch must done
+    	 */
+    	$v = str_replace('/', '\/', $v);
     	
-		$slop = 11;
-		$maxExpansions = 80;
-		
-		$should = [
-			[
-				"match_phrase_prefix" => [
-					"search_field" => [
-						"query" => $v,
-						"slop" => $slop,
-						"max_expansions" => $maxExpansions
-					]
-				]	
-			]
-		];
-		
-		$functions = [
-			[
-				"filter" => [
-					"match_phrase" => [
-						"search_name" => $v
-					]
-				],
-				"weight" => 3
-			],
-			[
-				"filter" => [
-					"match_phrase_prefix" => [
-						"search_name" => $v
-					]
-				],
-				"weight" => 2
-			],
-			[
-				"filter" => [
-					"match_phrase_prefix" => [
-						"search_field" => $v
-					]
-				],
-				"weight" => 1
-			],
-			[
-				"filter" => [
-					"match_phrase_prefix" => [
-						"search_field" => [
-							"query" => $v,
-							"slop" => $slop
-						]
-					]
-				],
-				"weight" => 3
-			],
-			[
-				"filter" => [
-					"match_phrase_prefix" => [
-						"search_field_key" => [
-							"query" => $v,
-							"max_expansions" => 12
-						]
-					]
-				],
-				"weight" => 1
-			],
-			[
-				"filter" => [
-					"match" => [
-						"city_id" => 1
-					]
-				],
-				"weight" => 0.1
-			],
-		];
-		
-		$additionSearch = preg_replace("/(q|quan|p|phuong)([0-9])/", "$1 $2", $v);
-		$additionSearch = preg_replace("/(^|(?<=\s))(tp|thanh pho|tinh)(\s|.)/", "", $additionSearch);
-		
-		if(strpos($additionSearch, "du an") !== false) {
-			$additionSearch = str_replace("du an", "", $v);
-		
-			$functions[] = [
-				"filter" => [
-					"match" => [
-						"_type" => "project_building"
-					]
-				],
-				"weight" => 4
-			];
-		} else {
-			$functions[] = [
-				"filter" => [
-					"match" => [
-						"_type" => "city"
-					]
-				],
-				"weight" => 2
-			];
-			$functions[] = [
-				"filter" => [
-					"match" => [
-						"_type" => "district"
-					]
-				],
-				"weight" => 1
-			];
-		}
-		
-		if($additionSearch != $v) {
-			$should[] = [
-				"match_phrase_prefix" => [
-					"search_field" => [
-						"query" => $additionSearch,
-						"slop" => $slop
-					]
-				]
-			];
-			
-			$functions[] = [
-				"filter" => [
-					"match_phrase_prefix" => [
-						"search_field" => [
-							"query" => $additionSearch,
-							"slop" => $slop
-						]
-					]
-				],
-				"weight" => 3
-			];
-		}
-		
-		
-		
-		$sentence = explode(' ', $additionSearch);
-		$totalWords = count($sentence);
-			
-		if($totalWords > 1) {
-			$lastWord = $sentence[$totalWords-1];
-		
-			$functions[] = [
-				"filter" => [
-					"match" => [
-						"search_field" => $lastWord
-					]
-				],
-				"weight" => 1
-			];
-			
-			if($totalWords > 2) {
-				$lastWord = $sentence[$totalWords-2] . ' ' . $lastWord;
-		
-				$functions[] = [
-					"filter" => [
-						"match_phrase_prefix" => [
-							"search_field" => $lastWord
-						]
-					],
-					"weight" => 1
-				];
-			}
-		}
-		
-		
-		
-		$correctText = self::correctText($additionSearch);
-		
-		if($correctText != $additionSearch) {
-			$should[] = [
-				"match_phrase_prefix" => [
-					"search_field" => [
-						"query" => $correctText,
-						"slop" => $slop
-					]
-				]
-			];
-			
-			$functions[] = [
-				"filter" => [
-					"match_phrase_prefix" => [
-						"search_field" => [
-							"query" => $correctText,
-							"slop" => $slop
-						]
-					]
-				],
-				"weight" => 3
-			];
-		}
-		
-		$params = [
-			"query" => [
-				"function_score" => [
-					"query" => [
-						"bool" => [
-							"should" => $should
-						]
-					],
-					"functions" => $functions,
-					"boost_mode" => "replace",
-					"score_mode" => "sum"
-				]
-			]
-		];
+    	$functions = [
+    		[
+    			"filter" => [
+    				"match" => [
+    					"search_name" => $v
+    				]
+    			],
+    			"weight" => 1.5
+    		],
+    		[
+    			"filter" => [
+    				"match" => [
+    					"search_name_with_prefix" => $v
+    				]
+    			],
+    			"weight" => 1.5
+    		],
+    		[
+    			"filter" => [
+    				"match" => [
+    					"search_name_full_text" => [
+    						"query" => $v,
+    						"operator" => "and"
+    					]
+    				]
+    			],
+    			"weight" => 1.5
+    		],
+    		[
+    			"filter" => [
+    				"match" => [
+    					"search_name_full_text_no_ngram" => [
+    						"query" => $v,
+    						"operator" => "and"
+    					]
+    				]
+    			],
+    			"weight" => 1.5
+    		],
+    		[
+    			"filter" => [
+    				"match" => [
+    					"_type" => "city"
+    				]
+    			],
+    			"weight" => 0.02
+    		],
+    		[
+    			"filter" => [
+    				"match" => [
+    					"_type" => "district"
+    				]
+    			],
+    			"weight" => 0.01
+    		]
+    	];
     	
-		return $params;
+    	$query = self::buildQueryString($v);
+    	
+    	$params = [
+    		"query" => [
+    			"function_score" => [
+    				"query" => [
+    					"query_string" => [
+    						"default_field" => "search_full_name",
+    						"query" => $query
+    					]
+    				],
+    				"functions" => $functions,
+    				"boost_mode" => "replace",
+    				"score_mode" => "sum"
+    			]
+    		]
+    	];
+    	  	
+    	return $params;
     }
     
     public static function searchAreasRankByTotal($v) {
@@ -600,7 +299,7 @@ class Elastic
     		"field_value_factor" => [
     			"field" => ["total_sell", "total_rent"],
     			"modifier" => "log1p",
-    			"factor" => 1
+    			"factor" => 0.1
     		]
     	];
     	
@@ -616,7 +315,7 @@ class Elastic
     		"field_value_factor" => [
     			"field" => $field,
     			"modifier" => "log1p",
-    			"factor" => 1
+    			"factor" => 0.1
     		]
     	];
 		
@@ -630,16 +329,17 @@ class Elastic
     		"field_value_factor" => [
     			"field" => ["total_sell", "total_rent"],
     			"modifier" => "log1p",
-    			"factor" => 1
+    			"factor" => 0.1
     		]
     	];
     	
-    	$params['query']['function_score']['query']["bool"]["must"][] = [
-			"match" => [
-				"city_id" => 1
-			]
-    	];
+    	$query = $params['query']['function_score']['query']['query_string']['query'];
+    	$default_field = $params['query']['function_score']['query']['query_string']['default_field'];
     	
+    	$params['query']['function_score']['query']['query_string'] = [
+    		"query" => "($default_field:($query)) AND (city_id:1)"
+    	];
+  	
     	return self::requestResult($params, self::elasticUrl('/project_building'));
     }
     
@@ -658,31 +358,38 @@ class Elastic
 		return $result;
     }
 	
-	public static function correctText($s) {
+	public static function buildQueryString($s) {
 		$consonantArr = ["ngh", "ph", "th", "tr", "gi", "ch", "nh", "ng", "kh", "gh"];
-		 
-		$consonantLv = [
-			1 => "c|q|k|t|r|h|b|m|v|n|l|x|p|s|d|g",
-			2 => "ph|th|tr|gi|ch|nh|ng|kh|gh",
-			3 => "ngh"
-		];
-		 
-		$consonant = "(" . $consonantLv[3] . "|" . $consonantLv[2] . "|" . $consonantLv[1] . ")";
-		$vowel = "(a|o|y|e|u|i)";
-		 
-		$correctText = preg_replace_callback("/$consonant(?=$consonant)/", function($matches) use ($consonantArr) {
-			if(in_array($matches[0].$matches[2], $consonantArr)) {
-				return $matches[0];
-			} else {
-				return $matches[0] . " ";
-			}
-		}, $s);
-			 
-		$correctText = preg_replace_callback("/(?<=$vowel)$consonant(?=$vowel)/", function($matches) {
-			return " " . $matches[0];
-		}, $correctText);
 		
-		return $correctText;
+		$consonantLv = [
+				1 => "c|q|k|t|r|h|b|m|v|n|l|x|p|s|d|g",
+				2 => "ph|th|tr|gi|ch|nh|ng|kh|gh",
+				3 => "ngh"
+		];
+		
+		$consonant = "(" . $consonantLv[3] . "|" . $consonantLv[2] . "|" . $consonantLv[1] . ")";
+		$vowel = "(a|\x{00E0}|\x{00E1}|\x{1EA1}|\x{1EA3}|\x{00E3}|\x{00E2}|\x{1EA7}|\x{1EA5}|\x{1EAD}|\x{1EA9}|\x{1EAB}|\x{0103}|\x{1EB1}|\x{1EAF}|\x{1EB7}|\x{1EB3}|\x{1EB5}|o|\x{00F2}|\x{00F3}|\x{1ECD}|\x{1ECF}|\x{00F5}|\x{00F4}|\x{1ED3}|\x{1ED1}|\x{1ED9}|\x{1ED5}|\x{1ED7}|\x{01A1}|\x{1EDD}|\x{1EDB}|\x{1EE3}|\x{1EDF}|\x{1EE1}|y|\x{1EF3}|\x{00FD}|\x{1EF5}|\x{1EF7}|\x{1EF9}|e|\x{00E8}|\x{00E9}|\x{1EB9}|\x{1EBB}|\x{1EBD}|\x{00EA}|\x{1EC1}|\x{1EBF}|\x{1EC7}|\x{1EC3}|\x{1EC5}|u|\x{00F9}|\x{00FA}|\x{1EE5}|\x{1EE7}|\x{0169}|\x{01B0}|\x{1EEB}|\x{1EE9}|\x{1EF1}|\x{1EED}|\x{1EEF}|i|\x{00EC}|\x{00ED}|\x{1ECB}|\x{1EC9}|\x{0129})";
+		
+		$words = explode(" ", $s);
+		
+		foreach ($words as &$word) {
+			$correctText = preg_replace_callback("/$consonant(?=$consonant)/", function($matches) use ($consonantArr) {
+				if(in_array($matches[0].$matches[2], $consonantArr)) {
+					return $matches[0];
+				} else {
+					return $matches[0] . " ";
+				}
+			}, $word);
+		
+			$correctText = preg_replace("/(?<=$vowel)$consonant(?=$vowel)/u", " $0", $correctText);
+	
+			if($correctText != $word) {
+				$correctText = implode(" AND ", explode(" ", $correctText));
+				$word = "($word OR ($correctText))";
+			}
+		}
+		
+		return implode(" AND ", $words);
 	}
 	
 	public static function insertProducts($indexName, $type, $bulk) {
@@ -756,5 +463,23 @@ class Elastic
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_exec($ch);
 		curl_close($ch);
+	}
+	
+	public static function standardSearch($s) {
+		$s = self::standardSearchlv1($s);
+		$s = preg_replace("/(\s|^)(\d+)(\s|$)/", "số $0", $s);
+	
+		return $s;
+	}
+	
+	public static function standardSearchlv1($s) {
+		$s = preg_replace("/(\S+)(-|'|&)(\S+)/", "$1$2$3 $1$3 $1 $3", $s);
+		$s = preg_replace("/(\d+)\/(\d+)/", "$1/$2 tháng $2", $s);
+	
+		return $s;
+	}
+	
+	public static function standardSearchDistrict($district) {
+		return self::standardSearchlv1(preg_replace("/(Quận)\s(\d+)/", "$1 $2 q$2", $district));
 	}
 }
