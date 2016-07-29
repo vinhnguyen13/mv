@@ -7,6 +7,7 @@
 
 namespace vsoft\express\models;
 
+use vsoft\ad\models\AdProduct;
 use yii\mongodb\ActiveRecord;
 
 class SysEmail extends ActiveRecord
@@ -38,5 +39,22 @@ class SysEmail extends ActiveRecord
     public function attributes()
     {
         return ['_id', 'from_name', 'from_email', 'to_name', 'to_email', 'object_id', 'object_type', 'subject', 'content', 'params', 'send_time', 'send_ip', 'read_time', 'read_ip'];
+    }
+
+    public function getDescription($object_type = null, $object_id = null){
+        $object_type = !empty($object_type) ? $object_type : $this->object_type;
+        $object_id = !empty($object_id) ? $object_id : $this->object_id;
+        if(!empty($object_type)){
+            switch($object_type){
+                case self::OBJECT_TYPE_SHARE;
+                case self::OBJECT_TYPE_CONTACT;
+                    $param = $this->params;
+                    if(!empty($param)){
+                        return $param['address'];
+                    }
+                    break;
+            }
+        }
+        return false;
     }
 }
