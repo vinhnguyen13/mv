@@ -141,7 +141,8 @@ class CrawlerController extends Controller
         }
     }
     public function actionUpdateProductTool(){
-        ImportListing::find()->updateProductTool();
+        $limit = $this->limit == null ? 1000 : ((intval($this->limit) <= 1000 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+        ImportListing::find()->updateProductTool($limit);
     }
 
     // Agent Batdongsan
