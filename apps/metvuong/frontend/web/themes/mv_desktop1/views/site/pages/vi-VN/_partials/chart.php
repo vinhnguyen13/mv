@@ -21,7 +21,15 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
         </tr>
         </tbody>
     </table>
-    <div id="chartBoxplot" style="width: 400px; height: 400px; margin: 0 auto"></div>
+    <div class="row mgT-50 mgB-50">
+        <div class="col-xs-6">
+            <div id="chartBoxplot"></div>        
+        </div>
+        <div class="col-xs-6">
+            <div id="chartHistogram"></div>        
+        </div>
+    </div>
+    
     <script>
         $(function () {
             loadChart();
@@ -74,8 +82,7 @@ if(!empty($data['total']) && !empty($data['list_price'])) {
             }
         });
     </script>
-    <div id="chartHistogram" style="width: 400px; height: 400px; margin: 0 auto"></div>
-
+    
     <script>
         var d = new Date();
         var pointStart = d.getTime();
