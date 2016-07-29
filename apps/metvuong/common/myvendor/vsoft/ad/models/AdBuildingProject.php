@@ -362,19 +362,24 @@ class AdBuildingProject extends ABP
 			$type = 'project_building';
 			$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/$type/" . $this->id);
 			
-			$fullName = $this->name . ', ' . $this->district->pre . ' ' . $this->district->name . ', ' . $this->city->name;
-			$searchField = Elastic::standardSearch(str_replace(',', '', $fullName));
+			$districtName = $this->district->pre . ' ' . $this->district->name;
+			$fullName = $this->name . ', ' . $districtName . ', ' . $this->city->name;
+			$nameWithPrefix = 'Dự án ' . $this->name;
+			$nameFulltext = Elastic::standardSearch($nameWithPrefix);
+			$searchFullName = $nameFulltext . ' ' . Elastic::standardSearchDistrict($districtName) . ' ' . $this->city->pre . ' ' . $this->city->name;
 			
 			$document = [
-				'name'	=> $this->name,
-				'slug' => $this->slug,
-				'search_name' => Elastic::standardSearch($this->name),
 				'full_name' => $fullName,
-				'search_field' => $searchField,
-				'search_field_key' => $searchField,
+				'slug' => $this->slug,
 				AdProduct::TYPE_FOR_SELL_TOTAL => 0,
 				AdProduct::TYPE_FOR_RENT_TOTAL => 0,
-				'city_id' => intval($this->city_id)
+				'city_id' => intval($this->city_id),
+				'district_id' => intval($this->district_id),
+				'search_name' => $this->name,
+				'search_name_with_prefix' => $nameWithPrefix,
+				'search_name_full_text' => $nameFulltext,
+				'search_name_full_text_no_ngram' => $nameFulltext,
+				'search_full_name' => $searchFullName
 			];
 			
 			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");

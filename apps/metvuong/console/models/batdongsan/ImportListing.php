@@ -7,6 +7,7 @@
 
 namespace console\models\batdongsan;
 
+use common\components\Slug;
 use console\models\BatdongsanV2;
 use console\models\Helpers;
 use DOMDocument;
@@ -54,16 +55,24 @@ class ImportListing extends Component
         return null;
     }
 
-    public function parseDetail($filename, $product_type = null)
+    public function parseDetail($filename, $page = null)
     {
         $json = array();
-        $page = file_get_contents($filename);
+        if(!empty($filename))
+            $page = file_get_contents($filename);
+
         if (empty($page))
             return null;
+
         $detail = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
         if (!empty($detail)) {
             $project = $detail->find('#divProjectOptions .current', 0);
             $project = empty($project) ? null : trim($project->innertext);
+
+            $type = $detail->find('#divCatagoryOptions .current', 0)->plaintext;
+            if(!empty($type)) {
+                $type = Slug::me()->slugify($type);
+            }
 
             $lat = $detail->find('#hdLat', 0)->value;
             $long = $detail->find('#hdLong', 0)->value;
@@ -297,75 +306,34 @@ class ImportListing extends Component
                 'dientich' => $dt,
                 'start_date' => $startdate,
                 'end_date' => $endate,
-                'project' => $project
-//                'link' => self::DOMAIN . $href
+                'project' => $project,
+                'type' => $type
             ];
         }
         return $json;
     }
 
-//    public function importDataForTool($product_type, $city=null, $limit=300)
     public function importDataForTool($limit = 300)
     {
-//        $types = null;
-//        $path_folder = null;
-//        $count_type = 0;
-//        $bds_import_filename = "bds_import_log.json";
-//        $folder = "files";
-//        $sales_rents = "sales";
-//        if($product_type == 1) {
-//            $types = Listing::find()->sale_types[$city];
-//            $count_type = count($types);
-//            if($count_type <= 0) {
-//                print_r("{$city} no value in sale_types");
-//                return;
-//            }
-//            $path_folder = Yii::getAlias('@console') . "/data/bds_html/{$city}/sales/";
-//            $bds_import_log = Helpers::loadLog($path_folder."import/", $bds_import_filename);
-//        }
-//
-//        if ($product_type == 2) {
-//            $types = Listing::find()->rent_types[$city];
-//            $count_type = count($types);
-//            if($count_type <= 0) {
-//                print_r("{$city} no value in rent_types");
-//                return;
-//            }
-//            $bds_import_filename = "bds_rent_import_log.json";
-//            $folder = "rent_files";
-//            $sales_rents = "rents";
-//            $path_folder = Yii::getAlias('@console') . "/data/bds_html/{$city}/rents/";
-//            $bds_import_log = Helpers::loadLog($path_folder."import/", $bds_import_filename);
-//        }
-
         $start_time = time();
         $insertCount = 0;
-//        $count_file = 1;
 
-//        $last_type_import = isset($bds_import_log["last_type_index"]) ? ($bds_import_log["last_type_index"] + 1) : 0;
-//        if($last_type_import >= ($count_type-1)) {
-//            $last_type_import = 0;
-//            Helpers::writeLog(null, $path_folder."import/", $bds_import_filename);
-//        }
         $bulkImage = array();
         $bulkInfo = array();
         $bulkContact = array();
 
         $count_project = 0;
         $path_folder = Yii::getAlias('@console') . "/data/bds_html/";
-//        for($t=$last_type_import; $t < $count_type; $t++){
-//            $type = $types[$t];
-//            $pathParam = $city."/".$sales_rents."/".$type."/".$folder;
-//            $product_files = AdProductFile::find()->where(['path' => $pathParam, 'is_import' => 0, 'is_copy' => 0])->orderBy(['created_at' => SORT_DESC])->limit($limit)->all();
 
-        $product_files = AdProductFile::find()->where(['is_import' => 0, 'is_copy' => 0])->orderBy(['created_at' => SORT_DESC])->limit($limit)->all();
+        $product_files = AdProductFile::find()->where(['is_import' => 0])->limit($limit)->all();
         if (count($product_files) > 0) {
             foreach ($product_files as $key_file => $product_file) {
                 $filename = $product_file->file;
+                print_r("\n" . ($key_file + 1) . " {$filename}: ");
                 $filepath = $path_folder . $product_file->path . "/" . $filename;
                 $arrPath = explode("/", $product_file->path);
                 if (file_exists($filepath)) {
-                    print_r("\n" . ($key_file + 1) . " {$arrPath[0]}: {$arrPath[2]}: {$filename}");
+                    print_r(" {$arrPath[0]}: {$arrPath[2]}");
                     $value = $this->parseDetail($filepath);
                     if (empty($value)) {
                         print_r(" Error: no content\n");
@@ -518,17 +486,10 @@ class ImportListing extends Component
                             ];
                         }
                     }
+                } else {
+                    print_r($product_file->path . "/". $filename. " not found");
                 }
             } // end for loop product file
-
-//                if($count_file > $limit)
-//                    break;
-//            } else {
-//                $bds_import_log["last_type_index"] = $t;
-//                Helpers::writeLog($bds_import_log, $path_folder . "import/", $bds_import_filename);
-//                print_r("\n{$pathParam} imported");
-//            }
-//        } // end types
 
             // execute image, info, contact
             if (count($bulkImage) > 0) {
@@ -571,115 +532,228 @@ class ImportListing extends Component
     }
 
     // update lai product tool ko co city, district
-    public function updateProductTool()
+    public function updateProductTool($limit=1000)
     {
-        $query = AdProduct::find()->where("city_id is null and district_id is null");
+        $query = AdProduct::find()->where("city_id is null and district_id is null and source > 0");
         $count_product = (int)$query->count('id');
-        if($count_product > 0) {
-            $products = $query->select(['file_name'])->orderBy(['file_name' => SORT_ASC])->asArray()->all();
+        if($count_product > 0)
+        {
+            $products = $query->orderBy(['file_name' => SORT_ASC])->limit($limit)->all();
             $path_folder = Yii::getAlias('@console') . "/data/bds_html/";
-            $in_products = ArrayHelper::getColumn($products, 'file_name');
-            $product_files = AdProductFile::find()->where(['IN', 'file', $in_products])->all();
-            if(count($product_files) > 0) {
-                $no = 1;
-                foreach ($product_files as $product_file) {
-                    $filename = $product_file->file;
-                    $filepath = $path_folder.$product_file->path."/".$filename;
-                    if(file_exists($filepath)){
-                        print_r("\n{$no} {$product_file->path}: {$filename}");
+            $no = 1;
+            foreach($products as $product) {
+                $filename = $product->file_name;
+                print_r("\n {$filename}");
+                $product_file = AdProductFile::find()->where(['file' => $filename])->one();
+                if (count($product_file) > 0) {
+                    $filepath = $path_folder . $product_file->path . "/" . $filename;
+                    if (file_exists($filepath)) {
                         $value = $this->parseDetail($filepath);
                         if (empty($value)) {
-                            print_r(" Error: no content\n");
+                            print_r(" - Error: no content.");
                             continue;
                         }
+                        $product_type = strpos($product_file->path, 'nha-dat-ban') ? 1 : 2;
+                        $res = $this->updateProduct($value[$filename], $product, $product_type);
+                        if($res) {
+                            $no++;
+                            print_r(" - updated.");
+                        } else{
+                            print_r(" - error.");
+                        }
+                    } else {
+                        print_r(" - not file exists");
+                        $page = Helpers::getUrlContent($product_file->vendor_link);
+                        if(empty($page)){
+                            $product->source = -1; // batdongsan.com.vn link sai
+                            $product->save(false);
+                            print_r(" - Cannot crawl page");
+                            continue;
+                        }
+                        $value = $this->parseDetail(null, $page);
+                        if (empty($value)) {
+                            print_r(" - Error: no content.");
+                            continue;
+                        }
+                        // Crawl new file
+                        $filepath = $path_folder. $product_file->path. "/";
+                        if (!is_dir($filepath)) {
+                            mkdir($filepath, 0777, true);
+                            echo "\nDirectory {$filepath} was created";
+                        }
+                        Helpers::writeFileJson($filepath. $filename, $page);
 
                         $product_type = strpos($product_file->path, 'nha-dat-ban') ? 1 : 2;
-                        $project_id = null;
-                        $city_id = null;
-                        $district_id = null;
-
-                        $ad_city = Helpers::getCityId($value[$filename]["city"]);
-                        if (count($ad_city) > 0) {
-                            $city_id = (int)$ad_city['id'];
-                            $district = Helpers::getDistrictId($value[$filename]["district"], $city_id);
-                            if (count($district) > 0) {
-                                $district_id = (int)$district['id'];
-                            }
-                        }
-
-                        $ward_id = $this->getWardId2($value[$filename]["ward"], $district_id);
-                        $street_id = $this->getStreetId2($value[$filename]["street"], $district_id);
-                        $home_no = $value[$filename]["home_no"];
-
-                        $lat = $value[$filename]["lat"];
-                        $lng = $value[$filename]["lng"];
-
-                        $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
-                        // neu co du an thi lay dia chi cua du an gan cho tin dang
-                        if (!empty($project_name)) {
-                            $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
-                            if (count($project) > 0) {
-                                $project_id = $project->id;
-                                $city_id = $project->city_id;
-                                $district_id = $project->district_id;
-                                $ward_id = $project->ward_id;
-                                $street_id = $project->street_id;
-                                $home_no = $project->home_no;
-                                $lat = $project->lat;
-                                $lng = $project->lng;
-                                print_r(" - " . $project_name);
-                            }
-                        }
-
-                        $area = $value[$filename]["dientich"];
-                        $price = $value[$filename]["price"];
-                        $content = null;
-                        $desc = $value[$filename]["description"];
-                        if (!empty($desc)) {
-                            $content = strip_tags($desc, '<br>');
-                            $pos = strpos($content, 'Tìm kiếm theo từ khóa');
-                            if ($pos) {
-                                $content = substr($content, 0, $pos);
-                                $content = str_replace('Tìm kiếm theo từ khóa', '', $content);
-                            }
-                            $content = str_replace('<br/>', PHP_EOL, $content);
-                            $content = trim($content);
-                        } else {
-                            $content = 'Tin đang cập nhật';
-                        }
-
-                        $product = AdProduct::find()->where(['id' => (int)$product_file['product_tool_id'], 'file_name' => $filename])->one();
-                        if(count($product) > 0){
-                            if(empty($product->city_id))
-                                $product->city_id = $city_id;
-
-                            if(empty($product->district_id))
-                                $product->district_id = $district_id;
-
-                            if(empty($product->ward_id))
-                                $product->ward_id = $ward_id;
-
-                            if(empty($product->street_id))
-                                $product->street_id = $street_id;
-
-                            $product->project_building_id = $project_id;
-                            $product->type = $product_type;
-                            $product->home_no = $home_no;
-                            $product->lat = $lat;
-                            $product->lng = $lng;
-                            $product->product_main_id = 0;
-                            $product->area = $area;
-                            $product->price = $price;
-                            $product->content = $content;
-                            if($product->save(false)){
-                                $no++;
-                                print_r(" - updated.");
-                            }
+                        $res = $this->updateProduct($value[$filename], $product, $product_type);
+                        if($res) {
+                            $no++;
+                            print_r(" - updated.");
+                        } else{
+                            print_r(" - error.");
                         }
                     }
+                } else {
+                    print_r(" - new file");
+                    $url = Listing::DOMAIN."/update-product-tool-pr".$filename;
+                    $page = Helpers::getUrlContent($url);
+                    if(empty($page)){
+                        $product->source = -1; // batdongsan.com.vn link sai
+                        $product->save(false);
+                        print_r(" - Cannot crawl page");
+                        continue;
+                    }
+                    $value = $this->parseDetail(null, $page);
+                    if (empty($value)) {
+                        print_r(" - Error: no content.");
+                        continue;
+                    }
+                    $city = $value[$filename]['city'];
+                    $district = $value[$filename]['district'];
+                    if(empty($city) || empty($district)) {
+                        print_r(" - no city or no district.");
+                        continue;
+                    }
+
+                    $type = $value[$filename]['type'];
+                    if(empty($type))
+                    {
+                        print_r(" - no type.");
+                        continue;
+                    }
+                    if($type == 'nha-dat-ban') {
+                        $product_type = 1;
+                        $sales_rents = 'sales';
+                        $folder = 'files';
+                    } else {
+                        $product_type = 2;
+                        $sales_rents = 'rents';
+                        $folder = 'rent_files';
+                    }
+
+                    $city_slug = Slug::me()->slugify($city);
+                    $district_slug = Slug::me()->slugify($district);
+                    $type_slug = $type. "-". $district_slug;
+                    $ad_product_file_path = $city_slug . "/" . $sales_rents . "/" . $type_slug . "/" . $folder;
+
+                    // Crawl new file
+                    $filepath = $path_folder. $ad_product_file_path. "/";
+                    if (!is_dir($filepath)) {
+                        mkdir($filepath, 0777, true);
+                        echo "\nDirectory {$filepath} was created";
+                    }
+                    Helpers::writeFileJson($filepath. $filename, $page);
+
+                    $ad_product_file = new AdProductFile();
+                    $ad_product_file->file = $filename;
+                    $ad_product_file->path = $ad_product_file_path;
+                    $ad_product_file->created_at = time();
+                    $ad_product_file->vendor_link = $url;
+                    $ad_product_file->is_import = 1;
+                    $ad_product_file->imported_at = $product->created_at;
+                    $ad_product_file->product_tool_id = $product->id;
+                    $ad_product_file->save(false);
+
+                    $res2 = $this->updateProduct($value[$filename], $product, $product_type);
+                    if($res2) {
+                        $no++;
+                        print_r(" - updated.");
+                    } else{
+                        print_r(" - error updated.");
+                    }
+//                    sleep(3);
                 }
-            }
+
+            } // end product loop
+        } else {
+            print_r("Not found product");
         }
     }
+
+    public function updateProduct($value, $product, $product_type)
+    {
+        $project_id = null;
+        $city_id = null;
+        $district_id = null;
+
+        $ad_city = Helpers::getCityId($value["city"]);
+        if (count($ad_city) > 0) {
+            $city_id = (int)$ad_city['id'];
+            $district = Helpers::getDistrictId($value["district"], $city_id);
+            if (count($district) > 0) {
+                $district_id = (int)$district['id'];
+            } else {
+                return false;
+            }
+
+        } else {
+            return false;
+        }
+
+        $ward_id = $this->getWardId2($value["ward"], $district_id);
+        $street_id = $this->getStreetId2($value["street"], $district_id);
+        $home_no = $value["home_no"];
+
+        $lat = $value["lat"];
+        $lng = $value["lng"];
+
+        $project_name = !empty($value["project"]) ? $value["project"] : null;
+        // neu co du an thi lay dia chi cua du an gan cho tin dang
+        if (!empty($project_name)) {
+            $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
+            if (count($project) > 0) {
+                $project_id = $project->id;
+                $city_id = $project->city_id;
+                $district_id = $project->district_id;
+                $ward_id = $project->ward_id;
+                $street_id = $project->street_id;
+                $home_no = $project->home_no;
+                $lat = $project->lat;
+                $lng = $project->lng;
+                print_r(" - " . $project_name);
+            }
+        }
+
+        $area = $value["dientich"];
+        $price = $value["price"];
+        $content = null;
+        $desc = $value["description"];
+        if (!empty($desc)) {
+            $content = strip_tags($desc, '<br>');
+            $pos = strpos($content, 'Tìm kiếm theo từ khóa');
+            if ($pos) {
+                $content = substr($content, 0, $pos);
+                $content = str_replace('Tìm kiếm theo từ khóa', '', $content);
+            }
+            $content = str_replace('<br/>', PHP_EOL, $content);
+            $content = trim($content);
+        } else {
+            $content = 'Tin đang cập nhật';
+        }
+
+        if (empty($product->city_id))
+            $product->city_id = $city_id;
+
+        if (empty($product->district_id))
+            $product->district_id = $district_id;
+
+        if (empty($product->ward_id))
+            $product->ward_id = $ward_id;
+
+        if (empty($product->street_id))
+            $product->street_id = $street_id;
+
+        $product->project_building_id = $project_id;
+        $product->type = $product_type;
+        $product->home_no = $home_no;
+        $product->lat = $lat;
+        $product->lng = $lng;
+        $product->product_main_id = 0;
+        $product->area = $area;
+        $product->price = $price;
+        $product->content = $content;
+        return $product->save(false) > 0 ? true : false;
+    }
+
+
 
 }

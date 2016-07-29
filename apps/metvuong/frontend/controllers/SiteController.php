@@ -429,27 +429,64 @@ class SiteController extends Controller
 			}
 
 			Yii::$app->dbCraw->createCommand('SET group_concat_max_len = 5000000')->execute();
-			$query2 = new Query();
-			$query2 = $query;
-			$resultTotal = $query2->select('COUNT(*) as totalListing')->one(Yii::$app->dbCraw);
-			$result = $query->select('SUM(price) as sum, SUM(area) as sum_area, COUNT(*) as total, GROUP_CONCAT(CAST(price/1000000 AS UNSIGNED) ORDER BY price ASC) as listprice')->andWhere('price != 0')->one(Yii::$app->dbCraw);
+			$resultTotal = $query->select('COUNT(*) as totalListing')->one(Yii::$app->dbCraw);
+			$result = $query->select([
+				'SUM(price) as sum_price',
+				'SUM(area) as sum_area',
+				'COUNT(*) as total',
+				'GROUP_CONCAT(area ORDER BY price ASC) as listarea',
+				'GROUP_CONCAT(CAST(price/1000000 AS UNSIGNED) ORDER BY price ASC) as listprice',
+				'GROUP_CONCAT(CAST(price/area AS UNSIGNED) ORDER BY price ASC) as listpricem2',
+				])
+				->andWhere('price != 0')->one(Yii::$app->dbCraw);
 
-//			Yii::$app->response->format = Response::FORMAT_JSON;
-			$return = ArrayHelper::merge($result, $resultTotal);
-			if(!empty($return['listprice']) && $return['total'] >= 3) {
-				$arrPrice = explode(',', $return['listprice']);
-				$dataChart = \frontend\models\Avg::me()->calculation_boxplot($arrPrice, YII_DEBUG);
-				$exclude_outlier = 3 * $dataChart['IQR'];
-				$newArrPrice = array_filter($arrPrice, function($element) use ($exclude_outlier, $dataChart) {
-					if($element > ($dataChart['q1']-$exclude_outlier) && $element < ($dataChart['q3']+$exclude_outlier)) {
-						return $element;
+			if(!empty($result['listprice']) && $result['total'] >= 3) {
+				$arrPrice = explode(',', $result['listprice']);
+				$arrArea = explode(',', $result['listarea']);
+				$dataBoxplot = \frontend\models\Avg::me()->calculation_boxplot($arrPrice, YII_DEBUG);
+				$exclude_outlier = 3 * $dataBoxplot['IQR'];
+				$keyEliminate = $arrAreaM2 = $newArrAreaM2 = [];
+				$newArrPrice = array_filter($arrPrice, function($element, $key) use ($exclude_outlier, $dataBoxplot, $arrArea, &$keyEliminate, &$arrAreaM2, &$newArrAreaM2) {
+					if(!empty($arrArea[$key])){
+						$arrAreaM2[$key] = $element/$arrArea[$key];
 					}
-				});
-				$dataChart2 = \frontend\models\Avg::me()->calculation_boxplot($newArrPrice, YII_DEBUG);
-				$data = ArrayHelper::merge($return, ['dataChart'=>$dataChart2, 'list_price'=>$arrPrice, 'list_price_new'=>$newArrPrice]);
-				$data['average_old'] = array_sum($arrPrice) / count($arrPrice);
-				$data['average_new'] = array_sum($newArrPrice) / count($newArrPrice);
-				$output = $this->renderAjax('/site/pages/vi-VN/_partials/chart', ['data'=>$data]);
+					if($element > ($dataBoxplot['q1']-$exclude_outlier) && $element < ($dataBoxplot['q3']+$exclude_outlier)) {
+						if(!empty($arrArea[$key])){
+							$newArrAreaM2[$key] = $element/$arrArea[$key];
+						}
+						return $element;
+					}else{
+						$keyEliminate[] = $key;
+					}
+				}, ARRAY_FILTER_USE_BOTH);
+
+				$dataBoxplotNew = \frontend\models\Avg::me()->calculation_boxplot($newArrPrice, YII_DEBUG);
+				$data['total'] = $result['total'];
+				$data['totalListing'] = $resultTotal['totalListing'];
+				$data['list_price'] = $arrPrice;
+				$data['list_price_new'] = $newArrPrice;
+				$data['dataChart'] = $dataBoxplotNew;
+				$data['average_old'] = (array_sum($arrPrice) / count($arrPrice))*1000000;
+				$data['average_m2_old'] = (array_sum($arrAreaM2) / count($arrAreaM2))*1000000;
+				$data['average_new'] = (array_sum($newArrPrice) / count($newArrPrice))*1000000;
+				$data['average_m2_new'] = (array_sum($newArrAreaM2) / count($newArrAreaM2))*1000000;
+
+
+				/**
+				 * chart for price/m2
+				 */
+				$dataBoxplotNewPM2 = \frontend\models\Avg::me()->calculation_boxplot($newArrAreaM2);
+
+				$data['dataChartPM2'] = $dataBoxplotNewPM2;
+				$data['list_price_new_PM2'] = $newArrAreaM2;
+				$data['list_price_PM2'] = $arrAreaM2;
+				$data['average_m2_old_PM2'] = (array_sum($arrAreaM2) / count($arrAreaM2)) * 1000000;
+				$data['average_m2_new_PM2'] = (array_sum($newArrAreaM2) / count($newArrAreaM2)) * 1000000;
+				/**
+				 * remove if release
+				 */
+
+				$output = $this->renderAjax('/site/pages/vi-VN/_partials/avg-result', ['data'=>$data]);
 				return $output;
 			}
 			return 'Not yet data !';
