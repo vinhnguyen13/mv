@@ -13874,7 +13874,9 @@ ul.cardList li {
     box-shadow: none;
     border: 1px solid #ccc;
     border-radius: 0;
-    max-height: 200px;
+}
+#frmAvg .item-dropdown .filter-minmax {
+    max-height: 300px;
     overflow: hidden;
     overflow-y: auto;
 }
