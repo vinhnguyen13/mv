@@ -19,11 +19,11 @@ if(count($list_user) > 0) {
             }
         }
         ?>
-        <li class="<?=$user['report_at']?>">
-            <a href="<?= Yii::$app->urlManager->hostInfo. "/". $username?>" title="<?=$username?>">
+        <tr class="<?=$user['report_at']?>">
+            <td><a href="<?= Yii::$app->urlManager->hostInfo. "/". $username?>" title="<?=$username?>">
                 <?=$username?>
-            </a>
-            <span><?php
+            </a></td>
+            <td><?php
                 $type = (int)$user['type'];
                 if($type == -1){
                     echo $user['description'];
@@ -31,9 +31,9 @@ if(count($list_user) > 0) {
                     echo \vsoft\ad\models\ReportType::getReportName($type);
                 }
                 ?>
-            </span>
-            <span> <?=date('d M Y H:i', $user['report_at'])?></span>
-        </li>
+            </td>
+            <td><?=date('d M Y H:i', $user['report_at'])?></td>
+        </tr>
         <?php
     }
 } ?>
