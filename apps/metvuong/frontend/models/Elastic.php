@@ -379,7 +379,7 @@ class Elastic
 			}, $word);
 		
 			$correctText = preg_replace("/(?<=$vowel)$consonant(?=$vowel)/u", " $0", $correctText);
-			$correctText = preg_replace("/(?<=\w)(\d+)/", " $1", $correctText);
+			$correctText = preg_replace("/(\D{2,})(\d+)/", "$1 $2", $correctText);
 	
 			if($correctText != $word) {
 				$correctText = implode(" AND ", explode(" ", $correctText));
@@ -482,6 +482,6 @@ class Elastic
 	}
 	
 	public static function standardSearchWard($ward) {
-		return self::standardSearchlv1(preg_replace("/(Phường)\s(\d+)/", "$1 $2 q$2", $ward));
+		return self::standardSearchlv1(preg_replace("/(Phường)\s(\d+)/", "$1 $2 p$2", $ward));
 	}
 }
