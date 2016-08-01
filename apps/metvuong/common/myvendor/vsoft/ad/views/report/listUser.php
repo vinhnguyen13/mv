@@ -10,14 +10,18 @@ Yii::t('chart','shares');
 $totalUser = \vsoft\ad\models\AdProductReport::find()->where(['product_id' => $product_id])->count();
 ?>
 <div class="clearfix mgB-15">
-    <p style="color: #4a933a;" class="pull-right desTotal"><strong><?=Yii::t('chart','Total user')?>: <?=$totalUser?></strong></p>
+    <p class="desTotal"><strong><?=Yii::t('chart','Total user')?>: <?=$totalUser?></strong></p>
 </div>
 <ul class="clearfix listUser">
 <?php
 echo $this->render('listUser_item',['list_user' => $list_user]);
 ?>
 </ul>
-<input type="button" style="color: #4a933a;" class="pull-right _loadmore" value="<?=Yii::t('statistic', 'Load more')?>" data-url="<?=Url::to(['report/get-user-report-load-more', 'product_id' => $product_id])?>">
+<div class="clearfix">
+    <div class="col-md-12 text-center">
+        <input type="button" class="btn btn-success _loadmore" value="<?=Yii::t('statistic', 'Load more')?>" data-url="<?=Url::to(['report/get-user-report-load-more', 'product_id' => $product_id])?>">
+    </div>
+</div>
 <script>
     $(document).ready(function () {
         var countLi = $('.listUser li').length;
@@ -35,8 +39,10 @@ echo $this->render('listUser_item',['list_user' => $list_user]);
                 success: function (data) {
                     $('.listUser').append(data);
                     countLi = $('.listUser li').length;
-                    if (countLi == totalUser)
+                    if (countLi == totalUser) {
                         $('._loadmore').remove();
+                        $('._backtop').removeClass('hide');
+                    }
                 }
             });
         });

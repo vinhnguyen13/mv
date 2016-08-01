@@ -75,7 +75,7 @@ $this->registerJs($script, View::POS_READY);
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+//        'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
@@ -97,20 +97,20 @@ $this->registerJs($script, View::POS_READY);
                     $count_report = \vsoft\ad\models\AdProductReport::find()->where(['product_id' => $model->product_id])->count();
                     $str_return = "<a href='{$link}'>{$text}</a> ";
                     if($count_report > 0) {
-                        $link_user = " <a href='#' class='user_report' title='{$model->product_id}'>({$count_report})</a>";
+                        $link_user = " <a href='#' class='user_report' title='{$model->product_id}' data-target='.bs-example-modal-lg'>({$count_report})</a>";
                         $str_return = $str_return . $link_user;
                     }
                     return $str_return;
                 },
             ],
-            [
-                'attribute' => 'type',
-                'value' => function ($model) {
-                    if($model->type == -1)
-                        return $model->description;
-                    return \vsoft\ad\models\ReportType::getReportName($model->type);
-                },
-            ],
+//            [
+//                'attribute' => 'type',
+//                'value' => function ($model) {
+//                    if($model->type == -1)
+//                        return $model->description;
+//                    return \vsoft\ad\models\ReportType::getReportName($model->type);
+//                },
+//            ],
 //            'type',
 //            'description',
 //            [

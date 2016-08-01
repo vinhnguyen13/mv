@@ -23,6 +23,15 @@ if(count($list_user) > 0) {
             <a href="<?= Yii::$app->urlManager->hostInfo. "/". $username?>" title="<?=$username?>">
                 <?=$username?>
             </a>
+            <span><?php
+                $type = (int)$user['type'];
+                if($type == -1){
+                    echo $user['description'];
+                } else {
+                    echo \vsoft\ad\models\ReportType::getReportName($type);
+                }
+                ?>
+            </span>
             <span> <?=date('d M Y h:i a', $user['report_at'])?></span>
         </li>
         <?php
