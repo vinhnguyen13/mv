@@ -32,7 +32,7 @@ if(count($list_user) > 0) {
                 }
                 ?>
             </span>
-            <span> <?=date('d M Y h:i a', $user['report_at'])?></span>
+            <span> <?=date('d M Y H:i', $user['report_at'])?></span>
         </li>
         <?php
     }

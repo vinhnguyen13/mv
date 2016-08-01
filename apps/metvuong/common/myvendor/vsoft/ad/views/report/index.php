@@ -125,7 +125,7 @@ $this->registerJs($script, View::POS_READY);
                 'value' => function ($model) {
                     return $model->report_at;
                 },
-                'format' => ['datetime', 'php: d/m/Y H:i a']
+                'format' => ['datetime', 'php: d/m/Y H:i']
             ],
             'ip'
         ],
