@@ -17,25 +17,23 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
                 </div>
             </div>
             <div class="title-gd mgB-10"><?=Yii::t('payment', 'Transaction history')?></div>
-            <div class="tbl-wrap clearfix">
-                <div class="thead clearfix">
-                    <div class="pull-left w-10"><span><?=Yii::t('payment', 'ID')?></span></div>
-                    <div class="pull-left w-15"><span><?=Yii::t('payment', 'Date/Time')?></span></div>
-                    <div class="pull-left w-15"><span><?=Yii::t('payment', 'Type')?></span></div>
-                    <div class="pull-left w-15"><span><?=Yii::t('payment', 'Status')?></span></div>
-                    <div class="pull-left w-15"><span><?=Yii::t('payment', 'Amount')?></span></div>
-                    <div class="pull-left w-30"><span><?=Yii::t('payment', 'Note')?></span></div>
-                </div>
-                <?php
-                if(count($transactions) > 0) {
-                    ?>
-                        <div class="wrap-tr-each swiper-container">
-                            <div class="inner-tr clearfix swiper-wrapper">
-                    <?php
-                    foreach ($transactions as $transaction) {
-                        $amount = $transaction->amount;
+            <div class="tbl-wrap">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="thead wrap-tr-each swiper-slide">
+                            <div class="w-10"><span><?=Yii::t('payment', 'ID')?></span></div>
+                            <div class="w-15"><span><?=Yii::t('payment', 'Date/Time')?></span></div>
+                            <div class="w-15"><span><?=Yii::t('payment', 'Type')?></span></div>
+                            <div class="w-15"><span><?=Yii::t('payment', 'Status')?></span></div>
+                            <div class="w-15"><span><?=Yii::t('payment', 'Amount')?></span></div>
+                            <div class="w-30"><span><?=Yii::t('payment', 'Note')?></span></div>
+                        </div>
+                        <?php
+                        if(count($transactions) > 0) {
+                            foreach ($transactions as $transaction) {
+                                $amount = $transaction->amount;
                         ?>
-                        <div class="clearfix tbl-emu swiper-slide">
+                        <div class="wrap-tr-each swiper-slide">
                             <div class="w-10"><span><?=$transaction->id?></span></div>
                             <div class="w-15"><span><?=date('d/m/Y, H:i', $transaction->created_at)?></span></div>
                             <div class="w-15"><span><?=$transaction->getObjectType($transaction->object_type)?></span></div>
@@ -43,20 +41,13 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
                             <div class="w-15"><span><?= abs($amount) > 1 ? $amount." Keys" : $amount." Key" ?></span></div>
                             <div class="w-30"><span><?=$transaction->getNote($transaction->object_type)?></span></div>
                         </div>
-                    <?php }
-                    ?>
+                        <?php } }else {?>
+                        <div class="wrap-tr-each swiper-slide">
+                            <div class="text-center"><span><?=Yii::t('payment', 'No transaction')?>.</span></div>
+                        </div>
+                        <?php } ?>
                     </div>
-                    </div>
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-button-next"><span class=""></span></div>
-                    <div class="swiper-button-prev"><span class=""></span></div>
-                    <?php
-                } else {?>
-                <div class="clearfix tbl-emu">
-                    <div class="text-center"><span><?=Yii::t('payment', 'No transaction')?>.</span></div>
                 </div>
-                <?php } ?>
-
             </div>
             <br>
             <nav class="text-center">
@@ -75,7 +66,7 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
         $(window).on('resize', function () {
              var wWindow = $(window).outerWidth();
             if ( wWindow <= 500 && swiper == undefined ) {
-                swiper = new Swiper('.wrap-tr-each.swiper-container', {
+                swiper = new Swiper('.tbl-wrap .swiper-container', {
                     pagination: '.swiper-pagination',
                     paginationClickable: true,
                     nextButton: '.swiper-button-next',

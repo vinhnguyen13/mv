@@ -12483,7 +12483,17 @@ label:hover {
     }
 }
 .tbl-wrap {
-    position: relative;
+    font-size: 13px;
+}
+.tbl-wrap .swiper-wrapper {
+    display: table;
+}
+.tbl-wrap .wrap-tr-each {
+    display: table-row;
+}
+.tbl-wrap .wrap-tr-each > div {
+    display: table-cell;
+    border-bottom: 1px solid #ccc;
 }
 .tbl-wrap .swiper-pagination {
     top: -12px;
@@ -12504,6 +12514,10 @@ label:hover {
 }
 .thead > div:first-child {
     border-left: none;
+}
+.wrap-tr-each > div span {
+    padding: 15px 10px;
+    display: block;
 }
 .thead > div span {
     display: block;
@@ -12547,39 +12561,54 @@ label:hover {
     }
 }
 @media ( max-width: 500px ) {
-    .thead {
-        float: left;
-        width: 35%;
-        border: none;
+    .invite-friend .inner-tr {
+        display: block;
     }
-    .thead > div {
+    .tbl-wrap .thead > div {
         width: 100%;
+        display: block;
         border: none;
         padding: 0;
     }
-    .thead > div span {
-        border: none;
-        border-bottom: 1px solid #fff;
-        padding: 12px 10px;
+    .tbl-wrap .swiper-wrapper {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        /* padding-left: 100px; */
     }
-    .tbl-emu {
-        float: left;
-        width: 65%;
-    }
-    .tbl-emu > div {
+    .tbl-wrap .wrap-tr-each > div {
         width: 100%;
+        display: block;
     }
-    .tbl-emu > div span {
-        padding: 12px 10px;
-    }
-    .tbl-emu > div:last-child {
+    .tbl-wrap .wrap-tr-each > div:last-child {
         border-bottom: none;
     }
-    .wrap-tr-each {
-        width: 65%;
+    .tbl-wrap .thead > div {
+        border-bottom: 1px solid #fff;
     }
-    .invite-friend .inner-tr {
+    .wrap-tr-each > div span {
+        padding: 10px;
+        border: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         display: block;
+    }
+    .tbl-wrap .wrap-tr-each {
+        display: block;
+        padding-left: 100px;
+    }
+    .tbl-wrap .thead {
+        width: 100px !important;
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 5;
+        padding: 0;
+        border: none;
     }
 }
 #frmListVisit .modal-header .close {
