@@ -230,6 +230,9 @@
 .scroll .clearfix {
 	cursor: pointer;
 }
+.scroll > div:hover {
+	background: #f1f1f1;
+}
 
 @media ( max-width : 985px) {
 	#map-search-wrap {
