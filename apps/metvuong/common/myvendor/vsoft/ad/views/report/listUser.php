@@ -15,9 +15,9 @@ $totalUser = \vsoft\ad\models\AdProductReport::find()->where(['product_id' => $p
 <table class="clearfix listUser">
     <thead>
         <tr>
-            <td>Username</td>
-            <td>Nội Dung</td>
-            <td>Ngày giờ</td>
+            <td class="col-md-4"><?=Yii::t('report', 'Username')?></td>
+            <td class="col-md-7"><?=Yii::t('report', 'Content')?></td>
+            <td class="col-md-4"><?=Yii::t('report', 'Date')?></td>
         </tr>
     </thead>
 <?php
@@ -27,17 +27,22 @@ echo $this->render('listUser_item',['list_user' => $list_user]);
 <div class="clearfix">
     <div class="col-md-12 text-center">
         <input type="button" class="btn btn-success _loadmore" value="<?=Yii::t('statistic', 'Load more')?>" data-url="<?=Url::to(['report/get-user-report-load-more', 'product_id' => $product_id])?>">
+        <input type="button" class="btn btn-info pull-right _backtop hide" value="top">
     </div>
 </div>
 <script>
     $(document).ready(function () {
-        var countLi = $('.listUser li').length;
+        var countLi = $('.listUser tr').length;
         var totalUser = <?=$totalUser?>;
-        if(countLi == totalUser)
+        if(countLi >= totalUser)
             $('._loadmore').remove();
 
+        $('._backtop').click(function(){
+            $('#popup-user-report').animate({scrollTop: 0}, 500);
+        });
+
         $('._loadmore').click(function () {
-            var last_time = $('.listUser>li:last').prop('class');
+            var last_time = $('.listUser tr:last').attr('class');
             var url = $(this).data('url');
             $.ajax({
                 type: "get",
@@ -45,10 +50,10 @@ echo $this->render('listUser_item',['list_user' => $list_user]);
                 url: url + '&last_time=' + last_time,
                 success: function (data) {
                     $('.listUser').append(data);
-                    countLi = $('.listUser li').length;
-                    if (countLi == totalUser) {
+                    $('._backtop').removeClass('hide');
+                    countLi = $('.listUser tr').length;
+                    if (countLi >= totalUser) {
                         $('._loadmore').remove();
-                        $('._backtop').removeClass('hide');
                     }
                 }
             });

@@ -47,7 +47,8 @@ $('#user-report').on('show.bs.modal', function (event) {
 
 $('.user_report').click(function(){
     $('#popup-user-report .modal-body').html('');
-    var pid = $(this).attr('title');
+    var pid = $(this).parents().parents().data('key').product_id;
+    console.log(pid);
     if(pid != ''){
         $.ajax({
             type: "get",
@@ -97,7 +98,7 @@ $this->registerJs($script, View::POS_READY);
                     $count_report = \vsoft\ad\models\AdProductReport::find()->where(['product_id' => $model->product_id])->count();
                     $str_return = "<a href='{$link}'>{$text}</a> ";
                     if($count_report > 0) {
-                        $link_user = " <a href='#' class='user_report' title='{$model->product_id}' data-target='.bs-example-modal-lg'>({$count_report})</a>";
+                        $link_user = " <a href='#' class='user_report'>({$count_report})</a>";
                         $str_return = $str_return . $link_user;
                     }
                     return $str_return;
