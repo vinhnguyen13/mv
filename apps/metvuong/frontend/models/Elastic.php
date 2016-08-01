@@ -127,9 +127,6 @@ class Elastic
 	];
 	
     protected $client = null;
-    public function __construct(){
-        $this->connect();
-    }
     
     public static function buildProductDocument($product) {
     	foreach ($product as $k => &$v) {
