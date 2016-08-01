@@ -7839,7 +7839,6 @@ padding: 5px 0;
 }
 .arrowDownFillFull {
 }
-.advande-search .box-dropdown .val-selected.active .arrowDownFillFull,
 .box-dropdown .val-selected:hover .arrowDownFillFull {
     border-top: 5px solid #00a769;
 }
