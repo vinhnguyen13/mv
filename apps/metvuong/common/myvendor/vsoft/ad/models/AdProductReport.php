@@ -45,4 +45,6 @@ class AdProductReport extends APR
         ];
     }
 
+    public $count_user;
+
 }

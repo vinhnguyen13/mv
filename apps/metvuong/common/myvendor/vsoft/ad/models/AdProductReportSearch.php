@@ -42,10 +42,10 @@ class AdProductReportSearch extends AdProductReport
     public function search($params)
     {
         $query = AdProductReport::find()->groupBy(['product_id']);
-
+        $query->select('count(user_id) as count_user, product_id, ip, report_at');
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort' => ['attributes' => ['product_id','report_at']]
+            'sort' => ['attributes' => ['count_user','product_id','report_at']]
         ]);
 
         $this->load($params);
