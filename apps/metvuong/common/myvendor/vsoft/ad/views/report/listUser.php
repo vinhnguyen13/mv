@@ -12,11 +12,18 @@ $totalUser = \vsoft\ad\models\AdProductReport::find()->where(['product_id' => $p
 <div class="clearfix mgB-15">
     <p class="desTotal"><strong><?=Yii::t('chart','Total user')?>: <?=$totalUser?></strong></p>
 </div>
-<ul class="clearfix listUser">
+<table class="clearfix listUser">
+    <thead>
+        <tr>
+            <td>Username</td>
+            <td>Nội Dung</td>
+            <td>Ngày giờ</td>
+        </tr>
+    </thead>
 <?php
 echo $this->render('listUser_item',['list_user' => $list_user]);
 ?>
-</ul>
+</table>
 <div class="clearfix">
     <div class="col-md-12 text-center">
         <input type="button" class="btn btn-success _loadmore" value="<?=Yii::t('statistic', 'Load more')?>" data-url="<?=Url::to(['report/get-user-report-load-more', 'product_id' => $product_id])?>">
