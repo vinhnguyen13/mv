@@ -133,7 +133,7 @@ class ReportController extends Controller
                           inner join profile p on r.user_id = p.user_id where product_id = {$product_id} ";
                 if($last_time)
                     $sql = $sql. "and r.report_at < {$last_time} ";
-                $sql = $sql. "order by r.report_at desc limit 6";
+                $sql = $sql. "order by r.report_at asc limit 10";
                 $list_user = User::getDb()->createCommand($sql)->queryAll();
                 if (count($list_user) > 0) {
                     return $this->renderAjax('listUser', ['list_user' => $list_user, 'product_id' => $product_id]);
@@ -151,7 +151,7 @@ class ReportController extends Controller
                           inner join profile p on r.user_id = p.user_id where product_id = {$product_id} ";
                 if($last_time)
                     $sql = $sql. "and r.report_at < {$last_time} ";
-                $sql = $sql. "order by r.report_at desc limit 12";
+                $sql = $sql. "order by r.report_at asc limit 10";
                 $list_user = User::getDb()->createCommand($sql)->queryAll();
                 if (count($list_user) > 0) {
                     return $this->renderAjax('listUser_item',['list_user' => $list_user]);
