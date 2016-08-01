@@ -482,6 +482,6 @@ class Elastic
 	}
 	
 	public static function standardSearchWard($ward) {
-		return self::standardSearchlv1(preg_replace("/(Phường)\s(\d+)/", "$1 $2 q$2", $ward));
+		return self::standardSearchlv1(preg_replace("/(Phường)\s(\d+)/", "$1 $2 p$2", $ward));
 	}
 }
