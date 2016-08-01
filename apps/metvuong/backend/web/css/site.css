@@ -115,3 +115,22 @@ a.desc:after {
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
 	margin-top: 0px;
 }
+.listUser,
+.listUser li {
+	list-style: none;
+	padding: 0;
+}
+.listUser li {
+	float: left;
+	width: 100%;
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #ccc;
+}
+.listUser li span {
+	float: right;
+}
+.listUser li a {
+	color: #3c3c3c;
+	text-decoration: underline;
+}
