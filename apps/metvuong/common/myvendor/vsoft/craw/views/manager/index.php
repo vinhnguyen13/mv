@@ -134,6 +134,54 @@ $script = <<<EOD
 			setCol();
 		});
 	});
+
+    $('.modal').each(function () {
+        var t = $(this),
+            d = t.find('.modal-dialog'),
+            fadeClass = (t.is('.fade') ? 'fade' : '');
+        // render dialog
+        t.removeClass('fade')
+            .addClass('invisible')
+            .css('display', 'block');
+        // read and store dialog height
+        d.data('height', d.height());
+        // hide dialog again
+        t.css('display', '')
+            .removeClass('invisible')
+            .addClass(fadeClass);
+    });
+
+	$('#file-info').on('show.bs.modal', function (event) {
+	    var t = $(this),
+            d = t.find('.modal-dialog'),
+            dh = d.data('height'),
+            w = $(window).width(),
+            h = $(window).height();
+        // if it is desktop & dialog is lower than viewport
+        // (set your own values)
+        if (w > 380 && (dh + 60) < h) {
+            d.css('margin-top', Math.round(0.96 * (h - dh) / 2));
+        } else {
+            d.css('margin-top', '');
+        }
+
+        var a = $(event.relatedTarget);
+        var filename = a.data('filename');
+        var filepath = a.data('filepath');
+        var imported = a.data('imported');
+        var toolid = a.data('toolid');
+        var copied = a.data('copied');
+        var mainid = a.data('mainid');
+
+        var modal = $(this);
+        modal.find('.modal-body .filename').html(filename);
+        modal.find('.modal-body .filepath').html(filepath);
+        modal.find('.modal-body .toolid').html(toolid);
+        modal.find('.modal-body .imported').html(imported);
+        modal.find('.modal-body .mainid').html(mainid);
+        modal.find('.modal-body .copied').html(copied);
+    });
+
 EOD;
 $this->registerJs($script, View::POS_READY);
 
@@ -259,7 +307,21 @@ $projectList = ArrayHelper::map(\vsoft\craw\models\AdBuildingProject::find()->wh
 			],
 			'start_date:date',
             ['attribute' => 'file_name', 'format' => 'raw', 'value' => function($model){
-                return Html::a($model->file_name, "#");
+                $file = \vsoft\craw\models\AdProductFile::find()->where(['file' => $model->file_name])->one();
+                if(count($file) > 0) {
+                    return Html::a($model->file_name, "#", [
+                        'data-toggle' => "modal",
+                        'data-target' => "#file-info",
+                        'data-filename' => $file->file,
+                        'data-filepath' => $file->path,
+                        'data-imported' => date('d F Y', $file->imported_at),
+                        'data-toolid' => $file->product_tool_id,
+                        'data-copied' => $file->copied_at > 0 ? date('d F Y', $file->copied_at) : '',
+                        'data-mainid' => $file->product_main_id > 0 ? Html::a(Yii::$app->urlManager->hostInfo. "/mv". $file->product_main_id, Yii::$app->urlManager->hostInfo. "/mv". $file->product_main_id, ['target' => 'blank']) : '',
+                    ]);
+                } else {
+                    return $model->file_name;
+                }
             }]
 		],
     ]); ?>
@@ -267,3 +329,42 @@ $projectList = ArrayHelper::map(\vsoft\craw\models\AdBuildingProject::find()->wh
     <a href="<?= Url::to(['/craw/manager/import', 'totalCount' => $dataProvider->totalCount, 'page' => 1, 'filter' => json_encode(Yii::$app->request->queryParams)]) ?>" class="btn btn-success">Import</a>
     <?php } ?>
 </div>
+<div id="file-info" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="gridSystemModalLabel">File Information</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">Name: </div>
+                    <div class="col-md-8 filename"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Path: </div>
+                    <div class="col-md-8 filepath"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">Imported at: </div>
+                    <div class="col-md-8 imported"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Crawl Product ID: </div>
+                    <div class="col-md-8 toolid"></div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">Copied at: </div>
+                    <div class="col-md-8 copied"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Link product: </div>
+                    <div class="col-md-8 mainid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
