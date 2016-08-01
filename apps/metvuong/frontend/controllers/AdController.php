@@ -361,6 +361,15 @@ class AdController extends Controller
     		
     		$params['location'] = Yii::$app->request->post('location');
     		$params['is_mobile'] = Yii::$app->request->post('is_mobile');
+    		$params['agent_js'] = Yii::$app->request->post('agent');
+    		
+    		if(!empty($_SERVER['HTTP_USER_AGENT'])) {
+    			$params['agent_php'] = $_SERVER['HTTP_USER_AGENT'];
+    		}
+    		
+    		if(!empty($_SERVER['HTTP_REFERER'])) {
+    			$params['real_referer'] = $_SERVER['HTTP_REFERER'];
+    		}
     		
     		if($referer = Yii::$app->request->post('referer')) {
     			$parseReferer = parse_url($referer);

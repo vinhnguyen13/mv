@@ -435,7 +435,12 @@ function tracking(r, notDelay) {
         return !!this.value;
     }).serialize();
 	
-	var data = {location: form.mapSearchEl.val(), payload: serialize, _csrf: yii.getCsrfToken()};
+	var data = {
+		location: form.mapSearchEl.val(),
+		payload: serialize,
+		_csrf: yii.getCsrfToken(),
+		agent: navigator.userAgent
+	};
 	
 	data.is_mobile = (window.navigator.userAgent.search('Mobi') !== -1) ? 1 : 0;
 	
