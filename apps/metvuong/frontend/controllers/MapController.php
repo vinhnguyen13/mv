@@ -17,11 +17,15 @@ class MapController extends ActiveController {
 	public $modelClass = 'frontend\models\MapSearch';
 	
 	public function actionSearchProject() {
-		$v = Elastic::transform(\Yii::$app->request->get('v'));
+		$v = \Yii::$app->request->get('v');
 		
 		$response = [];
 		
 		$result = Elastic::searchProjects($v);
+		
+		if($result['hits']['total'] == 0) {
+			$result = Elastic::searchProjects(Elastic::transform($v));
+		}
 
 		foreach ($result['hits']['hits'] as $k => $hit) {
 			$response[$k]['full_name'] = $hit['_source']['full_name'];
@@ -91,112 +95,6 @@ class MapController extends ActiveController {
 			
 			$response['rm'] = $products;
 		}
-/*		 
-		$response = [];
-		 
-		if($mapSearch->ra) {
-			$areaQuery = clone $query;
-			 
-			$allowArea = [
-					'city' => ['id'],
-					'district' => ['id', 'city_id'],
-					'ward' => ['id', 'district_id', 'city_id'],
-					'street' => ['id']
-			];
-			 
-			if(in_array($mapSearch->ra, array_keys($allowArea))) {
-				$allowKey = $allowArea[$mapSearch->ra];
-				$key = $mapSearch->ra_k;
-				 
-				if(in_array($key, $allowKey)) {
-					$value = ($key == 'id') ? $mapSearch->getAttribute($mapSearch->ra . '_id') : $mapSearch->getAttribute($key);
-					$areas = $this->getArea($mapSearch->ra, [$key => $value]);
-					 
-					if($key == 'id') {
-						$counts = [$value => ['total' => $areaQuery->count()]];
-					} else {
-						$group = $mapSearch->ra . '_id';
-							
-						$counts = $areaQuery->select([$group, 'COUNT(*) AS total'])->groupBy($group)->indexBy($group)->all();
-					}
-					 
-					foreach($areas as &$area) {
-						$area['total'] = isset($counts[$area['id']]['total']) ? $counts[$area['id']]['total'] : 0;
-					}
-					 
-					$response['ra'] = $areas;
-				}
-			}
-		}
-		 
-		if($mapSearch->rm || $mapSearch->rl) {
-			
-			$mapSearch->sort($query);
-			$mapSearch->fetchValues();
-			
-			if($mapSearch->rect) {
-				$rect = explode(',', $mapSearch->rect);
-					
-				$query->andWhere(['>=', 'ad_product.lat', $rect[0]]);
-				$query->andWhere(['<=', 'ad_product.lat', $rect[2]]);
-				$query->andWhere(['>=', 'ad_product.lng', $rect[1]]);
-				$query->andWhere(['<=', 'ad_product.lng', $rect[3]]);
-			}
-			 
-			if($mapSearch->rm) {
-				$markerQuery = clone $query;
-				
-				$markerQuery->addSelect(['`ad_images`.`file_name` AS f', '`ad_images`.`folder` AS d']);
-				$markerQuery->leftJoin('`ad_images`', '`ad_images`.`product_id` = `ad_product`.`id` AND `ad_images`.`order` = 0');
-				$markerQuery->groupBy('`ad_product`.`id`');
-					
-				$markerQuery->limit(500);
-					
-				$markers = $markerQuery->all();
-				
-				foreach ($markers as &$marker) {
-					$address = [];
-				
-					if($marker['show_home_no'] && $marker['home_no']) {
-						$address[] = $marker['home_no'];
-					}
-					
-					if(isset($mapSearch->streets[$marker['street_id']])) {
-						$street = $mapSearch->streets[$marker['street_id']];
-						
-						$address[] = $street['pre'] . ' ' . $street['name'];
-					}
-					
-					if(isset($mapSearch->wards[$marker['ward_id']])) {
-						$ward = $mapSearch->wards[$marker['ward_id']];
-						
-						$address[] = $ward['pre'] . ' ' . $ward['name'];
-					}
-					
-					if(isset($mapSearch->districts[$marker['district_id']])) {
-						$district = $mapSearch->districts[$marker['district_id']];
-						
-						$address[] = trim($district['pre'] . ' ' . $district['name']);
-					}
-					
-					$address = implode(', ', array_filter($address));
-					
-					$marker['a'] = $address;
-					
-					unset($marker['show_home_no']);
-					unset($marker['home_no']);
-				}
-				
-				$response['rm'] = $markers;
-			}
-			 
-			if($mapSearch->rl) {
-				$list = $mapSearch->getList($query);
-					
-				$response['rl'] = $this->renderPartial('@frontend/web/themes/mv_desktop1/views/ad/_partials/side-list', ['searchModel' => $mapSearch, 'list' => $list]);
-			}
-		}
-	*/	
 		return $response;
 	}
 	
@@ -222,13 +120,14 @@ class MapController extends ActiveController {
     }
 	
 	public function actionSearch() {
-		$v = Elastic::transform(\Yii::$app->request->get('v'));
+		$v = \Yii::$app->request->get('v');
+		$vTransform = Elastic::transform($v);
 		
 		if(\Yii::$app->request->isAjax) {
 			$response = [];
 			
-			if(StringHelper::startsWith($v, 'mv')) {
-				$id = str_replace('mv', '', $v);
+			if(StringHelper::startsWith($vTransform, 'mv')) {
+				$id = str_replace('mv', '', $vTransform);
 				$product = AdProduct::findOne($id);
 				
 				if($product) {
@@ -237,6 +136,10 @@ class MapController extends ActiveController {
 				}
 			} else {
 				$result = Elastic::searchAreasRankByTotal($v);
+				
+				if($result['hits']['total'] == 0) {
+					$result = Elastic::searchAreasRankByTotal($vTransform);
+				}
 				
 				foreach ($result['hits']['hits'] as $k => $hit) {
 	    			$response[$k] = $hit['_source'];
@@ -258,7 +161,7 @@ class MapController extends ActiveController {
 			
 			return $response;
 		} else {
-			$id = str_replace('mv', '', $v);
+			$id = str_replace('mv', '', $vTransform);
 			$product = AdProduct::findOne($id);
 			
 			if($product) {
