@@ -115,3 +115,22 @@ a.desc:after {
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
 	margin-top: 0px;
 }
+.listUser a {
+	color: #3c3c3c;
+	text-decoration: underline;
+}
+.listUser td {
+	border: 1px solid #ccc;
+	padding: 10px;
+	font-size: 13px;
+}
+.listUser {
+	margin-bottom: 30px;
+}
+.listUser thead td {
+	border-bottom: none;
+	text-align: center;
+	font-weight: bold;
+	padding: 5px;
+	background-color: #f3f3f3;
+}

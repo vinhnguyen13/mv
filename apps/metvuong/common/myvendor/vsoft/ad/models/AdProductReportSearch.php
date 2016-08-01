@@ -45,6 +45,7 @@ class AdProductReportSearch extends AdProductReport
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['attributes' => ['product_id','report_at']]
         ]);
 
         $this->load($params);
