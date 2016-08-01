@@ -48,8 +48,7 @@ $('#user-report').on('show.bs.modal', function (event) {
 $('.user_report').click(function(){
     $('#popup-user-report .modal-body').html('');
     var pid = $(this).parents().parents().data('key').product_id;
-    console.log(pid);
-    if(pid != ''){
+    if(pid){
         $.ajax({
             type: "get",
             dataType: 'html',

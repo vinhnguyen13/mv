@@ -16,7 +16,7 @@ $totalUser = \vsoft\ad\models\AdProductReport::find()->where(['product_id' => $p
     <thead>
         <tr>
             <td class="col-md-4"><?=Yii::t('report', 'Username')?></td>
-            <td class="col-md-7"><?=Yii::t('report', 'Content')?></td>
+            <td class="col-md-7"><?=Yii::t('report', 'Report')?></td>
             <td class="col-md-4"><?=Yii::t('report', 'Date')?></td>
         </tr>
     </thead>
