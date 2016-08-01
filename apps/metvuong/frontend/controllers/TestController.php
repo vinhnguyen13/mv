@@ -77,29 +77,6 @@ class TestController extends \yii\web\Controller
         }
     }
 
-    public function actionElastic($action=''){
-        if($action == 'add'){
-            $uids = [4, 2, 3, 7, 9];
-            $pids = [1, 2, 4, 3, 5, 6];
-            $times = Util::me()->dateRange(strtotime('-30 days'), strtotime('+1 days'), '+1 day', 'd-m-Y H:i:s');
-            foreach($pids as $pid){
-                $uid = array_rand(array_flip($uids), 1);
-                $time = array_rand(array_flip($times), 1);
-                $time = strtotime($time);
-                $ck = Tracking::find()->productVisitor($uid, $pid, $time);
-                var_dump($ck);
-            }
-        }elseif($action == 'search'){
-            $startTime = strtotime('2-1-2016');
-            $endTime = strtotime('19-1-2016');
-            $dataTracking = Tracking::find()->getProductTracking($startTime, $endTime, [1513]);
-            echo "<pre>";
-            print_r($dataTracking);
-            echo "</pre>";
-            exit;
-        }
-    }
-
     public function actionElastic2(){
 
         $content = $this->getUrlContent();

@@ -31,18 +31,12 @@ class Tracking extends Component
     const MOBILE = 1;
     const TABLET = 2;
 
-    protected $elastic = null;
-    protected $client = null;
     protected $dataChart = [];
 
     /**
      * __construct
      */
     public function __construct(){
-        $this->elastic = new Elastic();
-        if(empty($this->client)){
-            $this->client = $this->elastic->connect();
-        }
     }
     /**
      * @return mixed
@@ -166,48 +160,6 @@ class Tracking extends Component
             return !empty($return) ? $adProductFinder : true;
         }
         return false;
-    }
-
-    public function getProductTracking($from, $to, $pids = []){
-        $filtered = array();
-        $filtered['filter'] = [
-            'range' => [
-                'time' => [
-                    "gte" => $from,
-                    "lte" => $to
-                ]
-            ],
-
-        ];
-        if(!empty($pids)){
-            $filtered['query'] = [
-                "terms"=> [
-                    "pid"=> $pids,
-                ]
-            ];
-        }
-        $params = [
-            'index' => self::INDEX,
-            'type' => self::TYPE,
-            "size" => 100,
-            "from" => 0,
-            'body' => [
-                'query' => [
-                    'filtered' => $filtered
-                ],
-            ]
-        ];
-        try{
-            if($this->client->transport->getConnection()->ping()){
-                $results = $this->client->search($params);
-                if(!empty($results['hits']['hits'])){
-                    return $results;
-                }
-                return false;
-            }
-        }catch(Exception $ex){
-            throw new NotFoundHttpException('Service error.');
-        }
     }
 
     // count all visitor to show in Listings page of user
