@@ -465,7 +465,7 @@ class Elastic
 	
 	public static function standardSearch($s) {
 		$s = self::standardSearchlv1($s);
-		$s = preg_replace("/(\s|^)(\d+)(\s|$)/", "số $0", $s);
+		$s = preg_replace("/(^|(?<=\s))(\d+)/", "số $0", $s);
 	
 		return $s;
 	}
