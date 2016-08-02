@@ -6,6 +6,7 @@
 	use yii\web\View;
 use frontend\models\MapSearch;
 use vsoft\ad\models\TrackingSearch;
+use vsoft\express\components\StringHelper;
 	
 	$db = Yii::$app->getDb();
 	
@@ -31,11 +32,30 @@ use vsoft\ad\models\TrackingSearch;
 	$slugCatsMap = json_encode(array_flip(AdCategoryGroup::slugMap()));
 	$detr = TrackingSearch::DELAY_TRACKING * 1000;
 	$sortMapping = json_encode(array_flip(MapSearch::sortSlugMapping()));
-	$pageParam = \Yii::t('ad', 'trang');
 	
+	/*
+	 * Tracking params
+	 */
 	$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
-	$qs = isset($_GET['qs']) ? 'true' : 'false';
-
+	$tf_ip = TrackingSearch::FROM_IN_PAGE;
+	if(!$referer) {
+		$tf = TrackingSearch::FROM_DIRECT;
+	} else {
+		if(isset($_GET['tf'])) {
+			$tf = $_GET['tf'];
+		} else {
+			$homeUrl = rtrim(Url::to(['/'], true), '/');
+				
+			if($homeUrl == rtrim($referer, '/')) {
+				$tf = TrackingSearch::FROM_HOME;
+			} else if (StringHelper::startsWith($referer, $homeUrl)) {
+				$tf = TrackingSearch::FROM_OTHER_PAGE;
+			} else {
+				$tf = TrackingSearch::FROM_OTHER_SITE;
+			}
+		}
+	}
+	
 	$script = <<<EOD
 	var resources = ['$resourceHistoryJs', '$resourceListingMap', '$resourceApi'];
 	var actionId = '$actionId';
@@ -45,8 +65,8 @@ use vsoft\ad\models\TrackingSearch;
 	var sortMapping = $sortMapping;
 	var detr = $detr;
 	var referer = '$referer';
-	var pageParam = '$pageParam';
-	var qs = $qs;
+	var tf = $tf;
+	var tf_ip = $tf_ip;
 EOD;
 	
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl.'/resources/css/map.css');
@@ -64,6 +84,7 @@ EOD;
 			<div class="inner-wrap">
 				<form id="search-form" action="<?= $actionId ?>" method="get">
 					<?= Html::activeHiddenInput($searchModel, 'type', ['class' => 'auto-fill']); ?>
+					<input type="hidden" name="tf" value="<?= $tf_ip ?>" />
 					<div class="search-subpage">
 						<div class="advande-search clearfix">
 							<div class="toggle-search"<?= $hideSearchForm ? ' style="display: none"' : '' ?>>

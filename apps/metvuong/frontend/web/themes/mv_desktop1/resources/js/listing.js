@@ -70,7 +70,7 @@ $(document).ready(function() {
 		        return !this.value;
 		    }).prop('disabled', true);
 			
-			window.location = form.mappingUrl(form.el.serialize());
+			window.location = form.mappingUrl(form.el.serialize()) + '?tf=' + tf_ip;
 		},
 		mappingUrl: function(serialize) {
 			var serialize = decodeURIComponent(serialize);
@@ -363,13 +363,17 @@ $(document).ready(function() {
 	
 	$window.on('resize', desktop.checkToEnable);
 	
-	var re = new RegExp("/" + pageParam + "_[0-9]+");
-
-	if(referer.replace(re, "") != window.location.href.replace(re, "")) {
-		referer = qs ? '1' : referer;
-		
-		tracking(referer, true);
-	}
+	/*
+	 * Tracking
+	 */
+	tracking(tf);
+//	var re = new RegExp("/" + pageParam + "_[0-9]+");
+//
+//	if(referer.replace(re, "") != window.location.href.replace(re, "")) {
+//		referer = qs ? '1' : referer;
+//		
+//		tracking(referer, true);
+//	}
 	
 	
 	/*
@@ -426,6 +430,7 @@ $(document).ready(function() {
 	$('.select-dt .box-dropdown').price_dt();
 });
 
+/*
 var trackingTimeout;
 
 function tracking(r, notDelay) {
@@ -458,6 +463,32 @@ function tracking(r, notDelay) {
 }
 
 function _tracking(data) {
+	$.ajax({
+		method: "POST",
+		url: '/listing/tracking',
+		data: data
+	});
+}
+*/
+function tracking(tf, forceReferer) {
+	var serialize = form.fields.filter(function () {
+        return !!this.value;
+    }).serialize();
+	
+	var data = {
+		location: form.mapSearchEl.val(),
+		payload: serialize,
+		_csrf: yii.getCsrfToken(),
+		tf: tf,
+		referer: referer
+	};
+	
+	if(forceReferer) {
+		data.referer = forceReferer;
+	}
+	
+	data.im = (window.navigator.userAgent.search('Mobi') !== -1) ? 1 : 0;
+	
 	$.ajax({
 		method: "POST",
 		url: '/listing/tracking',
