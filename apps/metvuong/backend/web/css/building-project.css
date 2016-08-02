@@ -305,3 +305,31 @@ div.clearStyleButtons div:hover {
     /* box-shadow: 0 1px 0 rgba(255, 255, 255, 0.3), 0 4px 5px rgba(0, 0, 0, 0.6) inset, 0 1px 0 #000000 inset; */
     border: none;
 }
+.infor-bds .tabProject {
+	padding: 0;
+	margin-bottom: 25px;
+	border-bottom: 1px solid #ccc;
+}
+.infor-bds .tabProject li {
+	float: left;
+	padding: 0;
+	list-style: none;
+	margin: 0 10px 0 0;
+}
+.infor-bds .tabProject li a {
+	display: block;
+	padding: 7px 30px 5px;
+	background-color: #eaeaea;
+	border-radius: 4px 4px 0 0;
+	border: 1px solid #ccc;
+	border-bottom: none;
+}
+.infor-bds .tabProject li a.active,
+.infor-bds .tabProject li a:hover {
+	text-decoration: none;
+	background-color: #adadad;
+	color: #fff;
+}
+.infor-bds > div {
+	display: none;
+}
