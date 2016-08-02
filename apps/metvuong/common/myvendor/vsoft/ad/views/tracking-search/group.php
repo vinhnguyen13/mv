@@ -67,20 +67,7 @@ $mapSort = MapSearch::mapSort();
         				$tr = '<tr>';
         				
         				$tr .= '<td>' . date("h:i:s d-m", $tracking['created_at']) . '</td>';
-        				if($tracking['from'] == TrackingSearch::FROM_OTHER_PAGE || $tracking['from'] == TrackingSearch::FROM_OTHER_SITE) {
-        					if(StringHelper::startsWith($tracking['referer'], 'https://www.google.com/afs/ads')) {
-        						$v = 'Từ Google ads';
-        					} else if(StringHelper::startsWith($tracking['referer'], 'https://www.google.')) {
-        						$v = 'Từ Google search';
-        					} else {
-        						$v = $sourceDropDown[$tracking['from']];
-        					}
-        					
-        					$tr .= '<td title="' . $tracking['referer'] . '" style="font-weight: bold;">' . $v . '</td>';
-        				} else {
-        					$tr .= '<td style="font-weight: bold;">' . $sourceDropDown[$tracking['from']] . '</td>';
-        				}
-        				
+        				$tr .= '<td style="font-weight: bold;">' . $sourceDropDown[$tracking['from']] . '</td>';
         				$tr .= '<td>' . $tracking['location'] . '</td>';
         				$tr .= '<td style="color: red;">' . $type[$tracking['type']] . '</td>';
         				$tr .= '<td style="color: blue;">' . ($tracking['category_id'] ? $categoryDropDown[$tracking['category_id']] : '') . '</td>';

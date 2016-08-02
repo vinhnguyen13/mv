@@ -129,13 +129,7 @@ $sourceDropDown = [
         				if($searchModel->from_filter == TrackingSearch::FROM_OTHER_SITE) {
         					$return = '<span title="' . $model->referer . '">' . $model->referer . '</span>';
         				} else {
-        					if(StringHelper::startsWith($model->referer, 'https://www.google.com/afs/ads')) {
-        						$return = 'Từ Google ads';
-        					} else if(StringHelper::startsWith($model->referer, 'https://www.google.')) {
-        						$return = 'Từ Google search';
-        					} else {
-        						$return = $sourceDropDown[TrackingSearch::FROM_OTHER_SITE];
-        					}
+        					$return = $sourceDropDown[TrackingSearch::FROM_OTHER_SITE];
         				}
         			} else if($model->from == TrackingSearch::FROM_QUICK_SEARCH) {
         				$return = $sourceDropDown[TrackingSearch::FROM_QUICK_SEARCH];
