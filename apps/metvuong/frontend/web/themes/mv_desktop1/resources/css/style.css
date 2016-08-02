@@ -12483,10 +12483,24 @@ label:hover {
     }
 }
 .tbl-wrap {
-    position: relative;
+    font-size: 13px;
+}
+.tbl-wrap .thead-row {
+    display: table;
+    width: 100%;
+}
+.tbl-wrap .swiper-wrapper {
+    display: table;
+}
+.tbl-wrap .wrap-tr-each {
+    display: table-row;
+}
+.tbl-wrap .wrap-tr-each > div {
+    display: table-cell;
+    border-bottom: 1px solid #ccc;
 }
 .tbl-wrap .swiper-pagination {
-    top: -12px;
+    top: 0;
     right: 0;
     line-height: 100%;
 }
@@ -12504,6 +12518,10 @@ label:hover {
 }
 .thead > div:first-child {
     border-left: none;
+}
+.wrap-tr-each > div span {
+    padding: 15px 10px;
+    display: block;
 }
 .thead > div span {
     display: block;
@@ -12547,39 +12565,62 @@ label:hover {
     }
 }
 @media ( max-width: 500px ) {
-    .thead {
-        float: left;
-        width: 35%;
-        border: none;
+    .invite-friend .inner-tr {
+        display: block;
     }
-    .thead > div {
+    .tbl-wrap .thead > div {
         width: 100%;
+        display: block;
         border: none;
         padding: 0;
     }
-    .thead > div span {
-        border: none;
-        border-bottom: 1px solid #fff;
-        padding: 12px 10px;
+    .tbl-wrap .swiper-wrapper {
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        /* padding-left: 100px; */
     }
-    .tbl-emu {
-        float: left;
-        width: 65%;
-    }
-    .tbl-emu > div {
+    .tbl-wrap .wrap-tr-each > div {
         width: 100%;
+        display: block;
     }
-    .tbl-emu > div span {
-        padding: 12px 10px;
-    }
-    .tbl-emu > div:last-child {
+    .tbl-wrap .wrap-tr-each > div:last-child {
         border-bottom: none;
     }
-    .wrap-tr-each {
-        width: 65%;
+    .tbl-wrap .thead > div {
+        border-bottom: 1px solid #fff;
     }
-    .invite-friend .inner-tr {
+    .wrap-tr-each > div span {
+        padding: 10px;
+        border: none;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         display: block;
+    }
+    .tbl-wrap .wrap-tr-each {
+        display: block;
+    }
+    .tbl-wrap .thead {
+        display: block;
+        padding: 0;
+        border: none;
+    }
+    .tbl-wrap .swiper-container {
+        float: left;
+        width: 70%;
+    }
+    .tbl-wrap {
+        overflow: hidden;
+        position: relative;
+        padding-top: 15px;
+    }
+    .tbl-wrap .thead-row {
+        float: left;
+        display: block;
+        width: 30%;
     }
 }
 #frmListVisit .modal-header .close {
@@ -13736,6 +13777,7 @@ ul.cardList li {
         background: #f1f1f1;
         color: black;
         border: 1px solid #e2e2e2;
+        margin-top: 15px;
     }
     .tbl-wrap .swiper-button-prev {
         margin-right: 5px;
