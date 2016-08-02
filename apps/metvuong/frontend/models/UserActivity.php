@@ -90,7 +90,7 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
                     $now = time();
                     $from = strtotime(date('d-m-Y 00:00:00', $now));
                     $to = strtotime(date('d-m-Y 23:59:59', $now));
-                    $activityExist = UserActivity::find()->where(['action'=>5, 'owner_id'=>8])->andFilterWhere(['between', 'created', $from, $to])->one();
+                    $activityExist = UserActivity::find()->where(['action'=>$action, 'owner_id'=>$_identity->id])->andFilterWhere(['between', 'created', $from, $to])->one();
                     if(($activityExist) !== null){
                         return $activityExist;
                     }
