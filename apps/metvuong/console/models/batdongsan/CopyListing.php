@@ -8,23 +8,21 @@
 namespace console\models\batdongsan;
 
 
-use console\models\Helpers;
 use console\models\Metvuong;
 use frontend\models\Elastic;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdImages;
 use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductAdditionInfo;
-use vsoft\ad\models\AdStreet;
 use vsoft\craw\models\AdProductFile;
+use vsoft\express\components\AdImageHelper;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
-use yii\helpers\ArrayHelper;
-use yii\helpers\Url;
 
 class CopyListing extends Component
 {
+    public $copyListingFolder = "copylisting";
     public static function find()
     {
         return Yii::createObject(CopyListing::className());
@@ -47,7 +45,7 @@ class CopyListing extends Component
 
         if(count($models) > 0){
             $no = 0;
-            $arrElastic = [];
+            $helper = new AdImageHelper();
             foreach ($models as $key=>$model) {
                 print_r("\nCopy: {$model->file_name}");
                 $productImages = $model->adImages;
@@ -123,16 +121,30 @@ class CopyListing extends Component
                     'is_expired' => $is_expired
                 ];
 
-                $product = new AdProduct($record);
-                $score = AdProduct::calcScore($product, $adProductAdditionInfo, $adContactInfo, count($productImages));
-                $connection = AdProduct::getDb();
                 try {
-                    $connection->createCommand()
-                        ->insert('ad_product', $record)
-                        ->execute();
+                    // download images truoc khi tao product
+                    $arrImage = [];
+                    if (isset($productImages) && count($productImages) > 0 && $is_expired == 0) {
+                        $sessionName = uniqid();
+                        $tempFolder = Yii::getAlias('@store') . "/" . $helper->tempFolderName . "/{$this->copyListingFolder}/" . $sessionName. "/";
+                        if(!is_dir($tempFolder)) {
+                            mkdir($tempFolder, 0777, true);
+                        }
+                        foreach ($productImages as $key_image => $image) {
+                            if (count($image) > 0 && !empty($image)) {
+                                $result = Metvuong::DownloadImage($image->file_name, $image->uploaded_at, $tempFolder);
+                                $arrImage[$key_image] = $result;
+//                                sleep(1);
+                            }
+                        }
+                    }
 
-                    $last_product_id = (int)$connection->getLastInsertID();
-                    if ($last_product_id > 0) {
+                    $product = new AdProduct($record);
+                    $score = AdProduct::calcScore($product, $adProductAdditionInfo, $adContactInfo, count($productImages));
+                    $product->score = $score;
+                    if ($product->save(false)) {
+                        $product->insertEs(); // insert elastic
+                        $last_product_id = $product->id;
                         $model->product_main_id = $last_product_id;
                         $model->update(false);
 
@@ -184,83 +196,37 @@ class CopyListing extends Component
                         }
 
                         // product image
-                        $first_image_path = '';
                         if (isset($productImages) && count($productImages) > 0 && $is_expired == 0) {
                             foreach ($productImages as $key_image => $image) {
-                                if (count($image) > 0 && !empty($image)) {
-                                    $result = Metvuong::DownloadImage($image->file_name, $image->uploaded_at);
+                                if (count($image) > 0 && !empty($image) && count($arrImage) > 0) {
+                                    $resultImage = $arrImage[$key_image];
+                                    $file_image = isset($resultImage[0]) && !empty($resultImage[0]) ? $resultImage[0] : null;
+                                    $folderColumn = isset($resultImage[1]) && !empty($resultImage[1]) ? $resultImage[1] : null;
+                                    if(empty($file_image) && empty($folderColumn))
+                                        continue;
+
                                     $imageRecord = [
                                         'user_id' => $image->user_id,
                                         'product_id' => $last_product_id,
-                                        'file_name' => $result[0],
+                                        'file_name' => !empty($file_image) ? $file_image : $image->file_name,
                                         'uploaded_at' => $image->uploaded_at,
-                                        'folder' => $result[1]
+                                        'folder' => $folderColumn
                                     ];
-                                    if ($key_image == 0) {
-                                        $first_image_path = "/store/{$result[1]}/240x180/{$result[0]}";
-                                    }
                                     $adImage = new AdImages($imageRecord);
-                                    $adImage->save(false);
+                                    if($adImage->save(false)){
+                                        $oldFolder = isset($resultImage[2]) && !empty($resultImage[2]) ? $resultImage[2] : null;
+                                        $newFolder = Yii::getAlias('@store'). "/". $folderColumn;
+                                        if(!is_dir($newFolder)) {
+                                            mkdir($newFolder, 0777, true);
+                                        }
+                                        $helper->makeFolderSizes($newFolder);
+                                        $helper->moveTempFile($oldFolder, $newFolder, $file_image);
+                                    }
                                 }
                             }
                         }
-
-                        $project_id = empty($project_id) ? 0 : $project_id;
-                        $address = '';
-                        $street_id = empty($street_id) ? 0 : $street_id;
-                        $street = AdStreet::find()->where(['id' => $street_id])->asArray()->one();
-                        if (count($street) > 0) {
-                            $address = $street['pre'] . " " . $street['name'];
-                            if (!empty($home_no)) {
-                                $address = $home_no . " " . $address;
-                            }
-                        }
-
-                        if($is_expired == 0) {
-                            $arrElastic[] = [
-                                "index" => [
-                                    "_id" => $last_product_id
-                                ]
-                            ];
-                            $arrElastic[] = [
-                                "id" => $last_product_id,
-                                "category_id" => $record['category_id'],
-                                "project_building_id" => $project_id,
-                                "project_building" => $project_id > 0 ? $project->name : "",
-                                "user_id" => 0,
-                                "city_id" => empty($city_id) ? 0 : $city_id,
-                                "district_id" => empty($district_id) ? 0 : $district_id,
-                                "ward_id" => empty($ward_id) ? 0 : $ward_id,
-                                "street_id" => $street_id,
-                                "address" => $address,
-                                "type" => $record['type'],
-                                "area" => $record['area'],
-                                "price" => $record['price'],
-                                "location" => [
-                                    "lat" => empty($lat) ? 0 : $lat,
-                                    "lon" => empty($lng) ? 0 : $lng,
-                                ],
-                                "score" => empty($score) ? 0 : $score,
-                                "start_date" => $record['start_date'],
-                                "boost_time" => 0,
-                                "boost_start_time" => 0,
-                                "boost_sort" => 0,
-                                "facade_width" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->facade_width) ? 0 : $adProductAdditionInfo->facade_width,
-                                "land_width" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->land_width) ? 0 : $adProductAdditionInfo->land_width,
-                                "home_direction" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->home_direction) ? 0 : $adProductAdditionInfo->home_direction,
-                                "facade_direction" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->facade_direction) ? 0 : $adProductAdditionInfo->facade_direction,
-                                "floor_no" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->floor_no) ? 0 : $adProductAdditionInfo->floor_no,
-                                "room_no" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->room_no) ? 0 : $adProductAdditionInfo->room_no,
-                                "toilet_no" => isset($adProductAdditionInfo) && empty($adProductAdditionInfo->toilet_no) ? 0 : $adProductAdditionInfo->toilet_no,
-                                "img" => $first_image_path
-                            ];
-                        } else {
-                            print_r(" - is expired");
-                            if(count($productImages) == 0)
-                                print_r(" - no image");
-                        }
-
-                        if ($no > 0 && $no % 50 == 0) {
+                        print_r(" - success.");
+                        if ($no > 0 && $no % 20 == 0) {
                             print_r(PHP_EOL);
                             print_r("\n Copied {$no} records...");
                             print_r(PHP_EOL);
@@ -273,11 +239,16 @@ class CopyListing extends Component
 
             } // end foreach models
 
+            $copylisting_folder = Yii::getAlias('@store') . "/" . $helper->tempFolderName . "/{$this->copyListingFolder}";
+            if(is_dir($copylisting_folder)){
+                $this->removeDirectory($copylisting_folder);
+            }
+
             /**
              * Ham lưu elastic by Lệnh
              */
-            Elastic::insertProducts(\Yii::$app->params['indexName']['product'], Elastic::$productEsType, $arrElastic);
-            Elastic::countProducts($arrElastic);
+//            Elastic::insertProducts(\Yii::$app->params['indexName']['product'], Elastic::$productEsType, $arrElastic);
+//            Elastic::countProducts($arrElastic);
 
         } else {
             print_r("\nNot found new product. Please, try again!");
@@ -285,6 +256,15 @@ class CopyListing extends Component
         $end = time();
         $time = $end - $begin;
         print_r("\nTime: {$time}s");
+    }
+
+    public function removeDirectory($path) {
+        $files = glob($path . '/*');
+        foreach ($files as $file) {
+            is_dir($file) ? $this->removeDirectory($file) : unlink($file);
+        }
+        rmdir($path);
+        return;
     }
 
 }

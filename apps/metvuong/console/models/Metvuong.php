@@ -147,12 +147,16 @@ class Metvuong extends Component
         }
     }
 
-    public static function DownloadImage($link, $uploaded_at)
+    public static function DownloadImage($link, $uploaded_at, $tempFolder=null)
     {
         $helper = new AdImageHelper();
         $uploaded_at = empty($uploaded_at) ? time() : $uploaded_at;
         $folderColumn = $helper->getAbsoluteUploadFolderPath($uploaded_at);
-        $folder = Yii::getAlias('@store'). DIRECTORY_SEPARATOR . $folderColumn;
+        $folder = Yii::getAlias('@store'). "/". $folderColumn;
+        if($tempFolder){
+            $folder = $tempFolder. $folderColumn;
+        }
+
         if (!is_dir($folder)) {
             mkdir($folder, 0777, true);
         }
@@ -160,7 +164,7 @@ class Metvuong extends Component
             $ext = explode('.', $link);
             $length = count($ext) - 1;
             $fileName = uniqid() . '.' . $ext[$length];
-            $filePath = $folder . DIRECTORY_SEPARATOR . $fileName;
+            $filePath = $folder . "/" . $fileName;
             $content = file_get_contents($link);
             if($content) {
                 file_put_contents($filePath, $content);
@@ -169,7 +173,7 @@ class Metvuong extends Component
                 $helper->resize($filePath);
 
                 $folderColumn = str_replace("\\", "/", $folderColumn);
-                return [$fileName, $folderColumn];
+                return [$fileName, $folderColumn, $folder];
             }
         }
         return null;
