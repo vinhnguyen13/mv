@@ -12485,6 +12485,10 @@ label:hover {
 .tbl-wrap {
     font-size: 13px;
 }
+.tbl-wrap .thead-row {
+    display: table;
+    width: 100%;
+}
 .tbl-wrap .swiper-wrapper {
     display: table;
 }
@@ -12496,7 +12500,7 @@ label:hover {
     border-bottom: 1px solid #ccc;
 }
 .tbl-wrap .swiper-pagination {
-    top: -12px;
+    top: 0;
     right: 0;
     line-height: 100%;
 }
@@ -12598,17 +12602,25 @@ label:hover {
     }
     .tbl-wrap .wrap-tr-each {
         display: block;
-        padding-left: 100px;
     }
     .tbl-wrap .thead {
-        width: 100px !important;
         display: block;
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: 5;
         padding: 0;
         border: none;
+    }
+    .tbl-wrap .swiper-container {
+        float: left;
+        width: 70%;
+    }
+    .tbl-wrap {
+        overflow: hidden;
+        position: relative;
+        padding-top: 15px;
+    }
+    .tbl-wrap .thead-row {
+        float: left;
+        display: block;
+        width: 30%;
     }
 }
 #frmListVisit .modal-header .close {
@@ -13765,6 +13777,7 @@ ul.cardList li {
         background: #f1f1f1;
         color: black;
         border: 1px solid #e2e2e2;
+        margin-top: 15px;
     }
     .tbl-wrap .swiper-button-prev {
         margin-right: 5px;

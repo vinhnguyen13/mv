@@ -18,16 +18,18 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
             </div>
             <div class="title-gd mgB-10"><?=Yii::t('payment', 'Transaction history')?></div>
             <div class="tbl-wrap">
+                <div class="thead-row">
+                    <div class="thead wrap-tr-each">
+                        <div class="w-10"><span><?=Yii::t('payment', 'ID')?></span></div>
+                        <div class="w-15"><span><?=Yii::t('payment', 'Date/Time')?></span></div>
+                        <div class="w-15"><span><?=Yii::t('payment', 'Type')?></span></div>
+                        <div class="w-15"><span><?=Yii::t('payment', 'Status')?></span></div>
+                        <div class="w-15"><span><?=Yii::t('payment', 'Amount')?></span></div>
+                        <div class="w-30"><span><?=Yii::t('payment', 'Note')?></span></div>
+                    </div>
+                </div>
                 <div class="swiper-container">
                     <div class="swiper-wrapper">
-                        <div class="thead wrap-tr-each swiper-slide">
-                            <div class="w-10"><span><?=Yii::t('payment', 'ID')?></span></div>
-                            <div class="w-15"><span><?=Yii::t('payment', 'Date/Time')?></span></div>
-                            <div class="w-15"><span><?=Yii::t('payment', 'Type')?></span></div>
-                            <div class="w-15"><span><?=Yii::t('payment', 'Status')?></span></div>
-                            <div class="w-15"><span><?=Yii::t('payment', 'Amount')?></span></div>
-                            <div class="w-30"><span><?=Yii::t('payment', 'Note')?></span></div>
-                        </div>
                         <?php
                         if(count($transactions) > 0) {
                             foreach ($transactions as $transaction) {
@@ -48,6 +50,9 @@ $this->registerJsFile ( Yii::$app->view->theme->baseUrl . '/resources/js/swiper.
                         <?php } ?>
                     </div>
                 </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"><span class=""></span></div>
+                <div class="swiper-button-prev"><span class=""></span></div>
             </div>
             <br>
             <nav class="text-center">
