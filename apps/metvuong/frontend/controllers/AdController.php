@@ -357,6 +357,57 @@ class AdController extends Controller
     
     public function actionTracking() {
     	if(Yii::$app->request->isPost && Yii::$app->request->isAjax && ($payload = Yii::$app->request->post('payload'))) {
+    		$agent = $_SERVER['HTTP_USER_AGENT'];
+    		
+    		if(strpos(strtolower($agent), 'googlebot') === false) {
+    			$session = \Yii::$app->session->id;
+    			$now = time();
+    			
+    			$previousTracking = TrackingSearch::find()->orderBy('created_at DESC')->limit(1)->where(['session' => $session])->one();
+    			
+    			parse_str($payload, $params);
+    			
+    			$params['session'] = $session;
+    			$params['ip'] = \Yii::$app->request->userIP;
+    			$params['user_id'] = \Yii::$app->user->isGuest ? NULL : \Yii::$app->user->id;
+    			$params['alias'] = \Yii::$app->user->isGuest ? $params['ip'] : \Yii::$app->user->identity->username;
+    			$params['location'] = Yii::$app->request->post('location');
+    			$params['referer'] = Yii::$app->request->post('referer');
+    			$params['agent'] = $agent;
+    			$params['is_mobile'] = Yii::$app->request->post('im');
+    			$params['from'] = Yii::$app->request->post('tf');
+    			$params['created_at'] = $now;
+    			
+    			$trackingSearch = new TrackingSearch();
+    			$trackingSearch->load($params, '');
+    			
+    			if($previousTracking) {
+    				if($now - $previousTracking->created_at > TrackingSearch::DELAY_TRACKING) {
+    					$compareFields = ['type', 'location', 'city_id', 'district_id', 'ward_id', 'street_id', 'project_building_id', 'category_id', 'room_no', 'toilet_no', 'price_min', 'price_max', 'size_min', 'size_max', 'order_by'];
+    					
+    					$insert = false;
+    					
+    					foreach ($compareFields as $compareField) {
+    						if($trackingSearch->$compareField != $previousTracking->$compareField) {
+    							$insert = true;
+    						}
+    					}
+    					
+    					if(!$insert && $trackingSearch->referer == '' && $now - $previousTracking->created_at > 300) {
+    						$insert = true;
+    					}
+    					
+    					if($insert) {
+    						$trackingSearch->save(false);
+    					}
+    				}
+    			} else {
+    				$trackingSearch->save(false);
+    			}
+    		} 
+    	}
+    	/*
+    	if(Yii::$app->request->isPost && Yii::$app->request->isAjax && ($payload = Yii::$app->request->post('payload'))) {
     		parse_str($payload, $params);
     		
     		$params['location'] = Yii::$app->request->post('location');
@@ -387,6 +438,7 @@ class AdController extends Controller
     		
     		TrackingSearch::track($params);
     	}
+    	*/
     }
     
     public function actionSavedListing() {

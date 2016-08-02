@@ -1427,13 +1427,29 @@ form.afZoom = form.af.filter(s.z);
 form.afCenter = form.af.filter(s.c);
 form.projectInfoEl = $('#project-info');
 
+var ttobj = {
+	timeout: null,
+	lastestUrl: '',
+	tracking: function() {
+		clearTimeout(this.timeout);
+		
+		if(ttobj.lastestUrl == '') {
+			ttobj.lastestUrl = window.location.href + '';
+		}
+		
+		this.timeout = setTimeout(function(){
+			tracking(tf_ip, ttobj.lastestUrl);
+			ttobj.lastestUrl = '';
+		}, detr);
+	}
+}
+
 form.formChange = function(e) {
+	ttobj.tracking();
 	
 	var t = $(e.target);
 	
 	form.af.filter(s.rl).val(1);
-	
-	tracking();
 	
 	if(t.hasClass('search-item')) {
 

@@ -8,16 +8,22 @@ use common\models\User;
 class TrackingSearch extends TS {
 	
 	const DELAY_TRACKING = 3;
+	const FROM_HOME = 1;
+	const FROM_IN_PAGE = 2;
+	const FROM_QUICK_SEARCH = 3;
+	const FROM_OTHER_PAGE = 4;
+	const FROM_OTHER_SITE = 5;
+	const FROM_DIRECT = 6;
 	
 	public $category_search;
-	public $finder;
 	public $finder_search;
-	public $referer_filter;
+	public $finder_filter;
+	public $from_filter;
 	
 	public function rules()
 	{
 		return array_merge(parent::rules(), [
-			[['category_search', 'finder_search', 'referer_filter'], 'safe']
+			[['category_search', 'finder_search', 'from_filter', 'finder_filter'], 'safe']
 		]);
 	}
 	
@@ -58,30 +64,11 @@ class TrackingSearch extends TS {
 			'size_min' => 'Diện tích nhỏ nhất',
 			'size_max' => 'Diện tích lớn nhất',
 			'category' => 'Loại BĐS',
-			'finder' => 'Người tìm',
+			'alias' => 'Người tìm',
 			'order_by' => 'Sắp xếp',
 			'is_mobile' => 'Di động',
-			'referer' => 'Nguồn đến'
+			'from' => 'Nguồn đến'
 		];
-	}
-	
-	public static function track($data) {
-		$ip = \Yii::$app->request->userIP;
-		$now = time();
-		
-		$previousTracking = TrackingSearch::find()->asArray(true)->select(['MAX(created_at) `created_at`'])->where(['ip' => $ip])->one();
-	
-		if(!$previousTracking || $now - $previousTracking['created_at'] > self::DELAY_TRACKING) {
-			$trackingSearch = new TrackingSearch();
-			$trackingSearch->load($data, '');
-			if(!\Yii::$app->user->isGuest) {
-				$trackingSearch->user_id = \Yii::$app->user->id;
-			}
-			$trackingSearch->ip = $ip;
-			$trackingSearch->session = \Yii::$app->session->id;
-			$trackingSearch->created_at = $now;
-			$trackingSearch->save(false);
-		}
 	}
 	
 	public function search($params)
@@ -109,11 +96,16 @@ class TrackingSearch extends TS {
     		'desc' => ['user.username' => SORT_DESC]
     	];
 
-    	$query->andFilterWhere([
-    		'or',
-    		['like', 'username', $this->finder_search],
-    		['like', 'ip', $this->finder_search],
-    	]);
+    	if($this->finder_filter !== null && $this->finder_filter !== '') {
+    		if($this->finder_filter == 0) {
+    			$query->andWhere("user_id IS NOT NULL");
+    		} else if($this->finder_filter == 1) {
+    			$query->andWhere("user_id IS NULL");
+    		} else {
+    			$query->andFilterWhere(['like', 'alias', $this->alias]);
+    		}
+    	}
+    	
 		$query->andFilterWhere(['=', 'category_id', $this->category_search]);
 		$query->andFilterWhere(['like', 'location', $this->location]);
 		$query->andFilterWhere(['=', 'room_no', $this->room_no]);
@@ -126,16 +118,8 @@ class TrackingSearch extends TS {
 		$query->andFilterWhere(['=', 'type', $this->type]);
 		$query->andFilterWhere(['=', 'is_mobile', $this->is_mobile]);
 		
-		if($this->referer_filter) {
-			if($this->referer_filter == '2') {
-				$query->andWhere("`referer` IS NULL");
-			} else if($this->referer_filter == '3') {
-				$query->andWhere("`referer` != '/' AND `referer` LIKE '/%'");
-			} else if($this->referer_filter == '4') {
-				$query->andWhere("`referer` LIKE 'http%'");
-			} else {
-				$query->andFilterWhere(['=', 'referer', $this->referer_filter]);
-			}
+		if($this->from_filter) {
+			$query->andFilterWhere(['=', 'from', $this->from_filter]);
 		}
 
 		return $dataProvider;
