@@ -65,15 +65,6 @@ class Report extends Component
             /**
              * user login
              */
-            $month_year = new \yii\db\Expression("DATE_FORMAT(FROM_UNIXTIME(`updated_at`), '%d/%m/%Y')");
-            $query = new Query();
-            $query->select(['count(*) total', $month_year." today"])->from('user')
-                ->where(['>', 'updated_at', $from])
-                ->andWhere(['<', 'updated_at', $to])
-                ->andWhere('updated_at > created_at')
-                ->groupBy('today')->orderBy('updated_at DESC');
-            $stats_login = $query->all();
-
             $query = \frontend\models\UserActivity::find();
             $query->select(['action', 'updated']);
             $query->andWhere(['IN', 'action', [\frontend\models\UserActivity::ACTION_USER_LOGIN]])
@@ -81,7 +72,6 @@ class Report extends Component
                 /*->groupBy('{{user_activity}}.id')*/->orderBy('updated DESC');
             $login_results = $query->asArray()->all();
             if(!empty($login_results)){
-                $stats_login2 = ArrayHelper::merge($stats_login, $login_results);
                 array_filter($login_results, function($element, $key) use (&$stats_login3) {
                     $today = !empty($element['today']) ? $element['today'] : date('d/m/Y', $element['updated']);
                     $_key = strtotime(str_replace('/', '-', $today));
@@ -95,9 +85,6 @@ class Report extends Component
                 }, ARRAY_FILTER_USE_BOTH);
                 ksort($stats_login3);
             }
-
-//            $stats_login2 = array_values($stats_login2);
-//            $stats_login = ArrayHelper::merge($stats_login, $stats_login2);
 
             $totalLogin = 0;
             foreach($stats_login3 as $item){
