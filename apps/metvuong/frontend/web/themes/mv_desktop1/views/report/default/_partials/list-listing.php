@@ -11,17 +11,15 @@ $count_data = count($data) > 0 ? count($data) : 0;
 $last_key = count($data) - 1;
 if($count_data > 0) {
     foreach ($data as $key => $val) {
-        $user_id = $val["user_id"];
-        $user = Yii::$app->db->cache(function() use($user_id){
-            return User::findIdentity($user_id);
+        $product = Yii::$app->db->cache(function() use($val){
+            return \vsoft\ad\models\AdProduct::findOne($val["id"]);
         });
-        $username = $user->username;
-        $email = empty($user->profile->public_email) ? $user->email : $user->profile->public_email;
-        $avatar = $user->profile->getAvatarUrl();
+        $urlImage = $product->representImage;
+        $address = $product->getAddress();
         ?>
         <li class="">
-            <a href="<?=\yii\helpers\Url::to(['member/profile','username' => $username], true)?>" title="<?=$username?>">
-                <img src="<?=$avatar ?>" alt="<?=$username?>"><?=$username?>
+            <a href="<?=$product->urlDetail()?>" title="<?=$address?>">
+                <img src="<?=$urlImage ?>" alt="<?=$address?>"><?=$address?>
             </a>
         </li>
         <?php

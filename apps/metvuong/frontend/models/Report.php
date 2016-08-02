@@ -80,30 +80,27 @@ class Report extends Component
                 ->andFilterWhere(['BETWEEN', 'updated', $from, $to])
                 /*->groupBy('{{user_activity}}.id')*/->orderBy('updated DESC');
             $login_results = $query->asArray()->all();
-            $stats_login2 = [];
-            if(empty($stats_login2)){
-                foreach($login_results as $login_result){
-                    $today = date('d-m-Y', $login_result['updated']);
-                    if(!empty($stats_login2[$today])){
-                        $stats_login2[$today]['total'] ++;
+            if(!empty($login_results)){
+                $stats_login2 = ArrayHelper::merge($stats_login, $login_results);
+                array_filter($login_results, function($element, $key) use (&$stats_login3) {
+                    $today = !empty($element['today']) ? $element['today'] : date('d/m/Y', $element['updated']);
+                    $_key = strtotime(str_replace('/', '-', $today));
+                    if(!empty($stats_login3[$_key])){
+                        $stats_login3[$_key]['total'] ++;
                     }else{
-                        $stats_login2[$today]['total'] = 1;
-                        $stats_login2[$today]['today'] = $today;
+                        $stats_login3[$_key]['total'] = 1;
+                        $stats_login3[$_key]['today'] = $today;
                     }
-                }
-
+                    return $element;
+                }, ARRAY_FILTER_USE_BOTH);
+                ksort($stats_login3);
             }
 
-            echo "<pre>";
-            print_r($stats_login);
-            print_r($stats_login2);
-            echo "</pre>";
-            exit;
 //            $stats_login2 = array_values($stats_login2);
 //            $stats_login = ArrayHelper::merge($stats_login, $stats_login2);
 
             $totalLogin = 0;
-            foreach($stats_login as $item){
+            foreach($stats_login3 as $item){
                 $totalLogin += $item['total'];
                 $kDate = array_search($item['today'], $dateRange);
                 $dataLogin[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_LOGIN];
@@ -188,13 +185,12 @@ class Report extends Component
                 break;
             case Report::TYPE_LISTING;
                 $query = new Query();
-                $query->select(['id', 'username'])->from('user')
+                $query->select(['id'])->from('ad_product')
                     ->where(['>', 'created_at', $from])
                     ->andWhere(['<', 'created_at', $to])
-                    ->andWhere('updated_at > created_at')
                     ->orderBy('created_at DESC');
-                $data = $query->all();
-                return $data;
+                $stats_listing = $query->all();
+                return $stats_listing;
                 break;
 
         }
