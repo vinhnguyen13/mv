@@ -21,6 +21,7 @@ class UserActivity extends \vsoft\user\models\base\UserActivity
     const READ_YES      = 1;
     const READ_NO       = 0;
 
+    public $total;
     public static function me()
     {
         return Yii::createObject(self::className());

@@ -63,12 +63,35 @@ class Report extends Component
                 ->andWhere('updated_at > created_at')
                 ->groupBy('today')->orderBy('updated_at DESC');
             $stats_login = $query->all();
+
             $totalLogin = 0;
             foreach($stats_login as $item){
                 $totalLogin += $item['total'];
                 $kDate = array_search($item['today'], $dateRange);
                 $dataLogin[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today']];
             }
+
+            $query = \frontend\models\UserActivity::find();
+            $query->select(['action', 'updated']);
+            $query->andWhere(['IN', 'action', [\frontend\models\UserActivity::ACTION_USER_LOGIN]])
+                ->andFilterWhere(['BETWEEN', 'updated', $from, $to])
+                /*->groupBy('{{user_activity}}.id')*/->orderBy('updated DESC');
+            $login_results = $query->asArray()->all();
+            $stats_login = [];
+            if(!empty($login_results)){
+                foreach($login_results as $login_result){
+                    $today = date('d/m/Y', $login_result['updated']);
+                    if(!empty($stats_login[$today])){
+                        $stats_login[$today]['total'] ++;
+                    }else{
+                        $stats_login[$today]['total'] = 1;
+                        $stats_login[$today]['today'] = $today;
+                    }
+                }
+
+            }
+            $stats_login = array_values($stats_login);
+
             /**
              * listing
              */
