@@ -14,6 +14,7 @@ use frontend\models\Report;
 use vsoft\express\models\SysEmail;
 use yii\helpers\ArrayHelper;
 use Yii;
+use yii\web\Response;
 
 class ReportController extends Controller
 {
@@ -49,5 +50,33 @@ class ReportController extends Controller
             return $this->render('mail/index', $data);
         }
 
+    }
+
+    public function actionClickChart(){
+        if(Yii::$app->request->isAjax) {
+            Yii::$app->response->format = Response::FORMAT_HTML;
+
+            $type = (int)Yii::$app->request->get("type");
+            $date = Yii::$app->request->get("date");
+            switch($type){
+                case Report::TYPE_REGISTER;
+                    $viewItem = 'list-user';
+                    $data = Report::me()->chartDetail($type, $date);
+                    break;
+                case Report::TYPE_LOGIN;
+                    $viewItem = 'list-user';
+                    $data = Report::me()->chartDetail($type, $date);
+                    break;
+                case Report::TYPE_LISTING;
+                    $viewItem = 'list-listing';
+                    $data = Report::me()->chartDetail($type, $date);
+                    break;
+            }
+            return $this->renderAjax('default/_partials/list-items', [
+                'viewItem'=>$viewItem,
+                'data'=>$data,
+            ]);
+        }
+        return false;
     }
 }

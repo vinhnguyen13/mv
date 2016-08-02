@@ -46,10 +46,10 @@
                     var tooltip;
                     if (this.key == 'last') {
                         tooltip = '<b>Final result is </b> ' + this.y;
-                    }
-                    else {
-                        if(this.y > 0)
-                            tooltip = '<a href="#"><b class="chart_result" onclick="clickTooltip()">' + this.y + '</b></a><br/>';
+                    }else {
+                        if(this.y > 0) {
+                            tooltip = '<a href="#"><b class="chart_result" onclick="clickTooltip(this.point.type, this.point.date)">' + this.y + '</b></a><br/>';
+                        }
                         else
                             tooltip = '<b class="chart_result">' + this.y + '</b><br/>';
                     }
@@ -66,7 +66,7 @@
                     point: {
                         events: {
                             click: function () {
-                                clickTooltip();
+                                clickTooltip(this.type, this.date);
                             },
 
                         }
@@ -80,11 +80,10 @@
         });
     });
 
-    function clickTooltip() {
-        alert('hello!');return false;
-        $('#frmListVisit .wrap-modal').html('');
+    function clickTooltip(type, date) {
+        $('.wrap-chart').loading({full: false});
         var _this = this;
-        console.log(_this);
+        var url = '<?=\yii\helpers\Url::to(['report/click-chart'])?>?type='+type+'&date='+date;
         $('body').loading();
         $.ajax({
             type: "get",
@@ -92,11 +91,14 @@
             url: url,
             success: function (data) {
                 console.log(data);
-                $('body').loading({done: true});
                 $('#frmListVisit .wrap-modal').html($(data));
-
                 $('#frmListVisit').modal();
+                $('body').loading({done:true});
+            },
+            error: function (error) {
+                $('body').loading({done:true});
             }
         });
+        return false;
     }
 </script>

@@ -36,7 +36,7 @@ use yii\helpers\Url;
                             <input type="checkbox" name="toggle-chart" value="" id="listing" checked><label for="listing"><?=Yii::t('report','Listing')?></label>
                         </li>
                         <li style="display: none;">
-                            <input type="checkbox" name="toggle-chart" value="" id="transaction" checked><label for="transaction"><?=Yii::t('report','Transaction')?></label>
+                            <input type="checkbox" name="toggle-chart" value="" id="transaction"><label for="transaction"><?=Yii::t('report','Transaction')?></label>
                         </li>
                     </ul>
         		</div>
@@ -44,6 +44,22 @@ use yii\helpers\Url;
         </div>
     </div>
 </div>
+
+<div class="modal fade popup-common" id="frmListVisit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header title-popup clearfix">
+                <?=Yii::t('statistic','Statistic')?>
+                <a href="#" class="btn-close close" data-dismiss="modal" aria-label="Close"><span class="icon icon-close"></span></a>
+            </div>
+            <div class="modal-body">
+                <div class="wrap-modal clearfix">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script src="//code.highcharts.com/highcharts.js"></script>
 <script>
     $(document).ready(function () {
