@@ -70,7 +70,7 @@ use yii\helpers\Url;
             }
             $('.option-view-stats input[type=checkbox]').each(function () {
                 if (this.checked) {
-                    var index = $(this).parent().index();
+                    var index = $(this).parent().parent().index();
                     chart.series[index].show();
                 }
             });
