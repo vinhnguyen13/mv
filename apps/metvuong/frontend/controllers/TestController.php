@@ -245,4 +245,56 @@ class TestController extends \yii\web\Controller
         echo "</pre>";
         exit;
     }
+
+    public function actionLoginData($r=30)
+    {
+        $from = strtotime('-'.$r.' days');
+        $to = time();
+        $query = \frontend\models\UserActivity::find();
+        $query->select(['action', 'owner_id', 'updated']);
+        $query->andWhere(['IN', 'action', [\frontend\models\UserActivity::ACTION_USER_LOGIN]])
+            ->andFilterWhere(['BETWEEN', 'updated', $from, $to])
+            /*->groupBy('{{user_activity}}.id')*/->orderBy('updated DESC');
+        $login_results = $query->asArray()->all();
+        if(!empty($login_results)){
+            array_filter($login_results, function($element, $key) use (&$stats_login3, &$arrTrung) {
+                $today = !empty($element['today']) ? $element['today'] : date('d/m/Y', $element['updated']);
+                $_key = strtotime(str_replace('/', '-', $today));
+                if(!empty($stats_login3[$_key])){
+                    $stats_login3[$_key]['total'] ++;
+                }else{
+                    $stats_login3[$_key]['total'] = 1;
+                    $stats_login3[$_key]['today'] = $today;
+                }
+                $_keyExist = $_key.'_'.$element['owner_id'];
+                if(!empty($arrTrung[$_keyExist]['total'])){
+                    $arrTrung[$_keyExist]['total'] += 1;
+                    $arrTrung[$_keyExist]['id'][] = (string)$element['_id'];
+                    $arrTrung[$_keyExist]['today'] = $today;
+                }else{
+                    $arrTrung[$_keyExist]['total']=1;
+                    $arrTrung[$_keyExist]['id'][] = (string)$element['_id'];
+                    $arrTrung[$_keyExist]['today'] = $today;
+                }
+                return $element;
+            }, ARRAY_FILTER_USE_BOTH);
+
+
+            array_filter($arrTrung, function($element, $key){
+                if(!empty($element['total']) && $element['total'] > 1){
+                    $_id = $element['id'][0];
+                    $loginRecord = \frontend\models\UserActivity::findOne($_id);
+                    if(!empty($loginRecord)){
+                        $loginRecord->delete();
+                    }
+                }
+            }, ARRAY_FILTER_USE_BOTH);
+
+            echo "<pre>";
+            print_r($arrTrung);
+            echo "</pre>";
+            exit;
+            ksort($stats_login3);
+        }
+    }
 }
