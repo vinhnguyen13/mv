@@ -106,12 +106,15 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                         $investor = $model->investors[0];
                         $image = $investor->logo;
                         if(empty($investor->logo))
-                            $image = \vsoft\ad\models\AdImages::defaultImage();?>
+                            $image = \vsoft\ad\models\AdImages::defaultImage();
+                        if(file_exists(Yii::getAlias('@store') . "/building-project-images/" . $investor->logo))
+                            $src_img = "/store/building-project-images/" . $investor->logo;
+                        ?>
                         <div class="item chudautu-infor">
                             <div class="title-section"><?=Yii::t('project', 'Investor')?></div>
                             <div class="clearfix">
                                 <div class="wrap-img pull-left">
-                                    <img src="<?=(filter_var($image, FILTER_VALIDATE_URL) === FALSE) ? Yii::getAlias('@store') . "/building-project-images/" . $investor->logo : $investor->logo ?>" alt="<?=$investor->name?>">
+                                    <img src="<?=(filter_var($image, FILTER_VALIDATE_URL) === FALSE) ? $src_img : $investor->logo ?>" alt="<?=$investor->name?>">
                                 </div>
                                 <div class="infor-detail-chudautu">
                                     <ul>
@@ -249,7 +252,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
 </div>
 
 <?php
-$content = strip_tags($model->description);
+$content = $tongquan;
 $description = \yii\helpers\StringHelper::truncate($content, 500);
 $description = str_replace("\r", "", $description);
 $description = str_replace("\n", "", $description);
