@@ -10,10 +10,6 @@ use vsoft\ad\models\AdInvestor;
 use common\widgets\FileUploadUI;
 use yii\helpers\Url;
 
-/* @var $this yii\web\View */
-/* @var $model funson86\cms\models\CmsShow */
-/* @var $form yii\widgets\ActiveForm */
-
 ?>
 
 <div class="cms-show-form">
@@ -26,9 +22,17 @@ use yii\helpers\Url;
         ],
     ]); ?>
     
-	<?= $form->field($model, 'logo')->widget(FileUploadUI::className(), [
-		'url' => Url::to('/express/upload/image'),
-		'clientOptions' => ['maxNumberOfFiles' => 1] ]) ?>
+	<?php
+    if($model->logo) {
+        $pathInfo = pathinfo($model->logo);
+        if(!isset($pathInfo['extension']))
+            $model->logo = null;
+
+    }
+        echo $form->field($model, 'logo')->widget(FileUploadUI::className(), [
+            'url' => Url::to('/express/upload/image'),
+            'clientOptions' => ['maxNumberOfFiles' => 1]]);
+    ?>
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
     

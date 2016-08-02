@@ -8,12 +8,13 @@ use vsoft\ad\models\AdCategoryGroup;
 use vsoft\express\components\StringHelper;
 use vsoft\ad\models\TrackingSearch;
 use frontend\models\MapSearch;
+use yii\db\Query;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CmsShowSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->registerCss('.separator {margin: 0 8px;} .summary {position: absolute; right: 0px; top: -20px;} .cms-show-index {padding-top: 40px; position: relative;} .filter-col {margin-right: 12px;} .container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 28px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;}');
+$this->registerCss('table td{padding: 2px 10px;} .separator {margin: 0 8px;} .summary {position: absolute; right: 0px; top: -20px;} .cms-show-index {padding-top: 40px; position: relative;} .filter-col {margin-right: 12px;} .container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 28px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;}');
 $this->registerJsFile(Yii::getAlias('@web') . '/js/tracking-search.js', ['depends' => ['yii\web\YiiAsset']]);
 
 $this->title = Yii::t('cms', 'Tracking Search');
@@ -52,61 +53,60 @@ $mapSort = MapSearch::mapSort();
         	'alias',
         	[
         		'format' => 'raw',
-        		'attribute' => 'contents',
-        		'value' => function($model) use($type, $categoryDropDown, $sourceDropDown, $mapSort) {
-        			$contents = explode(' ||| ', $model['contents']);
+        		'value' => function($model) use($type, $categoryDropDown, $sourceDropDown, $mapSort)  {
+        			$query = new Query();
+        			$query->from('tracking_search');
+        			$query->where(['alias' => $model['alias']]);
+        			$query->orderBy('created_at');
+        			$query->limit(50);
+        			$trackings = $query->all();
         			
-        			$return = '<ul>';
+        			$table = '<table>';
         			
-        			foreach ($contents as $content) {
-        				$li = [];
+        			foreach ($trackings as $tracking) {
+        				$tr = '<tr>';
         				
-        				$content = explode(' |*| ', $content);
-        				$referer = '';
+        				$tr .= '<td>' . date("h:i:s d-m", $tracking['created_at']) . '</td>';
+        				$tr .= '<td style="font-weight: bold;">' . $sourceDropDown[$tracking['from']] . '</td>';
+        				$tr .= '<td>' . $tracking['location'] . '</td>';
+        				$tr .= '<td style="color: red;">' . $type[$tracking['type']] . '</td>';
+        				$tr .= '<td style="color: blue;">' . ($tracking['category_id'] ? $categoryDropDown[$tracking['category_id']] : '') . '</td>';
         				
-        				foreach ($content as $field) {
-        					$field = explode(' : ', $field);
-        					
-        					if($field[0] == 'l') {
-        						$li[] = '<span class="content-value">' . $field[1] . '</span>';
-        					} else if($field[0] == 't') {
-        						$li[] = '<span class="content-value" style="color: red;">' . $type[$field[1]] . '</span>';
-        					} else if($field[0] == 'ci') {
-        						$li[] = '<span class="content-value" style="color: blue;">' . $categoryDropDown[$field[1]] . '</span>';
-        					} else if($field[0] == 'rn') {
-        						$li[] = '<span class="content-value">' .$field[1] . ' phòng ngủ</span>';
-        					} else if($field[0] == 'tn') {
-        						$li[] = '<span class="content-value">' .$field[1] . ' phòng tắm</span>';
-        					} else if($field[0] == 'pi') {
-        						$li[] = '<span class="content-value">price min: ' . StringHelper::formatCurrency($field[1]) . '</span>';
-        					} else if($field[0] == 'pa') {
-        						$li[] = '<span class="content-value">price max: ' . StringHelper::formatCurrency($field[1]) . '</span>';
-        					} else if($field[0] == 'si') {
-        						$li[] = '<span class="content-value">size min: ' . $field[1] . '</span>';
-        					} else if($field[0] == 'sa') {
-        						$li[] = '<span class="content-value">size max: ' . $field[1] . '</span>';
-        					} else if($field[0] == 'o') {
-        						$li[] = '<span class="content-value">sort: ' . $mapSort[$field[1]] . '</span>';
-        					} else if($field[0] == 'ca') {
-        						$li[] = '<span class="content-value">' . date("h:i:s d-m-Y", $field[1]) . '</span>';
-        					} else if($field[0] == 'f') {
-        						if($field[1] == TrackingSearch::FROM_HOME || $field[1] == TrackingSearch::FROM_DIRECT || $field[1] == TrackingSearch::FROM_IN_PAGE || $field[1] == TrackingSearch::FROM_QUICK_SEARCH) {
-        							$li[] = '<span class="content-value" style="font-weight: bold; width: 110px; display: inline-block;">' . $sourceDropDown[$field[1]] . '</span>';
-        						} else {
-        							$li[] = '<span title="' . $referer . '" class="content-value" style="font-weight: bold; width: 110px; display: inline-block;">' . $sourceDropDown[$field[1]] . '</span>';
-        						}
-        					} else if($field[0] == 'r') {
-        						$referer = $field[1];
-        					}
+        				$content = [];
+        				
+        				if($tracking['room_no']) {
+        					$content[] = $tracking['room_no'] . ' beds';
+        				}
+        				if($tracking['toilet_no']) {
+        					$content[] = $tracking['toilet_no'] . ' bath';
+        				}
+        				if($tracking['price_min']) {
+        					$content[] = '$ min: ' . StringHelper::formatCurrency($tracking['price_min']);
+        				}
+        				if($tracking['price_max']) {
+        					$content[] = '$ max: ' . StringHelper::formatCurrency($tracking['price_max']);
+        				}
+        				if($tracking['size_min']) {
+        					$content[] = 'size min: ' . $tracking['size_min'];
+        				}
+        				if($tracking['size_max']) {
+        					$content[] = 'size max: ' . $tracking['size_max'];
+        				}
+        				if($tracking['order_by']) {
+        					$content[] = 'sort: ' . $mapSort[$tracking['order_by']];
         				}
         				
-        				$return .= '<li>' . implode('<span class="separator"></span>', $li) . '</li>';
+        				$tr .= '<td>' . implode('<span class="separator"></span>', $content) . '</td>';
+        				
+        				$tr .= '</tr>';
+        				
+        				$table .= $tr;
         			}
         			
-        			$return .= '</ul>';
+        			$table .= '</table>';
         			
-        			return $return;
-        		}
+        			return $table;
+    			}		
     		]
         ],
     ]); ?>
