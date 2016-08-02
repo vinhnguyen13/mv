@@ -26,13 +26,13 @@ use yii\helpers\Url;
                         </div>
         			</div>
                     <ul class="option-view-stats clearfix">
-                        <li>
+                        <li class="chk_register">
                             <input type="checkbox" name="toggle-chart" value="" id="register" checked><label for="register"><?=Yii::t('report','Register')?></label>
                         </li>
-                        <li>
+                        <li class="chk_login">
                             <input type="checkbox" name="toggle-chart" value="" id="login" checked><label for="login"><?=Yii::t('report','Login')?></label>
                         </li>
-                        <li>
+                        <li class="chk_listing">
                             <input type="checkbox" name="toggle-chart" value="" id="listing" checked><label for="listing"><?=Yii::t('report','Listing')?></label>
                         </li>
                         <li style="display: none;">

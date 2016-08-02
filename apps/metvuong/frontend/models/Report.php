@@ -128,14 +128,17 @@ class Report extends Component
             $categories = $dateRange;
             $dataChart[0] = [
                 'name' => 'Register',
+                'color' => '#00a769',
                 'data' => $dataRegister
             ];
             $dataChart[1] = [
                 'name' => 'Login',
+                'color' => '#337ab7',
                 'data' => $dataLogin
             ];
             $dataChart[2] = [
                 'name' => 'Listing',
+                'color' => '#a94442',
                 'data' => $dataListing
             ];
             return ['categories'=>$categories, 'dataChart'=>$dataChart];
