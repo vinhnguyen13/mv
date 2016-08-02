@@ -67,7 +67,12 @@ $mapSort = MapSearch::mapSort();
         				$tr = '<tr>';
         				
         				$tr .= '<td>' . date("h:i:s d-m", $tracking['created_at']) . '</td>';
-        				$tr .= '<td style="font-weight: bold;">' . $sourceDropDown[$tracking['from']] . '</td>';
+        				if($tracking['from'] == TrackingSearch::FROM_OTHER_PAGE || $tracking['from'] == TrackingSearch::FROM_OTHER_SITE) {
+        					$tr .= '<td title="' . $tracking['referer'] . '" style="font-weight: bold;">' . $sourceDropDown[$tracking['from']] . '</td>';
+        				} else {
+        					$tr .= '<td style="font-weight: bold;">' . $sourceDropDown[$tracking['from']] . '</td>';
+        				}
+        				
         				$tr .= '<td>' . $tracking['location'] . '</td>';
         				$tr .= '<td style="color: red;">' . $type[$tracking['type']] . '</td>';
         				$tr .= '<td style="color: blue;">' . ($tracking['category_id'] ? $categoryDropDown[$tracking['category_id']] : '') . '</td>';
