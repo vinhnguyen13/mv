@@ -1,3 +1,25 @@
+$(document).ready(function () {
+	$('.infor-bds .tabProject li a').each(function (i) {
+		if ( $(this).hasClass('active') ) {
+			var indexParent = $(this).parent().index();
+			$('.infor-bds > div').eq(indexParent).show();
+			return;
+		}
+	});
+	$('.infor-bds .tabProject li a').on('click', function (e) {
+		e.preventDefault();
+		var _this = $(this),
+			parentThis = _this.parent(),
+			indexParent = parentThis.index(),
+			itemShow = $('.infor-bds > div');
+
+		itemShow.hide();
+		itemShow.eq(indexParent).show();
+		$('.infor-bds .tabProject li a').removeClass('active');
+		_this.addClass('active');
+	});
+});
+
 var objMap = [], 
 	objItem = {
 		id_area : '',
@@ -566,3 +588,4 @@ function arrayAreaChange(arrCoordinates) {
 }
 
 function l(x){console.log(x);}
+
