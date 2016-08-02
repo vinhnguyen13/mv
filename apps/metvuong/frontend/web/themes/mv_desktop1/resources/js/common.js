@@ -5,7 +5,7 @@ $(window).on('load', function () {
 $(document).ready(function() {
 
     var getNumKey = parseInt($('.list-redire .num-gold a').data('keys'));
-    $('.list-redire .num-gold .notifi').html(convertKey(getNumKey));
+    $('.list-redire .num-gold .notifi').html(getNumKey);
     
     $(document).on('click', '.option-chat-box .val-selected', function (e) {
         $(this).closest('.box-dropdown').toggleClass('show-hide');
