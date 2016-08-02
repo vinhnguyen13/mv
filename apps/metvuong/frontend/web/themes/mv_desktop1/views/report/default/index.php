@@ -17,7 +17,7 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div class="clearfix"></div>
-        		<div class="summary clearfix">
+        		<div class="summary clearfix report-boss">
                     <div class="wrap-chart clearfix">
         				<div class="wrap-img">
                             <div class="wrapChart">
@@ -27,16 +27,16 @@ use yii\helpers\Url;
         			</div>
                     <ul class="option-view-stats clearfix">
                         <li class="chk_register">
-                            <input type="checkbox" name="toggle-chart" value="" id="register" checked><label for="register"><?=Yii::t('report','Register')?></label>
+                            <label for="register"><input type="checkbox" name="toggle-chart" value="" id="register" checked><?=Yii::t('report','Register')?></label>
                         </li>
                         <li class="chk_login">
-                            <input type="checkbox" name="toggle-chart" value="" id="login" checked><label for="login"><?=Yii::t('report','Login')?></label>
+                            <label for="login"><input type="checkbox" name="toggle-chart" value="" id="login" checked><?=Yii::t('report','Login')?></label>
                         </li>
                         <li class="chk_listing">
-                            <input type="checkbox" name="toggle-chart" value="" id="listing" checked><label for="listing"><?=Yii::t('report','Listing')?></label>
+                            <label for="listing"><input type="checkbox" name="toggle-chart" value="" id="listing" checked><?=Yii::t('report','Listing')?></label>
                         </li>
                         <li style="display: none;">
-                            <input type="checkbox" name="toggle-chart" value="" id="transaction"><label for="transaction"><?=Yii::t('report','Transaction')?></label>
+                            <label for="transaction"><input type="checkbox" name="toggle-chart" value="" id="transaction"><?=Yii::t('report','Transaction')?></label>
                         </li>
                     </ul>
         		</div>
