@@ -84,7 +84,6 @@
         $('.wrap-chart').loading({full: false});
         var _this = this;
         var url = '<?=\yii\helpers\Url::to(['report/click-chart'])?>?type='+type+'&date='+date;
-        $('body').loading();
         $.ajax({
             type: "get",
             dataType: 'html',

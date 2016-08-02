@@ -17,7 +17,7 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div class="clearfix"></div>
-        		<div class="summary clearfix">
+        		<div class="summary clearfix report-boss">
                     <div class="wrap-chart clearfix">
         				<div class="wrap-img">
                             <div class="wrapChart">
@@ -26,17 +26,17 @@ use yii\helpers\Url;
                         </div>
         			</div>
                     <ul class="option-view-stats clearfix">
-                        <li>
-                            <input type="checkbox" name="toggle-chart" value="" id="register" checked><label for="register"><?=Yii::t('report','Register')?></label>
+                        <li class="chk_register">
+                            <label for="register"><input type="checkbox" name="toggle-chart" value="" id="register" checked><?=Yii::t('report','Register')?></label>
                         </li>
-                        <li>
-                            <input type="checkbox" name="toggle-chart" value="" id="login" checked><label for="login"><?=Yii::t('report','Login')?></label>
+                        <li class="chk_login">
+                            <label for="login"><input type="checkbox" name="toggle-chart" value="" id="login" checked><?=Yii::t('report','Login')?></label>
                         </li>
-                        <li>
-                            <input type="checkbox" name="toggle-chart" value="" id="listing" checked><label for="listing"><?=Yii::t('report','Listing')?></label>
+                        <li class="chk_listing">
+                            <label for="listing"><input type="checkbox" name="toggle-chart" value="" id="listing" checked><?=Yii::t('report','Listing')?></label>
                         </li>
                         <li style="display: none;">
-                            <input type="checkbox" name="toggle-chart" value="" id="transaction"><label for="transaction"><?=Yii::t('report','Transaction')?></label>
+                            <label for="transaction"><input type="checkbox" name="toggle-chart" value="" id="transaction"><?=Yii::t('report','Transaction')?></label>
                         </li>
                     </ul>
         		</div>
@@ -70,7 +70,7 @@ use yii\helpers\Url;
             }
             $('.option-view-stats input[type=checkbox]').each(function () {
                 if (this.checked) {
-                    var index = $(this).parent().index();
+                    var index = $(this).parent().parent().index();
                     chart.series[index].show();
                 }
             });

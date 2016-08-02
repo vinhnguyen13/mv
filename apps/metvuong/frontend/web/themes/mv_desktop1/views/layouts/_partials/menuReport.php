@@ -7,13 +7,13 @@ use yii\helpers\Url;
             <ul class="clearfix">
                 <li>
                     <a class="dashboard-item <?= !empty($this->params['menuDashboard']) ? 'active' : ''; ?>" href="<?= Url::to(['/report/index']) ?>">
-                        <div><span class="icon-mv"><span class="icon-barometer"></span></span></div>
+                        <div><span class="icon-mv"><span class="icon-user-icon-profile1 fs-25"></span></span></div>
                         <?= Yii::t('report', 'User') ?>
                     </a>
                 </li>
                 <li>
                     <a class="dashboard-item <?= !empty($this->params['menuDashboard']) ? 'active' : ''; ?>" href="<?= Url::to(['/report/mail']) ?>">
-                        <div><span class="icon-mv"><span class="icon-barometer"></span></span></div>
+                        <div><span class="icon-mv"><span class="icon-mail-profile fs-20"></span></span></div>
                         <?= Yii::t('report', 'Mail') ?>
                     </a>
                 </li>

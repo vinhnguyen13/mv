@@ -13927,6 +13927,45 @@ ul.cardList li {
     overflow: hidden;
     overflow-y: auto;
 }
+.report-boss .wrap-chart {
+    border-bottom: 1px solid #dbdbdb;
+    margin-bottom: 30px;
+}
+.report-boss .option-view-stats {
+    /* width: 200px; */
+    border: 1px dotted #ccc;
+    border-radius: 4px;
+    padding: 15px 15px 0 15px;
+    background: #f9f9f9;
+}
+.report-boss .option-view-stats li {
+    /* width: auto; */
+    /* float: none; */
+    margin-bottom: 15px;
+}
+.report-boss .option-view-stats label {
+    font-weight: 600;
+    font-size: 15px;
+    display: block;
+    color: #fff;
+    text-align: left;
+}
+.report-boss .option-view-stats .chk_register label {
+    color: #00a769;
+}
+.report-boss .option-view-stats .chk_login label {
+    color: #337ab7;
+}
+.report-boss .option-view-stats .chk_listing label {
+    color: #a94442;
+}
+.report-boss .option-view-stats input {
+    display: inline-block;
+    margin: 0;
+    margin-right: 10px;
+    position: relative;
+    top: 2px;
+}
 @media (max-width: 1600px) {
     .wrap-listing-item {
         width: 45%;
