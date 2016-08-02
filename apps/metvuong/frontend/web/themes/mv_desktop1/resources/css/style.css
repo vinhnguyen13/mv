@@ -13927,6 +13927,35 @@ ul.cardList li {
     overflow: hidden;
     overflow-y: auto;
 }
+.option-view-stats {
+    border: 1px solid #ccc;
+    background: #efefef;
+}
+.option-view-stats label {
+    font-weight: 600;
+    font-size: 15px;
+    display: block;
+    background: #efefef;
+    padding: 15px 0;
+    border-right: 1px solid #ccc;
+    color: #fff;
+}
+.option-view-stats .chk_register label {
+    background: #00a769;
+}
+.option-view-stats .chk_login label {
+    background: #337ab7;
+}
+.option-view-stats .chk_listing label {
+    background: #a94442;
+}
+.option-view-stats input {
+    display: inline-block;
+    margin: 0;
+    margin-right: 5px;
+    position: relative;
+    top: 2px;
+}
 @media (max-width: 1600px) {
     .wrap-listing-item {
         width: 45%;
