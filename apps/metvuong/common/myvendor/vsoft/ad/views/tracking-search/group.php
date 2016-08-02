@@ -68,7 +68,15 @@ $mapSort = MapSearch::mapSort();
         				
         				$tr .= '<td>' . date("h:i:s d-m", $tracking['created_at']) . '</td>';
         				if($tracking['from'] == TrackingSearch::FROM_OTHER_PAGE || $tracking['from'] == TrackingSearch::FROM_OTHER_SITE) {
-        					$tr .= '<td title="' . $tracking['referer'] . '" style="font-weight: bold;">' . $sourceDropDown[$tracking['from']] . '</td>';
+        					if(StringHelper::startsWith($tracking['referer'], 'https://www.google.com/afs/ads')) {
+        						$v = 'Từ Google ads';
+        					} else if(StringHelper::startsWith($tracking['referer'], 'https://www.google.')) {
+        						$v = 'Từ Google search';
+        					} else {
+        						$v = $sourceDropDown[$tracking['from']];
+        					}
+        					
+        					$tr .= '<td title="' . $tracking['referer'] . '" style="font-weight: bold;">' . $v . '</td>';
         				} else {
         					$tr .= '<td style="font-weight: bold;">' . $sourceDropDown[$tracking['from']] . '</td>';
         				}
