@@ -94,8 +94,10 @@ class CopyListing extends Component
 
                 $is_expired = 0;
                 $end_date = $model->start_date + AdProduct::EXPIRED;
-                if($end_date < time())
+                if($end_date < time()) {
                     $is_expired = 1;
+                    print_r(" - expired");
+                }
 
                 $record = [
                     'category_id' => $model->category_id,
@@ -227,9 +229,10 @@ class CopyListing extends Component
                             }
                         }
 
-                        $product->insertEs(); // insert elastic
+                        if($is_expired == 0) {
+                            $product->insertEs(); // insert elastic
+                        }
 
-                        print_r(" - success.");
                         if ($no > 0 && $no % 20 == 0) {
                             print_r(PHP_EOL);
                             print_r("\n Copied {$no} records...");
