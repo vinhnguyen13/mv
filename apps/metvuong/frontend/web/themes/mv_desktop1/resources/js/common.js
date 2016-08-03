@@ -181,7 +181,7 @@ $(document).ready(function() {
             		
             		if(response.address) {
             			ss.removeClass('hide');
-            			$('.content-suggest ul').html('<li><a href="' + response.url + '">' + response.address + '</a>(' + lajax.t('ID') + ': MV' + val.replace('MV', '').replace('mv', '') + ')</li>');
+            			$('.content-suggest ul').html('<li><a href="' + response.url + '">' + response.address + '</a>(' + lajax.t('ID') + ': MV' + val.replace(/mv/i, '') + ')</li>');
             		} else if(response.length > 0) {
             			ss.removeClass('hide');
             			
