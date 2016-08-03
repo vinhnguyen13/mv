@@ -22,7 +22,7 @@ use yii\web\NotFoundHttpException;
  *
  * @author Dmitry Erofeev <dmeroff@gmail.com>
  */
-class MailChimp extends Component
+class MailerMailChimp extends Component
 {
     public static function me()
     {
@@ -36,16 +36,53 @@ class MailChimp extends Component
             require(Yii::getAlias('@common').'/myvendor/mailchimp-api-php/src/Mailchimp.php');
 
 //Create Campaign
-            $Mailchimp = new Mailchimp($api_key);
-            $result = $Mailchimp->campaigns->create('regular',
-                array('list_id'               => 'my_list_id',
+            $MailChimp = new \Mailchimp($api_key);
+            $Mailchimp_Lists = new \Mailchimp_Lists($MailChimp);
+
+            $list_id = 'c9e01b7cfb';
+            $email = 'hello@email.com';
+            $merge_vars = array();
+
+            /*$subscriber = $Mailchimp_Lists->subscribe(
+                $list_id,
+                array('email'=>htmlentities($email)),
+                $merge_vars,
+                false,
+                false,
+                false,
+                false
+            );
+echo "<pre>";
+print_r($subscriber);
+echo "</pre>";
+exit;*/
+            /*$result = $MailChimp->call('lists/subscribe', array(
+                'id'                => $list_id,
+                'email'             => array('email'=>'quangvinhit2007@gmail.com'),
+                'merge_vars'        => array(),
+                'double_optin'      => false,
+                'update_existing'   => true,
+                'replace_interests' => false,
+                'send_welcome'      => false,
+            ));
+echo "<pre>";
+print_r($result);
+echo "</pre>";
+exit;*/
+
+
+            $result = $MailChimp->campaigns->create('regular',
+                array('list_id'               => $list_id,
                     'subject'                       => 'This is a test subject',
                     'from_email'                        => 'test@test.com',
                     'from_name'                         => 'From Name'),
                 array('html'                    => '<div>test html email</div>',
                     'text'                                  => 'This is plain text.')
             );
-
+echo "<pre>";
+print_r($result);
+echo "</pre>";
+exit;
             if( $result === false ) {
                 // response wasn't even json
                 echo 'didnt work';
@@ -56,7 +93,7 @@ class MailChimp extends Component
                 echo 'worked';
             }
         } catch (\Exception $ex) {
-            return false;
+            return $ex;
         }
     }
 }
