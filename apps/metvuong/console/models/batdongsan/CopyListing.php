@@ -143,7 +143,6 @@ class CopyListing extends Component
                     $score = AdProduct::calcScore($product, $adProductAdditionInfo, $adContactInfo, count($productImages));
                     $product->score = $score;
                     if ($product->save(false)) {
-                        $product->insertEs(); // insert elastic
                         $last_product_id = $product->id;
                         $model->product_main_id = $last_product_id;
                         $model->update(false);
@@ -225,6 +224,9 @@ class CopyListing extends Component
                                 }
                             }
                         }
+
+                        $product->insertEs(); // insert elastic
+
                         print_r(" - success.");
                         if ($no > 0 && $no % 20 == 0) {
                             print_r(PHP_EOL);

@@ -9,8 +9,15 @@ $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_
 //$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
 $this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
 
-$tabProject = json_decode(strip_tags($model->data_html), true);
-$tongquan = html_entity_decode($tabProject["tong-quan"], ENT_HTML5, 'utf-8');
+$tongquan = $model->description;
+if(!empty($model->data_html)){
+    $tabProject = json_decode(strip_tags($model->data_html), true);
+    if (count($tabProject) > 0) {
+        $key_index = key($tabProject);
+        $tongquan = html_entity_decode($tabProject[$key_index], ENT_HTML5, 'utf-8');
+    }
+}
+
 Yii::$app->view->registerMetaTag([
     'name' => 'keywords',
     'content' => $model->location
@@ -164,10 +171,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                             <?php } ?>
                         </div>
                     <?php } ?>
-                    <!-- <div class="text-center mgT-40">
-                        <a class="btn-common mgR-10" href="<?=Url::to(['ad/index1', 'project_building_id'=>$model->id])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Buy')?></a>
-                        <a class="btn-common" href="<?=Url::to(['ad/index2', 'project_building_id'=>$model->id])?>" title="<?=Yii::t('project', 'Listing of this project')?>"><?=Yii::t('project', 'For Rent')?></a>
-                    </div> -->
+
                     <div class="listing-post-by-project">
                         <?php
                         $categoriesDb = \vsoft\ad\models\AdCategory::getDb();

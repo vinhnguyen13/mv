@@ -58,6 +58,15 @@ class BuildingProjectController extends Controller
             if(!empty($post["BuildingProject"]["facilities"])){
                 $model->facilities = implode(",", $post["BuildingProject"]["facilities"]);
             }
+
+            $data_html = $post['data_html'];
+            if(count($data_html) > 0){
+                $_data = [];
+                foreach ($data_html as $key => $tab) {
+                    $_data[$key] = $tab;
+                }
+                $model->data_html = json_encode($_data);
+            }
 			
 			$response = ['success' => true];
 			
@@ -65,8 +74,8 @@ class BuildingProjectController extends Controller
     			$model->save(false);
     			$model->saveMultiple($post['BuildingProject'], $investors, 'investors');
     			$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
-                $model->saveMultiple($post['BuildingProject'], $architects, 'architects');
-                $model->saveMultiple($post['BuildingProject'], $contractors, 'contractors');
+//                $model->saveMultiple($post['BuildingProject'], $architects, 'architects');
+//                $model->saveMultiple($post['BuildingProject'], $contractors, 'contractors');
 
     			$mapFormName = AdAreaType::mapFormName();
     			foreach ($mapFormName as $type => $formName) {
@@ -122,6 +131,7 @@ class BuildingProjectController extends Controller
     		if(Yii::$app->request->isPost) {
     			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     			$post = Yii::$app->request->post();
+
     			$model->load(Yii::$app->request->post());
                 $start_date = null;
                 if(!empty($post["BuildingProject"]["start_date"])){
@@ -132,14 +142,23 @@ class BuildingProjectController extends Controller
                     $model->facilities = implode(",", $post["BuildingProject"]["facilities"]);
                 }
 
+                $data_html = $post['data_html'];
+                if(count($data_html) > 0){
+                    $_data = [];
+                    foreach ($data_html as $key => $tab) {
+                       $_data[$key] = $tab;
+                    }
+                    $model->data_html = json_encode($_data);
+                }
+
     			$response = ['success' => true];
 
     			if($model->validate()) {
     				$model->save(false);
     				$model->saveMultiple($post['BuildingProject'], $investors, 'investors');
     				$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
-    				$model->saveMultiple($post['BuildingProject'], $architects, 'architects');
-    				$model->saveMultiple($post['BuildingProject'], $contractors, 'contractors');
+//    				$model->saveMultiple($post['BuildingProject'], $architects, 'architects');
+//    				$model->saveMultiple($post['BuildingProject'], $contractors, 'contractors');
 
 	    			$mapFormName = AdAreaType::mapFormName();
 	    			foreach ($mapFormName as $type => $formName) {

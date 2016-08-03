@@ -17,8 +17,52 @@ use yii\db\Query;
 use yii\db\yii\db;
 use yii\helpers\ArrayHelper;
 use vsoft\express\components\StringHelper;
+use vsoft\ad\models\AdWard;
 
 class ProductController extends Controller {
+	
+	public function actionUpdateNullLatLng() {
+		$products = \Yii::$app->db->createCommand("SELECT * FROM `ad_product` WHERE `lat` IS NULL OR `lat` = '' OR `lng` IS NULL OR `lng` = ''")->queryAll();
+		
+		echo "Total Products: " . count($products) . "\n";
+		
+		$updateTotal = 0;
+		
+		foreach ($products as $product) {
+			$latLng = [];
+			
+			if($product['ward_id']) {
+				$ward = AdWard::findOne($product['ward_id']);
+				
+				if($ward->center) {
+					$latLng = json_decode($ward->center);
+				}
+			}
+			
+			if(empty($latLng)) {
+				$district = AdDistrict::findOne($product['district_id']);
+				
+				if($district->center) {
+					$latLng = json_decode($district->center);
+				}
+			}
+			
+			if(empty($latLng)) {
+				$city = AdCity::findOne($product['city_id']);
+				
+				if($city->center) {
+					$latLng = json_decode($city->center);
+				}
+			}
+			
+			if(!empty($latLng)) {
+				$updateTotal++;
+				\Yii::$app->db->createCommand("UPDATE `ad_product` SET `lat` = '{$latLng[0]}', `lng` = '{$latLng[1]}' WHERE `id` = {$product['id']}")->execute();
+			}
+		}
+		
+		echo "Update Products: " . $updateTotal . "\n";
+	}
 	
 	public function actionDelete($id) {
 		$product = AdProduct::findOne($id);
