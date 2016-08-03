@@ -100,9 +100,13 @@ use yii\helpers\Url;
 
                                 $category = ucfirst(Yii::t('ad', $categories[$product->category_id]['name'], null, Yii::$app->language));
                                 $area = $product->area;
+                                $room_no = 0;
+                                $toilet_no = 0;
                                 $adProductAdditionInfo = $product->adProductAdditionInfo;
-                                $room_no = $adProductAdditionInfo->room_no;
-                                $toilet_no = $adProductAdditionInfo->toilet_no;
+                                if($adProductAdditionInfo) {
+                                    $room_no = $adProductAdditionInfo->room_no;
+                                    $toilet_no = $adProductAdditionInfo->toilet_no;
+                                }
 
                                 $price = vsoft\express\components\StringHelper::formatCurrency($product->price);
                                 $imageUrl = $product->representImage;
