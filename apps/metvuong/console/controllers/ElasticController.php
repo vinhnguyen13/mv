@@ -8,6 +8,7 @@ use vsoft\ad\models\AdProduct;
 use yii\db\Query;
 use common\models\SlugSearch;
 use yii\db\yii\db;
+use yii\helpers\ArrayHelper;
 
 class ElasticController extends Controller {
 	
@@ -45,6 +46,30 @@ class ElasticController extends Controller {
 		'`ad_product`.`is_expired`' => 0,
 		//'`ad_product`.`verified`' => 1
 	];
+	
+	public function actionFindNotSync() {
+		$indexName = \Yii::$app->params['indexName']['product'];
+		
+		$query = new Query();
+		$query->from('ad_product');
+		$query->select('id');
+		$query->where(self::$where);
+		$query->andWhere(['city_id' => 1, 'type' => 1]);
+		$result = $query->all();
+		$ids = ArrayHelper::getColumn($result, 'id');
+		
+		foreach ($ids as $id) {
+			$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/all/" . $id);
+			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			$response = curl_exec($ch);
+			$r = json_decode($response);
+			if(!$r->found) {
+				echo $id . "\n";
+			}
+			curl_close($ch);
+		}		
+	}
 	
 	public function actionListIndex() {
 		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . '/_cat/indices?v');
