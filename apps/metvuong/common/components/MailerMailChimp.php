@@ -36,27 +36,17 @@ class MailerMailChimp extends Component
             require(Yii::getAlias('@common').'/myvendor/mailchimp-api-php/src/Mailchimp.php');
 
 //Create Campaign
-            $MailChimp = new \Mailchimp($api_key);
-            $Mailchimp_Lists = new \Mailchimp_Lists($MailChimp);
-
+            $MailChimp = new \Mailchimp($api_key, [
+//                'debug'=>true
+            ]);
             $list_id = 'c9e01b7cfb';
-            $email = 'hello@email.com';
+            $email = 'contact@metvuong.com';
             $merge_vars = array();
 
-            /*$subscriber = $Mailchimp_Lists->subscribe(
-                $list_id,
-                array('email'=>htmlentities($email)),
-                $merge_vars,
-                false,
-                false,
-                false,
-                false
-            );
-echo "<pre>";
-print_r($subscriber);
-echo "</pre>";
-exit;*/
-            /*$result = $MailChimp->call('lists/subscribe', array(
+            /**
+             * add subscribe
+             */
+            $result = $MailChimp->call('campaigns/send-test', array(
                 'id'                => $list_id,
                 'email'             => array('email'=>'quangvinhit2007@gmail.com'),
                 'merge_vars'        => array(),
@@ -65,35 +55,27 @@ exit;*/
                 'replace_interests' => false,
                 'send_welcome'      => false,
             ));
-echo "<pre>";
-print_r($result);
-echo "</pre>";
-exit;*/
+            echo "<pre>";
+            print_r($result);
+            echo "</pre>";
+            exit;
 
-
-            $result = $MailChimp->campaigns->create('regular',
-                array('list_id'               => $list_id,
-                    'subject'                       => 'This is a test subject',
-                    'from_email'                        => 'test@test.com',
-                    'from_name'                         => 'From Name'),
-                array('html'                    => '<div>test html email</div>',
-                    'text'                                  => 'This is plain text.')
-            );
-echo "<pre>";
-print_r($result);
-echo "</pre>";
-exit;
-            if( $result === false ) {
-                // response wasn't even json
-                echo 'didnt work';
-            }
-            else if( isset($result->status) && $result->status == 'error' ) {
-                echo 'Error info: '.$result->status.', '.$result->code.', '.$result->name.', '.$result->error;
-            } else {
-                echo 'worked';
-            }
         } catch (\Exception $ex) {
             return $ex;
         }
+    }
+    /**
+     * add subscribe
+     */
+    private function addSubscribe($MailChimp, $list_id){
+        $result = $MailChimp->call('lists/subscribe', array(
+            'id'                => $list_id,
+            'email'             => array('email'=>'quangvinh.nguyen@trungthuygroup.vn'),
+            'merge_vars'        => array(),
+            'double_optin'      => false,
+            'update_existing'   => true,
+            'replace_interests' => false,
+            'send_welcome'      => false,
+        ));
     }
 }
