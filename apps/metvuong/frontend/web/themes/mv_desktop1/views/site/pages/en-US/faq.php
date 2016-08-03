@@ -3,8 +3,6 @@ use yii\helpers\Url;
 ?>
 <div class="title-fixed-wrap container">
 	<div class="page-faqs">
-		<div class="title-top"><!-- <a href="#" id="prev-page" class="hide"><span class="icon arrowRight-1"></span></a> -->Q & A
-</div>
 		<div class="inner-page">
 			<p dir="ltr"><strong>1. How to post information on metvuong.com?</strong>
 				<br>
@@ -39,6 +37,9 @@ use yii\helpers\Url;
 			</li>
 		</ul>
 		<p>If you are not in the above cases, please contact metvuong.com at:</p>
+		<p dir="ltr">Địa chỉ : 21 Nguyen Trung Ngan, Ben Nghe Ward, District 1, Hochiminh City, Vietnam
+			<br>
+		</p>
 		<p dir="ltr">Phone : (+84) (8) 7309 9966 - (+84) (8) 3824 6810
 			<br>
 		</p>
@@ -72,6 +73,9 @@ use yii\helpers\Url;
 		</p>
 		<p dir="ltr">After you have successfully registered, you will have to enter your email to activate your account. Once your account is activated, you sign in to website.
 		<br>In case you did not receive your activation email, or do the trigger but still can not sign in to the website, please contact us for assistance:</p>
+		<p dir="ltr">Địa chỉ : 21 Nguyen Trung Ngan, Ben Nghe Ward, District 1, Hochiminh City, Vietnam
+			<br>
+		</p>
 		<p>Phone : (+84) (8) 7309 9966 - (+84) (8) 3824 6810
 			<br>
 		</p>

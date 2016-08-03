@@ -3,7 +3,6 @@ $themeBaseUrl = Yii::$app->view->theme->baseUrl;
 ?>
 <div class="title-fixed-wrap container">
 	<div class="page-about-us">
-		<div class="title-top">VỀ CHÚNG TÔI</div>
 		<div class="inner-page">
 			<div class="text-center logo-search-box wrap-img">
 				<img src="<?=$themeBaseUrl?>/resources/images/logo.png" alt="" class="w-30">
@@ -15,8 +14,7 @@ $themeBaseUrl = Yii::$app->view->theme->baseUrl;
 				Ngoài ra, <a href="/"><strong>Metvuong.com</strong></a> còn liên tục cập nhật những thông tin mới nhất về thị trường nhà đất và các dự án sắp ra mắt, giúp độc giả có cái nhìn tổng quan hơn về thị trường bất động sản tại Việt Nam.
 			</p>
 			<p class="fs-20 font-600 mgB-15">Thông tin liên hệ:</p>
-			<div class="fs-14 mgB-10"><strong class="pdR-10 pull-left">Địa chỉ:</strong> <div class="overflow-all">Tầng 12 Tòa nhà Miss Áo dài, 21 Nguyễn Trung Ngạn, P. Bến Nghé, Quận 1, <br>
-				Thành phố Hồ Chí Minh, Việt Nam.</div></div>
+			<div class="fs-14 mgB-10"><strong class="pdR-10 pull-left">Địa chỉ:</strong> <div class="overflow-all">21 Nguyễn Trung Ngạn, P. Bến Nghé, Q.1, TPHCM, Việt Nam</div></div>
 			<p class="fs-14 mgB-10"><strong class="pdR-10">Điện thoại:</strong> (+84) (8) 7309 9966 ­ (+84) (8) 3824 6810</p>
 			<p class="fs-14 mgB-10"><strong class="pdR-10">Email:</strong> <a href="mailto:info@metvuong.com" class="text-decor">info@metvuong.com</a></p>
 		</div>
