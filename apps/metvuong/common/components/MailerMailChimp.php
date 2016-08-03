@@ -22,7 +22,7 @@ use yii\web\NotFoundHttpException;
  *
  * @author Dmitry Erofeev <dmeroff@gmail.com>
  */
-class MailChimp extends Component
+class MailerMailChimp extends Component
 {
     public static function me()
     {
@@ -36,27 +36,46 @@ class MailChimp extends Component
             require(Yii::getAlias('@common').'/myvendor/mailchimp-api-php/src/Mailchimp.php');
 
 //Create Campaign
-            $Mailchimp = new Mailchimp($api_key);
-            $result = $Mailchimp->campaigns->create('regular',
-                array('list_id'               => 'my_list_id',
-                    'subject'                       => 'This is a test subject',
-                    'from_email'                        => 'test@test.com',
-                    'from_name'                         => 'From Name'),
-                array('html'                    => '<div>test html email</div>',
-                    'text'                                  => 'This is plain text.')
-            );
+            $MailChimp = new \Mailchimp($api_key, [
+//                'debug'=>true
+            ]);
+            $list_id = 'c9e01b7cfb';
+            $email = 'contact@metvuong.com';
+            $merge_vars = array();
 
-            if( $result === false ) {
-                // response wasn't even json
-                echo 'didnt work';
-            }
-            else if( isset($result->status) && $result->status == 'error' ) {
-                echo 'Error info: '.$result->status.', '.$result->code.', '.$result->name.', '.$result->error;
-            } else {
-                echo 'worked';
-            }
+            /**
+             * add subscribe
+             */
+            $result = $MailChimp->call('campaigns/send-test', array(
+                'id'                => $list_id,
+                'email'             => array('email'=>'quangvinhit2007@gmail.com'),
+                'merge_vars'        => array(),
+                'double_optin'      => false,
+                'update_existing'   => true,
+                'replace_interests' => false,
+                'send_welcome'      => false,
+            ));
+            echo "<pre>";
+            print_r($result);
+            echo "</pre>";
+            exit;
+
         } catch (\Exception $ex) {
-            return false;
+            return $ex;
         }
+    }
+    /**
+     * add subscribe
+     */
+    private function addSubscribe($MailChimp, $list_id){
+        $result = $MailChimp->call('lists/subscribe', array(
+            'id'                => $list_id,
+            'email'             => array('email'=>'quangvinh.nguyen@trungthuygroup.vn'),
+            'merge_vars'        => array(),
+            'double_optin'      => false,
+            'update_existing'   => true,
+            'replace_interests' => false,
+            'send_welcome'      => false,
+        ));
     }
 }

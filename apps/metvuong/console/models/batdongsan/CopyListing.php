@@ -19,6 +19,7 @@ use vsoft\express\components\AdImageHelper;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
+use yii\helpers\ArrayHelper;
 
 class CopyListing extends Component
 {
@@ -34,7 +35,8 @@ class CopyListing extends Component
         $sql = "file_name is not null and product_main_id = 0 ";
 
         if($validate == 1) {
-            $sql = $sql ." and price > 0 and area > 0 and city_id > 0 and district_id > 0 and ward_id > 0 and street_id > 0 and (is_expired is null or is_expired = 0)";
+            $sql = $sql . " and lat > 0 and lat is not null and lng > 0 and lng is not null ";
+            $sql = $sql . " and price > 0 and area > 0 and city_id > 0 and district_id > 0 and ward_id > 0 and street_id > 0 and (is_expired is null or is_expired = 0)";
         }
 
         if($check_expired == 1)
@@ -92,8 +94,10 @@ class CopyListing extends Component
 
                 $is_expired = 0;
                 $end_date = $model->start_date + AdProduct::EXPIRED;
-                if($end_date < time())
+                if($end_date < time()) {
                     $is_expired = 1;
+                    print_r(" - expired");
+                }
 
                 $record = [
                     'category_id' => $model->category_id,
@@ -134,7 +138,7 @@ class CopyListing extends Component
                             if (count($image) > 0 && !empty($image)) {
                                 $result = Metvuong::DownloadImage($image->file_name, $image->uploaded_at, $tempFolder);
                                 $arrImage[$key_image] = $result;
-//                                sleep(1);
+                                sleep(1);
                             }
                         }
                     }
@@ -225,9 +229,10 @@ class CopyListing extends Component
                             }
                         }
 
-                        $product->insertEs(); // insert elastic
+                        if($is_expired == 0) {
+                            $product->insertEs(); // insert elastic
+                        }
 
-                        print_r(" - success.");
                         if ($no > 0 && $no % 20 == 0) {
                             print_r(PHP_EOL);
                             print_r("\n Copied {$no} records...");
