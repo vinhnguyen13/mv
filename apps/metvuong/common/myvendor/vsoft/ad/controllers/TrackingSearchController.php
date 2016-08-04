@@ -17,12 +17,11 @@ class TrackingSearchController extends Controller {
 		]);
 	}	
 	public function actionGroup() {
-		\Yii::$app->db->createCommand("SET SESSION group_concat_max_len = 1000000;")->execute();
-		
 		$query = new Query();
 		$query->from("`tracking_search`");
-		$query->select(["`alias`"]);
+		$query->select(["`alias`", "MAX(`created_at`) `created_at`"]);
 		$query->groupBy("alias");
+		$query->orderBy("created_at DESC");
 		
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query
