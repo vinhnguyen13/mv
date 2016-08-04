@@ -1,6 +1,7 @@
 <?php
 
 namespace frontend\controllers;
+use common\components\MailerMailChimp;
 use common\components\Util;
 use frontend\components\Mailer;
 use Elasticsearch\ClientBuilder;
@@ -25,11 +26,22 @@ class TestController extends \yii\web\Controller
     public $layout = '@app/views/layouts/layout';
     public function actionMail()
     {
-        $user = User::findOne(1);
-        $mailer = new Mailer();
-        $chk = $mailer->sendWelcomeMessage($user, null, true);
+        $mailer = new \common\components\Mailer();
+        $mailer->viewPath = '@frontend/mail';
+        $status = $mailer->compose(['html' => 'test'], ['params' => []])
+            ->setFrom('lenh.quach@trungthuygroup.vn')
+            ->setTo(['lenh.quach@trungthuygroup.vn'])
+            ->setSubject('Hello')
+            ->send();
         echo "<pre>";
-        print_r($chk);
+        print_r($status);
+        echo "</pre>";
+        exit;
+        //https://email.us-east-1.amazonaws.com?AWSAccessKeyId=AKIAJ2UJJVBIRXDYRQAQ&Action=VerifyEmailIdentity&EmailAddress=vinh@dwm.vn&Timestamp=2013-04-27T19:30:00Z&Version=2010-12-01&Signature=
+
+        $stt = MailerMailChimp::me()->send();
+        echo "<pre>";
+        print_r($stt);
         echo "</pre>";
         exit;
     }
