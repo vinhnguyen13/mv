@@ -19,6 +19,7 @@ use frontend\models\Elastic;
 class AdBuildingProject extends ABP
 {
 	private static $areaTypes = [];
+	private $oldAttrs = [];
 	
 	const STATUS_ENABLED = 1;
 	const STATUS_DISABLED = 0;
@@ -42,7 +43,7 @@ class AdBuildingProject extends ABP
     {
         return [
 	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status', 'is_crawl', 'hot_project', 'click'], 'integer'],
-	        [['name'], 'required'],
+	        [['name', 'district_id', 'city_id'], 'required'],
 	        [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress',
                 'name', 'description', 'file_name', 'data_html'], 'string'],
             [['facade_width'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/', 'max' => 10000],
@@ -167,6 +168,10 @@ class AdBuildingProject extends ABP
 		return 'BuildingProject';
 	}
 	
+	public function afterFind() {
+		$this->oldAttrs = $this->oldAttributes;
+	}
+	
 	public function beforeSave($insert) {
 		if (parent::beforeSave($insert)) {
 			if($this->progress) {
@@ -174,24 +179,34 @@ class AdBuildingProject extends ABP
 			}
 			
 			if($insert) {
-				if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
-					$slug = new Slug();
-				
-					$this->slug = $this->slug . '-' . $slug->slugify($this->city->name);
-				
-					if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
-						$this->slug = $this->slug . '-' . $slug->slugify($this->district->name);
-				
-						if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
-							$this->slug = $this->slug . uniqid();
-						}
-					}
+				$this->uniqueSlug();
+			} else {
+				if($this->oldAttrs['slug'] != $this->attributes['slug']) {
+					$this->uniqueSlug();
+					
+					\Yii::$app->db->createCommand("UPDATE `slug_search` SET `slug` = '{$this->slug}' WHERE `table` = 'ad_building_project' AND `value` = {$this->id}")->execute();
 				}
 			}
 		
 			return true;
 		} else {
 			return false;
+		}
+	}
+	
+	public function uniqueSlug() {
+		if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
+			$slug = new Slug();
+			
+			$this->slug = $this->slug . '-' . $slug->slugify($this->city->name);
+			
+			if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
+				$this->slug = $this->slug . '-' . $slug->slugify($this->district->name);
+			
+				if(SlugSearch::find()->where(['slug' => $this->slug])->one()) {
+					$this->slug = $this->slug . uniqid();
+				}
+			}
 		}
 	}
 	
@@ -363,6 +378,9 @@ class AdBuildingProject extends ABP
     }
 	
 	public function afterSave($insert, $changedAttributes) {
+		$indexName = \Yii::$app->params['indexName']['countTotal'];
+		$type = 'project_building';
+		
 		if($insert) {
 			$slugSearch = new SlugSearch();
 			$slugSearch->slug = $this->slug;
@@ -370,8 +388,8 @@ class AdBuildingProject extends ABP
 			$slugSearch->value = $this->id;
 			$slugSearch->save(false);
 			
-			$indexName = \Yii::$app->params['indexName']['countTotal'];
-			$type = 'project_building';
+			
+			
 			$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/$type/" . $this->id);
 			
 			$districtName = $this->district->pre . ' ' . $this->district->name;
@@ -399,6 +417,34 @@ class AdBuildingProject extends ABP
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_exec($ch);
 			curl_close($ch);
+		} else {
+			$dif = array_diff_assoc($this->attributes, $this->oldAttrs);
+			
+			if(isset($dif['city_id']) || isset($dif['district_id']) || isset($dif['name'])) {
+				$districtName = $this->district->pre . ' ' . $this->district->name;
+				$fullName = $this->name . ', ' . $districtName . ', ' . $this->city->name;
+				$nameWithPrefix = 'Dự án ' . $this->name;
+				$nameFulltext = Elastic::standardSearch($nameWithPrefix);
+				$searchFullName = $nameFulltext . ' ' . Elastic::standardSearchDistrict($districtName) . ' ' . $this->city->pre . ' ' . $this->city->name;
+				
+				$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/$type/" . $this->id . "/_update");
+				$update = ["doc" => [
+					'full_name' => $fullName,
+					'slug' => $this->slug,
+					'city_id' => intval($this->city_id),
+					'district_id' => intval($this->district_id),
+					'search_name' => $this->name,
+					'search_name_with_prefix' => $nameWithPrefix,
+					'search_name_full_text' => $nameFulltext,
+					'search_name_full_text_no_ngram' => $nameFulltext,
+					'search_full_name' => $searchFullName
+				]];
+				curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($update));
+				curl_exec($ch);
+				curl_close($ch);
+			}
 		}
 	}
 }
