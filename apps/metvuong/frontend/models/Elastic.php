@@ -210,7 +210,8 @@ class Elastic
     	 * escape for elasticsearch must done
     	 */
     	$v = str_replace('/', '\/', $v);
-    	$trimv = trim($v);
+    	$v = str_replace([',', '.'], ' ', $v);
+    	$v = trim(preg_replace('/\s+/', ' ', $v));
     	
     	$functions = [
     		[
@@ -233,7 +234,7 @@ class Elastic
     			"filter" => [
     				"match" => [
     					"search_name_full_text" => [
-    						"query" => $trimv,
+    						"query" => $v,
     						"operator" => "and"
     					]
     				]
@@ -244,7 +245,7 @@ class Elastic
     			"filter" => [
     				"match" => [
     					"search_name_full_text_no_ngram" => [
-    						"query" => $trimv,
+    						"query" => $v,
     						"operator" => "and"
     					]
     				]
@@ -269,7 +270,7 @@ class Elastic
     		]
     	];
     	
-    	$query = self::buildQueryString($trimv);
+    	$query = self::buildQueryString($v);
     	
     	$params = [
     		"query" => [
