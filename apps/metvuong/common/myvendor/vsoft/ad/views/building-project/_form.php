@@ -85,6 +85,30 @@ if(!$model->isNewRecord) {
 	    			<?= $form->field($model, 'city_id')->dropDownList(ArrayHelper::map(AdCity::find()->all(), 'id', 'name'), ['prompt' => '---', 'class' => 'select-2 form-control']) ?>
 	    			<input type="hidden" name="BuildingProject[district_id]" value="" />
 	    			<?= $form->field($model, 'district_id')->dropDownList($districtData, ['options' => $districtOptions, 'prompt' => '---', 'class' => 'select-2 form-control', 'disabled' => ($model->city_id) ? false : true]) ?>
+                    <div class="form-group">
+                    <label>Phường / xã</label>
+                    <?php echo \kartik\select2\Select2::widget([
+                        'model' => $model,
+                        'attribute' => 'ward_id',
+                        'data' => ArrayHelper::map(\vsoft\ad\models\AdWard::find()->all(), 'id', 'name'),
+                        'options' => ['placeholder' => 'Select a ward ...'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ])?>
+                    </div>
+                    <div class="form-group">
+                    <label>Đường</label>
+                    <?php echo \kartik\select2\Select2::widget([
+                        'model' => $model,
+                        'attribute' => 'street_id',
+                        'data' => ArrayHelper::map(\vsoft\ad\models\AdStreet::find()->all(), 'id', 'name'),
+                        'options' => ['placeholder' => 'Select a street ...'],
+                        'pluginOptions' => [
+                            'allowClear' => true
+                        ],
+                    ])?>
+                    </div>
                     <?= $form->field($model, 'investment_type')->dropDownList($model->projects) ?>
                     <?php
                     $tabKeys = [

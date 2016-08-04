@@ -11,6 +11,13 @@ class AdBuildingProjectSearch extends AdBuildingProject {
 		// bypass scenarios() implementation in the parent class
 		return Model::scenarios();
 	}
+
+    public function rules()
+    {
+        return [
+            [['name', 'click'], 'safe'],
+        ];
+    }
 	
 	public function search($params)
 	{
@@ -19,17 +26,16 @@ class AdBuildingProjectSearch extends AdBuildingProject {
 		$dataProvider = new ActiveDataProvider([
 			'query' => $query,
 		]);
-	
+
 		if ($this->load($params) && !$this->validate()) {
 			return $dataProvider;
 		}
-	
+
 		$query->andFilterWhere([
 			'click' => $this->click,
 		]);
-	
+
 		$query->andFilterWhere(['like', 'name', $this->name]);
-//        $query->orderBy(['created_at' => SORT_DESC]);
 
 		return $dataProvider;
 	}
