@@ -95,7 +95,6 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                 </div>
                             <?php }  ?>
                         </div>
-                        <div class="swiper-pagination"></div>
                         <div class="swiper-button-next"><span></span></div>
                         <div class="swiper-button-prev"><span></span></div>
                     </div>

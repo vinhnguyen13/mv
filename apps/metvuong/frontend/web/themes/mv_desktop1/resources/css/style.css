@@ -8427,32 +8427,19 @@ margin-right: 5px;
 .swiper-button-prev span {
     position: absolute;
     top: 50%;
-    width: 27px;
-    height: 44px;
-    margin-top: -22px;
     z-index: 10;
     cursor: pointer;
-    -moz-background-size: 27px 44px;
-    -webkit-background-size: 27px 44px;
-    background-size: 27px 44px;
-    background-position: center;
-    background-repeat: no-repeat;
+    font-size: 50px;
+    color: #00a769;
+    margin-top: -25px;
 }
 .swiper-button-next span {
     left: 50%;
-    margin-left: -16px;
+    margin-left: -8px;
 }
 .swiper-button-prev span {
     left: 50%;
-    margin-left: -16px;
-}
-.detail-duan-moi .swiper-button-prev span,
-.detail-duan-moi .swiper-button-next span,
-.detail-listing-extra .swiper-button-next span,
-.detail-listing-extra .swiper-button-prev span,
-.detail-listing-dt .swiper-button-next span, 
-.detail-listing-dt .swiper-button-prev span {
-    height: 20px;
+    margin-left: -8px;
 }
 .list-menu-news .swiper-button-next span,
 .list-menu-news .swiper-button-prev span {
@@ -8462,10 +8449,7 @@ margin-right: 5px;
 }
 .swiper-button-next span, 
 .swiper-container-rtl .swiper-button-prev span {
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M27%2C22L27%2C22L5%2C44l-2.1-2.1L22.8%2C22L2.9%2C2.1L5%2C0L27%2C22L27%2C22z'%20fill%3D'%23007aff'%2F%3E%3C%2Fsvg%3E");
-}
-.swiper-button-prev span {
-    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%2027%2044'%3E%3Cpath%20d%3D'M0%2C22L22%2C0l2.1%2C2.1L4.2%2C22l19.9%2C19.9L22%2C44L0%2C22L0%2C22L0%2C22z'%20fill%3D'%23007aff'%2F%3E%3C%2Fsvg%3E");
+    
 }
 .swiper-button-next, 
 .swiper-button-prev {
@@ -8483,6 +8467,18 @@ margin-right: 5px;
     position: absolute;
     z-index: 10;
     cursor: pointer;
+    /* background: inherit; */
+}
+.swiper-button-next span:before,
+.swiper-button-prev span:before {
+    content: '';
+    display: inline-block;
+}
+.swiper-button-next span:before {
+    content: "\e903";
+}
+.swiper-button-prev span:before {
+        content: "\e902";
 }
 .swiper-button-next {
     right: 0;
@@ -9417,6 +9413,8 @@ margin-right: 5px;
     font-weight: normal;
     font-style: normal;
 }
+.swiper-button-next span,
+.swiper-button-prev span,
 .upload-img-listing .glyphicon,
 .icon-mv [class^="icon-"],
 .icon-mv [class*=" icon-"] {
