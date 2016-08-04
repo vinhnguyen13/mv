@@ -255,6 +255,17 @@ class Elastic
     		[
     			"filter" => [
     				"match" => [
+    					"search_full_name_no_ngram" => [
+    						"query" => $v,
+    						"operator" => "and"
+    					]
+    				]
+    			],
+    			"weight" => 1.5
+    		],
+    		[
+    			"filter" => [
+    				"match" => [
     					"_type" => "city"
     				]
     			],

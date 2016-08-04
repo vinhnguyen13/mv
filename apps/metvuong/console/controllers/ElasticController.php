@@ -131,7 +131,8 @@ class ElasticController extends Controller {
 				'search_name_with_prefix' => $city['name'], // not $cityNamePrefix thành phố mà thêm prefix sẽ giảm tính cạnh tranh khi search,
 				'search_name_full_text' => $cityNamePrefix,
 				'search_name_full_text_no_ngram' => $cityNamePrefix,
-				'search_full_name' => $cityNamePrefix
+				'search_full_name' => $cityNamePrefix,
+				'search_full_name_no_ngram' => $cityNamePrefix
 			];
 			$termsCity .= $this->buildTerm($city['id'], $cityDocument);
 			
@@ -166,7 +167,8 @@ class ElasticController extends Controller {
 					'search_name_with_prefix' => $nameWithPrefix,
 					'search_name_full_text' => $nameWithPrefixStandardSearch,
 					'search_name_full_text_no_ngram' => $nameWithPrefixStandardSearch,
-					'search_full_name' => $searchFullName
+					'search_full_name' => $searchFullName,
+					'search_full_name_no_ngram' => $searchFullName
 				];
 				
 				$termsDistrict .= $this->buildTerm($district['id'], $districtDocument);
@@ -232,6 +234,7 @@ class ElasticController extends Controller {
 				
 			$namePrefix = $area['pre'] . ' ' . $area['name'];
 			$nameFulltext = call_user_func([Elastic::class, $ss], $namePrefix);
+			$searchFullFullName = $nameFulltext . $this->tSpace . $searchFullName;
 			
 			$document = [
 				'full_name' => call_user_func([$this, $fn], $area['pre'], $area['name'], $districtFullName),
@@ -244,7 +247,8 @@ class ElasticController extends Controller {
 				'search_name_with_prefix' => $namePrefix,
 				'search_name_full_text' => $nameFulltext,
 				'search_name_full_text_no_ngram' => $nameFulltext,
-				'search_full_name' => $nameFulltext . $this->tSpace . $searchFullName
+				'search_full_name' => $searchFullFullName,
+				'search_full_name_no_ngram' => $searchFullFullName
 			];
 			$terms .= $this->buildTerm($area['id'], $document);
 		}
@@ -333,6 +337,11 @@ class ElasticController extends Controller {
 					'search_full_name' => [
 						'type' => 'string',
 						'analyzer' => 'full_text_search',
+						'search_analyzer' => 'my_simple_search'
+					],
+					'search_full_name_no_ngram' => [
+						'type' => 'string',
+						'analyzer' => 'full_text_search_no_ngram',
 						'search_analyzer' => 'my_simple_search'
 					]
 				]
