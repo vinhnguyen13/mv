@@ -181,14 +181,14 @@ $(document).ready(function() {
             		
             		if(response.address) {
             			ss.removeClass('hide');
-            			$('.content-suggest ul').html('<li><a href="' + response.url + '">' + response.address + '</a>(' + lajax.t('ID') + ': MV' + val.replace('MV', '').replace('mv', '') + ')</li>');
+            			$('.content-suggest ul').html('<li><a href="' + response.url + '">' + response.address + '</a>(' + lajax.t('ID') + ': MV' + val.replace(/mv/i, '') + ')</li>');
             		} else if(response.length > 0) {
             			ss.removeClass('hide');
             			
             			var html = '';
             			
             			for(var i in response) {
-            				html += '<li data-type="' + response[i].type + '" data-id="' + response[i].id + '"><span>' + response[i].full_name + '</span> <a href="' + response[i].url_sale + '?tf=' + tf_qs + '">' + lajax.t('Sale') + ' (' + response[i].total_sell + ')</a><a href="' + response[i].url_rent + '?tf=' + tf_qs + '">' + lajax.t('Rent') + ' (' + response[i].total_rent + ')</a></li>';
+            				html += '<li data-type="' + response[i].type + '" data-id="' + response[i].id + '"><span>' + response[i].full_name + '</span> <a href="' + response[i].url_sale + '">' + lajax.t('Sale') + ' (' + response[i].total_sell + ')</a><a href="' + response[i].url_rent + '">' + lajax.t('Rent') + ' (' + response[i].total_rent + ')</a></li>';
                       	}
             			
             			$('.content-suggest ul').html(html);

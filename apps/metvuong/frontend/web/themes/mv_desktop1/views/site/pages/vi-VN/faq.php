@@ -3,7 +3,6 @@ use yii\helpers\Url;
 ?>
 <div class="title-fixed-wrap container">
 	<div class="page-faqs">
-		<div class="title-top"><!-- <a href="#" id="prev-page" class="hide"><span class="icon arrowRight-1"></span></a> -->NHỮNG CÂU HỎI THƯỜNG GẶP</div>
 		<div class="inner-page">
 			<p dir="ltr"><strong>1.&nbsp;Làm thế nào để đăng tin trên metvuong.com? Đăng tin thế nào nhanh nhất?</strong>
 				<br>
@@ -38,6 +37,9 @@ use yii\helpers\Url;
 			</li>
 		</ul>
 		<p>Nếu tin của bạn không nằm trong các trường hợp trên, xin liên hệ với metvuong.com tại:</p>
+		<p dir="ltr">Địa chỉ : 21 Nguyễn Trung Ngạn, P. Bến Nghé, Q.1, TPHCM, Việt Nam
+			<br>
+		</p>
 		<p dir="ltr">Điện thoại : (+84) (8) 7309 9966 - (+84) (8) 3824 6810
 			<br>
 		</p>
@@ -71,6 +73,9 @@ use yii\helpers\Url;
 		</p>
 		<p dir="ltr">Sau khi bạn đăng ký thành công, bạn sẽ phải vào email của mình để kích hoạt tài khoản. Khi tài khoản được kích họat, bạn mới đăng nhập được vào website.
 		<br>Trong trường hợp bạn không nhận được email kích hoạt, hoặc đã thực hiện thao tác kích hoạt nhưng vẫn không đăng nhập được vào website, hãy liên hệ với chúng tôi để được trợ giúp:</p>
+		<p dir="ltr">Địa chỉ : 21 Nguyễn Trung Ngạn, P. Bến Nghé, Q.1, TPHCM, Việt Nam
+			<br>
+		</p>
 		<p>Điện thoại : (+84) (8) 7309 9966 - (+84) (8) 3824 6810
 			<br>
 		</p>

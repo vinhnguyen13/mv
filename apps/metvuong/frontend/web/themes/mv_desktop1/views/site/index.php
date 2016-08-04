@@ -8,7 +8,6 @@ use yii\web\View;
 use vsoft\ad\models\TrackingSearch;
 
 $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-helper.js', ['position'=>View::POS_HEAD]);
-$this->registerJs("var tf_qs = " . TrackingSearch::FROM_QUICK_SEARCH, View::POS_HEAD);
 ?>
 <div class="page-home">
 

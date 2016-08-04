@@ -13,7 +13,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="container title-fixed-wrap">
     <div class="site-contact">
-        <div class="title-top"><?= Html::encode($this->title) ?></div>
         <div class="inner-block">
             <p class="mgB-20">If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.</p>
             <?php $form = ActiveForm::begin(['id' => 'contact-form']); ?>

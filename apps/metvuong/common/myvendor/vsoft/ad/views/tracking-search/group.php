@@ -49,8 +49,14 @@ $mapSort = MapSearch::mapSort();
 <div class="cms-show-index">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
+    	'filterModel' => $searchModel,
         'columns' => [
-        	'alias',
+        	[
+        		'label' => 'Người tìm',
+        		'attribute' => 'alias',
+        		'filter' => Html::activeDropDownList($searchModel, 'finder_filter', [0 => 'Có đăng nhập', 1 => 'Không đăng nhập', 2 => 'Lọc theo...'], ['class' => 'form-control min price', 'prompt' => 'Tất cả', 'style' => 'display: block;']) .
+        					Html::activeTextInput($searchModel, 'alias', ['class' => 'form-control min price', 'style' => $searchModel->finder_filter != 2 ? 'display: none;' : ''])
+			],
         	[
         		'format' => 'raw',
         		'value' => function($model) use($type, $categoryDropDown, $sourceDropDown, $mapSort)  {

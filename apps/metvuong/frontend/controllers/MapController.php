@@ -11,6 +11,7 @@ use yii\web\Request;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\db\yii\db;
+use vsoft\ad\models\TrackingSearch;
 
 class MapController extends ActiveController {
 	
@@ -121,54 +122,85 @@ class MapController extends ActiveController {
 	
 	public function actionSearch() {
 		$v = \Yii::$app->request->get('v');
-		$vTransform = Elastic::transform($v);
+		$mv = (stripos($v, 'mv') === 0);
 		
 		if(\Yii::$app->request->isAjax) {
 			$response = [];
 			
-			if(StringHelper::startsWith($vTransform, 'mv')) {
-				$id = str_replace('mv', '', $vTransform);
-				$product = AdProduct::findOne($id);
-				
-				if($product) {
-					$response['address'] = $product->address;
-					$response['url'] = $product->urlDetail();
-				}
+			if($mv) {
+				$response = $this->searchProductStripMv($v);
 			} else {
-				$result = Elastic::searchAreasRankByTotal($v);
+				$response = $this->searchAjax($v);
 				
-				if($result['hits']['total'] == 0) {
-					$result = Elastic::searchAreasRankByTotal($vTransform);
-				}
-				
-				foreach ($result['hits']['hits'] as $k => $hit) {
-	    			$response[$k] = $hit['_source'];
-	    			$response[$k]['url_sale'] = Url::to(['/ad/index1', 'params' => $hit['_source']['slug']]);
-	    			$response[$k]['url_rent'] = Url::to(['/ad/index2', 'params' => $hit['_source']['slug']]);
-	    			$response[$k]['type'] = $hit['_type'];
-	    			$response[$k]['id'] = $hit['_id'];
-	    		}
-				 
-				if(!$response && is_numeric($v)) {
-					$product = AdProduct::findOne($v);
-					 
-					if($product) {
-						$response['address'] = $product->address;
-						$response['url'] = $product->urlDetail();
-					}
+				if(empty($response) && is_numeric($v)) {
+					$response = $this->searchProduct($v);
 				}
 			}
 			
 			return $response;
 		} else {
-			$id = str_replace('mv', '', $vTransform);
-			$product = AdProduct::findOne($id);
-			
-			if($product) {
-				return $this->redirect($product->urlDetail());
+			if($mv) {
+				$response = $this->searchProductStripMv($v);
+				$url = $response ? $response['url'] : false;
+			} else {
+				$url = $this->searchEnter($v);
+				
+				if(!$url && is_numeric($v)) {
+					$response = $this->searchProductStripMv($v);
+					$url = $response ? $response['url'] : false;
+				}
+			}
+				
+			if($url) {
+				return $this->redirect($url);
 			} else {
 				return $this->redirect(Url::to(['/ad/index1']));
 			}
+		}
+	}
+	
+	function searchAjax($v) {
+		$result = $this->search($v);
+		$return = [];
+		
+		foreach ($result['hits']['hits'] as $k => $hit) {
+			$return[$k] = $hit['_source'];
+			$return[$k]['url_sale'] = Url::to(['/ad/index1', 'params' => $hit['_source']['slug'], 'tf' => TrackingSearch::FROM_QUICK_SEARCH]);
+			$return[$k]['url_rent'] = Url::to(['/ad/index2', 'params' => $hit['_source']['slug'], 'tf' => TrackingSearch::FROM_QUICK_SEARCH]);
+			$return[$k]['type'] = $hit['_type'];
+			$return[$k]['id'] = $hit['_id'];
+		}
+			
+		return $return;
+	}
+	
+	function searchEnter($v) {
+		$result = $this->search($v);
+		
+		return $result['hits']['total'] > 0 ? Url::to(['/ad/index1', 'params' => $result['hits']['hits'][0]['_source']['slug'], 'tf' => TrackingSearch::FROM_QUICK_SEARCH]) : false;
+	}
+	
+	function search($v) {
+		$result = Elastic::searchAreasRankByTotal($v);
+		
+		if($result['hits']['total'] == 0) {
+			$result = Elastic::searchAreasRankByTotal(Elastic::transform($v));
+		}
+		
+		return $result;
+	}
+	
+	function searchProductStripMv($v) {
+		$id = str_ireplace('mv', '', $v);
+		
+		return $this->searchProduct($id);
+	}
+	
+	function searchProduct($id) {
+		if($product = AdProduct::findOne($id)) {
+			return ['address' => $product->address, 'url' => $product->urlDetail()];
+		} else {
+			return [];
 		}
 	}
 }

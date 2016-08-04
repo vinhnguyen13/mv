@@ -3,7 +3,6 @@ $themeBaseUrl = Yii::$app->view->theme->baseUrl;
 ?>
 <div class="title-fixed-wrap container">
 	<div class="page-about-us">
-		<div class="title-top">ABOUT US</div>
 		<div class="inner-page">
 			<div class="text-center logo-search-box wrap-img">
 				<img src="<?=$themeBaseUrl?>/resources/images/logo.png" alt="" class="w-30">
@@ -15,8 +14,7 @@ $themeBaseUrl = Yii::$app->view->theme->baseUrl;
 				Besides, <a href="/"><strong>Metvuong.com</strong></a> continuously updates thousands of news and articles on a wide range of subjects, including upcoming property projects, analysis about the movement of real estate market and information on Legal documents. We would like to help customers keep up with latest changes of Vietnam real estate market.
 			</p>
 			<p class="fs-20 font-600 mgB-15">Contact us:</p>
-			<div class="fs-14 mgB-10"><strong class="pdR-10 pull-left">Address:</strong> <div class="overflow-all">Level 12th, Miss Aodai Building, 21 Nguyen Trung Ngan, Ben Nghe Ward, District 1,<br>
-				Hochiminh City, Vietnam</div></div>
+			<div class="fs-14 mgB-10"><strong class="pdR-10 pull-left">Address:</strong> <div class="overflow-all">21 Nguyen Trung Ngan, Ben Nghe Ward, District 1, Hochiminh City, Vietnam</div></div>
 			<p class="fs-14 mgB-10"><strong class="pdR-10">Tel:</strong> (+84) (8) 7309 9966 ­ (+84) (8) 3824 6810</p>
 			<p class="fs-14 mgB-10"><strong class="pdR-10">Email:</strong> <a href="mailto:info@metvuong.com" class="text-decor">info@metvuong.com</a></p>
 		</div>

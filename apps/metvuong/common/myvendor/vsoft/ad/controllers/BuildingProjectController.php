@@ -39,9 +39,9 @@ class BuildingProjectController extends Controller
 		}
 		
 		$investors = AdInvestor::find()->all();
-		$categories = AdCategory::find()->where(['status'=>1])->all();
-        $architects = AdArchitect::find()->where(['status'=>1])->all();
-        $contractors = AdContractor::find()->where(['status'=>1])->all();
+//		$categories = AdCategory::find()->where(['status'=>1])->all();
+//        $architects = AdArchitect::find()->where(['status'=>1])->all();
+//        $contractors = AdContractor::find()->where(['status'=>1])->all();
         $facility = AdFacility::find()->where(['status'=>1])->all();
 
 		if(Yii::$app->request->isPost) {
@@ -59,13 +59,15 @@ class BuildingProjectController extends Controller
                 $model->facilities = implode(",", $post["BuildingProject"]["facilities"]);
             }
 
-            $data_html = $post['data_html'];
-            if(count($data_html) > 0){
-                $_data = [];
-                foreach ($data_html as $key => $tab) {
-                    $_data[$key] = $tab;
+            if(isset($post['data_html'])) {
+                $data_html = $post['data_html'];
+                if (count($data_html) > 0) {
+                    $_data = [];
+                    foreach ($data_html as $key => $tab) {
+                        $_data[$key] = trim($tab);
+                    }
+                    $model->data_html = json_encode($_data);
                 }
-                $model->data_html = json_encode($_data);
             }
 			
 			$response = ['success' => true];
@@ -73,7 +75,7 @@ class BuildingProjectController extends Controller
 			if($model->validate()) {
     			$model->save(false);
     			$model->saveMultiple($post['BuildingProject'], $investors, 'investors');
-    			$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
+//    			$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
 //                $model->saveMultiple($post['BuildingProject'], $architects, 'architects');
 //                $model->saveMultiple($post['BuildingProject'], $contractors, 'contractors');
 
@@ -96,7 +98,7 @@ class BuildingProjectController extends Controller
     		return $response;
 		}
 		
-		return $this->render('create', ['model' => $model, 'areaTypeMapLabels' => $areaTypeMapLabels, 'areaTypes' => $areaTypes, 'investors' => $investors, 'categories' => $categories, 'architects' => $architects, 'contractors' => $contractors, 'facility' => $facility]);
+		return $this->render('create', ['model' => $model, 'areaTypeMapLabels' => $areaTypeMapLabels, 'areaTypes' => $areaTypes, 'investors' => $investors, 'facility' => $facility]);
 	}
     public function actionView($id)
     {
@@ -123,9 +125,9 @@ class BuildingProjectController extends Controller
     	}
 
     	$investors = AdInvestor::find()->all();
-    	$categories = AdCategory::find()->where(['status'=>1])->all();
-        $architects = AdArchitect::find()->where(['status'=>1])->all();
-        $contractors = AdContractor::find()->where(['status'=>1])->all();
+//    	$categories = AdCategory::find()->where(['status'=>1])->all();
+//        $architects = AdArchitect::find()->where(['status'=>1])->all();
+//        $contractors = AdContractor::find()->where(['status'=>1])->all();
         $facility = AdFacility::find()->where(['status'=>1])->all();
     	if($model) {
     		if(Yii::$app->request->isPost) {
@@ -156,7 +158,7 @@ class BuildingProjectController extends Controller
     			if($model->validate()) {
     				$model->save(false);
     				$model->saveMultiple($post['BuildingProject'], $investors, 'investors');
-    				$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
+//    				$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
 //    				$model->saveMultiple($post['BuildingProject'], $architects, 'architects');
 //    				$model->saveMultiple($post['BuildingProject'], $contractors, 'contractors');
 
@@ -196,7 +198,7 @@ class BuildingProjectController extends Controller
     			return $response;
     		}
 
-    		return $this->render('update', ['model' => $model, 'areaTypeMapLabels' => AdAreaType::mapLabels(), 'areaTypes' => $areaTypes, 'investors' => $investors, 'categories' => $categories, 'architects' => $architects, 'contractors' => $contractors, 'facility' => $facility]);
+    		return $this->render('update', ['model' => $model, 'areaTypeMapLabels' => AdAreaType::mapLabels(), 'areaTypes' => $areaTypes, 'investors' => $investors, 'facility' => $facility]);
     	} else {
     		throw new NotFoundHttpException('The requested page does not exist.');
     	}

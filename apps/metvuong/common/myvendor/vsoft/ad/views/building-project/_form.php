@@ -6,7 +6,6 @@ use common\widgets\FileUploadUI;
 use yii\helpers\Url;
 use common\widgets\CKEditor;
 use yii\web\View;
-use vsoft\ad\models\AdBuildingProject;
 use yii\helpers\ArrayHelper;
 use vsoft\ad\models\AdDistrict;
 use vsoft\ad\models\AdCity;
@@ -86,74 +85,60 @@ if(!$model->isNewRecord) {
 	    			<?= $form->field($model, 'city_id')->dropDownList(ArrayHelper::map(AdCity::find()->all(), 'id', 'name'), ['prompt' => '---', 'class' => 'select-2 form-control']) ?>
 	    			<input type="hidden" name="BuildingProject[district_id]" value="" />
 	    			<?= $form->field($model, 'district_id')->dropDownList($districtData, ['options' => $districtOptions, 'prompt' => '---', 'class' => 'select-2 form-control', 'disabled' => ($model->city_id) ? false : true]) ?>
-	  				<?= $form->field($model, 'categories')->dropDownList(ArrayHelper::map($categories, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
+                    <?= $form->field($model, 'investment_type')->dropDownList($model->projects) ?>
                     <?php
-                    if(empty($model->data_html)){
-                        echo $form->field($model, 'description')->widget(CKEditor::className(), [
-                            'editorOptions' => [
-                                'preset' => 'basic',
-                                'inline' => false,
-                                'height' => 300,
-                                'resize_enabled' => true,
-                                'removePlugins' => '',
-                            ]
-                        ]);
-                    } else {
-                        $tabKeys = [
-                            'tong-quan' => Yii::t('project', 'General'),
-                            'vi-tri' => Yii::t('project', 'Position'),
-                            'ha-tang' => Yii::t('project', 'Facility'),
-                            'thiet-ke' => Yii::t('project', 'Design'),
-                            'tien-do' => Yii::t('project', 'Progress'),
-                            'ban-hang' => Yii::t('project', 'Business'),
-                            'ho-tro' => Yii::t('project', 'Support'),
-                        ];
-                        $tabProject = json_decode($model->data_html, true);
-                        if (count($tabProject) > 0) { ?>
-                            <div class="form-group field-buildingproject-description">
-                                <label>Thông tin mô tả</label>
-                                <div class="infor-bds">
-                                    <ul class="tabProject clearfix">
-                                        <?php
-                                        $key_index = key($tabProject);
-                                        foreach ($tabProject as $key1 => $tabValue) {
-                                            if ($key1 == $key_index) {
-                                                ?>
-                                                <li>
-                                                    <a href="javascript:void(0)" rel="nofollow"
-                                                       style="white-space:nowrap;"
-                                                       class="active"><?= $tabKeys[$key1] ?></a>
-                                                </li>
-                                            <?php } else { ?>
-                                                <li>
-                                                    <a href="javascript:void(0)" rel="nofollow"
-                                                       style="white-space:nowrap;"><?= $tabKeys[$key1] ?></a>
-                                                </li>
-                                            <?php }
-                                        } ?>
-                                    </ul>
-                                    <?php
-                                    foreach ($tabProject as $key => $tabValue) {
-                                        echo CKEditor::widget([
-                                            'name' => "data_html[" . $key . "]",
-                                            'value' => $tabValue,
-                                            'editorOptions' => [
-                                                'preset' => 'basic',
-                                                'inline' => false,
-                                                'height' => 500,
-                                                'resize_enabled' => true,
-                                                'removePlugins' => '',
-                                            ]
-                                        ]);
-                                    } ?>
-                                </div>
-                            </div>
-                        <?php }
-                    }?>
+                    $tabKeys = [
+                        'tong-quan' => Yii::t('project', 'General'),
+                        'vi-tri' => Yii::t('project', 'Position'),
+                        'ha-tang' => Yii::t('project', 'Facility'),
+                        'thiet-ke' => Yii::t('project', 'Design'),
+                        'tien-do' => Yii::t('project', 'Progress'),
+                        'ban-hang' => Yii::t('project', 'Business'),
+                        'ho-tro' => Yii::t('project', 'Support'),
+                    ];
+                    $tabProject = json_decode($model->data_html, true);
+                    ?>
+                    <div class="form-group field-buildingproject-description">
+                        <label>Thông tin mô tả</label>
+                        <div class="infor-bds">
+                            <ul class="tabProject clearfix">
+                                <?php
+                                $key_index = key($tabKeys);
+                                foreach ($tabKeys as $key1 => $tabValue1) {
+                                    if ($key1 == $key_index) {
+                                        ?>
+                                        <li>
+                                            <a href="javascript:void(0)" rel="nofollow"
+                                               style="white-space:nowrap;"
+                                               class="active"><?= Yii::t('project', $tabValue1) ?></a>
+                                        </li>
+                                    <?php } else { ?>
+                                        <li>
+                                            <a href="javascript:void(0)" rel="nofollow"
+                                               style="white-space:nowrap;"><?= Yii::t('project', $tabValue1) ?></a>
+                                        </li>
+                                    <?php }
+                                } ?>
+                            </ul>
+                            <?php
+                            foreach ($tabKeys as $key => $tabValue) {
+                                $desc = isset($tabProject[$key]) ? $tabProject[$key] : '';
+                                echo CKEditor::widget([
+                                    'name' => "data_html[" . $key . "]",
+                                    'value' => $desc,
+                                    'editorOptions' => [
+                                        'preset' => 'full',
+                                        'inline' => false,
+                                        'height' => 500,
+                                        'resize_enabled' => true,
+                                        'removePlugins' => '',
+                                    ]
+                                ]);
+                            } ?>
+                        </div>
+                    </div>
 
                     <?= $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
-                    <?php //$form->field($model, 'architects')->dropDownList(ArrayHelper::map($architects, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
-                    <?php //$form->field($model, 'contractors')->dropDownList(ArrayHelper::map($contractors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
 			    	<?= $form->field($model, 'logo')->widget(FileUploadUI::className(), [
 						'url' => Url::to('/express/upload/image'),
 						'clientOptions' => ['maxNumberOfFiles' => 1] ]) ?>
@@ -162,18 +147,8 @@ if(!$model->isNewRecord) {
 					<div id="map" style="height: 320px; width: 100%; margin-bottom: 15px; margin-top: -10px; border-radius: 4px;"></div>
 					<?= Html::activeHiddenInput($model, 'lat') ?>
 					<?= Html::activeHiddenInput($model, 'lng') ?>
-					<?= $form->field($model, 'investment_type') ?>
-			    	<?= $form->field($model, 'land_area') ?>
-			    	<?php // $form->field($model, 'commercial_leasing_area')->textArea() ?>
-			    	<?php // $form->field($model, 'apartment_no') ?>
-			    	<?= $form->field($model, 'floor_no') ?>
-			    	<?= $form->field($model, 'facade_width')->input('number') ?>
-			    	<?= $form->field($model, 'lift')->input('number') ?>
-			    	<?= $form->field($model, 'start_date')->widget(\yii\jui\DatePicker::className(), ['options' => ['class' => 'form-control']]) ?>
-			    	<?= $form->field($model, 'start_time') ?>
-			    	<?= $form->field($model, 'estimate_finished') ?>
-			    	<?= $form->field($model, 'owner_type') ?>
-			    	<?= $form->field($model, 'facilities')->checkboxList(ArrayHelper::map($facility, 'id', 'name')) ?>
+
+			    	<?= $form->field($model, 'facilities')->checkboxList(ArrayHelper::map($facility, 'id', 'name'),['class']) ?>
 			    	<?= $form->field($model, 'hotline')->textArea()->hint('Mổi số điện thoại trên 1 dòng') ?>
 			    	<?= $form->field($model, 'website') ?>
 			    	<?= $form->field($model, 'hot_project')->checkbox() ?>

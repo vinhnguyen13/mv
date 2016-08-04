@@ -17,9 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
     	'areaTypeMapLabels' => $areaTypeMapLabels,
     	'areaTypes' => $areaTypes,
     	'investors' => $investors,
-    	'categories' => $categories,
-        'architects' => $architects,
-        'contractors' => $contractors,
+//    	'categories' => $categories,
+//        'architects' => $architects,
+//        'contractors' => $contractors,
         'facility' => $facility
     ]) ?>
 

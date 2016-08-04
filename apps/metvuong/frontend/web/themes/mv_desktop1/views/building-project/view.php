@@ -10,8 +10,9 @@ $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_
 $this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
 
 $tongquan = $model->description;
+$tabProject = null;
 if(!empty($model->data_html)){
-    $tabProject = json_decode(strip_tags($model->data_html), true);
+    $tabProject = json_decode($model->data_html, true);
     if (count($tabProject) > 0) {
         $key_index = key($tabProject);
         $tongquan = html_entity_decode($tabProject[$key_index], ENT_HTML5, 'utf-8');
@@ -153,32 +154,37 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                         <div class="infor-bds">
                             <ul class="tabProject clearfix">
                                 <?php
-                                foreach($tabProject as $key => $tabValue){
-                                    ?>
-                                    <li class="">
-                                        <a href="javascript:void(0)" rel="nofollow" style="white-space:nowrap;"><?=$tabKeys[$key]?></a>
-                                    </li>
-                                <?php } ?>
+                                foreach($tabProject as $key => $tabValue) {
+                                    if (!empty($tabValue)) {
+                                        ?>
+                                        <li class="">
+                                            <a href="javascript:void(0)" rel="nofollow"
+                                               style="white-space:nowrap;"><?= $tabKeys[$key] ?></a>
+                                        </li>
+                                    <?php }
+                                } ?>
                             </ul>
                             <?php
-                            foreach($tabProject as $key => $tabValue){
-                                ?>
-                                <div class="editor" style="display:none;clear: both">
-                                    <div class="a1">
-                                        <?=$tabValue?>
+                            foreach($tabProject as $key => $tabValue) {
+                                if (!empty($tabValue)) {
+                                    ?>
+                                    <div class="editor" style="display:none;clear: both">
+                                        <div class="a1">
+                                            <?= $tabValue ?>
+                                        </div>
                                     </div>
-                                </div>
-                            <?php } ?>
+                                <?php }
+                            } ?>
                         </div>
                     <?php } ?>
 
                     <div class="listing-post-by-project">
                         <?php
-                        $categoriesDb = \vsoft\ad\models\AdCategory::getDb();
-                        $categories = $categoriesDb->cache(function($categoriesDb){
-                            return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
-                        });
-                        $types = \vsoft\ad\models\AdProduct::getAdTypes();
+//                        $categoriesDb = \vsoft\ad\models\AdCategory::getDb();
+//                        $categories = $categoriesDb->cache(function(){
+//                            return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
+//                        });
+//                        $types = \vsoft\ad\models\AdProduct::getAdTypes();
                         $sell_products = \frontend\models\Ad::find()->listingOfBuilding($model->id, \vsoft\ad\models\AdProduct::TYPE_FOR_SELL);
                         $rent_products = \frontend\models\Ad::find()->listingOfBuilding($model->id, \vsoft\ad\models\AdProduct::TYPE_FOR_RENT);
                         ?>
