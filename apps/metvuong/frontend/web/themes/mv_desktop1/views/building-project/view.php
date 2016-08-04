@@ -18,6 +18,7 @@ if(!empty($model->data_html)){
         $tongquan = html_entity_decode($tabProject[$key_index], ENT_HTML5, 'utf-8');
     }
 }
+$tongquan = trim(strip_tags($tongquan));
 
 Yii::$app->view->registerMetaTag([
     'name' => 'keywords',
@@ -95,7 +96,6 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                 </div>
                             <?php }  ?>
                         </div>
-                        <div class="swiper-pagination"></div>
                         <div class="swiper-button-next"><span></span></div>
                         <div class="swiper-button-prev"><span></span></div>
                     </div>
@@ -269,6 +269,7 @@ $description = str_replace("\n", "", $description);
 $imageUrl = $logoUrl;
 if (!filter_var($imageUrl, FILTER_VALIDATE_URL))
     $imageUrl = Yii::$app->urlManager->hostInfo . $logoUrl;
+
 echo $this->render('/ad/_partials/shareSocial',[
     'popup_email_name' => 'share',
     'project' => $model,
