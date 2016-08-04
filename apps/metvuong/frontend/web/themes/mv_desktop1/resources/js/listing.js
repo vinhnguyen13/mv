@@ -1,6 +1,7 @@
 var desktop, form, events;
 var $window = $(window);
 var s = {type: "#type"};
+var im = (window.navigator.userAgent.search('Mobi') !== -1) ? 1 : 0;
 
 $(document).ready(function() {
 	/*
@@ -366,14 +367,18 @@ $(document).ready(function() {
 	/*
 	 * Tracking
 	 */
-	tracking(tf);
-//	var re = new RegExp("/" + pageParam + "_[0-9]+");
-//
-//	if(referer.replace(re, "") != window.location.href.replace(re, "")) {
-//		referer = qs ? '1' : referer;
-//		
-//		tracking(referer, true);
-//	}
+	var payload = form.fields.filter(function () {
+        return !!this.value;
+    }).serialize();
+	
+	var data = {
+		location: form.mapSearchEl.val(),
+		payload: payload,
+		tf: tf,
+		referer: referer
+	};
+
+	tracking(data);
 	
 	
 	/*
@@ -430,64 +435,9 @@ $(document).ready(function() {
 	$('.select-dt .box-dropdown').price_dt();
 });
 
-/*
-var trackingTimeout;
-
-function tracking(r, notDelay) {
-	clearTimeout(trackingTimeout);
-	
-	var serialize = form.fields.filter(function () {
-        return !!this.value;
-    }).serialize();
-	
-	var data = {
-		location: form.mapSearchEl.val(),
-		payload: serialize,
-		_csrf: yii.getCsrfToken(),
-		agent: navigator.userAgent
-	};
-	
-	data.is_mobile = (window.navigator.userAgent.search('Mobi') !== -1) ? 1 : 0;
-	
-	if(r) {
-		data.referer = r;
-	}
-	
-	if(notDelay) {
-		_tracking(data);
-	} else {
-		trackingTimeout = setTimeout(function(){
-			_tracking(data);
-		}, detr);
-	}
-}
-
-function _tracking(data) {
-	$.ajax({
-		method: "POST",
-		url: '/listing/tracking',
-		data: data
-	});
-}
-*/
-function tracking(tf, forceReferer) {
-	var serialize = form.fields.filter(function () {
-        return !!this.value;
-    }).serialize();
-	
-	var data = {
-		location: form.mapSearchEl.val(),
-		payload: serialize,
-		_csrf: yii.getCsrfToken(),
-		tf: tf,
-		referer: referer
-	};
-	
-	if(forceReferer) {
-		data.referer = forceReferer;
-	}
-	
-	data.im = (window.navigator.userAgent.search('Mobi') !== -1) ? 1 : 0;
+function tracking(data) {
+	data.im = im;
+	data._csrf = yii.getCsrfToken();
 	
 	$.ajax({
 		method: "POST",

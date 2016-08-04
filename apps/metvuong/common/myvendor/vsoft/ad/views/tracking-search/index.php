@@ -137,13 +137,13 @@ $sourceDropDown = [
         					$split = explode('/', $model->referer);
         					$return = '<span title="' . $model->referer . '">' . implode('/', array_slice($split, 3)) . '</span>';
         				} else {
-        					$return = $sourceDropDown[TrackingSearch::FROM_OTHER_PAGE];
+        					$return = '<span title="' . $model->referer . '">' . $sourceDropDown[TrackingSearch::FROM_OTHER_PAGE] . '</span>';
         				}
         			} else if($model->from == TrackingSearch::FROM_OTHER_SITE) {
         				if($searchModel->from_filter == TrackingSearch::FROM_OTHER_SITE) {
         					$return = '<span title="' . $model->referer . '">' . $model->referer . '</span>';
         				} else {
-        					$return = $sourceDropDown[TrackingSearch::FROM_OTHER_SITE];
+        					$return = '<span title="' . $model->referer . '">' . $sourceDropDown[TrackingSearch::FROM_OTHER_SITE] . '</span>';
         				}
         			} else if($model->from == TrackingSearch::FROM_QUICK_SEARCH) {
         				$return = $sourceDropDown[TrackingSearch::FROM_QUICK_SEARCH];

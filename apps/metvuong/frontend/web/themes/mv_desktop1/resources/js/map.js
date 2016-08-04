@@ -1437,8 +1437,19 @@ var ttobj = {
 			ttobj.lastestUrl = window.location.href + '';
 		}
 		
+		var payload = form.fields.filter(function () {
+	        return !!this.value;
+	    }).serialize();
+		
+		var data = {
+			location: form.mapSearchEl.val(),
+			payload: payload,
+			tf: tf_ip
+		};
+		
 		this.timeout = setTimeout(function(){
-			tracking(tf_ip, ttobj.lastestUrl);
+			data.referer = ttobj.lastestUrl;
+			tracking(data);
 			ttobj.lastestUrl = '';
 		}, detr);
 	}
