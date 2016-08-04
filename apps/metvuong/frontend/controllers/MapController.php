@@ -11,6 +11,7 @@ use yii\web\Request;
 use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\db\yii\db;
+use vsoft\ad\models\TrackingSearch;
 
 class MapController extends ActiveController {
 	
@@ -164,8 +165,8 @@ class MapController extends ActiveController {
 		
 		foreach ($result['hits']['hits'] as $k => $hit) {
 			$return[$k] = $hit['_source'];
-			$return[$k]['url_sale'] = Url::to(['/ad/index1', 'params' => $hit['_source']['slug']]);
-			$return[$k]['url_rent'] = Url::to(['/ad/index2', 'params' => $hit['_source']['slug']]);
+			$return[$k]['url_sale'] = Url::to(['/ad/index1', 'params' => $hit['_source']['slug'], 'tf' => TrackingSearch::FROM_QUICK_SEARCH]);
+			$return[$k]['url_rent'] = Url::to(['/ad/index2', 'params' => $hit['_source']['slug'], 'tf' => TrackingSearch::FROM_QUICK_SEARCH]);
 			$return[$k]['type'] = $hit['_type'];
 			$return[$k]['id'] = $hit['_id'];
 		}
@@ -176,7 +177,7 @@ class MapController extends ActiveController {
 	function searchEnter($v) {
 		$result = $this->search($v);
 		
-		return $result['hits']['total'] > 0 ? Url::to(['/ad/index1', 'params' => $result['hits']['hits'][0]['_source']['slug']]) : false;
+		return $result['hits']['total'] > 0 ? Url::to(['/ad/index1', 'params' => $result['hits']['hits'][0]['_source']['slug'], 'tf' => TrackingSearch::FROM_QUICK_SEARCH]) : false;
 	}
 	
 	function search($v) {
