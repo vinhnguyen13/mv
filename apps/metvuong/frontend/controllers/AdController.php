@@ -628,9 +628,10 @@ class AdController extends Controller
     				}
     				
     				$product->score = AdProduct::calcScore($product, $additionInfo, $contactInfo, $totalImage);
-    				$product->updateWithEs(false);
+    				$product->save(false);
     				$additionInfo->save(false);
     				$contactInfo->save(false);
+    				$product->updateWithEs();
     				
     				$result['template'] = $this->renderPartial('_partials/update-success', ['product' => $product]);
     				$result['url'] = $product->urlDetail();

@@ -755,9 +755,7 @@ class AdProduct extends AP
 		}
 	}
 	
-	public function updateWithEs($validate) {
-		$this->save($validate);
-		
+	public function updateWithEs() {
 		/*
 		 * Update Elastic
 		 */
