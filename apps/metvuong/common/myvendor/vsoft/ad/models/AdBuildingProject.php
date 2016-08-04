@@ -23,6 +23,18 @@ class AdBuildingProject extends ABP
 	const STATUS_ENABLED = 1;
 	const STATUS_DISABLED = 0;
 
+    public $projects=[
+        'Khu căn hộ' => 'Khu căn hộ',
+        'Cao ốc văn phòng' => 'Cao ốc văn phòng',
+        'Khu đô thị mới' => 'Khu đô thị mới',
+        'Khu dân cư' => 'Khu dân cư',
+        'Khu thương mại dịch vụ' => 'Khu thương mại dịch vụ',
+        'Khu công nghiệp' => 'Khu công nghiệp',
+        'Khu du lịch nghỉ dưỡng' => 'Khu du lịch nghỉ dưỡng',
+        'Khu phức hợp' => 'Khu phức hợp',
+        'Dự án khác' => 'Dự án khác'
+    ];
+
     /**
      * @inheritdoc
      */
@@ -60,8 +72,8 @@ class AdBuildingProject extends ABP
     	'city_id' => 'Tỉnh / Thành Phố',
     	'district_id' => 'Quận / Huyện',
     	'name' => 'Tên dự án',
-    	'logo' => 'Logo / Ảnh đại diện',
-    	'location' => 'Vị trí',
+    	'logo' => 'Ảnh đại diện',
+    	'location' => 'Địa chỉ',
     	'description' => 'Thông tin mô tả',
     	'investment_type' => 'Loại hình đầu tư',
     	'land_area' => 'Diện tích khu đất',
