@@ -3,8 +3,7 @@ namespace vsoft\ad\controllers;
 
 use yii\web\Controller;
 use vsoft\ad\models\TrackingSearch;
-use yii\db\Query;
-use yii\data\ActiveDataProvider;
+use vsoft\ad\models\TrackingSearchGroup;
 
 class TrackingSearchController extends Controller {
 	public function actionIndex() {
@@ -17,17 +16,11 @@ class TrackingSearchController extends Controller {
 		]);
 	}	
 	public function actionGroup() {
-		$query = new Query();
-		$query->from("`tracking_search`");
-		$query->select(["`alias`", "MAX(`created_at`) `created_at`"]);
-		$query->groupBy("alias");
-		$query->orderBy("created_at DESC");
-		
-		$dataProvider = new ActiveDataProvider([
-			'query' => $query
-		]);
+		$searchModel = new TrackingSearchGroup();
+		$dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 		
 		return $this->render('group', [
+			'searchModel' => $searchModel,
 			'dataProvider' => $dataProvider,
 		]);
 	}
