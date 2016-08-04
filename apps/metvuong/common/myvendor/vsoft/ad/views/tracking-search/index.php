@@ -76,24 +76,38 @@ $sourceDropDown = [
 				'value' => 'category.nameTranslate',
         		'filter' => Html::activeDropDownList($searchModel, 'category_search', $categoryDropDown, ['class' => 'form-control', 'prompt' => 'Loại BĐS'])
 			],
-        	'room_no',
-        	'toilet_no',
+        	[
+        		'attribute' => 'room_no',
+        		'filter' => Html::activeDropDownList($searchModel, 'room_no_filter', [2 => 'Có', 1 => 'Không'], ['class' => 'form-control min price', 'prompt' => 'Tất cả'])
+			],
+        	[
+        		'attribute' => 'toilet_no',
+        		'filter' => Html::activeDropDownList($searchModel, 'toilet_no_filter', [2 => 'Có', 1 => 'Không'], ['class' => 'form-control min price', 'prompt' => 'Tất cả'])
+			],
         	[
         		'format' => 'raw',
         		'attribute' => 'price_min',
         		'value' => function($model) {
         			return $model->price_min ? StringHelper::formatCurrency(floatval($model->price_min)) : null;
-    			}
+    			},
+    			'filter' => Html::activeDropDownList($searchModel, 'pmin_filter', [2 => 'Có', 1 => 'Không'], ['class' => 'form-control min price', 'prompt' => 'Tất cả'])
         	],
         	[
         		'format' => 'raw',
         		'attribute' => 'price_max',
         		'value' => function($model) {
         			return $model->price_max ? StringHelper::formatCurrency(floatval($model->price_max)) : null;
-    			}
+    			},
+    			'filter' => Html::activeDropDownList($searchModel, 'pmax_filter', [2 => 'Có', 1 => 'Không'], ['class' => 'form-control min price', 'prompt' => 'Tất cả'])
         	],
-        	'size_min',
-        	'size_max',
+        	[
+        		'attribute' => 'size_min',
+    			'filter' => Html::activeDropDownList($searchModel, 'smin_filter', [2 => 'Có', 1 => 'Không'], ['class' => 'form-control min price', 'prompt' => 'Tất cả'])
+        	],
+        	[
+        		'attribute' => 'size_max',
+    			'filter' => Html::activeDropDownList($searchModel, 'smax_filter', [2 => 'Có', 1 => 'Không'], ['class' => 'form-control min price', 'prompt' => 'Tất cả'])
+        	],
         	[
         		'attribute' => 'order_by',
         		'value' => function($model) use ($mapSort) {

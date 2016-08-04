@@ -19,11 +19,17 @@ class TrackingSearch extends TS {
 	public $finder_search;
 	public $finder_filter;
 	public $from_filter;
+	public $room_no_filter;
+	public $toilet_no_filter;
+	public $pmin_filter;
+	public $pmax_filter;
+	public $smin_filter;
+	public $smax_filter;
 	
 	public function rules()
 	{
 		return array_merge(parent::rules(), [
-			[['category_search', 'finder_search', 'from_filter', 'finder_filter'], 'safe']
+			[['category_search', 'finder_search', 'from_filter', 'finder_filter', 'room_no_filter', 'toilet_no_filter', 'pmin_filter', 'pmax_filter', 'smin_filter', 'smax_filter'], 'safe']
 		]);
 	}
 	
@@ -117,6 +123,49 @@ class TrackingSearch extends TS {
 		$query->andFilterWhere(['=', 'order_by', $this->order_by]);
 		$query->andFilterWhere(['=', 'type', $this->type]);
 		$query->andFilterWhere(['=', 'is_mobile', $this->is_mobile]);
+
+		if($this->room_no_filter) {
+			if($this->room_no_filter == 2) {
+				$query->andWhere('room_no IS NOT NULL');
+			} else {
+				$query->andWhere('room_no IS NULL');
+			}
+		}
+		if($this->toilet_no_filter) {
+			if($this->toilet_no_filter == 2) {
+				$query->andWhere('toilet_no IS NOT NULL');
+			} else {
+				$query->andWhere('toilet_no IS NULL');
+			}
+		}
+		if($this->pmin_filter) {
+			if($this->pmin_filter == 2) {
+				$query->andWhere('price_min IS NOT NULL');
+			} else {
+				$query->andWhere('price_min IS NULL');
+			}
+		}
+		if($this->pmax_filter) {
+			if($this->pmax_filter == 2) {
+				$query->andWhere('price_max IS NOT NULL');
+			} else {
+				$query->andWhere('price_max IS NULL');
+			}
+		}
+		if($this->smin_filter) {
+			if($this->smin_filter == 2) {
+				$query->andWhere('size_min IS NOT NULL');
+			} else {
+				$query->andWhere('size_min IS NULL');
+			}
+		}
+		if($this->smax_filter) {
+			if($this->smax_filter == 2) {
+				$query->andWhere('size_max IS NOT NULL');
+			} else {
+				$query->andWhere('size_max IS NULL');
+			}
+		}
 		
 		if($this->from_filter) {
 			$query->andFilterWhere(['=', 'from', $this->from_filter]);
