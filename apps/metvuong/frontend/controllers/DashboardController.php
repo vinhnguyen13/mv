@@ -516,7 +516,7 @@ class DashboardController extends Controller
         $pagination = new Pagination(['totalCount' => $count]);
         $pagination->defaultPageSize = 10;
         $transactions = $query->offset($pagination->offset)->limit($pagination->limit)
-            ->orderBy(['updated_at' => SORT_DESC])->all();
+            ->orderBy(['created_at' => SORT_DESC])->all();
         if(Yii::$app->request->isAjax) {
             return $this->renderAjax('payment/index', ['transactions' => $transactions, 'pagination' => $pagination]);
         }else{
