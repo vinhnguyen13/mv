@@ -4785,7 +4785,7 @@ html.mm-opening .mm-slideout {
     margin-right: 15px;
     padding: 3px 30px 2px;
 }
-.modal-dialog .icon-close,
+.modal-dialog .close .icon-close,
 .icon-close {
     background-position: 0px -1141px;
     width: 21px;
