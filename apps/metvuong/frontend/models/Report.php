@@ -179,6 +179,7 @@ class Report extends Component
                 $query->select(['id'])->from('ad_product')
                     ->where(['>', 'created_at', $from])
                     ->andWhere(['<', 'created_at', $to])
+                    ->andWhere('ip IS NOT NULL')
                     ->orderBy('created_at DESC');
                 $stats_listing = $query->all();
                 return $stats_listing;
