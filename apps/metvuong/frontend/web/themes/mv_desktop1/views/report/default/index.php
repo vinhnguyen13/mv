@@ -36,7 +36,7 @@ use yii\helpers\Url;
                             <label for="listing"><input type="checkbox" name="toggle-chart" value="" id="listing" checked><?=Yii::t('report','Listing')?></label>
                         </li>
                         <li class="chk_transaction">
-                            <label for="transaction"><input type="checkbox" name="toggle-chart" value="" id="transaction"><?=Yii::t('report','Transaction')?></label>
+                            <label for="transaction"><input type="checkbox" name="toggle-chart" value="" id="transaction" checked><?=Yii::t('report','Transaction')?></label>
                         </li>
                     </ul>
         		</div>
