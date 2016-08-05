@@ -21,7 +21,7 @@ if($count_data > 0) {
         ?>
         <li class="">
             <div class="wrap-tr-each swiper-slide">
-                <div class="w-10"><span><?=$transaction->id?></span></div>
+                <div class="w-10"><span><?=$item->user->profile->getDisplayName()?></span></div>
                 <div class="w-15"><span><?=date('d/m/Y, H:i', $transaction->created_at)?></span></div>
                 <div class="w-15"><span><?=$transaction->getObjectType($transaction->object_type)?></span></div>
                 <div class="w-15"><span class="color-cd"><?=$transaction->getTransactionStatus($transaction->status)?></span></div>
