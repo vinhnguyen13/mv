@@ -45,7 +45,7 @@ use yii\helpers\Url;
     </div>
 </div>
 
-<div class="modal fade popup-common" id="frmListVisit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade popup-common tkReport" id="frmListVisit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header title-popup clearfix">

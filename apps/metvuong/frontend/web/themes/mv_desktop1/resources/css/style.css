@@ -4785,7 +4785,7 @@ html.mm-opening .mm-slideout {
     margin-right: 15px;
     padding: 3px 30px 2px;
 }
-#frmListVisit .icon-close,
+.modal-dialog .icon-close,
 .icon-close {
     background-position: 0px -1141px;
     width: 21px;
@@ -10488,6 +10488,9 @@ input:-webkit-autofill {
     .chat-list {
         padding-top: 60px
     }
+    #tkUser .modal-dialog {
+        width: 700px;
+    }
 }
 .btn-slide .swiper-button-next span, 
 .btn-slide .swiper-button-prev span,
@@ -13777,6 +13780,37 @@ ul.cardList li {
     .item-payment {
         font-size: 13px;
     }
+    .infor-duan-suggest .wrap-img {
+        float: none !important;
+        margin-bottom: 10px;
+        height: 100px;
+    }
+    #project-info {
+    }
+    .infor-duan-suggest {
+        padding: 0 0 10px 0;
+    }
+    .option-show-listing .val-selected {
+        height: auto;
+    }
+    .option-show-listing {
+        padding: 10px 0;
+    }
+    #frmListVisit .wrap-modal li {
+        width: 50%;
+    }
+    #frmListVisit .wrap-modal a img {
+        max-width: 100%;
+        height: auto;
+    }
+    .btn-mani {
+        position: static;
+        text-align: right;
+        margin-bottom: 10px;
+    }
+    .edit-profile {
+        top: 0;
+    }
 }
 @media (max-width: 500px) {
     .invite-friend .tbl-emu > div,
@@ -13999,7 +14033,7 @@ ul.cardList li {
     font-size: 15px;
     display: block;
     color: #fff;
-    text-align: left;
+    text-align: center;
 }
 .report-boss .option-view-stats .chk_register label {
     color: #00a769;
@@ -14010,12 +14044,18 @@ ul.cardList li {
 .report-boss .option-view-stats .chk_listing label {
     color: #a94442;
 }
+.report-boss .option-view-stats .chk_transaction label {
+    color: #8a6d3b;
+}
 .report-boss .option-view-stats input {
     display: inline-block;
     margin: 0;
     margin-right: 10px;
     position: relative;
     top: 2px;
+}
+#frmListVisit.tkReport .modal-dialog {
+    width: 700px;
 }
 @media (max-width: 1600px) {
     .wrap-listing-item {
