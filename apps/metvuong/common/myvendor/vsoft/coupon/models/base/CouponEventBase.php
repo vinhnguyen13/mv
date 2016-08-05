@@ -12,6 +12,7 @@ use Yii;
  * @property string $name
  * @property string $description
  * @property integer $status
+ * @property integer $type
  * @property integer $created_at
  * @property integer $created_by
  *
@@ -32,7 +33,7 @@ class CouponEventBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['status', 'created_at', 'created_by'], 'integer'],
+            [['status', 'type', 'created_at', 'created_by'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['name'], 'required'],
             [['description'], 'string', 'max' => 3200],
@@ -49,6 +50,7 @@ class CouponEventBase extends \yii\db\ActiveRecord
             'name' => Yii::t('coupon', 'Name'),
             'description' => Yii::t('coupon', 'Description'),
             'status' => Yii::t('coupon', 'Status'),
+            'type' => Yii::t('coupon', 'Type'),
             'created_at' => Yii::t('coupon', 'Created At'),
             'created_by' => Yii::t('coupon', 'Created By'),
         ];

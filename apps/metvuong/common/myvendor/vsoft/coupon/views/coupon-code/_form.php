@@ -21,11 +21,8 @@ use yii\widgets\ActiveForm;
         'options' => [$model->cp_event_id => ['Selected ' => true]],
         'prompt' => ''
     ]);?>
-
     <?= $form->field($model, 'status')->dropDownList(Status::labels()) ?>
-
-    <?= $form->field($model, 'type')->dropDownList(\vsoft\coupon\models\CouponCode::getTypes()) ?>
-
+    <?= $form->field($model, 'limit')->textInput() ?>
     <?= $form->field($model, 'amount')->textInput() ?>
     <?= $form->field($model, 'amount_type')->dropDownList(\vsoft\coupon\models\CouponCode::getAmountTypes(),[
         'options' => [$model->amount_type => ['Selected ' => true]]

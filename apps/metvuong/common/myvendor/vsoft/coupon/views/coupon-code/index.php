@@ -45,13 +45,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::activeDropDownList($searchModel, 'status', \vsoft\news\models\Status::labels(),['class'=>'form-control','prompt' => 'All']),
             ],
             'count',
-            [
-                'attribute' => 'type',
-                'value' => function ($model) {
-                    return \vsoft\coupon\models\CouponCode::getTypes($model->type);
-                },
-                'filter' => Html::activeDropDownList($searchModel, 'type',  \vsoft\coupon\models\CouponCode::getTypes(),['class'=>'form-control','prompt' => 'All']),
-            ],
+            'limit',
             'amount',
             [
                 'attribute' => 'amount_type',

@@ -17,7 +17,7 @@ use yii\db\Expression;
  * @property integer $cp_event_id
  * @property integer $status
  * @property integer $count
- * @property integer $type
+ * @property integer $limit
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $amount
@@ -32,20 +32,6 @@ class CouponCode extends CouponCodeBase
 
     const AMOUNT_TYPE_PERCENT = 1;
     const AMOUNT_TYPE_PRICE = 2;
-
-    public static function getTypes($id = null)
-    {
-        $data = [
-            self::TYPE_ONE => Module::t('coupon', 'One'),
-            self::TYPE_MANY => Module::t('coupon', 'Many'),
-        ];
-
-        if ($id !== null && isset($data[$id])) {
-            return $data[$id];
-        } else {
-            return $data;
-        }
-    }
 
     public static function getAmountTypes($id = null)
     {

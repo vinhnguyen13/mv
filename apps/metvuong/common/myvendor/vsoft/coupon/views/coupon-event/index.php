@@ -34,6 +34,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::activeDropDownList($searchModel, 'status', \vsoft\news\models\Status::labels(),['class'=>'form-control','prompt' => 'All']),
             ],
             [
+                'attribute' => 'type',
+                'value' => function ($model) {
+                    return \vsoft\coupon\models\CouponEvent::getTypes($model->type);
+                },
+                'filter' => Html::activeDropDownList($searchModel, 'status', \vsoft\coupon\models\CouponEvent::getTypes(),['class'=>'form-control','prompt' => 'All']),
+            ],
+            [
                 'attribute' => 'created_at',
                 'value' => function ($model) {
                     return $model->created_at;

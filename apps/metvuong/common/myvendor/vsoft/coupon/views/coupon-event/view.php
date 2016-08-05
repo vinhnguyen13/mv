@@ -36,6 +36,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => \vsoft\news\models\Status::labels($model->status)
             ],
             [
+                'attribute' => 'type',
+                'value' => \vsoft\coupon\models\CouponEvent::getTypes($model->type)
+            ],
+            [
                 'attribute' => 'created_at',
                 'value' => $model->created_at,
                 'format' => ['datetime', 'php: d/m/Y H:i a']

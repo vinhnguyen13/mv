@@ -18,7 +18,7 @@ class CouponCodeSearch extends CouponCode
     public function rules()
     {
         return [
-            [['id', 'cp_event_id', 'status', 'count', 'type', 'created_at', 'updated_at', 'amount_type'], 'integer'],
+            [['id', 'cp_event_id', 'status', 'count', 'limit', 'created_at', 'updated_at', 'amount_type'], 'integer'],
             [['amount'], 'integer', 'integerOnly' => false],
             [['code'], 'safe'],
         ];
@@ -65,7 +65,7 @@ class CouponCodeSearch extends CouponCode
             'cp_event_id' => $this->cp_event_id,
             'status' => $this->status,
             'count' => $this->count,
-            'type' => $this->type,
+            'limit' => $this->limit,
             'amount' => $this->amount,
             'amount_type' => $this->amount_type,
             'created_at' => $this->created_at,

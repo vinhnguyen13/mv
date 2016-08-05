@@ -110,16 +110,15 @@ class CouponCodeController extends Controller
                 $code = CouponCode::generateCodeExists($coupon_code, $length, $prefix, $suffix, $numbers, $letters, $symbols, $random_register, $mask);
                 if(!empty($code)){
                     $event_id = (isset($post["CouponCode"]["cp_event_id"])) ? intval($post["CouponCode"]["cp_event_id"]) : 0;
-                    $type = (isset($post["CouponCode"]["type"])) ? intval($post["CouponCode"]["type"]) : 2;
+                    $limit = (isset($post["CouponCode"]["limit"])) ? intval($post["CouponCode"]["limit"]) : 2;
                     $amount = (isset($post["CouponCode"]["amount"])) ? intval($post["CouponCode"]["amount"]) : 0;
                     $amount_type = (isset($post["CouponCode"]["amount_type"])) ? intval($post["CouponCode"]["amount_type"]) : 1;
                     $model = new CouponCode();
                     $model->code = $code;
                     $model->cp_event_id = $event_id;
-                    $model->type = $type;
+                    $model->limit = $limit;
                     $model->amount = $amount;
                     $model->amount_type = $amount_type;
-                    $model->type = $type;
                     $model->save(false);
                 }
             }

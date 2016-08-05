@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'cp_event_id',
             'status',
             'count',
-            'type',
+            'limit',
             'created_at',
             'updated_at',
         ],

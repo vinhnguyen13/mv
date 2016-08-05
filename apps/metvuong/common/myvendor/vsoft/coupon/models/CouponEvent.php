@@ -22,6 +22,8 @@ use yii\db\Expression;
  */
 class CouponEvent extends CouponEventBase
 {
+    const TYPE_PUBLIC = 1;
+    const TYPE_SYSTEM = 2;
     public function behaviors()
     {
         return [
@@ -49,5 +51,19 @@ class CouponEvent extends CouponEventBase
         return array_merge(parent::rules(), [
             [['start_date', 'end_date'], 'integer'],
         ]);
+    }
+
+    public static function getTypes($id = null)
+    {
+        $data = [
+            self::TYPE_PUBLIC => Yii::t('coupon', 'Public'),
+            self::TYPE_SYSTEM => Yii::t('coupon', 'System'),
+        ];
+
+        if ($id !== null && isset($data[$id])) {
+            return $data[$id];
+        } else {
+            return $data;
+        }
     }
 }

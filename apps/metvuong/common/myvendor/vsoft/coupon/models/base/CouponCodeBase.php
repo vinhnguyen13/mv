@@ -13,7 +13,7 @@ use Yii;
  * @property integer $cp_event_id
  * @property integer $status
  * @property integer $count
- * @property integer $type
+ * @property integer $limit
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $amount
@@ -37,7 +37,7 @@ class CouponCodeBase extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['cp_event_id', 'status', 'count', 'type', 'created_at', 'updated_at', 'amount_type'], 'integer'],
+            [['cp_event_id', 'status', 'count', 'limit', 'created_at', 'updated_at', 'amount_type'], 'integer'],
             [['amount'], 'number'],
             [['amount'], 'required'],
             [['code'], 'string', 'max' => 32],
@@ -57,7 +57,7 @@ class CouponCodeBase extends \yii\db\ActiveRecord
             'cp_event_id' => Yii::t('coupon', 'Cp Event ID'),
             'status' => Yii::t('coupon', 'Status'),
             'count' => Yii::t('coupon', 'Count'),
-            'type' => Yii::t('coupon', 'Type'),
+            'limit' => Yii::t('coupon', 'Limit'),
             'created_at' => Yii::t('coupon', 'Created At'),
             'updated_at' => Yii::t('coupon', 'Updated At'),
             'amount' => Yii::t('coupon', 'Amount'),
