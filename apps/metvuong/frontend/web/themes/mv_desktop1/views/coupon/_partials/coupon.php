@@ -16,7 +16,7 @@ Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources
 
 $event = CouponEvent::find()->andWhere(['<','start_date',time()])->andWhere(['>','end_date',time()])->one();
 if(!empty($event)) {
-    $code = CouponCode::find()->where(['cp_event_id'=>$event->id, 'type'=>CouponCode::TYPE_MANY])->one();
+    $code = CouponCode::find()->where(['cp_event_id'=>$event->id])->one();
     $history = CouponHistory::find()->where(['cp_code_id' => $code->id, 'user_id' => Yii::$app->user->id])->asArray()->one();
     if(count($history) == 0) {
         ?>
