@@ -307,7 +307,15 @@ class Elastic
     	
     	$params['query']['function_score']['functions'][] = [
     		"field_value_factor" => [
-    			"field" => ["total_sell", "total_rent"],
+    			"field" => "total_sell",
+    			"modifier" => "log1p",
+    			"factor" => 0.1
+    		]
+    	];
+    	
+    	$params['query']['function_score']['functions'][] = [
+    		"field_value_factor" => [
+    			"field" => "total_rent",
     			"modifier" => "log1p",
     			"factor" => 0.1
     		]
@@ -334,14 +342,6 @@ class Elastic
     
     public static function searchProjects($v) {
     	$params = self::buildParams($v);
-    	
-    	$params['query']['function_score']['functions'][] = [
-    		"field_value_factor" => [
-    			"field" => ["total_sell", "total_rent"],
-    			"modifier" => "log1p",
-    			"factor" => 0.1
-    		]
-    	];
     	
     	$query = $params['query']['function_score']['query']['query_string']['query'];
     	$default_field = $params['query']['function_score']['query']['query_string']['default_field'];

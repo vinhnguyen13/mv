@@ -98,7 +98,7 @@ class AdBuildingProject extends ABP
     	'video' => 'Phim 3D dự án',
     	'progress' => 'Tiến độ xây dựng',
     	'slug' => 'Slug',
-    	'created_at' => 'Created At',
+    	'created_at' => 'Ngày tạo',
     	'updated_at' => 'Updated At',
     	'status' => 'Status',
     	'investors' => 'Chủ đầu tư',
