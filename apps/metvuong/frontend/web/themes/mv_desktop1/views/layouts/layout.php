@@ -21,6 +21,7 @@
     <?php }
     $this->beginContent('@app/views/layouts/_partials/tutorial.php');$this->endContent();
     $this->beginContent('@app/views/layouts/_partials/betaAutoGetCoupon.php');$this->endContent();
+    $this->beginContent('@app/views/layouts/_partials/campaignUserRegister.php');$this->endContent();
     ?>
 </div>
 <?php $this->endContent();?>
