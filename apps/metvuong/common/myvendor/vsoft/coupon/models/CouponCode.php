@@ -76,4 +76,12 @@ class CouponCode extends CouponCodeBase
         ];
     }
 
+    public function check()
+    {
+        if (($this->limit == 1 && $this->count < 1) || ($this->limit > 1 && $this->limit > $this->count) || $this->limit == 0) {
+            return true;
+        }
+        return false;
+    }
+
 }

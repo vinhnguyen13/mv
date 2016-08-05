@@ -14,11 +14,11 @@ use yii\web\View;
 
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_HEAD]);
 
-$event = CouponEvent::find()->andWhere(['<','start_date',time()])->andWhere(['>','end_date',time()])->one();
+$event = CouponEvent::find()->where(['type'=>CouponEvent::TYPE_PUBLIC])->andWhere(['<','start_date',time()])->andWhere(['>','end_date',time()])->one();
 if(!empty($event)) {
     $code = CouponCode::find()->where(['cp_event_id'=>$event->id])->one();
     $history = CouponHistory::find()->where(['cp_code_id' => $code->id, 'user_id' => Yii::$app->user->id])->asArray()->one();
-    if(count($history) == 0) {
+    if(empty($history) && ($code->check())) {
         ?>
         <a href="javascript:;" class="d-ib btn pdT-5 pdB-5 font-600 fs-13 btn-coupon"><?=Yii::t('coupon', 'Coupon')?></a>
         <div id="coupon-dialog" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

@@ -14,11 +14,11 @@ use yii\web\View;
 
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_HEAD]);
 
-$event = CouponEvent::find()->andWhere(['<','start_date',time()])->andWhere(['>','end_date',time()])->one();
+$event = CouponEvent::find()->where(['type'=>CouponEvent::TYPE_PUBLIC])->andWhere(['<','start_date',time()])->andWhere(['>','end_date',time()])->one();
 if(!empty($event) && !Yii::$app->user->isGuest) {
     $code = CouponCode::find()->where(['cp_event_id'=>$event->id])->one();
     $history = CouponHistory::find()->where(['cp_code_id' => $code->id, 'user_id' => Yii::$app->user->id])->asArray()->one();
-    if(count($history) == 0) {
+    if(empty($history) && ($code->check())) {
         ?>
         <div id="coupon-dialog-auto" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
@@ -35,7 +35,7 @@ if(!empty($event) && !Yii::$app->user->isGuest) {
                                 <div class="input-couple mgB-20 clearfix" style="display: none;">
                                     <?php
                                     $f = ActiveForm::begin([
-                                        'id' => 'frmCoupon',
+                                        'id' => 'frmCouponAuto',
                                         'enableAjaxValidation' => false,
                                         'enableClientValidation' => true,
                                         'action' => ''
@@ -68,7 +68,7 @@ if(!empty($event) && !Yii::$app->user->isGuest) {
                         type: "post",
                         dataType: 'json',
                         url: '<?=\yii\helpers\Url::to(['/coupon/process'])?>',
-                        data: $('#frmCoupon').serialize(),
+                        data: $('#frmCouponAuto').serialize(),
                         success: function (data) {
                             if (data.error_code == 0) {
                                 var timer = 0;
