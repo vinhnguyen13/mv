@@ -265,6 +265,7 @@ $count_review = $reviews->count();
 			</div>
 			<div class="infor-listing">
 				<div class="address-feat clearfix">
+					<p class="date-post pull-right fs-13">đăng 36 ngày trước<span class="pull-right mgL-20">Điểm: 95</span></p>
 					<p class="infor-by-up">
 						<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) ?> <?= Yii::t('ad', 'by') ?> <a href="javascript:;"><?= $product->ownerString ?></a>
 					</p>

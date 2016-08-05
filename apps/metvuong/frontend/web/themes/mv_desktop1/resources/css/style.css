@@ -7623,6 +7623,7 @@ padding: 5px 0;
     }
     #settings-user li .wrap-img {
         margin-right: 10px;
+        width: 50px;
     }
     #settings-user li .name-user {
         font-size: 14px;
@@ -13361,9 +13362,6 @@ ul.cardList li {
 .bottom-favori {
     background: #b9b9b9;
     padding: 10px 0;
-}
-#coupon-dialog .modal-dialog {
-    width: 300px;
 }
 .tabs-s {
     border-bottom: 2px solid #c3c3c3;

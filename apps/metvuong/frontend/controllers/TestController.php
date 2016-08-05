@@ -1,6 +1,7 @@
 <?php
 
 namespace frontend\controllers;
+use Aws\Ses\SesClient;
 use common\components\MailerMailChimp;
 use common\components\Util;
 use frontend\components\Mailer;
@@ -29,19 +30,35 @@ class TestController extends \yii\web\Controller
         $mailer = new \common\components\Mailer();
         $mailer->viewPath = '@frontend/mail';
         $status = $mailer->compose(['html' => 'test'], ['params' => []])
-            ->setFrom('lenh.quach@trungthuygroup.vn')
-            ->setTo(['lenh.quach@trungthuygroup.vn'])
+            ->setFrom(Yii::$app->params['noreplyEmail'])
+            ->setTo(['quangvinh.nguyen@trungthuygroup.vn'])
+//            ->setTo(['contact@metvuong.com'])
             ->setSubject('Hello')
             ->send();
         echo "<pre>";
         print_r($status);
         echo "</pre>";
         exit;
-        //https://email.us-east-1.amazonaws.com?AWSAccessKeyId=AKIAJ2UJJVBIRXDYRQAQ&Action=VerifyEmailIdentity&EmailAddress=vinh@dwm.vn&Timestamp=2013-04-27T19:30:00Z&Version=2010-12-01&Signature=
 
         $stt = MailerMailChimp::me()->send();
         echo "<pre>";
         print_r($stt);
+        echo "</pre>";
+        exit;
+    }
+
+    public function actionSend()
+    {
+        $folder = Yii::getAlias('@store'.'/mail');
+        $filePath = $folder.'/text.txt';
+        if(!is_dir($folder)){
+            mkdir($folder, 0777);
+        }
+        $handle = fopen($filePath, 'w') or die('Cannot open file:  ' . $filePath);
+        $int = fwrite($handle, var_export($_SERVER));
+        fclose($handle);
+        echo "<pre>";
+        print_r($int);
         echo "</pre>";
         exit;
     }
