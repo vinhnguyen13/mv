@@ -7792,6 +7792,7 @@ padding: 5px 0;
 }
 .editor img {
     max-width: 100%;
+    height: auto !important;
 }
 .infor-bds {
     /* min-height: 500px; */
@@ -10921,6 +10922,11 @@ label:hover {
         margin-right: -10px;
         width: inherit;
     }
+    .profile-user .title-top {
+        margin-bottom: 0;
+        padding: 7px 0;
+        border-bottom: solid 0.5px #DADADA;
+    }
     .detail-duan-moi {
         padding-top: 0;
     }
@@ -10988,7 +10994,7 @@ label:hover {
     }
     .profile-user {
         margin: 0;
-        padding: 0 20px;
+        padding: 0 10px;
     }
     .col-left {
         padding-top: 30px;
@@ -13686,6 +13692,7 @@ ul.cardList li {
         font-size: 13px;
         padding-left: 0;
         padding-right: 0;
+        border: none;
     }
     .type-payment {
         padding: 20px 10px;
@@ -13723,8 +13730,31 @@ ul.cardList li {
     .tabs-s li a {
         padding: 10px 0;
     }
+    .tab-payment li {
+        height: 40px;
+        background: #e8e8e8;
+    }
     .tab-payment li a {
         font-size: 12px;
+        padding: 0;
+        display: inline-block;
+        vertical-align: middle;
+        width: 100%;
+    }
+    .tab-payment li.active {
+        background: #757575;
+    }
+    .tab-payment li:before {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+        width: 0px;
+    }
+    .type-payment .nav-tabs>li.active>a,
+    .type-payment .nav-tabs>li.active>a:focus,
+    .type-payment .nav-tabs>li.active>a:hover {
+        border: none;
     }
     .input-couple .btn-common {
         padding-left: 0;
