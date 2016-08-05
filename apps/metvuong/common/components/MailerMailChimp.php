@@ -32,6 +32,7 @@ class MailerMailChimp extends Component
         }
         $this->MailChimp = new \Mailchimp($api_key, [
 //                'debug'=>true
+            'CURLOPT_SSL_VERIFYPEER'=>false
         ]);
     }
     public static function me()
@@ -52,7 +53,6 @@ class MailerMailChimp extends Component
             print_r($result);
             echo "</pre>";
             exit;
-
         } catch (\Exception $ex) {
             return $ex;
         }
@@ -65,15 +65,22 @@ class MailerMailChimp extends Component
             'sort_field'    => 'create_time',
             'sort_dir'      => 'DESC',
         ));
-        /*echo "<pre>";
+        echo "<pre>";
         print_r($campaigns);
         echo "</pre>";
-        exit;*/
+        exit;
 
-        $cid = '01c10b52fc';
+        $cid = 'fcc7b3d7d8';
 //        $cid = 'aa535d8f21';
 //        $cid = '4ed11c996a';
         $list_id = 'c9e01b7cfb';
+        $return = $this->MailChimp->call('campaigns/send', array(
+            'cid'                => $cid,
+        ));
+        echo "<pre>";
+        print_r($return);
+        echo "</pre>";
+        exit;
         return $this->MailChimp->call("campaigns/template-content", array(
                 'cid' => $cid,
             )
