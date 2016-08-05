@@ -20,7 +20,7 @@ if(!empty($event) && !Yii::$app->user->isGuest) {
     $history = CouponHistory::find()->where(['cp_code_id' => $code->id, 'user_id' => Yii::$app->user->id])->asArray()->one();
     if(count($history) == 0) {
         ?>
-        <div id="coupon-dialog" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div id="coupon-dialog-auto" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -58,12 +58,12 @@ if(!empty($event) && !Yii::$app->user->isGuest) {
         <script>
             $(document).ready(function () {
                 $('.popup-common').appendTo('body');
-                $('#coupon-dialog .inner-popup .alert').remove();
-                $('#coupon-dialog').modal('toggle');
-                //$('#coupon-dialog .modal-dialog').css('width', '700px');
-                $(document).on('click', '#coupon-dialog .coupon', function (e) {
+                $('#coupon-dialog-auto .inner-popup .alert').remove();
+                $('#coupon-dialog-auto').modal('toggle');
+                //$('#coupon-dialog-auto .modal-dialog').css('width', '700px');
+                $(document).on('click', '#coupon-dialog-auto .coupon', function (e) {
                     $('.input-couple').loading({full: false});
-                    $('#coupon-dialog .inner-popup .alert').remove();
+                    $('#coupon-dialog-auto .inner-popup .alert').remove();
                     $.ajax({
                         type: "post",
                         dataType: 'json',
@@ -73,7 +73,7 @@ if(!empty($event) && !Yii::$app->user->isGuest) {
                             if (data.error_code == 0) {
                                 var timer = 0;
                                 timer = setTimeout(function () {
-                                    $('#coupon-dialog').modal('toggle');
+                                    $('#coupon-dialog-auto').modal('toggle');
                                     location.reload();
                                 }, 1000);
                             }
