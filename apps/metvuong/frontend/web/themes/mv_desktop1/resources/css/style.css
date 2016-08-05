@@ -7700,6 +7700,10 @@ padding: 5px 0;
     .detail-listing .icons-detail {
         margin-top: 0;
     }
+    .infor-listing .date-post {
+        width: 100%;
+        text-transform: capitalize;
+    }
 }
 @media ( min-width: 985px ) and ( max-width: 1280px ) {
     .search-subpage .num-phongngu {
@@ -11637,14 +11641,14 @@ label:hover {
     }
     .swiper-button-next span,
     .swiper-button-prev span {
-        width: 16px;
+        /* width: 16px; */
         margin: 0;
     }
     .swiper-button-next span {
         left: 6px;
         top: 50%;
         margin-top: -10px;
-        background-position: -14px center;
+        /* background-position: -14px center; */
     }
     .swiper-button-prev span {
         left: 6px;
@@ -13494,6 +13498,13 @@ ul.cardList li {
         width: 90%;
         position: relative;
     }
+    .tool-cacu .form-group #hinhThucTraNo {
+        width: 100%;
+    }
+    .tool-cacu .form-horizontal .form-group {
+        margin-right: -10px;
+        margin-left: -10px;
+    }
 }
 @media (max-width: 985px) {
     .listing-contai {
@@ -13776,8 +13787,7 @@ ul.cardList li {
         display: block;
         position: static;
         margin: 0;
-        height: 20px;
-        width: 13px;
+        font-size: 25px;
     }
     .tbl-wrap .swiper-button-prev,
     .tbl-wrap .swiper-button-next {
