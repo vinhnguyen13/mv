@@ -10,6 +10,9 @@ use frontend\models\User;
 $count_data = count($data) > 0 ? count($data) : 0;
 $last_key = count($data) - 1;
 if($count_data > 0) {
+?>
+    <ul class="clearfix listContact">
+    <?php
     foreach ($data as $key => $val) {
         $product = Yii::$app->db->cache(function() use($val){
             return \vsoft\ad\models\AdProduct::findOne($val["id"]);
@@ -23,5 +26,6 @@ if($count_data > 0) {
             </a>
         </li>
         <?php
-    }
-} ?>
+    }?>
+    </ul>
+<?php } ?>

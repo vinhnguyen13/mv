@@ -35,8 +35,8 @@ use yii\helpers\Url;
                         <li class="chk_listing">
                             <label for="listing"><input type="checkbox" name="toggle-chart" value="" id="listing" checked><?=Yii::t('report','Listing')?></label>
                         </li>
-                        <li style="display: none;">
-                            <label for="transaction"><input type="checkbox" name="toggle-chart" value="" id="transaction"><?=Yii::t('report','Transaction')?></label>
+                        <li class="chk_transaction">
+                            <label for="transaction"><input type="checkbox" name="toggle-chart" value="" id="transaction" checked><?=Yii::t('report','Transaction')?></label>
                         </li>
                     </ul>
         		</div>
@@ -45,7 +45,7 @@ use yii\helpers\Url;
     </div>
 </div>
 
-<div class="modal fade popup-common" id="frmListVisit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade popup-common tkReport" id="frmListVisit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header title-popup clearfix">
