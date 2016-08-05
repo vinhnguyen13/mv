@@ -81,7 +81,7 @@ if(!empty($event)) {
                 $('.btn-coupon').click(function () {
                     $('#coupon-dialog .inner-popup .alert').remove();
                     $('#coupon-dialog').modal('toggle');
-                    $('#coupon-dialog .modal-dialog').css('width', '700px');
+                    //$('#coupon-dialog .modal-dialog').css('width', '700px');
                 });
                 $(document).on('click', '#coupon-dialog .coupon', function (e) {
                     $('.input-couple').loading({full: false});
