@@ -60,7 +60,7 @@ if(!empty($event) && !Yii::$app->user->isGuest) {
                 $('.popup-common').appendTo('body');
                 $('#coupon-dialog .inner-popup .alert').remove();
                 $('#coupon-dialog').modal('toggle');
-                $('#coupon-dialog .modal-dialog').css('width', '700px');
+                //$('#coupon-dialog .modal-dialog').css('width', '700px');
                 $(document).on('click', '#coupon-dialog .coupon', function (e) {
                     $('.input-couple').loading({full: false});
                     $('#coupon-dialog .inner-popup .alert').remove();
