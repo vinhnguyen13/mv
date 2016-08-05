@@ -17,6 +17,7 @@ use yii\web\Controller;
 use yii\data\ActiveDataProvider;
 use vsoft\craw\models\AdProductSearch;
 use yii\widgets\LinkPager;
+use vsoft\craw\models\AdProductSearch2;
 
 class ManagerController extends Controller {
 	public function actionIndex() {
@@ -28,6 +29,16 @@ class ManagerController extends Controller {
 			'filterModel' => $adProduct,
 			'dataProvider' => $provider,
             'import' => $import
+		]);
+	}
+	
+	public function actionIndex2() {
+		$searchModel = new AdProductSearch2();
+		$dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+		
+		return $this->render('index2', [
+			'searchModel' => $searchModel,
+			'dataProvider' => $dataProvider
 		]);
 	}
 
