@@ -10,6 +10,9 @@ use frontend\models\User;
 $count_data = count($data) > 0 ? count($data) : 0;
 $last_key = count($data) - 1;
 if($count_data > 0) {
+    ?>
+    <ul class="clearfix listContact">
+    <?php
     foreach ($data as $key => $val) {
         $user_id = $val["id"];
         $user = Yii::$app->db->cache(function() use($user_id){
@@ -33,5 +36,6 @@ if($count_data > 0) {
             </div>
         </li>
         <?php
-    }
-} ?>
+    }?>
+    </ul>
+<?php } ?>

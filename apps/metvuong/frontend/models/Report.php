@@ -45,6 +45,9 @@ class Report extends Component
             $dataListing = array_map(function($v){
                 return ['y'=>0, 'date'=>$v, 'type'=>self::TYPE_LISTING];
             },$dateRange);
+            $dataTransaction = array_map(function($v){
+                return ['y'=>0, 'date'=>$v, 'type'=>self::TYPE_TRANSACTION];
+            },$dateRange);
             /**
              * user register
              */
@@ -110,6 +113,22 @@ class Report extends Component
                 $kDate = array_search($item['today'], $dateRange);
                 $dataListing[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_LISTING];
             }
+
+            /**
+             * Transaction
+             */
+            $month_year = new \yii\db\Expression("DATE_FORMAT(FROM_UNIXTIME(`created_at`), '%d/%m/%Y')");
+            $query = new Query();
+            $query->select(['count(*) total', $month_year." today"])->from('ec_transaction_history')
+                ->where(['>', 'created_at', $from])
+                ->andWhere(['<', 'created_at', $to])
+                ->groupBy('today')->orderBy('created_at DESC');
+            $stats_transaction = $query->all();
+            foreach($stats_transaction as $item){
+                $totalListing += $item['total'];
+                $kDate = array_search($item['today'], $dateRange);
+                $dataTransaction[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_TRANSACTION];
+            }
             /**
              * load data to chart
              */
@@ -128,6 +147,11 @@ class Report extends Component
                 'name' => 'Listing',
                 'color' => '#a94442',
                 'data' => $dataListing
+            ];
+            $dataChart[3] = [
+                'name' => 'Transaction',
+                'color' => '#8a6d3b',
+                'data' => $dataTransaction
             ];
             return ['categories'=>$categories, 'dataChart'=>$dataChart];
         }
@@ -180,6 +204,15 @@ class Report extends Component
                     ->where(['>', 'created_at', $from])
                     ->andWhere(['<', 'created_at', $to])
                     ->andWhere('ip IS NOT NULL')
+                    ->orderBy('created_at DESC');
+                $stats_listing = $query->all();
+                return $stats_listing;
+                break;
+            case Report::TYPE_TRANSACTION;
+                $query = new Query();
+                $query->select(['id'])->from('ec_transaction_history')
+                    ->where(['>', 'created_at', $from])
+                    ->andWhere(['<', 'created_at', $to])
                     ->orderBy('created_at DESC');
                 $stats_listing = $query->all();
                 return $stats_listing;

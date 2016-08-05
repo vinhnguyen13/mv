@@ -61,19 +61,19 @@ class ReportController extends Controller
             switch($type){
                 case Report::TYPE_REGISTER;
                     $viewItem = 'list-user';
-                    $data = Report::me()->chartDetail($type, $date);
                     break;
                 case Report::TYPE_LOGIN;
                     $viewItem = 'list-user';
-                    $data = Report::me()->chartDetail($type, $date);
                     break;
                 case Report::TYPE_LISTING;
                     $viewItem = 'list-listing';
-                    $data = Report::me()->chartDetail($type, $date);
+                    break;
+                case Report::TYPE_TRANSACTION;
+                    $viewItem = 'list-transaction';
                     break;
             }
-            return $this->renderAjax('default/_partials/list-items', [
-                'viewItem'=>$viewItem,
+            $data = Report::me()->chartDetail($type, $date);
+            return $this->renderAjax('default/_partials/'.$viewItem, [
                 'data'=>$data,
             ]);
         }
