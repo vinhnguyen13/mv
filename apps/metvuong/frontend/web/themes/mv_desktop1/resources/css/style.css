@@ -1785,6 +1785,11 @@ margin-bottom: 0;
     height: 100%;
     background-position: -43px -1px;
 }
+.tkReport .modal-header .close span {
+    width: 21px;
+    height: 21px;
+    background-position: 0px -1141px;
+}
 .infor-user {
     background-color: #f5f5f5;
     padding: 20px 0;
