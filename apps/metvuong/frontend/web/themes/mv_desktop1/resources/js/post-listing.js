@@ -249,14 +249,15 @@ $(document).ready(function(){
 			
 			previewButton.addClass('disabled');
 		};
-
-		self.fileuploadcommon = function() {
+		self.fileuploadalways = function(e, data, instance) {
 			self.waitingUpload--;
 			
 			if(self.waitingUpload == 0) {
 				previewButton.removeClass('disabled');
 			}
-			
+		};
+		
+		self.fileuploadcommon = function() {
 			form.files.sortable('refreshPositions');
 			
 			point.calc();
