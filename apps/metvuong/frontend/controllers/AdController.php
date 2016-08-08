@@ -100,7 +100,7 @@ class AdController extends Controller
 	public function autoSaveImage($addImages, $productId) {
 		$helper = new AdImageHelper();
 		
-		$tempFolder = $helper->getTempFolderPath(Yii::createObject(Session::className())->getId());
+		$tempFolder = $helper->getTempFolderPath(\Yii::$app->session->id);
 		
 		$helper->adFolderName = 'auto-save';
 		
@@ -202,7 +202,7 @@ class AdController extends Controller
     		} else {
     			$helper = new AdImageHelper();
     			
-    			$sessionFolder = Yii::createObject(Session::className())->getId();
+    			$sessionFolder = \Yii::$app->session->id;
     			$tempFolder = $helper->getTempFolderPath($sessionFolder);
     			
     			if(!file_exists($tempFolder)) {
@@ -234,7 +234,7 @@ class AdController extends Controller
     	
     	$helper = new AdImageHelper();
     	
-    	$sessionFolder = Yii::createObject(Session::className())->getId();
+    	$sessionFolder = \Yii::$app->session->id;
     	 
     	$tempFolder = $helper->getTempFolderPath($sessionFolder);
     	
@@ -594,7 +594,7 @@ class AdController extends Controller
     					
     					if($addImages) {
     						$helper = new AdImageHelper();
-    						$tempFolder = $helper->getTempFolderPath(Yii::createObject(Session::className())->getId());
+    						$tempFolder = $helper->getTempFolderPath(\Yii::$app->session->id);
     						
     						$now = time();
     						
@@ -694,7 +694,7 @@ class AdController extends Controller
     			
     			if(!empty($post['images'])) {
     				$helper = new AdImageHelper();
-    				$tempFolder = $helper->getTempFolderPath(Yii::createObject(Session::className())->getId());
+    				$tempFolder = $helper->getTempFolderPath(\Yii::$app->session->id);
     				
     				$now = time();
     				
