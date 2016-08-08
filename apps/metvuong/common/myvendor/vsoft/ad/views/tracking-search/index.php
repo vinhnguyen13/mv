@@ -45,14 +45,14 @@ $sourceDropDown = [
     TrackingSearch::FROM_DIRECT => 'Vào trực tiếp',
 ];
 ?>
-<div style="position: relative; z-index: 1;">
-	<a style="font-size: 20px; display: inline-block;" href="<?= Url::to(['/ad/tracking-search']) ?>">Show all</a>
-	<span style="margin: 12px;"></span>
-	<a style="font-size: 20px; display: inline-block;" href="<?= Url::to(['/ad/tracking-search/group']) ?>">Group theo đối tượng</a>
-</div>
 <div class="cms-show-index">
 	<div style="text-align: center; width: 100%; position: absolute; top: -20px;">
-		<a style="font-size: 20px; display: inline-block; margin-top: 22px;" href="<?= Url::to(['/ad/tracking-search']) ?>">Reset filter</a>
+		<div style="float: left; margin-top: 26px;">
+			<a style="font-size: 20px; display: inline-block;" href="<?= Url::to(['/ad/tracking-search']) ?>">Show all</a>
+			<span style="margin: 12px;"></span>
+			<a style="font-size: 20px; display: inline-block;" href="<?= Url::to(['/ad/tracking-search/group']) ?>">Group theo đối tượng</a>
+		</div>
+		<a style="margin-top: 26px; font-size: 20px; position: absolute; left: 50%; transform: translateX(-50%);" href="<?= Url::to(['/ad/tracking-search']) ?>">Reset filter</a>
 	</div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

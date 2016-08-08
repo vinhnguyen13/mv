@@ -41,12 +41,14 @@ $sourceDropDown = [
 
 $mapSort = MapSearch::mapSort();
 ?>
-<div style="position: relative; z-index: 1;">
-	<a style="font-size: 20px; display: inline-block;" href="<?= Url::to(['/ad/tracking-search']) ?>">Show all</a>
-	<span style="margin: 12px;"></span>
-	<a style="font-size: 20px; display: inline-block;" href="<?= Url::to(['/ad/tracking-search/group']) ?>">Group theo đối tượng</a>
-</div>
 <div class="cms-show-index">
+	<div style="text-align: center; width: 100%; position: absolute; top: -20px;">
+		<div style="float: left; margin-top: 28px;">
+			<a style="font-size: 20px; display: inline-block;" href="<?= Url::to(['/ad/tracking-search']) ?>">Show all</a>
+			<span style="margin: 12px;"></span>
+			<a style="font-size: 20px; display: inline-block;" href="<?= Url::to(['/ad/tracking-search/group']) ?>">Group theo đối tượng</a>
+		</div>
+	</div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
     	'filterModel' => $searchModel,
