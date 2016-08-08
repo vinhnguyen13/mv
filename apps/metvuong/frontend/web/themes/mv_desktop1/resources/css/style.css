@@ -1738,7 +1738,7 @@ margin-bottom: 0;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
-    height: 100%;
+    /* height: 100%; */
 }
 #select-area .modal-body {
     padding: 15px 40px;
@@ -8742,6 +8742,10 @@ margin-right: 5px;
         left: 0;
         margin: 0;
         height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        display: block;
+        background: #fff;
     }
     #popup_email.modal:before,
     #popup-login.modal:before,
@@ -8763,6 +8767,8 @@ margin-right: 5px;
         -moz-box-shadow: none;
         -ms-box-shadow: none;
         border: none;
+        border-radius: 0;
+        height: 100%;
     }
     .price-td,
     .price-td span {
@@ -9095,6 +9101,7 @@ margin-right: 5px;
 }
 .modal-open .modal {
     background: rgba(0, 0, 0, 0.45);
+    height: 100%;
 }
 #review-listing-post .swiper-button-next span,
 #review-listing-post .swiper-button-prev span {
