@@ -301,6 +301,7 @@ use vsoft\ad\models\AdImages;
 									'clientEvents' => [
 										'fileuploadcompleted' => 'function(e, data) {form.fileuploadcompleted(e, data, this);}',
 										'fileuploaddestroyed' => 'function(e, data) {form.fileuploaddestroyed(e, data, this);}',
+										'fileuploadadd' => 'function(e, data) {form.fileuploadadd(e, data, this);}',
 									]
 								]) ?>
 						</div>
@@ -339,6 +340,7 @@ use vsoft\ad\models\AdImages;
 						</div>
 					</div>
 					<div class="error-hint" style="display: none;"><?= Yii::t('ad', 'Có lỗi xảy ra, vui lòng kiểm tra lại: ') ?> <span id="error-fields"></span></div>
+					<div class="wait-upload-hint" style="display: none;"><?= Yii::t('ad', 'Vui lòng chờ tất cả ảnh upload xong trước khi xem lại, cảm ơn !') ?></div>
 					<div class="text-right col-xs-12 text-center">
 						<button id="preview" type="button" class="btn-common text-uper btn-bd-radius"><?= Yii::t('ad', 'Preview') ?></button>
 					</div>

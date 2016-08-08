@@ -13,6 +13,7 @@ $(document).ready(function(){
 	var priceShow = $('#price-show');
 	var priceMask = $('#priceMask');
 	var errorHint = $('.error-hint');
+	var previewButton = $('#preview');
 	
 	$('.alert-success .icon-close-icon').on('click', hideHint);
 	
@@ -225,6 +226,8 @@ $(document).ready(function(){
 			}
 		};
 		
+		self.waitingUpload = 0;
+		
 		self.fileuploadcompleted = function() {
 			if(form.files.find('.template-download').length > 1) {
 				$('#upload-hint').fadeIn();
@@ -240,8 +243,20 @@ $(document).ready(function(){
 			
 			form.fileuploadcommon();
 		};
+		
+		self.fileuploadadd = function(e, data, instance) {
+			self.waitingUpload++;
+			
+			previewButton.addClass('disabled');
+		};
 
 		self.fileuploadcommon = function() {
+			self.waitingUpload--;
+			
+			if(self.waitingUpload == 0) {
+				previewButton.removeClass('disabled');
+			}
+			
 			form.files.sortable('refreshPositions');
 			
 			point.calc();
@@ -590,20 +605,25 @@ $(document).ready(function(){
 		});
 	});
 	
-	$('#preview').click(function(){
-		if(form.validate()) {
-			errorHint.hide();
-			
-			if(projectMask.data('lat') && projectMask.data('lng')) {
-				form.setLatLng(projectMask.data('lat'), projectMask.data('lng'));
-			} else {
-				form.geoLocation(form.buildAddress());
-			}
-			
-			form.showPreview();
+	previewButton.click(function(){
+		if(previewButton.hasClass('disabled')) {
+			$('.wait-upload-hint').show();
 		} else {
-			errorHint.show();
-			form.buildErrorHint();
+			$('.wait-upload-hint').hide();
+			if(form.validate()) {
+				errorHint.hide();
+				
+				if(projectMask.data('lat') && projectMask.data('lng')) {
+					form.setLatLng(projectMask.data('lat'), projectMask.data('lng'));
+				} else {
+					form.geoLocation(form.buildAddress());
+				}
+				
+				form.showPreview();
+			} else {
+				errorHint.show();
+				form.buildErrorHint();
+			}
 		}
 	});
 	
@@ -705,6 +725,12 @@ $(document).ready(function(){
 		
 		priceMask.on('keyup', function(e){
 			calPrice();
+		}).on('keydown', function(e){
+			var self = $(this);
+			
+			if(e.keyCode === 190) {
+				self.val(self.val() + ',');
+			}
 		});
 	}
 
