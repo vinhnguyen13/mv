@@ -864,7 +864,7 @@ class ImportListing extends Component
         {
             mkdir($path, 0777, true);
         }
-        $file_last_id_name = "update_last_id.json";
+        $file_last_id_name = "update_product_info_last_id.json";
         $log = Helpers::loadLog($path, $file_last_id_name);
         $last_id = 0;
         if(!empty($log)){
@@ -872,7 +872,7 @@ class ImportListing extends Component
         }
         $sql = "(id not in (select product_id from {$db_tool_schema}.ad_product_addition_info) or id not in (select product_id from {$db_tool_schema}.ad_contact_info))";
         if($last_id > 0){
-            $sql = $sql. " and id > {$last_id}";
+            $sql = $sql. " and id < {$last_id}";
         }
 
         $query = AdProduct::find()->where($sql);
@@ -880,9 +880,10 @@ class ImportListing extends Component
         if($count_product > 0) {
             $products = $query->orderBy(['id' => SORT_DESC])->limit($limit)->all();
             $path_folder = Yii::getAlias('@console') . "/data/bds_html/";
-            $no = 1;
-            foreach ($products as $product) {
+
+            foreach ($products as $key_product => $product) {
                 $filename = $product->file_name;
+                $no = $key_product + 1;
                 print_r("\n{$no} - {$product->id}");
                 $product_file = AdProductFile::find()->where(['file' => $filename])->one();
                 if (count($product_file) > 0) {
@@ -897,7 +898,6 @@ class ImportListing extends Component
                         $product_type = strpos($product_file->path, 'nha-dat-ban') ? 1 : 2;
                         $res = $this->updateProduct($value[$filename], $product, $product_type, false, true, true, true);
                         if($res) {
-                            $no++;
                             print_r("{$res}.");
                         } else{
                             print_r(" - error.");
@@ -929,11 +929,11 @@ class ImportListing extends Component
                         $product_type = strpos($product_file->path, 'nha-dat-ban') ? 1 : 2;
                         $res = $this->updateProduct($value[$filename], $product, $product_type, false, true, true, true);
                         if($res) {
-                            $no++;
                             print_r("{$res}");
                         } else{
                             print_r(" - error.");
                         }
+
                     }
                 }
                 else {
@@ -999,13 +999,19 @@ class ImportListing extends Component
 
                     $res2 = $this->updateProduct($value[$filename], $product, $product_type, false, true, true, true);
                     if($res2) {
-                        $no++;
-                        print_r("{$res}");
+                        print_r("{$res2}");
                     } else{
                         print_r(" - error updated.");
                     }
                 }
-            }
+
+                if($no >= count($products) || $no % 100 == 0){
+                    $log['last_id'] = $product->id;
+                    $log['last_time'] = date('d M Y H:i', time());
+                    Helpers::writeLog($log, $path, $file_last_id_name);
+                }
+
+            } // end foreach
         }
     }
 

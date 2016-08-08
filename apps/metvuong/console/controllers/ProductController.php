@@ -448,24 +448,23 @@ class ProductController extends Controller {
             $last_id = (int)$log['last_id'];
         }
 
-        $limit = $this->limit == null ? 10000 : ((intval($this->limit) <= 10000 && intval($this->limit) > 0) ? intval($this->limit) : 0); // Get product main
+        $limit = $this->limit == null ? 500 : ((intval($this->limit) <= 500 && intval($this->limit) > 0) ? intval($this->limit) : 0); // Get product main
 
 //        $product_main = \vsoft\craw\models\AdProduct::find()->select(['product_main_id'])->where('product_main_id != 0')->asArray()->all();
 //        $not_in_product_main = ArrayHelper::getColumn($product_main, 'product_main_id');
 //        $duplicate = \vsoft\craw\models\AdProduct::getDb()->createCommand("select product_main_id from {$db_tool_schema}.map_product_duplicate")->queryAll();
 //        $not_in_product_duplicate = ArrayHelper::getColumn($duplicate, 'product_main_id');
         $sql = "ip is null and id not in (select product_main_id from {$db_tool_schema}.ad_product where product_main_id != 0)
-                    and id not in (select product_main_id from {$db_tool_schema}.map_product_duplicate)";
+                    and id not in (select product_main_id from {$db_tool_schema}.map_product_duplicate group by product_main_id)";
         if($last_id > 0)
             $sql = $sql. " and id > {$last_id}";
-//        $sql = "id = 17186";
-
 
         $main_products = AdProduct::find()->where($sql)
             ->orderBy(['id' => SORT_ASC])->limit($limit)->all();
 
         $count_main_products = count($main_products);
-        if($count_main_products > 0){
+        if($count_main_products > 0)
+        {
             foreach($main_products as $key => $product ){
                 $no = $key+1;
                 print_r("\n{$no} Main ID: {$product->id} ");
@@ -517,7 +516,8 @@ class ProductController extends Controller {
                     } else {
                         print_r("- Not found in AdProductFile table.");
                     }
-                } else {
+                }
+                else {
                     $sql_where = $sql_where. " and product_main_id > 0";
                     $other_products = \vsoft\craw\models\AdProduct::find()
                         ->select(['id', 'product_main_id'])
@@ -582,7 +582,7 @@ class ProductController extends Controller {
                     }
                 }
 
-                if($no >= $count_main_products || $no % 200 == 0){
+                if($no >= count($main_products) || $no % 100 == 0){
                     $log['last_id'] = $product->id;
                     $log['last_time'] = date('d M Y H:i', time());
                     Helpers::writeLog($log, $path, $file_last_id_name);
