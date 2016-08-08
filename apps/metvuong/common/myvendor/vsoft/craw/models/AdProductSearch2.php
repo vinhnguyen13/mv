@@ -29,6 +29,24 @@ class AdProductSearch2 extends AdProduct
 	public $phone_filter;
 	public $mobile_filter;
 	public $email_filter;
+	public $project_name_filter;
+	public $project_name_mask;
+	public $ward_name_filter;
+	public $ward_name_mask;
+	public $street_name_filter;
+	public $street_name_mask;
+	public $city_name_mask;
+	public $district_name_mask;
+	public $price_min;
+	public $price_max;
+	public $price_mask;
+	public $price_unit;
+	public $area_mask;
+	public $area_min;
+	public $area_max;
+	public $room_no_mask;
+	public $toilet_no_mask;
+	public $floor_no_mask;
 	
 	public $columns;
 	
@@ -96,7 +114,9 @@ class AdProductSearch2 extends AdProduct
             [['type', 'category_id', 'project_name', 'city_name', 'district_name', 'ward_name', 'street_name', 'home_no_filter',
             		'price_type', 'area_filter', 'room_no_filter', 'toilet_no_filter', 'floor_no_filter', 'facade_width_filter', 'land_width_filter',
             		'home_direction_filter', 'facade_direction_filter', 'interior_filter', 'content_filter', 'contact_name_filter', 'contact_address_filter',
-            		'phone_filter', 'mobile_filter', 'email_filter'
+            		'phone_filter', 'mobile_filter', 'email_filter', 'project_name_filter', 'project_name_mask', 'project_building_id', 'ward_id', 'ward_name_filter', 'ward_name_mask',
+            		'street_name_filter', 'street_name_mask', 'street_id', 'city_name_mask', 'city_id', 'district_name_mask', 'district_id',
+            		'price_min', 'price_max', 'price_mask', 'price_unit', 'area_mask', 'area_min', 'area_max', 'room_no_mask', 'toilet_no_mask', 'floor_no_mask'
             ], 'safe'],
         ];
     }
@@ -172,15 +192,29 @@ class AdProductSearch2 extends AdProduct
     	
     	$query->andFilterWhere(['=', 'ad_product.type', $this->type]);
     	$query->andFilterWhere(['=', 'ad_product.category_id', $this->category_id]);
-    	$query->andFilterWhere(['=', 'ad_product.price_type', $this->price_type]);
     	
+    	if($this->price_type == 2) {
+    		$unit = $this->price_unit == 1 ? 1000000000 : 1000000;
+    		
+    		if($this->price_min) {
+    			$query->andFilterWhere(['>=', 'price', $this->price_min * $unit]);
+    		}
+    		if($this->price_max) {
+    			$query->andFilterWhere(['<=', 'price', $this->price_max * $unit]);
+    		}
+    	} else {
+    		$query->andFilterWhere(['=', 'ad_product.price_type', $this->price_type]);
+    	}
     	
     	if($this->area_filter) {
     		if($this->area_filter == 1) {
     			$query->andWhere(['!=', 'area', 0]);
     			$query->andWhere(['IS NOT', 'area', NULL]);
-    		} else {
+    		} else if($this->area_filter == 2) {
     			$query->andWhere("(`area` = 0 OR `area` IS NULL)");
+    		} else {
+    			$query->andFilterWhere(['>=', 'area', $this->area_min]);
+    			$query->andFilterWhere(['<=', 'area', $this->area_max]);
     		}
     	}
     	
@@ -195,11 +229,18 @@ class AdProductSearch2 extends AdProduct
     		'contact_address_filter' => 'ad_contact_info.address',
     		'phone_filter' => 'ad_contact_info.phone',
     		'mobile_filter' => 'ad_contact_info.mobile',
-    		'email_filter' => 'ad_contact_info.email'
+    		'email_filter' => 'ad_contact_info.email',
+    		'project_name_filter' => 'ad_product.project_building_id',
+    		'ward_name_filter' => 'ad_product.ward_id',
+    		'street_name_filter' => 'ad_product.street_id'
     	];
     	foreach ($filterYesNoNull as $field => $column) {
     		if($this->$field) {
-    			$query->andWhere([($this->$field == 1 ? 'IS NOT' : 'IS'), $column, NULL]);
+    			if($this->$field == 1) {
+    				$query->andWhere(['IS NOT', $column, NULL]);
+    			} else if($this->$field == 2) {
+    				$query->andWhere(['IS', $column, NULL]);
+    			}
     		}
     	}
     	
@@ -209,15 +250,35 @@ class AdProductSearch2 extends AdProduct
     		'floor_no_filter' => 'ad_product_addition_info.floor_no'
     	];
     	foreach ($filterYesNoZero as $field => $column) {
-    		if($this->$field) {
-    			$query->andWhere([($this->$field == 1 ? '!=' : '='), $column, 0]);
+    		if($this->$field == 1) {
+    			$query->andWhere(['!=', $column, 0]);
+    		} else if($this->$field == 2) {
+    			$query->andWhere(['=', $column, 0]);
+    		} else {
+    			$mask = str_replace('_filter', '_mask', $field);
+    			$mask = $this->$mask;
+    			if($mask) {
+    				if(strpos($mask, "+") !== FALSE) {
+    					$query->andFilterWhere(['>=', $column, $mask]);
+    				} else if(strpos($this->room_no_mask, "-") !== FALSE) {
+    					$query->andFilterWhere(['<=', $column, $mask]);
+    					$query->andWhere(['!=', $column, 0]);
+    				} else {
+    					$query->andFilterWhere(['=', $column, $mask]);
+    				}
+    			}
     		}
     	}
-    	
 
     	if($this->content_filter) {
     		$query->andWhere([($this->content_filter == 1 ? '!=' : '='), 'ad_product.content', '']);
     	}
+    	
+    	$query->andFilterWhere(['=', 'ad_product.project_building_id', $this->project_building_id]);
+    	$query->andFilterWhere(['=', 'ad_product.ward_id', $this->ward_id]);
+    	$query->andFilterWhere(['=', 'ad_product.street_id', $this->street_id]);
+    	$query->andFilterWhere(['=', 'ad_product.city_id', $this->city_id]);
+    	$query->andFilterWhere(['=', 'ad_product.district_id', $this->district_id]);
     	
     	return $dataProvider;
     	/*
