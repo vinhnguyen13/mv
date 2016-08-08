@@ -294,6 +294,12 @@ $(document).ready(function() {
 		},
 		preventEnterSubmit: function(e) {
 			if(e.keyCode == 13) {
+				var childs = form.listSearchUl.children();
+				
+				if(childs.length) {
+					childs.eq(0).find('.search-item').trigger('click');
+				}
+				
 				e.preventDefault();
 				return false;
 			}
