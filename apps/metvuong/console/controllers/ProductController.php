@@ -449,13 +449,21 @@ class ProductController extends Controller {
         }
 
         $limit = $this->limit == null ? 10000 : ((intval($this->limit) <= 10000 && intval($this->limit) > 0) ? intval($this->limit) : 0); // Get product main
-        $sql = "ip is null and id not in (select product_main_id from {$db_tool_schema}.ad_product where product_main_id != 0) and id not in (select product_main_id from {$db_tool_schema}.map_product_duplicate)";
+
+//        $product_main = \vsoft\craw\models\AdProduct::find()->select(['product_main_id'])->where('product_main_id != 0')->asArray()->all();
+//        $not_in_product_main = ArrayHelper::getColumn($product_main, 'product_main_id');
+//        $duplicate = \vsoft\craw\models\AdProduct::getDb()->createCommand("select product_main_id from {$db_tool_schema}.map_product_duplicate")->queryAll();
+//        $not_in_product_duplicate = ArrayHelper::getColumn($duplicate, 'product_main_id');
+        $sql = "ip is null and id not in (select product_main_id from {$db_tool_schema}.ad_product where product_main_id != 0)
+                    and id not in (select product_main_id from {$db_tool_schema}.map_product_duplicate)";
         if($last_id > 0)
             $sql = $sql. " and id > {$last_id}";
 //        $sql = "id = 17186";
 
 
-        $main_products = AdProduct::find()->where($sql)->orderBy(['id' => SORT_ASC])->limit($limit)->all();
+        $main_products = AdProduct::find()->where($sql)
+            ->orderBy(['id' => SORT_ASC])->limit($limit)->all();
+
         $count_main_products = count($main_products);
         if($count_main_products > 0){
             foreach($main_products as $key => $product ){
@@ -529,10 +537,26 @@ class ProductController extends Controller {
 
                     if(count($other_products) > 0) {
                         foreach ($other_products as $key_other => $other_product) {
+                            $sqlCheckDuplicate = "select * from {$db_tool_schema}.map_product_duplicate where product_main_id = {$product->id}";
+                            if(empty($other_product->product_main_id))
+                                $sqlCheckDuplicate = $sqlCheckDuplicate. " and duplicate_id is null";
+                            else
+                                $sqlCheckDuplicate = $sqlCheckDuplicate. " and duplicate_id = {$other_product->product_main_id}";
+
+                            if(empty($other_product->id))
+                                $sqlCheckDuplicate = $sqlCheckDuplicate. " and tool_id is null";
+                            else
+                                $sqlCheckDuplicate = $sqlCheckDuplicate. " and tool_id = {$other_product->id}";
+
+                            $checkProductDuplicate = \vsoft\craw\models\AdProduct::getDb()->createCommand($sqlCheckDuplicate)->queryAll();
+                            if(count($checkProductDuplicate) > 0) {
+                                print_r("Duplicate inserted");
+                               continue;
+                            }
                             $recordDuplicate = [
                                 'product_main_id' => $product->id,
                                 'duplicate_id' => $other_product->product_main_id,
-                                'tool_id' => $other_product['id'],
+                                'tool_id' => $other_product->id,
                                 'is_duplicate' => 1,
                                 'created_at' => time()
                             ];
