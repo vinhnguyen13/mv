@@ -32,10 +32,10 @@ use yii\widgets\ActiveForm;
                 ])->label(false);?></td>
         </tr>
         <tr>
-            <th>Coupon Type</th>
+            <th>Coupon Limit</th>
             <td>number</td>
             <td></td>
-            <td><?= $form->field($model, 'type')->dropDownList(\vsoft\coupon\models\CouponCode::getTypes())->label(false) ?></td>
+            <td><?= $form->field($model, 'limit')->textInput(['placeholder' => Yii::t('coupon','Limit')])->label(false) ?></td>
         </tr>
         <tr>
             <th>Discount by </th>

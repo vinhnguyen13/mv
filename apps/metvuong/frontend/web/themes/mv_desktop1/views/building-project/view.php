@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Url;
+use yii\web\Request;
 use yii\web\View;
 use common\models\SlugSearch;
 
@@ -117,6 +118,8 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                             $image = \vsoft\ad\models\AdImages::defaultImage();
                         if(file_exists(Yii::getAlias('@store') . "/building-project-images/" . $investor->logo))
                             $src_img = "/store/building-project-images/" . $investor->logo;
+
+
                         ?>
                         <div class="item chudautu-infor">
                             <div class="title-section"><?=Yii::t('project', 'Investor')?></div>
@@ -138,7 +141,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                         </li>
                                         <li>
                                             <strong id=""><?=Yii::t('project','Website')?></strong>:
-                                            <span><?=empty($investor->website) ? $lbl_updating : "<a href=\"//".$investor->website."\">".$investor->website."</a>" ?></span>
+                                            <span><?=empty($investor->website) ? $lbl_updating : "<a href='#' class='investor_website' data-url='". $investor->website. "'>".$investor->website."</a>" ?></span>
                                         </li>
                                         <li>
                                             <strong id=""><?=Yii::t('project','Email')?></strong>:
@@ -344,6 +347,13 @@ echo $this->render('/ad/_partials/shareSocial',[
             $('#popup-share-social').modal('hide');
         });
 
+        $('.investor_website').click(function(){
+            var url = $(this).data('url');
+            if (!/^(?:f|ht)tps?\:\/\//.test(url)) {
+                url = "http://" + url;
+            }
+            window.location = url;
+        });
 
     });
 </script>

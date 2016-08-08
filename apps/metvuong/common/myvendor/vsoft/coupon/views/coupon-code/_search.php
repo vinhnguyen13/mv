@@ -25,7 +25,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'count') ?>
 
-    <?php // echo $form->field($model, 'type') ?>
+    <?php // echo $form->field($model, 'limit') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 

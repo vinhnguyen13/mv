@@ -8,8 +8,10 @@ use frontend\models\PasswordResetRequestForm;
 use frontend\models\ResetPasswordForm;
 use frontend\models\SignupForm;
 use frontend\models\Tracking;
+use frontend\models\User;
 use funson86\cms\models\Status;
 use vsoft\ad\models\AdCategoryGroup;
+use vsoft\coupon\models\CouponCode;
 use vsoft\news\models\CmsShow;
 use Yii;
 use yii\base\Exception;
@@ -524,5 +526,35 @@ class SiteController extends Controller
 			throw new \yii\web\ServerErrorHttpException('file access failed: permission deny');
 		}
 		return $response->send();
+	}
+
+	public function actionFindUser() {
+		$v = \Yii::$app->request->get('v');
+		$responseData = [];
+		$result = User::find()->where('username LIKE "%'.$v.'%"')->limit(10)->all();
+		if(!empty($result)) {
+			foreach ($result as $k => $item) {
+				$responseData[$k]['full_name'] = $item->username;
+				$responseData[$k]['id'] = $item->id;
+			}
+			Yii::$app->response->format = Response::FORMAT_JSON;
+			return $responseData;
+		}
+		return false;
+	}
+
+	public function actionFindCouponCode() {
+		$v = \Yii::$app->request->get('v');
+		$responseData = [];
+		$result = CouponCode::find()->where('code LIKE "%'.$v.'%"')->limit(10)->all();
+		if(!empty($result)) {
+			foreach ($result as $k => $item) {
+				$responseData[$k]['full_name'] = $item->code;
+				$responseData[$k]['id'] = $item->id;
+			}
+			Yii::$app->response->format = Response::FORMAT_JSON;
+			return $responseData;
+		}
+		return false;
 	}
 }

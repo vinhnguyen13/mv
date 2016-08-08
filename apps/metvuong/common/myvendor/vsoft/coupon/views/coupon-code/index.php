@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Yii::t('coupon', 'Create Coupon'), ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a(Yii::t('coupon', 'Create Random Coupon'), ['create-random'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a(Yii::t('coupon', 'Events'), ['/coupon/coupon-event'], ['class' => 'btn btn-info']) ?>
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -45,13 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::activeDropDownList($searchModel, 'status', \vsoft\news\models\Status::labels(),['class'=>'form-control','prompt' => 'All']),
             ],
             'count',
-            [
-                'attribute' => 'type',
-                'value' => function ($model) {
-                    return \vsoft\coupon\models\CouponCode::getTypes($model->type);
-                },
-                'filter' => Html::activeDropDownList($searchModel, 'type',  \vsoft\coupon\models\CouponCode::getTypes(),['class'=>'form-control','prompt' => 'All']),
-            ],
+            'limit',
             'amount',
             [
                 'attribute' => 'amount_type',

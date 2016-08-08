@@ -18,8 +18,115 @@ use yii\data\ActiveDataProvider;
 use vsoft\craw\models\AdProductSearch;
 use yii\widgets\LinkPager;
 use vsoft\craw\models\AdProductSearch2;
+use vsoft\craw\models\AdCategory;
+use frontend\models\Elastic;
 
 class ManagerController extends Controller {
+	
+	public function actionSearch() {
+		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		
+		$v = \Yii::$app->request->get('value');
+		$type = \Yii::$app->request->get('type');
+		
+		$params = Elastic::buildParams($v);
+		
+		$params['query']['function_score']['functions'][] = [
+			"field_value_factor" => [
+				"field" => "total_sell",
+				"modifier" => "log1p",
+				"factor" => 0.1
+			]
+		];
+		 
+		$params['query']['function_score']['functions'][] = [
+			"field_value_factor" => [
+				"field" => "total_rent",
+				"modifier" => "log1p",
+				"factor" => 0.1
+			]
+		];
+		
+		$result = Elastic::requestResult($params, Elastic::elasticUrl('/' . $type));
+		
+		$response = [];
+		
+		foreach ($result['hits']['hits'] as $hit) {
+			$response[$hit['_id']] = $hit['_source']['full_name'];
+		}
+		
+		return $response;
+	}
+	
+	public function actionExport() {
+		$fileName = "metvuong-craw.xls";
+		$filePath = \Yii::getAlias("@store") . "/" . $fileName;
+		
+		if(file_exists($filePath)) {
+			unlink($filePath);
+		}
+		
+		$query = (new AdProductSearch())->search(\Yii::$app->request->queryParams)->query;
+		
+		$query->asArray(true);
+		$query->limit = 100;
+		
+		$sep = "\t";
+		
+		Yii::$app->language = 'vi-VN';
+
+		$type = AdProduct::getAdTypes();
+		$categories = ArrayHelper::map(AdCategory::find()->asArray(true)->all(), 'id', function($item) {
+			return Yii::t('ad', $item['name']);
+		});
+		$directions = AdProductAdditionInfo::directionList();
+		
+		$part = "";
+		
+		$part .= "ID{$sep}Phân loại{$sep}Nội dung{$sep}Thuộc dự án{$sep}Số nhà{$sep}Phường/Xã{$sep}Quận/Huyện{$sep}Đường/Phố{$sep}Tỉnh/Thành{$sep}Hình thức{$sep}Diện tích(m){$sep}Giá{$sep}Mặt tiền(m){$sep}Đường vào(m){$sep}Hướng nhà{$sep}Hướng ban công{$sep}Số tầng{$sep}Số phòng ngủ{$sep}Số phòng tắm{$sep}Nội thất{$sep}Tên liên hệ{$sep}Địa chỉ{$sep}Số điện thoại{$sep}Số di động{$sep}Email{$sep}Ngày đăng tin{$sep}File Name";
+		
+		for($i = 0; true; $i += $query->limit) {
+			
+			$query->offset = $i;
+			$products = $query->all();
+			
+			foreach ($products as $product) {
+				$schema_insert = "";
+				
+				$schema_insert .= $product['id'].$sep;
+				
+				$schema_insert .= "căn hộ chung cư" . $sep;
+				
+				//$schema_insert .= Elastic::transform(mb_substr($product['content'], 0, 20, 'UTF-8')) . '...' .$sep;
+				$schema_insert .= " ".$sep;
+				
+				$schema_insert .= " " . $sep;
+				
+				$schema_insert .= " " . $sep;
+				
+			
+				$schema_insert = str_replace($sep."$", "", $schema_insert);
+				$schema_insert = preg_replace("/\r\n|\n\r|\n|\r/", " ", $schema_insert);
+				$schema_insert .= "\t";
+					
+				$part .= trim($schema_insert);
+				$part .= "\n";
+			}
+			
+			$file = fopen(\Yii::getAlias("@store") . "/$fileName", "a");
+			fwrite($file, $part);
+			
+			$part = "";
+			
+			if(count($products) < $query->limit) {
+				break;
+			}
+		}
+
+		header("Location: /store/$fileName");
+		exit();
+	}
+	
 	public function actionIndex() {
         $import = Yii::$app->request->get("import");
 		$adProduct = new AdProductSearch();

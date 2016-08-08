@@ -32,6 +32,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'end_date')->widget(\yii\jui\DatePicker::classname(), [
         'options' => ['class' => 'form-control'],
     ]) ?>
+    <?= $form->field($model, 'type')->dropDownList(\vsoft\coupon\models\CouponEvent::getTypes()) ?>
+
     <?= $form->field($model, 'status')->dropDownList(\vsoft\news\models\Status::labels()) ?>
 
     <div class="form-group">

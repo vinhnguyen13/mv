@@ -1738,7 +1738,7 @@ margin-bottom: 0;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     -ms-border-radius: 5px;
-    height: 100%;
+    /* height: 100%; */
 }
 #select-area .modal-body {
     padding: 15px 40px;
@@ -1784,6 +1784,11 @@ margin-bottom: 0;
     width: 100%;
     height: 100%;
     background-position: -43px -1px;
+}
+.tkReport .modal-header .close span {
+    width: 21px;
+    height: 21px;
+    background-position: 0px -1141px;
 }
 .infor-user {
     background-color: #f5f5f5;
@@ -4785,7 +4790,7 @@ html.mm-opening .mm-slideout {
     margin-right: 15px;
     padding: 3px 30px 2px;
 }
-.modal-dialog .icon-close,
+.modal-dialog .close .icon-close,
 .icon-close {
     background-position: 0px -1141px;
     width: 21px;
@@ -8742,6 +8747,10 @@ margin-right: 5px;
         left: 0;
         margin: 0;
         height: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        display: block;
+        background: #fff;
     }
     #popup_email.modal:before,
     #popup-login.modal:before,
@@ -8763,6 +8772,8 @@ margin-right: 5px;
         -moz-box-shadow: none;
         -ms-box-shadow: none;
         border: none;
+        border-radius: 0;
+        height: 100%;
     }
     .price-td,
     .price-td span {
@@ -9095,6 +9106,7 @@ margin-right: 5px;
 }
 .modal-open .modal {
     background: rgba(0, 0, 0, 0.45);
+    height: 100%;
 }
 #review-listing-post .swiper-button-next span,
 #review-listing-post .swiper-button-prev span {
@@ -12916,7 +12928,7 @@ ul.bankList li {
 }
 
 i.VISA, i.MASTE, i.AMREX, i.JCB, i.VCB, i.TCB, i.MB, i.VIB, i.ICB, i.EXB, i.ACB, i.HDB, i.MSB, i.NVB, i.DAB, i.SHB, i.OJB, i.SEA, i.TPB, i.PGB, i.BIDV, i.AGB, i.SCB, i.VPB, i.VAB, i.GPB, i.SGB,i.NAB,i.BAB
-{ width:80px; height:30px; display:block; background:url(https://www.nganluong.vn/webskins/skins/nganluong/checkout/version3/images/bank_logo.png) no-repeat;}
+{ width:80px; height:30px; display:block; background:url(../images/bank_logo.png) no-repeat;}
 i.MASTE { background-position:0px -31px}
 i.AMREX { background-position:0px -62px}
 i.JCB { background-position:0px -93px;}
@@ -12977,6 +12989,9 @@ ul.cardList li {
 }
 #NLpayBank table td {
     padding: 7px 0;
+}
+#NLpayBank .box-dropdown {
+    width: 100%;
 }
 .list-content li label {
     margin-bottom: 10px;

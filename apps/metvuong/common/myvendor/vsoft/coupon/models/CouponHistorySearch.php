@@ -5,12 +5,12 @@ namespace vsoft\coupon\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use vsoft\coupon\models\CouponCode;
+use vsoft\coupon\models\CouponHistory;
 
 /**
- * CouponCodeSearch represents the model behind the search form about `vsoft\coupon\models\CouponCode`.
+ * CouponHistorySearch represents the model behind the search form about `vsoft\coupon\models\CouponHistory`.
  */
-class CouponCodeSearch extends CouponCode
+class CouponHistorySearch extends CouponHistory
 {
     /**
      * @inheritdoc
@@ -18,9 +18,7 @@ class CouponCodeSearch extends CouponCode
     public function rules()
     {
         return [
-            [['id', 'cp_event_id', 'status', 'count', 'limit', 'created_at', 'updated_at', 'amount_type'], 'integer'],
-            [['amount'], 'integer', 'integerOnly' => false],
-            [['code'], 'safe'],
+            [['user_id', 'cp_code_id', 'cp_event_id', 'created_at'], 'integer'],
         ];
     }
 
@@ -42,13 +40,12 @@ class CouponCodeSearch extends CouponCode
      */
     public function search($params)
     {
-        $query = CouponCode::find();
+        $query = CouponHistory::find();
 
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
-            'sort'=> ['defaultOrder' => ['created_at'=>SORT_DESC]]
         ]);
 
         $this->load($params);
@@ -61,17 +58,11 @@ class CouponCodeSearch extends CouponCode
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'cp_code_id' => $this->cp_code_id,
             'cp_event_id' => $this->cp_event_id,
-            'status' => $this->status,
-            'count' => $this->count,
-            'limit' => $this->limit,
-            'amount' => $this->amount,
-            'amount_type' => $this->amount_type,
             'created_at' => $this->created_at,
         ]);
-
-        $query->andFilterWhere(['like', 'code', $this->code]);
 
         return $dataProvider;
     }

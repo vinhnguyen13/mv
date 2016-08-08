@@ -43,95 +43,103 @@ class CopyListing extends Component
             $sql = $sql . " and (start_date + ".AdProduct::EXPIRED.") >= unix_timestamp() ";
 
         $models = \vsoft\craw\models\AdProduct::find()
-            ->where($sql)->limit($limit)->orderBy(['id' => SORT_ASC])->all();
+            ->where($sql)->limit($limit)->orderBy(['id' => SORT_DESC])->all();
 
-        if(count($models) > 0){
+        if(count($models) > 0) {
             $no = 0;
             $helper = new AdImageHelper();
-            foreach ($models as $key=>$model) {
-                print_r("\nCopy: {$model->file_name}");
-                $productImages = $model->adImages;
-                $adProductAdditionInfo = $model->adProductAdditionInfo;
-                $adContactInfo = $model->adContactInfo;
+            $connection = AdProduct::getDb();
+            $transaction = $connection->beginTransaction();
+            try {
+                foreach ($models as $key => $model) {
+                    print_r("\nCopy: {$model->file_name}");
+                    $productImages = $model->adImages;
+                    $adProductAdditionInfo = $model->adProductAdditionInfo;
+                    if (count($adProductAdditionInfo) <= 0) {
+                        continue;
+                    }
+                    $adContactInfo = $model->adContactInfo;
+                    if (count($adContactInfo) <= 0) {
+                        continue;
+                    }
 
-                $city_id = empty($model->city_id) ? null : $model->city_id;
-                $district_id = empty($model->district_id) ? null : $model->district_id;
-                $ward_id = empty($model->ward_id) ? null : $model->ward_id;
-                $street_id = empty($model->street_id) ? null : $model->street_id;
-                $home_no = empty($model->home_no) ? null : $model->home_no;
-                $lat = empty($model->lat) ? null : $model->lat;
-                $lng = empty($model->lng) ? null : $model->lng;
+                    $city_id = empty($model->city_id) ? null : $model->city_id;
+                    $district_id = empty($model->district_id) ? null : $model->district_id;
+                    $ward_id = empty($model->ward_id) ? null : $model->ward_id;
+                    $street_id = empty($model->street_id) ? null : $model->street_id;
+                    $home_no = empty($model->home_no) ? null : $model->home_no;
+                    $lat = empty($model->lat) ? null : $model->lat;
+                    $lng = empty($model->lng) ? null : $model->lng;
 
-                $crawl_project = $model->project;
-                $project_name = $crawl_project->name;
+                    $crawl_project = $model->project;
+                    $project_name = $crawl_project->name;
 
-                $project = \vsoft\ad\models\AdBuildingProject::find()->where([
-                    'city_id' => $city_id,
-                    'district_id' => $district_id,
-                    'name' => $project_name
-                ])->one();
+                    $project = \vsoft\ad\models\AdBuildingProject::find()->where([
+                        'city_id' => $city_id,
+                        'district_id' => $district_id,
+                        'name' => $project_name
+                    ])->one();
 
-                if (count($project) > 0) { // lay address theo address project
-                    $project_id = $project->id;
-                    $city_id = empty($project->city_id) ? (empty($model->city_id) ? null : $model->city_id) : $project->city_id;
-                    $district_id = empty($project->district_id) ? (empty($model->district_id) ? null : $model->district_id) : $project->district_id;
-                    $ward_id = empty($project->ward_id) ? (empty($model->ward_id) ? null : $model->ward_id) : $project->ward_id;
-                    $street_id = empty($project->street_id) ? (empty($model->street_id) ? null : $model->street_id) : $project->street_id;
-                    $home_no = empty($project->home_no) ? (empty($model->home_no) ? null : $model->home_no) : $project->home_no;
-                    $lat = empty($project->lat) ? (empty($model->lat) ? null : $model->lat) : $project->lat;
-                    $lng = empty($project->lng) ? (empty($model->lng) ? null : $model->lng) : $project->lng;
-                    print_r(" - {$project_name} ");
-                }
+                    if (count($project) > 0) { // lay address theo address project
+                        $project_id = $project->id;
+                        $city_id = empty($project->city_id) ? (empty($model->city_id) ? null : $model->city_id) : $project->city_id;
+                        $district_id = empty($project->district_id) ? (empty($model->district_id) ? null : $model->district_id) : $project->district_id;
+                        $ward_id = empty($project->ward_id) ? (empty($model->ward_id) ? null : $model->ward_id) : $project->ward_id;
+                        $street_id = empty($project->street_id) ? (empty($model->street_id) ? null : $model->street_id) : $project->street_id;
+                        $home_no = empty($project->home_no) ? (empty($model->home_no) ? null : $model->home_no) : $project->home_no;
+                        $lat = empty($project->lat) ? (empty($model->lat) ? null : $model->lat) : $project->lat;
+                        $lng = empty($project->lng) ? (empty($model->lng) ? null : $model->lng) : $project->lng;
+                        print_r(" - {$project_name} ");
+                    }
 
-                if($city_id <= 0 || $district_id <= 0 || $ward_id <= 0 || $street_id <= 0) {
-                    continue;
-                }
+                    if ($city_id <= 0 || $district_id <= 0 || $ward_id <= 0 || $street_id <= 0) {
+                        continue;
+                    }
 
-                $content = $model->content;
-                if(empty($content)){
-                    $content = $model->address;
-                }
+                    $content = $model->content;
+                    if (empty($content)) {
+                        $content = $model->address;
+                    }
 
-                $is_expired = 0;
-                $end_date = $model->start_date + AdProduct::EXPIRED;
-                if($end_date < time()) {
-                    $is_expired = 1;
-                    print_r(" - expired");
-                }
+                    $is_expired = 0;
+                    $end_date = $model->start_date + AdProduct::EXPIRED;
+                    if ($end_date < time()) {
+                        $is_expired = 1;
+                        print_r(" - expired");
+                    }
 
-                $record = [
-                    'category_id' => $model->category_id,
-                    'project_building_id' => empty($project_id) ? null : $project->id,
-                    'user_id' => empty($model->user_id) ? null : $model->user_id,
-                    'home_no' => $home_no,
-                    'city_id' => $city_id,
-                    'district_id' => $district_id,
-                    'ward_id' => $ward_id,
-                    'street_id' => $street_id,
-                    'type' => $model->type,
-                    'content' => $content,
-                    'area' => $model->area,
-                    'price' => $model->price,
-                    'price_type' => $model->price_type,
-                    'lat' => $lat,
-                    'lng' => $lng,
-                    'start_date' => $model->start_date,
-                    'end_date' => $end_date,
-                    'verified' => 1,
-                    'created_at' => $model->created_at,
-                    'updated_at' => $model->created_at,
-                    'source' => $model->source,
-                    'status' => 1,
-                    'is_expired' => $is_expired
-                ];
+                    $record = [
+                        'category_id' => $model->category_id,
+                        'project_building_id' => empty($project_id) ? null : $project->id,
+                        'user_id' => empty($model->user_id) ? null : $model->user_id,
+                        'home_no' => $home_no,
+                        'city_id' => $city_id,
+                        'district_id' => $district_id,
+                        'ward_id' => $ward_id,
+                        'street_id' => $street_id,
+                        'type' => $model->type,
+                        'content' => $content,
+                        'area' => $model->area,
+                        'price' => $model->price,
+                        'price_type' => $model->price_type,
+                        'lat' => $lat,
+                        'lng' => $lng,
+                        'start_date' => $model->start_date,
+                        'end_date' => $end_date,
+                        'verified' => 1,
+                        'created_at' => $model->created_at,
+                        'updated_at' => $model->created_at,
+                        'source' => $model->source,
+                        'status' => 1,
+                        'is_expired' => $is_expired
+                    ];
 
-                try {
                     // download images truoc khi tao product
                     $arrImage = [];
                     if (isset($productImages) && count($productImages) > 0 && $is_expired == 0) {
                         $sessionName = uniqid();
-                        $tempFolder = Yii::getAlias('@store') . "/" . $helper->tempFolderName . "/{$this->copyListingFolder}/" . $sessionName. "/";
-                        if(!is_dir($tempFolder)) {
+                        $tempFolder = Yii::getAlias('@store') . "/" . $helper->tempFolderName . "/{$this->copyListingFolder}/" . $sessionName . "/";
+                        if (!is_dir($tempFolder)) {
                             mkdir($tempFolder, 0777, true);
                         }
                         foreach ($productImages as $key_image => $image) {
@@ -153,8 +161,7 @@ class CopyListing extends Component
 
                         // update ad_product_file
                         $product_file = AdProductFile::find()->where(['file' => $model->file_name])->one();
-                        if($product_file)
-                        {
+                        if ($product_file) {
                             $product_file->is_copy = 1;
                             $product_file->copied_at = time();
                             $product_file->product_main_id = $last_product_id;
@@ -205,7 +212,7 @@ class CopyListing extends Component
                                     $resultImage = $arrImage[$key_image];
                                     $file_image = isset($resultImage[0]) && !empty($resultImage[0]) ? $resultImage[0] : null;
                                     $folderColumn = isset($resultImage[1]) && !empty($resultImage[1]) ? $resultImage[1] : null;
-                                    if(empty($file_image) && empty($folderColumn))
+                                    if (empty($file_image) && empty($folderColumn))
                                         continue;
 
                                     $imageRecord = [
@@ -216,10 +223,10 @@ class CopyListing extends Component
                                         'folder' => $folderColumn
                                     ];
                                     $adImage = new AdImages($imageRecord);
-                                    if($adImage->save(false)){
+                                    if ($adImage->save(false)) {
                                         $oldFolder = isset($resultImage[2]) && !empty($resultImage[2]) ? $resultImage[2] : null;
-                                        $newFolder = Yii::getAlias('@store'). "/". $folderColumn;
-                                        if(!is_dir($newFolder)) {
+                                        $newFolder = Yii::getAlias('@store') . "/" . $folderColumn;
+                                        if (!is_dir($newFolder)) {
                                             mkdir($newFolder, 0777, true);
                                         }
                                         $helper->makeFolderSizes($newFolder);
@@ -229,7 +236,7 @@ class CopyListing extends Component
                             }
                         }
 
-                        if($is_expired == 0) {
+                        if ($is_expired == 0) {
                             $product->insertEs(); // insert elastic
                         }
 
@@ -240,22 +247,17 @@ class CopyListing extends Component
                         }
                         $no++;
                     }
-                } catch (Exception $e) {
-                    throw $e;
-                }
-
-            } // end foreach models
+                } // end foreach models
+                $transaction->commit();
+            } catch (Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            } // end try-catch block
 
             $copylisting_folder = Yii::getAlias('@store') . "/" . $helper->tempFolderName . "/{$this->copyListingFolder}";
-            if(is_dir($copylisting_folder)){
+            if (is_dir($copylisting_folder)) {
                 $this->removeDirectory($copylisting_folder);
             }
-
-            /**
-             * Ham lưu elastic by Lệnh
-             */
-//            Elastic::insertProducts(\Yii::$app->params['indexName']['product'], Elastic::$productEsType, $arrElastic);
-//            Elastic::countProducts($arrElastic);
 
         } else {
             print_r("\nNot found new product. Please, try again!");

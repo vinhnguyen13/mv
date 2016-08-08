@@ -32,7 +32,7 @@ class CouponHistory extends CouponHistoryBase
                 if(!empty($history)){
                     return ['error_code'=>1, 'error_message'=>Yii::t('coupon', 'You used this code')];
                 }
-                if ($coupon->type == 1 && $coupon->count >= 1) {
+                if (!$coupon->check()) {
                     return ['error_code'=>1, 'error_message'=>Yii::t('coupon', 'This code is used')];
                 }
 
@@ -61,6 +61,6 @@ class CouponHistory extends CouponHistoryBase
 
     public function getCouponCode()
     {
-        return $this->hasOne(CouponCode::className(), ['id' => 'cp_event_id']);
+        return $this->hasOne(CouponCode::className(), ['id' => 'cp_code_id']);
     }
 }

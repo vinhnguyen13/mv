@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="coupon-event-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) ?> <?= Html::a(Yii::t('coupon', 'List codes'), ['/coupon/coupon-code', 'CouponCodeSearch[cp_event_id]'=>$model->id], ['class' => 'btn btn-info']) ?></h1>
 
     <p>
         <?= Html::a(Yii::t('coupon', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
+
     </p>
 
     <?= DetailView::widget([
@@ -34,6 +35,10 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'status',
                 'value' => \vsoft\news\models\Status::labels($model->status)
+            ],
+            [
+                'attribute' => 'type',
+                'value' => \vsoft\coupon\models\CouponEvent::getTypes($model->type)
             ],
             [
                 'attribute' => 'created_at',

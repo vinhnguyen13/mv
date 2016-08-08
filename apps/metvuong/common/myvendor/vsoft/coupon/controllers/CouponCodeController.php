@@ -2,7 +2,9 @@
 
 namespace vsoft\coupon\controllers;
 
+use frontend\models\Payment;
 use vsoft\coupon\models\Coupon;
+use vsoft\coupon\models\CouponHistory;
 use Yii;
 use vsoft\coupon\models\CouponCode;
 use vsoft\coupon\models\CouponCodeSearch;
@@ -110,16 +112,15 @@ class CouponCodeController extends Controller
                 $code = CouponCode::generateCodeExists($coupon_code, $length, $prefix, $suffix, $numbers, $letters, $symbols, $random_register, $mask);
                 if(!empty($code)){
                     $event_id = (isset($post["CouponCode"]["cp_event_id"])) ? intval($post["CouponCode"]["cp_event_id"]) : 0;
-                    $type = (isset($post["CouponCode"]["type"])) ? intval($post["CouponCode"]["type"]) : 2;
+                    $limit = (isset($post["CouponCode"]["limit"])) ? intval($post["CouponCode"]["limit"]) : 2;
                     $amount = (isset($post["CouponCode"]["amount"])) ? intval($post["CouponCode"]["amount"]) : 0;
                     $amount_type = (isset($post["CouponCode"]["amount_type"])) ? intval($post["CouponCode"]["amount_type"]) : 1;
                     $model = new CouponCode();
                     $model->code = $code;
                     $model->cp_event_id = $event_id;
-                    $model->type = $type;
+                    $model->limit = $limit;
                     $model->amount = $amount;
                     $model->amount_type = $amount_type;
-                    $model->type = $type;
                     $model->save(false);
                 }
             }
@@ -178,5 +179,31 @@ class CouponCodeController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionPromotion()
+    {
+        $model = new CouponCode();
+        if (Yii::$app->request->isPost) {
+            $user_id = \Yii::$app->request->post('user_id');
+            $code_id = \Yii::$app->request->post('code_id');
+            $cpCode = CouponCode::findOne($code_id);
+            if(!empty($cpCode)){
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                $res = CouponHistory::checkCoupon($user_id, $cpCode->code);
+                if (!empty($res['error_code'] == 0) && !empty($res['result']->couponCode->amount)) {
+                    Payment::me()->processTransactionByCoupon($user_id, $res['result']);
+                    return ['error_code'=>0, 'result'=>Yii::t('coupon', 'Thank you for using coupon')];
+                }else if($res['error_message']){
+                    return ['error_code'=>2, 'error_message'=>$res['error_message']];
+                }
+            }
+            return ['error_code'=>2, 'error_message'=>'Not found !'];
+        } else {
+            return $this->render('promotion', [
+                'model' => $model,
+            ]);
+        }
+
     }
 }

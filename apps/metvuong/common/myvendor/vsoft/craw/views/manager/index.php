@@ -328,6 +328,7 @@ $projectList = ArrayHelper::map(\vsoft\craw\models\AdBuildingProject::find()->wh
     <?php if($import == 'true'){?>
     <a href="<?= Url::to(['/craw/manager/import', 'totalCount' => $dataProvider->totalCount, 'page' => 1, 'filter' => json_encode(Yii::$app->request->queryParams)]) ?>" class="btn btn-success">Import</a>
     <?php } ?>
+    <a href="<?= Url::to(array_merge(['/craw/manager/export'], Yii::$app->request->get())) ?>" class="btn btn-success">Export to Excel</a>
 </div>
 <div id="file-info" class="modal fade popup-common" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">

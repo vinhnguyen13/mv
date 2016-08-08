@@ -13,6 +13,7 @@ $(document).ready(function(){
 	var priceShow = $('#price-show');
 	var priceMask = $('#priceMask');
 	var errorHint = $('.error-hint');
+	var previewButton = $('#preview');
 	
 	$('.alert-success .icon-close-icon').on('click', hideHint);
 	
@@ -240,7 +241,7 @@ $(document).ready(function(){
 			
 			form.fileuploadcommon();
 		};
-
+		
 		self.fileuploadcommon = function() {
 			form.files.sortable('refreshPositions');
 			
@@ -590,20 +591,25 @@ $(document).ready(function(){
 		});
 	});
 	
-	$('#preview').click(function(){
-		if(form.validate()) {
-			errorHint.hide();
-			
-			if(projectMask.data('lat') && projectMask.data('lng')) {
-				form.setLatLng(projectMask.data('lat'), projectMask.data('lng'));
-			} else {
-				form.geoLocation(form.buildAddress());
-			}
-			
-			form.showPreview();
+	previewButton.click(function(){
+		if(form.files.find('.template-upload').length > 0) {
+			$('.wait-upload-hint').show();
 		} else {
-			errorHint.show();
-			form.buildErrorHint();
+			$('.wait-upload-hint').hide();
+			if(form.validate()) {
+				errorHint.hide();
+				
+				if(projectMask.data('lat') && projectMask.data('lng')) {
+					form.setLatLng(projectMask.data('lat'), projectMask.data('lng'));
+				} else {
+					form.geoLocation(form.buildAddress());
+				}
+				
+				form.showPreview();
+			} else {
+				errorHint.show();
+				form.buildErrorHint();
+			}
 		}
 	});
 	
@@ -705,6 +711,12 @@ $(document).ready(function(){
 		
 		priceMask.on('keyup', function(e){
 			calPrice();
+		}).on('keydown', function(e){
+			var self = $(this);
+			
+			if(e.keyCode === 190) {
+				self.val(self.val() + ',');
+			}
 		});
 	}
 
