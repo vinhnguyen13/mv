@@ -8,6 +8,7 @@ use frontend\models\User;
 use vsoft\ad\models\AdProduct;
 use vsoft\coupon\models\Coupon;
 use vsoft\coupon\models\CouponCode;
+use vsoft\coupon\models\CouponEvent;
 use vsoft\ec\models\base\EcTransactionHistoryBase;
 use Yii;
 
@@ -183,8 +184,10 @@ class EcTransactionHistory extends EcTransactionHistoryBase
                 break;
             case self::OBJECT_TYPE_GET_KEYS_FROM_COUPON:
                 $object = CouponCode::findOne(['id'=>$this->object_id]);
-                if($object){
+                if(!empty($object->couponEvent) && $object->couponEvent->type == CouponEvent::TYPE_PUBLIC){
                     return Yii::t('ec', 'Get {amount} Keys from coupon by code {code}', ['amount'=>$object->amount, 'code'=>$object->code]);
+                }elseif(!empty($object->couponEvent) && $object->couponEvent->type == CouponEvent::TYPE_SYSTEM){
+                    return Yii::t('ec', 'Get {amount} Keys from MetVuong system', ['amount'=>$object->amount, 'code'=>$object->code]);
                 }
                 break;
 
