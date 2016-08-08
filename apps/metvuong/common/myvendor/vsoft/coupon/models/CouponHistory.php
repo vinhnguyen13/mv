@@ -61,6 +61,6 @@ class CouponHistory extends CouponHistoryBase
 
     public function getCouponCode()
     {
-        return $this->hasOne(CouponCode::className(), ['id' => 'cp_event_id']);
+        return $this->hasOne(CouponCode::className(), ['id' => 'cp_code_id']);
     }
 }

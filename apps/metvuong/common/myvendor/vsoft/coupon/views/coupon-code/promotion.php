@@ -20,7 +20,6 @@ $this->registerCssFile(Yii::getAlias('@web') . '/css/select2.min.css');
     <div class="form-group">
         <?= Html::submitButton(Yii::t('coupon', 'Submit'), ['class' => 'btn btn-primary']) ?>
     </div>
-
     <?php ActiveForm::end(); ?>
 
 </div>
@@ -84,7 +83,15 @@ $this->registerCssFile(Yii::getAlias('@web') . '/css/select2.min.css');
         $(document).on('click', '.btn-primary', function (e) {
             var _this = $(this);
             _this.html('Loading......');
+            if($('.message').length > 0){
+                $('.message').remove();
+            }
             $.post('<?=\yii\helpers\Url::to(['/coupon/coupon-code/promotion'])?>', $('#frmCP').serialize(), function (response) {
+                if(response.error_code == 0){
+                    _this.parent().append('<p class="message alert alert-info">'+response.result+'</p>');
+                }else{
+                    _this.parent().append('<p class="message alert alert-danger">'+response.error_message+'</p>');
+                }
                 _this.html('Submit');
             }).fail(function(response) {
                 alert('L?u không thành công !');
