@@ -97,7 +97,7 @@ $columns = [
     	},
 		'filter' =>	Html::activeDropDownList($searchModel, 'price_type', ['1' => 'Có', '0' => 'Không', '2' => 'Lọc theo range'], ['data-max' => 2, 'class' => 'form-control filter-type-2', 'prompt' => 'Tất cả', 'style' => $searchModel->price_type == 2 ? 'display: none;' : '']) .
 					'<div class="mask-wrap price-wrap range-wrap"' . ($searchModel->price_type != 2 ? ' style="display: none"' : '') . '>' .
-					Html::activeTextInput($searchModel, 'price_mask', ['class' => 'form-control search-range search', 'data-type' => 'street', 'readonly' => true]) .
+					Html::activeTextInput($searchModel, 'price_mask', ['class' => 'form-control search-range search', 'style' => 'width: 110px;', 'readonly' => true]) .
 					'<span class="mask-close">x</span><div class="range">' .
 					Html::activeTextInput($searchModel, 'price_min', ['class' => 'form-control range-value range-min', 'placeholder' => 'min']) . ' - ' .
 					Html::activeTextInput($searchModel, 'price_max', ['class' => 'form-control range-value range-max', 'placeholder' => 'max']) . ' ' .
