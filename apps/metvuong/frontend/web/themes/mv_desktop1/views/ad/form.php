@@ -300,9 +300,7 @@ use vsoft\ad\models\AdImages;
 									],
 									'clientEvents' => [
 										'fileuploadcompleted' => 'function(e, data) {form.fileuploadcompleted(e, data, this);}',
-										'fileuploaddestroyed' => 'function(e, data) {form.fileuploaddestroyed(e, data, this);}',
-										'fileuploadalways' => 'function(e, data) {form.fileuploadalways(e, data, this);}',
-										'fileuploadadd' => 'function(e, data) {form.fileuploadadd(e, data, this);}',
+										'fileuploaddestroyed' => 'function(e, data) {form.fileuploaddestroyed(e, data, this);}'
 									]
 								]) ?>
 						</div>

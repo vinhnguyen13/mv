@@ -226,8 +226,6 @@ $(document).ready(function(){
 			}
 		};
 		
-		self.waitingUpload = 0;
-		
 		self.fileuploadcompleted = function() {
 			if(form.files.find('.template-download').length > 1) {
 				$('#upload-hint').fadeIn();
@@ -242,19 +240,6 @@ $(document).ready(function(){
 			}
 			
 			form.fileuploadcommon();
-		};
-		
-		self.fileuploadadd = function(e, data, instance) {
-			self.waitingUpload++;
-			
-			previewButton.addClass('disabled');
-		};
-		self.fileuploadalways = function(e, data, instance) {
-			self.waitingUpload--;
-			
-			if(self.waitingUpload == 0) {
-				previewButton.removeClass('disabled');
-			}
 		};
 		
 		self.fileuploadcommon = function() {
@@ -607,7 +592,7 @@ $(document).ready(function(){
 	});
 	
 	previewButton.click(function(){
-		if(previewButton.hasClass('disabled')) {
+		if(form.files.find('.template-upload').length > 0) {
 			$('.wait-upload-hint').show();
 		} else {
 			$('.wait-upload-hint').hide();
