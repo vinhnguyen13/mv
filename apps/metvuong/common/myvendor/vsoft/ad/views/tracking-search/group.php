@@ -14,7 +14,7 @@ use yii\db\Query;
 /* @var $searchModel app\models\CmsShowSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->registerCss('table td{padding: 2px 10px;} .separator {margin: 0 8px;} .summary {position: absolute; right: 0px; top: -20px;} .cms-show-index {padding-top: 40px; position: relative;} .filter-col {margin-right: 12px;} .container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 28px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;}');
+$this->registerCss('table td{padding: 2px 10px;} .separator {margin: 0 8px;} .summary {position: absolute; right: 0px; top: -20px;} .cms-show-index {padding-top: 40px; position: relative;} .filter-col {margin-right: 12px;} .container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 18px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;}');
 $this->registerJsFile(Yii::getAlias('@web') . '/js/tracking-search.js', ['depends' => ['yii\web\YiiAsset']]);
 
 $this->title = Yii::t('cms', 'Tracking Search');
@@ -43,7 +43,7 @@ $mapSort = MapSearch::mapSort();
 ?>
 <div class="cms-show-index">
 	<div style="text-align: center; width: 100%; position: absolute; top: -20px;">
-		<div style="float: left; margin-top: 28px;">
+		<div style="float: left; margin-top: 18px;">
 			<a style="font-size: 20px; display: inline-block;" href="<?= Url::to(['/ad/tracking-search']) ?>">Show all</a>
 			<span style="margin: 12px;"></span>
 			<a style="font-size: 20px; display: inline-block;" href="<?= Url::to(['/ad/tracking-search/group']) ?>">Group theo đối tượng</a>
