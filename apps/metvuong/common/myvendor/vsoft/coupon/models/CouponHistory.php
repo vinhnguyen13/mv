@@ -32,7 +32,7 @@ class CouponHistory extends CouponHistoryBase
                 if(!empty($history)){
                     return ['error_code'=>1, 'error_message'=>Yii::t('coupon', 'You used this code')];
                 }
-                if ($coupon->limit == 1 && $coupon->count >= 1) {
+                if (!$coupon->check()) {
                     return ['error_code'=>1, 'error_message'=>Yii::t('coupon', 'This code is used')];
                 }
 

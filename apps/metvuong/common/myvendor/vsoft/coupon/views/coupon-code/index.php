@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a(Yii::t('coupon', 'Create Coupon'), ['create'], ['class' => 'btn btn-success']) ?>
         <?= Html::a(Yii::t('coupon', 'Create Random Coupon'), ['create-random'], ['class' => 'btn btn-info']) ?>
+        <?= Html::a(Yii::t('coupon', 'Events'), ['/coupon/coupon-event'], ['class' => 'btn btn-info']) ?>
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,

@@ -34,6 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'status',
             'count',
             'limit',
+            'amount',
             'created_at',
             'updated_at',
         ],

@@ -2,7 +2,9 @@
 
 namespace vsoft\coupon\controllers;
 
+use frontend\models\Payment;
 use vsoft\coupon\models\Coupon;
+use vsoft\coupon\models\CouponHistory;
 use Yii;
 use vsoft\coupon\models\CouponCode;
 use vsoft\coupon\models\CouponCodeSearch;
@@ -177,5 +179,31 @@ class CouponCodeController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function actionPromotion()
+    {
+        $model = new CouponCode();
+        if (Yii::$app->request->isPost) {
+            $user_id = \Yii::$app->request->post('user_id');
+            $code_id = \Yii::$app->request->post('code_id');
+            $cpCode = CouponCode::findOne($code_id);
+            if(!empty($cpCode)){
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                $res = CouponHistory::checkCoupon($user_id, $cpCode->code);
+                if (!empty($res['error_code'] == 0) && !empty($res['result']->couponCode->amount)) {
+                    Payment::me()->processTransactionByCoupon(Yii::$app->user->id, $res['result']);
+                    return ['error_code'=>0, 'result'=>Yii::t('coupon', 'Thank you for using coupon')];
+                }else if($res['error_message']){
+                    return ['error_code'=>2, 'error_message'=>$res['error_message']];
+                }
+            }
+            return ['error_code'=>2, 'error_message'=>'Not found !'];
+        } else {
+            return $this->render('promotion', [
+                'model' => $model,
+            ]);
+        }
+
     }
 }
