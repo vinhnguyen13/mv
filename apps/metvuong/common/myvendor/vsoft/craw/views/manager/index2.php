@@ -60,13 +60,13 @@ $columns = [
     'acn' => [
     	'attribute' => 'city_name',
     	'label' => 'Tỉnh/Thành',
-    	'filter' =>	'<div class="mask-wrap">' . Html::activeTextInput($searchModel, 'city_name_mask', ['class' => 'form-control search', 'data-type' => 'city']) . '<ul class="result-search"></ul></div>' .
+    	'filter' =>	'<div class="mask-wrap">' . Html::activeTextInput($searchModel, 'city_name_mask', ['class' => 'form-control search', 'data-type' => 'city']) . '<span class="mask-close simple-close"' . (!$searchModel->city_name_mask ? ' style="display: none"' : '') . '>x</span><ul class="result-search"></ul></div>' .
     				Html::activeHiddenInput($searchModel, 'city_id')
     ],
     'adn' => [
     	'attribute' => 'district_name',
     	'label' => 'Quận/Huyện',
-    	'filter' =>	'<div class="mask-wrap">' . Html::activeTextInput($searchModel, 'district_name_mask', ['class' => 'form-control search', 'data-type' => 'district']) . '<ul class="result-search"></ul></div>' .
+    	'filter' =>	'<div class="mask-wrap">' . Html::activeTextInput($searchModel, 'district_name_mask', ['class' => 'form-control search', 'data-type' => 'district']) . '<span class="mask-close simple-close"' . (!$searchModel->district_name_mask ? ' style="display: none"' : '') . '>x</span><ul class="result-search"></ul></div>' .
     				Html::activeHiddenInput($searchModel, 'district_id')
     ],
     'awn' => [

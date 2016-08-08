@@ -121,6 +121,13 @@ $(document).ready(function(){
 		parent.find('.search-range').val('');
 	});
 	
+	$('.simple-close').on('click', function(){
+		var self = $(this);
+		var parent = self.closest('.mask-wrap');
+		parent.find('.search').val('');
+		self.hide();
+	});
+	
 	$('.mask-close').on('click', function(){
 		var self = $(this);
 		var parent = self.closest('.mask-wrap');
