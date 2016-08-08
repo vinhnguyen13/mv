@@ -12916,7 +12916,7 @@ ul.bankList li {
 }
 
 i.VISA, i.MASTE, i.AMREX, i.JCB, i.VCB, i.TCB, i.MB, i.VIB, i.ICB, i.EXB, i.ACB, i.HDB, i.MSB, i.NVB, i.DAB, i.SHB, i.OJB, i.SEA, i.TPB, i.PGB, i.BIDV, i.AGB, i.SCB, i.VPB, i.VAB, i.GPB, i.SGB,i.NAB,i.BAB
-{ width:80px; height:30px; display:block; background:url(https://www.nganluong.vn/webskins/skins/nganluong/checkout/version3/images/bank_logo.png) no-repeat;}
+{ width:80px; height:30px; display:block; background:url(../images/bank_logo.png) no-repeat;}
 i.MASTE { background-position:0px -31px}
 i.AMREX { background-position:0px -62px}
 i.JCB { background-position:0px -93px;}
@@ -12977,6 +12977,9 @@ ul.cardList li {
 }
 #NLpayBank table td {
     padding: 7px 0;
+}
+#NLpayBank .box-dropdown {
+    width: 100%;
 }
 .list-content li label {
     margin-bottom: 10px;
