@@ -79,10 +79,10 @@ class AdProductFile extends \yii\db\ActiveRecord
         return parent::beforeSave($insert);
     }
 
-    public static function checkFileExists($product_id)
+    public static function checkFileExists($file_name)
     {
-        if($product_id){
-            $count = AdProductFile::find()->where(['file' => $product_id])->count();
+        if($file_name){
+            $count = AdProductFile::find()->where(['file' => $file_name])->count();
             if($count > 0)
                 return true;
         }

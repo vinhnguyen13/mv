@@ -142,4 +142,15 @@ class Helpers
         return preg_replace($from, $to, $subject, 1);
     }
 
+    public static function getDbTool()
+    {
+        $db_tool = 'db_mv_tool';
+        $dbCraw = \Yii::$app->dbCraw;
+        if($dbCraw) {
+            $dsn = explode(";", $dbCraw->dsn);
+            $db_tool = str_replace("dbname=",'', $dsn[1]);
+        }
+        return $db_tool;
+    }
+
 }

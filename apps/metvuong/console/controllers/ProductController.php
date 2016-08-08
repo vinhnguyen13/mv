@@ -3,9 +3,11 @@ namespace console\controllers;
 
 use common\components\Slug;
 use console\models\batdongsan\Listing;
+use console\models\Helpers;
 use console\models\Metvuong;
 use vsoft\ad\models\AdImages;
 use vsoft\craw\models\AdProductFile;
+use Yii;
 use yii\console\Controller;
 use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdBuildingProject;
@@ -429,16 +431,41 @@ class ProductController extends Controller {
 
     public function actionMapProduct()
     {
-        $limit = 1000;
-        $main_products = AdProduct::find()->where("id not in (select product_main_id from db_mv_tool.ad_product where product_main_id != 0)")->orderBy(['id' => SORT_ASC])->limit($limit)->all();
-        if(count($main_products) > 0){
+        $start_time = time();
+        $count_product_duplicate = 0;
+        $count_product_not_found = 0;
+        $count_product_copied= 0;
+        $db_tool_schema = Helpers::getDbTool();
+        $path = Yii::getAlias('@console'). "/data/bds_html/map_product/";
+        if(!is_dir($path))
+        {
+            mkdir($path, 0777, true);
+        }
+        $file_last_id_name = "last_id.json";
+        $log = Helpers::loadLog($path, $file_last_id_name);
+        $last_id = 0;
+        if(!empty($log)){
+            $last_id = (int)$log['last_id'];
+        }
 
+        $limit = $this->limit == null ? 10000 : ((intval($this->limit) <= 10000 && intval($this->limit) > 0) ? intval($this->limit) : 0); // Get product main
+        $sql = "ip is null and id not in (select product_main_id from {$db_tool_schema}.ad_product where product_main_id != 0) and id not in (select product_main_id from {$db_tool_schema}.map_product_duplicate)";
+        if($last_id > 0)
+            $sql = $sql. " and id > {$last_id}";
+//        $sql = "id = 17186";
+
+
+        $main_products = AdProduct::find()->where($sql)->orderBy(['id' => SORT_ASC])->limit($limit)->all();
+        $count_main_products = count($main_products);
+        if($count_main_products > 0){
             foreach($main_products as $key => $product ){
-                $sql_where = "CAST(lat AS decimal) = CAST({$product->lat} AS decimal) and CAST(lng AS decimal) = CAST({$product->lng}  AS decimal) ";
+                $no = $key+1;
+                print_r("\n{$no} Main ID: {$product->id} ");
+                $sql_where = "CAST(lat AS decimal(10,6)) = CAST({$product->lat} AS decimal(10,6)) and CAST(lng AS decimal(10,6)) = CAST({$product->lng}  AS decimal(10,6)) ";
                 if(!empty($product->area)){
                     $sql_where = $sql_where . " and CAST(area AS decimal) = CAST({$product->area} AS decimal)";
                 }
-
+                // Get product tool
                 $crawl_product = \vsoft\craw\models\AdProduct::find()->where([
                     'content' => $product->content,
                     'city_id' => $product->city_id,
@@ -454,10 +481,10 @@ class ProductController extends Controller {
                     ->andWhere($sql_where)
                     ->orderBy(['id' =>SORT_ASC])->one();
 
-                $file_name = $crawl_product->file_name;
-                if(count($crawl_product) > 0 && !empty($file_name))
+                if(count($crawl_product) > 0)
                 {
-                    print_r("\n{$product->id} File: {$file_name} ");
+                    $file_name = $crawl_product->file_name;
+                    print_r("- File: {$file_name} ");
                     $product_file = AdProductFile::find()->where(['file' => $file_name])->one();
                     if(count($product_file) > 0) {
                         if($product_file->is_import != 1) {
@@ -472,19 +499,81 @@ class ProductController extends Controller {
                             $product_file->is_copy = 1;
                             $product_file->copied_at = $product->created_at;
                             $product_file->product_main_id = $product->id;
-
                         }
                         $product_file->updated_at = time();
                         $res = $product_file->save(false);
-                        if($res)
-                            print_r("copied.");
+                        if($res) {
+                            $count_product_copied++;
+                            print_r("- Map");
+                        }
                     } else {
-                        print_r("Not found in AdProductFile table.");
+                        print_r("- Not found in AdProductFile table.");
+                    }
+                } else {
+                    $sql_where = $sql_where. " and product_main_id > 0";
+                    $other_products = \vsoft\craw\models\AdProduct::find()
+                        ->select(['id', 'product_main_id'])
+                        ->where([
+                            'content' => $product->content,
+                            'city_id' => $product->city_id,
+                            'district_id' => $product->district_id,
+                            'ward_id' => $product->ward_id,
+                            'street_id' => $product->street_id,
+                            'price' => $product->price,
+                            'type' => $product->type,
+                            'category_id' => $product->category_id,
+                            'start_date' => $product->start_date
+                        ])
+                        ->andWhere($sql_where)
+                        ->orderBy(['id' =>SORT_ASC])->all();
+
+                    if(count($other_products) > 0) {
+                        foreach ($other_products as $key_other => $other_product) {
+                            $recordDuplicate = [
+                                'product_main_id' => $product->id,
+                                'duplicate_id' => $other_product->product_main_id,
+                                'tool_id' => $other_product['id'],
+                                'is_duplicate' => 1,
+                                'created_at' => time()
+                            ];
+                            $duplicate_count = \vsoft\craw\models\AdProduct::getDb()->createCommand()
+                                ->insert('map_product_duplicate', $recordDuplicate)
+                                ->execute();
+                            $count_product_duplicate = $count_product_duplicate + $duplicate_count;
+                        }
+                        print_r("- Duplicate");
+                    } else {
+                        $recordNotFound = [
+                            'product_main_id' => $product->id,
+                            'duplicate_id' => null,
+                            'tool_id' => null,
+                            'is_duplicate' => 0,
+                            'created_at' => time()
+                        ];
+                        $not_found_count = \vsoft\craw\models\AdProduct::getDb()->createCommand()
+                            ->insert('map_product_duplicate', $recordNotFound)
+                            ->execute();
+                        $count_product_not_found = $count_product_not_found + $not_found_count;
+                        print_r("- Not found DB Tool");
                     }
                 }
 
-            }
+                if($no >= $count_main_products || $no % 200 == 0){
+                    $log['last_id'] = $product->id;
+                    $log['last_time'] = date('d M Y H:i', time());
+                    Helpers::writeLog($log, $path, $file_last_id_name);
+                }
+            } // end foreach product
+        } else {
+            print_r("\n Product Main not found");
         }
+
+        $end_time = time();
+        $time = $end_time - $start_time;
+        print_r("\n\nTime: {$time}s");
+        print_r("\nMap product: {$count_product_copied}");
+        print_r("\nProduct duplicate: {$count_product_duplicate}");
+        print_r("\nProduct not found: {$count_product_not_found}\n");
     }
 
 }

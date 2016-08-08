@@ -145,6 +145,12 @@ class CrawlerController extends Controller
         ImportListing::find()->updateProductTool($limit);
     }
 
+    public function actionUpdateProductInfo()
+    {
+        $limit = $this->limit == null ? 1000 : ((intval($this->limit) <= 1000 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+        ImportListing::find()->updateProductInfo($limit);
+    }
+
     // Agent Batdongsan
     public function actionAgentbatdongsan()
     {
