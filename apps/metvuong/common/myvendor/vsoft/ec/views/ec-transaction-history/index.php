@@ -27,11 +27,21 @@ $EcTransactionHistory = new \vsoft\ec\models\EcTransactionHistory();
             ['class' => 'yii\grid\SerialColumn'],
 
             [
-                'label' => Yii::t('ec', 'Username'),
+                'label' => Yii::t('ec', 'Name'),
                 'attribute' => 'user_id',
                 'value' => function ($model) {
                     if($model->user)
                         return $model->user->profile->name;
+                    return '';
+                },
+                'filter' => true
+            ],
+            [
+                'label' => Yii::t('ec', 'Username'),
+                'attribute' => 'user_id',
+                'value' => function ($model) {
+                    if($model->user)
+                        return $model->user->username;
                     return '';
                 },
                 'filter' => true
