@@ -600,4 +600,10 @@ class ProductController extends Controller {
         print_r("\nProduct not found: {$count_product_not_found}\n");
     }
 
+    public function actionMapContactProduct()
+    {
+        $limit = $this->limit == null ? 500 : ((intval($this->limit) <= 500 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+        Metvuong::mapContactProduct($limit);
+    }
+
 }

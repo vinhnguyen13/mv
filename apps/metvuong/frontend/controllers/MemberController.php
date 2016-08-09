@@ -186,12 +186,13 @@ class MemberController extends Controller
                     $token->delete();
                     $user_id = $user->id;
                     $email = $user->email;
+                    Yii::$app->getDb()->createCommand('SET group_concat_max_len = 5000000')->execute();
                     $contacts = AdContactInfo::getDb()->cache(function () use ($email) {
                         $sql = "SELECT group_concat(product_id) as list_id FROM ad_contact_info where email = '{$email}'";
                         return AdContactInfo::getDb()->createCommand($sql)->queryAll();
                     });
 
-                    if (count($contacts) && isset($contacts[0]["list_id"])) {
+                    if (count($contacts) > 0 && isset($contacts[0]["list_id"])) {
                         $list_id = $contacts[0]["list_id"];
                         $update_sql = "UPDATE `ad_product` SET `user_id`={$user_id} WHERE id IN ({$list_id})";
                         AdProduct::getDb()->createCommand($update_sql)->execute();
