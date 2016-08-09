@@ -550,6 +550,21 @@ $(document).ready(function(){
 				}
 			});
 			
+			var listTienIch = $('.list-tienich').html('');
+			$('.tienich-frm').find('input').each(function(){
+				var self = $(this);
+				
+				if(this.checked) {
+					listTienIch.append('<li><span class="icon-mv"><span class="icon-' + self.data('class') + '"></span></span>' + self.parent().text() + '</li>');
+				}
+			});
+			if(listTienIch.html() == '') {
+				listTienIch.closest('.panel').hide();
+			} else {
+				listTienIch.closest('.panel').show();
+			}
+			
+			
 			$('.address-show').text(self.buildAddress());
 		};
 		
