@@ -112,6 +112,7 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
                         <ol class="list-unstyled">
                             <li><a href="<?=Yii::$app->urlManager->createUrl(['coupon/coupon-event'])?>">Coupon Event</a></li>
                             <li><a href="<?=Yii::$app->urlManager->createUrl(['coupon/coupon-code'])?>">Coupon Code</a></li>
+                            <li><a href="<?=Yii::$app->urlManager->createUrl(['coupon/coupon-code/promotion'])?>">Donate</a></li>
                         </ol>
                     </div>
                 </div>
@@ -125,6 +126,7 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
                             <li><a href="<?=Yii::$app->urlManager->createUrl(['ec/ec-package'])?>">Package</a></li>
                             <li><a href="<?=Yii::$app->urlManager->createUrl(['ec/ec-charge'])?>">Charge</a></li>
                             <li><a href="<?=Yii::$app->urlManager->createUrl(['ec/ec-balance'])?>">Balance</a></li>
+                            <li><a href="<?=Yii::$app->urlManager->createUrl(['ec/ec-transaction-history'])?>">Transaction</a></li>
                         </ol>
                     </div>
                 </div>
