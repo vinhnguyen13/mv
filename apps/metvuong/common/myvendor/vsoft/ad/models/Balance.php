@@ -44,6 +44,7 @@ class Balance extends Bl {
 				'amount' => - $chargeFee,
 				'balance' => $this->amount,
 				'status' => Transaction::STATUS_SUCCESS,
+				'updated_at' => time(),
 			]);
 		
 			$transaction->commit();
