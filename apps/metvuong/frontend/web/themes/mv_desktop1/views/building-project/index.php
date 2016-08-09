@@ -30,7 +30,18 @@ use yii\widgets\LinkPager;
                 <div class="col-xs-12 col-md-9 col-left">
                     <ul class="clearfix">
                         <?php if(count($models) > 0) {
-                            foreach ($models as $model) { ?>
+                            foreach ($models as $key => $model) {
+                                $tongquan = $model->description;
+                                $tabProject = null;
+                                if(!empty($model->data_html)){
+                                    $tabProject = json_decode($model->data_html, true);
+                                    if (count($tabProject) > 0) {
+                                        $key_index = key($tabProject);
+                                        $tongquan = html_entity_decode($tabProject[$key_index], ENT_HTML5, 'utf-8');
+                                    }
+                                }
+                                $tongquan = trim(strip_tags($tongquan));
+                                ?>
                                 <li>
                                     <div class="wrap-item">
                                         <a href="<?= Url::to(["building-project/view", 'slug'=>$model->slug]); ?>" class="pic-intro rippler rippler-default">
@@ -48,7 +59,7 @@ use yii\widgets\LinkPager;
                                             </div>
                                             <div class="bottom-feat-box clearfix">
                                                 <input type="hidden" value="<?=$model->id?>">
-                                                <p><?=\yii\helpers\StringHelper::truncate($model->description, 180)?></p>
+                                                <p><?=\yii\helpers\StringHelper::truncate($tongquan, 500)?></p>
                                             </div>
                                         </div>
                                     </div>
