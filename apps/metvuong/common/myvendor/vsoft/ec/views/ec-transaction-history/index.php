@@ -40,6 +40,10 @@ $EcTransactionHistory = new \vsoft\ec\models\EcTransactionHistory();
                 'attribute' => 'amount',
                 'format' => 'raw',
                 'contentOptions'=>['style'=>'text-align:right'],
+            ],[
+                'attribute' => 'balance',
+                'format' => 'raw',
+                'contentOptions'=>['style'=>'text-align:right'],
             ],
             [
                 'attribute' => 'object_type',
