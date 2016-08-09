@@ -468,39 +468,13 @@
 								        <div class="panel panel-default">
 								            <div class="panel-heading" role="tab" id="headingFour">
 								                <h4 class="panel-title">
-								                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-								                        Facilities		                        <span class="icon-mv"><span class="icon-plus"></span></span>
+								                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour"><?= Yii::t('ad', 'Facilities') ?><span class="icon-mv"><span class="icon-plus"></span></span>
 								                    </a>
 								                </h4>
 								            </div>
 								            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
 								                <div class="panel-body" name="experience">
-						                            <ul class="clearfix list-tienich">
-													                                    <li>
-						                                        <span class="icon-mv"><span class="icon-cho-gui-xe"></span></span>
-						                                        Parking                                    </li>
-						                                                                    <li>
-						                                        <span class="icon-mv"><span class="icon-tap-gym"></span></span>
-						                                        Gym                                    </li>
-						                                                                    <li>
-						                                        <span class="icon-mv"><span class="icon-truong-hoc"></span></span>
-						                                        School                                    </li>
-						                                                                    <li>
-						                                        <span class="icon-mv"><span class="icon-cong-vien"></span></span>
-						                                        Park                                    </li>
-						                                                                    <li>
-						                                        <span class="icon-mv"><span class="icon-may-lanh"></span></span>
-						                                        Air-conditioner                                    </li>
-						                                                                    <li>
-						                                        <span class="icon-mv"><span class="icon-may-giat"></span></span>
-						                                        Washing machine                                    </li>
-						                                                                    <li>
-						                                        <span class="icon-mv"><span class="icon-tu-lanh"></span></span>
-						                                        Fridge                                    </li>
-						                                                                    <li>
-						                                        <span class="icon-mv"><span class="icon-ti-vi"></span></span>
-						                                        Television                                    </li>
-						                                                            </ul>
+						                            <ul class="clearfix list-tienich"></ul>
 								                </div>
 								            </div>
 								        </div>
