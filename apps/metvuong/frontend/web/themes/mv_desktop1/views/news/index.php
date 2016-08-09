@@ -36,7 +36,7 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'st
                                 <p class="name-news"><a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" title="<?=$n["title"]?>"><?=$n["title"]?></a></p>
                                 <p class="date-post"><?=date('d/m/Y, H:i', $n["created_at"])?></p>
                                 <p class="short-txt">
-                                    <?=\yii\helpers\StringHelper::truncate($n["brief"], 200)?>
+                                    <?=\yii\helpers\StringHelper::truncate($n["brief"], 500)?>
                                 </p>
                                 <a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" class="view-more"><?=Yii::t('news','Read more')?> <span class="icon arrowLeft-small-black"></span></a>
                             </div>
