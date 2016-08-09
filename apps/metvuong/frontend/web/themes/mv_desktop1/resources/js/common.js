@@ -313,6 +313,10 @@ $.fn.checkbox_ui = function (options) {
 
     return this.each(function() {
         var defaults = {
+            checked: false,
+            unchecked: false,
+            disableChecked: false,
+            enableChecked: false,
             done: function(){}
         },
         sc = {},
@@ -328,6 +332,28 @@ $.fn.checkbox_ui = function (options) {
 
         if ( el.find('input[type=checkbox]').attr('disabled') ) {
             el.addClass('disabled-rc');
+        }
+
+        if ( sc.settings.checked ) {
+            el.find('input[type=checkbox]').prop("checked", true);
+            checkedItem(el, true);
+        }
+
+        if ( sc.settings.unchecked ) {
+            el.find('input[type=checkbox]').prop("checked", false);
+            checkedItem(el, false);
+        }
+
+        if ( sc.settings.disableChecked ) {
+            el.find('input[type=checkbox]').prop("checked", true);
+            checkedItem(el, true);
+            el.addClass('disabled-rc');
+        }
+
+        if ( sc.settings.enableChecked ) {
+            el.find('input[type=checkbox]').prop("checked", true);
+            checkedItem(el, true);
+            el.removeClass('disabled-rc');
         }
 
         el.on('click', toggleCheck);

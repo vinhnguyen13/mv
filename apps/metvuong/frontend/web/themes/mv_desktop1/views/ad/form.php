@@ -547,7 +547,8 @@
 
 <script>
 	$(document).ready(function () {
-		$('.checkbox-ui').checkbox_ui();
+		$('.fild-address .checkbox-ui').checkbox_ui();
+		$('.tienich-frm .checkbox-ui').checkbox_ui();
 		$('.add-gold').on('click', function (e) {
 			e.preventDefault();
 			$('.ajax-loading-inner').toggle();
