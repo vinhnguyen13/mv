@@ -1261,4 +1261,9 @@ class AdController extends Controller
 
         return \vsoft\ad\widgets\ListingWidget::widget(['title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4]);
     }
+
+	public function actionCampare(){
+		$this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuDashboard' => true, 'isCampare' => true], $this->view->params);
+		return $this->render('campare');
+	}
 }

@@ -31,7 +31,7 @@ $EcTransactionHistory = new \vsoft\ec\models\EcTransactionHistory();
                 'attribute' => 'user_id',
                 'value' => function ($model) {
                     if($model->user)
-                        return $model->user->username;
+                        return $model->user->profile->name;
                     return '';
                 },
                 'filter' => true
