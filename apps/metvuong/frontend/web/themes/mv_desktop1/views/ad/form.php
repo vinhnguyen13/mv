@@ -1,32 +1,26 @@
 <?php 
 	use yii\widgets\ActiveForm;
 	use yii\helpers\Html;
-use vsoft\ad\models\AdCategory;
-use yii\helpers\ArrayHelper;
-use vsoft\ad\models\AdCity;
-use vsoft\ad\models\AdProduct;
-use vsoft\ad\models\AdDistrict;
-use vsoft\ad\models\AdWard;
-use vsoft\ad\models\AdStreet;
-use vsoft\ad\models\AdProductAdditionInfo;
-use vsoft\ad\models\AdFacility;
-use common\widgets\fileupload\FileUpload;
-use yii\helpers\Url;
-use yii\web\View;
-use vsoft\ad\models\AdImages;
+	use vsoft\ad\models\AdCategory;
+	use yii\helpers\ArrayHelper;
+	use vsoft\ad\models\AdCity;
+	use vsoft\ad\models\AdProduct;
+	use vsoft\ad\models\AdDistrict;
+	use vsoft\ad\models\AdWard;
+	use vsoft\ad\models\AdStreet;
+	use vsoft\ad\models\AdProductAdditionInfo;
+	use vsoft\ad\models\AdFacility;
+	use common\widgets\fileupload\FileUpload;
+	use yii\helpers\Url;
+	use yii\web\View;
+	use vsoft\ad\models\AdImages;
+	use common\components\Slug;
 
 	/**
 	 * @var $product vsoft\ad\models\AdProduct
 	 * @var $this yii\web\View
 	 * @var $additionInfo vsoft\ad\models\AdProductAdditionInfo
 	 */
-
-// $product->category_id = AdCategory::CATEGORY_CHCK;
-// $product->project_building_id = 1491;
-// $product->city_id = 1;
-// $product->district_id = 19;
-// $product->ward_id = 253;
-// $product->street_id = 2755;
 
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/select2.min.css');
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl . '/resources/css/swiper.min.css');
@@ -256,12 +250,13 @@ use vsoft\ad\models\AdImages;
 									$facilities = AdFacility::find()->all();
 									$activeFacility = $additionInfo->facility ? $additionInfo->facility : [];
 									$facilityName = $additionInfo->formName() . '[facility][]';
+									$slug = new Slug();
 								?>
 								<ul class="clearfix">
 									<?php foreach ($facilities as $facility): ?>
 									<li>
 										<label class="checkbox-inline fs-13 checkbox-ui">
-											<?= Html::checkbox($facilityName, in_array($facility->id, $activeFacility), ['value' => $facility->id]) ?>
+											<?= Html::checkbox($facilityName, in_array($facility->id, $activeFacility), ['value' => $facility->id, 'data-class' => $slug->slugify($facility->name)]) ?>
 											<span class="icon-mv"><span class="icon-checkbox"></span></span> <?= Yii::t('ad', $facility->name) ?>
 										</label>
 									</li>
@@ -467,6 +462,45 @@ use vsoft\ad\models\AdImages;
 														<li><strong><?= $additionInfo->getAttributeLabel('facade_direction') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-facade_direction"></span></li>
 														<li><strong><?= $additionInfo->getAttributeLabel('interior') ?>:</strong> <span class="ref" data-ref="#adproductadditioninfo-interior"></span></li>
 													</ul>
+								                </div>
+								            </div>
+								        </div>
+								        <div class="panel panel-default">
+								            <div class="panel-heading" role="tab" id="headingFour">
+								                <h4 class="panel-title">
+								                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+								                        Facilities		                        <span class="icon-mv"><span class="icon-plus"></span></span>
+								                    </a>
+								                </h4>
+								            </div>
+								            <div id="collapseFour" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFour">
+								                <div class="panel-body" name="experience">
+						                            <ul class="clearfix list-tienich">
+													                                    <li>
+						                                        <span class="icon-mv"><span class="icon-cho-gui-xe"></span></span>
+						                                        Parking                                    </li>
+						                                                                    <li>
+						                                        <span class="icon-mv"><span class="icon-tap-gym"></span></span>
+						                                        Gym                                    </li>
+						                                                                    <li>
+						                                        <span class="icon-mv"><span class="icon-truong-hoc"></span></span>
+						                                        School                                    </li>
+						                                                                    <li>
+						                                        <span class="icon-mv"><span class="icon-cong-vien"></span></span>
+						                                        Park                                    </li>
+						                                                                    <li>
+						                                        <span class="icon-mv"><span class="icon-may-lanh"></span></span>
+						                                        Air-conditioner                                    </li>
+						                                                                    <li>
+						                                        <span class="icon-mv"><span class="icon-may-giat"></span></span>
+						                                        Washing machine                                    </li>
+						                                                                    <li>
+						                                        <span class="icon-mv"><span class="icon-tu-lanh"></span></span>
+						                                        Fridge                                    </li>
+						                                                                    <li>
+						                                        <span class="icon-mv"><span class="icon-ti-vi"></span></span>
+						                                        Television                                    </li>
+						                                                            </ul>
 								                </div>
 								            </div>
 								        </div>
