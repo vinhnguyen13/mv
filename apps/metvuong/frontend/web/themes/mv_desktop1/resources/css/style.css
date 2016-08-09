@@ -6829,7 +6829,7 @@ padding: 5px 0;
     }
     .list-menu-news a {
         font-size: 14px;
-        padding: 1px 15px;
+        padding: 1px 0;
     }
     .sidebar-news,
     .wrap-news {
@@ -6997,7 +6997,7 @@ padding: 5px 0;
         padding: 0;
         float: right;
         max-width: 70%;
-        padding: 0 20px;
+        padding: 0;
     }
     .list-menu-news > .container {
         padding: 0;
