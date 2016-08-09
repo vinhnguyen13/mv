@@ -125,7 +125,7 @@ class EcTransactionHistory extends EcTransactionHistoryBase
         if (isset($data[$this->object_type])) {
             return $data[$this->object_type];
         } else {
-            return null;
+            return $data;
         }
     }
 
@@ -141,7 +141,7 @@ class EcTransactionHistory extends EcTransactionHistoryBase
         if (isset($data[$this->status])) {
             return $data[$this->status];
         } else {
-            return null;
+            return $data;
         }
     }
 
