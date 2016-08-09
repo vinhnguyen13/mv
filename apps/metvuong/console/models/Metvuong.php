@@ -38,7 +38,7 @@ class Metvuong extends Component
                 return CouponCode::find()->where('code = :c',[':c' => $code])->one();
             });
 
-            if($coupon->type == CouponCode::TYPE_ONE && $coupon->count >= 1) {
+            if(!$coupon->check()) {
                 print_r("{$code} was used. Please, select other coupon code.");
                 return;
             }
