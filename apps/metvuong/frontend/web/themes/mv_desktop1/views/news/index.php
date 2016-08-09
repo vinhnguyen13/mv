@@ -22,9 +22,6 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'st
                 <ul class="clearfix row list-news">
                     <?php foreach($news as $n) {
                         $banner = \vsoft\news\models\CmsShow::getBanner($n["banner"]);
-//                        $checkBanner = file_exists(Yii::getAlias('@store')."/news/show/".\vsoft\news\models\CmsShow::THUMB400x0.$n["banner"]);
-//                        if($checkBanner == false)
-//                            $banner = '/themes/metvuong2/resources/images/default-ads.jpg';
                     ?>
                     <li class="col-xs-12 col-sm-6 col-md-4">
                         <div title="<?=$n["title"]?>">
@@ -34,7 +31,7 @@ $catalogs = \vsoft\news\models\CmsCatalog::findAll(['parent_id'=>$newsCatID, 'st
                             <div>
                                 <a href="<?=\yii\helpers\Url::to(['news/list', 'cat_id'=>$n["catalog_id"], 'cat_slug'=>$n["cat_slug"]], true)?>" class="name-cate"><?=mb_strtoupper(Yii::t('news', $n["cat_title"]), 'UTF-8')?></a>
                                 <p class="name-news"><a href="<?=\yii\helpers\Url::to(['news/view', 'id' => $n["id"], 'slug' => $n["slug"]], true)?>" title="<?=$n["title"]?>"><?=$n["title"]?></a></p>
-                                <p class="date-post"><?=date('d/m/Y, H:i', $n["created_at"])?></p>
+                                <p class="date-post"><?=date('d F Y, H:i', $n["created_at"])?></p>
                                 <p class="short-txt">
                                     <?=\yii\helpers\StringHelper::truncate($n["brief"], 500)?>
                                 </p>
