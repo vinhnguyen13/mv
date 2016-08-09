@@ -254,7 +254,7 @@ class AdProductSearch2 extends AdProduct
     			$query->andWhere(['!=', $column, 0]);
     		} else if($this->$field == 2) {
     			$query->andWhere(['=', $column, 0]);
-    		} else {
+    		} else if($this->$field == 3) {
     			$mask = str_replace('_filter', '_mask', $field);
     			$mask = $this->$mask;
     			if($mask) {
