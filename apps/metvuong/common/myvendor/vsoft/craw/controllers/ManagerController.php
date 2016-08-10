@@ -130,6 +130,8 @@ class ManagerController extends Controller {
 						} else if($k == 'area') {
 							$value = floatval($value);
 						}
+					} else if($value === '0') {
+						$value = null;
 					}
 				}
 				$writer->addRowWithStyle(array_values($product), $style);
