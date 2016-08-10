@@ -11,6 +11,7 @@ $(document).ready(function() {
 		numGet: $('.tool-compare .num-show'),
 		saveGetItem: $('.getCompare'),
 		saveArr: [],
+		compareItemCookie: 'compareItems',
 		init: function () {
 			$(document).on('click', '.flag-compare-set', function (e) {
 				e.preventDefault();
@@ -20,6 +21,13 @@ $(document).ready(function() {
 				e.preventDefault();
 				compare.remove($(this));
 			});
+			
+			var length = this.getCookieCompares().length;
+			if (length == 0 ) {
+				compare.numGet.text('');
+			} else {
+				compare.numGet.text('('+length+')');	
+			}
 		},
 		add: function (item) {
 			compare.countCompare += 1;
@@ -29,6 +37,8 @@ $(document).ready(function() {
 			compare.numGet.text('('+compare.countCompare+')');
 			compare.effectShow();
 			compare.checkVal(item, 1);
+			
+			this.pushCookie(item.data('value'));
 		},
 		remove: function (item) {
 			item.removeClass('flag-compare-remove').addClass('flag-compare-set');
@@ -43,6 +53,8 @@ $(document).ready(function() {
 			
 			compare.effectShow();
 			compare.checkVal(item, 0);
+			
+			this.removeCookie(item.data('value'));
 		},
 		checkVal: function (item, flag) {
 			var idItem = item.data('value');
@@ -62,6 +74,52 @@ $(document).ready(function() {
 		effectShow: function () {
 			compare.setNumItem.addClass('get-show-num');
 			setTimeout(function(){compare.setNumItem.removeClass('get-show-num')},300);
+		},
+		pushCookie: function(id) {
+			var compareItems = this.getCookieCompares();
+			
+			var currentActived = [];
+			
+			for(var i in compareItems) {
+				var item = compareItems[i].split(':');
+				var isActive = item[1];
+				
+				if(isActive == '1') {
+					currentActived.push(i);
+				}
+			}
+			
+			if(currentActived.length > 2) {
+				for(var i = 2; i < currentActived.length; i++) {
+					var index = currentActived[i];
+					compareItems[index] = compareItems[index].replace(':1', ':0');
+				}
+			}
+			
+			compareItems.push(id + ':' + '1');
+			
+			setCookie(this.compareItemCookie, compareItems.join(','));
+		},
+		removeCookie: function(id) {
+			var compareItems = this.getCookieCompares();
+			
+			for(var i in compareItems) {
+				var item = compareItems[i].split(':');
+				var _id = item[0];
+				
+				if(_id == id) {
+					compareItems.splice(i, 1);
+					break;
+				}
+			}
+			
+			setCookie(this.compareItemCookie, compareItems.join(','));
+		},
+		getCookieCompares: function() {
+			var compareItems = getCookie(this.compareItemCookie);
+			compareItems = compareItems ? compareItems.split(',') : [];
+			
+			return compareItems;
 		}
 	};
 
