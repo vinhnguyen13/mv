@@ -10,7 +10,16 @@ $(document).ready(function(){
 	
 	function loading(el, start) {
 		if(getCookie('downloadComplete')) {
-			el.remove();
+			var text = el.find('.text');
+			
+			text.fadeOut(function(){
+				text.text('ĐÃ TẠO XONG FILE EXCEL').fadeIn(function(){
+					setTimeout(function(){
+						el.remove();
+					}, 1000);
+				});
+			});
+			
 			setCookie('downloadComplete', '', 0)
 		} else {
 			if(start == 80) {
