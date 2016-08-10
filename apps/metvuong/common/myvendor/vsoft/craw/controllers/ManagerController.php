@@ -20,6 +20,12 @@ use yii\widgets\LinkPager;
 use vsoft\craw\models\AdProductSearch2;
 use vsoft\craw\models\AdCategory;
 use frontend\models\Elastic;
+use Box\Spout\Writer\WriterFactory;
+use Box\Spout\Common\Type;
+use Box\Spout\Writer\Style\Border;
+use Box\Spout\Writer\Style\BorderBuilder;
+use Box\Spout\Writer\Style\Color;
+use Box\Spout\Writer\Style\StyleBuilder;
 
 class ManagerController extends Controller {
 	
@@ -59,72 +65,82 @@ class ManagerController extends Controller {
 	}
 	
 	public function actionExport() {
-		$fileName = "metvuong-craw.xls";
-		$filePath = \Yii::getAlias("@store") . "/" . $fileName;
+		include str_replace('controllers', 'components', dirname(__FILE__)) . '/Spout/Autoloader/autoload.php';
 		
-		if(file_exists($filePath)) {
-			unlink($filePath);
+		ini_set('max_execution_time', 0);
+		
+		$fileName = "metvuong-craw.xlsx";
+		Yii::$app->language = 'vi-VN';
+		
+		$writer = WriterFactory::create(Type::XLSX);
+		$writer->openToBrowser($fileName);
+		
+		$searchModel = new AdProductSearch2();
+		$provider = $searchModel->search(\Yii::$app->request->queryParams);
+		$query = $provider->query;
+		$query->limit = 1000;
+		
+		foreach ($query->select as &$select) {
+			if($select == 'ad_product.content') {
+				$select = "IF(`ad_product`.`content` = '', NULL, '...') `ad_product.content`";
+			} else if($select == 'ad_product_addition_info.interior') {
+				$select = "IF(`ad_product_addition_info`.`interior` IS NULL, NULL, '...') `ad_product_addition_info.interior`";
+			}
 		}
 		
-		$query = (new AdProductSearch())->search(\Yii::$app->request->queryParams)->query;
+		$columnName = AdProductSearch2::$_columnsName;
+		$titles = array_map(function($item) use ($columnName) {
+			return $columnName[$item];
+		}, array_values($searchModel->columns));
 		
-		$query->asArray(true);
-		$query->limit = 100;
+		$style = (new StyleBuilder())->setFontSize(11)->build();
+		$titleStyle = clone $style;
+		$titleStyle->setFontColor(Color::BLUE)->setFontBold();
+			
+		$writer->addRowWithStyle($titles, $titleStyle);
 		
-		$sep = "\t";
-		
-		Yii::$app->language = 'vi-VN';
-
 		$type = AdProduct::getAdTypes();
 		$categories = ArrayHelper::map(AdCategory::find()->asArray(true)->all(), 'id', function($item) {
 			return Yii::t('ad', $item['name']);
 		});
 		$directions = AdProductAdditionInfo::directionList();
 		
-		$part = "";
-		
-		$part .= "ID{$sep}Phân loại{$sep}Nội dung{$sep}Thuộc dự án{$sep}Số nhà{$sep}Phường/Xã{$sep}Quận/Huyện{$sep}Đường/Phố{$sep}Tỉnh/Thành{$sep}Hình thức{$sep}Diện tích(m){$sep}Giá{$sep}Mặt tiền(m){$sep}Đường vào(m){$sep}Hướng nhà{$sep}Hướng ban công{$sep}Số tầng{$sep}Số phòng ngủ{$sep}Số phòng tắm{$sep}Nội thất{$sep}Tên liên hệ{$sep}Địa chỉ{$sep}Số điện thoại{$sep}Số di động{$sep}Email{$sep}Ngày đăng tin{$sep}File Name";
-		
 		for($i = 0; true; $i += $query->limit) {
-			
+				
 			$query->offset = $i;
-			$products = $query->all();
+			$products = $query->all(\Yii::$app->dbCraw);
 			
 			foreach ($products as $product) {
-				$schema_insert = "";
-				
-				$schema_insert .= $product['id'].$sep;
-				
-				$schema_insert .= "căn hộ chung cư" . $sep;
-				
-				//$schema_insert .= Elastic::transform(mb_substr($product['content'], 0, 20, 'UTF-8')) . '...' .$sep;
-				$schema_insert .= " ".$sep;
-				
-				$schema_insert .= " " . $sep;
-				
-				$schema_insert .= " " . $sep;
-				
-			
-				$schema_insert = str_replace($sep."$", "", $schema_insert);
-				$schema_insert = preg_replace("/\r\n|\n\r|\n|\r/", " ", $schema_insert);
-				$schema_insert .= "\t";
-					
-				$part .= trim($schema_insert);
-				$part .= "\n";
+				foreach ($product as $k => &$value) {
+					if($value) {
+						if($k == 'type') {
+							$value = $type[$value];
+						} else if($k == 'category_id') {
+							$value = $categories[$value];
+						} else if($k == 'home_direction') {
+							$value = $directions[$value];
+						} else if($k == 'facade_direction') {
+							$value = $directions[$value];
+						} else if($k == 'created_at') {
+							$value = date("F d, Y", $value);
+						} else if($k == 'id') {
+							$value = intval($value);
+						} else if($k == 'price' || $k == 'room_no' || $k == 'toilet_no' || $k == 'floor_no' || $k == 'land_width' || $k == 'facade_width') {
+							$value = intval($value);
+						} else if($k == 'area') {
+							$value = floatval($value);
+						}
+					}
+				}
+				$writer->addRowWithStyle(array_values($product), $style);
 			}
-			
-			$file = fopen(\Yii::getAlias("@store") . "/$fileName", "a");
-			fwrite($file, $part);
-			
-			$part = "";
 			
 			if(count($products) < $query->limit) {
 				break;
 			}
 		}
-
-		header("Location: /store/$fileName");
-		exit();
+		
+		$writer->close();
 	}
 	
 	public function actionIndex() {
