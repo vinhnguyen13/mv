@@ -221,7 +221,7 @@ EOD;
 							<button class="btn-submit btn-common <?= $hideSearchForm ? '' : 'active' ?>"><?= Yii::t('ad', 'Search') ?></button>
 							<div class="pull-right item-right hide">
 								<ul class="clearfix">
-									<li class="tool-compare"><button data-num=""><span class="icon-mv mgR-5"><span class="icon-balance-scale"></span></span>So sánh <span class="num-show"></span></button></li>
+									<li class="tool-compare"><a href="<?= Url::to(['ad/compare']) ?>" data-num=""><span class="icon-mv mgR-5"><span class="icon-balance-scale"></span></span><?= Yii::t('ad', 'So sánh') ?> <span class="num-show"></span></a></li>
 								</ul>
 								<input type="hidden" class="getCompare" value="">
 							</div>

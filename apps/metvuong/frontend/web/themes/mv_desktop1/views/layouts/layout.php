@@ -12,8 +12,8 @@
         <?php if(!empty($this->params['isReport'])){?>
             <?php $this->beginContent('@app/views/layouts/_partials/menuReport.php'); ?><?php $this->endContent();?>
         <?php }?>
-        <?php if(!empty($this->params['isCampare'])){?>
-            <?php $this->beginContent('@app/views/layouts/_partials/menuCampare.php'); ?><?php $this->endContent();?>
+        <?php if(!empty($this->params['isCompare'])){?>
+            <?php $this->beginContent('@app/views/layouts/_partials/menuCompare.php'); ?><?php $this->endContent();?>
         <?php }?>
         <div class="contentContainer">
             <?=$content;?>

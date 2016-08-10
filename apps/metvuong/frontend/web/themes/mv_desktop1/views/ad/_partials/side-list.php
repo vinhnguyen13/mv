@@ -10,7 +10,7 @@
 	use vsoft\express\components\StringHelper;
 	use yii\data\Pagination;
 	use frontend\components\SearchUrlManager;
-use frontend\models\Tracking;
+	use frontend\models\Tracking;
 	
 	$db = Yii::$app->getDb();
 	
@@ -102,80 +102,3 @@ use frontend\models\Tracking;
 <?php else: ?>
 <div class="container" id="no-result"><?= sprintf(Yii::t('ad', 'Chưa có tin đăng theo tìm kiếm của bạn, %sđăng ký nhận thông báo khi có tin đăng phù hợp%s.'), '<a href="#">', '</a>') ?></div>
 <?php endif; ?>
-
-<script>
-	$(document).ready(function () {
-		
-		var compare = {
-			countCompare: 0,
-			numCheck: 3,
-			setNumItem: $('.tool-compare button'),
-			numGet: $('.tool-compare .num-show'),
-			saveGetItem: $('.getCompare'),
-			saveArr: [],
-			init: function () {
-				$(document).on('click', '.flag-compare-set', function (e) {
-					e.preventDefault();
-					compare.add($(this));
-				});
-				$(document).on('click', '.flag-compare-remove', function (e) {
-					e.preventDefault();
-					compare.remove($(this));
-				});
-			},
-			add: function (item) {
-				compare.countCompare += 1;
-				if ( compare.countCompare > 0 && compare.countCompare <= compare.numCheck ) {
-					item.removeClass('flag-compare-set').addClass('flag-compare-remove');
-					item.find('.txt-change').text('Đã thêm so sánh');
-					item.find('.icon-balance-scale').attr('class','icon-close-icon');
-					compare.numGet.text('('+compare.countCompare+')');
-					compare.effectShow();
-					compare.checkVal(item, 1);
-				}else {
-					alert("Bạn đã chọn đủ 3 tin đăng");
-					compare.countCompare = compare.numCheck;
-				}
-			},
-			remove: function (item) {
-				item.removeClass('flag-compare-remove').addClass('flag-compare-set');
-				item.find('.txt-change').text('So Sánh');
-				item.find('.icon-close-icon').attr('class','icon-balance-scale');
-				compare.countCompare -= 1;
-				if ( compare.countCompare == 0 ) {
-					compare.numGet.text('');
-				}else {
-					compare.numGet.text('('+compare.countCompare+')');	
-				}
-				
-				compare.effectShow();
-				compare.checkVal(item, 0);
-			},
-			checkVal: function (item, flag) {
-				var idItem = item.data('value');
-				if ( flag ) {
-					compare.saveArr.push(idItem);
-				}else {
-					for ( var i = 0; i < compare.saveArr.length; i++ ) {
-						if ( idItem == compare.saveArr[i] ) {
-							compare.saveArr.splice(i, 1);
-						}
-					}
-				}
-				
-				var valSet = '['+compare.saveArr.toString()+']';
-				compare.saveGetItem.val(valSet);
-			},
-			effectShow: function () {
-				compare.setNumItem.addClass('get-show-num');
-				setTimeout(function(){compare.setNumItem.removeClass('get-show-num')},300);
-			}
-		};
-
-		compare.init();
-
-		var favorite = {
-
-		};
-	});
-</script>
