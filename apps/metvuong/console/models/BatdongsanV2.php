@@ -2512,16 +2512,16 @@ class BatdongsanV2 extends Component
 //        print_r("\nTime: {$time}s");
     }
 
-    public function updateProjects(){
+    public function updateProjects($limit=300){
         $start = time();
         $path = Yii::getAlias('@console') . "/data/bds_html/projects/";
         $file_log = "update_project_log.json";
-        $project_log_import = $this->loadLog($path."update/", $file_log);
-        if(!isset($project_log_import["type"]))
-            $project_log_import["type"] = array();
+        $project_log_update = $this->loadLog($path."update/", $file_log);
+        if(!isset($project_log_update["type"]))
+            $project_log_update["type"] = array();
         $types = $this->projects;
         $break_type = false; // detect next type if it is false
-        $current_type = empty($project_log_import["current_type"]) ? 0 : $project_log_import["current_type"]+1;
+        $current_type = empty($project_log_update["current_type"]) ? 0 : $project_log_update["current_type"]+1;
 //        $count_types = count($types)-1;
 //        if($current_type > $count_types)
 //            $current_type = 0;
@@ -2545,10 +2545,10 @@ class BatdongsanV2 extends Component
                         $filename = null;
                         $from = isset($log_import["update_total"]) ? $log_import["update_total"] : 0;
                         for ($i = $from; $i <= $last_file_index; $i++) {
-//                            if ($count_file > 1000) {
-//                                $break_type = true;
-//                                break;
-//                            }
+                            if ($count_file > $limit) {
+                                $break_type = true;
+                                break;
+                            }
                             $filename = $files[$i];
                             $filePath = $path . $type. "/files/" . $filename;
                             if (file_exists($filePath)) {
@@ -2558,14 +2558,36 @@ class BatdongsanV2 extends Component
                                     continue;
                                 }
 
-                                $recordUpdate = [
-                                    'logo' => $value[$filename]["logo"],
-                                    'file_name' => $type . "/" . $filename,
-                                    'is_crawl' => 1,
+                                $city_id = null;
+                                $district_id = null;
+
+                                $ad_city = Helpers::getCityId($value[$filename]["city"]);
+                                if (count($ad_city) > 0) {
+                                    $city_id = (int)$ad_city['id'];
+                                    $district = Helpers::getDistrictId($value[$filename]["district"], $city_id);
+                                    if (count($district) > 0) {
+                                        $district_id = (int)$district['id'];
+                                    }
+                                }
+
+//                                if(empty($city_id) || empty($district_id))
+//                                    continue;
+
+//                                $recordUpdate = [
+//                                    'logo' => $value[$filename]["logo"],
+//                                    'file_name' => $type . "/" . $filename,
+//                                    'is_crawl' => 1,
 //                                    'data_html' => $value[$filename]["data_html"],
-                                ];
-                                $project = \vsoft\ad\models\AdBuildingProject::getProjectBySlug($value[$filename]["slug"]);
-                                if(!empty($project)) {
+//                                ];
+
+                                $project_name = $value[$filename]["name"];
+                                $project = \vsoft\ad\models\AdBuildingProject::find()->where([
+                                    'city_id' => $city_id,
+                                    'district_id' => $district_id,
+                                    'name' => $project_name
+                                ])->one();
+
+                                if(count($project) > 0) {
                                     $buildingInvestor = AdInvestorBuildingProject::findOne(['building_project_id' => $project->id]);
                                     $investor = $value[$filename]["contractor"];
                                     if(count($investor) > 0){
@@ -2577,9 +2599,9 @@ class BatdongsanV2 extends Component
                                             ->execute();
                                     }
 
-                                    \vsoft\ad\models\AdBuildingProject::getDb()->createCommand()
-                                        ->update(\vsoft\ad\models\AdBuildingProject::tableName(), $recordUpdate, 'id=:id', [':id' => $project->id])
-                                        ->execute();
+//                                    \vsoft\ad\models\AdBuildingProject::getDb()->createCommand()
+//                                        ->update(\vsoft\ad\models\AdBuildingProject::tableName(), $recordUpdate, 'id=:id', [':id' => $project->id])
+//                                        ->execute();
 
                                     print_r("\n" . $count_file . " {$type}: {$filename} updated.");
                                     array_push($log_import["files"], $filename);
@@ -2592,11 +2614,11 @@ class BatdongsanV2 extends Component
                         } // end file loop
 
                         if ($break_type == false) {
-                            if (!in_array($type, $project_log_import["type"])) {
-                                array_push($project_log_import["type"], $type);
+                            if (!in_array($type, $project_log_update["type"])) {
+                                array_push($project_log_update["type"], $type);
                             }
-                            $project_log_import["current_type"] = $key_type;
-                            $this->writeLog($project_log_import, $path."update/", $file_log);
+                            $project_log_update["current_type"] = $key_type;
+                            $this->writeLog($project_log_update, $path."update/", $file_log);
                             print_r("\nADD TYPE: {$type} DONE!\n");
                         }
                     }
