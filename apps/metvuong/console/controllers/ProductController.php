@@ -551,7 +551,7 @@ class ProductController extends Controller {
 
                             $checkProductDuplicate = \vsoft\craw\models\AdProduct::getDb()->createCommand($sqlCheckDuplicate)->queryAll();
                             if(count($checkProductDuplicate) > 0) {
-                                print_r("Duplicate inserted");
+                                print_r(" Duplicate inserted");
                                continue;
                             }
                             $recordDuplicate = [
@@ -568,6 +568,12 @@ class ProductController extends Controller {
                         }
                         print_r("- Duplicate");
                     } else {
+                        $sqlCheckDuplicate = "select * from {$db_tool_schema}.map_product_duplicate where product_main_id = {$product->id}";
+                        $checkProductDuplicate = \vsoft\craw\models\AdProduct::getDb()->createCommand($sqlCheckDuplicate)->queryAll();
+                        if(count($checkProductDuplicate) > 0) {
+                            print_r(" Not found inserted");
+                            continue;
+                        }
                         $recordNotFound = [
                             'product_main_id' => $product->id,
                             'duplicate_id' => null,
