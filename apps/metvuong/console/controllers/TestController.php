@@ -9,9 +9,9 @@ use yii\db\Query;
 use yii\helpers\ArrayHelper;
 
 class TestController extends Controller {
-    public function actionDuplicate($thread = 'th1', $start = 1, $end = 10)
+    public function actionDuplicate($thread = '1', $start = 1, $end = 10)
     {
-		Test::me()->duplicate($thread, $start, $end);
+        Test::me()->duplicate($thread, $start, $end);
     }
 
 }
