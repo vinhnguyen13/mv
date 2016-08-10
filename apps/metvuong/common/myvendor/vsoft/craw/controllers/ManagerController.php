@@ -113,7 +113,9 @@ class ManagerController extends Controller {
 			foreach ($products as $product) {
 				foreach ($product as $k => &$value) {
 					if($value) {
-						if($k == 'type') {
+						if($k == 'id') {
+							$value = '' . $value;
+						} else if($k == 'type') {
 							$value = $type[$value];
 						} else if($k == 'category_id') {
 							$value = $categories[$value];
@@ -148,6 +150,8 @@ class ManagerController extends Controller {
 	}
 	
 	public function actionIndex() {
+		return $this->redirect(Url::to(['/craw/manager/index2']));
+		
         $import = Yii::$app->request->get("import");
 		$adProduct = new AdProductSearch();
 		$provider = $adProduct->search(\Yii::$app->request->queryParams);
