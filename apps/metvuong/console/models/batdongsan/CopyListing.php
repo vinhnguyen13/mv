@@ -279,7 +279,7 @@ class CopyListing extends Component
         }
         $end = time();
         $time = $end - $begin;
-        print_r("\nTime: {$time}s");
+        print_r("\nTime: {$time}s".PHP_EOL);
     }
 
     public function removeDirectory($path) {
