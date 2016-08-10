@@ -10603,7 +10603,7 @@ input:-webkit-autofill {
     transition: background-color .1s linear;
     -ms-transition: background-color .1s linear;
     -moz-transition: background-color .1s linear;
-    padding: 0px 10px;
+    padding: 17px 10px;
     display: block;
     /* background: #848484; */
     color: #3c3c3c;
@@ -10614,16 +10614,12 @@ input:-webkit-autofill {
     border-top: 1px solid #ECECEC;
     margin-top: -1px;
     margin-right: 0;
-    height: 46px;
-    line-height: 42px;
 }
 .wrap-swiper .icons-detail a {
-    height: 52px;
-    line-height: 47px;
+    
 }
 .detail-listing-extra .wrap-swiper .icons-detail a {
-    height: 55px;
-    line-height: 53px;
+    padding: 16px 10px 17px;
 }
 .detail-listing-extra .wrap-swiper .icons-detail li:last-child a {
     height: 51px;
@@ -10892,6 +10888,7 @@ label:hover {
         background: none;
         /* color: #3c3c3c; */
     }
+    .detail-listing-extra .wrap-swiper .icons-detail a,
     .wrap-swiper .icons-detail a {
         display: inline-block;
         padding: 0;

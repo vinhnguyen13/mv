@@ -219,7 +219,7 @@ EOD;
 								<?= Html::activeHiddenInput($searchModel, 'type', ['name' => '']); ?>
 							</div>
 							<button class="btn-submit btn-common <?= $hideSearchForm ? '' : 'active' ?>"><?= Yii::t('ad', 'Search') ?></button>
-							<div class="pull-right item-right">
+							<div class="pull-right item-right hide">
 								<ul class="clearfix">
 									<li class="tool-compare"><button data-num=""><span class="icon-mv mgR-5"><span class="icon-balance-scale"></span></span>So sánh <span class="num-show"></span></button></li>
 								</ul>
