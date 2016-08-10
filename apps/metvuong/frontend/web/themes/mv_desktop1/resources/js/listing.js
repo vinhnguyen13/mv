@@ -25,19 +25,19 @@ $(document).ready(function() {
 			compare.countCompare += 1;
 			if ( compare.countCompare > 0 && compare.countCompare <= compare.numCheck ) {
 				item.removeClass('flag-compare-set').addClass('flag-compare-remove');
-				item.find('.txt-change').text('Đã thêm so sánh');
+				item.find('.txt-change').text(lajax.t('Đã thêm so sánh'));
 				item.find('.icon-balance-scale').attr('class','icon-close-icon');
 				compare.numGet.text('('+compare.countCompare+')');
 				compare.effectShow();
 				compare.checkVal(item, 1);
 			}else {
-				alert("Bạn đã chọn đủ 3 tin đăng");
+				alert(lajax.t("Bạn đã chọn đủ 3 tin đăng"));
 				compare.countCompare = compare.numCheck;
 			}
 		},
 		remove: function (item) {
 			item.removeClass('flag-compare-remove').addClass('flag-compare-set');
-			item.find('.txt-change').text('So Sánh');
+			item.find('.txt-change').text(lajax.t('So Sánh'));
 			item.find('.icon-close-icon').attr('class','icon-balance-scale');
 			compare.countCompare -= 1;
 			if ( compare.countCompare == 0 ) {
