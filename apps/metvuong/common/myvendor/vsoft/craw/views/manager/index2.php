@@ -233,7 +233,7 @@ $columns = array_intersect_key($columns, $searchModel->columns);
 	<div style="text-align: center; width: 100%; position: absolute; top: -20px;">
 		<div id="filter_columns">
 			<a href="#" id="toggle" style="font-size: 20px; display: inline-block; margin-top: 22px;">Show/Hide Columns</a>
-			<a href="<?= Url::to(array_merge(['/craw/manager/export'], Yii::$app->request->get())) ?>" class="btn btn-success btn-sm" style="margin-left: 22px;">Export to Excel</a>
+			<a id="export-link" href="<?= Url::to(array_merge(['/craw/manager/export'], Yii::$app->request->get())) ?>" class="btn btn-success btn-sm" style="margin-left: 22px;">Export to Excel</a>
 			<div id="columns-wrap">
 				<table>
 				<?php

@@ -180,27 +180,55 @@ class Metvuong extends Component
         return null;
     }
 
-    public static function mapContactProduct($limit=500)
+    public static function mapContactProduct($limit=1000)
     {
+        $start_time = time();
         $connection = AdProduct::getDb();
-        $sql = "select p.id as product_id, c.email from ad_contact_info c inner join ad_product p on c.product_id = p.id
-                where p.user_id is null and c.email is not null and ip is null order by id desc";
-        if($limit > 0 && $limit <= 500){
+        $connection->createCommand('SET group_concat_max_len = 5000000')->execute();
+        $sql = "select c.email, u.id as user_id, group_concat(c.product_id) as list_id from ad_contact_info c inner join `user` u on c.email = u.email where c.email is not null ";
+
+        $path = Yii::getAlias('@console'). "/data/bds_html/map_product/";
+        $email_list_file_name = "map_contact_product.json";
+        $log = Helpers::loadLog($path, $email_list_file_name);
+        $log_emails = isset($log['emails']) ? $log['emails'] : array();
+
+        if(count($log_emails) > 0){
+            $str_emails = "'". implode("', '", array_map('mysql_real_escape_string', $log_emails)). "'";
+            $sql = $sql. " and c.email not in ({$str_emails}) ";
+        }
+        $sql = $sql. " group by c.email";
+
+
+        if($limit >=1 && $limit <= 1000){
             $sql = $sql. " limit ". $limit;
         } else {
+            print_r("\nRecord limit from 1 to 1000");
             return;
         }
 
-        $products = $connection->createCommand($sql)->queryAll();
-        echo "<pre>";
-        print_r($products);
-        echo "<pre>";
-        exit();
-        if(count($products) > 0){
+        $email_listings = $connection->createCommand($sql)->queryAll();
+        if(count($email_listings) > 0){
+            foreach ($email_listings as $key_email => $email_listing) {
+                $list_id = $email_listing['list_id'];
+                $user_id = $email_listing['user_id'];
+                $email = $email_listing['email'];
 
+                $update_sql = "UPDATE `ad_product` SET `user_id`={$user_id} WHERE id IN ({$list_id})";
+                $connection->createCommand($update_sql)->execute();
+
+                if(!in_array($email, $log['emails']))
+                    $log['emails'][] = $email;
+                Helpers::writeLog($log, $path, $email_list_file_name);
+                print_r("\n" . ($key_email + 1) . " - ". $email);
+
+            }
         } else {
             print_r("Product not found");
         }
+
+        $end_time = time();
+        $time = $end_time - $start_time;
+        print_r("\n\nTime: {$time}s");
     }
 
 }

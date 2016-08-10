@@ -1,4 +1,58 @@
 $(document).ready(function(){
+	$('#export-link').click(function(){
+		setCookie('downloadComplete', '', 0)
+		
+		var el = $('<div style="top:0px; left:0px; position: fixed; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 99999; "><div style=" position: absolute; top: 50%; margin-top: -20px; font-size: 28px; color: #FFF; text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7); left: 50%; transform: translateX(-50%); "><span style="white-space: nowrap;" class="text">Đang tạo file Excel</span><img src="/admin/css/images/submit-loading.gif" style=" margin-left: 8px; width: 20px; "></div></div>');
+		$('body').append(el);
+		
+		loading(el, 0);
+	});
+	
+	function loading(el, start) {
+		var text = el.find('.text');
+		
+		if(getCookie('downloadComplete')) {
+			text.fadeOut(function(){
+				el.find('img').remove();
+				text.text('ĐÃ TẠO XONG FILE EXCEL').fadeIn(function(){
+					setTimeout(function(){
+						el.remove();
+					}, 1000);
+				});
+			});
+			
+			setCookie('downloadComplete', '', 0)
+		} else {
+			if(start == 80) {
+				text.fadeOut(function(){
+					text.text('Vui lòng chờ thêm chút nửa').fadeIn();
+				});
+			} else if(start == 30) {
+				text.fadeOut(function(){
+					text.text('Build tổng cộng ' + $('.summary').find('b').eq(1).text() + ' record').fadeIn();
+				});
+			} else if(start == 140) {
+				text.fadeOut(function(){
+					text.text('Càng nhiều record thì build càng lâu').fadeIn();
+				});
+			} else if(start == 240) {
+				text.fadeOut(function(){
+					text.text('Vẫn đang tiếp tục tạo file...').fadeIn();
+				});
+			} else if(start == 440) {
+				text.fadeOut(function(){
+					text.text('Nhiều record quá ! chờ, đừng đóng cửa sổ').fadeIn();
+				});
+				
+				start = -80;
+			}
+			
+			setTimeout(function(){
+				loading(el, ++start);
+			}, 100);
+		}
+	}
+	
 	$('.toggle-column').change(function(){
 		var exclude = getCookie('columns');
 		

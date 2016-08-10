@@ -309,7 +309,7 @@ class Elastic
     		"field_value_factor" => [
     			"field" => "total_sell",
     			"modifier" => "log1p",
-    			"factor" => 0.1
+    			"factor" => 0.000001
     		]
     	];
     	
@@ -317,7 +317,7 @@ class Elastic
     		"field_value_factor" => [
     			"field" => "total_rent",
     			"modifier" => "log1p",
-    			"factor" => 0.1
+    			"factor" => 0.000001
     		]
     	];
     	
@@ -333,7 +333,7 @@ class Elastic
     		"field_value_factor" => [
     			"field" => $field,
     			"modifier" => "log1p",
-    			"factor" => 0.1
+    			"factor" => 0.000001
     		]
     	];
 		

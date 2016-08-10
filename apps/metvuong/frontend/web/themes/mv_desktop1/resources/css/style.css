@@ -6125,7 +6125,7 @@ padding: 5px 0;
         padding: 8px 0;
     }
     .advande-search {
-        padding: 0 15px 0 0;
+        padding: 0 0 0 0;
         background: #f5f5f5;
     }
     .advande-search .toggle-search {
@@ -8925,6 +8925,23 @@ margin-right: 5px;
     /* height: 60px; */
     /* line-height: 60px; */
 }
+.menuUser .listing-compare label {
+    display: block;
+    border-bottom: 1px solid #DADADA;
+    padding: 15px 30px 15px 10px;
+    text-transform: uppercase;
+    position: relative;
+    color: #3c3c3c;
+    font-size: 15px;
+    font-weight: 400;
+}
+.menuUser .listing-compare label:hover,
+.menuUser .listing-compare label.active {
+    color: #00a769;
+}
+.menuUser .listing-compare .checkbox-ui .icon-mv {
+    float: right;
+}
 .menuUser li:first-child .hemi-intro-popover {
     top: 10px !important;
 }
@@ -9448,6 +9465,12 @@ margin-right: 5px;
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+.icon-long-arrow-up:before {
+    content: "\f176";
+}
+.icon-long-arrow-down:before {
+    content: "\f175";
 }
 .icon-balance-scale:before {
     content: "\f24e";
@@ -10580,7 +10603,7 @@ input:-webkit-autofill {
     transition: background-color .1s linear;
     -ms-transition: background-color .1s linear;
     -moz-transition: background-color .1s linear;
-    padding: 0px 10px;
+    padding: 17px 10px;
     display: block;
     /* background: #848484; */
     color: #3c3c3c;
@@ -10591,12 +10614,12 @@ input:-webkit-autofill {
     border-top: 1px solid #ECECEC;
     margin-top: -1px;
     margin-right: 0;
-    height: 46px;
-    line-height: 42px;
+}
+.wrap-swiper .icons-detail a {
+    
 }
 .detail-listing-extra .wrap-swiper .icons-detail a {
-    height: 48px;
-    line-height: 45px;
+    padding: 16px 10px 17px;
 }
 .detail-listing-extra .wrap-swiper .icons-detail li:last-child a {
     height: 51px;
@@ -10865,6 +10888,7 @@ label:hover {
         background: none;
         /* color: #3c3c3c; */
     }
+    .detail-listing-extra .wrap-swiper .icons-detail a,
     .wrap-swiper .icons-detail a {
         display: inline-block;
         padding: 0;
@@ -13909,6 +13933,9 @@ ul.cardList li {
     width: 50%;
     padding: 0 5px 5px 0;
 }
+#listing-list > ul > li > div {
+    position: relative;
+}
 #listing-list > ul > li a {
     height: 190px;
     overflow: hidden;
@@ -14099,7 +14126,7 @@ ul.cardList li {
     position: relative;
 }
 .listing-compare .remove-compare {
-    padding: 3px 8px;
+    padding: 0;
     width: auto;
     position: absolute;
     top: 12px;
@@ -14108,6 +14135,7 @@ ul.cardList li {
 }
 .listing-compare .remove-compare:hover {
     
+background: none;
 }
 .listing-compare {
     margin-bottom: 30px;
@@ -14123,7 +14151,7 @@ ul.cardList li {
     font-size: 14px;
     font-weight: 400;
     display: block;
-    padding: 7px 20px;
+    padding: 12px 7px 12px 10px;
     text-transform: uppercase;
 }
 .option-choose-compare ul label:hover {
@@ -14137,6 +14165,108 @@ ul.cardList li {
 }
 .compare-block {
     padding: 25px 0 0 30px;
+}
+#listing-list .compare-button {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    z-index: -1;
+    font-size: 13px;
+    background: rgba(0, 0, 0, 0.36);
+    color: #fff;
+    border-radius: 4px;
+    opacity: 0;
+    transition: all .3s ease-out;
+    padding: 1px;
+    cursor: pointer;
+}
+#listing-list .compare-button .inner-box {
+    padding: 5px 10px;
+    display: block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+#listing-list .compare-button:hover {
+    background: rgba(0, 0, 0, 0.63);
+}
+#listing-list > ul > li > div:hover .compare-button {
+    opacity: 1;
+    z-index: 10;
+}
+.search-subpage .item-right li {
+    float: left;
+}
+.search-subpage .item-right button,
+.search-subpage .item-right a {
+    font-size: 14px;
+    text-align: center;
+    display: block;
+    line-height: 17px;
+    position: relative;
+    padding: 17px 15px;
+    border: none;
+    background: inherit;
+    border-left: 1px solid #e2e2e2;
+    transition: all .3s ease-out;
+    width: auto;
+    height: auto;
+    max-width: inherit;
+}
+.search-subpage .item-right .get-show-num {
+    background: rgba(6, 153, 73, 0.2);
+}
+.search-subpage .item-right button:hover,
+.search-subpage .item-right a:hover {
+    background: #e8e8e8;
+    color: #00a769;
+}
+.list-compare .inner-box {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0px 0px 5px #ccc;
+}
+.list-compare .inner-box .infor .address-listing {
+    padding: 15px;
+    padding-top: 0;
+    border-bottom: 1px solid #ccc;
+}
+.list-compare .inner-box li {
+    text-align: center;
+    line-height: 100%;
+    white-space: nowrap;
+    padding: 15px 0;
+    border-bottom: 1px solid #ccc;
+    font-size: 15px;
+}
+.list-compare .inner-box li.price-item {
+    font-size: 20px;
+}
+.list-compare .inner-box li.price-item span {
+    font-size: 13px;
+}
+.list-compare .inner-box .icon-mv {
+    font-size: 22px;
+    margin-right: 12px;
+}
+.list-compare .inner-box li:last-child {
+    border-bottom: none;
+}
+.list-compare .inner-box li .arrow-updown {
+    padding: 0 10px;
+}
+.list-compare .inner-box li .arrow-updown .icon-mv {
+    margin: 0;
+}
+.list-compare .inner-box li .arrow-updown .icon-long-arrow-up,
+.list-compare .inner-box li .arrow-updown .icon-long-arrow-down {
+    font-size: 20px;
+}
+.list-compare .inner-box li .arrow-updown .icon-long-arrow-up {
+    
+}
+.list-compare .inner-box li .arrow-updown .icon-long-arrow-down {
+    
 }
 @media (max-width: 1600px) {
     .wrap-listing-item {

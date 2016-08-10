@@ -78,7 +78,8 @@ class ManagerController extends Controller {
 		$searchModel = new AdProductSearch2();
 		$provider = $searchModel->search(\Yii::$app->request->queryParams);
 		$query = $provider->query;
-		$query->limit = 1000;
+		$query->orderBy($provider->sort->getAttributeOrders());
+		$query->limit = 5000;
 		
 		foreach ($query->select as &$select) {
 			if($select == 'ad_product.content') {
@@ -113,7 +114,9 @@ class ManagerController extends Controller {
 			foreach ($products as $product) {
 				foreach ($product as $k => &$value) {
 					if($value) {
-						if($k == 'type') {
+						if($k == 'id') {
+							$value = '' . $value;
+						} else if($k == 'type') {
 							$value = $type[$value];
 						} else if($k == 'category_id') {
 							$value = $categories[$value];
@@ -130,6 +133,8 @@ class ManagerController extends Controller {
 						} else if($k == 'area') {
 							$value = floatval($value);
 						}
+					} else if($value === '0') {
+						$value = null;
 					}
 				}
 				$writer->addRowWithStyle(array_values($product), $style);
@@ -140,10 +145,14 @@ class ManagerController extends Controller {
 			}
 		}
 		
+		setcookie("downloadComplete", 1);
+		
 		$writer->close();
 	}
 	
 	public function actionIndex() {
+		return $this->redirect(Url::to(['/craw/manager/index2']));
+		
         $import = Yii::$app->request->get("import");
 		$adProduct = new AdProductSearch();
 		$provider = $adProduct->search(\Yii::$app->request->queryParams);

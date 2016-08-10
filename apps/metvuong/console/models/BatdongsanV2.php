@@ -2562,7 +2562,7 @@ class BatdongsanV2 extends Component
                                     'logo' => $value[$filename]["logo"],
                                     'file_name' => $type . "/" . $filename,
                                     'is_crawl' => 1,
-                                    'data_html' => $value[$filename]["data_html"],
+//                                    'data_html' => $value[$filename]["data_html"],
                                 ];
                                 $project = \vsoft\ad\models\AdBuildingProject::getProjectBySlug($value[$filename]["slug"]);
                                 if(!empty($project)) {
