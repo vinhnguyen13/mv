@@ -261,10 +261,6 @@ class CopyListing extends Component
                                 $product->insertEs(); // insert elastic
                             }
                         }
-                        echo "<pre>";
-                        print_r($key);
-                        echo "</pre>";
-                        exit;
                         $transaction->commit();
                     } catch (Exception $e) {
                         $transaction->rollBack();
