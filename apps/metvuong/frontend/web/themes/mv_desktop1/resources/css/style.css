@@ -9466,6 +9466,12 @@ margin-right: 5px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.icon-long-arrow-up:before {
+    content: "\f176";
+}
+.icon-long-arrow-down:before {
+    content: "\f175";
+}
 .icon-balance-scale:before {
     content: "\f24e";
 }
@@ -14244,6 +14250,22 @@ background: none;
 }
 .list-compare .inner-box li:last-child {
     border-bottom: none;
+}
+.list-compare .inner-box li .arrow-updown {
+    padding: 0 10px;
+}
+.list-compare .inner-box li .arrow-updown .icon-mv {
+    margin: 0;
+}
+.list-compare .inner-box li .arrow-updown .icon-long-arrow-up,
+.list-compare .inner-box li .arrow-updown .icon-long-arrow-down {
+    font-size: 20px;
+}
+.list-compare .inner-box li .arrow-updown .icon-long-arrow-up {
+    
+}
+.list-compare .inner-box li .arrow-updown .icon-long-arrow-down {
+    
 }
 @media (max-width: 1600px) {
     .wrap-listing-item {

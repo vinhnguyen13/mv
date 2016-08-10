@@ -52,10 +52,22 @@ use yii\helpers\Url;
                             <div class="infor">
                                 <p class="address-listing">Đường Mai Chí Thọ, Phường An Phú, Quận 2, Hồ Chí Minh</p>
                                 <ul>
-                                    <li class="price-item">1,6191 <span class="txt-unit">tỷ</span> <span class="txt-unit">VNĐ</span></li>
-                                    <li><span class="icon-mv"><span class="icon-page-1-copy"></span></span>82m<sup>2</sup> </li>
-                                    <li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 phòng ngủ</li>
-                                    <li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 phòng tắm</li>
+                                    <li class="price-item">
+                                        1,6191 <span class="txt-unit">tỷ</span> <span class="txt-unit">VNĐ</span>
+                                        <a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-down"></span></span></a>
+                                    </li>
+                                    <li>
+                                        <span class="icon-mv"><span class="icon-page-1-copy"></span></span>82m<sup>2</sup>
+                                        <a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-up"></span></span></a>
+                                    </li>
+                                    <li>
+                                        <span class="icon-mv"><span class="icon-bed-search"></span></span>2 phòng ngủ
+                                        <a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-up"></span></span></a>
+                                    </li>
+                                    <li>
+                                        <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 phòng tắm
+                                        <a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-up"></span></span></a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -66,10 +78,22 @@ use yii\helpers\Url;
                             <div class="infor">
                                 <p class="address-listing">Đường Mai Chí Thọ, Phường An Phú, Quận 2, Hồ Chí Minh</p>
                                 <ul>
-                                    <li class="price-item">1,6191 <span class="txt-unit">tỷ</span> <span class="txt-unit">VNĐ</span></li>
-                                    <li><span class="icon-mv"><span class="icon-page-1-copy"></span></span>82m<sup>2</sup> </li>
-                                    <li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 phòng ngủ</li>
-                                    <li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 phòng tắm</li>
+                                    <li class="price-item">
+                                        1,6191 <span class="txt-unit">tỷ</span> <span class="txt-unit">VNĐ</span>
+                                        <a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-down"></span></span></a>
+                                    </li>
+                                    <li>
+                                        <span class="icon-mv"><span class="icon-page-1-copy"></span></span>82m<sup>2</sup>
+                                        <a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-up"></span></span></a>
+                                    </li>
+                                    <li>
+                                        <span class="icon-mv"><span class="icon-bed-search"></span></span>2 phòng ngủ
+                                        <a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-up"></span></span></a>
+                                    </li>
+                                    <li>
+                                        <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 phòng tắm
+                                        <a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-up"></span></span></a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -80,10 +104,22 @@ use yii\helpers\Url;
                             <div class="infor">
                                 <p class="address-listing">Đường Mai Chí Thọ, Phường An Phú, Quận 2, Hồ Chí Minh</p>
                                 <ul>
-                                    <li class="price-item">1,6191 <span class="txt-unit">tỷ</span> <span class="txt-unit">VNĐ</span></li>
-                                    <li><span class="icon-mv"><span class="icon-page-1-copy"></span></span>82m<sup>2</sup> </li>
-                                    <li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 phòng ngủ</li>
-                                    <li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 phòng tắm</li>
+                                    <li class="price-item">
+                                        1,6191 <span class="txt-unit">tỷ</span> <span class="txt-unit">VNĐ</span>
+                                        <a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-down"></span></span></a>
+                                    </li>
+                                    <li>
+                                        <span class="icon-mv"><span class="icon-page-1-copy"></span></span>82m<sup>2</sup>
+                                        <a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-up"></span></span></a>
+                                    </li>
+                                    <li>
+                                        <span class="icon-mv"><span class="icon-bed-search"></span></span>2 phòng ngủ
+                                        <a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-up"></span></span></a>
+                                    </li>
+                                    <li>
+                                        <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 phòng tắm
+                                        <a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-up"></span></span></a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
