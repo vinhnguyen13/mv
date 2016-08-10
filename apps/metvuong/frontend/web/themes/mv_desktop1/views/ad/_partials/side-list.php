@@ -84,7 +84,7 @@ use frontend\models\Tracking;
 					    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['start_date']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?php $score = round($product['score'] - 0.00001157407 * ($now - $product['start_date'])); if($score > 0) echo $score; else echo 0; ?></span></p>
 					    </div>
 					</a>
-					<div class="compare-button flag-compare-set" data-value="<?= $product['id'] ?>"><span class="inner-box"><span class="icon-mv mgR-5"><span class="icon-balance-scale"></span></span><span class="txt-change">So Sánh</span></span></div>
+					<div class="compare-button flag-compare-set hide" data-value="<?= $product['id'] ?>"><span class="inner-box"><span class="icon-mv mgR-5"><span class="icon-balance-scale"></span></span><span class="txt-change">So Sánh</span></span></div>
 				</div>
 			</li>
 			<?php endforeach; ?>
