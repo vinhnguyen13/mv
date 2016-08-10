@@ -23,17 +23,12 @@ $(document).ready(function() {
 		},
 		add: function (item) {
 			compare.countCompare += 1;
-			if ( compare.countCompare > 0 && compare.countCompare <= compare.numCheck ) {
-				item.removeClass('flag-compare-set').addClass('flag-compare-remove');
-				item.find('.txt-change').text(lajax.t('Đã thêm so sánh'));
-				item.find('.icon-balance-scale').attr('class','icon-close-icon');
-				compare.numGet.text('('+compare.countCompare+')');
-				compare.effectShow();
-				compare.checkVal(item, 1);
-			}else {
-				alert(lajax.t("Bạn đã chọn đủ 3 tin đăng"));
-				compare.countCompare = compare.numCheck;
-			}
+			item.removeClass('flag-compare-set').addClass('flag-compare-remove');
+			item.find('.txt-change').text(lajax.t('Đã thêm so sánh'));
+			item.find('.icon-balance-scale').attr('class','icon-close-icon');
+			compare.numGet.text('('+compare.countCompare+')');
+			compare.effectShow();
+			compare.checkVal(item, 1);
 		},
 		remove: function (item) {
 			item.removeClass('flag-compare-remove').addClass('flag-compare-set');
