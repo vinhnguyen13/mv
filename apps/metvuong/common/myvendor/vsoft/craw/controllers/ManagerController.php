@@ -140,6 +140,8 @@ class ManagerController extends Controller {
 			}
 		}
 		
+		setcookie("downloadComplete", 1);
+		
 		$writer->close();
 	}
 	
