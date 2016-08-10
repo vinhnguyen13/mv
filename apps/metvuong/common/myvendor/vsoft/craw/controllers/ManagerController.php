@@ -78,7 +78,7 @@ class ManagerController extends Controller {
 		$searchModel = new AdProductSearch2();
 		$provider = $searchModel->search(\Yii::$app->request->queryParams);
 		$query = $provider->query;
-		$query->limit = 1000;
+		$query->limit = 5000;
 		
 		foreach ($query->select as &$select) {
 			if($select == 'ad_product.content') {
