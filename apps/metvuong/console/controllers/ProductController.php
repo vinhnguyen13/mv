@@ -349,7 +349,7 @@ class ProductController extends Controller {
                     print_r(PHP_EOL);
                 }
                 $no++;
-                sleep(1);
+                usleep(50000);
             }
             print_r(PHP_EOL);
             print_r("Updated {$no} images...");
@@ -429,6 +429,7 @@ class ProductController extends Controller {
         }
     }
 
+    // Map product main voi product tool va check product main duplicate
     public function actionMapProduct()
     {
         $start_time = time();
@@ -600,9 +601,10 @@ class ProductController extends Controller {
         print_r("\nProduct not found: {$count_product_not_found}\n");
     }
 
+    // Map Contact co user thong qua email cap nhat user_id vao product main. Su dung file log email da map: bds_html/map_product/map_contact_product.json
     public function actionMapContactProduct()
     {
-        $limit = $this->limit == null ? 500 : ((intval($this->limit) <= 500 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+        $limit = $this->limit == null ? 1000 : ((intval($this->limit) <= 1000 && intval($this->limit) > 0) ? intval($this->limit) : 0);
         Metvuong::mapContactProduct($limit);
     }
 

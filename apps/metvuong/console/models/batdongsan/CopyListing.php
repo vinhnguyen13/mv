@@ -47,13 +47,13 @@ class CopyListing extends Component
             ->where($sql)->limit($limit)->orderBy(['id' => SORT_DESC])->all();
 
         if(count($models) > 0) {
-            $no = 0;
+//            $no = 0;
             $helper = new AdImageHelper();
             $connection = AdProduct::getDb();
             $transaction = $connection->beginTransaction();
             try {
                 foreach ($models as $key => $model) {
-                    print_r("\nCopy: {$model->file_name}");
+                    print_r("\n\n". ($key+1). " - Copy: {$model->file_name}");
                     $productImages = $model->adImages;
                     $adProductAdditionInfo = $model->adProductAdditionInfo;
                     if (count($adProductAdditionInfo) <= 0) {
@@ -68,7 +68,7 @@ class CopyListing extends Component
                     $district_id = empty($model->district_id) ? null : $model->district_id;
                     $ward_id = empty($model->ward_id) ? null : $model->ward_id;
                     $street_id = empty($model->street_id) ? null : $model->street_id;
-                    $home_no = empty($model->home_no) ? null : $model->home_no;
+                    $home_no = empty($model->home_no) ? null : trim($model->home_no);
                     $lat = empty($model->lat) ? null : $model->lat;
                     $lng = empty($model->lng) ? null : $model->lng;
 
@@ -87,7 +87,7 @@ class CopyListing extends Component
                         $district_id = empty($project->district_id) ? (empty($model->district_id) ? null : $model->district_id) : $project->district_id;
                         $ward_id = empty($project->ward_id) ? (empty($model->ward_id) ? null : $model->ward_id) : $project->ward_id;
                         $street_id = empty($project->street_id) ? (empty($model->street_id) ? null : $model->street_id) : $project->street_id;
-                        $home_no = empty($project->home_no) ? (empty($model->home_no) ? null : $model->home_no) : $project->home_no;
+                        $home_no = empty($project->home_no) ? (empty($model->home_no) ? null : $model->home_no) : trim($project->home_no);
                         $lat = empty($project->lat) ? (empty($model->lat) ? null : $model->lat) : $project->lat;
                         $lng = empty($project->lng) ? (empty($model->lng) ? null : $model->lng) : $project->lng;
                         print_r(" - {$project_name} ");
@@ -147,19 +147,38 @@ class CopyListing extends Component
                             if (count($image) > 0 && !empty($image)) {
                                 $result = Metvuong::DownloadImage($image->file_name, $image->uploaded_at, $tempFolder);
                                 $arrImage[$key_image] = $result;
-                                sleep(1);
+                                usleep(50000);
                             }
                         }
                     }
+                    $total_images = count($arrImage);
+                    print_r(" - Total images: {$total_images}");
 
                     $product = new AdProduct($record);
                     $score = AdProduct::calcScore($product, $adProductAdditionInfo, $adContactInfo, count($productImages));
                     $product->score = $score;
+
+                    $email = $adContactInfo->email;
+                    if(!empty($email)) {
+                        $user_query = Yii::$app->getDb()->cache(function() use($email){
+                            return User::find()->where(['email' => $email])->count();
+                        });
+                        $count_user = (int)$user_query;
+                        if ($count_user > 0) {
+                            $user = Yii::$app->getDb()->cache(function() use($email){
+                                return User::find()->where(['email' => $email])->one();
+                            });
+                            if(count($user) > 0)
+                                $product->user_id = $user->id;
+                        }
+                    }
+
                     if ($product->save(false)) {
                         $last_product_id = $product->id;
                         $model->product_main_id = $last_product_id;
                         $model->update(false);
-
+                        print_r(" - Product: {$last_product_id}");
+                        print_r(" - City: {$product->city_id}");
                         // update ad_product_file
                         $product_file = AdProductFile::find()->where(['file' => $model->file_name])->one();
                         if ($product_file) {
@@ -188,7 +207,9 @@ class CopyListing extends Component
                                 'interior' => $adProductAdditionInfo->interior
                             ];
                             $adInfo = new AdProductAdditionInfo($infoRecord);
-                            $adInfo->save(false);
+                            if($adInfo->save(false)){
+                                print_r(" - Addition");
+                            }
                         }
 
                         // contact info
@@ -203,21 +224,13 @@ class CopyListing extends Component
                                 'email' => $adContactInfo->email
                             ];
                             $adContact = new AdContactInfo($contactRecord);
-                            if($adContact->save(false)){ // map product
-                                $email = $adContact->email;
-                                $user_query = User::find()->where(['email' => $email]);
-                                $count_user = (int)$user_query->count();
-                                print_r(" - user: ". $count_user);
-                                if($count_user > 0){
-                                    $user = $user_query->one();
-                                    $product->user_id = $user->id;
-                                    $product->save(false);
-                                    print_r(" - map user {$user->username}");
-                                }
+                            if($adContact->save(false)){
+                                print_r(" - Contact");
                             }
                         }
 
                         // product image
+                        $list_image_id = null;
                         if (isset($productImages) && count($productImages) > 0 && $is_expired == 0) {
                             foreach ($productImages as $key_image => $image) {
                                 if (count($image) > 0 && !empty($image) && count($arrImage) > 0) {
@@ -243,21 +256,26 @@ class CopyListing extends Component
                                         }
                                         $helper->makeFolderSizes($newFolder);
                                         $helper->moveTempFile($oldFolder, $newFolder, $file_image);
+                                        $image_id = $key_image == 0 ? $adImage->id : ", ". $adImage->id;
+                                        $list_image_id = $list_image_id. $image_id;
                                     }
                                 }
                             }
+                        }
+                        if(!empty($list_image_id)){
+                            print_r(" - Images: {$list_image_id}");
                         }
 
                         if ($is_expired == 0) {
                             $product->insertEs(); // insert elastic
                         }
 
-                        if ($no > 0 && $no % 20 == 0) {
-                            print_r(PHP_EOL);
-                            print_r("\n Copied {$no} records...");
-                            print_r(PHP_EOL);
-                        }
-                        $no++;
+//                        if ($no > 0 && $no % 20 == 0) {
+//                            print_r(PHP_EOL);
+//                            print_r("\n Copied {$no} records...");
+//                            print_r(PHP_EOL);
+//                        }
+//                        $no++;
                     }
                 } // end foreach models
                 $transaction->commit();
