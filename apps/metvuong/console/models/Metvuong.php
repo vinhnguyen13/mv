@@ -27,6 +27,7 @@ class Metvuong extends Component
 {
     public static function sendMailContact($code=null, $limit=100)
     {
+        Yii::$app->getDb()->createCommand('SET group_concat_max_len = 5000000')->execute();
         $contacts = AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
                 ->where('email is not null')
                 ->andWhere("email NOT IN (select email from mark_email)")
@@ -177,6 +178,29 @@ class Metvuong extends Component
             }
         }
         return null;
+    }
+
+    public static function mapContactProduct($limit=500)
+    {
+        $connection = AdProduct::getDb();
+        $sql = "select p.id as product_id, c.email from ad_contact_info c inner join ad_product p on c.product_id = p.id
+                where p.user_id is null and c.email is not null and ip is null order by id desc";
+        if($limit > 0 && $limit <= 500){
+            $sql = $sql. " limit ". $limit;
+        } else {
+            return;
+        }
+
+        $products = $connection->createCommand($sql)->queryAll();
+        echo "<pre>";
+        print_r($products);
+        echo "<pre>";
+        exit();
+        if(count($products) > 0){
+
+        } else {
+            print_r("Product not found");
+        }
     }
 
 }

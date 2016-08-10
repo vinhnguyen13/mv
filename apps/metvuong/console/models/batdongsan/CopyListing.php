@@ -10,6 +10,7 @@ namespace console\models\batdongsan;
 
 use console\models\Metvuong;
 use frontend\models\Elastic;
+use frontend\models\User;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdImages;
 use vsoft\ad\models\AdProduct;
@@ -202,7 +203,18 @@ class CopyListing extends Component
                                 'email' => $adContactInfo->email
                             ];
                             $adContact = new AdContactInfo($contactRecord);
-                            $adContact->save(false);
+                            if($adContact->save(false)){ // map product
+                                $email = $adContact->email;
+                                $user_query = User::find()->where(['email' => $email]);
+                                $count_user = (int)$user_query->count();
+                                print_r(" - user: ". $count_user);
+                                if($count_user > 0){
+                                    $user = $user_query->one();
+                                    $product->user_id = $user->id;
+                                    $product->save(false);
+                                    print_r(" - map user {$user->username}");
+                                }
+                            }
                         }
 
                         // product image

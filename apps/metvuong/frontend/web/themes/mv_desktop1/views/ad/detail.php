@@ -261,6 +261,12 @@ $count_review = $reviews->count();
 							<span><?= Yii::t('ad', 'Report Abuse') ?></span>
 						</a>
 					</li>
+					<li class="">
+						<a href="#" class="">
+							<span class="icon-mv"><span class="icon-balance-scale"></span></span>
+							<span>Compare</span>
+						</a>
+					</li>
 				</ul>
 			</div>
 			<div class="infor-listing">
