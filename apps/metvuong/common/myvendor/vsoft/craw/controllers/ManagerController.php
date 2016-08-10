@@ -78,6 +78,7 @@ class ManagerController extends Controller {
 		$searchModel = new AdProductSearch2();
 		$provider = $searchModel->search(\Yii::$app->request->queryParams);
 		$query = $provider->query;
+		$query->orderBy($provider->sort->getAttributeOrders());
 		$query->limit = 5000;
 		
 		foreach ($query->select as &$select) {
