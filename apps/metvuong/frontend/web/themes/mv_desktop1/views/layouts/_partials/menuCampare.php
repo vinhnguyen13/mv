@@ -7,23 +7,23 @@ use yii\helpers\Url;
                 <div class="title">Select Listing</div>
                 <ul class="clearfix">
                     <li>
-                        <a href="" class="active">Lê Thanh Tôn</a>
+                        <label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Lê Thanh Tôn</label>
                         <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
                     </li>
                     <li>
-                        <a href="">Lê Thanh Tôn</a>
+                        <label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Lê Thanh Tôn</label>
                         <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
                     </li>
                     <li>
-                        <a href="">Lê Thanh Tôn</a>
+                        <label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Lê Thanh Tôn</label>
                         <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
                     </li>
                     <li>
-                        <a href="">Lê Thanh Tôn</a>
+                        <label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Lê Thanh Tôn</label>
                         <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
                     </li>
                     <li>
-                        <a href="">Lê Thanh Tôn</a>
+                        <label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Lê Thanh Tôn</label>
                         <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
                     </li>
                 </ul>
@@ -45,32 +45,49 @@ use yii\helpers\Url;
         <div class="u-allduan">
             <div class="title-top">Compare Listing</div>
             <div class="compare-block">
-                <div class="tbl-wrap w-60">
-                    <div class="thead-row">
-                        <div class="thead wrap-tr-each">
-                            <div class="w-10"><span>ID</span></div>
-                            <div class="w-15"><span>Ngày/Thời gian</span></div>
-                            <div class="w-15"><span>Loại</span></div>
-                            <div class="w-15"><span>Trạng thái</span></div>
-                            <div class="w-15"><span>Số tiền</span></div>
-                            <div class="w-30"><span>Lưu ý</span></div>
-                        </div>
-                    </div>
-                    <div class="swiper-container">
-                        <div class="swiper-wrapper">
-                            <div class="wrap-tr-each swiper-slide">
-                                <div class="w-10"><span>1</span></div>
-                                <div class="w-15"><span>01/07/2016, 12:13</span></div>
-                                <div class="w-15"><span>Thêm Keys</span></div>
-                                <div class="w-15"><span class="color-cd">Thành công</span></div>
-                                <div class="w-15"><span>35 Keys</span></div>
-                                <div class="w-30"><span>Thêm 35.00 Keys từ coupon bởi nhập mã I641J3</span></div>
+                <div class="row list-compare">
+                    <div class="col-xs-12 col-sm-6 col-lg-4 item">
+                        <div class="inner-box">
+                            <a href="" class="pic-intro"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>" alt=""></a>
+                            <div class="infor">
+                                <p class="address-listing">Đường Mai Chí Thọ, Phường An Phú, Quận 2, Hồ Chí Minh</p>
+                                <ul>
+                                    <li class="price-item">1,6191 <span class="txt-unit">tỷ</span> <span class="txt-unit">VNĐ</span></li>
+                                    <li><span class="icon-mv"><span class="icon-page-1-copy"></span></span>82m<sup>2</sup> </li>
+                                    <li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 phòng ngủ</li>
+                                    <li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 phòng tắm</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
-                    <div class="swiper-pagination"></div>
-                    <div class="swiper-button-next"><span class=""></span></div>
-                    <div class="swiper-button-prev"><span class=""></span></div>
+                    <div class="col-xs-12 col-sm-6 col-lg-4 item">
+                        <div class="inner-box">
+                            <a href="" class="pic-intro"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>" alt=""></a>
+                            <div class="infor">
+                                <p class="address-listing">Đường Mai Chí Thọ, Phường An Phú, Quận 2, Hồ Chí Minh</p>
+                                <ul>
+                                    <li class="price-item">1,6191 <span class="txt-unit">tỷ</span> <span class="txt-unit">VNĐ</span></li>
+                                    <li><span class="icon-mv"><span class="icon-page-1-copy"></span></span>82m<sup>2</sup> </li>
+                                    <li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 phòng ngủ</li>
+                                    <li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 phòng tắm</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-lg-4 item">
+                        <div class="inner-box">
+                            <a href="" class="pic-intro"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/Government_-South_Australia_Police_Headquarters_Built_Environs_main.jpg' ?>" alt=""></a>
+                            <div class="infor">
+                                <p class="address-listing">Đường Mai Chí Thọ, Phường An Phú, Quận 2, Hồ Chí Minh</p>
+                                <ul>
+                                    <li class="price-item">1,6191 <span class="txt-unit">tỷ</span> <span class="txt-unit">VNĐ</span></li>
+                                    <li><span class="icon-mv"><span class="icon-page-1-copy"></span></span>82m<sup>2</sup> </li>
+                                    <li><span class="icon-mv"><span class="icon-bed-search"></span></span>2 phòng ngủ</li>
+                                    <li> <span class="icon-mv"><span class="icon-icon-bathroom"></span></span>2 phòng tắm</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -78,6 +95,8 @@ use yii\helpers\Url;
     <script>
         $(document).ready(function () {
             $('.option-choose-compare ul label').checkbox_ui();
+            $('.listing-compare ul label').checkbox_ui();
+
             /*$('.menuReport li a').click(function (e) {
                 $('body').loading();
                 $('.menuUser li a').removeClass('active');
