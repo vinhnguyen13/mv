@@ -9,10 +9,11 @@ $(document).ready(function(){
 	});
 	
 	function loading(el, start) {
+		var text = el.find('.text');
+		
 		if(getCookie('downloadComplete')) {
-			var text = el.find('.text');
-			
 			text.fadeOut(function(){
+				el.find('img').remove();
 				text.text('ĐÃ TẠO XONG FILE EXCEL').fadeIn(function(){
 					setTimeout(function(){
 						el.remove();
@@ -23,32 +24,22 @@ $(document).ready(function(){
 			setCookie('downloadComplete', '', 0)
 		} else {
 			if(start == 80) {
-				var text = el.find('.text');
-				
 				text.fadeOut(function(){
 					text.text('Vui lòng chờ thêm chút nửa').fadeIn();
 				});
 			} else if(start == 30) {
-				var text = el.find('.text');
-				
 				text.fadeOut(function(){
 					text.text('Build tổng cộng ' + $('.summary').find('b').eq(1).text() + ' record').fadeIn();
 				});
 			} else if(start == 140) {
-				var text = el.find('.text');
-				
 				text.fadeOut(function(){
 					text.text('Càng nhiều record thì build càng lâu').fadeIn();
 				});
 			} else if(start == 240) {
-				var text = el.find('.text');
-				
 				text.fadeOut(function(){
 					text.text('Vẫn đang tiếp tục tạo file...').fadeIn();
 				});
 			} else if(start == 440) {
-				var text = el.find('.text');
-				
 				text.fadeOut(function(){
 					text.text('Nhiều record quá ! chờ, đừng đóng cửa sổ').fadeIn();
 				});
