@@ -261,7 +261,7 @@ $count_review = $reviews->count();
 							<span><?= Yii::t('ad', 'Report Abuse') ?></span>
 						</a>
 					</li>
-					<li class="hide">
+					<li class="">
 						<a href="#" class="compare-button flag-compare-set" data-value="<?= $product['id'] ?>">
 							<span class="icon-mv"><span class="icon-balance-scale"></span></span>
 							<span class="txt-change">So Sánh</span>

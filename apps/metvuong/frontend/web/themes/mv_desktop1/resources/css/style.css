@@ -10616,13 +10616,13 @@ input:-webkit-autofill {
     margin-right: 0;
 }
 .wrap-swiper .icons-detail a {
-    
+    padding: 14px 10px 12px;
 }
 .detail-listing-extra .wrap-swiper .icons-detail a {
-    padding: 16px 10px 17px;
+    padding: 13px 10px;
 }
 .detail-listing-extra .wrap-swiper .icons-detail li:last-child a {
-    height: 51px;
+    
 }
 .active .icon-heart-icon-listing:before {
     content: "\f004";
@@ -10635,7 +10635,6 @@ input:-webkit-autofill {
 }
 .wrap-swiper .icons-detail li:last-child a {
     border-bottom: none;
-    height: 47px;
 }
 .wrap-swiper .icons-detail li:last-child a:hover,
 .wrap-swiper .icons-detail a:hover {
