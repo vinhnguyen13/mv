@@ -8933,19 +8933,23 @@ margin-right: 5px;
 .menuUser .listing-compare label {
     display: block;
     border-bottom: 1px solid #DADADA;
-    padding: 15px 30px 15px 10px;
+    padding: 15px 30px 15px 0;
     text-transform: uppercase;
     position: relative;
     color: #3c3c3c;
     font-size: 15px;
     font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .menuUser .listing-compare label:hover,
 .menuUser .listing-compare label.active {
     color: #00a769;
 }
 .menuUser .listing-compare .checkbox-ui .icon-mv {
-    float: right;
+    position: relative;
+    top: 1px;
 }
 .menuUser li:first-child .hemi-intro-popover {
     top: 10px !important;
@@ -14137,13 +14141,12 @@ ul.cardList li {
     padding: 0;
     width: auto;
     position: absolute;
-    top: 12px;
+    top: 15px;
     right: 10px;
     border: none;
 }
 .listing-compare .remove-compare:hover {
-    
-background: none;
+    background: none;
 }
 .listing-compare {
     margin-bottom: 30px;
