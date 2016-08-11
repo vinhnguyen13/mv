@@ -1227,7 +1227,7 @@ label {
 }
 .checkbox-ui input,
 .radio-ui input {
-    /* display: none; */
+    display: none;
 }
 .btn-post {
     
