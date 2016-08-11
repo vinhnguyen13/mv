@@ -46,7 +46,7 @@ $(document).ready(function(){
 						var index = currentActived[i];
 						var item = compareItems[index].split(':');
 						
-						compare.updateCheckbox(item[0], {unchecked: true});
+						compare.updateCheckbox(item[0], {unchecked: true, trigger: false});
 						
 						compareItems[index] = compareItems[index].replace(':1', ':0');
 					}

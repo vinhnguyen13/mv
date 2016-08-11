@@ -314,6 +314,7 @@ $.fn.checkbox_ui = function (options) {
     return this.each(function() {
         var defaults = {
             checked: false,
+            trigger: true,
             unchecked: false,
             disableChecked: false,
             enableChecked: false,
@@ -369,7 +370,8 @@ $.fn.checkbox_ui = function (options) {
                 _this.find('input[type=checkbox]').prop("checked", true);
                 checkedItem(_this, true);
             }
-            _this.find('input[type=checkbox]').trigger('change');
+            if ( sc.settings.trigger )
+                _this.find('input[type=checkbox]').trigger('change');
 
             sc.settings.done(_this.find('input[type=checkbox]')); // CALLBACK
         }
