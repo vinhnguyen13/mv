@@ -1,32 +1,37 @@
 <?php
 	use yii\helpers\Url;
+	use vsoft\ad\models\AdProduct;
+	use yii\db\Query;
+use yii\db\Expression;
+	
+	if(isset($_COOKIE['compareItems'])) {
+		$temp = explode(',', $_COOKIE['compareItems']);
+		$compares = [];
+		foreach ($temp as $t) {
+			list($id, $status) = explode(':', $t);
+			
+			$compares[$id] = $status;
+		}
+		
+		$ids = array_keys($compares);
+		$expression = new Expression('FIELD(ad_product.id,' . implode(',', $ids) . ')');
+		$products = AdProduct::find()->where(['ad_product.id' => $ids])->orderBy($expression)->all();
+	}
 ?>
     <div class="container">
         <div class="menuUser">
             <div class="listing-compare">
                 <div class="title">Select Listing</div>
+                <?php if(isset($products)) : ?>
                 <ul class="clearfix">
+                	<?php foreach ($products as $product) : ?>
                     <li>
-                        <label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Lê Thanh Tôn</label>
+                        <label for="" class="checkbox-ui"><input type="checkbox" <?= $compares[$product->id] ? 'checked="checked"' : '' ?>><span class="icon-mv"><span class="icon-checkbox"></span></span><?= $product->address ?></label>
                         <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
                     </li>
-                    <li>
-                        <label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Lê Thanh Tôn</label>
-                        <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
-                    </li>
-                    <li>
-                        <label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Lê Thanh Tôn</label>
-                        <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
-                    </li>
-                    <li>
-                        <label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Lê Thanh Tôn</label>
-                        <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
-                    </li>
-                    <li>
-                        <label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Lê Thanh Tôn</label>
-                        <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
-                    </li>
+                	<?php endforeach; ?>
                 </ul>
+                <?php endif; ?>
             </div>
             <div class="option-choose-compare">
                 <div class="title">Tùy chọn compare</div>

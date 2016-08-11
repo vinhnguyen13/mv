@@ -203,7 +203,7 @@ $meta->add(Yii::$app->request->absoluteUrl);
                 <li class="<?=!empty($this->params['menuProject']) ? 'active' : '' ;?>"><a href="<?=Url::to(['building-project/index']);?>"><?=Yii::t('general', 'New Project')?></a></li>
                 <li class="<?=!empty($this->params['menuNews']) ? 'active' : '' ;?>"><a href="<?=Url::to(['news/index']);?>"><?=Yii::t('general', 'News')?></a></li>
                 <li class="<?=!empty($this->params['menuPricing']) ? 'active' : '' ;?>"><a href="<?=Url::to(['site/page', 'view'=>'service'])?>"><?=Yii::t('general', 'Service')?></a></li>
-                <li class="tool-compare <?=!empty($this->params['menuPricing']) ? 'active' : '' ;?>"><a href="<?=Url::to(['/ad/compare'])?>" data-num=""><span class="icon-mv mgR-5"><span class="icon-balance-scale"></span></span>So sánh <span class="num-show"></span></a></li>
+                <li class="tool-compare <?=!empty($this->params['menuPricing']) ? 'active' : '' ;?>"><a href="<?=Url::to(['/ad/compare'])?>" data-num=""><span class="icon-mv mgR-5"><span class="icon-balance-scale"></span></span><?= Yii::t('ad', 'So sánh') ?> <span class="num-show"><?= isset($_COOKIE['compareItems']) ? '(' . count(explode(',', $_COOKIE['compareItems'])) . ')' : '' ?></span></a></li>
             </ul>
         </div>
     </div>

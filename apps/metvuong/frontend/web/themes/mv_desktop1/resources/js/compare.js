@@ -7,8 +7,6 @@ $(document).ready(function(){
 		init: function () {
 			$(document).on('click', '.flag-compare-set', this.add);
 			$(document).on('click', '.flag-compare-remove', this.remove);
-			
-			this.setCounter(this.getCookieCompares());
 		},
 		add: function () {
 			var item = $(this);
