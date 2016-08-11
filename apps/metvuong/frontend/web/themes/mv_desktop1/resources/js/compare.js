@@ -7,6 +7,71 @@ $(document).ready(function(){
 		init: function () {
 			$(document).on('click', '.flag-compare-set', this.add);
 			$(document).on('click', '.flag-compare-remove', this.remove);
+			$(document).on('click', '.remove-compare', function(e){
+				e.preventDefault();
+				
+				var self = $(this).closest('li');
+				var id = self.data('id');
+				
+				compare.removeCookie(id);
+				
+				if(self.find('.checkbox-ui').hasClass('active')) {
+					compare.updateCompareView();
+				}
+				
+				self.remove()
+			});
+			$(document).on('change', '.active-compare', compare.checkCompare);
+		},
+		checkCompare: function() {
+			var self = $(this).closest('li');
+			var id = self.data('id');
+			
+			if(this.checked) {
+				var compareItems = compare.getCookieCompares();
+				
+				var currentActived = [];
+				
+				for(var i in compareItems) {
+					var item = compareItems[i].split(':');
+					var isActive = item[1];
+					
+					if(isActive == '1') {
+						currentActived.push(i);
+					}
+				}
+				
+				if(currentActived.length > 2) {
+					for(var i = 0; i < currentActived.length - 2; i++) {
+						var index = currentActived[i];
+						var item = compareItems[index].split(':');
+						
+						compare.updateCheckbox(item[0], {unchecked: true});
+						
+						compareItems[index] = compareItems[index].replace(':1', ':0');
+					}
+				}
+				
+				compare.updateCookieId(id, '1');
+			} else {
+				compare.updateCookieId(id, '0');
+			}
+			
+			compare.updateCompareView();
+		},
+		updateCheckbox: function(id, status) {
+			$('.listing-compare').find('li').each(function(){
+				var self = $(this);
+				
+				if(self.data('id') == id) {
+					self.find('input').checkbox_ui(status);
+
+					return false;
+				}
+			});
+		},
+		updateCompareView: function() {
+			console.log('update view');
 		},
 		add: function () {
 			var item = $(this);
@@ -85,6 +150,21 @@ $(document).ready(function(){
 			
 			this.updateCookie(compareItems);
 		},
+		updateCookieId: function(id, status) {
+			var compareItems = compare.getCookieCompares();
+			
+			for(var i in compareItems) {
+				var item = compareItems[i].split(':');
+				var _id = item[0];
+				
+				if(_id == id) {
+					compareItems[i] = _id + ':' + status;
+					break;
+				}
+			}
+			
+			this.updateCookie(compareItems);
+		},
 		removeCookie: function(id) {
 			var compareItems = this.getCookieCompares();
 			
@@ -107,7 +187,7 @@ $(document).ready(function(){
 			return compareItems;
 		},
 		updateCookie: function(compareItems) {
-			setServerCookie(this.compareItemCookie, compareItems.join(','));
+			setServerCookie(this.compareItemCookie, compareItems.join(','), 30);
 			this.setCounter(compareItems);
 		},
 		setCounter: function(compareItems) {

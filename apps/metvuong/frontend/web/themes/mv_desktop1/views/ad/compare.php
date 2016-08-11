@@ -3,8 +3,9 @@
 	use vsoft\ad\models\AdProduct;
 	use yii\db\Query;
 	use yii\db\Expression;
+	use yii\web\View;
 	
-	if(isset($_COOKIE['compareItems'])) {
+	if(!empty($_COOKIE['compareItems'])) {
 		$temp = explode(',', $_COOKIE['compareItems']);
 		$compares = [];
 		foreach ($temp as $t) {
@@ -17,6 +18,8 @@
 		$expression = new Expression('FIELD(ad_product.id,' . implode(',', $ids) . ')');
 		$products = AdProduct::find()->where(['ad_product.id' => $ids])->orderBy($expression)->all();
 	}
+	
+	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/compare.js', ['position'=>View::POS_END]);
 ?>
     <div class="container">
         <div class="menuUser">
@@ -33,8 +36,8 @@
                 				$selectProducts[] = $product;
                 			}
                 	?>
-                    <li>
-                        <label for="" class="checkbox-ui"><input type="checkbox" <?= $compares[$product->id] ? 'checked="checked"' : '' ?>><span class="icon-mv"><span class="icon-checkbox"></span></span><?= $product->address ?></label>
+                    <li data-id="<?= $product->id ?>">
+                        <label for="" class="checkbox-ui"><input class="active-compare" type="checkbox" <?= $compares[$product->id] ? 'checked="checked"' : '' ?>><span class="icon-mv"><span class="icon-checkbox"></span></span><?= $product->address ?></label>
                         <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
                     </li>
                 	<?php endforeach; ?>
@@ -57,7 +60,11 @@
     <div class="title-fixed-wrap container">
         <div class="u-allduan">
             <div class="title-top">Compare Listing</div>
-            <div class="compare-block"><?= $this->render('_partials/compare.php', ['products' => $selectProducts]) ?></div>
+            <div class="compare-block">
+            	<?php if(isset($selectProducts)): ?>
+            	<?= $this->render('_partials/compare.php', ['products' => $selectProducts]) ?>
+            	<?php endif; ?>
+            </div>
         </div>
     </div>
     <script>
