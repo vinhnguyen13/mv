@@ -295,11 +295,15 @@ class ImportProject extends Component
      * @param $filename
      * @return array|null
      */
-    public function parseProjectDetail($path_folder, $filename){
+    public function parseProjectDetail($path_folder, $filename, $page=null){
         $json = array();
-        $page = file_get_contents($path_folder . $filename);
+
+        if(!empty($path_folder) && !empty($filename))
+            $page = file_get_contents($path_folder . $filename);
+
         if(empty($page))
             return null;
+
         $detail = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
 //        $detail = SimpleHTMLDom::file_get_html($path_folder.$filename);
         if (!empty($detail)) {
