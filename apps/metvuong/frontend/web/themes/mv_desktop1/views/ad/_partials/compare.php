@@ -9,11 +9,14 @@
 			<div class="infor">
 				<p class="address-listing"><?= $product->address ?></p>
 				<ul>
+					<li>
+						<span class="icon-mv"><span class="icon-page-1-copy"></span></span><?= $product->area ?>m<sup>2</sup>
+					</li>
 					<li class="price-item">
 						<?= StringHelper::formatCurrency($product->price) ?> <span class="txt-unit"><?= Yii::t('ad', 'VND') ?></span>
 					</li>
-					<li>
-						<span class="icon-mv"><span class="icon-page-1-copy"></span></span><?= $product->area ?>m<sup>2</sup>
+					<li class="price-item">
+						<?= StringHelper::formatCurrency(round(($product->price/$product->area) / 10000) * 10000) ?> <span class="txt-unit"><?= Yii::t('ad', 'VND') ?> / </span>m<sup>2</sup>
 					</li>
 					<li>
 						<span class="icon-mv"><span class="icon-bed-search"></span></span><?= $product->adProductAdditionInfo->room_no ?> <?= Yii::t('ad', 'Beds') ?>
