@@ -259,12 +259,13 @@ class CopyListing extends Component
                                 $product->insertEs(); // insert elastic
                             }
                         }
-                        if($transaction->commit()) {
-                            $model->product_main_id = $last_product_id;
-                            $model->update(false);
-                        }
+                        $transaction->commit();
+                        $model->product_main_id = $last_product_id;
+                        $model->update(false);
                     } catch (Exception $e) {
                         $transaction->rollBack();
+                        $model->product_main_id = 0;
+                        $model->update(false);
                         throw $e;
                     } // end try-catch block
                 } // end foreach models
