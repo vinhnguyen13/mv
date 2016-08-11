@@ -1097,7 +1097,10 @@ class AdController extends Controller
     }
 
 	public function actionCompare(){
-		$this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuDashboard' => true, 'isCompare' => true], $this->view->params);
+		$this->view->params = ArrayHelper::merge(['noFooter' => true], $this->view->params);
+		
+		
+		
 		return $this->render('compare');
 	}
 }
