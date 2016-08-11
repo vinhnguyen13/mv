@@ -14,9 +14,7 @@ $(document).ready(function(){
 			var item = $(this);
 			var id = item.data('value');
 			
-			item.removeClass('flag-compare-set').addClass('flag-compare-remove');
-			item.find('.txt-change').text(lajax.t('Đã thêm so sánh'));
-			item.find('.icon-balance-scale').attr('class','icon-close-icon');
+			compare.sync(item, 1);
 			
 			if(!compare.isAdded(id)) {
 				compare.pushCookie(id);
@@ -25,11 +23,44 @@ $(document).ready(function(){
 		remove: function () {
 			var item = $(this);
 			
-			item.removeClass('flag-compare-remove').addClass('flag-compare-set');
-			item.find('.txt-change').text(lajax.t('So Sánh'));
-			item.find('.icon-close-icon').attr('class','icon-balance-scale');
+			compare.sync(item, 0);
 			
 			compare.removeCookie(item.data('value'));
+		},
+		sync: function(item, status) {
+			var id = item.data('value');
+
+			if(item.is('a')) {
+				var listItems = $('#listing-list').find('.compare-button');
+				
+				if(listItems.length) {
+					listItems.each(function() {
+						var self = $(this);
+						
+						if(self.data('value') == id) {
+							item = item.add(self);
+							
+							return false;
+						}
+					});
+				}				
+			} else {
+				var compareButton = $('.detail-listing-dt').find('.compare-button');
+				
+				if(compareButton.length && compareButton.data('value') == id) {
+					item = item.add(compareButton);
+				}
+			}
+			
+			if(status) {
+				item.removeClass('flag-compare-set').addClass('flag-compare-remove');
+				item.find('.txt-change').text(lajax.t('Đã thêm so sánh'));
+				item.find('.icon-balance-scale').attr('class','icon-close-icon');
+			} else {
+				item.removeClass('flag-compare-remove').addClass('flag-compare-set');
+				item.find('.txt-change').text(lajax.t('So Sánh'));
+				item.find('.icon-close-icon').attr('class','icon-balance-scale');
+			}
 		},
 		pushCookie: function(id) {
 			var compareItems = this.getCookieCompares();
@@ -46,7 +77,7 @@ $(document).ready(function(){
 			}
 			
 			if(currentActived.length > 2) {
-				for(var i = 2; i < currentActived.length; i++) {
+				for(var i = 0; i < currentActived.length - 2; i++) {
 					var index = currentActived[i];
 					compareItems[index] = compareItems[index].replace(':1', ':0');
 				}
@@ -72,13 +103,13 @@ $(document).ready(function(){
 			this.updateCookie(compareItems);
 		},
 		getCookieCompares: function() {
-			var compareItems = getCookie(this.compareItemCookie);
+			var compareItems = getServerCookie(this.compareItemCookie);
 			compareItems = compareItems ? compareItems.split(',') : [];
 			
 			return compareItems;
 		},
 		updateCookie: function(compareItems) {
-			setCookie(this.compareItemCookie, compareItems.join(','));
+			setServerCookie(this.compareItemCookie, compareItems.join(','));
 			this.setCounter(compareItems);
 		},
 		setCounter: function(compareItems) {

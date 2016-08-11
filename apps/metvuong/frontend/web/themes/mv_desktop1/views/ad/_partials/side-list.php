@@ -37,6 +37,8 @@
 		$tracking = (!empty($searchModel->project_building_id) || ((!empty($searchModel->ward_id) || !empty($searchModel->street_id)) && (!empty($searchModel->room_no) || !empty($searchModel->price_min) || !empty($searchModel->price_max)))) && \Yii::$app->user->identity;
 		$userId = \Yii::$app->user->id;
 	}
+	
+	$compares = isset($_COOKIE['compareItems']) ? array_map(function($item) { return current(explode(':', $item)); }, explode(',', $_COOKIE['compareItems'])) : [];
 ?>
 
 <?php if($products): ?>
@@ -84,7 +86,11 @@
 					    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['start_date']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?php $score = round($product['score'] - 0.00001157407 * ($now - $product['start_date'])); if($score > 0) echo $score; else echo 0; ?></span></p>
 					    </div>
 					</a>
+					<?php if(in_array($product['id'], $compares)) : ?>
+					<div class="compare-button flag-compare-remove" data-value="<?= $product['id'] ?>"><span class="inner-box"><span class="icon-mv mgR-5"><span class="icon-close-icon"></span></span><span class="txt-change"><?= Yii::t('ad', 'Đã thêm so sánh') ?></span></span></div>
+					<?php else: ?>
 					<div class="compare-button flag-compare-set" data-value="<?= $product['id'] ?>"><span class="inner-box"><span class="icon-mv mgR-5"><span class="icon-balance-scale"></span></span><span class="txt-change"><?= Yii::t('ad', 'So Sánh') ?></span></span></div>
+					<?php endif; ?>
 				</div>
 			</li>
 			<?php endforeach; ?>

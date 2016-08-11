@@ -264,10 +264,20 @@ $count_review = $reviews->count();
 						</a>
 					</li>
 					<li class="">
+						<?php 
+							$compares = isset($_COOKIE['compareItems']) ? array_map(function($item) { return current(explode(':', $item)); }, explode(',', $_COOKIE['compareItems'])) : [];
+							if(in_array($product['id'], $compares)) :
+						?>
+						<a href="#" class="compare-button flag-compare-remove" data-value="<?= $product['id'] ?>">
+							<span class="icon-mv"><span class="icon-close-icon"></span></span>
+							<span class="txt-change"><?= Yii::t('ad', 'Đã thêm so sánh') ?></span>
+						</a>
+						<?php else: ?>
 						<a href="#" class="compare-button flag-compare-set" data-value="<?= $product['id'] ?>">
 							<span class="icon-mv"><span class="icon-balance-scale"></span></span>
-							<span class="txt-change">So Sánh</span>
+							<span class="txt-change"><?= Yii::t('ad', 'So Sánh') ?></span>
 						</a>
+						<?php endif; ?>
 					</li>
 				</ul>
 			</div>
