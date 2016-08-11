@@ -37,7 +37,7 @@
                 			}
                 	?>
                     <li data-id="<?= $product->id ?>">
-                        <label for="" class="checkbox-ui"><input class="active-compare" type="checkbox" <?= $compares[$product->id] ? 'checked="checked"' : '' ?>><span class="icon-mv"><span class="icon-checkbox"></span></span><?= $product->address ?></label>
+                        <input class="active-compare" type="checkbox" <?= $compares[$product->id] ? 'checked="checked"' : '' ?>><span class="icon-mv"><span class="icon-checkbox"></span></span><?= $product->address ?>
                         <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
                     </li>
                 	<?php endforeach; ?>
