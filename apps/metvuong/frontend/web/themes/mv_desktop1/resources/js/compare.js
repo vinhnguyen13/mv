@@ -46,8 +46,8 @@ $(document).ready(function(){
 						var index = currentActived[i];
 						var item = compareItems[index].split(':');
 						
-						// compare.updateCheckbox(item[0], {unchecked: true, trigger: false});
-						compare.updateCheckbox(item[0], false);
+						compare.updateCheckbox(item[0], {unchecked: true, trigger: false});
+						//compare.updateCheckbox(item[0], false);
 						
 						compare.updateCookieId(item[0], '0');
 					}
@@ -65,7 +65,8 @@ $(document).ready(function(){
 				var self = $(this);
 				
 				if(self.data('id') == id) {
-					self.find('input').prop('checked', status);
+					//self.find('input').prop('checked', status);
+					self.find('.checkbox-ui').checkbox_ui(status);
 
 					return false;
 				}

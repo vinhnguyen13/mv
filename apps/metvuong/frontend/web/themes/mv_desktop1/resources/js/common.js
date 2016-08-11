@@ -314,7 +314,6 @@ $.fn.checkbox_ui = function (options) {
     return this.each(function() {
         var defaults = {
             checked: false,
-            trigger: true,
             unchecked: false,
             disableChecked: false,
             enableChecked: false,
@@ -357,6 +356,7 @@ $.fn.checkbox_ui = function (options) {
             el.removeClass('disabled-rc');
         }
 
+        el.unbind('click');
         el.on('click', toggleCheck);
 
         function toggleCheck (e) {
@@ -370,8 +370,7 @@ $.fn.checkbox_ui = function (options) {
                 _this.find('input[type=checkbox]').prop("checked", true);
                 checkedItem(_this, true);
             }
-            if ( sc.settings.trigger )
-                _this.find('input[type=checkbox]').trigger('change');
+            _this.find('input[type=checkbox]').trigger('change');
 
             sc.settings.done(_this.find('input[type=checkbox]')); // CALLBACK
         }
