@@ -327,7 +327,6 @@ class ImportListing extends Component
         $product_files = AdProductFile::find()->where(['is_import' => 0])->orderBy(['created_at' => SORT_DESC])->limit($limit)->all();
         if (count($product_files) > 0) {
             $connection = AdProductFile::getDb();
-            $transaction = $connection->beginTransaction();
             try {
                 foreach ($product_files as $key_file => $product_file) {
                     $bulkImage = array();
@@ -367,7 +366,7 @@ class ImportListing extends Component
                         $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
                         // neu co du an thi lay dia chi cua du an gan cho tin dang
                         if (!empty($project_name)) {
-                            $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->one();
+                            $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->andWhere(['city_id' => $city_id, 'district_id' => $district_id,])->one();
                             if (count($project) > 0) {
                                 $project_id = $project->id;
                                 $city_id = $project->city_id;
@@ -499,11 +498,7 @@ class ImportListing extends Component
                         print_r($product_file->path . "/" . $filename . " not found");
                     }
                 } // end for loop product file
-
-                $transaction->commit();
-
             } catch(Exception $e){
-                $transaction->rollBack();
                 throw $e;
             } // end try-catch block
 

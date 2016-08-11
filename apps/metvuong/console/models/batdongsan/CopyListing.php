@@ -167,8 +167,6 @@ class CopyListing extends Component
 
                         if ($product->save(false)) {
                             $last_product_id = $product->id;
-                            $model->product_main_id = $last_product_id;
-                            $model->update(false);
                             print_r(" - Product: {$last_product_id}");
                             print_r(" - City: {$product->city_id}");
                             // update ad_product_file
@@ -261,7 +259,10 @@ class CopyListing extends Component
                                 $product->insertEs(); // insert elastic
                             }
                         }
-                        $transaction->commit();
+                        if($transaction->commit()) {
+                            $model->product_main_id = $last_product_id;
+                            $model->update(false);
+                        }
                     } catch (Exception $e) {
                         $transaction->rollBack();
                         throw $e;
