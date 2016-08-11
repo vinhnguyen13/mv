@@ -7990,6 +7990,8 @@ padding: 5px 0;
 .infor-duan-suggest .wrap-img.pic-intro {
     height: 120px;
     margin-bottom: 0;
+    border-radius: 4px;
+    overflow: hidden;
 }
 .infor-duan-suggest .name-duan {
     color: #009544;
@@ -14241,6 +14243,9 @@ ul.cardList li {
     padding: 15px;
     padding-top: 0;
     border-bottom: 1px solid #ccc;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .list-compare .inner-box li {
     text-align: center;
