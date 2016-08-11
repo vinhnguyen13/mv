@@ -47,12 +47,12 @@
             <div class="option-choose-compare">
                 <div class="title">Tùy chọn compare</div>
                 <ul class="clearfix">
-                    <li><label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Phòng ngủ</label></li>
-                    <li><label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Phòng tắm</label></li>
-                    <li><label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Diện tích</label></li>
-                    <li><label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Giá</label></li>
-                    <li><label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Tiện ích</label></li>
-                    <li><label for="" class="checkbox-ui"><input type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span>Số tầng</label></li>
+                    <li><label for="" class="checkbox-ui"><input checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Number of storeys') ?></label></li>
+                    <li><label for="" class="checkbox-ui"><input checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Facade') ?></label></li>
+                    <li><label for="" class="checkbox-ui"><input checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Entry width') ?></label></li>
+                    <li><label for="" class="checkbox-ui"><input checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'House direction') ?></label></li>
+                    <li><label for="" class="checkbox-ui"><input checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Balcony direction') ?></label></li>
+                    <li><label for="" class="checkbox-ui"><input checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Facilities') ?></label></li>
                 </ul>
             </div>
         </div>
