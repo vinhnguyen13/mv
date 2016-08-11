@@ -9,20 +9,17 @@
 			<div class="infor">
 				<p class="address-listing"><?= $product->address ?></p>
 				<ul>
-					<li class="price-item"><?= StringHelper::formatCurrency($product->price) ?> <span class="txt-unit"><?= Yii::t('ad', 'VND') ?></span>
-						<a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-down"></span></span></a>
+					<li class="price-item">
+						<?= StringHelper::formatCurrency($product->price) ?> <span class="txt-unit"><?= Yii::t('ad', 'VND') ?></span>
 					</li>
 					<li>
 						<span class="icon-mv"><span class="icon-page-1-copy"></span></span><?= $product->area ?>m<sup>2</sup>
-						<a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-up"></span></span></a>
 					</li>
 					<li>
 						<span class="icon-mv"><span class="icon-bed-search"></span></span><?= $product->adProductAdditionInfo->room_no ?> <?= Yii::t('ad', 'Beds') ?>
-						<a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-up"></span></span></a>
 					</li>
 					<li>
 						<span class="icon-mv"><span class="icon-icon-bathroom"></span></span><?= $product->adProductAdditionInfo->toilet_no ?> <?= Yii::t('ad', 'Baths') ?>
-						<a href="" class="pull-right arrow-updown"><span class="icon-mv"><span class="icon-long-arrow-up"></span></span></a>
 					</li>
 				</ul>
 			</div>
