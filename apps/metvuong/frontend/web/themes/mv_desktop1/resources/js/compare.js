@@ -64,7 +64,8 @@ $(document).ready(function(){
 				var self = $(this);
 				
 				if(self.data('id') == id) {
-					self.find('input').checkbox_ui(status);
+					console.log('test');
+					self.find('.checkbox-ui').checkbox_ui(status);
 
 					return false;
 				}
