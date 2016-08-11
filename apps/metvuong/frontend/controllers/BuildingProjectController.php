@@ -110,43 +110,22 @@ class BuildingProjectController extends Controller
         if(Yii::$app->request->isAjax) {
             Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
-            $v = Elastic::transform($v);
-
-            $params = [
-                'query' => [
-                    'match_phrase_prefix' => [
-                        'search_field' => [
-                            'query' => $v,
-                            'max_expansions' => 100
-                        ]
-                    ],
-                ],
-                'sort' => [
-                    'total_sell' => [
-                        'order' => 'desc',
-                        'mode'	=> 'sum'
-                    ],
-                    'total_rent' => [
-                        'order' => 'desc',
-                        'mode'	=> 'sum'
-                    ],
-                ],
-                'size' => 20
-            ];
-
-            $ch = curl_init(Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['countTotal'] . '/project_building/_search');
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-            $result = json_decode(curl_exec($ch), true);
             $response = [];
 
+            $result = Elastic::searchProjects($v);
+
+            if($result['hits']['total'] == 0) {
+                $result = Elastic::searchProjects(Elastic::transform($v));
+            }
+
             foreach ($result['hits']['hits'] as $k => $hit) {
-                $response[$k] = [$hit['_source'], $hit['_id']];
+                $response[$k]['full_name'] = $hit['_source']['full_name'];
+                $response[$k]['id'] = $hit['_id'];
+                $response[$k]['link'] = Url::to(["building-project/view", 'slug' => $hit['_source']['slug'] ]);
             }
 
             return $response;
+
         } else {
             $models = AdBuildingProject::find()->where('`status` = ' . AdBuildingProject::STATUS_ENABLED)
                 ->andWhere('`city_id` is not null')
