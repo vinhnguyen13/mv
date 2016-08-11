@@ -129,22 +129,23 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                 </div>
                                 <div class="infor-detail-chudautu">
                                     <ul>
+                                        <li><strong><?=empty($investor->name) ? $lbl_updating : $investor->name ?></strong></li>
                                         <li>
-                                            <strong id=""><?=Yii::t('project','Address')?></strong>:
+                                            <strong><?=Yii::t('project','Address')?></strong>:
                                             <?=empty($investor->address) ? $lbl_updating : $investor->address ?></li>
                                         <li>
-                                            <strong id=""><?=Yii::t('project','Phone')?></strong>:
+                                            <strong><?=Yii::t('project','Phone')?></strong>:
                                             <?=empty($investor->phone) ? $lbl_updating : $investor->phone ?>
                                             |
-                                            <strong id=""><?=Yii::t('project','Fax')?></strong>:
+                                            <strong><?=Yii::t('project','Fax')?></strong>:
                                             <span><?=empty($investor->fax) ? $lbl_updating : $investor->fax ?></span>
                                         </li>
                                         <li>
-                                            <strong id=""><?=Yii::t('project','Website')?></strong>:
+                                            <strong><?=Yii::t('project','Website')?></strong>:
                                             <span><?=empty($investor->website) ? $lbl_updating : "<a href='#' class='investor_website' data-url='". $investor->website. "'>".$investor->website."</a>" ?></span>
                                         </li>
                                         <li>
-                                            <strong id=""><?=Yii::t('project','Email')?></strong>:
+                                            <strong><?=Yii::t('project','Email')?></strong>:
                                             <span><?=empty($investor->email) ? $lbl_updating : $investor->email ?></span>
                                         </li>
                                     </ul>
