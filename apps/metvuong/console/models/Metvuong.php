@@ -51,7 +51,7 @@ class Metvuong extends Component
                 $email = mb_strtolower($email);
                 // check user exists or create new user
                 $user = $contact->createUserInfo();
-                if (!empty($user)) {
+                if (!empty($user->id)) {
                     $token = new Token();
                     $token->user_id = $user->id;
                     $token->code = Yii::$app->security->generateRandomString();
