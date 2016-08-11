@@ -144,12 +144,15 @@ $count_review = $reviews->count();
 					$images = $product->adImages;
 					if($images):
 				?>
+
 				<div class="gallery-detail swiper-container pull-left">
 					<div class="swiper-wrapper">
 						<?php foreach ($images as $image): ?>
 						<div class="swiper-slide">
-							<div class="pic-intro">
-								<img src="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" alt="<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) . ' - ' . $address?>">
+							<div class="pic-gallery">
+								<a href="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" class="fancybox" rel="gallery1">
+									<img src="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" alt="<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) . ' - ' . $address?>">
+								</a>
 							</div>
 						</div>
 						<?php endforeach; ?>
@@ -158,6 +161,15 @@ $count_review = $reviews->count();
 					<div class="swiper-button-prev icon-mv"><span class=""></span></div>
 					<div class="swiper-button-next icon-mv"><span class=""></span></div>
 				</div>
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$(".fancybox").fancybox({
+							openEffect	: 'none',
+							closeEffect	: 'none',
+							padding: 3
+						});
+					});
+				</script>
 				<?php else: ?>
 				<div class="no-gallery pull-left">
 					<div class="img-show">
@@ -453,6 +465,7 @@ $count_review = $reviews->count();
                 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
                 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_END]);
                 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_END]);
+
                 ?>
 
 				<script>
