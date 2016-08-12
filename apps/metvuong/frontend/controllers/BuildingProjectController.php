@@ -81,7 +81,8 @@ class BuildingProjectController extends Controller
         	'streets' => AdStreet::getListByDistrict($model['district_id']),
         	'home_no' => $model['home_no'],
         	'lat' => $model['lat'],
-        	'lng' => $model['lng']
+        	'lng' => $model['lng'],
+        	'facilities' => $model['facilities']
         ];
 
         return $response;

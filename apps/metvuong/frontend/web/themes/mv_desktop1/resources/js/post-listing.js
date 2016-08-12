@@ -14,6 +14,8 @@ $(document).ready(function(){
 	var priceMask = $('#priceMask');
 	var errorHint = $('.error-hint');
 	var previewButton = $('#preview');
+	var checkboxShowHome = $('#checkbox-show-home');
+	var tienichs = $('.tienich-frm').find('input');
 	
 	$('.alert-success .icon-close-icon').on('click', hideHint);
 	
@@ -106,7 +108,7 @@ $(document).ready(function(){
 			additionP += (form.fields.homeDirection.val()) ? form.getPoint(form.fields.homeDirection) : 0;
 			additionP += (form.fields.facadeDirection.val()) ? form.getPoint(form.fields.facadeDirection) : 0;
 			
-			var facilityP = $('.tienich-frm input').filter(':checked').length;
+			var facilityP = tienichs.filter(':checked').length;
 			
 			additionP += (facilityP > 5) ? 5 : facilityP;
 			
@@ -551,7 +553,7 @@ $(document).ready(function(){
 			});
 			
 			var listTienIch = $('.list-tienich').html('');
-			$('.tienich-frm').find('input').each(function(){
+			tienichs.each(function(){
 				var self = $(this);
 				
 				if(this.checked) {
@@ -773,6 +775,7 @@ $(document).ready(function(){
 		form.fields.wardId.prop("disabled", false);
 		form.fields.streetId.prop("disabled", false);
 		form.fields.homeNo.prop("disabled", false);
+		checkboxShowHome.checkbox_ui({enable: true});
 		
 		projectMask.val('').prop('readonly', false).focus();
 		projectWrap.removeClass('show-project');
@@ -883,6 +886,15 @@ $(document).ready(function(){
 					form.fields.homeNo.prop("disabled", false);
 					form.fields.homeNo.val('');
 				}
+				
+				checkboxShowHome.checkbox_ui({disable: true});
+				
+				var facilities = r.facilities.split(',');
+				tienichs.each(function(){
+					if(facilities.indexOf(this.value) !== -1) {
+						$(this).closest('.checkbox-inline').checkbox_ui({checked: true});
+					}
+				});
 
 				form.buildErrorHint();
 				
