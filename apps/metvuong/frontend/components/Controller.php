@@ -47,7 +47,6 @@ class Controller extends \yii\web\Controller
             if(!empty($redirect_url)){
                 Yii::$app->getUser()->setReturnUrl(Url::to($redirect_url));
             }
-
         }
         $this->view->params['balance'] = 0;
         if(!Yii::$app->user->isGuest){
@@ -110,6 +109,7 @@ class Controller extends \yii\web\Controller
     protected function checkAccess()
     {
         if(Yii::$app->user->isGuest) {
+            Yii::$app->getUser()->setReturnUrl(Url::current());
             Yii::$app->response->redirect('/member/login');
             Yii::$app->end();
         }
