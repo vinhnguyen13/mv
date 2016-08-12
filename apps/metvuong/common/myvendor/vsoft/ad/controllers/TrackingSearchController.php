@@ -24,4 +24,9 @@ class TrackingSearchController extends Controller {
 			'dataProvider' => $dataProvider,
 		]);
 	}
+	public function actionDeleteLocalIp() {
+		$connection = \Yii::$app->db;
+		
+		$connection->createCommand()->delete('tracking_search', "ip = '10.0.0.1'")->execute();
+	}
 }
