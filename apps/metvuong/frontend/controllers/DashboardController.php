@@ -388,6 +388,7 @@ class DashboardController extends Controller
         if($last_id != 0){
             $query->andWhere('id < :id', [':id' => $last_id]);
         }
+        $query->andWhere('status != :status', [':status' => AdProduct::STATUS_DELETE]);
         $totalProducts = $query->orderBy(['id' => SORT_DESC])->all();
         $count_total = count($totalProducts);
         if($count_total > 0){
