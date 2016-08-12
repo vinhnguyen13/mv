@@ -31,7 +31,7 @@ class CopyListing extends Component
     }
 
     /* End date = Start date Db Crawl + AdProduct::Expired days */
-    public function copyToMainDB($validate=0, $limit=300, $check_expired=0, $city, $district){
+    public function copyToMainDB($validate=0, $limit=300, $check_expired=0, $type, $city, $district){
         $begin = time();
         $sql = "file_name IS NOT NULL AND product_main_id = 0 ";
 
@@ -39,6 +39,9 @@ class CopyListing extends Component
             $sql .= " AND lat > 0 AND lat IS NOT NULL AND lng > 0 AND lng IS NOT NULL ";
             $sql .= " AND price > 0 AND area > 0 AND city_id > 0 AND district_id > 0 AND ward_id > 0 AND street_id > 0 AND (is_expired IS NULL OR is_expired = 0)";
             $sql .= " AND content IS NOT NULL";
+        }
+        if(!empty($type)){
+            $sql .= " AND type IN ($type)";
         }
         if(!empty($city)){
             $sql .= " AND city_id IN ($city)";
