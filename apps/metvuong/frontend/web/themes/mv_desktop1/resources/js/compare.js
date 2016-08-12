@@ -4,6 +4,7 @@ $(document).ready(function(){
 		numGet: $('.tool-compare .num-show'),
 		saveGetItem: $('.getCompare'),
 		compareItemCookie: 'compareItems',
+		listingCompare: $('.listing-compare').find('li'),
 		init: function () {
 			$(document).on('click', '.flag-compare-set', this.add);
 			$(document).on('click', '.flag-compare-remove', this.remove);
@@ -61,7 +62,7 @@ $(document).ready(function(){
 			compare.updateCompareView();
 		},
 		updateCheckbox: function(id, status) {
-			$('.listing-compare').find('li').each(function(){
+			compare.listingCompare.each(function(){
 				var self = $(this);
 				
 				if(self.data('id') == id) {
@@ -73,7 +74,21 @@ $(document).ready(function(){
 			});
 		},
 		updateCompareView: function() {
-			console.log('update view');
+			var ids = [];
+			
+			compare.listingCompare.each(function(){
+				var self = $(this);
+				
+				if(self.find('input').get(0).checked) {
+					ids.push(self.data('id'));
+				}
+			});
+			
+			$('body').loading();
+			
+			$.get(url, {ids: ids}, function(r) {
+				$('body').loading({done: true});
+			});
 		},
 		add: function () {
 			var item = $(this);

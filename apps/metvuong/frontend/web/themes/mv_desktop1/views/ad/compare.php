@@ -20,6 +20,7 @@
 	}
 	
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/compare.js', ['position'=>View::POS_END]);
+	$this->registerJs("var url = '" . Url::current() . "'", View::POS_HEAD);
 ?>
     <div class="container">
         <div class="menuUser">
