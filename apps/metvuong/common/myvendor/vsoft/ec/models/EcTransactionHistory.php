@@ -11,6 +11,7 @@ use vsoft\coupon\models\CouponCode;
 use vsoft\coupon\models\CouponEvent;
 use vsoft\ec\models\base\EcTransactionHistoryBase;
 use Yii;
+use yii\helpers\Html;
 
 /**
  * This is the model class for table "ec_transaction_history".
@@ -151,13 +152,15 @@ class EcTransactionHistory extends EcTransactionHistoryBase
             case self::OBJECT_TYPE_POST:
                 $object = AdProduct::findOne(['id'=>$this->object_id]);
                 if($object){
-                    return Yii::t('ec', 'Post for listing {product}', ['product'=>'MV'.$object->id]);
+                    $productLnk = Html::a('MV'.$object->id, $object->urlDetail());
+                    return Yii::t('ec', 'Post for listing {product}', ['product'=>$productLnk]);
                 }
                 break;
             case self::OBJECT_TYPE_BOOST:
                 $object = AdProduct::findOne(['id'=>$this->object_id]);
                 if($object){
-                    return Yii::t('ec', 'Boost for listing {product}', ['product'=>'MV'.$object->id]);
+                    $productLnk = Html::a('MV'.$object->id, $object->urlDetail());
+                    return Yii::t('ec', 'Boost for listing {product}', ['product'=>$productLnk]);
                 }
                 break;
             case self::OBJECT_TYPE_DASHBOARD:
