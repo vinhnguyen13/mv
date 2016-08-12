@@ -23,6 +23,20 @@ $(document).ready(function(){
 				self.remove()
 			});
 			$(document).on('change', '.active-compare', compare.checkCompare);
+			$(document).on('change', '.custom-compare', compare.updateCustomCompare);
+		},
+		updateCustomCompare: function() {
+			var cb = $('#compare-box');
+			
+			$('.custom-compare').each(function(){
+				var row = cb.find('.compare-' + $(this).data('row'));
+				
+				if(this.checked) {
+					row.show();
+				} else {
+					row.hide();
+				}
+			});
 		},
 		checkCompare: function() {
 			var self = $(this).closest('li');
@@ -88,6 +102,10 @@ $(document).ready(function(){
 			
 			$.get(url, {ids: ids}, function(r) {
 				$('body').loading({done: true});
+				
+				$('.compare-block').html(r);
+				
+				compare.updateCustomCompare();
 			});
 		},
 		add: function () {

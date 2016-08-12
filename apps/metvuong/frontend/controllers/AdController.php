@@ -52,6 +52,7 @@ use common\models\SlugSearch;
 use vsoft\ad\models\Balance;
 use vsoft\ad\models\AdCategoryGroup;
 use vsoft\ad\models\TrackingSearch;
+use yii\db\Expression;
 
 class AdController extends Controller
 {
@@ -1097,8 +1098,19 @@ class AdController extends Controller
     }
 
 	public function actionCompare(){
-		$this->view->params = ArrayHelper::merge(['noFooter' => true], $this->view->params);
-		
-		return $this->render('compare');
+		if(Yii::$app->request->isAjax) {
+			$ids = \Yii::$app->request->get('ids');
+			
+			if(is_array($ids)) {
+				$expression = new Expression('FIELD(ad_product.id,' . implode(',', $ids) . ')');
+				$products = AdProduct::find()->where(['ad_product.id' => $ids])->orderBy($expression)->all();
+				
+				return $this->renderPartial('_partials/compare.php', ['products' => $products]);
+			}
+		} else {
+			$this->view->params = ArrayHelper::merge(['noFooter' => true], $this->view->params);
+			
+			return $this->render('compare');
+		}
 	}
 }
