@@ -398,10 +398,6 @@ class ImportListing extends Component
                         $content = 'Tin đang cập nhật.';
                     }
 
-                    if ($key_file % 2 == 0) {
-                        $street_id = 0;
-                    }
-
                     $record = [
                         'category_id' => $value[$filename]["loai_tai_san"],
                         'project_building_id' => $project_id,
