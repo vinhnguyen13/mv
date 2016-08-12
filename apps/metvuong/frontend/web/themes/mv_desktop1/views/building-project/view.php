@@ -129,7 +129,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                 </div>
                                 <div class="infor-detail-chudautu">
                                     <ul>
-                                        <li><strong><?=empty($investor->name) ? $lbl_updating : $investor->name ?></strong></li>
+                                        <li><strong class="fs-20 font-600"><?=empty($investor->name) ? $lbl_updating : $investor->name ?></strong></li>
                                         <li>
                                             <strong><?=Yii::t('project','Address')?></strong>:
                                             <?=empty($investor->address) ? $lbl_updating : $investor->address ?></li>
