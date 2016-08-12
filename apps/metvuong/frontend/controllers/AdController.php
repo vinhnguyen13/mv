@@ -456,6 +456,11 @@ class AdController extends Controller
     public function detail($id) {
     
     	$product = AdProduct::findOne($id);
+    	
+    	if($product->status == AdProduct::STATUS_DELETE) {
+    		throw new \yii\web\NotFoundHttpException();
+    	}
+    	
     	try{
     		if(Yii::$app->user->id != $product->user_id) {
     			//                if(isset(Yii::$app->params['tracking']['all']) && Yii::$app->params['tracking']['all'] == true) {
