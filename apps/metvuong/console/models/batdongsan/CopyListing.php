@@ -31,13 +31,19 @@ class CopyListing extends Component
     }
 
     /* End date = Start date Db Crawl + AdProduct::Expired days */
-    public function copyToMainDB($validate=0, $limit=300, $check_expired=0){
+    public function copyToMainDB($validate=0, $limit=300, $check_expired=0, $city, $district){
         $begin = time();
         $sql = "file_name is not null and product_main_id = 0 ";
 
         if($validate == 1) {
             $sql .= " and lat > 0 and lat is not null and lng > 0 and lng is not null ";
             $sql .= " and price > 0 and area > 0 and city_id > 0 and district_id > 0 and ward_id > 0 and street_id > 0 and (is_expired is null or is_expired = 0)";
+            $sql .= " and content is not null";
+        }
+        if(!empty($city)){
+            $sql .= " and content is not null";
+        }
+        if(!empty($district)){
             $sql .= " and content is not null";
         }
 
