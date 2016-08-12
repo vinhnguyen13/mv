@@ -342,6 +342,7 @@ class MemberController extends Controller
             $query->addSelect('ad_product.created_at, ad_product.category_id, ad_product.type, ad_images.file_name, ad_images.folder');
             $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id')->groupBy('ad_product.id');
             $query->where('ad_product.user_id = :uid', [':uid' => $model->user_id]);
+            $query->andWhere('ad_product.status = :st', [':st' => 1]);
             $detectProducts = $query->orderBy(['district_id' => SORT_ASC, 'city_id'=> SORT_ASC, 'id' => SORT_DESC])->all();
             if(count($detectProducts) > 0){
                 foreach($detectProducts as $product){
