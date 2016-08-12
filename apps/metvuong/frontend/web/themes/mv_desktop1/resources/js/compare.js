@@ -90,18 +90,21 @@ $(document).ready(function(){
 		updateCompareView: function() {
 			var ids = [];
 			
-			compare.listingCompare.each(function(){
-				var self = $(this);
-				
-				if(self.find('input').get(0).checked) {
-					ids.push(self.data('id'));
-				}
-			});
+			var compareItems = compare.getCookieCompares();
 			
-			$('body').loading();
+			for(var i in compareItems) {
+				var item = compareItems[i].split(':');
+				var isActive = item[1];
+				
+				if(isActive == '1') {
+					ids.push(item[0]);
+				}
+			}
+			
+			$('#compare-box').loading({full: false});
 			
 			$.get(url, {ids: ids}, function(r) {
-				$('body').loading({done: true});
+				$('#compare-box').loading({done: true});
 				
 				$('.compare-block').html(r);
 				
