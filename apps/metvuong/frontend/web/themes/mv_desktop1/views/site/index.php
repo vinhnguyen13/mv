@@ -32,7 +32,6 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
                     <button type="submit" id="btn-search"><span class="icon-mv"><span class="icon-icons-search"></span></span></button>
                     <div class="suggest-search hide">
                         <div class="content-suggest">
-                            <a class="btn-close"><span class="icon icon-close"></span></a>
                             <ul></ul>
                         </div>
                     </div>

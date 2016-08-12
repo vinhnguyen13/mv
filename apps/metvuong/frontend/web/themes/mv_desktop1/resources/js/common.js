@@ -162,11 +162,12 @@ $(document).ready(function() {
     }).trigger('scroll');
 
     var searchForm = $('#search-form');
+    var ss = $('.suggest-search');
+    
     $('#search').keyup(function() {
     	var self = $(this);
     	var val = self.val().trim();
     	var url = searchForm.attr('action');
-    	var ss = $('.suggest-search');
     	
     	if(val) {
     		if($.data(this, 'v') != val) {
@@ -180,10 +181,10 @@ $(document).ready(function() {
             		var cs = $('.content-suggest ul');
             		
             		if(response.address) {
-            			ss.removeClass('hide');
+            			showSearchList();
             			$('.content-suggest ul').html('<li><a href="' + response.url + '">' + response.address + '</a>(' + lajax.t('ID') + ': MV' + val.replace(/mv/i, '') + ')</li>');
             		} else if(response.length > 0) {
-            			ss.removeClass('hide');
+            			showSearchList();
             			
             			var html = '';
             			
@@ -193,15 +194,42 @@ $(document).ready(function() {
             			
             			$('.content-suggest ul').html(html);
             		} else {
-            			ss.addClass('hide');
+            			$('.content-suggest ul').html('');
+            			hideSearchList();
             		}
             	}));
             }
     	} else {
+			$('.content-suggest ul').html('');
     		$.data(this, 'v', '');
-    		ss.addClass('hide');
+			hideSearchList();
+    	}
+    }).on('focus', function(){
+    	if($('.content-suggest ul').html() != '') {
+    		showSearchList();
     	}
     }).focus();
+    
+    function showSearchList() {
+    	ss.removeClass('hide');
+    	
+    	$(document).on('click', _hideSearchList);
+    }
+    
+    function _hideSearchList(e) {
+    	var target = $(e.target);
+    	
+    	if(target.closest('#search-form').length == 0) {
+    		hideSearchList();
+    	}
+    }
+    
+    function hideSearchList() {
+    	ss.addClass('hide');
+    	
+    	$(document).off('click', _hideSearchList);
+    }
+    
     $('.content-suggest').on('click', 'a', function(e){
     	var parentLi = $(this).closest('li');
     	var id = parentLi.data('id');
@@ -233,11 +261,6 @@ $(document).ready(function() {
 		}
 		
 		setCookie('sh1', JSON.stringify(listSearch));
-    });
-
-    $('.suggest-search .content-suggest .btn-close').on('click', function (e) {
-        e.preventDefault();
-        $('.suggest-search').addClass('hide');
     });
 
     $(window).on('resize', function () {
