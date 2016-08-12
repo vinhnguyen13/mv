@@ -206,6 +206,7 @@ class Ad extends Component
         if(!empty($ids)){
             $query->andWhere('ad_product.id IN ('.$ids.')');
         }
+        $query->andWhere('ad_product.status=1');
         $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
         $query->groupBy('ad_product.id');
         $products = $query->orderBy(['ad_product.score'=>SORT_DESC])->limit(6)->all();
@@ -222,6 +223,7 @@ class Ad extends Component
 //        $query->where(['status' => 1, 'verified' => 1, 'is_expired' => 0]);
         $query->andWhere('ad_product_saved.user_id IN ('.Yii::$app->user->id.')');
         $query->andWhere('ad_product_saved.saved_at != 0');
+        $query->andWhere('ad_product.status=1');
         $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
         $query->groupBy('ad_product.id');
         $products = $query->orderBy(['ad_product.score'=>SORT_DESC])->limit(6)->all();
@@ -235,6 +237,7 @@ class Ad extends Component
 			 ad_images.folder');
         $query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
         $query->andWhere('ad_product.type = '.$type.' AND ad_product.project_building_id = '.$building_id);
+        $query->andWhere('ad_product.status=1');
         $query->leftJoin('ad_images', 'ad_images.order = 0 AND ad_images.product_id = ad_product.id');
         $query->groupBy('ad_product.id');
         $products = $query->orderBy(['ad_product.updated_at'=>SORT_DESC])->limit(4)->all();
