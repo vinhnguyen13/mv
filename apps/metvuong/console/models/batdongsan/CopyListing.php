@@ -31,14 +31,20 @@ class CopyListing extends Component
     }
 
     /* End date = Start date Db Crawl + AdProduct::Expired days */
-    public function copyToMainDB($validate=0, $limit=300, $check_expired=0){
+    public function copyToMainDB($validate=0, $limit=300, $check_expired=0, $city, $district){
         $begin = time();
-        $sql = "file_name is not null and product_main_id = 0 ";
+        $sql = "file_name IS NOT NULL AND product_main_id = 0 ";
 
         if($validate == 1) {
-            $sql .= " and lat > 0 and lat is not null and lng > 0 and lng is not null ";
-            $sql .= " and price > 0 and area > 0 and city_id > 0 and district_id > 0 and ward_id > 0 and street_id > 0 and (is_expired is null or is_expired = 0)";
-            $sql .= " and content is not null";
+            $sql .= " AND lat > 0 AND lat IS NOT NULL AND lng > 0 AND lng IS NOT NULL ";
+            $sql .= " AND price > 0 AND area > 0 AND city_id > 0 AND district_id > 0 AND ward_id > 0 AND street_id > 0 AND (is_expired IS NULL OR is_expired = 0)";
+            $sql .= " AND content IS NOT NULL";
+        }
+        if(!empty($city)){
+            $sql .= " AND city_id IN ($city)";
+        }
+        if(!empty($district)){
+            $sql .= " AND district_id IN ($district)";
         }
 
         if($check_expired == 1)
@@ -47,7 +53,7 @@ class CopyListing extends Component
         $models = \vsoft\craw\models\AdProduct::find()
             ->where($sql)->limit($limit)->orderBy(['id' => SORT_DESC])->all();
 
-        if(count($models) > 0) {
+        if(!empty($models)) {
             $helper = new AdImageHelper();
                 foreach ($models as $key => $model) {
                     $connection = AdProduct::getDb();
