@@ -10,8 +10,12 @@ namespace console\models\batdongsan;
 
 use console\models\Helpers;
 use keltstr\simplehtmldom\SimpleHTMLDom;
+use vsoft\ad\models\AdInvestor;
+use vsoft\ad\models\AdInvestorBuildingProject;
 use Yii;
 use yii\base\Component;
+use yii\base\Exception;
+use yii\helpers\ArrayHelper;
 
 class Project extends Component
 {
@@ -184,4 +188,161 @@ class Project extends Component
             return null;
         }
     }
+
+    public function updateProjectImage($limit=500){
+        $start = time();
+        $query = \vsoft\ad\models\AdBuildingProject::find()->where("logo LIKE 'http%'");
+        $count = (int)$query->count('id');
+        if($count > 0) {
+            $projects = $query->orderBy(['id' => SORT_ASC])->limit($limit)->all();
+            if(count($projects) > 0){
+                $folder = Yii::getAlias('@store'). "/building-project-images";
+                foreach ($projects as $project) {
+                    $value = null;
+                    if(empty($project->file_name))
+                        continue;
+                    $arr_file_name = explode("/", $project->file_name);
+                    $file_name = $arr_file_name[1];
+                    $url = Listing::DOMAIN. "/view-pj". $file_name;
+                    $page = Helpers::getUrlContent($url);
+                    if(empty($page)){
+                        $logo = $project->logo;
+                        if(!filter_var($logo, FILTER_VALIDATE_URL) === FALSE){
+                            $file_download = $this->downloadImage($logo, $folder);
+                            if($file_download){
+                                $project->logo = $file_download;
+                                $project->save(false);
+                            }
+                        }
+                    }
+                    else {
+                        $value = ImportProject::find()->parseProjectDetail(null, $file_name, $page);
+                        if (empty($value)) {
+                            print_r(" - Error: no content.");
+                            continue;
+                        }
+                        $project_logo = $value[$file_name]['logo'];
+                        if(!filter_var($project_logo, FILTER_VALIDATE_URL) === FALSE){
+                            $file_download = $this->downloadImage($project_logo, $folder);
+                            if($file_download){
+                                $project->logo = $file_download;
+                                $project->save(false);
+                            }
+                        }
+
+                        $investor = $value[$file_name]["investor"];
+                        if(count($investor) > 0 && isset($investor['name']) && !empty($investor['name'])){
+                            $investor_logo = $investor["logo"];
+                            if(!filter_var($investor_logo, FILTER_VALIDATE_URL) === FALSE){
+                                $inv_logo_file_download = $this->downloadImage($investor_logo, $folder);
+                                if($inv_logo_file_download){
+                                    $investor_logo = $inv_logo_file_download;
+                                }
+                            }
+
+                            $address = isset($investor["address"]) && !empty($investor["address"]) ? $investor["address"] : null;
+                            $phone = isset($investor["phone"]) && !empty($investor["phone"]) ? $investor["phone"] : null;
+                            $fax = isset($investor["fax"]) && !empty($investor["fax"]) ? $investor["fax"] : null;
+                            $website = isset($investor["website"]) && !empty($investor["website"]) ? $investor["website"] : null;
+                            $email = isset($investor["email"]) && !empty($investor["email"]) ? $investor["email"] : null;
+
+                            $buildingInvestor = AdInvestorBuildingProject::find()->where(['building_project_id' => $project->id])->one();
+                            if(count($buildingInvestor) > 0 && $buildingInvestor->investor_id > 0){
+                                $recordInvUpdate = [
+                                    'logo' => $investor_logo,
+                                    'name' => $investor["name"],
+                                    'address' => $address,
+                                    'phone' => $phone,
+                                    'fax' => $fax,
+                                    'website' => $website,
+                                    'email' => $email,
+                                    'updated_at' => time()
+                                ];
+                                $resUpdate = \vsoft\ad\models\AdInvestor::getDb()->createCommand()
+                                    ->update(\vsoft\ad\models\AdInvestor::tableName(), $recordInvUpdate, 'id=:id', [':id' => $buildingInvestor->investor_id])
+                                    ->execute();
+                                if($resUpdate > 0)
+                                    print_r(" - update investor image success");
+                            }
+                            else {
+                                $old_investor = AdInvestor::find()->where([
+                                    'name' => $investor["name"],
+                                    'address' => $address,
+                                    'phone' => $phone,
+                                    'fax' => $fax,
+                                    'website' => $website,
+                                    'email' => $email,
+                                ])->one();
+                                if(count($old_investor) > 0) {
+                                    $old_investor->logo = $investor_logo;
+                                    $old_investor->updated_at = time();
+                                    if($old_investor->save(false)) {
+                                        $new_buildingInvestor = new AdInvestorBuildingProject();
+                                        $new_buildingInvestor->investor_id = $old_investor->id;
+                                        $new_buildingInvestor->building_project_id = $project->id;
+                                        $new_buildingInvestor->save(false);
+                                        print_r(" - update project & investor success");
+                                    }
+                                }
+                                else {
+                                    $recordInv = [
+                                        'name' => $investor["name"],
+                                        'address' => $address,
+                                        'phone' => $phone,
+                                        'fax' => $fax,
+                                        'website' => $website,
+                                        'email' => $email,
+                                        'logo' => $investor_logo,
+                                        'status' => 1,
+                                        'created_at' => time()
+                                    ];
+                                    $new_investor = new AdInvestor($recordInv);
+                                    if($new_investor->save(false)) {
+                                        $new_buildingInvestor = new AdInvestorBuildingProject();
+                                        $new_buildingInvestor->investor_id = $new_investor->id;
+                                        $new_buildingInvestor->building_project_id = $project->id;
+                                        $new_buildingInvestor->save(false);
+                                        print_r(" - update investor success");
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+
+                }
+            } else {
+                print_r("\nProject not found");
+            }
+
+        } else {
+            print_r("\nCannot find project");
+        }
+        $stop = time();
+        $time = $stop - $start;
+        print_r("\nTime: {$time}s");
+    }
+
+    public function downloadImage($link, $folder)
+    {
+        try {
+            if (!is_dir($folder)) {
+                mkdir($folder, 0777, true);
+            }
+            $ext = explode('.', $link);
+            $length = count($ext) - 1;
+            $fileName = uniqid("img_") . '.' . $ext[$length];
+            $filePath = $folder . "/" . $fileName;
+            $content = file_get_contents($link);
+            if ($content) {
+                $result = file_put_contents($filePath, $content);
+                return $result > 0 ? $fileName : null;
+            }
+        } catch(Exception $e){
+            throw $e;
+        }
+        return null;
+    }
+
 }

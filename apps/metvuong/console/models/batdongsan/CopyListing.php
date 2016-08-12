@@ -36,8 +36,9 @@ class CopyListing extends Component
         $sql = "file_name is not null and product_main_id = 0 ";
 
         if($validate == 1) {
-            $sql = $sql . " and lat > 0 and lat is not null and lng > 0 and lng is not null ";
-            $sql = $sql . " and price > 0 and area > 0 and city_id > 0 and district_id > 0 and ward_id > 0 and street_id > 0 and (is_expired is null or is_expired = 0)";
+            $sql .= " and lat > 0 and lat is not null and lng > 0 and lng is not null ";
+            $sql .= " and price > 0 and area > 0 and city_id > 0 and district_id > 0 and ward_id > 0 and street_id > 0 and (is_expired is null or is_expired = 0)";
+            $sql .= " and content is not null";
         }
 
         if($check_expired == 1)
