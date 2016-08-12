@@ -197,7 +197,7 @@ class MapController extends ActiveController {
 	}
 	
 	function searchProduct($id) {
-		if($product = AdProduct::findOne($id)) {
+		if($product = AdProduct::find()->where(['id' => $id])->andWhere(['!=', 'status', AdProduct::STATUS_DELETE])->one()) {
 			return ['address' => $product->address, 'url' => $product->urlDetail()];
 		} else {
 			return [];
