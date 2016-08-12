@@ -14,7 +14,7 @@ use vsoft\express\components\StringHelper;
 	
 	$compress = isset(Yii::$app->params['local']) ? '' : '.compress';
 	
-	$resourceListingMap = Yii::$app->view->theme->baseUrl . '/resources/js/map' . $compress . '.js?v=5';
+	$resourceListingMap = Yii::$app->view->theme->baseUrl . '/resources/js/map' . $compress . '.js?v=6';
 	$resourceHistoryJs = Yii::$app->view->theme->baseUrl . '/resources/js/history.js';
 	$resourceApi = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=desktop.loadedResource&libraries=geometry';
 	
