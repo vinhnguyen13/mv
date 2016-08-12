@@ -152,14 +152,14 @@ class EcTransactionHistory extends EcTransactionHistoryBase
             case self::OBJECT_TYPE_POST:
                 $object = AdProduct::findOne(['id'=>$this->object_id]);
                 if($object){
-                    $productLnk = Html::a('MV'.$object->id, $object->urlDetail());
+                    $productLnk = Html::a('MV'.$object->id, $object->urlDetail(), ['target'=>'_blank']);
                     return Yii::t('ec', 'Post for listing {product}', ['product'=>$productLnk]);
                 }
                 break;
             case self::OBJECT_TYPE_BOOST:
                 $object = AdProduct::findOne(['id'=>$this->object_id]);
                 if($object){
-                    $productLnk = Html::a('MV'.$object->id, $object->urlDetail());
+                    $productLnk = Html::a('MV'.$object->id, $object->urlDetail(), ['target'=>'_blank']);
                     return Yii::t('ec', 'Boost for listing {product}', ['product'=>$productLnk]);
                 }
                 break;

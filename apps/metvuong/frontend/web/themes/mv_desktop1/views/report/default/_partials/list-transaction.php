@@ -22,7 +22,7 @@ if($count_data > 0) {
                     $amount = $transaction->amount;
                     ?>
                     <div class="wrap-tr-each">
-                        <div class="w-15"><a href="<?=$transaction->user->urlProfile()?>"><span><?=$transaction->user->profile->getDisplayName()?></span></a></div>
+                        <div class="w-15"><a target="_blank" href="<?=$transaction->user->urlProfile()?>"><span><?=$transaction->user->profile->getDisplayName()?></span></a></div>
                         <div class="w-20"><span><?=date('d/m/Y, H:i', $transaction->created_at)?></span></div>
                         <div class="w-15"><span><?=$transaction->getObjectType($transaction->object_type)?></span></div>
                         <div class="w-15"><span class="color-cd"><?=$transaction->getTransactionStatus($transaction->status)?></span></div>
