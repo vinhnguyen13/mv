@@ -315,8 +315,8 @@ $.fn.checkbox_ui = function (options) {
         var defaults = {
             checked: false,
             unchecked: false,
-            disableChecked: false,
-            enableChecked: false,
+            disable: false,
+            enable: false,
             done: function(){}
         },
         sc = {},
@@ -344,15 +344,15 @@ $.fn.checkbox_ui = function (options) {
             checkedItem(el, false);
         }
 
-        if ( sc.settings.disableChecked ) {
-            el.find('input[type=checkbox]').prop("checked", true);
-            checkedItem(el, true);
+        if ( sc.settings.disable ) {
+            /*el.find('input[type=checkbox]').prop("checked", true);
+            checkedItem(el, true);*/
             el.addClass('disabled-rc');
         }
 
-        if ( sc.settings.enableChecked ) {
-            el.find('input[type=checkbox]').prop("checked", true);
-            checkedItem(el, true);
+        if ( sc.settings.enable ) {
+            /*el.find('input[type=checkbox]').prop("checked", true);
+            checkedItem(el, true);*/
             el.removeClass('disabled-rc');
         }
 
