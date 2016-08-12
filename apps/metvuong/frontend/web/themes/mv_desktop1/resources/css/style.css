@@ -14239,6 +14239,9 @@ ul.cardList li {
     overflow: hidden;
     box-shadow: 0px 0px 5px #ccc;
 }
+.list-compare .item {
+    margin-bottom: 50px;
+}
 .list-compare .inner-box .infor .address-listing {
     padding: 15px;
     padding-top: 0;
@@ -14251,7 +14254,7 @@ ul.cardList li {
     text-align: center;
     line-height: 100%;
     white-space: nowrap;
-    padding: 15px 0;
+    padding: 15px 10px;
     border-bottom: 1px solid #ccc;
     font-size: 15px;
 }
@@ -14267,6 +14270,8 @@ ul.cardList li {
 }
 .list-compare .inner-box li:last-child {
     border-bottom: none;
+    white-space: normal;
+    line-height: 20px;
 }
 .list-compare .inner-box li .arrow-updown {
     padding: 0 10px;
