@@ -23,27 +23,30 @@
 	$this->registerJs("var url = '" . Url::current() . "'", View::POS_HEAD);
 ?>
     <div class="container">
-        <div class="menuUser">
+        <div class="menuUser compare-box">
             <div class="listing-compare">
                 <div class="title">Select Listing</div>
                 <?php
                 	if(isset($products)) :
                 		$selectProducts = []
                 ?>
-                <ul class="clearfix">
-                	<?php
-                		foreach ($products as $product) :
-                			if($compares[$product->id]) {
-                				$selectProducts[] = $product;
-                			}
-                	?>
-                    <li data-id="<?= $product->id ?>">
-                        <label class="checkbox-ui"><input class="active-compare" type="checkbox" <?= $compares[$product->id] ? 'checked="checked"' : '' ?>><span class="icon-mv"><span class="icon-checkbox"></span></span><?= $product->address ?></label>
-                        <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
-                    </li>
-                	<?php endforeach; ?>
-                </ul>
+                <div class="inner-box">
+                    <ul class="clearfix">
+                    	<?php
+                    		foreach ($products as $product) :
+                    			if($compares[$product->id]) {
+                    				$selectProducts[] = $product;
+                    			}
+                    	?>
+                        <li data-id="<?= $product->id ?>">
+                            <label class="checkbox-ui"><input class="active-compare" type="checkbox" <?= $compares[$product->id] ? 'checked="checked"' : '' ?>><span class="icon-mv"><span class="icon-checkbox"></span></span><?= $product->address ?></label>
+                            <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
+                        </li>
+                    	<?php endforeach; ?>
+                    </ul>
+                </div>
                 <?php endif; ?>
+                
             </div>
             <div class="option-choose-compare">
                 <div class="title">Tùy chọn compare</div>
@@ -72,5 +75,9 @@
         $(document).ready(function () {
             $('.option-choose-compare ul label').checkbox_ui();
             $('.listing-compare ul label').checkbox_ui();
+            $('.listing-compare .inner-box').slimScroll({
+                height: '250px',
+                alwaysVisible: true
+            });
         });
     </script>

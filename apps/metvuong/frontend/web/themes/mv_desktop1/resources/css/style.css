@@ -7285,6 +7285,7 @@ padding: 5px 0;
     -webkit-text-shadow: 1px 1px 1px #fff;
     -ms-text-shadow: 1px 1px 1px #fff;
     -moz-text-shadow: 1px 1px 1px #fff;
+    font-size: 13px;
 }
 .box-dropdown .val-selected.active,
 .user-login .icon-guest:hover {
@@ -10053,13 +10054,21 @@ margin-right: 5px;
 }
 @media ( max-width: 1200px ) {
     .list-menu li a {
-        /* padding: 21px 12px; */
-        font-size: 14px;
+        padding: 16px 10px 17px;
+        font-size: 13px;
     }
 }
 @media ( max-width: 985px ) {
     .menuUser {
         display: none;
+    }
+    .compare-box {
+        display: block;
+        position: static;
+        width: 100%;
+        padding-top: 20px;
+        margin-top: 0;
+        border: none;
     }
     .chat-history,
     .edit-user-tt,
@@ -14179,6 +14188,9 @@ ul.cardList li {
 .compare-block {
     padding: 25px 0 0 30px;
 }
+.option-choose-compare {
+    /* border-bottom: 1px solid #ccc; */
+}
 #listing-list .compare-button {
     position: absolute;
     top: 8px;
@@ -14301,6 +14313,9 @@ ul.cardList li {
     text-align: center;
     height: 100%;
 }
+.list-compare {
+    
+}
 @media (max-width: 1600px) {
     .wrap-listing-item {
         width: 45%;
@@ -14405,6 +14420,26 @@ ul.cardList li {
 
 }
 @media (max-width: 985px) {
+    #listing-list .compare-button {
+        opacity: 1;
+        z-index: 10;
+    }
+    .list-compare .item {
+        width: 320px;
+    }
+    .list-compare {
+        margin: 0;
+        width: 960px;
+    }
+    .compare-block {
+        padding-left: 0;
+        width: 100%;
+        overflow: hidden;
+        overflow-x: auto;
+    }
+    .listing-compare {
+        margin-bottom: 10px;
+    }
     .right-attr-detail .price-item {
         font-size: 25px;
     }

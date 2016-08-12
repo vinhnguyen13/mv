@@ -8,7 +8,7 @@
 ?>
 <div class="row list-compare" id="compare-box">
 	<?php foreach ($products as $product): ?>
-	<div class="col-xs-12 col-sm-6 col-lg-4 item">
+	<div class="col-xs-4 item">
 		<div class="inner-box">
 			<a href="" class="pic-intro"><img src="<?= $product->representImage ?>" alt=""></a>
 			<div class="infor">
