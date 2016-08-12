@@ -113,19 +113,20 @@ use yii\widgets\LinkPager;
             var self = $(this);
             var val = self.val().trim();
             var url = searchForm.attr('action');
-            var ss = $('.suggest-search');
+            var ss = $('#search-duan-form .suggest-search');
 
             if (val.length >= 2) {
                 $.get(url, searchForm.serialize(), function (response) {
+                    console.log(response);
                     result = response.length;
                     if (result > 0) {
                         ss.removeClass('hide');
-
                         var html = '';
                         for (var i in response) {
-                            html += '<li><a href="/building-project/redirect-view?id='+response[i][1]+'">' + response[i][0].full_name + '</a></li>';
+                            html += '<li><a href="'+response[i]['link']+'">' + response[i]['full_name'] + '</a></li>';
                         }
-                        $('.content-suggest ul').html(html);
+                        $('#search-duan-form .content-suggest ul').html(html);
+
                     } else {
                         ss.addClass('hide');
                     }
@@ -137,12 +138,12 @@ use yii\widgets\LinkPager;
         });
 
         $('#search-duan-form .btn-close').click(function(){
-            $('.suggest-search').addClass('hide');
+            $('#search-duan-form .suggest-search').addClass('hide');
         });
 
         $('#findProject').mouseenter(function(){
             if(result > 0)
-                $('.suggest-search').removeClass('hide');
+                $('#search-duan-form .suggest-search').removeClass('hide');
         });
     });
 </script>
