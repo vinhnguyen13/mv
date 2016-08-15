@@ -70,6 +70,8 @@
 	$disabledWard = ($product->projectBuilding && $product->projectBuilding->ward_id) || $expiredEdit;
 	$disabledStreet = ($product->projectBuilding && $product->projectBuilding->street_id) || $expiredEdit;
 	$disabledHome = ($product->projectBuilding && $product->projectBuilding->home_no) || $expiredEdit;
+	
+	$folder = uniqid();
 ?>
 <div class="title-fixed-wrap container">
 	<div class="post-listing">
@@ -91,6 +93,7 @@
 							'data-auto-save' => Url::to(['/ad/auto-save'])
 						]
 					]) ?>
+					<input type="hidden" name="f" value="<?= $folder ?>" />
 					<div class="group-frm">
 						<div class="title-frm"><?= Yii::t('ad', 'Loại tin') ?> <span class="pdL-10"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="max-point">8</span>') ?></span></div>
 						<div class="row">
@@ -292,6 +295,7 @@
 										'previewMaxWidth' => 130,
 										'previewMaxHeight' => 98,
 										'previewCrop' => true,
+										'formData' => ['f' => $folder]
 									],
 									'clientEvents' => [
 										'fileuploadcompleted' => 'function(e, data) {form.fileuploadcompleted(e, data, this);}',

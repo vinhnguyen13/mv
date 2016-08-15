@@ -88,8 +88,8 @@ class AdController extends Controller
 					$product->ip = Yii::$app->request->userIP;
 					$product->save();
 						
-					if(!empty($post['images']) && is_array($post['images'])) {
-						$this->autoSaveImage($post['images'], $product->id);
+					if(!empty($post['images']) && is_array($post['images']) && isset($post['f'])) {
+						$this->autoSaveImage($post['images'], $product->id, $post['f']);
 					}
 						
 					return $product->id;
@@ -98,10 +98,10 @@ class AdController extends Controller
 		}
 	}
 	
-	public function autoSaveImage($addImages, $productId) {
+	public function autoSaveImage($addImages, $productId, $folder) {
 		$helper = new AdImageHelper();
 		
-		$tempFolder = $helper->getTempFolderPath(\Yii::$app->session->id);
+		$tempFolder = $helper->getTempFolderPath($folder);
 		
 		$helper->adFolderName = 'auto-save';
 		
@@ -186,7 +186,7 @@ class AdController extends Controller
 	}
     
     public function actionUpload() {
-        if($_FILES) {
+        if($_FILES && isset($_POST['f'])) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     		
     		$image = UploadedFile::getInstanceByName('upload');
@@ -203,7 +203,7 @@ class AdController extends Controller
     		} else {
     			$helper = new AdImageHelper();
     			
-    			$sessionFolder = \Yii::$app->session->id;
+    			$sessionFolder = $_POST['f'];
     			$tempFolder = $helper->getTempFolderPath($sessionFolder);
     			
     			if(!file_exists($tempFolder)) {
@@ -222,7 +222,7 @@ class AdController extends Controller
     			$response['name'] = $fileName;
     			$response['url'] = Url::to($tempUrl . $fileName);
     			$response['thumbnailUrl'] = Url::to($tempUrl . $helper->makeFolderName(AdImageHelper::$sizes['thumb']) . '/' . $fileName);
-    			$response['deleteUrl'] = Url::to(['delete-temp-file', 'file' => $fileName]);
+    			$response['deleteUrl'] = Url::to(['delete-temp-file', 'file' => $fileName, 'f' => $_POST['f']]);
     			$response['deleteType'] = 'DELETE';
     		}
     		
@@ -231,17 +231,19 @@ class AdController extends Controller
     }
     
     public function actionDeleteTempFile($file) {
-    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    	
-    	$helper = new AdImageHelper();
-    	
-    	$sessionFolder = \Yii::$app->session->id;
-    	 
-    	$tempFolder = $helper->getTempFolderPath($sessionFolder);
-    	
-    	$helper->removeTempFile($tempFolder, $file);
-    	
-    	return ['files' => []];
+    	if(isset($_GET['f'])) {
+    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    		 
+    		$helper = new AdImageHelper();
+    		 
+    		$sessionFolder = $_GET['f'];
+    		
+    		$tempFolder = $helper->getTempFolderPath($sessionFolder);
+    		 
+    		$helper->removeTempFile($tempFolder, $file);
+    		 
+    		return ['files' => []];
+    	}
     }
 
     public function actionDeleteFile($file) {
@@ -565,9 +567,9 @@ class AdController extends Controller
     						}
     					}
     					
-    					if($addImages) {
+    					if($addImages && isset($post['f'])) {
     						$helper = new AdImageHelper();
-    						$tempFolder = $helper->getTempFolderPath(\Yii::$app->session->id);
+    						$tempFolder = $helper->getTempFolderPath($post['f']);
     						
     						$now = time();
     						
@@ -665,9 +667,9 @@ class AdController extends Controller
     			$profileForm = new ProfileForm();
     			$profileForm->compareToUpdate($post['AdContactInfo']);
     			
-    			if(!empty($post['images'])) {
+    			if(!empty($post['images']) && isset($post['f'])) {
     				$helper = new AdImageHelper();
-    				$tempFolder = $helper->getTempFolderPath(\Yii::$app->session->id);
+    				$tempFolder = $helper->getTempFolderPath($post['f']);
     				
     				$now = time();
     				
