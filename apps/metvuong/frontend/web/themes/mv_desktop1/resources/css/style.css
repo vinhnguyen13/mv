@@ -11222,6 +11222,10 @@ label:hover {
 .swiper-button-next.swiper-button-disabled, .swiper-button-prev.swiper-button-disabled {
     /* display: none; */
 }
+.list-menu-news .swiper-button-next,
+.list-menu-news .swiper-button-prev {
+    display: none;
+}
 .you-want,
 .you-are {
     
