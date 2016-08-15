@@ -815,4 +815,18 @@ class AdProduct extends AP
 			}
 		}
 	}
+	
+	public function getEs() {
+		$indexName = \Yii::$app->params['indexName']['product'];
+		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/" . Elastic::$productEsType . "/" . $this->id);
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$result = json_decode(curl_exec($ch), true);
+		
+		if($result['found']) {
+			return $result['_source'];
+		} else {
+			return null;
+		}
+	}
 }
