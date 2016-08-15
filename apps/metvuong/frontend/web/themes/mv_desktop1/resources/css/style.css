@@ -12696,6 +12696,7 @@ label:hover {
     }
     .list-compare .tbl-wrap .swiper-wrapper {
         display: table;
+        width: 500px;
     }
     .tbl-wrap .wrap-tr-each > div {
         width: 100%;
@@ -12725,6 +12726,10 @@ label:hover {
         white-space: nowrap;
         display: block;
     }
+    .wrap-tr-each > div span span {
+        display: inline;
+        padding: 0;
+    }
     .list-compare .wrap-tr-each > div > span {
         text-overflow: inherit;
         overflow: inherit;
@@ -12750,6 +12755,7 @@ label:hover {
     }
     .list-compare .tbl-wrap .swiper-container {
         width: 100%;
+        overflow-x: auto;
     }
     .tbl-wrap {
         overflow: hidden;
