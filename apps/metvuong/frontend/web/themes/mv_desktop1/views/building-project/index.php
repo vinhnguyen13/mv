@@ -41,11 +41,24 @@ use yii\widgets\LinkPager;
                                     }
                                 }
                                 $tongquan = trim(strip_tags($tongquan));
+
+                                $src_img = \vsoft\ad\models\AdImages::defaultImage();
+                                $checkThumbFile = file_exists(Yii::getAlias('@store'). "/building-project-images/thumb_" . $model->logo);
+                                if($checkThumbFile) {
+                                    $src_img = Url::to('/store/building-project-images/thumb_' . $model->logo);
+                                }
+                                else {
+                                    $logo = Yii::getAlias('@store'). "/building-project-images/" . $model->logo;
+                                    $checkFile = file_exists($logo);
+                                    if ($checkFile) {
+                                        $src_img = Url::to('/store/building-project-images/' . $model->logo);
+                                    }
+                                }
                                 ?>
                                 <li>
                                     <div class="wrap-item">
                                         <a href="<?= Url::to(["building-project/view", 'slug'=>$model->slug]); ?>" class="pic-intro rippler rippler-default">
-                                            <img src="<?=$model->logoUrl?>">
+                                            <img src="<?=$src_img ?>" alt="<?= $model->name ?>">
                                         </a>
 
                                         <div class="info-item">
