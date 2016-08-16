@@ -23,6 +23,11 @@ use vsoft\ad\models\AdWard;
 
 class ProductController extends Controller {
 	
+	public function actionUpdateScore($id) {
+		$product = AdProduct::findOne($id);
+		$product->updateEs(['score' => $product->score]);
+	}
+	
 	public function actionCheckWrongScore($hasIp = false) {
 		$query = AdProduct::find();
 		$query->where(ElasticController::$where);
