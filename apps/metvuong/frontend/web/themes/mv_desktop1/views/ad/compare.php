@@ -24,40 +24,42 @@
 ?>
     <div class="container">
         <div class="menuUser compare-box">
-            <div class="listing-compare">
-                <div class="title">Select Listing</div>
-                <?php
-                	if(isset($products)) :
-                		$selectProducts = []
-                ?>
-                <div class="inner-box">
+            <div class="inner-box">
+                <div class="listing-compare">
+                    <div class="title">Select Listing</div>
+                    <?php
+                    	if(isset($products)) :
+                    		$selectProducts = []
+                    ?>
+                    <div class="inner-box">
+                        <ul class="clearfix">
+                        	<?php
+                        		foreach ($products as $product) :
+                        			if($compares[$product->id]) {
+                        				$selectProducts[] = $product;
+                        			}
+                        	?>
+                            <li data-id="<?= $product->id ?>">
+                                <label class="checkbox-ui"><input class="active-compare" type="checkbox" <?= $compares[$product->id] ? 'checked="checked"' : '' ?>><span class="icon-mv"><span class="icon-checkbox"></span></span><?= $product->address ?></label>
+                                <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
+                            </li>
+                        	<?php endforeach; ?>
+                        </ul>
+                    </div>
+                    <?php endif; ?>
+                    
+                </div>
+                <div class="option-choose-compare">
+                    <div class="title">Tùy chọn compare</div>
                     <ul class="clearfix">
-                    	<?php
-                    		foreach ($products as $product) :
-                    			if($compares[$product->id]) {
-                    				$selectProducts[] = $product;
-                    			}
-                    	?>
-                        <li data-id="<?= $product->id ?>">
-                            <label class="checkbox-ui"><input class="active-compare" type="checkbox" <?= $compares[$product->id] ? 'checked="checked"' : '' ?>><span class="icon-mv"><span class="icon-checkbox"></span></span><?= $product->address ?></label>
-                            <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
-                        </li>
-                    	<?php endforeach; ?>
+                        <li><label for="" class="checkbox-ui"><input data-row="s" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Number of storeys') ?></label></li>
+                        <li><label for="" class="checkbox-ui"><input data-row="fw" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Facade') ?></label></li>
+                        <li><label for="" class="checkbox-ui"><input data-row="lw" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Entry width') ?></label></li>
+                        <li><label for="" class="checkbox-ui"><input data-row="hd" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'House direction') ?></label></li>
+                        <li><label for="" class="checkbox-ui"><input data-row="bd" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Balcony direction') ?></label></li>
+                        <li><label for="" class="checkbox-ui"><input data-row="f" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Facilities') ?></label></li>
                     </ul>
                 </div>
-                <?php endif; ?>
-                
-            </div>
-            <div class="option-choose-compare">
-                <div class="title">Tùy chọn compare</div>
-                <ul class="clearfix">
-                    <li><label for="" class="checkbox-ui"><input data-row="s" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Number of storeys') ?></label></li>
-                    <li><label for="" class="checkbox-ui"><input data-row="fw" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Facade') ?></label></li>
-                    <li><label for="" class="checkbox-ui"><input data-row="lw" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Entry width') ?></label></li>
-                    <li><label for="" class="checkbox-ui"><input data-row="hd" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'House direction') ?></label></li>
-                    <li><label for="" class="checkbox-ui"><input data-row="bd" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Balcony direction') ?></label></li>
-                    <li><label for="" class="checkbox-ui"><input data-row="f" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Facilities') ?></label></li>
-                </ul>
             </div>
         </div>
     </div>
