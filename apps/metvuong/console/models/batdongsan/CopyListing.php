@@ -54,7 +54,7 @@ class CopyListing extends Component
             $sql = $sql . " and (start_date + ".AdProduct::EXPIRED.") >= unix_timestamp() ";
 
         $models = \vsoft\craw\models\AdProduct::find()
-            ->where($sql)->limit($limit)->orderBy(['id' => SORT_DESC])->all();
+            ->where($sql)->limit($limit)->orderBy(['start_date' => SORT_DESC])->all();
 
         if(!empty($models)) {
             $helper = new AdImageHelper();
