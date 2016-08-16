@@ -196,7 +196,7 @@ class Metvuong extends Component
         $log_emails = isset($log['emails']) ? $log['emails'] : array();
 
         if(count($log_emails) > 0){
-            $str_emails = "'". implode("', '", array_map('mysql_real_escape_string', $log_emails)). "'";
+            $str_emails = "'". implode("', '", $log_emails). "'";
             $sql = $sql. " and c.email not in ({$str_emails}) ";
         }
         $sql = $sql. " group by c.email";
@@ -222,7 +222,7 @@ class Metvuong extends Component
                 if(!in_array($email, $log['emails']))
                     $log['emails'][] = $email;
                 Helpers::writeLog($log, $path, $email_list_file_name);
-                print_r("\n" . ($key_email + 1) . " - ". $email);
+                print_r("\n" . ($key_email + 1) . " - ". $email. " - ". $list_id);
 
             }
         } else {
