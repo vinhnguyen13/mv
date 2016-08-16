@@ -15,7 +15,7 @@
 					<?php foreach ($products as $product): ?>
 					<div class="w-28">
 						<span>
-							<a href="" class="img-compare clearfix">
+							<a href="<?= $product->urlDetail() ?>" class="img-compare clearfix">
 								<div class="pull-left pic-intro"><img src="<?= $product->representImage ?>" alt=""></div>
 								<div class="overflow-all"><?= $product->address ?></div>
 							</a>
