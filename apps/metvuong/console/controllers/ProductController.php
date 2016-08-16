@@ -42,7 +42,12 @@ class ProductController extends Controller {
 				$score = AdProduct::calcScore($product);
 				
 				if($score != $product->score) {
-					echo $product->id . ': ' . $score . ' ' . $product->score . ' ' . $product->ip . "\n";
+					
+					if($product->ip) {
+						echo $product->id . ': ' . $score . ' ' . $product->score . ' ' . $product->ip . "\n";
+					}
+					
+					\Yii::$app->db->createCommand("UPDATE `ad_product` SET `score` = {$score} WHERE `id` = {$product->id}")->execute();
 				}
 			}
 					
