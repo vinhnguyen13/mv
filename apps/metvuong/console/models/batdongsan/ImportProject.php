@@ -387,10 +387,10 @@ class ImportProject extends Component
                 // investor website
                 $str_inv_web = substr($str_inv_detail, strpos($str_inv_detail, 'LeftMainContent__projectDetail_EnterpriseInfo1_hplWebpage" title="'));
                 $str_inv_web = trim(str_replace('LeftMainContent__projectDetail_EnterpriseInfo1_hplWebpage" title="', '', $str_inv_web));
-                //">
+
                 $str_inv_web = substr($str_inv_web, strpos($str_inv_web, '">'));
                 $str_inv_web = trim(str_replace('">', '', $str_inv_web));
-                //</span>
+
                 $inv_web = substr($str_inv_web, 0, strpos($str_inv_web, '</span>'));
                 $investor['website'] = trim($inv_web);
 
@@ -399,7 +399,7 @@ class ImportProject extends Component
                 $email = str_replace("var attr = '", "", $email);
                 $email = substr($email, 0, strpos($email, "var txt ="));
                 $email = str_replace("';", "", $email);
-                $email = trim(html_entity_decode($email));
+                $email = trim($email);
                 $investor["email"] = $email;
 
             }

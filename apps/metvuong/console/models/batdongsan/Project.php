@@ -8,14 +8,19 @@
 namespace console\models\batdongsan;
 
 
+use common\components\Slug;
 use console\models\Helpers;
 use keltstr\simplehtmldom\SimpleHTMLDom;
 use vsoft\ad\models\AdInvestor;
 use vsoft\ad\models\AdInvestorBuildingProject;
+use vsoft\ad\models\AdStreet;
+use vsoft\ad\models\AdWard;
+use vsoft\express\components\AdImageHelper;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
+use yii\image\drivers\Image;
 
 class Project extends Component
 {
@@ -189,129 +194,229 @@ class Project extends Component
         }
     }
 
-    public function updateProjectImage($limit=500){
+    public function updateProject($limit=500, $updateImage=false, $updateInvestor=false){
         $start = time();
-        $query = \vsoft\ad\models\AdBuildingProject::find()->where("logo LIKE 'http%'");
+        $path = Yii::getAlias('@console'). "/data/bds_html/projects/update/";
+        if(!is_dir($path))
+        {
+            mkdir($path, 0777, true);
+        }
+        $file_last_id_name = "update_project_last_id.json";
+        $log = Helpers::loadLog($path, $file_last_id_name);
+        $last_id = 0;
+        if(!empty($log)){
+            $last_id = (int)$log['last_id'];
+        }
+        $query = \vsoft\ad\models\AdBuildingProject::find()->where("id > {$last_id}");
         $count = (int)$query->count('id');
         if($count > 0) {
             $projects = $query->orderBy(['id' => SORT_ASC])->limit($limit)->all();
             if(count($projects) > 0){
                 $folder = Yii::getAlias('@store'). "/building-project-images";
-                foreach ($projects as $project) {
+                foreach ($projects as $k => $project) {
                     $value = null;
                     if(empty($project->file_name))
                         continue;
                     $arr_file_name = explode("/", $project->file_name);
                     $file_name = $arr_file_name[1];
-                    $url = Listing::DOMAIN. "/view-pj". $file_name;
-                    $page = Helpers::getUrlContent($url);
-                    if(empty($page)){
-                        $logo = $project->logo;
-                        if(!filter_var($logo, FILTER_VALIDATE_URL) === FALSE){
-                            $file_download = $this->downloadImage($logo, $folder);
-                            if($file_download){
-                                $project->logo = $file_download;
-                                $project->save(false);
+
+                    $search_url = Listing::DOMAIN. "/phan-muc-cac-du-an-bds?k=". rawurlencode($project->name);
+                    $search_page = Helpers::getUrlContent($search_url);
+                    $page = null;
+                    if(!empty($search_page)){
+                        $search_detail = SimpleHTMLDom::str_get_html($search_page, true, true, DEFAULT_TARGET_CHARSET, false);
+                        if (!empty($search_detail)) {
+                            $list_result_project = $search_detail->find('.project-by-cate-list .list2item2');
+                            foreach($list_result_project as $result_project){
+                                $link = $result_project->find('a', 0)->href;
+                                if(strpos($link, "pj".$file_name)){
+                                    $url = Listing::DOMAIN. "/". $link;
+                                    $page = Helpers::getUrlContent($url);
+                                }
                             }
                         }
                     }
+
+                    if(empty($page)){
+                        if($updateImage) {
+                            $project_logo = $value[$file_name]['logo'];
+                            if (!filter_var($project_logo, FILTER_VALIDATE_URL) === FALSE || Helpers::beginWith($project_logo, 'http')) {
+                                if(strpos($project_logo, "batdongsan.com.vn//"))
+                                    $project_logo = str_replace("batdongsan.com.vn//", "batdongsan.com.vn/", $project_logo);
+                                $file_download = $this->downloadImage($project_logo, $folder);
+                                if ($file_download) {
+                                    $project->logo = $file_download;
+                                }
+                            }
+                        }
+                        $project->save(false);
+                        print_r(" - Cannot crawl project page");
+                        continue;
+                    }
                     else {
+                        print_r("\n" . ($k + 1). " ". $file_name);
                         $value = ImportProject::find()->parseProjectDetail(null, $file_name, $page);
                         if (empty($value)) {
                             print_r(" - Error: no content.");
                             continue;
                         }
-                        $project_logo = $value[$file_name]['logo'];
-                        if(!filter_var($project_logo, FILTER_VALIDATE_URL) === FALSE){
-                            $file_download = $this->downloadImage($project_logo, $folder);
-                            if($file_download){
-                                $project->logo = $file_download;
-                                $project->save(false);
+
+                        if($updateImage) {
+                            $project_logo = $value[$file_name]['logo'];
+                            if (!filter_var($project_logo, FILTER_VALIDATE_URL) === FALSE || Helpers::beginWith($project_logo, 'http')) {
+                                if(strpos($project_logo, "batdongsan.com.vn//"))
+                                    $project_logo = str_replace("batdongsan.com.vn//", "batdongsan.com.vn/", $project_logo);
+
+                                $file_download = $this->downloadImage($project_logo, $folder);
+                                if ($file_download) {
+                                    $project->logo = $file_download;
+                                }
                             }
                         }
 
-                        $investor = $value[$file_name]["investor"];
-                        if(count($investor) > 0 && isset($investor['name']) && !empty($investor['name'])){
-                            $investor_logo = $investor["logo"];
-                            if(!filter_var($investor_logo, FILTER_VALIDATE_URL) === FALSE){
-                                $inv_logo_file_download = $this->downloadImage($investor_logo, $folder);
-                                if($inv_logo_file_download){
-                                    $investor_logo = $inv_logo_file_download;
+                        /*if($updateInfo){
+                            $street_id = null;
+                            $ward_id = null;
+                            $home_no = null;
+                            $city = $value[$file_name]["city"];
+                            $district = $value[$file_name]["district"];
+
+                            $city_result = Helpers::getCityId($city);
+                            $city_id = isset($city_result['id']) ? (int)$city_result['id'] : null;
+                            $district_id = 0;
+                            if(!empty($city_id) && $city_id > 0){
+                                $district_result = Helpers::getDistrictId($district, $city_id);
+                                $district_id = isset($district_result['id']) ? (int)$district_result['id'] : null;
+                            }
+
+                            $location = $value[$file_name]["location"];
+                            $project_name = !empty($value[$file_name]["name"]) ? $value[$file_name]["name"] : null;
+                            if(!empty($project_name) && $project_name != $project->name){
+                                $project->name = $project_name;
+                            }
+
+                            if (!empty($project->district_id)) {
+                                $wards = AdWard::getDb()->cache(function () use($district_id){
+                                    return AdWard::getDb()->createCommand("SELECT id, name, district_id FROM `ad_ward` WHERE district_id = {$district_id}")->queryAll();
+                                });
+                                $streets = AdStreet::getDb()->cache(function () use($district_id){
+                                    return AdStreet::getDb()->createCommand("SELECT id, name, district_id FROM `ad_street` WHERE district_id = {$district_id}")->queryAll();
+                                });
+                                $ws = ImportProject::find()->getWardAndStreet($location, $streets, $wards, $district_id);
+                                if (count($ws) > 0) {
+                                    $street_id = (isset($ws["street_id"]) && !empty($ws["street_id"])) ? (int)$ws["street_id"] : null;
+                                    $ward_id = (isset($ws["ward_id"]) && !empty($ws["ward_id"])) ? (int)$ws["ward_id"] : null;
+                                    $home_no = (isset($ws["home_no"]) && !empty($ws["home_no"])) ? (int)$ws["home_no"] : null;
+
+                                    if(!empty($street_id))
+                                        $project->street_id = $street_id;
+
+                                    if(!empty($ward_id))
+                                        $project->ward_id = $ward_id;
+
+                                    if(!empty($home_no))
+                                        $project->home_no = $home_no;
                                 }
                             }
+                            $type = Slug::me()->slugify($value[$file_name]["investment_type"]);
+                            $project->file_name = $type . "/" . $file_name;
+                            $project->is_crawl = 1;
+                            $project->data_html = $value[$file_name]["data_html"];
+                        }*/
 
-                            $address = isset($investor["address"]) && !empty($investor["address"]) ? $investor["address"] : null;
-                            $phone = isset($investor["phone"]) && !empty($investor["phone"]) ? $investor["phone"] : null;
-                            $fax = isset($investor["fax"]) && !empty($investor["fax"]) ? $investor["fax"] : null;
-                            $website = isset($investor["website"]) && !empty($investor["website"]) ? $investor["website"] : null;
-                            $email = isset($investor["email"]) && !empty($investor["email"]) ? $investor["email"] : null;
+                        if($project->save(false))
+                            print_r(" - update project image");
 
-                            $buildingInvestor = AdInvestorBuildingProject::find()->where(['building_project_id' => $project->id])->one();
-                            if(count($buildingInvestor) > 0 && $buildingInvestor->investor_id > 0){
-                                $recordInvUpdate = [
-                                    'logo' => $investor_logo,
-                                    'name' => $investor["name"],
-                                    'address' => $address,
-                                    'phone' => $phone,
-                                    'fax' => $fax,
-                                    'website' => $website,
-                                    'email' => $email,
-                                    'updated_at' => time()
-                                ];
-                                $resUpdate = \vsoft\ad\models\AdInvestor::getDb()->createCommand()
-                                    ->update(\vsoft\ad\models\AdInvestor::tableName(), $recordInvUpdate, 'id=:id', [':id' => $buildingInvestor->investor_id])
-                                    ->execute();
-                                if($resUpdate > 0)
-                                    print_r(" - update investor image success");
-                            }
-                            else {
-                                $old_investor = AdInvestor::find()->where([
-                                    'name' => $investor["name"],
-                                    'address' => $address,
-                                    'phone' => $phone,
-                                    'fax' => $fax,
-                                    'website' => $website,
-                                    'email' => $email,
-                                ])->one();
-                                if(count($old_investor) > 0) {
-                                    $old_investor->logo = $investor_logo;
-                                    $old_investor->updated_at = time();
-                                    if($old_investor->save(false)) {
-                                        $new_buildingInvestor = new AdInvestorBuildingProject();
-                                        $new_buildingInvestor->investor_id = $old_investor->id;
-                                        $new_buildingInvestor->building_project_id = $project->id;
-                                        $new_buildingInvestor->save(false);
-                                        print_r(" - update project & investor success");
+                        if($updateInvestor) {
+                            $investor = $value[$file_name]["investor"];
+                            if (count($investor) > 0 && isset($investor['name']) && !empty($investor['name'])) {
+                                $investor_logo = $investor["logo"];
+                                $investor_folder = Yii::getAlias('@store'). "/investor";
+                                if (!filter_var($investor_logo, FILTER_VALIDATE_URL) === FALSE || Helpers::beginWith($investor_logo, 'http')) {
+                                    if(strpos($investor_logo, "batdongsan.com.vn//"))
+                                        $investor_logo = str_replace("batdongsan.com.vn//", "batdongsan.com.vn/", $investor_logo);
+
+                                    $inv_logo_file_download = $this->downloadImage($investor_logo, $investor_folder);
+                                    if ($inv_logo_file_download) {
+                                        $investor_logo = $inv_logo_file_download;
                                     }
                                 }
-                                else {
-                                    $recordInv = [
+
+                                $address = isset($investor["address"]) && !empty($investor["address"]) ? $investor["address"] : null;
+                                $phone = isset($investor["phone"]) && !empty($investor["phone"]) ? $investor["phone"] : null;
+                                $fax = isset($investor["fax"]) && !empty($investor["fax"]) ? $investor["fax"] : null;
+                                $website = isset($investor["website"]) && !empty($investor["website"]) ? $investor["website"] : null;
+                                $email = isset($investor["email"]) && !empty($investor["email"]) ? $investor["email"] : null;
+
+                                $buildingInvestor = AdInvestorBuildingProject::find()->where(['building_project_id' => $project->id])->one();
+                                if (count($buildingInvestor) > 0 && $buildingInvestor->investor_id > 0) {
+                                    $recordInvUpdate = [
+                                        'logo' => $investor_logo,
                                         'name' => $investor["name"],
                                         'address' => $address,
                                         'phone' => $phone,
                                         'fax' => $fax,
                                         'website' => $website,
                                         'email' => $email,
-                                        'logo' => $investor_logo,
-                                        'status' => 1,
-                                        'created_at' => time()
+                                        'updated_at' => time()
                                     ];
-                                    $new_investor = new AdInvestor($recordInv);
-                                    if($new_investor->save(false)) {
-                                        $new_buildingInvestor = new AdInvestorBuildingProject();
-                                        $new_buildingInvestor->investor_id = $new_investor->id;
-                                        $new_buildingInvestor->building_project_id = $project->id;
-                                        $new_buildingInvestor->save(false);
-                                        print_r(" - update investor success");
-                                    }
+                                    $resUpdate = AdInvestor::getDb()->createCommand()
+                                        ->update(AdInvestor::tableName(), $recordInvUpdate, 'id=:id', [':id' => $buildingInvestor->investor_id])
+                                        ->execute();
+                                    if ($resUpdate > 0)
+                                        print_r(" - update investor success.");
                                 }
+                                else {
+                                    $old_investor = AdInvestor::find()->where([
+                                        'name' => $investor["name"],
+                                        'address' => $address,
+                                        'phone' => $phone,
+                                        'fax' => $fax,
+                                        'website' => $website,
+                                        'email' => $email,
+                                    ])->one();
+                                    if (count($old_investor) > 0) {
+                                        $old_investor->logo = $investor_logo;
+                                        $old_investor->updated_at = time();
+                                        if ($old_investor->save(false)) {
+                                            $new_buildingInvestor = new AdInvestorBuildingProject();
+                                            $new_buildingInvestor->investor_id = $old_investor->id;
+                                            $new_buildingInvestor->building_project_id = $project->id;
+                                            $new_buildingInvestor->save(false);
+                                            print_r(" - update project & investor success");
+                                        }
+                                    } else {
+                                        $recordInv = [
+                                            'name' => $investor["name"],
+                                            'address' => $address,
+                                            'phone' => $phone,
+                                            'fax' => $fax,
+                                            'website' => $website,
+                                            'email' => $email,
+                                            'logo' => $investor_logo,
+                                            'status' => 1,
+                                            'created_at' => time()
+                                        ];
+                                        $new_investor = new AdInvestor($recordInv);
+                                        if ($new_investor->save(false)) {
+                                            $new_buildingInvestor = new AdInvestorBuildingProject();
+                                            $new_buildingInvestor->investor_id = $new_investor->id;
+                                            $new_buildingInvestor->building_project_id = $project->id;
+                                            $new_buildingInvestor->save(false);
+                                            print_r(" - update investor success");
+                                        }
+                                    }
 
+                                }
                             }
                         }
 
+                        $log['last_id'] = $project->id;
+                        $log['last_time'] = date('d M Y H:i', time());
+                        Helpers::writeLog($log, $path, $file_last_id_name);
                     }
 
-                }
+                } // end foreach
             } else {
                 print_r("\nProject not found");
             }
@@ -326,6 +431,8 @@ class Project extends Component
 
     public function downloadImage($link, $folder)
     {
+        $width = 498;
+        $height = 300;
         try {
             if (!is_dir($folder)) {
                 mkdir($folder, 0777, true);
@@ -337,6 +444,16 @@ class Project extends Component
             $content = file_get_contents($link);
             if ($content) {
                 $result = file_put_contents($filePath, $content);
+                if(!strpos($folder, 'investor')) {
+                    $pathInfo = pathinfo($filePath);
+                    if (isset($pathInfo['filename']) && isset($pathInfo['extension'])) {
+                        $thumbFile = $pathInfo['filename'] . ".thumb." . $pathInfo['extension'];
+                        $thumbPath = $folder . "/". $thumbFile;
+
+                        $resource = \Yii::$app->image->load($filePath);
+                        $resource->resize($width, $height, Image::AUTO)->save($thumbPath);
+                    }
+                }
                 return $result > 0 ? $fileName : null;
             }
         } catch(Exception $e){
@@ -344,5 +461,4 @@ class Project extends Component
         }
         return null;
     }
-
 }
