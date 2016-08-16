@@ -21,6 +21,7 @@ use yii\base\Component;
 use yii\base\Exception;
 use yii\helpers\ArrayHelper;
 use yii\image\drivers\Image;
+use yii\image\drivers\Image_Imagick;
 
 class Project extends Component
 {
@@ -194,7 +195,7 @@ class Project extends Component
         }
     }
 
-    public function updateProject($limit=500, $updateImage=false, $updateInvestor=false){
+    public function updateProject($limit=300, $updateImage=false, $updateInvestor=false){
         $start = time();
         $path = Yii::getAlias('@console'). "/data/bds_html/projects/update/";
         if(!is_dir($path))
@@ -215,129 +216,71 @@ class Project extends Component
                 $folder = Yii::getAlias('@store'). "/building-project-images";
                 foreach ($projects as $k => $project) {
                     $value = null;
-                    if(empty($project->file_name))
+                    $page = null;
+                    if(empty($project->file_name)) {
+                        $log['last_id'] = $project->id;
+                        $log['last_time'] = date('d M Y H:i', time());
+                        Helpers::writeLog($log, $path, $file_last_id_name);
                         continue;
+                    }
+
+                    $search_url = Listing::DOMAIN . "/phan-muc-cac-du-an-bds?k=" . rawurlencode($project->name);
                     $arr_file_name = explode("/", $project->file_name);
                     $file_name = $arr_file_name[1];
+                    print_r("\n" . ($k + 1) . " " . $file_name);
+                    $page = $this->searchProject($search_url, $file_name);
 
-                    $search_url = Listing::DOMAIN. "/phan-muc-cac-du-an-bds?k=". rawurlencode($project->name);
-                    $search_page = Helpers::getUrlContent($search_url);
-                    $page = null;
-                    if(!empty($search_page)){
-                        $search_detail = SimpleHTMLDom::str_get_html($search_page, true, true, DEFAULT_TARGET_CHARSET, false);
-                        if (!empty($search_detail)) {
-                            $list_result_project = $search_detail->find('.project-by-cate-list .list2item2');
-                            foreach($list_result_project as $result_project){
-                                $link = $result_project->find('a', 0)->href;
-                                if(strpos($link, "pj".$file_name)){
-                                    $url = Listing::DOMAIN. "/". $link;
-                                    $page = Helpers::getUrlContent($url);
-                                }
-                            }
-                        }
-                    }
-
-                    if(empty($page)){
-                        if($updateImage) {
-                            $project_logo = $value[$file_name]['logo'];
-                            if (!filter_var($project_logo, FILTER_VALIDATE_URL) === FALSE || Helpers::beginWith($project_logo, 'http')) {
-                                if(strpos($project_logo, "batdongsan.com.vn//"))
-                                    $project_logo = str_replace("batdongsan.com.vn//", "batdongsan.com.vn/", $project_logo);
-                                $file_download = $this->downloadImage($project_logo, $folder);
-                                if ($file_download) {
-                                    $project->logo = $file_download;
-                                }
-                            }
-                        }
-                        $project->save(false);
-                        print_r(" - Cannot crawl project page");
-                        continue;
-                    }
-                    else {
-                        print_r("\n" . ($k + 1). " ". $file_name);
+                    if(!empty($page)){
                         $value = ImportProject::find()->parseProjectDetail(null, $file_name, $page);
                         if (empty($value)) {
                             print_r(" - Error: no content.");
+                            $log['last_id'] = $project->id;
+                            $log['last_time'] = date('d M Y H:i', time());
+                            Helpers::writeLog($log, $path, $file_last_id_name);
                             continue;
                         }
 
                         if($updateImage) {
                             $project_logo = $value[$file_name]['logo'];
-                            if (!filter_var($project_logo, FILTER_VALIDATE_URL) === FALSE || Helpers::beginWith($project_logo, 'http')) {
-                                if(strpos($project_logo, "batdongsan.com.vn//"))
-                                    $project_logo = str_replace("batdongsan.com.vn//", "batdongsan.com.vn/", $project_logo);
+                            if (Helpers::beginWith($project_logo, 'http')) {
+                                if(strpos($project_logo, " ")) {
+                                    $arrProjectUrl = explode("/", $project_logo);
+                                    $arrEnd = end($arrProjectUrl);
+                                    $encode = rawurlencode($arrEnd);
+                                    if(strpos($project_logo, $arrEnd)){
+                                        $project_logo = str_replace($arrEnd, $encode, $project_logo);
+                                    }
+                                }
 
                                 $file_download = $this->downloadImage($project_logo, $folder);
-                                if ($file_download) {
+                                if($file_download == -1){
+                                    print_r(" - cannot download project image");
+                                }
+                                if ($file_download && $file_download != -1) {
                                     $project->logo = $file_download;
+                                    if($project->save(false))
+                                        print_r(" - update project image");
                                 }
                             }
                         }
-
-                        /*if($updateInfo){
-                            $street_id = null;
-                            $ward_id = null;
-                            $home_no = null;
-                            $city = $value[$file_name]["city"];
-                            $district = $value[$file_name]["district"];
-
-                            $city_result = Helpers::getCityId($city);
-                            $city_id = isset($city_result['id']) ? (int)$city_result['id'] : null;
-                            $district_id = 0;
-                            if(!empty($city_id) && $city_id > 0){
-                                $district_result = Helpers::getDistrictId($district, $city_id);
-                                $district_id = isset($district_result['id']) ? (int)$district_result['id'] : null;
-                            }
-
-                            $location = $value[$file_name]["location"];
-                            $project_name = !empty($value[$file_name]["name"]) ? $value[$file_name]["name"] : null;
-                            if(!empty($project_name) && $project_name != $project->name){
-                                $project->name = $project_name;
-                            }
-
-                            if (!empty($project->district_id)) {
-                                $wards = AdWard::getDb()->cache(function () use($district_id){
-                                    return AdWard::getDb()->createCommand("SELECT id, name, district_id FROM `ad_ward` WHERE district_id = {$district_id}")->queryAll();
-                                });
-                                $streets = AdStreet::getDb()->cache(function () use($district_id){
-                                    return AdStreet::getDb()->createCommand("SELECT id, name, district_id FROM `ad_street` WHERE district_id = {$district_id}")->queryAll();
-                                });
-                                $ws = ImportProject::find()->getWardAndStreet($location, $streets, $wards, $district_id);
-                                if (count($ws) > 0) {
-                                    $street_id = (isset($ws["street_id"]) && !empty($ws["street_id"])) ? (int)$ws["street_id"] : null;
-                                    $ward_id = (isset($ws["ward_id"]) && !empty($ws["ward_id"])) ? (int)$ws["ward_id"] : null;
-                                    $home_no = (isset($ws["home_no"]) && !empty($ws["home_no"])) ? (int)$ws["home_no"] : null;
-
-                                    if(!empty($street_id))
-                                        $project->street_id = $street_id;
-
-                                    if(!empty($ward_id))
-                                        $project->ward_id = $ward_id;
-
-                                    if(!empty($home_no))
-                                        $project->home_no = $home_no;
-                                }
-                            }
-                            $type = Slug::me()->slugify($value[$file_name]["investment_type"]);
-                            $project->file_name = $type . "/" . $file_name;
-                            $project->is_crawl = 1;
-                            $project->data_html = $value[$file_name]["data_html"];
-                        }*/
-
-                        if($project->save(false))
-                            print_r(" - update project image");
 
                         if($updateInvestor) {
                             $investor = $value[$file_name]["investor"];
                             if (count($investor) > 0 && isset($investor['name']) && !empty($investor['name'])) {
                                 $investor_logo = $investor["logo"];
                                 $investor_folder = Yii::getAlias('@store'). "/investor";
-                                if (!filter_var($investor_logo, FILTER_VALIDATE_URL) === FALSE || Helpers::beginWith($investor_logo, 'http')) {
-                                    if(strpos($investor_logo, "batdongsan.com.vn//"))
-                                        $investor_logo = str_replace("batdongsan.com.vn//", "batdongsan.com.vn/", $investor_logo);
+                                if (Helpers::beginWith($investor_logo, 'http')) {
+                                    if(strpos($investor_logo, " ")) {
+                                        $arrUrl = explode("/", $investor_logo);
+                                        $end = end($arrUrl);
+                                        $inv_encode = rawurlencode($end);
+                                        if(strpos($investor_logo, $end)){
+                                            $investor_logo = str_replace($end, $inv_encode, $investor_logo);
+                                        }
+                                    }
 
                                     $inv_logo_file_download = $this->downloadImage($investor_logo, $investor_folder);
-                                    if ($inv_logo_file_download) {
+                                    if ($inv_logo_file_download && $inv_logo_file_download != -1) {
                                         $investor_logo = $inv_logo_file_download;
                                     }
                                 }
@@ -368,12 +311,7 @@ class Project extends Component
                                 }
                                 else {
                                     $old_investor = AdInvestor::find()->where([
-                                        'name' => $investor["name"],
-                                        'address' => $address,
-                                        'phone' => $phone,
-                                        'fax' => $fax,
-                                        'website' => $website,
-                                        'email' => $email,
+                                        'name' => $investor["name"]
                                     ])->one();
                                     if (count($old_investor) > 0) {
                                         $old_investor->logo = $investor_logo;
@@ -410,12 +348,14 @@ class Project extends Component
                                 }
                             }
                         }
-
-                        $log['last_id'] = $project->id;
-                        $log['last_time'] = date('d M Y H:i', time());
-                        Helpers::writeLog($log, $path, $file_last_id_name);
+                    } else {
+                        print_r(' - Cannot crawl project');
                     }
 
+                    $log['last_id'] = $project->id;
+                    $log['last_time'] = date('d M Y H:i', time());
+                    Helpers::writeLog($log, $path, $file_last_id_name);
+                    usleep(50000);
                 } // end foreach
             } else {
                 print_r("\nProject not found");
@@ -433,32 +373,77 @@ class Project extends Component
     {
         $width = 498;
         $height = 300;
+        $supported_image = array('gif','jpg','jpeg','png');
         try {
             if (!is_dir($folder)) {
                 mkdir($folder, 0777, true);
             }
-            $ext = explode('.', $link);
-            $length = count($ext) - 1;
-            $fileName = uniqid("img_") . '.' . $ext[$length];
-            $filePath = $folder . "/" . $fileName;
-            $content = file_get_contents($link);
-            if ($content) {
-                $result = file_put_contents($filePath, $content);
-                if(!strpos($folder, 'investor')) {
-                    $pathInfo = pathinfo($filePath);
-                    if (isset($pathInfo['filename']) && isset($pathInfo['extension'])) {
-                        $thumbFile = $pathInfo['filename'] . ".thumb." . $pathInfo['extension'];
-                        $thumbPath = $folder . "/". $thumbFile;
 
-                        $resource = \Yii::$app->image->load($filePath);
-                        $resource->resize($width, $height, Image::AUTO)->save($thumbPath);
+            $checkImage = getimagesize($link);
+            if(!isset($checkImage['mime'])){
+                $link = 'https://metvuong.com/themes/metvuong2/resources/images/default-ads.jpg';
+                $checkImage = getimagesize($link);
+            }
+
+            if(isset($checkImage['mime']) && Helpers::beginWith($checkImage['mime'], 'image/')) {
+                $arrLink = explode('.', $link);
+                $length = count($arrLink) - 1;
+                $fileName = uniqid("img_") . '.' . $arrLink[$length];
+                $filePath = $folder . "/" . $fileName;
+                $content = file_get_contents($link);
+                if ($content) {
+                    $result = file_put_contents($filePath, $content);
+                    if (!strpos($folder, 'investor')) {
+                        $pathInfo = pathinfo($filePath);
+                        if (isset($pathInfo['filename']) && isset($pathInfo['extension'])) {
+                            $ext = $pathInfo['extension'];
+                            $thumbFile = "thumb_" . $fileName;
+                            $thumbPath = $folder . "/" . $thumbFile;
+
+                            if (in_array($ext, $supported_image) && !strpos($checkImage['mime'], 'bmp') && $checkImage[0] > $width) {
+                                $resource = \Yii::$app->image->load($filePath);
+                                $resource->resize($width, $height, Image::WIDTH)->save($thumbPath);
+                            } else {
+                                file_put_contents($thumbPath, $content);
+                            }
+                        }
                     }
+                    return $result > 0 ? $fileName : null;
                 }
-                return $result > 0 ? $fileName : null;
+            } else {
+                return -1;
             }
         } catch(Exception $e){
-            throw $e;
+            print_r("\n \t".$e->getMessage());
         }
         return null;
+    }
+
+    public function searchProject($search_url, $file_name){
+        $search_page = Helpers::getUrlContent($search_url);
+        $page = null;
+        if(!empty($search_page)){
+            $search_detail = SimpleHTMLDom::str_get_html($search_page, true, true, DEFAULT_TARGET_CHARSET, false);
+            if (!empty($search_detail)) {
+                $list_result_project = $search_detail->find('.project-by-cate-list .list2item2');
+                if(count($list_result_project) > 0) {
+                    foreach ($list_result_project as $result_project) {
+                        $link = $result_project->find('a', 0)->href;
+                        if (strpos($link, "pj" . $file_name)) {
+                            $url = Listing::DOMAIN . "/" . $link;
+                            $page = Helpers::getUrlContent($url);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if(empty($page) && !empty($file_name)) {
+                $search_url = Listing::DOMAIN . "/view-pj" . $file_name;
+                $page = Helpers::getUrlContent($search_url);
+            }
+
+        }
+        return $page;
     }
 }
