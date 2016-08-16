@@ -34,6 +34,14 @@ $columns = [
     	'attribute' => 'id',
     	'label' => 'ID'
     ],
+    'appmi' => [
+    	'attribute' => 'product_main_id',
+    	'label' => 'Live ID',
+    	'value' => function($model) use ($type) {
+    		return $model['product_main_id'] ? $model['product_main_id'] : null;
+    	},
+    	'filter' =>	Html::activeDropDownList($searchModel, 'product_main_filter', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả'])
+    ],
     'apt' => [
     	'attribute' => 'type',
     	'label' => 'Hình thức',
