@@ -353,6 +353,12 @@ class Elastic
     	return self::requestResult($params, self::elasticUrl('/project_building'));
     }
     
+    public static function searchAllProjects($v) {
+    	$params = self::buildParams($v);
+  	
+    	return self::requestResult($params, self::elasticUrl('/project_building'));
+    }
+    
     public static function elasticUrl($type = '') {
     	return \Yii::$app->params['elastic']['config']['hosts'][0] . '/' . \Yii::$app->params['indexName']['countTotal'] . $type . '/_search';
     }
