@@ -185,8 +185,9 @@ class CrawlerController extends Controller
         BatdongsanV2::find()->importProjectPrimary();
     }
     public function actionUpdateProjectPrimary(){
-        $limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
-        BatdongsanV2::find()->updateProjects($limit);
+        $limit = $this->limit == null ? 500 : ((intval($this->limit) <= 500 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+//        BatdongsanV2::find()->updateProjects($limit);
+        Project::find()->updateProject($limit, true, true);
     }
 
     // Get Contractor
