@@ -195,7 +195,7 @@ class Project extends Component
         }
     }
 
-    public function updateProject($limit=500, $updateImage=false, $updateInvestor=false){
+    public function updateProject($limit=300, $updateImage=false, $updateInvestor=false){
         $start = time();
         $path = Yii::getAlias('@console'). "/data/bds_html/projects/update/";
         if(!is_dir($path))
@@ -435,15 +435,15 @@ class Project extends Component
                             break;
                         }
                     }
-                } else {
-                    if(!empty($file_name)) {
-                        $search_url = Listing::DOMAIN . "/view-pj" . $file_name;
-                        $page = Helpers::getUrlContent($search_url);
-                    }
                 }
-                return $page;
             }
+
+            if(empty($page) && !empty($file_name)) {
+                $search_url = Listing::DOMAIN . "/view-pj" . $file_name;
+                $page = Helpers::getUrlContent($search_url);
+            }
+
         }
-        return null;
+        return $page;
     }
 }
