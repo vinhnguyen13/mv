@@ -14,7 +14,7 @@ use vsoft\express\components\StringHelper;
 	
 	$compress = isset(Yii::$app->params['local']) ? '' : '.compress';
 	
-	$resourceListingMap = Yii::$app->view->theme->baseUrl . '/resources/js/map' . $compress . '.js?v=5';
+	$resourceListingMap = Yii::$app->view->theme->baseUrl . '/resources/js/map' . $compress . '.js?v=6';
 	$resourceHistoryJs = Yii::$app->view->theme->baseUrl . '/resources/js/history.js';
 	$resourceApi = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4&callback=desktop.loadedResource&libraries=geometry';
 	
@@ -72,6 +72,7 @@ EOD;
 	$this->registerCssFile(Yii::$app->view->theme->baseUrl.'/resources/css/map.css');
 	$this->registerJs($script, View::POS_BEGIN);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-helper.js', ['position'=>View::POS_HEAD]);
+	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/compare.js', ['position'=>View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/listing' . $compress . '.js?v=5', ['position' => View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_END]);
@@ -219,12 +220,6 @@ EOD;
 								<?= Html::activeHiddenInput($searchModel, 'type', ['name' => '']); ?>
 							</div>
 							<button class="btn-submit btn-common <?= $hideSearchForm ? '' : 'active' ?>"><?= Yii::t('ad', 'Search') ?></button>
-							<div class="pull-right item-right hide">
-								<ul class="clearfix">
-									<li class="tool-compare"><button data-num=""><span class="icon-mv mgR-5"><span class="icon-balance-scale"></span></span>So sánh <span class="num-show"></span></button></li>
-								</ul>
-								<input type="hidden" class="getCompare" value="">
-							</div>
 						</div>
 					</div>
 					<div id="project-info">

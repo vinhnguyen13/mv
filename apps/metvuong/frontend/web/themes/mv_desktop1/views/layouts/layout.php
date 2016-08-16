@@ -12,9 +12,6 @@
         <?php if(!empty($this->params['isReport'])){?>
             <?php $this->beginContent('@app/views/layouts/_partials/menuReport.php'); ?><?php $this->endContent();?>
         <?php }?>
-        <?php if(!empty($this->params['isCampare'])){?>
-            <?php $this->beginContent('@app/views/layouts/_partials/menuCampare.php'); ?><?php $this->endContent();?>
-        <?php }?>
         <div class="contentContainer">
             <?=$content;?>
         </div>

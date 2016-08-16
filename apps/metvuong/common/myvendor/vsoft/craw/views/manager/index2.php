@@ -34,6 +34,14 @@ $columns = [
     	'attribute' => 'id',
     	'label' => 'ID'
     ],
+    'appmi' => [
+    	'attribute' => 'product_main_id',
+    	'label' => 'Live ID',
+    	'value' => function($model) use ($type) {
+    		return $model['product_main_id'] ? $model['product_main_id'] : null;
+    	},
+    	'filter' =>	Html::activeDropDownList($searchModel, 'product_main_filter', ['1' => 'Có', '2' => 'Không'], ['class' => 'form-control', 'prompt' => 'Tất cả'])
+    ],
     'apt' => [
     	'attribute' => 'type',
     	'label' => 'Hình thức',
@@ -259,7 +267,14 @@ $columns = array_intersect_key($columns, $searchModel->columns);
 				<a href="<?= Url::current() ?>" id="ok" style="text-decoration: none; font-size: 20px; display: inline-block; margin-top: 22px; background: #5a5aad; color: #FFF; padding: 4px 72px;">OK</a>
 			</div>
 		</div>
-		<a style="font-size: 20px; display: inline-block; margin-top: 22px;" href="<?= Url::to(['/craw/manager/index2']) ?>">Reset filter</a>
+		<?php 
+			if(isset($_GET['main_id'])) {
+				$to = ['/craw/manager/index2', 'main_id' => 1];
+			} else {
+				$to = ['/craw/manager/index2'];
+			}
+		?>
+		<a style="font-size: 20px; display: inline-block; margin-top: 22px;" href="<?= Url::to($to) ?>">Reset filter</a>
 	</div>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

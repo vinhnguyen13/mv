@@ -10,7 +10,7 @@
 	use vsoft\express\components\StringHelper;
 	use yii\data\Pagination;
 	use frontend\components\SearchUrlManager;
-use frontend\models\Tracking;
+	use frontend\models\Tracking;
 	
 	$db = Yii::$app->getDb();
 	
@@ -37,6 +37,8 @@ use frontend\models\Tracking;
 		$tracking = (!empty($searchModel->project_building_id) || ((!empty($searchModel->ward_id) || !empty($searchModel->street_id)) && (!empty($searchModel->room_no) || !empty($searchModel->price_min) || !empty($searchModel->price_max)))) && \Yii::$app->user->identity;
 		$userId = \Yii::$app->user->id;
 	}
+	
+	$compares = isset($_COOKIE['compareItems']) ? array_map(function($item) { return current(explode(':', $item)); }, explode(',', $_COOKIE['compareItems'])) : [];
 ?>
 
 <?php if($products): ?>
@@ -84,7 +86,11 @@ use frontend\models\Tracking;
 					    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['start_date']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?php $score = round($product['score'] - 0.00001157407 * ($now - $product['start_date'])); if($score > 0) echo $score; else echo 0; ?></span></p>
 					    </div>
 					</a>
-					<div class="compare-button flag-compare-set hide" data-value="<?= $product['id'] ?>"><span class="inner-box"><span class="icon-mv mgR-5"><span class="icon-balance-scale"></span></span><span class="txt-change">So Sánh</span></span></div>
+					<?php if(in_array($product['id'], $compares)) : ?>
+					<div class="compare-button flag-compare-remove" data-value="<?= $product['id'] ?>"><span class="inner-box"><span class="icon-mv mgR-5"><span class="icon-close-icon"></span></span><span class="txt-change"><?= Yii::t('ad', 'Đã thêm so sánh') ?></span></span></div>
+					<?php else: ?>
+					<div class="compare-button flag-compare-set" data-value="<?= $product['id'] ?>"><span class="inner-box"><span class="icon-mv mgR-5"><span class="icon-balance-scale"></span></span><span class="txt-change"><?= Yii::t('ad', 'So Sánh') ?></span></span></div>
+					<?php endif; ?>
 				</div>
 			</li>
 			<?php endforeach; ?>
@@ -102,80 +108,3 @@ use frontend\models\Tracking;
 <?php else: ?>
 <div class="container" id="no-result"><?= sprintf(Yii::t('ad', 'Chưa có tin đăng theo tìm kiếm của bạn, %sđăng ký nhận thông báo khi có tin đăng phù hợp%s.'), '<a href="#">', '</a>') ?></div>
 <?php endif; ?>
-
-<script>
-	$(document).ready(function () {
-		
-		var compare = {
-			countCompare: 0,
-			numCheck: 3,
-			setNumItem: $('.tool-compare button'),
-			numGet: $('.tool-compare .num-show'),
-			saveGetItem: $('.getCompare'),
-			saveArr: [],
-			init: function () {
-				$(document).on('click', '.flag-compare-set', function (e) {
-					e.preventDefault();
-					compare.add($(this));
-				});
-				$(document).on('click', '.flag-compare-remove', function (e) {
-					e.preventDefault();
-					compare.remove($(this));
-				});
-			},
-			add: function (item) {
-				compare.countCompare += 1;
-				if ( compare.countCompare > 0 && compare.countCompare <= compare.numCheck ) {
-					item.removeClass('flag-compare-set').addClass('flag-compare-remove');
-					item.find('.txt-change').text('Đã thêm so sánh');
-					item.find('.icon-balance-scale').attr('class','icon-close-icon');
-					compare.numGet.text('('+compare.countCompare+')');
-					compare.effectShow();
-					compare.checkVal(item, 1);
-				}else {
-					alert("Bạn đã chọn đủ 3 tin đăng");
-					compare.countCompare = compare.numCheck;
-				}
-			},
-			remove: function (item) {
-				item.removeClass('flag-compare-remove').addClass('flag-compare-set');
-				item.find('.txt-change').text('So Sánh');
-				item.find('.icon-close-icon').attr('class','icon-balance-scale');
-				compare.countCompare -= 1;
-				if ( compare.countCompare == 0 ) {
-					compare.numGet.text('');
-				}else {
-					compare.numGet.text('('+compare.countCompare+')');	
-				}
-				
-				compare.effectShow();
-				compare.checkVal(item, 0);
-			},
-			checkVal: function (item, flag) {
-				var idItem = item.data('value');
-				if ( flag ) {
-					compare.saveArr.push(idItem);
-				}else {
-					for ( var i = 0; i < compare.saveArr.length; i++ ) {
-						if ( idItem == compare.saveArr[i] ) {
-							compare.saveArr.splice(i, 1);
-						}
-					}
-				}
-				
-				var valSet = '['+compare.saveArr.toString()+']';
-				compare.saveGetItem.val(valSet);
-			},
-			effectShow: function () {
-				compare.setNumItem.addClass('get-show-num');
-				setTimeout(function(){compare.setNumItem.removeClass('get-show-num')},300);
-			}
-		};
-
-		compare.init();
-
-		var favorite = {
-
-		};
-	});
-</script>

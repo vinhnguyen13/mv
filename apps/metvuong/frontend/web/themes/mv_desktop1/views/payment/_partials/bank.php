@@ -58,7 +58,7 @@ use yii\web\View;
                             </td>
                         </tr>
                         <tr class="payBank">
-                            <td class="w-35"><?=Yii::t('payment', 'Bank')?>:</td>
+                            <td><?=Yii::t('payment', 'Bank')?>:</td>
                             <td>
                                 <div class="box-dropdown dropdown-common">
                                     <div class="val-selected style-click">
@@ -139,7 +139,7 @@ use yii\web\View;
                             </td>
                         </tr>
                         <tr class="payAmount">
-                            <td class="w-35"><?=Yii::t('payment', 'Amount')?>:</td>
+                            <td><?=Yii::t('payment', 'Amount')?>:</td>
                             <td>
                                 <div class="box-dropdown dropdown-common">
                                     <div class="val-selected style-click">

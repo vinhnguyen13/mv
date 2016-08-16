@@ -7,7 +7,6 @@ use common\models\SlugSearch;
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
 
 $this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
-//$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
 $this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
 
 $tongquan = $model->description;
@@ -78,9 +77,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                         <div class="swiper-slide">
                                             <div class="img-show">
                                                 <div>
-                                                    <img
-                                                        src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>"
-                                                        alt="<?= $model->location ?>">
+                                                    <img src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>" alt="<?= $model->name ?>">
                                                 </div>
                                             </div>
                                         </div>
@@ -91,7 +88,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                 <div class="swiper-slide">
                                     <div class="img-show">
                                         <div>
-                                            <img src="<?=$logoUrl?>" alt="<?=$logoUrl?>">
+                                            <img src="<?=$logoUrl?>" alt="<?=$model->name?>">
                                         </div>
                                     </div>
                                 </div>
@@ -106,45 +103,43 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                         <?= empty($model->location) ? $lbl_updating : $model->location ?>
                         <ul class="pull-right icons-detail">
                             <li><a href="#" data-toggle="modal" data-target="#popup-share-social" class="icon icon-share-td"></a></li>
-                            <!--<li><a href="#" class="icon save-item" data-id="4115" data-url="/ad/favorite"></a></li>-->
                             <li><a href="#" data-toggle="modal" data-target="#popup-map" class="icon icon-map-loca"></a></li>
                         </ul>
                     </div>
                     <?php
                     if(count($model->investors) > 0){
                         $investor = $model->investors[0];
-                        $image = $investor->logo;
+                        $src_img = $investor->logo;
                         if(empty($investor->logo))
-                            $image = \vsoft\ad\models\AdImages::defaultImage();
-                        if(file_exists(Yii::getAlias('@store') . "/building-project-images/" . $investor->logo))
-                            $src_img = "/store/building-project-images/" . $investor->logo;
-
-
+                            $src_img = \vsoft\ad\models\AdImages::defaultImage();
+                        if(file_exists(Yii::getAlias('@store') . "/investor/" . $investor->logo))
+                            $src_img = "/store/investor/" . $investor->logo;
                         ?>
                         <div class="item chudautu-infor">
                             <div class="title-section"><?=Yii::t('project', 'Investor')?></div>
                             <div class="clearfix">
                                 <div class="wrap-img pull-left">
-                                    <img src="<?=(filter_var($image, FILTER_VALIDATE_URL) === FALSE) ? $src_img : $investor->logo ?>" alt="<?=$investor->name?>">
+                                    <img src="<?=(filter_var($src_img, FILTER_VALIDATE_URL) === FALSE) ? $src_img : $investor->logo ?>" alt="<?=$investor->name?>">
                                 </div>
                                 <div class="infor-detail-chudautu">
                                     <ul>
+                                        <li><strong class="fs-20 font-600"><?=empty($investor->name) ? $lbl_updating : $investor->name ?></strong></li>
                                         <li>
-                                            <strong id=""><?=Yii::t('project','Address')?></strong>:
+                                            <strong><?=Yii::t('project','Address')?></strong>:
                                             <?=empty($investor->address) ? $lbl_updating : $investor->address ?></li>
                                         <li>
-                                            <strong id=""><?=Yii::t('project','Phone')?></strong>:
+                                            <strong><?=Yii::t('project','Phone')?></strong>:
                                             <?=empty($investor->phone) ? $lbl_updating : $investor->phone ?>
                                             |
-                                            <strong id=""><?=Yii::t('project','Fax')?></strong>:
+                                            <strong><?=Yii::t('project','Fax')?></strong>:
                                             <span><?=empty($investor->fax) ? $lbl_updating : $investor->fax ?></span>
                                         </li>
                                         <li>
-                                            <strong id=""><?=Yii::t('project','Website')?></strong>:
+                                            <strong><?=Yii::t('project','Website')?></strong>:
                                             <span><?=empty($investor->website) ? $lbl_updating : "<a href='#' class='investor_website' data-url='". $investor->website. "'>".$investor->website."</a>" ?></span>
                                         </li>
                                         <li>
-                                            <strong id=""><?=Yii::t('project','Email')?></strong>:
+                                            <strong><?=Yii::t('project','Email')?></strong>:
                                             <span><?=empty($investor->email) ? $lbl_updating : $investor->email ?></span>
                                         </li>
                                     </ul>

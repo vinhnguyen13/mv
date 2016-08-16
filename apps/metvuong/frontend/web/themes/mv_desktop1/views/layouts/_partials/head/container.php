@@ -19,17 +19,17 @@ $this->registerCssFile(Yii::$app->view->theme->baseUrl."/resources/css/style.css
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.min.js', ['position'=>View::POS_HEAD]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/bootstrap.js', ['position'=>View::POS_HEAD]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/velocity.js', ['position'=>View::POS_HEAD]);
-//Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.easing.min.js', ['position'=>View::POS_HEAD]);
+
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-helper.js', ['position'=>View::POS_HEAD]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.mmenu.min.js', ['position'=>View::POS_HEAD]);
-// Yii::$app->getView()->registerJsFile(Yii::$app->homeUrl . 'store/data/data.js', ['position'=>View::POS_BEGIN]);
-//Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_HEAD]); /* swiper js o tren head de slide ben duoi goi thu vien thuc thi */
+
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rippler.min.js', ['position'=>View::POS_HEAD]);
-//Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_HEAD]);
-//Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_HEAD]);
-//Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.slimscroll.min.js', ['position'=>View::POS_HEAD]);
+
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/common.js', ['position'=>View::POS_HEAD]);
 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.slimscroll.min.js', ['position'=>View::POS_END]);
+
+Yii::$app->getView()->registerCssFile(Yii::$app->view->theme->baseUrl.'/resources/css/jquery.fancybox.css', ['position'=>View::POS_END]);
+Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.fancybox.pack.js', ['position'=>View::POS_HEAD]);
 
 Yii::$app->view->registerLinkTag([
     'rel'=>'shortcut icon',

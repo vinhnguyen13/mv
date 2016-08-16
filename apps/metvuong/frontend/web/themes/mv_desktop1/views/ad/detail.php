@@ -14,8 +14,10 @@ use vsoft\ad\models\AdFacility;
 
 	if(!Yii::$app->request->isAjax) {
 		$this->registerJsFile('https://maps.googleapis.com/maps/api/js?key=AIzaSyASTv_J_7DuXskr5SaCZ_7RVEw7oBKiHi4', ['depends' => ['yii\web\YiiAsset'], 'async' => true, 'defer' => true]);
+		$this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/compare.js', ['position'=>View::POS_END]);
 	}
 	
+
 	$this->registerJsFile(Yii::$app->view->theme->baseUrl . '/resources/js/detail.js', ['position' => View::POS_END]);
 	$this->registerCss('.map-wrap {position: relative;} .map-wrap:after {display: block; content: ""; padding-top: 75%;} .map-inside {position: absolute; width: 100%; height: 100%;} #map {height: 100%;}');
 
@@ -142,12 +144,15 @@ $count_review = $reviews->count();
 					$images = $product->adImages;
 					if($images):
 				?>
+
 				<div class="gallery-detail swiper-container pull-left">
 					<div class="swiper-wrapper">
 						<?php foreach ($images as $image): ?>
 						<div class="swiper-slide">
-							<div class="pic-intro">
-								<img src="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" alt="<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) . ' - ' . $address?>">
+							<div class="pic-gallery">
+								<a href="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" class="fancybox" rel="gallery1">
+									<img src="<?= $image->getUrl(AdImages::SIZE_LARGE) ?>" alt="<?= ucfirst(Yii::t('ad', $categories[$product->category_id]['name'])) ?> <?= mb_strtolower($types[$product->type]) . ' - ' . $address?>">
+								</a>
 							</div>
 						</div>
 						<?php endforeach; ?>
@@ -156,6 +161,15 @@ $count_review = $reviews->count();
 					<div class="swiper-button-prev icon-mv"><span class=""></span></div>
 					<div class="swiper-button-next icon-mv"><span class=""></span></div>
 				</div>
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$(".fancybox").fancybox({
+							openEffect	: 'none',
+							closeEffect	: 'none',
+							padding: 3
+						});
+					});
+				</script>
 				<?php else: ?>
 				<div class="no-gallery pull-left">
 					<div class="img-show">
@@ -261,11 +275,21 @@ $count_review = $reviews->count();
 							<span><?= Yii::t('ad', 'Report Abuse') ?></span>
 						</a>
 					</li>
-					<li class="hide">
+					<li class="">
+						<?php 
+							$compares = isset($_COOKIE['compareItems']) ? array_map(function($item) { return current(explode(':', $item)); }, explode(',', $_COOKIE['compareItems'])) : [];
+							if(in_array($product['id'], $compares)) :
+						?>
+						<a href="#" class="compare-button flag-compare-remove" data-value="<?= $product['id'] ?>">
+							<span class="icon-mv"><span class="icon-close-icon"></span></span>
+							<span class="txt-change"><?= Yii::t('ad', 'Đã thêm so sánh') ?></span>
+						</a>
+						<?php else: ?>
 						<a href="#" class="compare-button flag-compare-set" data-value="<?= $product['id'] ?>">
 							<span class="icon-mv"><span class="icon-balance-scale"></span></span>
-							<span class="txt-change">So Sánh</span>
+							<span class="txt-change"><?= Yii::t('ad', 'So Sánh') ?></span>
 						</a>
+						<?php endif; ?>
 					</li>
 				</ul>
 			</div>
@@ -441,6 +465,7 @@ $count_review = $reviews->count();
                 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/swiper.jquery.min.js', ['position'=>View::POS_END]);
                 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/jquery.rateit.js', ['position'=>View::POS_END]);
                 Yii::$app->getView()->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/clipboard.min.js', ['position'=>View::POS_END]);
+
                 ?>
 
 				<script>

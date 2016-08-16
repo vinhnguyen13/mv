@@ -165,6 +165,10 @@ class ManagerController extends Controller {
 	}
 	
 	public function actionIndex2() {
+		if(!isset($_GET['main_id'])) {
+			unset(AdProductSearch2::$_columns['appmi']);
+		}
+		
 		$searchModel = new AdProductSearch2();
 		$dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
 		

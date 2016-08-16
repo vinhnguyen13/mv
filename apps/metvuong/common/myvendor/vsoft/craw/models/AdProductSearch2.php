@@ -8,6 +8,7 @@ use yii\db\Query;
 
 class AdProductSearch2 extends AdProduct
 {
+	public $product_main_filter;
 	public $project_name;
 	public $city_name;
 	public $district_name;
@@ -52,6 +53,7 @@ class AdProductSearch2 extends AdProduct
 	
 	public static $_columns = [
     	"apid" => "ad_product.id",
+		"appmi" => "ad_product.product_main_id",
     	"apt" => "ad_product.type",
     	"apcid" => "ad_product.category_id",
     	"abpn" => "ad_building_project.name `project_name`",
@@ -81,6 +83,7 @@ class AdProductSearch2 extends AdProduct
 	
 	public static $_columnsName = [
     	"ad_product.id" => "ID",
+		"ad_product.product_main_id" => "Live ID",
     	"ad_product.type" => "Hình thức",
     	"ad_product.category_id" => "Phân loại",
     	"ad_building_project.name `project_name`" => "Thuộc dự án",
@@ -111,7 +114,7 @@ class AdProductSearch2 extends AdProduct
     public function rules()
     {
         return [
-            [['type', 'category_id', 'project_name', 'city_name', 'district_name', 'ward_name', 'street_name', 'home_no_filter',
+            [['product_main_filter', 'type', 'category_id', 'project_name', 'city_name', 'district_name', 'ward_name', 'street_name', 'home_no_filter',
             		'price_type', 'area_filter', 'room_no_filter', 'toilet_no_filter', 'floor_no_filter', 'facade_width_filter', 'land_width_filter',
             		'home_direction_filter', 'facade_direction_filter', 'interior_filter', 'content_filter', 'contact_name_filter', 'contact_address_filter',
             		'phone_filter', 'mobile_filter', 'email_filter', 'project_name_filter', 'project_name_mask', 'project_building_id', 'ward_id', 'ward_name_filter', 'ward_name_mask',
@@ -156,6 +159,7 @@ class AdProductSearch2 extends AdProduct
     	
     	$sorts = [
     		'id' => 'ad_product.id',
+    		'product_main_id' => 'ad_product.product_main_id',
     		'type' => 'ad_product.type',
     		'category_id' => 'ad_product.category_id',
     		'project_name' => 'project_name',
@@ -247,7 +251,8 @@ class AdProductSearch2 extends AdProduct
     	$filterYesNoZero = [
     		'room_no_filter' => 'ad_product_addition_info.room_no',
     		'toilet_no_filter' => 'ad_product_addition_info.toilet_no',
-    		'floor_no_filter' => 'ad_product_addition_info.floor_no'
+    		'floor_no_filter' => 'ad_product_addition_info.floor_no',
+    		'product_main_filter' => 'ad_product.product_main_id'
     	];
     	foreach ($filterYesNoZero as $field => $column) {
     		if($this->$field == 1) {

@@ -23,6 +23,45 @@ use vsoft\ad\models\AdWard;
 
 class ProductController extends Controller {
 	
+	public function actionUpdateScore($id) {
+		$product = AdProduct::findOne($id);
+		$product->updateEs(['score' => $product->score]);
+	}
+	
+	public function actionCheckWrongScore($hasIp = false) {
+		$query = AdProduct::find();
+		$query->where(ElasticController::$where);
+		
+		if($hasIp) {
+			$query->andWhere('`ip` IS NOT NULL');
+		}
+		
+		$query->limit(1000);
+		
+		for($i = 0; true; $i += $query->limit) {
+			$query->offset($i);
+			
+			$products = $query->all();
+			
+			foreach ($products as $product) {
+				$score = AdProduct::calcScore($product);
+				
+				if($score != $product->score) {
+					
+					if($product->ip) {
+						echo $product->id . ': ' . $score . ' ' . $product->score . ' ' . $product->ip . "\n";
+					}
+					
+					\Yii::$app->db->createCommand("UPDATE `ad_product` SET `score` = {$score} WHERE `id` = {$product->id}")->execute();
+				}
+			}
+					
+			if(count($products) < $query->limit) {
+				break;
+			}
+		}
+	}
+	
 	public function actionUpdateNullLatLng() {
 		$products = \Yii::$app->db->createCommand("SELECT * FROM `ad_product` WHERE `lat` IS NULL OR `lat` = '' OR `lng` IS NULL OR `lng` = ''")->queryAll();
 		

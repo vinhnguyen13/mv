@@ -52,6 +52,7 @@ use common\models\SlugSearch;
 use vsoft\ad\models\Balance;
 use vsoft\ad\models\AdCategoryGroup;
 use vsoft\ad\models\TrackingSearch;
+use yii\db\Expression;
 
 class AdController extends Controller
 {
@@ -87,8 +88,8 @@ class AdController extends Controller
 					$product->ip = Yii::$app->request->userIP;
 					$product->save();
 						
-					if(!empty($post['images']) && is_array($post['images'])) {
-						$this->autoSaveImage($post['images'], $product->id);
+					if(!empty($post['images']) && is_array($post['images']) && isset($post['f'])) {
+						$this->autoSaveImage($post['images'], $product->id, $post['f']);
 					}
 						
 					return $product->id;
@@ -97,10 +98,10 @@ class AdController extends Controller
 		}
 	}
 	
-	public function autoSaveImage($addImages, $productId) {
+	public function autoSaveImage($addImages, $productId, $folder) {
 		$helper = new AdImageHelper();
 		
-		$tempFolder = $helper->getTempFolderPath(\Yii::$app->session->id);
+		$tempFolder = $helper->getTempFolderPath($folder);
 		
 		$helper->adFolderName = 'auto-save';
 		
@@ -185,7 +186,7 @@ class AdController extends Controller
 	}
     
     public function actionUpload() {
-        if($_FILES) {
+        if($_FILES && isset($_POST['f'])) {
     		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
     		
     		$image = UploadedFile::getInstanceByName('upload');
@@ -202,7 +203,7 @@ class AdController extends Controller
     		} else {
     			$helper = new AdImageHelper();
     			
-    			$sessionFolder = \Yii::$app->session->id;
+    			$sessionFolder = $_POST['f'];
     			$tempFolder = $helper->getTempFolderPath($sessionFolder);
     			
     			if(!file_exists($tempFolder)) {
@@ -221,7 +222,7 @@ class AdController extends Controller
     			$response['name'] = $fileName;
     			$response['url'] = Url::to($tempUrl . $fileName);
     			$response['thumbnailUrl'] = Url::to($tempUrl . $helper->makeFolderName(AdImageHelper::$sizes['thumb']) . '/' . $fileName);
-    			$response['deleteUrl'] = Url::to(['delete-temp-file', 'file' => $fileName]);
+    			$response['deleteUrl'] = Url::to(['delete-temp-file', 'file' => $fileName, 'f' => $_POST['f']]);
     			$response['deleteType'] = 'DELETE';
     		}
     		
@@ -230,17 +231,19 @@ class AdController extends Controller
     }
     
     public function actionDeleteTempFile($file) {
-    	Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    	
-    	$helper = new AdImageHelper();
-    	
-    	$sessionFolder = \Yii::$app->session->id;
-    	 
-    	$tempFolder = $helper->getTempFolderPath($sessionFolder);
-    	
-    	$helper->removeTempFile($tempFolder, $file);
-    	
-    	return ['files' => []];
+    	if(isset($_GET['f'])) {
+    		Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    		 
+    		$helper = new AdImageHelper();
+    		 
+    		$sessionFolder = $_GET['f'];
+    		
+    		$tempFolder = $helper->getTempFolderPath($sessionFolder);
+    		 
+    		$helper->removeTempFile($tempFolder, $file);
+    		 
+    		return ['files' => []];
+    	}
     }
 
     public function actionDeleteFile($file) {
@@ -406,39 +409,6 @@ class AdController extends Controller
     			}
     		} 
     	}
-    	/*
-    	if(Yii::$app->request->isPost && Yii::$app->request->isAjax && ($payload = Yii::$app->request->post('payload'))) {
-    		parse_str($payload, $params);
-    		
-    		$params['location'] = Yii::$app->request->post('location');
-    		$params['is_mobile'] = Yii::$app->request->post('is_mobile');
-    		$params['agent_js'] = Yii::$app->request->post('agent');
-    		
-    		if(!empty($_SERVER['HTTP_USER_AGENT'])) {
-    			$params['agent_php'] = $_SERVER['HTTP_USER_AGENT'];
-    		}
-    		
-    		if(!empty($_SERVER['HTTP_REFERER'])) {
-    			$params['real_referer'] = $_SERVER['HTTP_REFERER'];
-    		}
-    		
-    		if($referer = Yii::$app->request->post('referer')) {
-    			$parseReferer = parse_url($referer);
-
-    			if(!(StringHelper::startsWith($parseReferer['path'], '/' . Yii::t('url', 'nha-dat-cho-thue')) || StringHelper::startsWith($parseReferer['path'], '/' . Yii::t('url', 'nha-dat-ban')))) {
-    				$params['referer'] = $referer;
-    				 
-    				if($referer != '1') {
-    					if($_SERVER['SERVER_NAME'] == $parseReferer['host']) {
-    						$params['referer'] = $parseReferer['path'];
-    					}
-    				}
-    			}
-    		}
-    		
-    		TrackingSearch::track($params);
-    	}
-    	*/
     }
     
     public function actionSavedListing() {
@@ -597,9 +567,9 @@ class AdController extends Controller
     						}
     					}
     					
-    					if($addImages) {
+    					if($addImages && isset($post['f'])) {
     						$helper = new AdImageHelper();
-    						$tempFolder = $helper->getTempFolderPath(\Yii::$app->session->id);
+    						$tempFolder = $helper->getTempFolderPath($post['f']);
     						
     						$now = time();
     						
@@ -697,9 +667,9 @@ class AdController extends Controller
     			$profileForm = new ProfileForm();
     			$profileForm->compareToUpdate($post['AdContactInfo']);
     			
-    			if(!empty($post['images'])) {
+    			if(!empty($post['images']) && isset($post['f'])) {
     				$helper = new AdImageHelper();
-    				$tempFolder = $helper->getTempFolderPath(\Yii::$app->session->id);
+    				$tempFolder = $helper->getTempFolderPath($post['f']);
     				
     				$now = time();
     				
@@ -743,32 +713,6 @@ class AdController extends Controller
     				$template = 'post_pending';
     			}
     			
-    			/*
-    			$balance = Yii::$app->user->identity->balance;
-    			
-    			if($balance->amount >= AdProduct::CHARGE_POST) {
-    				$balance->amount -= AdProduct::CHARGE_POST;
-    				$balance->save();
-    				
-    				$product->status = AdProduct::STATUS_ACTIVE;
-    				$product->save(false);
-    				
-    				$transaction_code = md5(uniqid(rand(), true));
-    				Transaction::me()->saveTransaction($transaction_code, [
-						'code'=>$transaction_code,
-						'user_id'=>Yii::$app->user->identity->id,
-						'object_id'=>$product->id,
-						'object_type'=>Transaction::OBJECT_TYPE_POST,
-						'amount'=> -AdProduct::CHARGE_POST,
-						'balance'=>$balance->amount,
-						'status'=>Transaction::STATUS_SUCCESS,
-    				]);
-    			
-    				$template = 'post_success';
-    			} else {
-    				$template = 'post_pending';
-    			}
-    			*/
     			$result['template'] = $this->renderPartial('_partials/' . $template, ['balance' => $balance, 'product' => $product]);
     			$result['amount'] = $balance->amount;
     			$result['url'] = $product->urlDetail();
@@ -1106,60 +1050,6 @@ class AdController extends Controller
     			}
     		}
     	}
-    	
-    	/*
-    	
-    	if(Yii::$app->user->identity) {
-    		$chargeBoost = [
-    				1 => AdProduct::CHARGE_BOOST_1,
-    				3 => AdProduct::CHARGE_BOOST_3
-    		];
-    		 
-    		$product = AdProduct::findOne($id);
-    		 
-    		if(isset($chargeBoost[$day]) && $product && $product->user_id == Yii::$app->user->identity->id) {
-    			$now = time();
-    			$boost_time = $day * 86400;
-    			$boost_time = $product->boost_time > $now ? $product->boost_time + $boost_time : $now + $boost_time;
-    			
-    			if($boost_time - $product->updated_at > 86400 * 30) {
-    				return ['success' => false, 'message' => sprintf(\Yii::t("listing", "Thời gian boost không được nhiều hơn 30 ngày (tối đa đến ngày %s)."), date('d-m-Y', $now + 86400 * 30))];
-    			}
-    			
-    			$balance = Yii::$app->user->identity->balance;
-    			
-    			if($balance->amount >= $chargeBoost[$day]) {
-    				$balance->amount -= $chargeBoost[$day];
-					$balance->save(false);
-					
-					$boost_time = $day * 86400;
-					$product->boost_time = $product->boost_time ? $product->boost_time + $boost_time : $now + $boost_time;
-					$product->boost_start_time = $now;
-					if($product->boost_time > $product->end_date) {
-						$product->end_date = $product->boost_time;
-					}
-					$product->save(false);
-					
-					$transaction_code = md5(uniqid(rand(), true));
-					Transaction::me()->saveTransaction($transaction_code, [
-							'code'=>$transaction_code,
-							'user_id'=>Yii::$app->user->identity->id,
-							'object_id'=>$product->id,
-							'object_type'=>Transaction::OBJECT_TYPE_BOOST,
-							'amount'=>-$chargeBoost[$day],
-							'balance'=>$balance->amount,
-							'status'=>Transaction::STATUS_SUCCESS,
-					]);
-					
-					$template = $this->renderPartial('/dashboard/ad/list', ['products' => [$product]]);
-					
-					return ['success' => true, 'amount' => $balance->amount, 'message' => \Yii::t("listing", "Tin đã được boost thành công."), 'template' => $template];
-    			} else {
-    				return ['success' => false, 'message' => \Yii::t("listing", "Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.")];
-    			}
-    		}
-    	}
-    	*/
     }
     
     public function actionUpdateStatus($id) {
@@ -1203,59 +1093,6 @@ class AdController extends Controller
     				
     				return $response;
     			}
-    			/*
-    			if($product->status == AdProduct::STATUS_PENDING) {
-					$balance = Yii::$app->user->identity->balance;
-    				
-					if($balance->amount >= AdProduct::CHARGE_POST) {
-						$balance->amount -= AdProduct::CHARGE_POST;
-						$balance->save(false);
-						
-						$product->status = AdProduct::STATUS_ACTIVE;
-						$product->start_date = time();
-						$product->end_date = $product->start_date + (AdProduct::EXPIRED * 30);
-						$product->is_expired = 0;
-						$product->save(false);
-						
-    					$transaction_code = md5(uniqid(rand(), true));
-    					Transaction::me()->saveTransaction($transaction_code, [
-    							'code'=>$transaction_code,
-    							'user_id'=>Yii::$app->user->identity->id,
-    							'object_id'=>$product->id,
-    							'object_type'=>Transaction::OBJECT_TYPE_POST,
-    							'amount'=>-AdProduct::CHARGE_POST,
-    							'balance'=>$balance->amount,
-    							'status'=>Transaction::STATUS_SUCCESS,
-    					]);
-    					
-    					if(Yii::$app->request->isAjax) {
-    						Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    						
-    						$template = $this->renderPartial('/dashboard/ad/list', ['products' => [$product]]);
-    						
-    						return ['success' => true, 'amount' => $balance->amount, 'message' => \Yii::t("listing", "Tin đã được kích hoạt thành công."), 'template' => $template];
-    					} else {
-    						return $this->render('update-status', ['balance' => $balance, 'product' => $product, 'template' => 'post_success']);
-    					}
-					} else {
-						if(Yii::$app->request->isAjax) {
-							Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-							
-    						return ['success' => false, 'message' => \Yii::t("listing", "Bạn không đủ keys để thực hiện thao tác này, vui lòng nạp thêm keys.")];
-						} else {
-							return $this->render('update-status', ['balance' => $balance, 'product' => $product, 'template' => 'post_pending']);
-						}
-					}
-    			} else {
-    				if(Yii::$app->request->isAjax) {
-    					Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-    					
-						return ['success' => false, 'message' => \Yii::t("listing", "Tin đã được cập nhật trạng thái trước đó, không cần phải cập nhật lại.")];
-    				} else {
-    					echo \Yii::t("listing", "Tin đã được cập nhật trạng thái trước đó, không cần phải cập nhật lại.");
-    				}
-    			}
-    			*/
     		}
     	}
     }
@@ -1267,8 +1104,20 @@ class AdController extends Controller
         return \vsoft\ad\widgets\ListingWidget::widget(['title' => Yii::t('listing','SIMILAR LISTINGS'), 'limit' => 4]);
     }
 
-	public function actionCampare(){
-		$this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuDashboard' => true, 'isCampare' => true], $this->view->params);
-		return $this->render('campare');
+	public function actionCompare(){
+		if(Yii::$app->request->isAjax) {
+			$ids = \Yii::$app->request->get('ids');
+			
+			if(is_array($ids)) {
+				$expression = new Expression('FIELD(ad_product.id,' . implode(',', $ids) . ')');
+				$products = AdProduct::find()->where(['ad_product.id' => $ids])->orderBy($expression)->all();
+				
+				return $this->renderPartial('_partials/compare.php', ['products' => $products]);
+			}
+		} else {
+			$this->view->params = ArrayHelper::merge(['noFooter' => true], $this->view->params);
+			
+			return $this->render('compare');
+		}
 	}
 }
