@@ -128,13 +128,13 @@ class CrawlerController extends Controller
     }
 
     // php yii crawler/copytomain -valid=1 -limit=300 -check_expired=1
-    public function actionCopytomain($type = null, $city = null, $district = null)
+    public function actionCopytomain($city = null, $district = null)
     {
         $validate = intval($this->valid);
         $check_expired = $this->check_expired == null ? 0 : 1;
         $copy_limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
         if($copy_limit > 0) {
-            CopyListing::find()->copyToMainDB($validate, $copy_limit, $check_expired, $type, $city, $district);
+            CopyListing::find()->copyToMainDB($validate, $copy_limit, $check_expired, $city, $district);
         }
         else {
             print_r("\n How many listing to copy? \n Ex: php yii crawler/copytomain -valid=1 -limit=1\n");
