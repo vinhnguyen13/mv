@@ -30,7 +30,7 @@ class Acl extends Component
             if (Yii::$app->user->can($permissionName)) {
                 return true;
             }
-            throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+            return false;
         }
     }
 

@@ -24,7 +24,7 @@ class ReportController extends Controller
     {
         $this->checkAccess();
         $permissionName = !empty(Yii::$app->setting->get('aclReport')) ? Yii::$app->setting->get('aclReport') : Acl::ACL_REPORT;
-        Acl::me()->checkACL($permissionName);
+        $this->checkACL($permissionName);
         return parent::beforeAction($action);
     }
 

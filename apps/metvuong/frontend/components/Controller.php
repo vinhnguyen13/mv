@@ -116,6 +116,14 @@ class Controller extends \yii\web\Controller
         return true;
     }
 
+    protected function checkACL($permissionName)
+    {
+        if(Acl::me()->checkACL($permissionName)) {
+            return true;
+        }
+        throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+    }
+
     protected function checkIsMe()
     {
         $username = Yii::$app->request->get('username');
