@@ -109,7 +109,8 @@ class MVBootstrap implements BootstrapInterface
             'mvuser/protect/<action>' => 'user/security/<action>',
             'mvuser/join/<action>' => 'user/registration/<action>',
             'mvuser/forgot/<action>' => 'user/recovery/<action>',
-			'listing/<action>' => 'ad/<action>',
+            Yii::t('url', 'so-sanh', [], $language) => 'ad/compare',
+            'listing/<action>' => 'ad/<action>',
             '<usrn>/avatar' => 'member/avatar',
         ];
     }

@@ -28,4 +28,5 @@ return [
     'cai-dat' => 'cai-dat',
     'cap-nhat' => 'cap-nhat',
     'danh-sach-tin-dang' => 'danh-sach-tin-dang',
+    'so-sanh' => 'so-sanh',
 ];

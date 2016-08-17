@@ -28,4 +28,5 @@ return [
     'cai-dat' => 'setting',
     'cap-nhat' => 'update',
     'danh-sach-tin-dang' => 'dashboard',
+    'so-sanh' => 'comparison',
 ];
