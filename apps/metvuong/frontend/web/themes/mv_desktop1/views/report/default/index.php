@@ -60,7 +60,7 @@ use yii\helpers\Url;
     </div>
 </div>
 
-<script src="//code.highcharts.com/highcharts.js"></script>
+<!--<script src="//code.highcharts.com/highcharts.js"></script>-->
 <script>
     $(document).ready(function () {
         var chart = $('#chartAds').highcharts();
