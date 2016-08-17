@@ -22,6 +22,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\caching\DbDependency;
 use yii\db\ActiveRecord;
 use yii\db\Query;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\Application as WebApplication;
 use yii\web\IdentityInterface;
@@ -207,7 +208,7 @@ class User extends \dektrium\user\models\User
             'usernameLength'   => ['username', 'string', 'min' => 3, 'max' => 255],
             'usernameUnique'   => ['username', 'unique', 'message' => Yii::t('user', 'This username has already been taken')],
             'usernameTrim'     => ['username', 'trim'],
-
+            'usernameValidate' => ['username', 'validateUsername'],
             // email rules
             'emailRequired' => ['email', 'required', 'on' => ['register', 'connect', 'create', 'update']],
             'emailPattern'  => ['email', 'email'],
@@ -219,6 +220,35 @@ class User extends \dektrium\user\models\User
             'passwordRequired' => ['password', 'required', 'on' => ['register']],
             'passwordLength'   => ['password', 'string', 'min' => 6, 'on' => ['register', 'create']],
         ];
+    }
+
+    public function validateUsername($attribute, $params)
+    {
+        if(file_exists(Yii::getAlias('@frontend'.'/messages/en-US/url.php')) && file_exists(Yii::getAlias('@frontend'.'/messages/vi-VN/url.php'))){
+            $urlEN = include Yii::getAlias('@frontend'.'/messages/en-US/url.php');
+            $urlVN = include Yii::getAlias('@frontend'.'/messages/vi-VN/url.php');
+            if(empty($urlEN) || empty($urlVN)){
+                return true;
+            }
+            $urlEN = array_values($urlEN);
+            $urlVN = array_values($urlVN);
+            $arrUrl = array_merge($urlEN, $urlVN);
+            $_username = strtolower(trim($this->username));
+            if(!empty($arrUrl)){
+                if(!empty($_username) && in_array($_username, $arrUrl)){
+                    $this->addError($attribute, Yii::t('user', 'This username is not valid'));
+                }
+            }
+            $pattern = '/^mv[-0-9_\.@]+$/';
+            $pattern = '/mv(?P<digit>\d+)$/';
+            preg_match($pattern, $_username, $matches);
+            if(!empty($matches) && !empty($matches['digit'])){
+                $usnCheck = 'mv'.$matches['digit'];
+                if($_username === $usnCheck){
+                    $this->addError($attribute, Yii::t('user', 'This username is not valid'));
+                }
+            }
+        }
     }
 
     /** @inheritdoc */
@@ -424,7 +454,7 @@ class User extends \dektrium\user\models\User
                 ->select('MAX(id) as id')
                 ->one();
 
-            $this->username = $this->username . ++$row['id'];
+            $this->username = $this->username .'m'. ++$row['id'];
         }
 
         return $this->username;
