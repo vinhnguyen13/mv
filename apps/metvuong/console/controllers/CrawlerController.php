@@ -109,16 +109,18 @@ class CrawlerController extends Controller
 //    }
 
     public $valid;
+    public $type;
     public $city;
+    public $district;
     public $limit;
     public $check_expired;
     public function options()
     {
-        return ['valid','city','limit','check_expired'];
+        return ['valid','type','city','district','limit','check_expired'];
     }
     public function optionAliases()
     {
-        return ['valid' => 'valid', 'city' => 'city', 'limit' => 'limit', 'check_expired' => 'check_expired'];
+        return ['valid' => 'valid', 'type' => 'type', 'city' => 'city', 'district' => 'district', 'limit' => 'limit', 'check_expired' => 'check_expired'];
     }
 
     public function actionImportListing()
@@ -127,14 +129,14 @@ class CrawlerController extends Controller
         ImportListing::find()->importDataForTool($import_limit);
     }
 
-    // php yii crawler/copytomain -valid=1 -limit=300 -check_expired=1
-    public function actionCopytomain($type = null, $city = null, $district = null)
+    // php yii crawler/copytomain -valid=1 -limit=300 -check_expired=1 -type=1 -city=1 -district=16
+    public function actionCopytomain()
     {
         $validate = intval($this->valid);
         $check_expired = $this->check_expired == null ? 0 : 1;
         $copy_limit = $this->limit == null ? 300 : ((intval($this->limit) <= 300 && intval($this->limit) > 0) ? intval($this->limit) : 0);
         if($copy_limit > 0) {
-            CopyListing::find()->copyToMainDB($validate, $copy_limit, $check_expired, $type, $city, $district);
+            CopyListing::find()->copyToMainDB($validate, $copy_limit, $check_expired, $this->type, $this->city, $this->district);
         }
         else {
             print_r("\n How many listing to copy? \n Ex: php yii crawler/copytomain -valid=1 -limit=1\n");
