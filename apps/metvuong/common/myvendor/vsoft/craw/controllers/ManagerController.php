@@ -92,6 +92,16 @@ class ManagerController extends Controller {
 			$query->limit = 5000;
 		}
 		
+		$contentFn = 'contentKeep';
+		
+		if(isset($_COOKIE['export-setting'])) {
+			if($_COOKIE['export-setting'] == 2) {
+				$contentFn = 'contentHide';
+			} else if($_COOKIE['export-setting'] == 3) {
+				$contentFn = 'contentReplace';
+			}
+		}
+		
 		$columnName = AdProductSearch2::$_columnsName;
 		$titles = array_map(function($item) use ($columnName) {
 			return $columnName[$item];
@@ -135,6 +145,10 @@ class ManagerController extends Controller {
 							$value = intval($value);
 						} else if($k == 'area') {
 							$value = floatval($value);
+						} else if($k == 'content') {
+							$value = $this->$contentFn($value);
+						} else if($k == 'interior') {
+							$value = $this->$contentFn($value);
 						}
 					} else if($value === '0') {
 						$value = null;
@@ -151,6 +165,16 @@ class ManagerController extends Controller {
 		setcookie("downloadComplete", 1);
 		
 		$writer->close();
+	}
+	
+	public function contentKeep($str) {
+		return $str;
+	}
+	public function contentHide($str) {
+		return $str ? '...' : null;
+	}
+	public function contentReplace($str) {
+		return $str ? trim(preg_replace('/\s+/', ' ', str_replace("\n", " ", $str))) : null;
 	}
 	
 	public function actionIndex() {

@@ -8,6 +8,10 @@ $(document).ready(function(){
 		loading(el, 0);
 	});
 	
+	$('#content-setting-wrap').find('input').change(function(){
+		setCookie('export-setting', $(this).val());
+	});
+	
 	function loading(el, start) {
 		var text = el.find('.text');
 		
@@ -70,6 +74,12 @@ $(document).ready(function(){
 		setCookie('columns', exclude.join(','));
 	});
 	
+	$('#content-setting').click(function(e){
+		e.preventDefault();
+		
+		$('#content-setting-wrap').toggleClass('show');
+	});
+	
 	$('#toggle').click(function(e){
 		e.preventDefault();
 		
@@ -78,9 +88,13 @@ $(document).ready(function(){
 	
 	$(document).click(function(e){
 		var target = $(e.target);
-		
+
 		if(target.closest('#columns-wrap').length == 0 && target.attr('id') != 'toggle') {
 			$('#filter_columns').removeClass('show');
+		}
+		
+		if(target.closest('#content-setting-wrap').length == 0 && target.attr('id') != 'content-setting') {
+			$('#content-setting-wrap').removeClass('show');
 		}
 	});
 	
