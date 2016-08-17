@@ -134,23 +134,25 @@ $(document).ready(function(){
 		var type = self.data('type');
 		
 		if(type) {
-			$.get('/admin/craw/manager/search', {type: type, value: self.val()}, function(r){
+			$.data(this, 'ajax') && $.data(this, 'ajax').abort();
+			
+			$.data(this, 'ajax', $.get('/admin/craw/manager/search', {type: type, value: self.val()}, function(r){
 				var parent = self.closest('.mask-wrap');
 				
-				if(r) {
+				if(r.length) {
 					parent.addClass('show-search');
 					
 					var ul = '';
 					
 					for(var i in r) {
-						ul += '<li><a href="#" class="hit" data-id="' + i + '">' + r[i] + '</a></li>';
+						ul += '<li><a href="#" class="hit" data-id="' + r[i].id + '">' + r[i].full_name + '</a></li>';
 					}
 					
 					parent.find('.result-search').html(ul);
 				} else {
 					parent.removeClass('show-search');
 				}
-			});
+			}));
 		}
 	}).change(function(e){
 		e.stopPropagation();

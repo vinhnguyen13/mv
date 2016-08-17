@@ -116,17 +116,12 @@ class Controller extends \yii\web\Controller
         return true;
     }
 
-    protected function checkACL()
+    protected function checkACL($permissionName)
     {
-        $parseUrl = Yii::$app->urlManager->parseRequest(Yii::$app->request);
-        $urlBase = !empty($parseUrl[0]) ? $parseUrl[0] : '';
-        if(!Yii::$app->user->isGuest && !in_array($urlBase, ['site/logout'])) {
-            $permissionName = !empty(Yii::$app->setting->get('aclReport')) ? Yii::$app->setting->get('aclReport') : Acl::ACL_REPORT;
-            if (Yii::$app->user->can($permissionName)) {
-                return true;
-            }
-            throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
+        if(Acl::me()->checkACL($permissionName)) {
+            return true;
         }
+        throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
     }
 
     protected function checkIsMe()

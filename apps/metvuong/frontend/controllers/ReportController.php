@@ -9,6 +9,7 @@
 namespace frontend\controllers;
 
 
+use common\components\Acl;
 use frontend\components\Controller;
 use frontend\models\Report;
 use vsoft\express\models\SysEmail;
@@ -22,14 +23,15 @@ class ReportController extends Controller
     public function beforeAction($action)
     {
         $this->checkAccess();
-        $this->checkACL();
+        $permissionName = !empty(Yii::$app->setting->get('aclReport')) ? Yii::$app->setting->get('aclReport') : Acl::ACL_REPORT;
+        $this->checkACL($permissionName);
         return parent::beforeAction($action);
     }
 
     public function actionIndex()
     {
+        $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuDaily' => true, 'isDashboard' => true], $this->view->params);
         $filter = Yii::$app->request->get("filter", 'week');
-        $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuDashboard' => true, 'isReport' => true], $this->view->params);
 
         $chart = Report::me()->chart($filter);
         $data = ArrayHelper::merge($chart, ['filter'=>$filter]);
@@ -42,7 +44,7 @@ class ReportController extends Controller
 
     public function actionMail()
     {
-        $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuDashboard' => true, 'isReport' => true], $this->view->params);
+        $this->view->params = ArrayHelper::merge(['noFooter' => true, 'menuMail' => true, 'isDashboard' => true], $this->view->params);
         $data['sysEmails'] = SysEmail::find()->orderBy(['send_time' => SORT_DESC])->limit(10)->all();
         if(Yii::$app->request->isAjax) {
             return $this->renderAjax('mail/index', $data);

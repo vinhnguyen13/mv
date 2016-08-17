@@ -59,7 +59,7 @@ use yii\helpers\Url;
                         <?= Yii::t('activity', 'Invite friend') ?>
                     </a>
                 </li>
-                
+                <?=$this->render('/layouts/_partials/menuReport'); ?>
                 <li>
                     <a data-method="post" href="<?=Url::to(['/member/logout'])?>">
                         <div><span class="icon-mv"><span class="icon-sign-out"></span></span></div>
