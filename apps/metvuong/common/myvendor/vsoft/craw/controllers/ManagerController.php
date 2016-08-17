@@ -58,7 +58,10 @@ class ManagerController extends Controller {
 		$response = [];
 		
 		foreach ($result['hits']['hits'] as $hit) {
-			$response[$hit['_id']] = $hit['_source']['full_name'];
+			$response[] = [
+				'id' => $hit['_id'],
+				'full_name' => $hit['_source']['full_name']
+			];
 		}
 		
 		return $response;
