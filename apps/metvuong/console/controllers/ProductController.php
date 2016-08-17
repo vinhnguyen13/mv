@@ -452,11 +452,13 @@ class ProductController extends Controller {
         $limit = $this->limit == null ? 500 : ((intval($this->limit) <= 500 && intval($this->limit) > 0) ? intval($this->limit) : 0); // Get product main
 
 //        $product_main = \vsoft\craw\models\AdProduct::find()->select(['product_main_id'])->where('product_main_id != 0')->asArray()->all();
-//        $not_in_product_main = ArrayHelper::getColumn($product_main, 'product_main_id');
-//        $duplicate = \vsoft\craw\models\AdProduct::getDb()->createCommand("select product_main_id from {$db_tool_schema}.map_product_duplicate")->queryAll();
-//        $not_in_product_duplicate = ArrayHelper::getColumn($duplicate, 'product_main_id');
-        $sql = "ip is null and id not in (select product_main_id from {$db_tool_schema}.ad_product where product_main_id != 0)
-                    and id not in (select product_main_id from {$db_tool_schema}.map_product_duplicate group by product_main_id)";
+        $product_main = \vsoft\craw\models\AdProduct::getDb()->createCommand("select product_main_id from ad_product where product_main_id != 0")->queryColumn();
+        $not_in_product_main = implode(",", $product_main);
+
+        $duplicate = \vsoft\craw\models\AdProduct::getDb()->createCommand("select product_main_id from map_product_duplicate group by product_main_id")->queryColumn();
+        $not_in_product_duplicate = implode(",", $duplicate);
+
+        $sql = "ip is null and id not in ({$not_in_product_main}) and id not in ({$not_in_product_duplicate})";
         if($last_id > 0)
             $sql = $sql. " and id > {$last_id}";
 
@@ -539,12 +541,12 @@ class ProductController extends Controller {
                     if(count($other_products) > 0) {
                         foreach ($other_products as $key_other => $other_product) {
                             $sqlCheckDuplicate = "select * from {$db_tool_schema}.map_product_duplicate where product_main_id = {$product->id}";
-                            if(empty($other_product->product_main_id))
+                            if(empty($other_product->product_main_id)) // check exists duplicate_id
                                 $sqlCheckDuplicate = $sqlCheckDuplicate. " and duplicate_id is null";
                             else
                                 $sqlCheckDuplicate = $sqlCheckDuplicate. " and duplicate_id = {$other_product->product_main_id}";
 
-                            if(empty($other_product->id))
+                            if(empty($other_product->id)) // check exists tool_id
                                 $sqlCheckDuplicate = $sqlCheckDuplicate. " and tool_id is null";
                             else
                                 $sqlCheckDuplicate = $sqlCheckDuplicate. " and tool_id = {$other_product->id}";
