@@ -86,7 +86,7 @@
 				<div class="wrap-tr-each swiper-slide compare-f">
 					<div class="w-16 font-600"><span><?= Yii::t('ad', 'Facilities') ?></span></div>
 					<?php foreach ($products as $k => $product): ?>
-					<div class="w-28 text-center<?= $k%2 == 0 ? ' bg-2' : '' ?>"><span><?= $product->adProductAdditionInfo->facility ? implode(', ', array_map(function($item) use ($facilities) { return $facilities[$item]->name; }, $product->adProductAdditionInfo->facility)) : '<span style="opacity: 0.5;">' . Yii::t('ad', 'không xác định') . '</span>' ?></span></div>
+					<div class="w-28 text-center<?= $k%2 == 0 ? ' bg-2' : '' ?>"><span><?= $product->adProductAdditionInfo->facility ? implode(', ', array_map(function($item) use ($facilities) { return Yii::t('ad', $facilities[$item]->name); }, $product->adProductAdditionInfo->facility)) : '<span style="opacity: 0.5;">' . Yii::t('ad', 'không xác định') . '</span>' ?></span></div>
 					<?php endforeach; ?>
 				</div>
 			</div>
