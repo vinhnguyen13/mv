@@ -68,6 +68,10 @@ class ManagerController extends Controller {
 		include str_replace('controllers', 'components', dirname(__FILE__)) . '/Spout/Autoloader/autoload.php';
 		
 		ini_set('max_execution_time', 0);
+
+		if(!isset($_GET['main_id'])) {
+			unset(AdProductSearch2::$_columns['appmi']);
+		}
 		
 		$fileName = "metvuong-craw.xlsx";
 		Yii::$app->language = 'vi-VN';
