@@ -236,6 +236,8 @@ $columns = [
 ];
 
 $columns = array_intersect_key($columns, $searchModel->columns);
+
+$exportSetting = isset($_COOKIE['export-setting']) ? $_COOKIE['export-setting'] : 1;
 ?>
 <div class="cms-show-index">
 	<div style="text-align: center; width: 100%; position: absolute; top: -20px;">
@@ -248,15 +250,15 @@ $columns = array_intersect_key($columns, $searchModel->columns);
 					<div style="font-weight: bold; font-size: 15px;">Thiết lập khi export nội dung dài</div>
 					<table style="margin: 12px;">
 						<tr>
-							<td><input checked="checked" name="content-setting" type="radio" id="cs-keep" value="1" /></td>
+							<td><input<?= $exportSetting == 1 ? ' checked="checked"' : '' ?> name="content-setting" type="radio" id="cs-keep" value="1" /></td>
 							<td><label for="cs-keep">Giữ nguyên</label></td>
 						</tr>
 						<tr>
-							<td><input name="content-setting" type="radio" id="cs-hide" value="2" /></td>
+							<td><input<?= $exportSetting == 2 ? ' checked="checked"' : '' ?> name="content-setting" type="radio" id="cs-hide" value="2" /></td>
 							<td><label for="cs-hide">Thay bằng dấu ...</label></td>
 						</tr>
 						<tr>
-							<td><input name="content-setting" type="radio" id="cs-replace" value="3" /></td>
+							<td><input<?= $exportSetting == 3 ? ' checked="checked"' : '' ?> name="content-setting" type="radio" id="cs-replace" value="3" /></td>
 							<td><label for="cs-replace">Bỏ breakline</label></td>
 						</tr>
 					</table>
