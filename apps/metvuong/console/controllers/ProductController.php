@@ -489,13 +489,18 @@ class ProductController extends Controller {
         }
 
         $limit = $this->limit == null ? 500 : ((intval($this->limit) <= 500 && intval($this->limit) > 0) ? intval($this->limit) : 0); // Get product main
-
+        if($limit == 0){
+            print_r("\nRecord limit from 1 to 500");
+            return;
+        }
 //        $product_main = \vsoft\craw\models\AdProduct::find()->select(['product_main_id'])->where('product_main_id != 0')->asArray()->all();
-//        $not_in_product_main = ArrayHelper::getColumn($product_main, 'product_main_id');
-//        $duplicate = \vsoft\craw\models\AdProduct::getDb()->createCommand("select product_main_id from {$db_tool_schema}.map_product_duplicate")->queryAll();
-//        $not_in_product_duplicate = ArrayHelper::getColumn($duplicate, 'product_main_id');
-        $sql = "ip is null and id not in (select product_main_id from {$db_tool_schema}.ad_product where product_main_id != 0)
-                    and id not in (select product_main_id from {$db_tool_schema}.map_product_duplicate group by product_main_id)";
+        $product_main = \vsoft\craw\models\AdProduct::getDb()->createCommand("select product_main_id from ad_product where product_main_id != 0")->queryColumn();
+        $not_in_product_main = implode(",", $product_main);
+
+        $duplicate = \vsoft\craw\models\AdProduct::getDb()->createCommand("select product_main_id from map_product_duplicate group by product_main_id")->queryColumn();
+        $not_in_product_duplicate = implode(",", $duplicate);
+
+        $sql = "ip is null and id not in ({$not_in_product_main}) and id not in ({$not_in_product_duplicate})";
         if($last_id > 0)
             $sql = $sql. " and id > {$last_id}";
 
@@ -507,7 +512,7 @@ class ProductController extends Controller {
         {
             foreach($main_products as $key => $product ){
                 $no = $key+1;
-                print_r("\n{$no} Main ID: {$product->id} ");
+                print_r("\n{$no} MainID: {$product->id} ");
                 $sql_where = "CAST(lat AS decimal(10,6)) = CAST({$product->lat} AS decimal(10,6)) and CAST(lng AS decimal(10,6)) = CAST({$product->lng}  AS decimal(10,6)) ";
                 if(!empty($product->area)){
                     $sql_where = $sql_where . " and CAST(area AS decimal) = CAST({$product->area} AS decimal)";
@@ -531,7 +536,6 @@ class ProductController extends Controller {
                 if(count($crawl_product) > 0)
                 {
                     $file_name = $crawl_product->file_name;
-                    print_r("- File: {$file_name} ");
                     $product_file = AdProductFile::find()->where(['file' => $file_name])->one();
                     if(count($product_file) > 0) {
                         if($product_file->is_import != 1) {
@@ -551,7 +555,7 @@ class ProductController extends Controller {
                         $res = $product_file->save(false);
                         if($res) {
                             $count_product_copied++;
-                            print_r("- Map");
+                            print_r("- Map Tool ID: {$crawl_product->id} - File: {$file_name}");
                         }
                     } else {
                         print_r("- Not found in AdProductFile table.");
@@ -576,6 +580,7 @@ class ProductController extends Controller {
                         ->orderBy(['id' =>SORT_ASC])->all();
 
                     if(count($other_products) > 0) {
+                        print_r("- Duplicate");
                         foreach ($other_products as $key_other => $other_product) {
                             $sqlCheckDuplicate = "select * from {$db_tool_schema}.map_product_duplicate where product_main_id = {$product->id}";
                             if(empty($other_product->product_main_id))
@@ -604,8 +609,9 @@ class ProductController extends Controller {
                                 ->insert('map_product_duplicate', $recordDuplicate)
                                 ->execute();
                             $count_product_duplicate = $count_product_duplicate + $duplicate_count;
+                            $print_out = $key_other == 0 ? "ID: ". $other_product->product_main_id : ", ". $other_product->product_main_id;
+                            print_r($print_out);
                         }
-                        print_r("- Duplicate");
                     } else {
                         $sqlCheckDuplicate = "select * from {$db_tool_schema}.map_product_duplicate where product_main_id = {$product->id}";
                         $checkProductDuplicate = \vsoft\craw\models\AdProduct::getDb()->createCommand($sqlCheckDuplicate)->queryAll();

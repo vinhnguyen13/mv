@@ -26,7 +26,7 @@
         <div class="menuUser compare-box">
             <div class="inner-box">
                 <div class="listing-compare">
-                    <div class="title">Select Listing</div>
+                    <div class="title"><?= Yii::t('ad', 'Chọn Listing') ?></div>
                     <?php
                     	if(isset($products)) :
                     		$selectProducts = []
@@ -50,7 +50,7 @@
                     
                 </div>
                 <div class="option-choose-compare">
-                    <div class="title">Tùy chọn compare</div>
+                    <div class="title"><?= Yii::t('ad', 'Tùy chọn so sánh') ?></div>
                     <ul class="clearfix">
                         <li><label for="" class="checkbox-ui"><input data-row="s" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Number of storeys') ?></label></li>
                         <li><label for="" class="checkbox-ui"><input data-row="fw" class="custom-compare" checked="checked" type="checkbox"><span class="icon-mv"><span class="icon-checkbox"></span></span><?= Yii::t('ad', 'Facade') ?></label></li>
@@ -65,7 +65,7 @@
     </div>
     <div class="title-fixed-wrap container">
         <div class="u-allduan">
-            <div class="title-top">Compare Listing</div>
+            <div class="title-top"><?= Yii::t('ad', 'So sánh Listing') ?></div>
             <div class="compare-block">
             	<?php if(isset($selectProducts)): ?>
             	<?= $this->render('_partials/compare.php', ['products' => $selectProducts]) ?>

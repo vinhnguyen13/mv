@@ -68,6 +68,10 @@ class ManagerController extends Controller {
 		include str_replace('controllers', 'components', dirname(__FILE__)) . '/Spout/Autoloader/autoload.php';
 		
 		ini_set('max_execution_time', 0);
+
+		if(!isset($_GET['main_id'])) {
+			unset(AdProductSearch2::$_columns['appmi']);
+		}
 		
 		$fileName = "metvuong-craw.xlsx";
 		Yii::$app->language = 'vi-VN';
@@ -79,13 +83,22 @@ class ManagerController extends Controller {
 		$provider = $searchModel->search(\Yii::$app->request->queryParams);
 		$query = $provider->query;
 		$query->orderBy($provider->sort->getAttributeOrders());
-		$query->limit = 5000;
 		
-		foreach ($query->select as &$select) {
-			if($select == 'ad_product.content') {
-				$select = "IF(`ad_product`.`content` = '', NULL, '...') `ad_product.content`";
-			} else if($select == 'ad_product_addition_info.interior') {
-				$select = "IF(`ad_product_addition_info`.`interior` IS NULL, NULL, '...') `ad_product_addition_info.interior`";
+		if(isset($query->select['ad_product.content'])) {
+			$query->limit = 1000;
+		} else if(isset($query->select['ad_product_addition_info.interior'])) {
+			$query->limit = 3000;
+		} else {
+			$query->limit = 5000;
+		}
+		
+		$contentFn = 'contentKeep';
+		
+		if(isset($_COOKIE['export-setting'])) {
+			if($_COOKIE['export-setting'] == 2) {
+				$contentFn = 'contentHide';
+			} else if($_COOKIE['export-setting'] == 3) {
+				$contentFn = 'contentReplace';
 			}
 		}
 		
@@ -132,6 +145,10 @@ class ManagerController extends Controller {
 							$value = intval($value);
 						} else if($k == 'area') {
 							$value = floatval($value);
+						} else if($k == 'content') {
+							$value = $this->$contentFn($value);
+						} else if($k == 'interior') {
+							$value = $this->$contentFn($value);
 						}
 					} else if($value === '0') {
 						$value = null;
@@ -148,6 +165,16 @@ class ManagerController extends Controller {
 		setcookie("downloadComplete", 1);
 		
 		$writer->close();
+	}
+	
+	public function contentKeep($str) {
+		return $str;
+	}
+	public function contentHide($str) {
+		return $str ? '...' : null;
+	}
+	public function contentReplace($str) {
+		return $str ? trim(preg_replace('/\s+/', ' ', str_replace("\n", " ", $str))) : null;
 	}
 	
 	public function actionIndex() {
