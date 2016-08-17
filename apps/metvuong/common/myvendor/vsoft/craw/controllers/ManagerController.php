@@ -83,14 +83,13 @@ class ManagerController extends Controller {
 		$provider = $searchModel->search(\Yii::$app->request->queryParams);
 		$query = $provider->query;
 		$query->orderBy($provider->sort->getAttributeOrders());
-		$query->limit = 5000;
 		
-		foreach ($query->select as &$select) {
-			if($select == 'ad_product.content') {
-				$select = "IF(`ad_product`.`content` = '', NULL, '...') `ad_product.content`";
-			} else if($select == 'ad_product_addition_info.interior') {
-				$select = "IF(`ad_product_addition_info`.`interior` IS NULL, NULL, '...') `ad_product_addition_info.interior`";
-			}
+		if(isset($query->select['ad_product.content'])) {
+			$query->limit = 1000;
+		} else if(isset($query->select['ad_product_addition_info.interior'])) {
+			$query->limit = 3000;
+		} else {
+			$query->limit = 5000;
 		}
 		
 		$columnName = AdProductSearch2::$_columnsName;
