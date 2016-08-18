@@ -138,9 +138,16 @@ $count_product = count($products);
                                         </p>
                                         <?php endif; ?>
 	                                </div>
-	                                <a href="#"  data-toggle="modal" data-target="#update-boost" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-boost"><?= Yii::t('statistic', 'Up') ?></a>
-	                                <div class="clearfix"></div>
-	                                <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" class="see-detail-listing fs-13 font-600 color-cd-hover mgT-5"><span class="text-decor"><?=Yii::t('statistic','Xem thống kê')?></span><span class="icon-mv mgL-10"><span class="icon-angle-right"></span></span></a>
+	                                <div>
+                                        <a href="#"  data-toggle="modal" data-target="#update-boost" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-boost btn-common btn-bd-radius">
+                                            <span class="icon-mv fs-13"><span class="icon-long-arrow-up"></span></span><?= Yii::t('statistic', 'Up') ?>
+                                        </a>
+                                    </div>
+	                                <div>
+                                        <a href="<?= Url::to(['/dashboard/statistics', 'id' => $product->id]) ?>" class="see-detail-listing btn-common btn-bd-radius">
+                                            <span class="icon-mv fs-13"><span class="icon-bar-chart"></span></span><?=Yii::t('statistic','Xem thống kê')?>
+                                        </a>
+                                        </div>
 	                            	<?php endif; ?>
                             	<?php endif; ?>
                             </div>

@@ -2623,6 +2623,10 @@ footer {
     position: relative;
     width: 40%;
 }
+.wrap-list-duan li .wrap-img-list .pic-intro {
+    margin: 0;
+    height: 270px;
+}
 .wrap-list-duan .list-item li:last-child {
     border-bottom: none;
 }
@@ -4220,7 +4224,7 @@ html.mm-opening .mm-slideout {
 .wrap-list-duan .intro-detail .status-duan {
     font-weight: 700;
     color: #3c3c3c;
-    margin-bottom: 5px;
+    /* margin-bottom: 5px; */
 }
 .status-duan .id-duan {
     margin-bottom: 0;
@@ -4229,27 +4233,23 @@ html.mm-opening .mm-slideout {
     line-height: 25px;
     text-align: right;
 }
+.push-price .see-detail-listing,
 .push-price .btn-nang-cap {
-    border: solid 1px #00a769;
-    color: #00a769;
-    padding: 1px 20px;
+    /* border: solid 1px #00a769; */
+    /* color: #00a769; */
+    /* padding: 5px 0; */
+    /* display: inline-block; */
+    line-height: 100%;
+    width: 120px;
+    /* text-align: center; */
+    padding: 8px 0;
 }
 .push-price .btn-nang-cap:hover {
-    background: rgba(0, 167, 105, 0.12);
-    color: #3c3c3c;
+    /* background: rgba(0, 167, 105, 0.12); */
+    /* color: #3c3c3c; */
 }
 .push-price .btn-nang-cap:active {
     background: rgba(0, 167, 105, 0.36);
-}
-.push-price .see-detail-listing {
-    letter-spacing: 0;
-    display: inline-block;
-    line-height: 100%;
-    margin-top: 5px;
-}
-.wrap-list-duan .push-price .see-detail-listing .icon-mv {
-    width: auto;
-    margin: 0;
 }
 .push-price p {
     margin-bottom: 8px;
@@ -9097,7 +9097,7 @@ margin-right: 5px;
     line-height: 100%;
 }
 .wrap-list-duan .bottom-feat-box > .wrap-icon {
-    margin-bottom: 7px;
+    margin-bottom: 14px;
 }
 .wrap-list-duan .bottom-feat-box .status-duan strong {
     margin: 0;
@@ -9108,6 +9108,12 @@ margin-right: 5px;
     color: #3c3c3c;
     text-align: center;
     margin-right: 5px;
+}
+.wrap-list-duan .bottom-feat-box .push-price .icon-mv {
+    width: auto;
+    color: #fff;
+    position: relative;
+    top: -1px;
 }
 .wrap-list-duan .bottom-feat-box strong {
     margin-right: 5px;
@@ -9480,6 +9486,9 @@ margin-right: 5px;
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+.icon-bar-chart:before {
+    content: "\f080";
 }
 .icon-long-arrow-up:before {
     content: "\f176";
@@ -12217,7 +12226,7 @@ label:hover {
 }
 .btn-cancel:hover {
     background: #A2A2A2;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
 }
 #upgrade-time .inner-popup .icon-info-circle {
     color: #A2A2A2;
@@ -12554,7 +12563,7 @@ label:hover {
     text-transform: uppercase;
 }
 .see-detail-listing {
-    line-height: 100%;
+    /* line-height: 100%; */
 }
 @media ( max-width: 500px ) {
     .wrap-list-duan li .wrap-img-list .pic-intro {
