@@ -109,22 +109,30 @@ class Helpers
         return rename($fromFilePath, $toFilePath);
     }
 
-    public static function getUrlContent($url)
+    public static function getUrlContent($url, $post_string = null)
     {
         $agent = "Mozilla/5.0 (X11; U; Linux i686; en-US) " .
             "AppleWebKit/532.4 (KHTML, like Gecko) " .
             "Chrome/4.0.233.0 Safari/532.4";
-        $referer = "http://www.google.com/";
+        $referer = "https://www.google.com.vn/";
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_USERAGENT, $agent);
-        curl_setopt($ch, CURLOPT_HEADER, false);
+        curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_REFERER, $referer);
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
         curl_setopt($ch, CURLOPT_TIMEOUT, 100);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, TRUE);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        if($post_string){
+//            $post_items = [];
+//            foreach ( $postData as $key => $value) {
+//                $post_items[] = $key . '=' . $value;
+//            }
+//            $post_string = implode ('&', $post_items);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_string);
+        }
+        curl_setopt($ch, CURLOPT_URL, $url);
         $data = curl_exec($ch);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);

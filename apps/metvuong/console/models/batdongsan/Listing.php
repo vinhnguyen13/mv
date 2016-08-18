@@ -240,14 +240,23 @@ class Listing extends Component
     public function getListProject($type, $current_page, $product_type, $path_folder, $city)
     {
         $href = "/".$type."/p".$current_page;
-        $page = Helpers::getUrlContent(self::DOMAIN . $href);
+//        $viewstate = '/wEPDwULLTE5NDAyOTA4MTRkZKtvk1jQl8oi2w3CPzrBNiMWJ9/+'; //input hidden name=__VIEWSTATE
+//        $viewstate = "__VIEWSTATE=". rawurlencode($viewstate);
+//        $ddlSortReult = 'ctl00$LeftMainContent$_productSearchResult$ddlSortReult';
+//        $ddlSortReult = rawurlencode($ddlSortReult). "=1"; //select option 0: thong thuong; 1 : tin moi nhat
+
+        $viewstate = "__VIEWSTATE=%2FwEPDwULLTE5NDAyOTA4MTRkZKtvk1jQl8oi2w3CPzrBNiMWJ9%2F%2B";
+        $ddlSortReult = "ctl00%24LeftMainContent%24_productSearchResult%24ddlSortReult=1";
+        $post_string = $viewstate. "&" . $ddlSortReult;
+
+        $page = Helpers::getUrlContent(self::DOMAIN . $href, $post_string);
         if(!empty($page)) {
             $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
             $list = $html->find('div.p-title a');
             if (count($list) > 0) {
                 $item_no = 0;
                 // about 20 listing
-                foreach ($list as $item) {
+                foreach ($list as $key => $item) {
                     $productId = '';
                     if (preg_match('/pr(\d+)/', self::DOMAIN . $item->href, $matches)) {
                         if(!empty($matches[1])){
@@ -350,6 +359,35 @@ class Listing extends Component
         }
         if( strpos(file_get_contents($file_name),$log) === false) {
             $this->writeToFile($file_name, $log, 'a');
+        }
+    }
+
+    // delete nhung file da duoc import
+    public function deleteFile($limit=5000)
+    {
+        $connection = AdProductFile::getDb();
+        $schema_tool = Helpers::getDbTool();
+        $sql = "SELECT `file`, `path` FROM {$schema_tool}.ad_product_file where is_import = 1 and path is not null";
+        if($limit > 0){
+            $sql .= " limit {$limit}";
+        }
+        $product_files = $connection->createCommand($sql)->queryAll();
+        if(count($product_files) > 0){
+            foreach ($product_files as $key => $product_file) {
+                print_r("\n". ($key + 1). " {$product_file['file']} ");
+                $filePath = Yii::getAlias("@console/data/bds_html/"). $product_file['path']. "/". $product_file['file'];
+                if(file_exists($filePath)){
+                    if(unlink($filePath))
+                        print_r(" - deleted");
+                    else
+                        print_r(" - cannot deleted");
+                } else {
+                    $update_sql = "UPDATE {$schema_tool}.ad_product_file SET `path`= NULL WHERE `file` = '".$product_file['file']."'";
+                    $connection->createCommand($update_sql)->execute();
+                    print_r(" - not exists");
+                }
+            }
+
         }
     }
 }
