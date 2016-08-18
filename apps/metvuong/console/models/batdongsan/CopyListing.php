@@ -33,27 +33,29 @@ class CopyListing extends Component
     /* End date = Start date Db Crawl + AdProduct::Expired days */
     public function copyToMainDB($validate=0, $limit=300, $check_expired=0, $type, $city, $district){
         $begin = time();
-        $sql = "file_name IS NOT NULL AND product_main_id = 0 ";
+        $sql = "a.file_name IS NOT NULL AND a.product_main_id = 0 ";
 
         if($validate == 1) {
-            $sql .= " AND lat > 0 AND lat IS NOT NULL AND lng > 0 AND lng IS NOT NULL ";
-            $sql .= " AND price > 0 AND area > 0 AND city_id > 0 AND district_id > 0 AND ward_id > 0 AND street_id > 0 AND (is_expired IS NULL OR is_expired = 0)";
-            $sql .= " AND content IS NOT NULL";
+            $sql .= " AND a.lat > 0 AND a.lat IS NOT NULL AND a.lng > 0 AND a.lng IS NOT NULL ";
+            $sql .= " AND a.price > 0 AND a.area > 0 AND a.city_id > 0 AND a.district_id > 0 AND a.ward_id > 0 AND a.street_id > 0 AND (a.is_expired IS NULL OR a.is_expired = 0)";
+            $sql .= " AND a.content IS NOT NULL";
         }
         if(!empty($type)){
-            $sql .= " AND type IN ($type)";
+            $sql .= " AND a.type IN ($type)";
         }
         if(!empty($city)){
-            $sql .= " AND city_id IN ($city)";
+            $sql .= " AND a.city_id IN ($city)";
         }
         if(!empty($district)){
-            $sql .= " AND district_id IN ($district)";
+            $sql .= " AND a.district_id IN ($district)";
         }
 
         if($check_expired == 1)
-            $sql = $sql . " and (start_date + ".AdProduct::EXPIRED.") >= unix_timestamp() ";
+            $sql = $sql . " AND (a.start_date + ".AdProduct::EXPIRED.") >= unix_timestamp() ";
 
-        $models = \vsoft\craw\models\AdProduct::find()
+        $models = \vsoft\craw\models\AdProduct::find()->select()->alias('a')
+            ->innerJoin('ad_product_addition_info b', 'b.product_id = a.id')
+            ->innerJoin('ad_contact_info c', 'c.product_id = a.id')
             ->where($sql)->limit($limit)->orderBy(['start_date' => SORT_DESC])->all();
 
         if(!empty($models)) {
