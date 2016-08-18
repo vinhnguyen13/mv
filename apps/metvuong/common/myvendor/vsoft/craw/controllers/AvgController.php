@@ -130,9 +130,9 @@ class AvgController extends Controller {
 			
 		$parent['value'] = [
 			'Data Point' => $totalPoint,
-			'AVG Price' => 	round($totalPrice / $count),
-			'AVG SQM' => 	round($totalSize / $count),
-			'AVG $/SQM' => round($totalPriceSize / $count),
+			'AVG Price' => 	$totalPrice / $count,
+			'AVG SQM' => 	$totalSize / $count,
+			'AVG $/SQM' => $totalPriceSize / $count,
 			'AVG Bed' => $totalBed,
 			'AVG Bath' => $totalBath
 		];
@@ -192,9 +192,9 @@ class AvgController extends Controller {
 			$totalBath += $product['toilet_no'];
 		}
 		
-		$avgPrice = $totalHasPrice ? round($totalPrice/$totalHasPrice) : 0;
-		$avgSize = $totalHasSize ? round($totalSize/$totalHasSize) : 0;
-		$avgPriceSize = $avgSize ? round($avgPrice/$avgSize) : 0;
+		$avgPrice = $totalHasPrice ? $totalPrice/$totalHasPrice : 0;
+		$avgSize = $totalHasSize ? $totalSize/$totalHasSize : 0;
+		$avgPriceSize = $avgSize ? $avgPrice/$avgSize : 0;
 
 		return ['Data Point' => count($products), 'AVG Price' => $avgPrice, 'AVG SQM' => $avgSize, 'AVG $/SQM' => $avgPriceSize, 'AVG Bed' => $totalBed, 'AVG Bath' => $totalBath];
 	}
