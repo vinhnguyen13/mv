@@ -96,7 +96,6 @@
             dataType: 'html',
             url: url,
             success: function (data) {
-                console.log(data);
                 $('#frmListVisit .wrap-modal').html($(data));
                 $('#frmListVisit').modal();
                 $('body').loading({done:true});

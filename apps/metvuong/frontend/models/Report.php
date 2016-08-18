@@ -19,6 +19,7 @@ class Report extends Component
     const TYPE_LOGIN        = 2;
     const TYPE_LISTING      = 3;
     const TYPE_TRANSACTION  = 4;
+    const TYPE_FAVORITE     = 5;
     public static function me()
     {
         return Yii::createObject(self::className());
@@ -47,6 +48,9 @@ class Report extends Component
             },$dateRange);
             $dataTransaction = array_map(function($v){
                 return ['y'=>0, 'date'=>$v, 'type'=>self::TYPE_TRANSACTION];
+            },$dateRange);
+            $dataFavorite = array_map(function($v){
+                return ['y'=>0, 'date'=>$v, 'type'=>self::TYPE_FAVORITE];
             },$dateRange);
             /**
              * user register
@@ -107,9 +111,7 @@ class Report extends Component
                 ->andWhere('ip IS NOT NULL')
                 ->groupBy('today')->orderBy('created_at DESC');
             $stats_listing = $query->all();
-            $totalListing = 0;
             foreach($stats_listing as $item){
-                $totalListing += $item['total'];
                 $kDate = array_search($item['today'], $dateRange);
                 $dataListing[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_LISTING];
             }
@@ -125,9 +127,23 @@ class Report extends Component
                 ->groupBy('today')->orderBy('created_at DESC');
             $stats_transaction = $query->all();
             foreach($stats_transaction as $item){
-                $totalListing += $item['total'];
                 $kDate = array_search($item['today'], $dateRange);
                 $dataTransaction[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_TRANSACTION];
+            }
+
+            /**
+             * Favorite
+             */
+            $month_year = new \yii\db\Expression("DATE_FORMAT(FROM_UNIXTIME(`saved_at`), '%d/%m/%Y')");
+            $query = new Query();
+            $query->select(['count(*) total', $month_year." today"])->from('ad_product_saved')
+                ->where(['>', 'saved_at', $from])
+                ->andWhere(['<', 'saved_at', $to])
+                ->groupBy('today')->orderBy('saved_at DESC');
+            $stats_favorite = $query->all();
+            foreach($stats_favorite as $item){
+                $kDate = array_search($item['today'], $dateRange);
+                $dataFavorite[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_FAVORITE];
             }
             /**
              * load data to chart
@@ -153,6 +169,11 @@ class Report extends Component
                 'color' => '#8a6d3b',
                 'data' => $dataTransaction
             ];
+            $dataChart[4] = [
+                'name' => 'Favorite',
+                'color' => '#8a893b',
+                'data' => $dataFavorite
+            ];
             return ['categories'=>$categories, 'dataChart'=>$dataChart];
         }
         return false;
@@ -170,8 +191,7 @@ class Report extends Component
                     ->andWhere(['<', 'created_at', $to])
                     ->andWhere('updated_at > created_at')
                     ->orderBy('created_at DESC');
-                $data = $query->all();
-                return $data;
+                return $query->all();
                 break;
             case Report::TYPE_LOGIN;
                 $query = \frontend\models\UserActivity::find();
@@ -194,8 +214,7 @@ class Report extends Component
                         ->andWhere(['<', 'updated_at', $to])
                         ->andWhere('updated_at > created_at')
                         ->orderBy('updated_at DESC');
-                    $stats_login = $query->all();
-                    return $stats_login;
+                    return $query->all();
                 }
                 break;
             case Report::TYPE_LISTING;
@@ -205,8 +224,7 @@ class Report extends Component
                     ->andWhere(['<', 'created_at', $to])
                     ->andWhere('ip IS NOT NULL')
                     ->orderBy('created_at DESC');
-                $stats_listing = $query->all();
-                return $stats_listing;
+                return $query->all();
                 break;
             case Report::TYPE_TRANSACTION;
                 $query = new Query();
@@ -214,8 +232,15 @@ class Report extends Component
                     ->where(['>', 'created_at', $from])
                     ->andWhere(['<', 'created_at', $to])
                     ->orderBy('created_at DESC');
-                $stats_listing = $query->all();
-                return $stats_listing;
+                return $query->all();
+                break;
+            case Report::TYPE_FAVORITE;
+                $query = new Query();
+                $query->select(['user_id', 'product_id'])->from('ad_product_saved')
+                    ->where(['>', 'saved_at', $from])
+                    ->andWhere(['<', 'saved_at', $to])
+                    ->orderBy('saved_at DESC');
+                return $query->all();
                 break;
 
         }

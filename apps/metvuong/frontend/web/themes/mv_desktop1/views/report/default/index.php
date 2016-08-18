@@ -38,6 +38,9 @@ use yii\helpers\Url;
                         <li class="chk_transaction">
                             <label for="transaction"><input type="checkbox" name="toggle-chart" value="" id="transaction" checked><?=Yii::t('report','Transaction')?></label>
                         </li>
+                        <li class="chk_favorite">
+                            <label for="favorite"><input type="checkbox" name="toggle-chart" value="" id="favorite" checked><?=Yii::t('report','Favorite')?></label>
+                        </li>
                     </ul>
         		</div>
         	</section>
@@ -63,18 +66,24 @@ use yii\helpers\Url;
 <!--<script src="//code.highcharts.com/highcharts.js"></script>-->
 <script>
     $(document).ready(function () {
-        var chart = $('#chartAds').highcharts();
-        $(document).on('click', '.option-view-stats input', function (e) {
-            for ( var i = 0; i < chart.series.length; i++ ) {
-                chart.series[i].hide();
-            }
-            $('.option-view-stats input[type=checkbox]').each(function () {
-                if (this.checked) {
-                    var index = $(this).parent().parent().index();
-                    chart.series[index].show();
+        $.getScript( "//code.highcharts.com/highcharts.js" )
+        .done(function( script, textStatus ) {
+            var chart = $('#chartAds').highcharts();
+            $(document).on('click', '.option-view-stats input', function (e) {
+                for ( var i = 0; i < chart.series.length; i++ ) {
+                    chart.series[i].hide();
                 }
-            });
+                $('.option-view-stats input[type=checkbox]').each(function () {
+                    if (this.checked) {
+                        var index = $(this).parent().parent().index();
+                        chart.series[index].show();
+                    }
+                });
 
+            });
+        })
+        .fail(function( jqxhr, settings, exception ) {
+            alert(5);
         });
     });
 </script>
