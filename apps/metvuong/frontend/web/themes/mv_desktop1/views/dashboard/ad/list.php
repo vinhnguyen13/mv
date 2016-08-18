@@ -4,6 +4,7 @@
  * User: Nhut Tran
  * Date: 4/8/2016 11:26 AM
  */
+use frontend\models\Tracking;
 use vsoft\tracking\models\base\ChartStats;
 use yii\helpers\Url;
 use yii\mongodb\Query;
@@ -42,6 +43,12 @@ $count_product = count($products);
                     }
                 }
             }
+
+            if($fav_count == 0){
+                $fav_count = (int)\vsoft\ad\models\AdProductSaved::find()->where(['product_id' => $product->id])->count();
+                Tracking::syncFavorite($product->id);
+            }
+
             $thumb = $product->representImage;
             if(strpos($thumb, "default")){
                 if($product->projectBuilding){
