@@ -66,24 +66,24 @@ use yii\helpers\Url;
 <!--<script src="//code.highcharts.com/highcharts.js"></script>-->
 <script>
     $(document).ready(function () {
-        $.getScript( "//code.highcharts.com/highcharts.js" )
-        .done(function( script, textStatus ) {
-            var chart = $('#chartAds').highcharts();
-            $(document).on('click', '.option-view-stats input', function (e) {
-                for ( var i = 0; i < chart.series.length; i++ ) {
-                    chart.series[i].hide();
-                }
-                $('.option-view-stats input[type=checkbox]').each(function () {
-                    if (this.checked) {
-                        var index = $(this).parent().parent().index();
-                        chart.series[index].show();
-                    }
-                });
-
-            });
-        })
-        .fail(function( jqxhr, settings, exception ) {
-            alert(5);
+        $(document).bind('highcharts/afterLoad', function (event, data) {
+            doSomethingAfterLoadFile();
         });
     });
+
+    function doSomethingAfterLoadFile(){
+        var chart = $('#chartAds').highcharts();
+        $(document).on('click', '.option-view-stats input', function (e) {
+            for ( var i = 0; i < chart.series.length; i++ ) {
+                chart.series[i].hide();
+            }
+            $('.option-view-stats input[type=checkbox]').each(function () {
+                if (this.checked) {
+                    var index = $(this).parent().parent().index();
+                    chart.series[index].show();
+                }
+            });
+
+        });
+    }
 </script>

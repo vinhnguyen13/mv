@@ -7,6 +7,13 @@
     $(function () {
         $.getScript( "//code.highcharts.com/highcharts.js" )
         .done(function( script, textStatus ) {
+            $(document).trigger('highcharts/afterLoad');
+        })
+        .fail(function( jqxhr, settings, exception ) {
+
+        });
+
+        $(document).bind('highcharts/afterLoad', function (event, data) {
             $('#chartAds').highcharts({
                 legend: {
                     enabled: false,
@@ -80,11 +87,7 @@
                     enabled: false
                 }
             });
-        })
-        .fail(function( jqxhr, settings, exception ) {
-
         });
-
     });
 
     function clickTooltip(type, date) {
