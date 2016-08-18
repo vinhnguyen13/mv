@@ -24,16 +24,16 @@ if($count_data > 0) {
         $email = empty($user->profile->public_email) ? $user->email : $user->profile->public_email;
         $avatar = $user->profile->getAvatarUrl();
         $address = $product->getAddress();
+
+        $message = Yii::t('activity', '{owner} favorite {product}',
+            [
+                'owner'=> \yii\helpers\Html::a($user->profile->getDisplayName(), \yii\helpers\Url::to(['member/profile','username' => $username], true)),
+                'product'=> \yii\helpers\Html::a($address, $product->urlDetail())
+            ]
+        );
         ?>
         <li class="">
-            <?=Yii::t('activity', '{owner} favorite {product}');?>
-            <a href="<?=\yii\helpers\Url::to(['member/profile','username' => $username], true)?>" title="<?=$username?>">
-                <?=$user->profile->getDisplayName()?>
-            </a>
-
-            <a href="<?=$product->urlDetail()?>" title="<?=$address?>">
-                <?=$address?>
-            </a>
+            <?=$message;?>
         </li>
         <?php
     }?>
