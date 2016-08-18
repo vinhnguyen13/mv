@@ -193,7 +193,7 @@ class AvgController extends Controller {
 			
 			if($product['price'] && $product['area']) {
 				$totalHasPriceSize++;
-				$totalPriceSize += $product['price'] / $product['area'];
+				$totalPriceSize += ($product['price'] / $product['area']);
 			}
 			
 			$totalBed += $product['room_no'];
