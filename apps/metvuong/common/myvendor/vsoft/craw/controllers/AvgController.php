@@ -177,10 +177,21 @@ class AvgController extends Controller {
 		$totalPriceSize = 0;
 		$totalHasPriceSize = 0;
 	
+		$totalHasPrice = 0;
+		$totalHasSize = 0;
+		
 		foreach ($products as $product) {
-			if($product['price'] && $product['area']) {
+			if($product['price']) {
 				$totalPrice += $product['price'];
+				$totalHasPrice++;
+			}
+			
+			if($product['area']) {
 				$totalSize += $product['area'];
+				$totalHasSize++;
+			}
+			
+			if($product['price'] && $product['area']) {
 				$totalHasPriceSize++;
 				$totalPriceSize += $product['price'] / $product['area'];
 			}
