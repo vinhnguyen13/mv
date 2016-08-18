@@ -41,7 +41,7 @@ $alt = $catType . ' - ' . $product->getAddress($product->show_home_no);
                     <?php
                 } ?>
 		        <p class="price-item"><?= StringHelper::formatCurrency($product->price) . ' <span class="txt-unit">' . Yii::t('ad', 'VND').'</span>' ?></p>
-		    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product->updated_at) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: 95</span></p>
+		    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product->start_date) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?php $score = round($product->score - 0.00001157407 * (time() - $product->start_date)); if($score > 0) echo $score; else echo 0; ?></span></p>
 		    </div>
 		</a>
 	</div>
