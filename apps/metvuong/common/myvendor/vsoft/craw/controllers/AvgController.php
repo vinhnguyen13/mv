@@ -174,15 +174,15 @@ class AvgController extends Controller {
 	public function avg($products) {
 		$totalPrice = $totalSize = $totalBed = $totalBath = 0;
 		
-		$totalHasPrice = 0;
-		$totalHasSize = 0;
+		$totalPriceSize = 0;
+		$totalHasPriceSize = 0;
 	
 		foreach ($products as $product) {
 			if($product['price'] && $product['area']) {
 				$totalPrice += $product['price'];
-				$totalHasPrice++;
 				$totalSize += $product['area'];
-				$totalHasSize++;
+				$totalHasPriceSize++;
+				$totalPriceSize += $product['price'] / $product['area'];
 			}
 			
 			$totalBed += $product['room_no'];
@@ -191,7 +191,7 @@ class AvgController extends Controller {
 		
 		$avgPrice = $totalHasPrice ? $totalPrice/$totalHasPrice : 0;
 		$avgSize = $totalHasSize ? $totalSize/$totalHasSize : 0;
-		$avgPriceSize = $avgSize ? $avgPrice/$avgSize : 0;
+		$avgPriceSize = $totalHasPriceSize ? $totalPriceSize/$totalHasPriceSize : 0;
 
 		return ['Data Point' => count($products), 'AVG Price' => $avgPrice, 'AVG SQM' => $avgSize, 'AVG $/SQM' => $avgPriceSize, 'AVG Bed' => $totalBed, 'AVG Bath' => $totalBath];
 	}
