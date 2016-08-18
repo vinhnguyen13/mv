@@ -154,7 +154,7 @@ class CrawlerController extends Controller
     }
 
     public function actionDeleteFile(){
-        $limit = $this->limit == null ? 5000 : ((intval($this->limit) <= 5000 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+        $limit = $this->limit == null ? 1000000 : ((intval($this->limit) <= 1000000 && intval($this->limit) > 0) ? intval($this->limit) : 0);
         Listing::find()->deleteFile($limit);
     }
 

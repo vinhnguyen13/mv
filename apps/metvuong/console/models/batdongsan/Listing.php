@@ -363,7 +363,7 @@ class Listing extends Component
     }
 
     // delete nhung file da duoc import
-    public function deleteFile($limit=5000)
+    public function deleteFile($limit=1000000)
     {
         $connection = AdProductFile::getDb();
         $schema_tool = Helpers::getDbTool();
