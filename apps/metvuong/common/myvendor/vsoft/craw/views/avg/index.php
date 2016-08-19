@@ -23,6 +23,10 @@ use vsoft\ad\models\AdCategory;
 			<?php endforeach; ?>
 		</select>
 		<div id="input-wrap">
+			<div style="display: none;">
+				<label id="has-ward-wrap"><input class="cb" checked="checked" type="checkbox" name="has-ward" value="1" /><span>Có Phường</span></label>
+				<label id="has-project-wrap" style="margin-right: 6px;"><input class="cb" checked="checked" type="checkbox" name="has-project" value="1" /><span>Có Dự án</span></label>
+			</div>
 			<input id="export" class="btn btn-primary" type="button" value="Export Excel" />
 			<a target="_blank" href="#" class="btn btn-primary">View Listings</a>
 		</div>

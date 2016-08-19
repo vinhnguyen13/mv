@@ -100,4 +100,70 @@
 
 #view-wrap {
 	clear: both;
+	padding-top: 22px;
+}
+
+label {
+	margin-left: 6px;
+}
+
+label span {
+	display: inline-block;
+	vertical-align: top;
+	padding-left: 2px;
+	font-size: 15px;
+}
+
+.tab-title {
+	float: left;
+    background: #e6e7ea;
+    color: #000;
+    border-top: 1px solid;
+    border-left: 1px solid;
+    border-right: 1px solid;
+    border-radius: 4px 4px 0 0;
+    height: 28px;
+    line-height: 28px;
+    padding: 0 8px;
+    margin-right: 4px;
+    display: block;
+    opacity: 0.5;
+    bottom: -1px;
+    position: relative;
+}
+.tab-title:hover {
+	text-decoration: none;
+    opacity: 0.9;
+}
+.tab-title.active {
+	text-decoration: none;
+	opacity: 1;
+    border-bottom: 1px solid #e6e7ea;
+    z-index: 2;
+}
+
+#tabs-content {
+	clear: left;
+    border: 1px solid;
+    overflow-x: auto;
+}
+.tab-content {
+	display: none;
+	padding: 12px;
+}
+.tab-content.active {
+	display: table;
+}
+.avg-table {
+	
+}
+.avg-table .area-title {
+	font-weight: bold;
+}
+.avg-table td {
+	border: 1px solid #dad7d7;
+    padding: 4px 12px;
+}
+.avg-table .main {
+	background-color: #F4F4F4;	
 }

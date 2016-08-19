@@ -5,6 +5,7 @@ use yii\web\Controller;
 use frontend\models\Elastic;
 use yii\helpers\Url;
 use vsoft\craw\models\AdProductSearch2;
+use vsoft\ad\models\AdBuildingProject;
 
 class AvgController extends Controller {
 	public function init() {
@@ -61,6 +62,12 @@ class AvgController extends Controller {
 		return ['url' => $this->buildUrl($get), 'sheets' => $this->buildSheets($get)];
 	}
 	
+	public function actionExport() {
+		$get = \Yii::$app->request->get();
+		
+		$sheets = $this->buildSheets($get);
+	}
+	
 	public function buildUrl($get) {
 		$params = $this->buildParams($get);
 		
@@ -76,7 +83,7 @@ class AvgController extends Controller {
 		$provider = $serachModel->search($params);
 		$query = $provider->query;
 		$query->select(array_values(AdProductSearch2::$_columns));
-		$query->addSelect(['ad_product.ward_id']);
+		$query->addSelect(['ad_product.ward_id', 'ad_product.project_building_id']);
 		
 		$products = $query->all(\Yii::$app->dbCraw);
 		
@@ -92,7 +99,16 @@ class AvgController extends Controller {
 		$groupByWard = $this->groupByWard($products);
 		$parentName = current(explode(', ', $get['location']));
 		
-		$sheets[] = $this->buildSheetFromGroupData($groupByWard, $parentName, $parentName . ' - Overview');
+		$sheets[] = [
+			'sheetName' => $parentName . ' - Overview',
+			'data' => [
+				'parent' => [
+					'name' => $parentName,
+					'value' => $this->avg($products)
+				],
+				'childs' => $this->buildChildsFromGroupData($groupByWard)
+			]
+		];
 		
 		foreach ($groupByWard as $wardName => $wardProducts) {
 			$sheets[] = $this->_buildSheetsWard($wardName, $wardName, $wardProducts);
@@ -101,7 +117,7 @@ class AvgController extends Controller {
 		return $sheets;
 	}
 	
-	public function buildSheetFromGroupData($groupData, $parentName, $SheetName) {
+	public function buildChildsFromGroupData($groupData) {
 		$childs = [];
 			
 		foreach ($groupData as $name => $products) {
@@ -110,43 +126,14 @@ class AvgController extends Controller {
 				'value' => $this->avg($products)
 			];
 		}
-			
-		$parent = ['name' => $parentName];
-			
-		$totalPoint = $totalPrice = $totalSize = $totalBed = $totalBath = $totalPriceSize = 0;
-			
-		foreach ($childs as $sos) {
-			$sos = $sos['value'];
-				
-			$totalPoint += $sos['Data Point'];
-			$totalPrice += $sos['AVG Price'];
-			$totalSize += $sos['AVG SQM'];
-			$totalPriceSize += $sos['AVG $/SQM'];
-			$totalBed += $sos['AVG Bed'];
-			$totalBath += $sos['AVG Bath'];
-		}
-			
-		$count = count($childs);
-			
-		$parent['value'] = [
-			'Data Point' => $totalPoint,
-			'AVG Price' => 	$totalPrice / $count,
-			'AVG SQM' => 	$totalSize / $count,
-			'AVG $/SQM' => $totalPriceSize / $count,
-			'AVG Bed' => $totalBed,
-			'AVG Bath' => $totalBath
-		];
 		
-		return [
-			'SheetName' => $SheetName,
-			'data' => ['childs' => $childs, 'parent' => $parent]
-		];
+		return $childs;
 	}
 	
 	public function buildSheetsWard($get, $products) {
 		$parentName = current(explode(', ', $get['location']));
 		
-		return $this->_buildSheetsWard($parentName . ' - Overview', $parentName, $products);
+		return [$this->_buildSheetsWard($parentName . ' - Overview', $parentName, $products)];
 	}
 	
 	public function buildSheetsProject_building($get, $products) {
@@ -158,15 +145,41 @@ class AvgController extends Controller {
 		];
 		
 		return [[
-			'SheetName' => $name,
+			'sheetName' => $name . ' - Overview',
 			'data' => ['childs' => $childs]
 		]];
 	}
 	
 	public function _buildSheetsWard($sheetName, $name, $products) {
 		$groupByProject = $this->groupByProject($products);
+		
+// 		$additionProjectData = [];
+		
+// 		foreach ($groupByProject as $name => $projectProducts) {
+// 			if($projectProducts[0]['project_building_id']) {
+// 				$additionProjectData[$name] = AdBuildingProject::findOne($projectProducts[0]['project_building_id']);
+// 			}
+// 		}
 
-		$sheet = $this->buildSheetFromGroupData($groupByProject, $name, $sheetName);
+		$sheet = [
+			'sheetName' => $sheetName,
+			'data' => [
+				'parent' => [
+					'name' => $name,
+					'value' => $this->avg($products)
+				],
+				'childs' => $this->buildChildsFromGroupData($groupByProject)
+			]
+		];
+		
+// 		foreach ($sheet['data']['childs'] as &$child) {
+// 			$project = $additionProjectData[$child['name']];
+// 			$child['value']['AdditionData'] = [];
+			
+// 			if($project['location']) {
+// 				$child['value']['AdditionData']['Address'] = current(explode(', ', $project['location']));
+// 			}
+// 		}
 		
 		return $sheet;
 	}
@@ -179,6 +192,8 @@ class AvgController extends Controller {
 	
 		$totalHasPrice = 0;
 		$totalHasSize = 0;
+		$totalHasBed = 0;
+		$totalHasBath = 0;
 		
 		foreach ($products as $product) {
 			if($product['price']) {
@@ -192,19 +207,28 @@ class AvgController extends Controller {
 			}
 			
 			if($product['price'] && $product['area']) {
-				$totalHasPriceSize++;
 				$totalPriceSize += ($product['price'] / $product['area']);
+				$totalHasPriceSize++;
 			}
 			
-			$totalBed += $product['room_no'];
-			$totalBath += $product['toilet_no'];
+			if($product['room_no']) {
+				$totalBed += $product['room_no'];
+				$totalHasBed++;
+			}
+			
+			if($product['toilet_no']) {
+				$totalBath += $product['toilet_no'];
+				$totalHasBath++;
+			}
 		}
 		
 		$avgPrice = $totalHasPrice ? $totalPrice/$totalHasPrice : 0;
 		$avgSize = $totalHasSize ? $totalSize/$totalHasSize : 0;
 		$avgPriceSize = $totalHasPriceSize ? $totalPriceSize/$totalHasPriceSize : 0;
+		$avgBed = $totalHasBed ? $totalBed/$totalHasBed : 0;
+		$avgBath = $totalHasBath ? $totalBath/$totalHasBath : 0;
 
-		return ['Data Point' => count($products), 'AVG Price' => $avgPrice, 'AVG SQM' => $avgSize, 'AVG $/SQM' => $avgPriceSize, 'AVG Bed' => $totalBed, 'AVG Bath' => $totalBath];
+		return ['Data Point' => count($products), 'AVG Price' => $avgPrice, 'AVG SQM' => $avgSize, 'AVG $/SQM' => $avgPriceSize, 'AVG Bed' => $avgBed, 'AVG Bath' => $avgBath];
 	}
 	
 	public function groupByProject($products) {
@@ -239,12 +263,18 @@ class AvgController extends Controller {
 		
 		if($get['type'] == 'ward') {
 			$params['ward_name_filter'] = 3;
-			$params['project_name_filter'] = 1;
+			if($get['hasProject']) {
+				$params['project_name_filter'] = 1;
+			}
 		} else if($get['type'] == 'project_building') {
 			$params['project_name_filter'] = 3;
 		} else {
-			$params['project_name_filter'] = 1;
-			$params['ward_name_filter'] = 1;
+			if($get['hasProject']) {
+				$params['project_name_filter'] = 1;
+			}
+			if($get['hasWard']) {
+				$params['ward_name_filter'] = 1;
+			}
 		}
 		
 		return $params;
