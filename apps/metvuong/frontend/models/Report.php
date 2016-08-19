@@ -210,7 +210,7 @@ class Report extends Component
             ];
             $dataChart[5] = [
                 'name' => 'Share',
-                'color' => '#1b6d00',
+                'color' => '#840072',
                 'data' => $dataShare
             ];
             return ['categories'=>$categories, 'dataChart'=>$dataChart];
