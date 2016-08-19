@@ -63,6 +63,22 @@ class TestController extends \yii\web\Controller
         exit;
     }
 
+    public function actionTracking()
+    {
+        $uid = 8;
+        $ip = Yii::$app->getRequest()->getUserIP();
+        $products = [
+            161077,
+            156071,
+            134816
+        ];
+        $return = Tracking::find()->compareStats(null, $ip, $products);
+        echo "<pre>";
+        print_r($return);
+        echo "</pre>";
+        exit;
+    }
+
     public function actionPayment2(){
         $obj = (object) array(
             'error_code' => '00',
