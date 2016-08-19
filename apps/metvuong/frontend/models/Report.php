@@ -283,7 +283,7 @@ class Report extends Component
                 break;
             case Report::TYPE_SHARE;
                 $query = AdProductShare::find();
-                $query->select(['user_id', 'product_id']);
+                $query->select(['user_id', 'product_id', 'type']);
                 $query->andFilterWhere(['BETWEEN', 'time', $from, $to])
                     /*->groupBy('{{user_activity}}.id')*/->orderBy('time DESC');
                 $share_results = $query->asArray()->all();

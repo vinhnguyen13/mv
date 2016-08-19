@@ -106,8 +106,7 @@ class Tracking extends Component
             $time = !empty($time) ? $time : time();
             $query = AdProductShare::find();
             $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:00", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
-            $query->andWhere(['user_id' => (int)$uid]);
-            $query->andWhere(['product_id' => (int)$pid]);
+            $query->andWhere(['user_id' => (int)$uid, 'product_id' => (int)$pid, 'type'=>$type]);
             $query->orderBy('time DESC');
             $adProductShare = $query->one();
             if (count($adProductShare) > 0) {
