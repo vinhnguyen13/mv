@@ -41,6 +41,9 @@ use yii\helpers\Url;
                         <li class="chk_favorite">
                             <label for="favorite"><input type="checkbox" name="toggle-chart" value="" id="favorite" checked><?=Yii::t('report','Favorite')?></label>
                         </li>
+                        <li class="chk_share">
+                            <label for="share"><input type="checkbox" name="toggle-chart" value="" id="share" checked><?=Yii::t('report','Share')?></label>
+                        </li>
                     </ul>
         		</div>
         	</section>

@@ -76,6 +76,9 @@ class ReportController extends Controller
                 case Report::TYPE_FAVORITE;
                     $viewItem = 'list-favorite';
                     break;
+                case Report::TYPE_SHARE;
+                    $viewItem = 'list-share';
+                    break;
             }
             $data = Report::me()->chartDetail($type, $date);
             return $this->renderAjax('default/_partials/'.$viewItem, [
