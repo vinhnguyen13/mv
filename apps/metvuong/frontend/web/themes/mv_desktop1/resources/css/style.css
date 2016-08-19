@@ -14184,6 +14184,12 @@ ul.cardList li {
 .report-boss .option-view-stats .chk_transaction label {
     color: #8a6d3b;
 }
+.report-boss .option-view-stats .chk_favorite label {
+    color: #809000;
+}
+.report-boss .option-view-stats .chk_share label {
+    color: #1b6d00;
+}
 .report-boss .option-view-stats input {
     display: inline-block;
     margin: 0;

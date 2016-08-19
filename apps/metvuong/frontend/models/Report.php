@@ -205,12 +205,12 @@ class Report extends Component
             ];
             $dataChart[4] = [
                 'name' => 'Favorite',
-                'color' => '#b5ca0d',
+                'color' => '#809000',
                 'data' => $dataFavorite
             ];
             $dataChart[5] = [
                 'name' => 'Share',
-                'color' => '#b5ca0d',
+                'color' => '#1b6d00',
                 'data' => $dataShare
             ];
             return ['categories'=>$categories, 'dataChart'=>$dataChart];
