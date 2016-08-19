@@ -8,6 +8,7 @@
 
 namespace frontend\models;
 use common\components\Util;
+use vsoft\tracking\models\base\AdProductShare;
 use Yii;
 use yii\base\Component;
 use yii\db\Query;
@@ -20,6 +21,7 @@ class Report extends Component
     const TYPE_LISTING      = 3;
     const TYPE_TRANSACTION  = 4;
     const TYPE_FAVORITE     = 5;
+    const TYPE_SHARE        = 6;
     public static function me()
     {
         return Yii::createObject(self::className());
@@ -51,6 +53,9 @@ class Report extends Component
             },$dateRange);
             $dataFavorite = array_map(function($v){
                 return ['y'=>0, 'date'=>$v, 'type'=>self::TYPE_FAVORITE];
+            },$dateRange);
+            $dataShare = array_map(function($v){
+                return ['y'=>0, 'date'=>$v, 'type'=>self::TYPE_SHARE];
             },$dateRange);
             /**
              * user register
@@ -146,6 +151,35 @@ class Report extends Component
                 $dataFavorite[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_FAVORITE];
             }
             /**
+             * Share
+             */
+            $query = AdProductShare::find();
+            $query->select(['type', 'time']);
+            $query->andFilterWhere(['BETWEEN', 'time', $from, $to])
+                /*->groupBy('{{user_activity}}.id')*/->orderBy('time DESC');
+            $share_results = $query->asArray()->all();
+            if(!empty($share_results)){
+                array_filter($share_results, function($element, $key) use (&$stats_share) {
+                    $today = !empty($element['today']) ? $element['today'] : date('d/m/Y', $element['time']);
+                    $_key = strtotime(str_replace('/', '-', $today));
+                    if(!empty($stats_share[$_key])){
+                        $stats_share[$_key]['total'] ++;
+                    }else{
+                        $stats_share[$_key]['total'] = 1;
+                        $stats_share[$_key]['today'] = $today;
+                    }
+                    return $element;
+                }, ARRAY_FILTER_USE_BOTH);
+                ksort($stats_share);
+                $totalLogin = 0;
+                foreach($stats_share as $item){
+                    $totalLogin += $item['total'];
+                    $kDate = array_search($item['today'], $dateRange);
+                    $dataShare[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_SHARE];
+                }
+
+            }
+            /**
              * load data to chart
              */
             $categories = $dateRange;
@@ -171,8 +205,13 @@ class Report extends Component
             ];
             $dataChart[4] = [
                 'name' => 'Favorite',
-                'color' => '#8a893b',
+                'color' => '#b5ca0d',
                 'data' => $dataFavorite
+            ];
+            $dataChart[5] = [
+                'name' => 'Share',
+                'color' => '#b5ca0d',
+                'data' => $dataShare
             ];
             return ['categories'=>$categories, 'dataChart'=>$dataChart];
         }
@@ -242,7 +281,16 @@ class Report extends Component
                     ->orderBy('saved_at DESC');
                 return $query->all();
                 break;
-
+            case Report::TYPE_SHARE;
+                $query = AdProductShare::find();
+                $query->select(['user_id', 'product_id']);
+                $query->andFilterWhere(['BETWEEN', 'time', $from, $to])
+                    /*->groupBy('{{user_activity}}.id')*/->orderBy('time DESC');
+                $share_results = $query->asArray()->all();
+                if(!empty($share_results)){
+                    return $share_results;
+                }
+                break;
         }
     }
 

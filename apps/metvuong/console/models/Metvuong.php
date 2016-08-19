@@ -106,8 +106,8 @@ class Metvuong extends Component
                     } catch (Exception $ex) {
                         print_r("\n Error .");
                     }
+                    print_r("\n--------------------\nSend email finish.");
                 }
-                print_r("\n--------------------\nSend email finish.");
             }
         } else
             print_r("No contact info.");
