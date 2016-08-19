@@ -48,14 +48,6 @@ class Test extends Component
         }
     }
 
-    public static function writeFileJson($filePath, $data)
-    {
-        $handle = fopen($filePath, 'a+') or die('Cannot open file:  ' . $filePath);
-        $int = fwrite($handle, $data);
-        fclose($handle);
-        return $int;
-    }
-
     public static function saveDuplicate($pid, $data)
     {
         Yii::$app->dbCraw->createCommand("INSERT INTO `test_duplicate` (pid, content) VALUES ('$pid', '$data')")->execute();
@@ -64,5 +56,10 @@ class Test extends Component
     public static function saveDuplicateNot($pid, $data)
     {
         Yii::$app->dbCraw->createCommand("INSERT INTO `test_duplicate_not` (pid, content) VALUES ('$pid', '$data')")->execute();
+    }
+
+    public function transaction($pid, $data)
+    {
+        Yii::$app->db->createCommand("INSERT INTO `test_transaction` (pid, content) VALUES ('$pid', '$data')")->execute();
     }
 }
