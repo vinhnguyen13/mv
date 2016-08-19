@@ -14,6 +14,7 @@ use vsoft\tracking\models\base\AdProductFinder;
 use vsoft\tracking\models\base\AdProductShare;
 use vsoft\tracking\models\base\AdProductVisitor;
 use vsoft\tracking\models\base\ChartStats;
+use vsoft\tracking\models\base\CompareStats;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
@@ -328,6 +329,51 @@ class Tracking extends Component
             throw $e;
         }
         return 'failed';
+    }
+
+    /**
+     * @param null $uid
+     * @param null $ip
+     * @param $products
+     * @param null $time
+     * @return array|bool|null|CompareStats|\yii\mongodb\ActiveRecord
+     */
+    public function compareStats($uid = null, $ip = null, $products, $time = null){
+        $time = !empty($time) ? $time : time();
+        $query = CompareStats::find();
+        $query->andFilterWhere(['between', 'time', strtotime(date("d-m-Y 00:00:00", $time)), strtotime(date("d-m-Y 23:59:59", $time))]);
+        $query->andFilterWhere(['or',
+            ['=','user_id',$uid],
+            ['=','ip',$ip]]);
+        $query->orderBy('time DESC');
+        $compareStats = $query->one();
+        if (!empty($compareStats)) {
+            $compareStats->products = $products;
+            $compareStats->count++;
+            $compareStats->save();
+            return $compareStats;
+        } else {
+            $alias = $ip;
+            if(!empty($uid)){
+                $user = Yii::$app->db->cache(function() use($uid){
+                    return User::findIdentity($uid);
+                });
+                $alias = $user->username;
+            }
+            $compareStats = new CompareStats();
+            $compareStats->user_id = $uid;
+            $compareStats->ip = $ip;
+            $compareStats->alias = $alias;
+            $compareStats->products = $products;
+            $compareStats->time = $time;
+            $compareStats->count = 1;
+            $compareStats->device = $this->getMobileDetect();
+            if($compareStats->save()){
+                return $compareStats;
+            }
+        }
+
+        return false;
     }
 
 }

@@ -81,5 +81,27 @@
                 height: '250px',
                 alwaysVisible: true
             });
+
+            var products = [];
+            $('.listing-compare ul li').each(function () {
+                products.push($(this).attr('data-id'));
+            });
+            if(products.length > 1){
+                $(document).trigger('compare/tracking', [products]);
+            }
+        });
+
+        $(document).bind('compare/tracking', function (event, products) {
+            var timer = 0;
+            timer = setTimeout(function () {
+                $.ajax({
+                    type: "post",
+                    url: "<?=Url::to(['/ad/compare-tracking'])?>",
+                    data: {ids: products},
+                    success: function (data) {
+
+                    }
+                });
+            }, 500);
         });
     </script>

@@ -1120,4 +1120,22 @@ class AdController extends Controller
 			return $this->render('compare');
 		}
 	}
+
+	public function actionCompareTracking(){
+		if(Yii::$app->request->isAjax) {
+			Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+			$products = \Yii::$app->request->post('ids');
+			$uid = Yii::$app->user->id;
+			$ip = Yii::$app->request->userIP;
+			if(!Yii::$app->user->isGuest){
+				$return = Tracking::find()->compareStats($uid, null, $products);
+			}else{
+				$return = Tracking::find()->compareStats(null, $ip, $products);
+			}
+			if(!empty($return)){
+				return ['error_code'=>0, 'result'=>'Success'];
+			}
+			return ['error_code'=>1, 'result'=>'Error'];
+		}
+	}
 }
