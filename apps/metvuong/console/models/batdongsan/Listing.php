@@ -166,61 +166,74 @@ class Listing extends Component
             $bds_log = Helpers::loadLog($path_folder, $bds_log_name);
         }
 
-        $write_log = false;
+
         $last_type = isset($bds_log["last_type_index"]) ? ($bds_log["last_type_index"] + 1) : 0;
         if($last_type >= ($count_type-1)) {
             unset($bds_log["last_type_index"]);
             $last_type = 0;
             Helpers::writeLog($bds_log, $path_folder, $bds_log_name);
+            print_r("\nReset run all district");
         } // last change
 
-        $p = 1;
-        $break_page = false;
+        $ddlSortReult = "ctl00%24LeftMainContent%24_productSearchResult%24ddlSortReult=1";
+        $viewstate = "__VIEWSTATE=%2FwEPDwULLTE5NDAyOTA4MTRkZKtvk1jQl8oi2w3CPzrBNiMWJ9%2F%2B";
+        $current_date = [];
+        $break_type = false;
+        $write_log = false;
+        $p=1;
         for($t=$last_type; $t < $count_type; $t++) {
             $type = $types[$t];
             $url = self::DOMAIN . '/' . $type;
             $page = Helpers::getUrlContent($url);
             if (!empty($page)) {
                 $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
+                $str_viewstate = trim($html->find('#__VIEWSTATE', 0)->value);
+                if($str_viewstate) {
+                    $encode_viewstate = "__VIEWSTATE=". rawurlencode($str_viewstate);
+                    if($encode_viewstate != $viewstate){
+                        $viewstate = $encode_viewstate;
+                    }
+                }
+                $post_string = $viewstate. "&" . $ddlSortReult;
+
                 $pagination = $html->find('.container-default .background-pager-right-controls a');
                 $count_page = count($pagination);
                 $last_page = (int)str_replace("/" . $type . "/p", "", $pagination[$count_page - 1]->href);
+
                 if ($count_page > 0) {
                     $log = Helpers::loadLog($path_folder . $type . "/", "bds_log_{$type}.json");
-                    $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"] + 1);
-                    $current_page_add = $current_page + 4; // +4 => total pages to run that are 5.
-                    if ($current_page_add > $last_page)
-                        $current_page_add = $last_page;
-
+                    if(isset($log["continue"]) && $log["continue"] == 1)
+                        $current_page = empty($log["current_page"]) ? 1 : ($log["current_page"] + 1);
+                    else {
+                        $current_page = 1;
+                    }
                     if ($current_page <= $last_page) {
-                        for ($i = $current_page; $i <= $current_page_add; $i++) {
-                            if($p > 5) {
-                                $break_page = true;
+                        for ($i = $current_page; $i <= $last_page; $i++) {
+                            // cao tin trong 1 ngay
+                            if(count($current_date) > 1) {
+                                $write_log = true;
                                 break;
                             }
-                            $this->getListProject($type, $i, $product_type, $path_folder, $city);
+                            if($p > 5){
+                                $log["current_page"] = ($i - 1);
+                                $log["continue"] = 1;
+                                Helpers::writeLog($log, $path_folder . $type . "/", "bds_log_{$type}.json");
+                                $break_type = true;
+                                break;
+                            }
+                            $current_date = $this->getProductList($type, $i, $product_type, $city, $post_string, $current_date);
                             $log["current_page"] = $i;
                             Helpers::writeLog($log, $path_folder . $type . "/", "bds_log_{$type}.json");
                             print_r("\n\n{$type}: Page " . $i . " done!\n");
                             $p++;
                         }
 
-                        if($break_page)
+                        if($break_type) {
                             break;
-
-                        if($last_page == $current_page_add) {
-                            $write_log = true;
-                            $log["current_page"] = 0;
-                            Helpers::writeLog($log, $path_folder . $type . "/", "bds_log_{$type}.json");
                         }
-                        else
-                            break;
-
                     } else {
                         $write_log = true;
-                        $log['current_page'] = 0;
-                        Helpers::writeLog($log, $path_folder . $type . "/", "bds_log_{$type}.json");
-                        print_r("\nLast file of {$type} finish.");
+                        print_r("\nRun {$type} finish.");
                     }
                 } else {
                     echo "\nCannot find listing. End page!" . Listing::DOMAIN . "/" . $type;
@@ -229,66 +242,100 @@ class Listing extends Component
                 echo "\nCannot access in get pages of " . Listing::DOMAIN . "/" . $type;
             }
 
-            if($write_log) {
+            if($write_log){
+                $current_date = [];
+                $log = ["current_page" => 0];
+                Helpers::writeLog($log, $path_folder . $type . "/", "bds_log_{$type}.json");
+
+                // ghi nhan Quan nay da dc chay hom nay
                 $bds_log["last_type_index"] = $t;
                 Helpers::writeLog($bds_log, $path_folder, $bds_log_name);
                 print_r("\nTYPE: {$type} DONE!\n");
             }
+
         }  // end foreach types
     }
 
-    public function getListProject($type, $current_page, $product_type, $path_folder, $city)
+    public function getProductList($type, $current_page, $product_type, $city, $post_string, $current_date)
     {
         $href = "/".$type."/p".$current_page;
-//        $viewstate = '/wEPDwULLTE5NDAyOTA4MTRkZKtvk1jQl8oi2w3CPzrBNiMWJ9/+'; //input hidden name=__VIEWSTATE
-//        $viewstate = "__VIEWSTATE=". rawurlencode($viewstate);
-//        $ddlSortReult = 'ctl00$LeftMainContent$_productSearchResult$ddlSortReult';
-//        $ddlSortReult = rawurlencode($ddlSortReult). "=1"; //select option 0: thong thuong; 1 : tin moi nhat
-
-        $viewstate = "__VIEWSTATE=%2FwEPDwULLTE5NDAyOTA4MTRkZKtvk1jQl8oi2w3CPzrBNiMWJ9%2F%2B";
-        $ddlSortReult = "ctl00%24LeftMainContent%24_productSearchResult%24ddlSortReult=1";
-        $post_string = $viewstate. "&" . $ddlSortReult;
-
         $page = Helpers::getUrlContent(self::DOMAIN . $href, $post_string);
         if(!empty($page)) {
             $html = SimpleHTMLDom::str_get_html($page, true, true, DEFAULT_TARGET_CHARSET, false);
-            $list = $html->find('div.p-title a');
-            if (count($list) > 0) {
-                $item_no = 0;
-                // about 20 listing
+            $list = $html->find('div.search-productItem');
+            if(count($list) > 0) {
+                $sales_rents = "rents";
+                if($product_type == 1){
+                    $sales_rents = "sales";
+                }
+                $description = $city . "/" . $sales_rents . "/" . $type;
+
                 foreach ($list as $key => $item) {
-                    $productId = '';
-                    if (preg_match('/pr(\d+)/', self::DOMAIN . $item->href, $matches)) {
-                        if(!empty($matches[1])){
-                            $productId = $matches[1];
+                    $file_name = '';
+                    $str_date = trim($item->find('div.p-main div.mar-right-10',0)->plaintext);
+                    if(!in_array($str_date, $current_date)){
+                        $current_date[] = $str_date;
+                    }
+
+                    if(count($current_date) > 1){
+                        return $current_date;
+                    }
+
+                    $item_href = trim($item->find('div.p-title a',0)->href);
+                    if(empty($item_href)) {
+                        print_r(" - link not found");
+                        continue;
+                    }
+
+                    if (preg_match('/pr(\d+)/', self::DOMAIN . $item_href, $matches)) {
+                        if (!empty($matches[1])) {
+                            $file_name = $matches[1];
                         }
                     }
-                    $checkExists = false;
-                    if(!empty($productId)) {
-                        $checkExists = AdProductFile::checkFileExists($productId); // in_array($productId, $log["files"]);
-                    }
-                    if ($checkExists == false) {
-                        $return_detail = $this->getProductDetail($type, $item->href, $product_type, $path_folder, $productId, $city);
-                        if(!empty($return_detail))
-                            $item_no++;
-//                        sleep(3);
-//                        ob_flush();
-                    } else {
-                        print_r(PHP_EOL.$productId . " exists");
-                    }
 
+                    print_r("\n" . ($key + 1) . " File: " . $file_name);
+                    if (!empty($file_name)) {
+                        // kiem tra co trong bang AdProductFile
+                        $checkExists = AdProductFile::checkFileExists($file_name);
+                        if ($checkExists == false) {
+
+                            $ad_product_file = new AdProductFile();
+                            $ad_product_file->file = $file_name;
+                            $ad_product_file->vendor_link = self::DOMAIN . $item_href;
+                            $ad_product_file->description = $description;
+                            $ad_product_file->created_at = time();
+
+                            $ad_crawl_product = AdProduct::find()->where(['file_name' => $file_name])->one();
+                            if (count($ad_crawl_product) > 0) {
+                                $ad_product_file->is_import = 1;
+                                $ad_product_file->imported_at = $ad_crawl_product->created_at;
+                                $ad_product_file->product_tool_id = $ad_crawl_product->id;
+                                if ($ad_crawl_product->product_main_id > 0) {
+                                    $ad_product_file->is_copy = 1;
+                                    $ad_product_file->copied_at = $ad_crawl_product->updated_at;
+                                    $ad_product_file->product_main_id = $ad_crawl_product->product_main_id;
+                                }
+                                print_r(" - exists in product tool");
+                            }
+                            if($ad_product_file->save(false))
+                                print_r(" - crawl success");
+                        } else {
+                            print_r(" - exists");
+                        }
+                    } else {
+                        print_r(" - not found file name");
+                    }
                 } // end foreach list item
-                return $item_no;
-            } else {
+            }  else {
                 echo "\nCannot find listing. End page! ".Listing::DOMAIN;
             }
-
         } else {
             echo "\nCannot access in get List Project of ".Listing::DOMAIN;
         }
-        return null;
+        return $current_date;
     }
 
+    // no use
     public function getProductDetail($type, $href, $product_type, $path_folder, $productId, $city)
     {
         $url = self::DOMAIN . $href;
@@ -390,4 +437,6 @@ class Listing extends Component
 
         }
     }
+
+
 }

@@ -44,7 +44,7 @@ class AdProductFile extends \yii\db\ActiveRecord
             [['is_import', 'imported_at', 'product_tool_id', 'is_copy', 'copied_at', 'product_main_id', 'created_at', 'updated_at'], 'integer'],
             [['file'], 'string', 'max' => 32],
             [['path'], 'string', 'max' => 255],
-            [['vendor_link'], 'string', 'max' => 500],
+            [['vendor_link', 'description'], 'string', 'max' => 500],
             [['file'], 'unique'],
         ];
     }
@@ -66,6 +66,7 @@ class AdProductFile extends \yii\db\ActiveRecord
             'vendor_link' => Yii::t('file', 'Vendor Link'),
             'created_at' => Yii::t('file', 'Created At'),
             'updated_at' => Yii::t('file', 'Updated At'),
+            'description' => Yii::t('file', 'Description'),
         ];
     }
 
