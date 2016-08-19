@@ -541,20 +541,19 @@ $count_review = $reviews->count();
                             $('body').loading();
                             var url = $(this).data("url");
                             if(url != undefined && url.length > 0) {
+								var winWidth = 600;
+								var winHeight = 350;
+								var winTop = (screen.height / 2) - (winHeight / 2);
+								var winLeft = (screen.width / 2) - (winWidth / 2);
+								var wi = window.open('about:blank', 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
                                 $.ajax({
                                     type: "get",
                                     dataType: 'json',
                                     url: url,
                                     success: function (data) {
-                                        var link = '<?=$product->urlDetail(true)?>';
-                                        if(link != '#' && link.length > 0) {
-                                            var winWidth = 520;
-                                            var winHeight = 350;
-                                            var winTop = (screen.height / 2) - (winHeight / 2);
-                                            var winLeft = (screen.width / 2) - (winWidth / 2);
-                                            window.open('https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link)+ '&p[title]=<?=$title?>&p[images][0]='+'<?=$product_image?>', 'facebook-share-dialog', 'top=' + winTop + ',left=' + winLeft + ',toolbar=0,status=0,width=' + winWidth + ',height=' + winHeight);
-                                        }
                                         $('body').loading({done:true});
+										var link = '<?=$product->urlDetail(true)?>';
+										wi.location.href = 'https://www.facebook.com/sharer/sharer.php?u='+encodeURIComponent(link)+ '&p[title]=<?=$title?>&p[images][0]='+'<?=$product_image?>';
                                         return true;
                                     }
                                 });
