@@ -6,6 +6,12 @@ use frontend\models\Elastic;
 use yii\helpers\Url;
 use vsoft\craw\models\AdProductSearch2;
 use vsoft\ad\models\AdBuildingProject;
+use Box\Spout\Writer\WriterFactory;
+use Box\Spout\Common\Type;
+use Box\Spout\Writer\Style\Border;
+use Box\Spout\Writer\Style\BorderBuilder;
+use Box\Spout\Writer\Style\Color;
+use Box\Spout\Writer\Style\StyleBuilder;
 
 class AvgController extends Controller {
 	public function init() {
@@ -59,13 +65,69 @@ class AvgController extends Controller {
 		
 		$get = \Yii::$app->request->get();
 		
-		return ['url' => $this->buildUrl($get), 'sheets' => $this->buildSheets($get)];
+		return ['exportUrl' => Url::to(['export'] + $get), 'url' => $this->buildUrl($get), 'sheets' => $this->buildSheets($get)];
 	}
 	
 	public function actionExport() {
+		include str_replace('controllers', 'components', dirname(__FILE__)) . '/Spout/Autoloader/autoload.php';
+		
+		ini_set('max_execution_time', 0);
+		
 		$get = \Yii::$app->request->get();
 		
 		$sheets = $this->buildSheets($get);
+		
+		$names = explode(', ', $get['location']);
+		$name = $get['type'] == 'ward' ? $names[0] . ', ' . $names[1] : $names[0];
+		$fileName = 'MV - ' . $name . ' - CH ' . ($get['t'] == 1 ? 'Bán' : 'Cho thuê') . ".xlsx";
+		
+		$writer = WriterFactory::create(Type::XLSX);
+		$writer->openToBrowser($fileName);
+		
+		foreach ($sheets as $k => $sheet) {
+			$excelSheet = ($k == 0) ? $writer->getCurrentSheet() : $writer->addNewSheetAndMakeItCurrent();
+			$excelSheet->setName($sheet['sheetName']);
+
+			if($k == 0) {
+				$writer->addRow(['']);
+			}
+			
+			$rows = [[''], ['Data Point'], ['AVG Price'], ['AVG SQM'], ['AVG $/SQM'], ['AVG Bed'], ['AVG Bath']];
+			
+			$childs = $sheet['data']['childs'];
+			
+			foreach ($childs as $child) {
+				$rows[0][] = $child['name'];
+				$rows[1][] = $child['value']['Data Point'];
+				$rows[2][] = $child['value']['AVG Price'];
+				$rows[3][] = $child['value']['AVG SQM'];
+				$rows[4][] = $child['value']['AVG $/SQM'];
+				$rows[5][] = $child['value']['AVG Bed'];
+				$rows[6][] = $child['value']['AVG Bath'];
+			}
+			
+			if(isset($sheet['data']['parent'])) {
+				$parent = $sheet['data']['parent'];
+				
+				$rows[0][] = mb_strtoupper($parent['name'], 'UTF-8');
+				$rows[1][] = $parent['value']['Data Point'];
+				$rows[2][] = $parent['value']['AVG Price'];
+				$rows[3][] = $parent['value']['AVG SQM'];
+				$rows[4][] = $parent['value']['AVG $/SQM'];
+				$rows[5][] = $parent['value']['AVG Bed'];
+				$rows[6][] = $parent['value']['AVG Bath'];
+			}
+			
+			$style = (new StyleBuilder())->setFontSize(11)->build();
+			$titleStyle = clone $style;
+			$titleStyle->setFontColor(Color::BLUE)->setFontBold();
+			
+			$writer->addRowWithStyle(array_shift($rows), $titleStyle);
+			$writer->addRows($rows, $style);
+		}
+		
+		setcookie("avgComplete", 1);
+		$writer->close();
 	}
 	
 	public function buildUrl($get) {

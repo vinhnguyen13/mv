@@ -1,7 +1,7 @@
 <?php 
 	use yii\helpers\Url;
-use vsoft\ad\models\AdProduct;
-use vsoft\ad\models\AdCategory;
+	use vsoft\ad\models\AdProduct;
+	use vsoft\ad\models\AdCategory;
 
 	$this->registerCss('.summary {position: absolute; right: 0px; top: -20px;} .cms-show-index {padding-top: 40px; position: relative;} .filter-col {margin-right: 12px;} .container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 28px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;}');
 	$this->registerCssFile(Yii::getAlias('@web') . '/css/avg.css');
@@ -27,8 +27,8 @@ use vsoft\ad\models\AdCategory;
 				<label id="has-ward-wrap"><input class="cb" checked="checked" type="checkbox" name="has-ward" value="1" /><span>Có Phường</span></label>
 				<label id="has-project-wrap" style="margin-right: 6px;"><input class="cb" checked="checked" type="checkbox" name="has-project" value="1" /><span>Có Dự án</span></label>
 			</div>
-			<input id="export" class="btn btn-primary" type="button" value="Export Excel" />
-			<a target="_blank" href="#" class="btn btn-primary">View Listings</a>
+			<a id="export" class="btn btn-primary" type="button" href="#">Export Excel</a>
+			<a id="view-listing" target="_blank" href="#" class="btn btn-primary">View Listings</a>
 		</div>
 	</div>
 	<div id="view-wrap" class="hide">

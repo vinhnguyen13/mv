@@ -36,7 +36,7 @@ $this->registerJs($javascript, View::POS_END, 'masonry');
 			      <div class="panel-body">
 			      	<ol class="list-unstyled">
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['craw/manager/index2'])?>">Quản lý tin CRAW</a></li>
-	                    <!-- <li><a href="<?=Yii::$app->urlManager->createUrl(['craw/avg/index'])?>">AVG Calculator</a></li> -->
+	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['craw/avg/index'])?>">AVG Calculator</a></li>
 	                    <li><a href="<?=Yii::$app->urlManager->createUrl(['craw/agent/'])?>">Quản lý môi giới</a></li>
 	                </ol>
 			      </div>

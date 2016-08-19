@@ -26,6 +26,29 @@ $(document).ready(function(){
 		}));
 	});
 	
+	$('#export').click(function(){
+		setCookie('avgComplete', '', 0)
+		
+		var el = $('<div style="top:0px; left:0px; position: fixed; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 99999; "><div style=" position: absolute; top: 50%; margin-top: -20px; font-size: 28px; color: #FFF; text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.7); left: 50%; transform: translateX(-50%); "><span style="white-space: nowrap;" class="text">Đang tạo file Excel</span><img src="/admin/css/images/submit-loading.gif" style=" margin-left: 8px; width: 20px; "></div></div>');
+		$('body').append(el);
+		
+		loadingFn(el, 0);
+	});
+	
+	function loadingFn(el, start) {
+		var text = el.find('.text');
+		
+		if(getCookie('avgComplete')) {
+			el.remove();
+			
+			setCookie('avgComplete', '', 0)
+		} else {
+			setTimeout(function(){
+				loadingFn(el, ++start);
+			}, 100);
+		}
+	}
+	
 	$(document).on('click', '.hit', function(e){
 		e.preventDefault();
 		
@@ -157,7 +180,8 @@ $(document).ready(function(){
 		$.get('calculate', {hasProject: hasProject, hasWard: hasWard, type: avgSearch.data('type'), id: avgSearch.data('id'), t: type.val(), location: avgSearchPlaceholder.find('.text').text()}, function(r){
 			viewWrap.addClass('loaded');
 			
-			inputWrap.find('a').attr('href', r.url);
+			$('#view-listing').attr('href', r.url);
+			$('#export').attr('href', r.exportUrl);
 			
 			addSheets(r.sheets);
 		});
@@ -189,3 +213,21 @@ $(document).ready(function(){
 		resultSearch.html('');
 	}
 });
+
+function setCookie(cname, cvalue, exdays) {
+    var d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    var expires = "expires="+d.toUTCString();
+    document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+	
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for(var i=0; i<ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0)==' ') c = c.substring(1);
+        if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
+    }
+    return "";
+}
