@@ -71,3 +71,12 @@ $profile = Yii::$app->user->identity->profile;
 		});
 	</script>
 <?php endif; ?>
+<?php if(Yii::$app->session->hasFlash('errorMsg')): ?>
+	<script language="javascript">
+		$(document).ready(function () {
+			$('#payment-dialog .inner-popup').html('<?=Yii::$app->session->getFlash('errorMsg')?>');
+			$('#payment-dialog').modal('toggle');
+		});
+	</script>
+<?php endif; ?>
+

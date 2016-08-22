@@ -8,6 +8,7 @@ use Yii;
 use yii\base\Event;
 use yii\base\ViewEvent;
 use yii\helpers\Url;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 use yii\web\View;
@@ -27,7 +28,10 @@ class PaymentController extends Controller
         $this->checkAccess();
         if(Yii::$app->request->isPost) {
             $redirect = Yii::$app->request->get('redirect');
-            Payment::me()->payWithNganLuong($redirect);
+            $return = Payment::me()->payWithNganLuong($redirect);
+            if(!empty($return['error_code']) && $return['error_code'] !== 0){
+                \Yii::$app->getSession()->setFlash('errorMsg', $return['error_message']);
+            }
         }
         return $this->render('index');
     }
