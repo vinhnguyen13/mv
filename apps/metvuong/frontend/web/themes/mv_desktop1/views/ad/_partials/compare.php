@@ -7,6 +7,7 @@
 	$facilities = AdFacility::find()->indexBy('id')->all();
 ?>
 <div class="list-compare" id="compare-box">
+	<?php if($products) : ?>
 	<div class="tbl-wrap">
 		<div class="swiper-container">
 			<div class="swiper-wrapper">
@@ -54,7 +55,7 @@
 					<?php endforeach; ?>
 				</div>
 				<div class="wrap-tr-each swiper-slide compare-s">
-					<div class="w-16 font-600"><span><?= $product->project_building_id ? Yii::t('ad', 'Floor plan') : Yii::t('ad', 'Number of storeys') ?></span></div>
+					<div class="w-16 font-600"><span><?= Yii::t('ad', 'Number of storeys') ?></span></div>
 					<?php foreach ($products as $k => $product): ?>
 					<div class="w-28 text-center<?= $k%2 == 0 ? ' bg-2' : '' ?>"><span><?= $product->adProductAdditionInfo->floor_no ? $product->adProductAdditionInfo->floor_no : '<span style="opacity: 0.5;">' . Yii::t('ad', 'không xác định') . '</span>' ?></span></div>
 					<?php endforeach; ?>
@@ -92,4 +93,7 @@
 			</div>
 		</div>
 	</div>
+	<?php else : ?>
+	<div><?= Yii::t('ad', 'Vui lòng chọn tin để so sánh') ?></div>
+	<?php endif; ?>
 </div>

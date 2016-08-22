@@ -265,11 +265,7 @@ class MapSearch extends AdProduct {
 			$doa = StringHelper::startsWith($sortBy, '-') ? 'desc' : 'asc';
 			$sortBy = str_replace('-', '', $sortBy);
 			
-			$sort = [
-				[
-					"boost_sort" => ["order" => "desc"]		
-				]
-			];
+			$sort = [];
 			
 			if($sortBy == 'score') {
 				$sort[] = [
@@ -306,16 +302,28 @@ class MapSearch extends AdProduct {
 			$page = $this->page ? $this->page : 1;
 			$offset = ($page - 1) * $limit;
 			
+			$sourceRl = ["include" => ["id", "boost_start_time", "user_id", "category_id", "type", "address", "price", "area", "room_no", "toilet_no", "start_date", "score", "img"]];
+			
 			$aggs["rl"] = [
 				"top_hits" => [
-					"_source" => [
-						"include" => ["id", "boost_sort", "user_id", "category_id", "type", "address", "price", "area", "room_no", "toilet_no", "start_date", "score", "img"]
-					],
+					"_source" => $sourceRl,
 					"size" => $limit,
 					"from" => $offset,
 					"sort" => $sort
 				]
 			];
+			
+			if($page == 1) {
+				$aggs["top"] = [
+					"top_hits" => [
+						"_source" => $sourceRl,
+						"size" => 4,
+						"sort" => [
+							"boost_start_time" => ["order" => "desc"]
+						]
+					]
+				];
+			}
 		}
 		
 		if($this->rect && !$this->ra) {

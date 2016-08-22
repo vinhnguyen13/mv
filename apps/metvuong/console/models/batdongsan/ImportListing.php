@@ -73,7 +73,7 @@ class ImportListing extends Component
             $project = $detail->find('#divProjectOptions .current', 0);
             $project = empty($project) ? null : trim($project->innertext);
 
-            $type = $detail->find('#divCatagoryOptions .current', 0)->plaintext;
+            $type = mb_strtolower($detail->find('#divCatagoryOptions .current', 0)->plaintext);
             if(!empty($type)) {
                 $type = Slug::me()->slugify($type);
             }
@@ -305,7 +305,6 @@ class ImportListing extends Component
                 'street' => $street,
                 'home_no' => $home_no,
                 'loai_tai_san' => $loai_tai_san,
-//                'loai_giao_dich' => empty($product_type) ? 1 : $product_type,
                 'price' => $price,
                 'dientich' => $dt,
                 'start_date' => $startdate,
@@ -326,23 +325,39 @@ class ImportListing extends Component
         $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at'];
         $product_files = AdProductFile::find()->where(['is_import' => 0])->orderBy(['created_at' => SORT_DESC])->limit($limit)->all();
         if (count($product_files) > 0) {
-            $connection = AdProductFile::getDb();
-
             foreach ($product_files as $key_file => $product_file) {
-                $bulkImage = array();
-                $filename = $product_file->file;
-                print_r("\n" . ($key_file + 1) . " {$filename}: ");
-                $filepath = $path_folder . $product_file->path . "/" . $filename;
-                $arrPath = explode("/", $product_file->path);
-                if (file_exists($filepath)) {
-                    print_r(" {$arrPath[0]}: {$arrPath[2]}");
-                    $value = $this->parseDetail($filepath);
+                $connection = AdProduct::getDb();
+                $transaction = $connection->beginTransaction();
+                try {
+                    $bulkImage = array();
+                    $filename = $product_file->file;
+                    print_r("\n" . ($key_file + 1) . " {$filename}");
+
+                    $product_type = strpos($product_file->description, 'nha-dat-ban') ? 1 : 2;
+                    $folder = $product_type == 1 ? "files" : "rent_files";
+                    $filepath = $path_folder. $product_file->description . "/". $folder. "/". $filename;
+                    $file_exists = file_exists($filepath);
+                    if ($file_exists) {
+                        $value = $this->parseDetail($filepath);
+                    } else {
+                        $page = Helpers::getUrlContent($product_file->vendor_link);
+                        if (empty($page)) {
+                            $product_file->is_import = -2; // -2 la link khong thay hoac bi chan tu batdongsan
+                            $product_file->save(false);
+                            print_r(" - Cannot crawl page");
+                            continue;
+                        } else {
+                            $value = $this->parseDetail(null, $page);
+                        }
+                    }
+
                     if (empty($value)) {
                         print_r(" Error: no content\n");
                         continue;
                     }
 
-                    $product_type = strpos($product_file->path, 'nha-dat-ban') ? 1 : 2;
+                    print_r(" - ". $value[$filename]["type"]);
+
                     $project_id = null;
                     $city_id = null;
                     $district_id = null;
@@ -422,85 +437,98 @@ class ImportListing extends Component
                         'source' => 1,
                         'file_name' => $filename
                     ];
-                    try {
-                        $crawl_product = new AdProduct($record);
-                        if ($crawl_product->save(false)) {
-                            $product_id = $crawl_product->id;
-                            $product_file->is_import = 1;
-                            $product_file->imported_at = time();
-                            $product_file->product_tool_id = $product_id;
-                            $product_file->save(false);
-                            $insertCount++;
 
-                            $imageArray = $value[$filename]["thumbs"];
-                            if (count($imageArray) > 0) {
-                                foreach ($imageArray as $imageValue) {
-                                    if (!empty($imageValue)) {
-                                        $imageRecord = [
-                                            'user_id' => null,
-                                            'product_id' => $product_id,
-                                            'file_name' => $imageValue,
-                                            'uploaded_at' => time()
-                                        ];
-                                        $bulkImage[] = $imageRecord;
-                                    }
-                                }
-                                if (count($bulkImage) > 0) {
-                                    $connection->createCommand()
-                                        ->batchInsert(\vsoft\craw\models\AdImages::tableName(), $ad_image_columns, $bulkImage)
-                                        ->execute();
+                    $crawl_product = new AdProduct($record);
+                    if ($crawl_product->save(false)) {
+                        $product_id = $crawl_product->id;
+                        $imageArray = $value[$filename]["thumbs"];
+                        if (count($imageArray) > 0) {
+                            foreach ($imageArray as $imageValue) {
+                                if (!empty($imageValue)) {
+                                    $imageRecord = [
+                                        'user_id' => null,
+                                        'product_id' => $product_id,
+                                        'file_name' => $imageValue,
+                                        'uploaded_at' => time()
+                                    ];
+                                    $bulkImage[] = $imageRecord;
                                 }
                             }
-
-                            $infoArray = $value[$filename]["info"];
-                            if (count($infoArray) > 0) {
-                                $facade_width = empty($infoArray["Mặt tiền"]) == false ? trim($infoArray["Mặt tiền"]) : null;
-                                $land_width = empty($infoArray["Đường vào"]) == false ? trim($infoArray["Đường vào"]) : null;
-                                $home_direction = empty($infoArray["direction"]) == false ? trim($infoArray["direction"]) : null;
-                                $facade_direction = null;
-                                $floor_no = empty($infoArray["Số tầng"]) == false ? trim(str_replace('(tầng)', '', $infoArray["Số tầng"])) : 0;
-                                $room_no = empty($infoArray["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)', '', $infoArray["Số phòng ngủ"])) : 0;
-                                $toilet_no = empty($infoArray["Số toilet"]) == false ? trim($infoArray["Số toilet"]) : 0;
-                                $interior = empty($infoArray["Nội thất"]) == false ? trim($infoArray["Nội thất"]) : null;
-                                $infoRecord = [
-                                    'product_id' => $product_id,
-                                    'facade_width' => $facade_width,
-                                    'land_width' => $land_width,
-                                    'home_direction' => $home_direction,
-                                    'facade_direction' => $facade_direction,
-                                    'floor_no' => $floor_no,
-                                    'room_no' => $room_no,
-                                    'toilet_no' => $toilet_no,
-                                    'interior' => $interior
-                                ];
-                                $connection->createCommand()->insert(AdProductAdditionInfo::tableName(), $infoRecord)->execute();
-                            }
-
-                            $contactArray = $value[$filename]["contact"];
-                            if (count($contactArray) > 0) {
-                                $name = isset($contactArray["Tên liên lạc"]) && !empty($contactArray["Tên liên lạc"]) ? trim($contactArray["Tên liên lạc"]) : null;
-                                $phone = isset($contactArray["Điện thoại"]) && !empty($contactArray["Điện thoại"]) ? trim($contactArray["Điện thoại"]) : null;
-                                $mobile = isset($contactArray["Mobile"]) && !empty($contactArray["Mobile"]) ? trim($contactArray["Mobile"]) : null;
-                                $address = isset($contactArray["Địa chỉ"]) && !empty($contactArray["Địa chỉ"]) ? trim($contactArray["Địa chỉ"]) : null;
-                                $email = isset($contactArray["Email"]) && !empty($contactArray["Email"]) ? trim($contactArray["Email"]) : null;
-                                $contactRecord = [
-                                    'product_id' => $product_id,
-                                    'name' => $name,
-                                    'phone' => $phone,
-                                    'mobile' => $mobile == null ? $phone : $mobile,
-                                    'address' => $address,
-                                    'email' => $email
-                                ];
-                                $connection->createCommand()->insert(AdContactInfo::tableName(), $contactRecord)->execute();
+                            $totalImage = count($bulkImage);
+                            if ($totalImage > 0) {
+                                $resImg = AdImages::getDb()->createCommand()
+                                    ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
+                                    ->execute();
+                                if ($resImg > 0)
+                                    print_r(" - Total Image: {$totalImage}");
                             }
                         }
-                    } catch (Exception $e1) {
-                        $product_file->is_import = -1;
-                        $product_file->save(false);
-                        print_r("\n\t" . $e1->getMessage(). PHP_EOL);
+
+                        $infoArray = $value[$filename]["info"];
+                        if (count($infoArray) > 0) {
+                            $facade_width = empty($infoArray["Mặt tiền"]) == false ? trim($infoArray["Mặt tiền"]) : null;
+                            $land_width = empty($infoArray["Đường vào"]) == false ? trim($infoArray["Đường vào"]) : null;
+                            $home_direction = empty($infoArray["direction"]) == false ? trim($infoArray["direction"]) : null;
+                            $facade_direction = null;
+                            $floor_no = empty($infoArray["Số tầng"]) == false ? trim(str_replace('(tầng)', '', $infoArray["Số tầng"])) : 0;
+                            $room_no = empty($infoArray["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)', '', $infoArray["Số phòng ngủ"])) : 0;
+                            $toilet_no = empty($infoArray["Số toilet"]) == false ? trim($infoArray["Số toilet"]) : 0;
+                            $interior = empty($infoArray["Nội thất"]) == false ? trim($infoArray["Nội thất"]) : null;
+                            $infoRecord = [
+                                'product_id' => $product_id,
+                                'facade_width' => $facade_width,
+                                'land_width' => $land_width,
+                                'home_direction' => $home_direction,
+                                'facade_direction' => $facade_direction,
+                                'floor_no' => $floor_no,
+                                'room_no' => $room_no,
+                                'toilet_no' => $toilet_no,
+                                'interior' => $interior
+                            ];
+                            $adInfo = new AdProductAdditionInfo($infoRecord);
+                            if ($adInfo->save(false)) {
+                                print_r(" - Addition");
+                            }
+                        }
+
+                        $contactArray = $value[$filename]["contact"];
+                        if (count($contactArray) > 0) {
+                            $name = isset($contactArray["Tên liên lạc"]) && !empty($contactArray["Tên liên lạc"]) ? trim($contactArray["Tên liên lạc"]) : null;
+                            $phone = isset($contactArray["Điện thoại"]) && !empty($contactArray["Điện thoại"]) ? trim($contactArray["Điện thoại"]) : null;
+                            $mobile = isset($contactArray["Mobile"]) && !empty($contactArray["Mobile"]) ? trim($contactArray["Mobile"]) : null;
+                            $address = isset($contactArray["Địa chỉ"]) && !empty($contactArray["Địa chỉ"]) ? trim($contactArray["Địa chỉ"]) : null;
+                            $email = isset($contactArray["Email"]) && !empty($contactArray["Email"]) ? trim($contactArray["Email"]) : null;
+                            $contactRecord = [
+                                'product_id' => $product_id,
+                                'name' => $name,
+                                'phone' => $phone,
+                                'mobile' => $mobile == null ? $phone : $mobile,
+                                'address' => $address,
+                                'email' => $email
+                            ];
+                            $adContact = new AdContactInfo($contactRecord);
+                            if ($adContact->save(false)) {
+                                print_r(" - Contact");
+                            }
+                        }
                     }
-                } else {
-                    print_r($product_file->path . "/" . $filename . " file not found");
+
+                    $transaction->commit();
+                    if(!empty($crawl_product->id)) {
+                        $product_file->is_import = 1;
+                        $product_file->imported_at = time();
+                        $product_file->product_tool_id = $crawl_product->id;
+                        $product_file->save(false);
+                        if($file_exists)
+                            unlink($filepath);
+                        $insertCount++;
+                    }
+                }
+                catch (Exception $e1) {
+                    $transaction->rollBack();
+                    $product_file->is_import = -1;
+                    $product_file->save(false);
+                    print_r("\n\t" . $e1->getMessage() . PHP_EOL);
                 }
             } // end for loop product file
 
@@ -531,14 +559,15 @@ class ImportListing extends Component
                 print_r("\n {$filename}");
                 $product_file = AdProductFile::find()->where(['file' => $filename])->one();
                 if (count($product_file) > 0) {
-                    $filepath = $path_folder . $product_file->path . "/" . $filename;
+                    $product_type = strpos($product_file->description, 'nha-dat-ban') ? 1 : 2;
+                    $folder = $product_type == 1 ? "files" : "rent_files";
+                    $filepath = $path_folder. $product_file->description . "/". $folder. "/". $filename;
                     if (file_exists($filepath)) {
                         $value = $this->parseDetail($filepath);
                         if (empty($value)) {
                             print_r(" - Error: no content.");
                             continue;
                         }
-                        $product_type = strpos($product_file->path, 'nha-dat-ban') ? 1 : 2;
                         $res = $this->updateProduct($value[$filename], $product, $product_type);
                         if($res) {
                             $no++;
@@ -560,15 +589,7 @@ class ImportListing extends Component
                             print_r(" - Error: no content.");
                             continue;
                         }
-                        // Crawl new file
-                        $filepath = $path_folder. $product_file->path. "/";
-                        if (!is_dir($filepath)) {
-                            mkdir($filepath, 0777, true);
-                            echo "\nDirectory {$filepath} was created";
-                        }
-                        Helpers::writeFileJson($filepath. $filename, $page);
 
-                        $product_type = strpos($product_file->path, 'nha-dat-ban') ? 1 : 2;
                         $res = $this->updateProduct($value[$filename], $product, $product_type);
                         if($res) {
                             $no++;
@@ -619,19 +640,19 @@ class ImportListing extends Component
                     $city_slug = Slug::me()->slugify($city);
                     $district_slug = Slug::me()->slugify($district);
                     $type_slug = $type. "-". $district_slug;
-                    $ad_product_file_path = $city_slug . "/" . $sales_rents . "/" . $type_slug . "/" . $folder;
+                    $ad_product_file_path = $city_slug . "/" . $sales_rents . "/" . $type_slug;
 
                     // Crawl new file
-                    $filepath = $path_folder. $ad_product_file_path. "/";
-                    if (!is_dir($filepath)) {
-                        mkdir($filepath, 0777, true);
-                        echo "\nDirectory {$filepath} was created";
-                    }
-                    Helpers::writeFileJson($filepath. $filename, $page);
+//                    $filepath = $path_folder. $ad_product_file_path. "/";
+//                    if (!is_dir($filepath)) {
+//                        mkdir($filepath, 0777, true);
+//                        echo "\nDirectory {$filepath} was created";
+//                    }
+//                    Helpers::writeFileJson($filepath. $filename, $page);
 
                     $ad_product_file = new AdProductFile();
                     $ad_product_file->file = $filename;
-                    $ad_product_file->path = $ad_product_file_path;
+                    $ad_product_file->description = $ad_product_file_path;
                     $ad_product_file->created_at = time();
                     $ad_product_file->vendor_link = $url;
                     $ad_product_file->is_import = 1;
@@ -884,7 +905,9 @@ class ImportListing extends Component
                 print_r("\n{$no} - {$product->id}");
                 $product_file = AdProductFile::find()->where(['file' => $filename])->one();
                 if (count($product_file) > 0) {
-                    $filepath = $path_folder . $product_file->path . "/" . $filename;
+                    $product_type = strpos($product_file->description, 'nha-dat-ban') ? 1 : 2;
+                    $folder = $product_type == 1 ? "files" : "rent_files";
+                    $filepath = $path_folder. $product_file->description . "/". $folder. "/". $filename;
                     if (file_exists($filepath)) {
                         $value = $this->parseDetail($filepath);
                         if (empty($value)) {
@@ -892,14 +915,14 @@ class ImportListing extends Component
                             continue;
                         }
 
-                        $product_type = strpos($product_file->path, 'nha-dat-ban') ? 1 : 2;
                         $res = $this->updateProduct($value[$filename], $product, $product_type, false, true, true, true);
                         if($res) {
                             print_r("{$res}.");
                         } else{
                             print_r(" - error.");
                         }
-                    } else {
+                    }
+                    else {
                         print_r(" - not file exists");
                         $page = Helpers::getUrlContent($product_file->vendor_link);
                         if(empty($page)){
@@ -915,15 +938,7 @@ class ImportListing extends Component
                             print_r(" - Error: no content.");
                             continue;
                         }
-                        // Crawl new file
-                        $filepath = $path_folder. $product_file->path. "/";
-                        if (!is_dir($filepath)) {
-                            mkdir($filepath, 0777, true);
-                            echo "\nDirectory {$filepath} was created";
-                        }
-                        Helpers::writeFileJson($filepath. $filename, $page);
 
-                        $product_type = strpos($product_file->path, 'nha-dat-ban') ? 1 : 2;
                         $res = $this->updateProduct($value[$filename], $product, $product_type, false, true, true, true);
                         if($res) {
                             print_r("{$res}");
@@ -974,7 +989,7 @@ class ImportListing extends Component
                     $city_slug = Slug::me()->slugify($city);
                     $district_slug = Slug::me()->slugify($district);
                     $type_slug = $type. "-". $district_slug;
-                    $ad_product_file_path = $city_slug . "/" . $sales_rents . "/" . $type_slug . "/" . $folder;
+                    $ad_product_file_path = $city_slug . "/" . $sales_rents . "/" . $type_slug;
 
                     // Crawl new file
                     $filepath = $path_folder. $ad_product_file_path. "/";
@@ -986,7 +1001,7 @@ class ImportListing extends Component
 
                     $ad_product_file = new AdProductFile();
                     $ad_product_file->file = $filename;
-                    $ad_product_file->path = $ad_product_file_path;
+                    $ad_product_file->description = $ad_product_file_path;
                     $ad_product_file->created_at = time();
                     $ad_product_file->vendor_link = $url;
                     $ad_product_file->is_import = 1;
@@ -1002,11 +1017,9 @@ class ImportListing extends Component
                     }
                 }
 
-                if($no >= count($products) || $no % 100 == 0){
-                    $log['last_id'] = $product->id;
-                    $log['last_time'] = date('d M Y H:i', time());
-                    Helpers::writeLog($log, $path, $file_last_id_name);
-                }
+                $log['last_id'] = $product->id;
+                $log['last_time'] = date('d M Y H:i', time());
+                Helpers::writeLog($log, $path, $file_last_id_name);
 
             } // end foreach
         }

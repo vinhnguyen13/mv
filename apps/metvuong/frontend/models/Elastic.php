@@ -340,19 +340,6 @@ class Elastic
 		return self::requestResult($params, self::elasticUrl());
     }
     
-    public static function searchProjects($v) {
-    	$params = self::buildParams($v);
-    	
-    	$query = $params['query']['function_score']['query']['query_string']['query'];
-    	$default_field = $params['query']['function_score']['query']['query_string']['default_field'];
-    	
-    	$params['query']['function_score']['query']['query_string'] = [
-    		"query" => "($default_field:($query)) AND (city_id:1)"
-    	];
-  	
-    	return self::requestResult($params, self::elasticUrl('/project_building'));
-    }
-    
     public static function searchAllProjects($v) {
     	$params = self::buildParams($v);
   	

@@ -39,6 +39,27 @@
 	}
 	
 	$compares = isset($_COOKIE['compareItems']) ? array_map(function($item) { return current(explode(':', $item)); }, explode(',', $_COOKIE['compareItems'])) : [];
+	
+	if($top) {
+		$topBoost = [];
+		$ids = [];
+		
+		foreach ($top['hits'] as $hit) {
+			if($hit['_source']['boost_start_time'] > 0) {
+				$hit['vip'] = true;
+				$topBoost[] = $hit;
+				$ids[] = $hit['_id'];
+			}
+		}
+		
+		foreach ($products as $k => $product) {
+			if(in_array($product['_id'], $ids)) {
+				unset($products[$k]);
+			}
+		}
+		
+		$products = array_merge($topBoost, $products);
+	}
 ?>
 
 <?php if($products): ?>
@@ -65,7 +86,7 @@
 			?>
 			<li class="col-xs-12 col-sm-6 col-lg-4">
 				<div class="item">
-					<a data-id="<?= $product['id'] ?>" class="clearfix<?php if($product['boost_sort']) echo ' vip' ?>" href="<?= $urlDetail ?>" title="<?= $alt ?>">
+					<a data-id="<?= $product['id'] ?>" class="clearfix<?php if(isset($hit['vip'])) echo ' vip' ?>" href="<?= $urlDetail ?>" title="<?= $alt ?>">
 						<div class="pic-intro">
 							<img src="<?= $product['img'] ? $product['img'] : AdImages::defaultImage() ?>" alt="<?= $alt ?>" />
 						</div>

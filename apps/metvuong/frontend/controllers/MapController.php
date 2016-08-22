@@ -22,10 +22,10 @@ class MapController extends ActiveController {
 		
 		$response = [];
 		
-		$result = Elastic::searchProjects($v);
+		$result = Elastic::searchAllProjects($v);
 		
 		if($result['hits']['total'] == 0) {
-			$result = Elastic::searchProjects(Elastic::transform($v));
+			$result = Elastic::searchAllProjects(Elastic::transform($v));
 		}
 
 		foreach ($result['hits']['hits'] as $k => $hit) {
@@ -46,8 +46,15 @@ class MapController extends ActiveController {
 		
 		if($mapSearch->rl) {
 			$list = $result['aggregations']['rl']['hits'];
+			
+			if(isset($result['aggregations']['top'])) {
+				$top = $result['aggregations']['top']['hits'];
+			} else {
+				$top = [];
+			}
+			
 				
-			$response['rl'] = $this->renderPartial('@frontend/web/themes/mv_desktop1/views/ad/_partials/side-list', ['searchModel' => $mapSearch, 'list' => $list]);
+			$response['rl'] = $this->renderPartial('@frontend/web/themes/mv_desktop1/views/ad/_partials/side-list', ['searchModel' => $mapSearch, 'list' => $list, 'top' => $top]);
 		}
 		
 		if($mapSearch->ra) {
