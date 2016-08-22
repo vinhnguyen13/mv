@@ -42,19 +42,11 @@
 	
 	if($top) {
 		$topBoost = [];
-		$ids = [];
 		
 		foreach ($top['hits'] as $hit) {
 			if($hit['_source']['boost_start_time'] > 0) {
 				$hit['vip'] = true;
 				$topBoost[] = $hit;
-				$ids[] = $hit['_id'];
-			}
-		}
-		
-		foreach ($products as $k => $product) {
-			if(in_array($product['_id'], $ids)) {
-				unset($products[$k]);
 			}
 		}
 		
