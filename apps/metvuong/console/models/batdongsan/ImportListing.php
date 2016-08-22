@@ -322,204 +322,213 @@ class ImportListing extends Component
         $start_time = time();
         $insertCount = 0;
         $count_project = 0;
-//        $path_folder = Yii::getAlias('@console') . "/data/bds_html/";
+        $path_folder = Yii::getAlias('@console') . "/data/bds_html/";
         $ad_image_columns = ['user_id', 'product_id', 'file_name', 'uploaded_at'];
         $product_files = AdProductFile::find()->where(['is_import' => 0])->orderBy(['created_at' => SORT_DESC])->limit($limit)->all();
         if (count($product_files) > 0) {
             foreach ($product_files as $key_file => $product_file) {
-                $bulkImage = array();
-                $filename = $product_file->file;
-                print_r("\n" . ($key_file + 1) . " {$filename} ");
-                $page = Helpers::getUrlContent($product_file->vendor_link);
-                if (empty($page)) {
-                    $product_file->is_import = -1;
-                    $product_file->save(false);
-                    print_r(" - Cannot crawl page");
-                    continue;
-                } else {
-                    $connection = AdProduct::getDb();
-                    $transaction = $connection->beginTransaction();
-                    try {
-                        $value = $this->parseDetail(null, $page);
-                        if (empty($value)) {
-                            print_r(" Error: no content\n");
+                $connection = AdProduct::getDb();
+                $transaction = $connection->beginTransaction();
+                try {
+                    $bulkImage = array();
+                    $filename = $product_file->file;
+                    print_r("\n" . ($key_file + 1) . " {$filename}");
+                    $filepath = $path_folder . $product_file->path . "/" . $filename;
+                    $arrPath = explode("/", $product_file->path);
+                    $file_exists = file_exists($filepath);
+                    if ($file_exists) {
+                        print_r(" {$arrPath[0]}: {$arrPath[2]}");
+                        $value = $this->parseDetail($filepath);
+                    } else {
+                        $page = Helpers::getUrlContent($product_file->vendor_link);
+                        if (empty($page)) {
+                            $product_file->is_import = -2; // -2 la link khong thay hoac bi chan tu batdongsan
+                            $product_file->save(false);
+                            print_r(" - Cannot crawl page");
                             continue;
-                        }
-
-                        $product_type = strpos($product_file->path, 'nha-dat-ban') ? 1 : 2;
-                        $project_id = null;
-                        $city_id = null;
-                        $district_id = null;
-
-                        $ad_city = Helpers::getCityId($value[$filename]["city"]);
-                        if (count($ad_city) > 0) {
-                            $city_id = (int)$ad_city['id'];
-                            $district = Helpers::getDistrictId($value[$filename]["district"], $city_id);
-                            if (count($district) > 0) {
-                                $district_id = (int)$district['id'];
-                            }
-                        }
-
-                        $ward_id = $this->getWardId2($value[$filename]["ward"], $district_id);
-                        $street_id = $this->getStreetId2($value[$filename]["street"], $district_id);
-                        $home_no = $value[$filename]["home_no"];
-
-                        $lat = $value[$filename]["lat"];
-                        $lng = $value[$filename]["lng"];
-
-                        $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
-                        // neu co du an thi lay dia chi cua du an gan cho tin dang
-                        if (!empty($project_name)) {
-                            $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->andWhere(['city_id' => $city_id, 'district_id' => $district_id,])->one();
-                            if (count($project) > 0) {
-                                $project_id = $project->id;
-                                $city_id = $project->city_id;
-                                $district_id = $project->district_id;
-                                $ward_id = $project->ward_id;
-                                $street_id = $project->street_id;
-                                $home_no = $project->home_no;
-                                $lat = $project->lat;
-                                $lng = $project->lng;
-                                $count_project++;
-                                print_r(" - " . $project_name);
-                            }
-                        }
-
-                        $area = $value[$filename]["dientich"];
-                        $price = $value[$filename]["price"];
-                        $content = null;
-                        $desc = $value[$filename]["description"];
-                        if (!empty($desc)) {
-                            $content = strip_tags($desc, '<br>');
-                            $pos = strpos($content, 'Tìm kiếm theo từ khóa');
-                            if ($pos) {
-                                $content = substr($content, 0, $pos);
-                                $content = str_replace('Tìm kiếm theo từ khóa', '', $content);
-                            }
-                            $content = str_replace('<br/>', PHP_EOL, $content);
-                            $content = trim($content);
                         } else {
-                            $content = 'Tin đang cập nhật.';
+                            $value = $this->parseDetail(null, $page);
+                        }
+                    }
+
+                    if (empty($value)) {
+                        print_r(" Error: no content\n");
+                        continue;
+                    }
+
+                    $product_type = strpos($product_file->path, 'nha-dat-ban') ? 1 : 2;
+                    $project_id = null;
+                    $city_id = null;
+                    $district_id = null;
+
+                    $ad_city = Helpers::getCityId($value[$filename]["city"]);
+                    if (count($ad_city) > 0) {
+                        $city_id = (int)$ad_city['id'];
+                        $district = Helpers::getDistrictId($value[$filename]["district"], $city_id);
+                        if (count($district) > 0) {
+                            $district_id = (int)$district['id'];
+                        }
+                    }
+
+                    $ward_id = $this->getWardId2($value[$filename]["ward"], $district_id);
+                    $street_id = $this->getStreetId2($value[$filename]["street"], $district_id);
+                    $home_no = $value[$filename]["home_no"];
+
+                    $lat = $value[$filename]["lat"];
+                    $lng = $value[$filename]["lng"];
+
+                    $project_name = !empty($value[$filename]["project"]) ? $value[$filename]["project"] : null;
+                    // neu co du an thi lay dia chi cua du an gan cho tin dang
+                    if (!empty($project_name)) {
+                        $project = AdBuildingProject::find()->where('name = :n', [':n' => $project_name])->andWhere(['city_id' => $city_id, 'district_id' => $district_id,])->one();
+                        if (count($project) > 0) {
+                            $project_id = $project->id;
+                            $city_id = $project->city_id;
+                            $district_id = $project->district_id;
+                            $ward_id = $project->ward_id;
+                            $street_id = $project->street_id;
+                            $home_no = $project->home_no;
+                            $lat = $project->lat;
+                            $lng = $project->lng;
+                            $count_project++;
+                            print_r(" - " . $project_name);
+                        }
+                    }
+
+                    $area = $value[$filename]["dientich"];
+                    $price = $value[$filename]["price"];
+                    $content = null;
+                    $desc = $value[$filename]["description"];
+                    if (!empty($desc)) {
+                        $content = strip_tags($desc, '<br>');
+                        $pos = strpos($content, 'Tìm kiếm theo từ khóa');
+                        if ($pos) {
+                            $content = substr($content, 0, $pos);
+                            $content = str_replace('Tìm kiếm theo từ khóa', '', $content);
+                        }
+                        $content = str_replace('<br/>', PHP_EOL, $content);
+                        $content = trim($content);
+                    } else {
+                        $content = 'Tin đang cập nhật.';
+                    }
+
+                    $record = [
+                        'category_id' => $value[$filename]["loai_tai_san"],
+                        'project_building_id' => $project_id,
+                        'user_id' => null,
+                        'home_no' => $home_no,
+                        'city_id' => $city_id,
+                        'district_id' => $district_id,
+                        'ward_id' => $ward_id,
+                        'street_id' => $street_id,
+                        'type' => $product_type,
+                        'content' => $content,
+                        'area' => $area,
+                        'price' => $price,
+                        'price_type' => empty($price) ? 0 : 1,
+                        'lat' => $lat,
+                        'lng' => $lng,
+                        'start_date' => $value[$filename]["start_date"],
+                        'end_date' => $value[$filename]["end_date"],
+                        'verified' => 1,
+                        'created_at' => $value[$filename]["start_date"],
+                        'updated_at' => $value[$filename]["start_date"],
+                        'source' => 1,
+                        'file_name' => $filename
+                    ];
+
+                    $crawl_product = new AdProduct($record);
+                    if ($crawl_product->save(false)) {
+                        $product_id = $crawl_product->id;
+                        $imageArray = $value[$filename]["thumbs"];
+                        if (count($imageArray) > 0) {
+                            foreach ($imageArray as $imageValue) {
+                                if (!empty($imageValue)) {
+                                    $imageRecord = [
+                                        'user_id' => null,
+                                        'product_id' => $product_id,
+                                        'file_name' => $imageValue,
+                                        'uploaded_at' => time()
+                                    ];
+                                    $bulkImage[] = $imageRecord;
+                                }
+                            }
+                            $totalImage = count($bulkImage);
+                            if ($totalImage > 0) {
+                                $resImg = AdImages::getDb()->createCommand()
+                                    ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
+                                    ->execute();
+                                if ($resImg > 0)
+                                    print_r(" - Total Image: {$totalImage}");
+                            }
                         }
 
-                        $record = [
-                            'category_id' => $value[$filename]["loai_tai_san"],
-                            'project_building_id' => $project_id,
-                            'user_id' => null,
-                            'home_no' => $home_no,
-                            'city_id' => $city_id,
-                            'district_id' => $district_id,
-                            'ward_id' => $ward_id,
-                            'street_id' => $street_id,
-                            'type' => $product_type,
-                            'content' => $content,
-                            'area' => $area,
-                            'price' => $price,
-                            'price_type' => empty($price) ? 0 : 1,
-                            'lat' => $lat,
-                            'lng' => $lng,
-                            'start_date' => $value[$filename]["start_date"],
-                            'end_date' => $value[$filename]["end_date"],
-                            'verified' => 1,
-                            'created_at' => $value[$filename]["start_date"],
-                            'updated_at' => $value[$filename]["start_date"],
-                            'source' => 1,
-                            'file_name' => $filename
-                        ];
-
-                        $crawl_product = new AdProduct($record);
-                        if ($crawl_product->save(false)) {
-                            $product_id = $crawl_product->id;
-
-                            $imageArray = $value[$filename]["thumbs"];
-                            if (count($imageArray) > 0) {
-                                foreach ($imageArray as $imageValue) {
-                                    if (!empty($imageValue)) {
-                                        $imageRecord = [
-                                            'user_id' => null,
-                                            'product_id' => $product_id,
-                                            'file_name' => $imageValue,
-                                            'uploaded_at' => time()
-                                        ];
-                                        $bulkImage[] = $imageRecord;
-                                    }
-                                }
-                                $totalImage = count($bulkImage);
-                                if ($totalImage > 0) {
-                                    $resImg = AdImages::getDb()->createCommand()
-                                        ->batchInsert(AdImages::tableName(), $ad_image_columns, $bulkImage)
-                                        ->execute();
-                                    if($resImg > 0)
-                                        print_r(" - Total Image: {$totalImage}");
-                                }
-                            }
-
-                            $infoArray = $value[$filename]["info"];
-                            if (count($infoArray) > 0) {
-                                $facade_width = empty($infoArray["Mặt tiền"]) == false ? trim($infoArray["Mặt tiền"]) : null;
-                                $land_width = empty($infoArray["Đường vào"]) == false ? trim($infoArray["Đường vào"]) : null;
-                                $home_direction = empty($infoArray["direction"]) == false ? trim($infoArray["direction"]) : null;
-                                $facade_direction = null;
-                                $floor_no = empty($infoArray["Số tầng"]) == false ? trim(str_replace('(tầng)', '', $infoArray["Số tầng"])) : 0;
-                                $room_no = empty($infoArray["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)', '', $infoArray["Số phòng ngủ"])) : 0;
-                                $toilet_no = empty($infoArray["Số toilet"]) == false ? trim($infoArray["Số toilet"]) : 0;
-                                $interior = empty($infoArray["Nội thất"]) == false ? trim($infoArray["Nội thất"]) : null;
-                                $infoRecord = [
-                                    'product_id' => $product_id,
-                                    'facade_width' => $facade_width,
-                                    'land_width' => $land_width,
-                                    'home_direction' => $home_direction,
-                                    'facade_direction' => $facade_direction,
-                                    'floor_no' => $floor_no,
-                                    'room_no' => $room_no,
-                                    'toilet_no' => $toilet_no,
-                                    'interior' => $interior
-                                ];
-                                $adInfo = new AdProductAdditionInfo($infoRecord);
-                                if($adInfo->save(false)){
-                                    print_r(" - Addition");
-                                }
-                            }
-
-                            $contactArray = $value[$filename]["contact"];
-                            if (count($contactArray) > 0) {
-                                $name = isset($contactArray["Tên liên lạc"]) && !empty($contactArray["Tên liên lạc"]) ? trim($contactArray["Tên liên lạc"]) : null;
-                                $phone = isset($contactArray["Điện thoại"]) && !empty($contactArray["Điện thoại"]) ? trim($contactArray["Điện thoại"]) : null;
-                                $mobile = isset($contactArray["Mobile"]) && !empty($contactArray["Mobile"]) ? trim($contactArray["Mobile"]) : null;
-                                $address = isset($contactArray["Địa chỉ"]) && !empty($contactArray["Địa chỉ"]) ? trim($contactArray["Địa chỉ"]) : null;
-                                $email = isset($contactArray["Email"]) && !empty($contactArray["Email"]) ? trim($contactArray["Email"]) : null;
-                                $contactRecord = [
-                                    'product_id' => $product_id,
-                                    'name' => $name,
-                                    'phone' => $phone,
-                                    'mobile' => $mobile == null ? $phone : $mobile,
-                                    'address' => $address,
-                                    'email' => $email
-                                ];
-                                $adContact = new AdContactInfo($contactRecord);
-                                if($adContact->save(false)){
-                                    print_r(" - Contact");
-                                }
+                        $infoArray = $value[$filename]["info"];
+                        if (count($infoArray) > 0) {
+                            $facade_width = empty($infoArray["Mặt tiền"]) == false ? trim($infoArray["Mặt tiền"]) : null;
+                            $land_width = empty($infoArray["Đường vào"]) == false ? trim($infoArray["Đường vào"]) : null;
+                            $home_direction = empty($infoArray["direction"]) == false ? trim($infoArray["direction"]) : null;
+                            $facade_direction = null;
+                            $floor_no = empty($infoArray["Số tầng"]) == false ? trim(str_replace('(tầng)', '', $infoArray["Số tầng"])) : 0;
+                            $room_no = empty($infoArray["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)', '', $infoArray["Số phòng ngủ"])) : 0;
+                            $toilet_no = empty($infoArray["Số toilet"]) == false ? trim($infoArray["Số toilet"]) : 0;
+                            $interior = empty($infoArray["Nội thất"]) == false ? trim($infoArray["Nội thất"]) : null;
+                            $infoRecord = [
+                                'product_id' => $product_id,
+                                'facade_width' => $facade_width,
+                                'land_width' => $land_width,
+                                'home_direction' => $home_direction,
+                                'facade_direction' => $facade_direction,
+                                'floor_no' => $floor_no,
+                                'room_no' => $room_no,
+                                'toilet_no' => $toilet_no,
+                                'interior' => $interior
+                            ];
+                            $adInfo = new AdProductAdditionInfo($infoRecord);
+                            if ($adInfo->save(false)) {
+                                print_r(" - Addition");
                             }
                         }
 
-                        $transaction->commit();
+                        $contactArray = $value[$filename]["contact"];
+                        if (count($contactArray) > 0) {
+                            $name = isset($contactArray["Tên liên lạc"]) && !empty($contactArray["Tên liên lạc"]) ? trim($contactArray["Tên liên lạc"]) : null;
+                            $phone = isset($contactArray["Điện thoại"]) && !empty($contactArray["Điện thoại"]) ? trim($contactArray["Điện thoại"]) : null;
+                            $mobile = isset($contactArray["Mobile"]) && !empty($contactArray["Mobile"]) ? trim($contactArray["Mobile"]) : null;
+                            $address = isset($contactArray["Địa chỉ"]) && !empty($contactArray["Địa chỉ"]) ? trim($contactArray["Địa chỉ"]) : null;
+                            $email = isset($contactArray["Email"]) && !empty($contactArray["Email"]) ? trim($contactArray["Email"]) : null;
+                            $contactRecord = [
+                                'product_id' => $product_id,
+                                'name' => $name,
+                                'phone' => $phone,
+                                'mobile' => $mobile == null ? $phone : $mobile,
+                                'address' => $address,
+                                'email' => $email
+                            ];
+                            $adContact = new AdContactInfo($contactRecord);
+                            if ($adContact->save(false)) {
+                                print_r(" - Contact");
+                            }
+                        }
+                    }
+
+                    $transaction->commit();
+                    if(!empty($crawl_product->id)) {
                         $product_file->is_import = 1;
                         $product_file->imported_at = time();
-                        $product_file->product_tool_id = $product_id;
+                        $product_file->product_tool_id = $crawl_product->id;
                         $product_file->save(false);
+                        if($file_exists)
+                            unlink($filepath);
                         $insertCount++;
-
                     }
-                    catch (Exception $e1) {
-                        $transaction->rollBack();
-                        $product_file->is_import = -1;
-                        $product_file->save(false);
-                        print_r("\n\t" . $e1->getMessage() . PHP_EOL);
-                    }
-
-                } // else import product
-
+                }
+                catch (Exception $e1) {
+                    $transaction->rollBack();
+                    $product_file->is_import = -1;
+                    $product_file->save(false);
+                    print_r("\n\t" . $e1->getMessage() . PHP_EOL);
+                }
             } // end for loop product file
 
             print_r("\n\n------------------------------");
