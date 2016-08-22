@@ -22,10 +22,10 @@ class MapController extends ActiveController {
 		
 		$response = [];
 		
-		$result = Elastic::searchProjects($v);
+		$result = Elastic::searchAllProjects($v);
 		
 		if($result['hits']['total'] == 0) {
-			$result = Elastic::searchProjects(Elastic::transform($v));
+			$result = Elastic::searchAllProjects(Elastic::transform($v));
 		}
 
 		foreach ($result['hits']['hits'] as $k => $hit) {

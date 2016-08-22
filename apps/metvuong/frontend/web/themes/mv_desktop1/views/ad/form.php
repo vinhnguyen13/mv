@@ -33,7 +33,6 @@
 	
 	$cities = AdCity::find()->all();
 	$citiesDropdown = ArrayHelper::map($cities, 'id', 'name');
-	$citiesOptions = ArrayHelper::map($cities, 'id', function($city){ return ['disabled' => ($city->id != AdProduct::DEFAULT_CITY)]; });
 	
 	$wards = AdWard::getListByDistrict($product->district_id);
 	$wardsDropdown = ArrayHelper::map($wards, 'id', 'name');
@@ -146,7 +145,7 @@
 							<?php endif; ?>
 							<div class="form-group col-xs-12 col-sm-6">
 								<label for="<?= Html::getInputId($product, 'city_id') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('city_id') ?></span><span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">2</span>') ?></span></label>
-								<?= Html::activeDropDownList($product, 'city_id', $citiesDropdown, ['class' => 'form-control search', 'options' => $citiesOptions, 'prompt' => "...", 'disabled' => $disabledCity]) ?>
+								<?= Html::activeDropDownList($product, 'city_id', $citiesDropdown, ['class' => 'form-control search', 'prompt' => "...", 'disabled' => $disabledCity]) ?>
 								<div class="help-block"></div>
 							</div>
 							<div class="form-group col-xs-12 col-sm-6"<?= $product->city_id ? '' : ' style="display: none;"' ?>>
