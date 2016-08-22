@@ -889,13 +889,15 @@ $(document).ready(function(){
 				
 				checkboxShowHome.checkbox_ui({disable: true});
 				
-				var facilities = r.facilities.split(',');
-				tienichs.each(function(){
-					if(facilities.indexOf(this.value) !== -1) {
-						$(this).closest('.checkbox-inline').checkbox_ui({checked: true});
-					}
-				});
-
+				if(r.facilities) {
+					var facilities = r.facilities.split(',');
+					tienichs.each(function(){
+						if(facilities.indexOf(this.value) !== -1) {
+							$(this).closest('.checkbox-inline').checkbox_ui({checked: true});
+						}
+					});
+				}
+				
 				form.buildErrorHint();
 				
 				point.calc();
