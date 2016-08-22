@@ -44,6 +44,9 @@ use yii\helpers\Url;
                         <li class="chk_share">
                             <label for="share"><input type="checkbox" name="toggle-chart" value="" id="share" checked><?=Yii::t('report','Share')?></label>
                         </li>
+                        <li class="chk_compare">
+                            <label for="compare"><input type="checkbox" name="toggle-chart" value="" id="compare" checked><?=Yii::t('report','Compare')?></label>
+                        </li>
                     </ul>
         		</div>
         	</section>
