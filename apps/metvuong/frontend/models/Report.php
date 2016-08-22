@@ -9,6 +9,7 @@
 namespace frontend\models;
 use common\components\Util;
 use vsoft\tracking\models\base\AdProductShare;
+use vsoft\tracking\models\base\CompareStats;
 use Yii;
 use yii\base\Component;
 use yii\db\Query;
@@ -22,6 +23,7 @@ class Report extends Component
     const TYPE_TRANSACTION  = 4;
     const TYPE_FAVORITE     = 5;
     const TYPE_SHARE        = 6;
+    const TYPE_COMPARE      = 7;
     public static function me()
     {
         return Yii::createObject(self::className());
@@ -56,6 +58,9 @@ class Report extends Component
             },$dateRange);
             $dataShare = array_map(function($v){
                 return ['y'=>0, 'date'=>$v, 'type'=>self::TYPE_SHARE];
+            },$dateRange);
+            $dataCompare = array_map(function($v){
+                return ['y'=>0, 'date'=>$v, 'type'=>self::TYPE_COMPARE];
             },$dateRange);
             /**
              * user register
@@ -150,8 +155,7 @@ class Report extends Component
              */
             $query = AdProductShare::find();
             $query->select(['type', 'time']);
-            $query->andFilterWhere(['BETWEEN', 'time', $from, $to])
-                /*->groupBy('{{user_activity}}.id')*/->orderBy('time DESC');
+            $query->andFilterWhere(['BETWEEN', 'time', $from, $to])->orderBy('time DESC');
             $share_results = $query->asArray()->all();
             if(!empty($share_results)){
                 array_filter($share_results, function($element, $key) use (&$stats_share) {
@@ -169,6 +173,32 @@ class Report extends Component
                 foreach($stats_share as $item){
                     $kDate = array_search($item['today'], $dateRange);
                     $dataShare[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_SHARE];
+                }
+
+            }
+            /**
+             * Share
+             */
+            $query = CompareStats::find();
+            $query->select(['type', 'time']);
+            $query->andFilterWhere(['BETWEEN', 'time', $from, $to])->orderBy('time DESC');
+            $compare_results = $query->asArray()->all();
+            if(!empty($compare_results)){
+                array_filter($compare_results, function($element, $key) use (&$stats_compare) {
+                    $today = !empty($element['today']) ? $element['today'] : date('d/m/Y', $element['time']);
+                    $_key = strtotime(str_replace('/', '-', $today));
+                    if(!empty($stats_compare[$_key])){
+                        $stats_compare[$_key]['total'] ++;
+                    }else{
+                        $stats_compare[$_key]['total'] = 1;
+                        $stats_compare[$_key]['today'] = $today;
+                    }
+                    return $element;
+                }, ARRAY_FILTER_USE_BOTH);
+                ksort($stats_compare);
+                foreach($stats_compare as $item){
+                    $kDate = array_search($item['today'], $dateRange);
+                    $dataCompare[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_COMPARE];
                 }
 
             }
@@ -205,6 +235,11 @@ class Report extends Component
                 'name' => 'Share',
                 'color' => '#840072',
                 'data' => $dataShare
+            ];
+            $dataChart[6] = [
+                'name' => 'Compare',
+                'color' => '#006956',
+                'data' => $dataCompare
             ];
             return ['categories'=>$categories, 'dataChart'=>$dataChart];
         }
@@ -277,6 +312,16 @@ class Report extends Component
             case Report::TYPE_SHARE;
                 $query = AdProductShare::find();
                 $query->select(['user_id', 'product_id', 'type']);
+                $query->andFilterWhere(['BETWEEN', 'time', $from, $to])
+                    /*->groupBy('{{user_activity}}.id')*/->orderBy('time DESC');
+                $share_results = $query->asArray()->all();
+                if(!empty($share_results)){
+                    return $share_results;
+                }
+                break;
+            case Report::TYPE_COMPARE;
+                $query = CompareStats::find();
+                $query->select(['alias']);
                 $query->andFilterWhere(['BETWEEN', 'time', $from, $to])
                     /*->groupBy('{{user_activity}}.id')*/->orderBy('time DESC');
                 $share_results = $query->asArray()->all();
