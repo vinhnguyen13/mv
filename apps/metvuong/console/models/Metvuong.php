@@ -170,7 +170,7 @@ class Metvuong extends Component
             $fileName = uniqid() . '.' . $ext[$length];
             $filePath = $folder . "/" . $fileName;
             $content = file_get_contents($link);
-            if($content) {
+            if(file_exists($filePath) && $content) {
                 file_put_contents($filePath, $content);
 
                 $helper->makeFolderSizes($folder);

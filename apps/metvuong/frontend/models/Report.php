@@ -68,9 +68,7 @@ class Report extends Component
                 ->andWhere('updated_at > created_at')
                 ->groupBy('today')->orderBy('created_at DESC');
             $stats_register = $query->all();
-            $totalRegister = 0;
             foreach($stats_register as $item){
-                $totalRegister += $item['total'];
                 $kDate = array_search($item['today'], $dateRange);
                 $dataRegister[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_REGISTER];
             }
@@ -97,10 +95,7 @@ class Report extends Component
                 }, ARRAY_FILTER_USE_BOTH);
                 ksort($stats_login3);
             }
-
-            $totalLogin = 0;
             foreach($stats_login3 as $item){
-                $totalLogin += $item['total'];
                 $kDate = array_search($item['today'], $dateRange);
                 $dataLogin[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_LOGIN];
             }
@@ -171,9 +166,7 @@ class Report extends Component
                     return $element;
                 }, ARRAY_FILTER_USE_BOTH);
                 ksort($stats_share);
-                $totalLogin = 0;
                 foreach($stats_share as $item){
-                    $totalLogin += $item['total'];
                     $kDate = array_search($item['today'], $dateRange);
                     $dataShare[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_SHARE];
                 }
