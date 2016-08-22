@@ -354,8 +354,14 @@ class AdController extends Controller
     	$mapSearch->rm = $backupRm;
     	
     	$mapSearch->fetchValues();
+    	
+    	if(isset($result['aggregations']['top'])) {
+    		$top = $result['aggregations']['top']['hits'];
+    	} else {
+    		$top = [];
+    	}
     	 
-    	return $this->render('index', ['searchModel' => $mapSearch, 'list' => $result['aggregations']['rl']['hits'], 'slug' => $params[0]]);
+    	return $this->render('index', ['searchModel' => $mapSearch, 'list' => $result['aggregations']['rl']['hits'], 'top' => $top, 'slug' => $params[0]]);
     }
     
     public function actionTracking() {

@@ -46,8 +46,15 @@ class MapController extends ActiveController {
 		
 		if($mapSearch->rl) {
 			$list = $result['aggregations']['rl']['hits'];
+			
+			if(isset($result['aggregations']['top'])) {
+				$top = $result['aggregations']['top']['hits'];
+			} else {
+				$top = [];
+			}
+			
 				
-			$response['rl'] = $this->renderPartial('@frontend/web/themes/mv_desktop1/views/ad/_partials/side-list', ['searchModel' => $mapSearch, 'list' => $list]);
+			$response['rl'] = $this->renderPartial('@frontend/web/themes/mv_desktop1/views/ad/_partials/side-list', ['searchModel' => $mapSearch, 'list' => $list, 'top' => $top]);
 		}
 		
 		if($mapSearch->ra) {
