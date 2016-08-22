@@ -649,6 +649,7 @@ $(document).ready(function(){
 			$('body').loading({done: true});
 			
 			if(r.success) {
+				form.hidePreview();
 				$('.wrap-frm-listing').hide();
 				$('#notify').removeClass('hide').html(r.template);
 				
