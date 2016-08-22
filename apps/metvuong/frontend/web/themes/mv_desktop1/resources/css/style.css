@@ -14043,6 +14043,36 @@ ul.cardList li {
     color: #fff;
     text-shadow: 0px 0px 2px #000;
 }
+.icon-num-get {
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    z-index: 10;
+    /* padding-top: 8px; */
+    float: left;
+    width: 100%;
+    margin-bottom: 2px;
+}
+.icon-num-get li {
+    float: left;
+    /* margin-left: 10px; */
+    margin-right: 15px;
+    color: #fff;
+    text-shadow: 0px 0px 2px #000;
+    font-size: 16px;
+}
+.icon-num-get li:last-child {
+    margin-right: 0;
+}
+.icon-num-get li .icon-mv {
+    margin-right: 5px;
+}
+#listing-list .icon-num-get a {
+    height: auto;
+    border: none;
+    color: #fff;
+    display: inline-block;
+}
 #listing-list > ul {
     padding: 10px 0 0 5px;
 }
@@ -14461,6 +14491,10 @@ ul.cardList li {
     #listing-list .date-post,
     #listing-list .list-attr-td li, #listing-list .list-attr-td li .icon-mv, #listing-list .price-item .icon-mv, #listing-list .infor-by-up {
         color: #000;
+    }
+    .icon-num-get li {
+        color: #000;
+        text-shadow: inherit;
     }
     #listing-list > ul > li a {
         height: auto;
