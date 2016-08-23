@@ -7783,13 +7783,20 @@ padding: 5px 0;
 .right-attr-detail {
     float: right;
 }
+.item-sidebar .left-attr-detail,
+.item-sidebar .right-attr-detail {
+    float: none;
+}
+.item-sidebar .right-attr-detail {
+    margin-bottom: 5px;
+}
 .right-attr-detail .id-duan {
     text-align: right;
     margin-bottom: 5px;
 }
 .item-sidebar .right-attr-detail .id-duan {
-    /* text-align: left; */
-    margin-bottom: 10px;
+    text-align: left;
+    margin-bottom: 5px;
 }
 .item-sidebar .right-attr-detail .icon-num-get {
 }
@@ -10706,6 +10713,9 @@ input:-webkit-autofill {
 }
 .active .icon-heart-icon-listing:before {
     content: "\f004";
+}
+.tabs-scroll-item .active .icon-heart-icon-listing:before {
+        content: "\e91f";
 }
 .wrap-list-duan .active .icon-heart-icon-listing:before {
     content: "\e91f";
@@ -14680,6 +14690,15 @@ ul.cardList li {
         float: none;
         height: auto;
     }
+    .item-sidebar .right-attr-detail {
+        float: right;
+    }
+    .item-sidebar .left-attr-detail {
+        float: left;
+    }
+    .item-sidebar .right-attr-detail .id-duan {
+        text-align: right;
+    }
 }
 @media (max-width: 768px) {
     #listing-list > ul > li {
@@ -14723,5 +14742,14 @@ ul.cardList li {
         line-height: 100%;
         float: none;
         margin-bottom: 9px;
+    }
+}
+@media (max-width: 1580px) {
+    .icon-num-get {
+        width: 100%;
+    }
+    #listing-list .date-post {
+        float: left;
+        text-align: left;
     }
 }
