@@ -422,11 +422,11 @@ class SiteController extends Controller
 			$bedroom = Yii::$app->request->post('bedroom');
 			if(!empty($bathroom) || !empty($bedroom)){
 				$query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
-				if(!empty($bathroom)){
-					$query->andWhere(['>=','ad_product_addition_info.room_no', $bathroom]);
-				}
 				if(!empty($bedroom)){
-					$query->andWhere(['>=','ad_product_addition_info.toilet_no', $bedroom]);
+					$query->andWhere(['>=','ad_product_addition_info.room_no', $bedroom]);
+				}
+				if(!empty($bathroom)){
+					$query->andWhere(['>=','ad_product_addition_info.toilet_no', $bathroom]);
 				}
 			}
 
