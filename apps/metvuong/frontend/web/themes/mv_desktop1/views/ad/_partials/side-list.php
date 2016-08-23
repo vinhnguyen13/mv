@@ -106,8 +106,8 @@
 							</div>
 							<ul class="icon-num-get">
 						    	<li><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>3</li>
-						    	<li><span class="icon-mv"><span class="icon-share-social"></span></span>5</li>
-						    	<li><span class="icon-mv"><span class="icon-icons-search"></span></span>12</li>
+						    	<li><span class="icon-mv fs-16"><span class="icon-share-social"></span></span>5</li>
+						    	<li><span class="icon-mv fs-16"><span class="icon-icons-search"></span></span>12</li>
 						    </ul>
 					    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['start_date']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?php $score = round($product['score'] - 0.00001157407 * ($now - $product['start_date'])); if($score > 0) echo $score; else echo 0; ?></span></p>
 					    </div>

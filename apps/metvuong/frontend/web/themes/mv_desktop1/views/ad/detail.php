@@ -303,7 +303,6 @@ $count_review = $reviews->count();
 						<p><?= $address ?></p>
 					</div>
 					<div class="left-attr-detail">
-						<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 						<?php
                         $adProductAdditionInfo = $product->adProductAdditionInfo;
                         $room_no = !empty($adProductAdditionInfo) ? $adProductAdditionInfo->room_no : null;
@@ -321,9 +320,15 @@ $count_review = $reviews->count();
                             </ul>
                             <?php
                         } ?>
+                        <p class="price-item"><span class="icon-mv"><span class="icon-pricing"></span></span> <?= StringHelper::formatCurrency($product->price) . ' <span class="txt-unit">' . Yii::t('ad', 'VND').'</span>' ?></p>
 					</div>
 					<div class="right-attr-detail">
-						<p class="price-item"><span class="icon-mv"><span class="icon-pricing"></span></span> <?= StringHelper::formatCurrency($product->price) . ' <span class="txt-unit">' . Yii::t('ad', 'VND').'</span>' ?></p>
+						<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
+						<ul class="icon-num-get">
+					    	<li><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>3</li>
+					    	<li><span class="icon-mv"><span class="icon-share-social"></span></span>5</li>
+					    	<li><span class="icon-mv"><span class="icon-icons-search"></span></span>12</li>
+					    </ul>
 					</div>
 				</div>
 

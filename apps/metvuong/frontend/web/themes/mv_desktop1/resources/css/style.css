@@ -3874,6 +3874,12 @@ html.mm-opening .mm-slideout {
 .left-attr-detail .list-attr-td li .icon-mv {
     font-size: 30px;
 }
+.item-sidebar .left-attr-detail .list-attr-td li .icon-mv {
+    font-size: 20px;
+}
+.box-feature-item .left-attr-detail .list-attr-td li .icon-mv {
+    font-size: 24px;
+}
 .right-attr-detail .price-item .icon-mv {
     font-size: 30px;
 }
@@ -4144,12 +4150,24 @@ html.mm-opening .mm-slideout {
     position: relative;
     margin-bottom: 3px;
 }
+.left-attr-detail .price-item {
+    font-size: 25px;
+}
+.item-sidebar .left-attr-detail .price-item {
+    line-height: 100%;
+}
+.box-feature-item .left-attr-detail .price-item {
+    font-size: 18px;
+}
 .price-item .txt-unit {
     font-size: 14px;
 }
 .price-item .icon-mv {
     font-size: 25px;
     color: #000;
+}
+.left-attr-detail .price-item .icon-mv {
+    font-size: 27px;
 }
 .price-attr {
     margin: 0 0 10px 0;
@@ -4396,7 +4414,7 @@ html.mm-opening .mm-slideout {
     font-size: 15px;
     font-weight: 600;
     color: #00a769;
-    margin-bottom: 5px;
+    margin-bottom: 9px;
 }
 .address-listing p {
     text-overflow: ellipsis;
@@ -6350,6 +6368,7 @@ padding: 5px 0;
 .date-post {
     font-weight: 400;
     color: #999;
+    text-transform: capitalize;
 }
 .wrap-news .date-post {
     margin-bottom: 10px;
@@ -7559,7 +7578,7 @@ padding: 5px 0;
         padding: 0;
     }
     .detail-listing .infor-listing .list-attr-td {
-        margin-bottom: 0;
+        margin-bottom: 11px;
     }
     .detail-listing .collapsing,
     .detail-listing .collapse {
@@ -7757,6 +7776,35 @@ padding: 5px 0;
 }
 .detail-listing-dt .infor-listing .list-attr-td {
     margin-bottom: 10px;
+}
+.left-attr-detail {
+    float: left;
+}
+.right-attr-detail {
+    float: right;
+}
+.right-attr-detail .id-duan {
+    text-align: right;
+    margin-bottom: 5px;
+}
+.item-sidebar .right-attr-detail .id-duan {
+    /* text-align: left; */
+    margin-bottom: 10px;
+}
+.item-sidebar .right-attr-detail .icon-num-get {
+}
+.right-attr-detail .id-duan,
+.right-attr-detail .icon-num-get {
+    float: none;
+}
+.right-attr-detail .icon-num-get li {
+    color: #3c3c3c;
+    text-shadow: inherit;
+    margin-right: 10px;
+    font-size: 16px;
+}
+.box-feature-item .right-attr-detail .icon-num-get li {
+    font-size: 15px;
 }
 .detail-listing-dt .price-td {
     line-height: 100%;
@@ -11309,8 +11357,7 @@ label:hover {
     -moz-border-radius: 2px;
     -ms-border-radius: 2px;
 }
-.left-attr-detail .id-duan {
-}
+.left-attr-detail .id-duan {/* float: none; */}
 .wrap-frm-listing select {
     border-radius: 0;
     -webkit-border-radius: 0;
@@ -11717,11 +11764,21 @@ label:hover {
         width: 100%;
     }
     .left-attr-detail {
-        width: 100%;
+        /* width: 100%; */
         margin-bottom: 10px;
+    }
+    .box-feature-item .left-attr-detail {
+        margin-bottom: 0;
     }
     .right-attr-detail {
         overflow: visible !important;
+    }
+    .box-feature-item .right-attr-detail {
+        float: none;
+        margin-bottom: 9px;
+    }
+    .box-feature-item .listing-item .item .id-duan {
+        text-align: left;
     }
     #listing-list .info-item .price-item {
         /* margin-bottom: 10px; */
@@ -13302,7 +13359,7 @@ ul.cardList li {
 }
 .detail-listing-extra .left-attr-detail,
 #review-listing .left-attr-detail {
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 .payment-gr .hemi-intro-popover,
 .post-listing .hemi-intro-popover,
@@ -14044,28 +14101,20 @@ ul.cardList li {
     text-shadow: 0px 0px 2px #000;
 }
 .icon-num-get {
-    /* position: absolute; */
-    top: 0;
-    left: 0;
-    z-index: 10;
-    /* padding-top: 8px; */
     float: left;
-    width: 100%;
-    margin-bottom: 2px;
 }
 .icon-num-get li {
-    float: left;
-    /* margin-left: 10px; */
-    margin-right: 15px;
+    display: inline-block;
+    margin-right: 5px;
     color: #fff;
     text-shadow: 0px 0px 2px #000;
-    font-size: 16px;
+    font-size: 15px;
 }
 .icon-num-get li:last-child {
     margin-right: 0;
 }
 .icon-num-get li .icon-mv {
-    margin-right: 5px;
+    margin-right: 3px;
 }
 #listing-list .icon-num-get a {
     height: auto;
@@ -14084,6 +14133,16 @@ ul.cardList li {
 }
 #listing-list .date-post {
     color: #fff;
+    float: right;
+    line-height: 22px;
+    text-transform: capitalize;
+}
+#listing-list .date-post span {
+    margin-left: 5px;
+    border-left: 1px solid #fff;
+    padding-left: 5px;
+    line-height: 15px;
+    margin-top: 5px;
 }
 #listing-list .vip .address-listing,
 #listing-list .address-listing {
@@ -14504,6 +14563,18 @@ ul.cardList li {
     #listing-list > ul {
         padding: 0;
     }
+    .item-sidebar .left-attr-detail,
+    .item-sidebar .right-attr-detail {
+        float: none;
+        margin-bottom: 0px;
+    }
+    .item-sidebar .right-attr-detail .id-duan {
+        text-align: left;
+        margin-bottom: 5px;
+    }
+    .item-sidebar .right-attr-detail {
+        margin-bottom: 5px;
+    }
 }
 @media (max-width: 1200px) {
     .detail-listing-dt.show-detail {
@@ -14538,6 +14609,9 @@ ul.cardList li {
         height: 18px;
         margin-bottom: 15px;
         padding: 0 30px;
+    }
+    .detail-listing-extra .wrap-swiper .icons-detail li a {
+        padding: 0;
     }
 }
 @media (max-width: 1024px) {
