@@ -24,6 +24,7 @@ class Report extends Component
     const TYPE_FAVORITE     = 5;
     const TYPE_SHARE        = 6;
     const TYPE_COMPARE      = 7;
+    const TYPE_DASHBOARD    = 8;
     public static function me()
     {
         return Yii::createObject(self::className());
@@ -61,6 +62,9 @@ class Report extends Component
             },$dateRange);
             $dataCompare = array_map(function($v){
                 return ['y'=>0, 'date'=>$v, 'type'=>self::TYPE_COMPARE];
+            },$dateRange);
+            $dataDashboard = array_map(function($v){
+                return ['y'=>0, 'date'=>$v, 'type'=>self::TYPE_DASHBOARD];
             },$dateRange);
             /**
              * user register
@@ -203,6 +207,20 @@ class Report extends Component
 
             }
             /**
+             * Dashboard
+             */
+            $month_year = new \yii\db\Expression("DATE_FORMAT(FROM_UNIXTIME(`start_at`), '%d/%m/%Y')");
+            $query = new Query();
+            $query->select(['count(*) total', $month_year." today"])->from('ec_statistic_view')
+                ->where(['>', 'start_at', $from])
+                ->andWhere(['<', 'start_at', $to])
+                ->groupBy('today')->orderBy('start_at DESC');
+            $stats_dashboard = $query->all();
+            foreach($stats_dashboard as $item){
+                $kDate = array_search($item['today'], $dateRange);
+                $dataDashboard[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_DASHBOARD];
+            }
+            /**
              * load data to chart
              */
             $categories = $dateRange;
@@ -240,6 +258,11 @@ class Report extends Component
                 'name' => 'Compare',
                 'color' => '#006956',
                 'data' => $dataCompare
+            ];
+            $dataChart[7] = [
+                'name' => 'Dashboard',
+                'color' => '#00bcd4',
+                'data' => $dataDashboard
             ];
             return ['categories'=>$categories, 'dataChart'=>$dataChart];
         }
@@ -328,6 +351,14 @@ class Report extends Component
                 if(!empty($share_results)){
                     return $share_results;
                 }
+                break;
+            case Report::TYPE_DASHBOARD;
+                $query = new Query();
+                $query->select(['user_id id'])->from('ec_statistic_view')
+                    ->where(['>', 'start_at', $from])
+                    ->andWhere(['<', 'start_at', $to])
+                    ->orderBy('start_at DESC');
+                return $query->all();
                 break;
         }
     }

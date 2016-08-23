@@ -14193,6 +14193,9 @@ ul.cardList li {
 .report-boss .option-view-stats .chk_compare label {
     color: #006956;
 }
+.report-boss .option-view-stats .chk_dashboard label {
+    color: #00bcd4;
+}
 .report-boss .option-view-stats input {
     display: inline-block;
     margin: 0;
