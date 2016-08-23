@@ -596,8 +596,4 @@ class DashboardController extends Controller
         }
     }
 
-    public function actionSyncFavorite($pid){
-        return Tracking::syncFavorite($pid);
-    }
-
 }

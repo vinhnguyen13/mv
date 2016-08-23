@@ -18,6 +18,7 @@ use vsoft\tracking\models\base\CompareStats;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
+use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use vsoft\news\models\CmsShow;
@@ -285,41 +286,33 @@ class Tracking extends Component
     }
 
     public static function syncFavorite($pid){
-        $date_range = array();
-        $adProSaveds = AdProductSaved::find()->where(['product_id'=>(int)$pid])->orderBy(['saved_at' => SORT_ASC])->asArray()->all();
-        if(count($adProSaveds) > 0) {
-            foreach ($adProSaveds as $ads) {
-                $saved_at = (int)$ads['saved_at'];
-                $date = date(Chart::DATE_FORMAT, $saved_at);
-                if($saved_at == 0)
-                    $date = date(Chart::DATE_FORMAT, time());
-
-                if (array_key_exists($date, $date_range)) {
-                    $in = $date_range[$date];
-                    $date_range[$date] = $in + 1;
-                }
-                else {
-                    $date_range[$date] = ($saved_at == 0 ? 0 : 1);
-                }
-            }
-        }
+        $pid = (int) $pid;
+        $query = new Query();
+        $query->select(['count(*) total', new \yii\db\Expression("DATE_FORMAT(FROM_UNIXTIME(`saved_at`), '%d-%m-%Y')")." today"])
+            ->from('ad_product_saved')->where(['=','status',1])->andWhere(['product_id'=>$pid])->groupBy('today')->orderBy('saved_at DESC');
+        $adProSaveds = $query->all();
         $transaction = Yii::$app->db->beginTransaction();
         try {
-            if(count($date_range) > 0){
-                foreach ($date_range as $key => $val) {
-                    $chart_stats = ChartStats::find()->where(['product_id' => (int)$pid, 'date' => $key])->one();
-                    if(is_object($chart_stats) && count($chart_stats) > 0) {
-                        $chart_stats->favorite = $val;
+            if(!empty($adProSaveds)){
+                foreach ($adProSaveds as $key => $val) {
+                    print_r("pid: $pid day : ".$val['today'].' total: '.$val['total'].PHP_EOL);
+                    $chart_stats = ChartStats::find()->where(['product_id' => $pid, 'date' => $val['today']])->one();
+                    if(!empty($chart_stats)) {
+                        $chart_stats->favorite = (int)$val['total'];
                         $chart_stats->save();
                     } else {
                         $chart_stats = new ChartStats();
-                        $chart_stats->date = $key;
-                        $chart_stats->product_id = (int)$pid;
-                        $chart_stats->created_at = strtotime($key);
-                        $chart_stats->favorite = $val;
+                        $chart_stats->date = $val['today'];
+                        $chart_stats->product_id = $pid;
+                        $chart_stats->created_at = strtotime($val['today']);
+                        $chart_stats->favorite = (int)$val['total'];
                         $chart_stats->save();
                     }
                 }
+            }else{
+                $chart_stats = ChartStats::find()->where(['product_id' => $pid])->one();
+                $chart_stats->favorite = 0;
+                $chart_stats->save();
             }
             $transaction->commit();
             return 'synchronized';
