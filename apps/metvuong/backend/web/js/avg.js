@@ -32,7 +32,7 @@ $(document).ready(function(){
 				children.eq(0).find('a').trigger('click');
 			}
 		}
-	});
+	}).focus();
 	
 	$('#export').click(function(){
 		setCookie('avgComplete', '', 0)
