@@ -13,7 +13,7 @@
 <div id="avg-page">
 	<div id="filter-wrap">
 		<div id="avg-search-wrap">
-			<input data-url="<?= Url::to(['search']) ?>" class="big-field" id="avg-search" type="text" placeholder="Nhập tên Quận, Phường Hoặc Dự án" />
+			<input data-url="<?= Url::to('/api/v1/craw-search/get') ?>" class="big-field" id="avg-search" type="text" placeholder="Nhập tên Quận, Phường Hoặc Dự án" />
 			<div class="big-field avg-search-placeholder"><span class="text"></span><a href="#" class="close">x</a></div>
 			<div id="result-search-wrap" class="hide"><ul class="result-search"></ul></div>
 		</div>

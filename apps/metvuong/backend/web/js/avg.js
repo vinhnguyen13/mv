@@ -24,6 +24,14 @@ $(document).ready(function(){
     			hideSearchList();
     		}
 		}));
+	}).keydown(function(e){
+		if(e.keyCode === 13) {
+			var children = resultSearch.children();
+
+			if(children.length) {
+				children.eq(0).find('a').trigger('click');
+			}
+		}
 	});
 	
 	$('#export').click(function(){
@@ -91,6 +99,13 @@ $(document).ready(function(){
 	avgSearchWrap.find('.close').click(function(e){
 		e.preventDefault();
 		
+		filterWrap.removeClass('active');
+		avgSearch.focus();
+
+		viewWrap.addClass('hide').removeClass('loaded');
+	});
+	
+	avgSearchPlaceholder.click(function(){
 		filterWrap.removeClass('active');
 		avgSearch.focus();
 
