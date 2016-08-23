@@ -17,7 +17,7 @@ $alt = $catType . ' - ' . $product->getAddress($product->show_home_no);
 	<div class="item">
 		<a data-id="<?= $product->id ?>" class="clearfix" href="<?= $product->urlDetail(); ?>" title="<?= $alt ?>">
 			<div class="pic-intro">
-				<img alt="<?= $alt ?>" src="<?= $product->file_name ? AdImages::getImageUrl($product->folder, $product->file_name, AdImages::SIZE_THUMB) : AdImages::defaultImage() ?>" />
+				<img alt="<?= $alt ?>" src="<?= $product->file_name ? AdImages::getImageUrl($product->folder, $product->file_name, AdImages::SIZE_MEDIUM) : AdImages::defaultImage() ?>" />
 			</div>
 			<div class="info-item clearfix">
 				<div class="address-listing">
