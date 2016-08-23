@@ -14407,8 +14407,17 @@ ul.cardList li {
     height: auto;
     max-width: inherit;
 }
-.search-subpage .item-right .get-show-num {
-    background: rgba(6, 153, 73, 0.2);
+.tool-compare a {
+    position: relative;
+}
+.tool-compare {
+    transition: all 250ms;
+}
+.get-show-num {
+    background: #00a769;
+}
+.get-show-num a {
+    color: #fff;
 }
 .search-subpage .item-right button:hover,
 .search-subpage .item-right a:hover {
