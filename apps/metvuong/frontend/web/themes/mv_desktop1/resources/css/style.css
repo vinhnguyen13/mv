@@ -7794,11 +7794,21 @@ padding: 5px 0;
     text-align: right;
     margin-bottom: 5px;
 }
+.item-sidebar .address-listing {
+    margin-bottom: 3px;
+}
 .item-sidebar .right-attr-detail .id-duan {
     text-align: left;
-    margin-bottom: 5px;
+    margin-bottom: 0;
+    float: left;
+    line-height: 20px;
 }
 .item-sidebar .right-attr-detail .icon-num-get {
+    float: right;
+    width: auto;
+}
+.item-sidebar .right-attr-detail .icon-num-get li {
+    font-size: 14px;
 }
 .right-attr-detail .id-duan,
 .right-attr-detail .icon-num-get {
@@ -7812,6 +7822,7 @@ padding: 5px 0;
 }
 .box-feature-item .right-attr-detail .icon-num-get li {
     font-size: 15px;
+    line-height: 100%;
 }
 .detail-listing-dt .price-td {
     line-height: 100%;
@@ -11787,8 +11798,20 @@ label:hover {
         float: none;
         margin-bottom: 9px;
     }
+    .box-feature-item .address-listing {
+        margin-bottom: 5px;
+    }
     .box-feature-item .listing-item .item .id-duan {
         text-align: left;
+    }
+    .box-feature-item .listing-item .item .id-duan {
+        line-height: 18px;
+        margin-bottom: 0;
+        float: left;
+    }
+    .box-feature-item .right-attr-detail .icon-num-get {
+        float: right;
+        width: inherit;
     }
     #listing-list .info-item .price-item {
         /* margin-bottom: 10px; */
@@ -14710,6 +14733,8 @@ ul.cardList li {
     }
     .item-sidebar .right-attr-detail .id-duan {
         text-align: right;
+        float: right;
+        width: 100%;
     }
 }
 @media (max-width: 768px) {
@@ -14749,11 +14774,6 @@ ul.cardList li {
     }
     .item-sidebar .listing-item .item .id-duan {
         float: none;
-    }
-    .box-feature-item .listing-item .item .id-duan {
-        line-height: 100%;
-        float: none;
-        margin-bottom: 9px;
     }
 }
 @media (max-width: 1580px) {
