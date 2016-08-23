@@ -91,16 +91,24 @@
 }
 #input-wrap {
 	display: none;
-	float: left;
 }
 
 .active #input-wrap {
-	display: inline-block;
+	display: block;
 }
 
 #view-wrap {
 	clear: both;
 	padding-top: 22px;
+}
+
+#input-wrap > a {
+	float: left;
+	margin-right: 4px;
+}
+
+#addition-setting {
+	clear: left;
 }
 
 label {

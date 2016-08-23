@@ -23,12 +23,12 @@
 			<?php endforeach; ?>
 		</select>
 		<div id="input-wrap">
-			<div style="display: none;">
+			<a id="export" class="btn btn-primary" type="button" href="#">Export Excel</a>
+			<a id="view-listing" target="_blank" href="#" class="btn btn-primary">View Listings</a>
+			<div id="addition-setting">
 				<label id="has-ward-wrap"><input class="cb" checked="checked" type="checkbox" name="has-ward" value="1" /><span>Có Phường</span></label>
 				<label id="has-project-wrap" style="margin-right: 6px;"><input class="cb" checked="checked" type="checkbox" name="has-project" value="1" /><span>Có Dự án</span></label>
 			</div>
-			<a id="export" class="btn btn-primary" type="button" href="#">Export Excel</a>
-			<a id="view-listing" target="_blank" href="#" class="btn btn-primary">View Listings</a>
 		</div>
 	</div>
 	<div id="view-wrap" class="hide">
