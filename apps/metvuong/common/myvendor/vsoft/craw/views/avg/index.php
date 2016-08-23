@@ -32,6 +32,14 @@
 						<label id="has-ward-wrap"><input class="cb" type="checkbox" name="has-ward" value="1" /><span>Chỉ tính trên những tin có thông tin <span style="color: #337ab7;">Phường</span></span></label><br />
 						<label id="has-project-wrap" style="margin-right: 6px;"><input class="cb" type="checkbox" name="has-project" value="1" /><span>Chỉ tính trên những tin có thông tin <span style="color: #337ab7;">Dự án</span></span></label>
 						<div class="field-wrap">
+							<label>Loại BĐS</label>
+							<select name="category_id" id="category_id">
+								<?php foreach ($categories as $category): ?>
+								<option value="<?= $category->id ?>"<?= $category->id == 6 ? ' selected="selected"' : '' ?>><?= Yii::t('ad', $category->name) ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						<div class="field-wrap">
 							<label>Round number</label>
 							<select name="round" id="round">
 								<option value="-1">Giữ nguyên</option>

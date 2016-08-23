@@ -199,3 +199,12 @@ label span {
 .avg-bed, .avg-bath {
 	vertical-align: top;
 }
+.field-wrap {
+	margin-top: 8px;
+}
+.field-wrap label {
+	width: 120px;
+}
+#category_id {
+	text-transform: capitalize;
+}
