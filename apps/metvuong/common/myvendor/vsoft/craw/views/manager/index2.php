@@ -229,6 +229,7 @@ $columns = [
     'apca' => [
     	'attribute' => 'created_at',
     	'label' => 'Ngày đăng',
+		'filter' =>	Html::activeDropDownList($searchModel, 'created_filter', [AdProduct::EXPIRED => 'Hoạt động'], ['class' => 'form-control', 'prompt' => 'Tất cả']),
     	'value' => function($model) {
     		return date("F d, Y", $model['created_at']);
     	}

@@ -30,6 +30,7 @@ class AdProductSearch2 extends AdProduct
 	public $phone_filter;
 	public $mobile_filter;
 	public $email_filter;
+	public $created_filter;
 	public $project_name_filter;
 	public $project_name_mask;
 	public $ward_name_filter;
@@ -117,7 +118,7 @@ class AdProductSearch2 extends AdProduct
             [['product_main_filter', 'type', 'category_id', 'project_name', 'city_name', 'district_name', 'ward_name', 'street_name', 'home_no_filter',
             		'price_type', 'area_filter', 'room_no_filter', 'toilet_no_filter', 'floor_no_filter', 'facade_width_filter', 'land_width_filter',
             		'home_direction_filter', 'facade_direction_filter', 'interior_filter', 'content_filter', 'contact_name_filter', 'contact_address_filter',
-            		'phone_filter', 'mobile_filter', 'email_filter', 'project_name_filter', 'project_name_mask', 'project_building_id', 'ward_id', 'ward_name_filter', 'ward_name_mask',
+            		'phone_filter', 'mobile_filter', 'email_filter', 'created_filter', 'project_name_filter', 'project_name_mask', 'project_building_id', 'ward_id', 'ward_name_filter', 'ward_name_mask',
             		'street_name_filter', 'street_name_mask', 'street_id', 'city_name_mask', 'city_id', 'district_name_mask', 'district_id',
             		'price_min', 'price_max', 'price_mask', 'price_unit', 'area_mask', 'area_min', 'area_max', 'room_no_mask', 'toilet_no_mask', 'floor_no_mask'
             ], 'safe'],
@@ -221,6 +222,10 @@ class AdProductSearch2 extends AdProduct
     			$query->andFilterWhere(['<=', 'area', $this->area_max]);
     		}
     	}
+
+		if($this->created_filter) {
+			$query->andFilterWhere(['>=', 'ad_product.start_date', time()- AdProduct::EXPIRED]);
+		}
     	
     	$filterYesNoNull = [
     		'home_no_filter' => 'ad_product.home_no',
@@ -233,7 +238,7 @@ class AdProductSearch2 extends AdProduct
     		'contact_address_filter' => 'ad_contact_info.address',
     		'phone_filter' => 'ad_contact_info.phone',
     		'mobile_filter' => 'ad_contact_info.mobile',
-    		'email_filter' => 'ad_contact_info.email',
+    		'created_filter' => 'ad_product.start_date',
     		'project_name_filter' => 'ad_product.project_building_id',
     		'ward_name_filter' => 'ad_product.ward_id',
     		'street_name_filter' => 'ad_product.street_id'
