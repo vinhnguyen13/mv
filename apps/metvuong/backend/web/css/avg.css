@@ -195,3 +195,7 @@ label span {
     background: #FFF;
     padding: 0 4px;
 }
+
+.avg-bed, .avg-bath {
+	vertical-align: top;
+}

@@ -150,8 +150,22 @@ $(document).ready(function(){
 		table.find('.avg-price').append('<td class="' + c + '">' + formatNumber(data.value['AVG Price']) + '</td>');
 		table.find('.avg-size').append('<td class="' + c + '">' + formatNumber(data.value['AVG SQM']) + '</td>');
 		table.find('.avg-price-size').append('<td class="' + c + '">' + formatNumber(data.value['AVG $/SQM']) + '</td>');
-		table.find('.avg-bed').append('<td class="' + c + '">' + data.value['AVG Bed'] + '</td>');
-		table.find('.avg-bath').append('<td class="' + c + '">' + data.value['AVG Bath'] + '</td>');
+		table.find('.avg-bed').append('<td class="' + c + '">' + percentCell(data.value['AVG Bed'], 'bed') + '</td>');
+		table.find('.avg-bath').append('<td class="' + c + '">' + percentCell(data.value['AVG Bath'], 'bath') + '</td>');
+	}
+	
+	function percentCell(counts, label) {
+		var html = '<div>';
+		
+		for(var i in counts) {
+			slabel = counts[i][0] > 1 ? label + 's' : label;
+			
+			html += '<div>' + counts[i][0] + ' ' + slabel + ': ' + formatNumber(counts[i][1]) + '%</div>';
+		}
+		
+		html += '</div>';
+		
+		return html;
 	}
 	
 	var firstTab = true;

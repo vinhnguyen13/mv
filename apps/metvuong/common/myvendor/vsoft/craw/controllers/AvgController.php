@@ -78,8 +78,8 @@ class AvgController extends Controller {
 						$rows[2][] = $child['value']['AVG Price'];
 						$rows[3][] = $child['value']['AVG SQM'];
 						$rows[4][] = $child['value']['AVG $/SQM'];
-						$rows[5][] = $child['value']['AVG Bed'];
-						$rows[6][] = $child['value']['AVG Bath'];
+						$rows[5][] = $this->percentCell($child['value']['AVG Bed'], 'bed');
+						$rows[6][] = $this->percentCell($child['value']['AVG Bath'], 'bath');
 					}
 				}
 					
@@ -91,8 +91,8 @@ class AvgController extends Controller {
 					$rows[2][] = $parent['value']['AVG Price'];
 					$rows[3][] = $parent['value']['AVG SQM'];
 					$rows[4][] = $parent['value']['AVG $/SQM'];
-					$rows[5][] = $parent['value']['AVG Bed'];
-					$rows[6][] = $parent['value']['AVG Bath'];
+					$rows[5][] = $this->percentCell($parent['value']['AVG Bed'], 'bed');
+					$rows[6][] = $this->percentCell($parent['value']['AVG Bath'], 'bath');
 				}
 					
 				$style = (new StyleBuilder())->setFontSize(11)->build();
@@ -106,6 +106,18 @@ class AvgController extends Controller {
 		
 		setcookie("avgComplete", 1);
 		$writer->close();
+	}
+	
+	public function percentCell($counts, $label) {
+		$html = [];
+		
+		foreach($counts as $count) {
+			$slabel = $count[0] > 1 ? $label . 's' : $label;
+			
+			$html[] = $count[0] . " $slabel: " . $count[1] . '%';
+		}
+		
+		return implode("\n", $html);
 	}
 	
 	public function buildUrl($get) {
@@ -227,15 +239,16 @@ class AvgController extends Controller {
 	}
 	
 	public function avg($products) {
-		$totalPrice = $totalSize = $totalBed = $totalBath = 0;
+		$totalPrice = $totalSize = 0;
 		
 		$totalPriceSize = 0;
 		$totalHasPriceSize = 0;
 	
 		$totalHasPrice = 0;
 		$totalHasSize = 0;
-		$totalHasBed = 0;
-		$totalHasBath = 0;
+		
+		$groupBed = [];
+		$groupBath = [];
 		
 		foreach ($products as $product) {
 			if($product['price']) {
@@ -253,24 +266,47 @@ class AvgController extends Controller {
 				$totalHasPriceSize++;
 			}
 			
-			if($product['room_no']) {
-				$totalBed += $product['room_no'];
-				$totalHasBed++;
+			if(isset($groupBed[$product['room_no']])) {
+				$groupBed[$product['room_no']] += 1;
+			} else {
+				$groupBed[$product['room_no']] = 1;
 			}
 			
-			if($product['toilet_no']) {
-				$totalBath += $product['toilet_no'];
-				$totalHasBath++;
+			if(isset($groupBath[$product['toilet_no']])) {
+				$groupBath[$product['toilet_no']] += 1;
+			} else {
+				$groupBath[$product['toilet_no']] = 1;
 			}
 		}
 		
 		$avgPrice = $totalHasPrice ? $totalPrice/$totalHasPrice : 0;
 		$avgSize = $totalHasSize ? $totalSize/$totalHasSize : 0;
 		$avgPriceSize = $totalHasPriceSize ? $totalPriceSize/$totalHasPriceSize : 0;
-		$avgBed = $totalHasBed ? $totalBed/$totalHasBed : 0;
-		$avgBath = $totalHasBath ? $totalBath/$totalHasBath : 0;
+		$avgBed = $this->groupCount($groupBed);
+		$avgBath = $this->groupCount($groupBath);
 
 		return ['Data Point' => count($products), 'AVG Price' => $avgPrice, 'AVG SQM' => $avgSize, 'AVG $/SQM' => $avgPriceSize, 'AVG Bed' => $avgBed, 'AVG Bath' => $avgBath];
+	}
+	
+	public function groupCount($items) {
+		$total = array_sum($items);
+
+		foreach ($items as $k => $item) {
+			if(!$k) {
+				unset($items[$k]);
+			}
+		}
+	
+		arsort($items);
+		$group = array_slice($items, 0, 3, true);
+		
+		$avg = [];
+		
+		foreach ($group as $num => $count) {
+			$avg[] = [$num, ($count/$total * 100)];
+		}
+		
+		return $avg;
 	}
 	
 	public function groupByProject($products) {
