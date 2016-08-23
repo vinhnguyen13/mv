@@ -30,6 +30,16 @@ class AvgController extends Controller {
 		return ['exportUrl' => Url::to(['export'] + $get), 'url' => $this->buildUrl($get), 'sheets' => $this->buildSheets($get)];
 	}
 	
+	public function round(&$sheets, $round) {
+		if($round > -1) {
+			array_walk_recursive($sheets, function(&$item, $key) use ($round) {
+				if(is_float($item)) {
+					$item = round($item, $round);
+				}
+			});
+		}
+	}
+	
 	public function actionExport() {
 		include str_replace('controllers', 'components', dirname(__FILE__)) . '/Spout/Autoloader/autoload.php';
 		
@@ -38,6 +48,8 @@ class AvgController extends Controller {
 		$get = \Yii::$app->request->get();
 		
 		$sheets = $this->buildSheets($get);
+		
+		$this->round($sheets, $get['round']);
 		
 		$names = explode(', ', $get['location']);
 		$name = $get['type'] == 'ward' ? $names[0] . ', ' . $names[1] : $names[0];
@@ -119,6 +131,8 @@ class AvgController extends Controller {
 		
 		$fn = 'buildSheets' . ucfirst($get['type']);
 		$sheets = $this->$fn($get, $products);
+		
+		$this->round($sheets, $get['round']);
 		
 		return $sheets;
 	}

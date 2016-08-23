@@ -146,10 +146,10 @@ $(document).ready(function(){
 		var c = isMain ? 'main' : '';
 		
 		table.find('.area-title').append('<td class="' + c + '">' + data.name + '</td>');
-		table.find('.data-point').append('<td class="' + c + '">' + data.value['Data Point'] + '</td>');
-		table.find('.avg-price').append('<td class="' + c + '">' + data.value['AVG Price'] + '</td>');
-		table.find('.avg-size').append('<td class="' + c + '">' + data.value['AVG SQM'] + '</td>');
-		table.find('.avg-price-size').append('<td class="' + c + '">' + data.value['AVG $/SQM'] + '</td>');
+		table.find('.data-point').append('<td class="' + c + '">' + formatNumber(data.value['Data Point']) + '</td>');
+		table.find('.avg-price').append('<td class="' + c + '">' + formatNumber(data.value['AVG Price']) + '</td>');
+		table.find('.avg-size').append('<td class="' + c + '">' + formatNumber(data.value['AVG SQM']) + '</td>');
+		table.find('.avg-price-size').append('<td class="' + c + '">' + formatNumber(data.value['AVG $/SQM']) + '</td>');
 		table.find('.avg-bed').append('<td class="' + c + '">' + data.value['AVG Bed'] + '</td>');
 		table.find('.avg-bath').append('<td class="' + c + '">' + data.value['AVG Bath'] + '</td>');
 	}
@@ -249,4 +249,23 @@ function getCookie(cname) {
         if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
     }
     return "";
+}
+
+function formatNumber(number) {
+	number = number + '';
+	
+	if(/^0*$/.test(number)) {
+		return '';
+	}
+	
+	number = number.split('.');
+	
+	var numberFormated = number[0];
+	numberFormated = numberFormated.split( /(?=(?:\d{3})+(?:\.|$))/g ).join(".");
+	
+	if(number.length > 1) {
+		numberFormated = numberFormated + ',' + number[1];
+	}
+	
+	return numberFormated;
 }
