@@ -11675,7 +11675,7 @@ label:hover {
     content: "\f046";
 }
 .price-type input[type=text] {
-    width: 50%;
+    /* width: 50%; */
 }
 .agent-postlisting {
     /* margin-top: 20px; */
