@@ -14253,13 +14253,14 @@ ul.cardList li {
     /* width: auto; */
     /* float: none; */
     margin-bottom: 15px;
+    padding: 0 20px;
 }
 .report-boss .option-view-stats label {
     font-weight: 600;
     font-size: 15px;
     display: block;
     color: #fff;
-    text-align: center;
+    text-align: left;
 }
 .report-boss .option-view-stats .chk_register label {
     color: #00a769;
