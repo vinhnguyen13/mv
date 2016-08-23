@@ -26,8 +26,23 @@
 			<a id="export" class="btn btn-primary" type="button" href="#">Export Excel</a>
 			<a id="view-listing" target="_blank" href="#" class="btn btn-primary">View Listings</a>
 			<div id="addition-setting">
-				<label id="has-ward-wrap"><input class="cb" checked="checked" type="checkbox" name="has-ward" value="1" /><span>Có Phường</span></label>
-				<label id="has-project-wrap" style="margin-right: 6px;"><input class="cb" checked="checked" type="checkbox" name="has-project" value="1" /><span>Có Dự án</span></label>
+				<div class="field-set">
+					<div class="field-set-legend">Thiết lập thêm</div>
+					<div class="field-set-body">
+						<label id="has-ward-wrap"><input class="cb" type="checkbox" name="has-ward" value="1" /><span>Chỉ tính trên những tin có thông tin <span style="color: #337ab7;">Phường</span></span></label><br />
+						<label id="has-project-wrap" style="margin-right: 6px;"><input class="cb" type="checkbox" name="has-project" value="1" /><span>Chỉ tính trên những tin có thông tin <span style="color: #337ab7;">Dự án</span></span></label>
+						<div class="field-wrap">
+							<label>Round number</label>
+							<select name="round" id="round">
+								<option value="-1">Giữ nguyên</option>
+								<option value="0" selected="selected">0</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+							</select>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -47,45 +47,49 @@ class AvgController extends Controller {
 		$writer->openToBrowser($fileName);
 		
 		foreach ($sheets as $k => $sheet) {
-			$excelSheet = ($k == 0) ? $writer->getCurrentSheet() : $writer->addNewSheetAndMakeItCurrent();
-			$excelSheet->setName($sheet['sheetName']);
-
-			if($k == 0) {
-				$writer->addRow(['']);
-			}
-			
-			$rows = [[''], ['Data Point'], ['AVG Price'], ['AVG SQM'], ['AVG $/SQM'], ['AVG Bed'], ['AVG Bath']];
-			
-			$childs = $sheet['data']['childs'];
-			
-			foreach ($childs as $child) {
-				$rows[0][] = $child['name'];
-				$rows[1][] = $child['value']['Data Point'];
-				$rows[2][] = $child['value']['AVG Price'];
-				$rows[3][] = $child['value']['AVG SQM'];
-				$rows[4][] = $child['value']['AVG $/SQM'];
-				$rows[5][] = $child['value']['AVG Bed'];
-				$rows[6][] = $child['value']['AVG Bath'];
-			}
-			
-			if(isset($sheet['data']['parent'])) {
-				$parent = $sheet['data']['parent'];
+			if($sheet['sheetName']) {
+				$excelSheet = ($k == 0) ? $writer->getCurrentSheet() : $writer->addNewSheetAndMakeItCurrent();
+				$excelSheet->setName($sheet['sheetName']);
 				
-				$rows[0][] = mb_strtoupper($parent['name'], 'UTF-8');
-				$rows[1][] = $parent['value']['Data Point'];
-				$rows[2][] = $parent['value']['AVG Price'];
-				$rows[3][] = $parent['value']['AVG SQM'];
-				$rows[4][] = $parent['value']['AVG $/SQM'];
-				$rows[5][] = $parent['value']['AVG Bed'];
-				$rows[6][] = $parent['value']['AVG Bath'];
+				if($k == 0) {
+					$writer->addRow(['']);
+				}
+					
+				$rows = [[''], ['Data Point'], ['AVG Price'], ['AVG SQM'], ['AVG $/SQM'], ['AVG Bed'], ['AVG Bath']];
+					
+				$childs = $sheet['data']['childs'];
+					
+				foreach ($childs as $child) {
+					if($child['name']) {
+						$rows[0][] = $child['name'];
+						$rows[1][] = $child['value']['Data Point'];
+						$rows[2][] = $child['value']['AVG Price'];
+						$rows[3][] = $child['value']['AVG SQM'];
+						$rows[4][] = $child['value']['AVG $/SQM'];
+						$rows[5][] = $child['value']['AVG Bed'];
+						$rows[6][] = $child['value']['AVG Bath'];
+					}
+				}
+					
+				if(isset($sheet['data']['parent'])) {
+					$parent = $sheet['data']['parent'];
+				
+					$rows[0][] = mb_strtoupper($parent['name'], 'UTF-8');
+					$rows[1][] = $parent['value']['Data Point'];
+					$rows[2][] = $parent['value']['AVG Price'];
+					$rows[3][] = $parent['value']['AVG SQM'];
+					$rows[4][] = $parent['value']['AVG $/SQM'];
+					$rows[5][] = $parent['value']['AVG Bed'];
+					$rows[6][] = $parent['value']['AVG Bath'];
+				}
+					
+				$style = (new StyleBuilder())->setFontSize(11)->build();
+				$titleStyle = clone $style;
+				$titleStyle->setFontColor(Color::BLUE)->setFontBold();
+					
+				$writer->addRowWithStyle(array_shift($rows), $titleStyle);
+				$writer->addRows($rows, $style);
 			}
-			
-			$style = (new StyleBuilder())->setFontSize(11)->build();
-			$titleStyle = clone $style;
-			$titleStyle->setFontColor(Color::BLUE)->setFontBold();
-			
-			$writer->addRowWithStyle(array_shift($rows), $titleStyle);
-			$writer->addRows($rows, $style);
 		}
 		
 		setcookie("avgComplete", 1);

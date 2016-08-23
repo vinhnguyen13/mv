@@ -114,7 +114,9 @@ $(document).ready(function(){
 	
 	function addSheets(sheets) {
 		for(var i in sheets) {
-			addSheet(sheets[i]);
+			if(sheets[i]['sheetName']) {
+				addSheet(sheets[i]);
+			}
 		}
 	}
 	
@@ -128,7 +130,9 @@ $(document).ready(function(){
 		var table = $('<table class="avg-table"><tr class="area-title"><td></td></tr><tr class="data-point"><td>Data Point</td></tr><tr class="avg-price"><td>AVG Price</td></tr><tr class="avg-size"><td>AVG SQM</td></tr><tr class="avg-price-size"><td>AVG $/SQM</td></tr><tr class="avg-bed"><td>AVG Bed</td></tr><tr class="avg-bath"><td>AVG Bath</td></tr></table>');
 		
 		for(var i in childs) {
-			append(table, childs[i]);
+			if(childs[i]['name']) {
+				append(table, childs[i]);
+			}
 		}
 		
 		if(parent) {
@@ -192,7 +196,7 @@ $(document).ready(function(){
 		var hasWard = hasWardWrap.find('input').is(':checked') ? 1 : 0;
 		var hasProject = hasProjectWrap.find('input').is(':checked') ? 1 : 0;
 		
-		$.get('calculate', {hasProject: hasProject, hasWard: hasWard, type: avgSearch.data('type'), id: avgSearch.data('id'), t: type.val(), location: avgSearchPlaceholder.find('.text').text()}, function(r){
+		$.get('calculate', {round: $('#round').val(), hasProject: hasProject, hasWard: hasWard, type: avgSearch.data('type'), id: avgSearch.data('id'), t: type.val(), location: avgSearchPlaceholder.find('.text').text()}, function(r){
 			viewWrap.addClass('loaded');
 			
 			$('#view-listing').attr('href', r.url);
