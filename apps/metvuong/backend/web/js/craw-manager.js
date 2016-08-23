@@ -136,7 +136,7 @@ $(document).ready(function(){
 		if(type) {
 			$.data(this, 'ajax') && $.data(this, 'ajax').abort();
 			
-			$.data(this, 'ajax', $.get('/admin/craw/manager/search', {type: type, value: self.val()}, function(r){
+			$.data(this, 'ajax', $.get('/api/v1/craw-search/get-m', {type: type, value: self.val()}, function(r){
 				var parent = self.closest('.mask-wrap');
 				
 				if(r.length) {

@@ -46,4 +46,42 @@ class CrawSearchController extends Controller {
 		
 		return $response;
 	}
+	
+	public function actionGetM() {
+		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+		
+		$v = \Yii::$app->request->get('value');
+		$type = \Yii::$app->request->get('type');
+		
+		$params = Elastic::buildParams($v);
+		
+		$params['query']['function_score']['functions'][] = [
+				"field_value_factor" => [
+						"field" => "total_sell",
+						"modifier" => "log1p",
+						"factor" => 0.1
+				]
+		];
+			
+		$params['query']['function_score']['functions'][] = [
+				"field_value_factor" => [
+						"field" => "total_rent",
+						"modifier" => "log1p",
+						"factor" => 0.1
+				]
+		];
+		
+		$result = Elastic::requestResult($params, Elastic::elasticUrl('/' . $type));
+		
+		$response = [];
+		
+		foreach ($result['hits']['hits'] as $hit) {
+			$response[] = [
+					'id' => $hit['_id'],
+					'full_name' => $hit['_source']['full_name']
+			];
+		}
+		
+		return $response;
+	}
 }
