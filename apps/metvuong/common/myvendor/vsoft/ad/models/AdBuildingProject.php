@@ -24,7 +24,7 @@ class AdBuildingProject extends ABP
 	const STATUS_ENABLED = 1;
 	const STATUS_DISABLED = 0;
 
-    public $projects=[
+    public $inv_type = [
         'Khu căn hộ' => 'Khu căn hộ',
         'Cao ốc văn phòng' => 'Cao ốc văn phòng',
         'Khu đô thị mới' => 'Khu đô thị mới',
@@ -43,16 +43,16 @@ class AdBuildingProject extends ABP
     {
         // GFA, Building Density, Construction Start, Complettion, Developer, Architect, Contractor, # of Buildings, # of Units, # of 1bed, SQM of 1bed, #2bed, SQM of 2bed, # of 3bed, SQM of 3bed)
         return [
-	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status', 'is_crawl', 'hot_project', 'click', 'ward_id', 'street_id', 'units_no',
-                'no_1_bed', 'no_2_bed', 'no_3_bed'], 'integer'],
+	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status', 'is_crawl', 'hot_project', 'click', 'ward_id', 'street_id',
+                'apartment_no', 'floor_no', 'units_no', 'no_1_bed', 'no_2_bed', 'no_3_bed'], 'integer'],
 	        [['name', 'district_id', 'city_id'], 'required'],
 	        [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress',
                 'name', 'description', 'file_name', 'data_html'], 'string'],
             [['facade_width'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/', 'max' => 10000],
             [['lift'], 'integer', 'max' => 100],
-	        [['lng', 'lat', 'gfa', 'sqm_1_bed', 'sqm_2_bed', 'sqm_3_bed'], 'number'],
-	        [['land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline', 'home_no'], 'string', 'max' => 32],
-	        [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'website', 'logo', 'slug', 'building_density'], 'string', 'max' => 255]
+	        [['lng', 'lat', 'land_area', 'gfa', 'sqm_1_bed', 'sqm_2_bed', 'sqm_3_bed', 'building_density'], 'number'],
+	        [['start_time', 'estimate_finished', 'hotline', 'home_no'], 'string', 'max' => 32],
+	        [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'website', 'logo', 'slug'], 'string', 'max' => 255]
         ];
     }
     
@@ -118,12 +118,12 @@ class AdBuildingProject extends ABP
             'units_no' => Yii::t('project','Units No'),
             'building_density' => Yii::t('project','Building Density'),
             'gfa' => Yii::t('project','GFA'),
-            'no_1_bed' => Yii::t('project','# 1 bed'),
-            'no_2_bed' => Yii::t('project','# 2 bed'),
-            'no_3_bed' => Yii::t('project','# 3 bed'),
-            'sqm_1_bed' => Yii::t('project','SQM 1 bed'),
-            'sqm_2_bed' => Yii::t('project','SQM 2 bed'),
-            'sqm_3_bed' => Yii::t('project','SQM 3 bed'),
+            'no_1_bed' => Yii::t('project','# 1 Bed'),
+            'no_2_bed' => Yii::t('project','# 2 Bed'),
+            'no_3_bed' => Yii::t('project','# 3 Bed'),
+            'sqm_1_bed' => Yii::t('project','SQM 1 Bed'),
+            'sqm_2_bed' => Yii::t('project','SQM 2 Bed'),
+            'sqm_3_bed' => Yii::t('project','SQM 3 Bed'),
         ];
     }
     
