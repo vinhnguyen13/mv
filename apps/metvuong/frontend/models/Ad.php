@@ -108,6 +108,7 @@ class Ad extends Component
                     $adSaved->user_id = Yii::$app->user->id;
                     $adSaved->saved_at = time();
                 }
+                $adSaved->updated_at = time();
                 $adSaved->status = $post['stt'];
                 $adSaved->validate();
                 if(!$adSaved->hasErrors()){

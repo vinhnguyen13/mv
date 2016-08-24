@@ -11,6 +11,7 @@ use Yii;
  * @property integer $product_id
  * @property integer $saved_at
  * @property integer $status
+ * @property integer $updated_at
  *
  * @property AdProduct $product
  * @property User $user
@@ -32,7 +33,7 @@ class AdProductSaved extends \yii\db\ActiveRecord
     {
         return [
             [['user_id', 'product_id', 'saved_at'], 'required'],
-            [['user_id', 'product_id', 'saved_at', 'status'], 'integer']
+            [['user_id', 'product_id', 'saved_at', 'status', 'updated_at'], 'integer']
         ];
     }
 
@@ -46,6 +47,7 @@ class AdProductSaved extends \yii\db\ActiveRecord
             'product_id' => 'Product ID',
             'saved_at' => 'Saved At',
             'status' => 'Status',
+            'updated_at' => 'Updated At',
         ];
     }
 
