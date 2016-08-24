@@ -239,7 +239,7 @@ $count_review = $reviews->count();
 						</div>
 					</li>
 					<li class="color-4">
-						<a href="#" class="save-item <?=!empty($product->productSaved->saved_at) ? 'active' : '';?> <?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
+						<a href="#" class="save-item <?=!empty($product->productSaved->status) ? 'active' : '';?> <?=Yii::$app->user->isGuest ? " user-login-link" : "" ?>" data-id="<?=$product->id;?>" data-url="<?=Url::to(['/ad/favorite'])?>">
 							<span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>
 							<span><?= Yii::t('ad', 'Add to Favorites') ?></span>
 						</a>

@@ -111,7 +111,6 @@ class Chart extends Component
 
     public function getChartStats($id, $dateRange)
     {
-        Tracking::syncFavorite($id);
         $query = new Query;
         $query->from(ChartStats::collectionName())
             ->where(['product_id' => $id])

@@ -31,12 +31,12 @@ class Product extends Component
             }
         }
         if($step == 'update-stats'){
-            $adProSaveds = AdProductSaved::find()->orderBy(['saved_at' => SORT_ASC])->groupBy('product_id')->asArray()->all();
+            $adProSaveds = AdProductSaved::find()->where(['=','status',1])->orderBy(['saved_at' => SORT_ASC])->groupBy('product_id')->asArray()->all();
             if(!empty($adProSaveds)){
                 print_r("Total: ".count($adProSaveds).PHP_EOL);
                 foreach($adProSaveds as $adProSaved){
                     print_r("update stats for: ".$adProSaved['product_id'].PHP_EOL);
-                    echo Tracking::syncFavorite($adProSaved['product_id']);
+                    echo Tracking::find()->syncFavorite($adProSaved['product_id']);
                     echo PHP_EOL;
                 }
             }

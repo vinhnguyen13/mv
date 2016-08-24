@@ -285,7 +285,31 @@ class Tracking extends Component
         }
     }
 
-    public static function syncFavorite($pid){
+    public function statsFavorite($pid, $date){
+        $pid = (int) $pid;
+        $query = new Query();
+        $query->select(['count(*) total'])
+            ->from('ad_product_saved')->where(['=','status',1])->andWhere(['product_id'=>$pid])
+            ->andWhere(['=',"DATE_FORMAT(FROM_UNIXTIME(`saved_at`), '%d-%m-%Y')",$date])
+            ->orderBy('saved_at DESC');
+        $adProSaved = $query->one();
+        if(!empty($adProSaved)){
+            $chart_stats = ChartStats::find()->where(['product_id' => $pid, 'date' => $date])->one();
+            if(!empty($chart_stats)) {
+                $chart_stats->favorite = (int)$adProSaved['total'];
+                $chart_stats->save();
+            } else {
+                $chart_stats = new ChartStats();
+                $chart_stats->date = $date;
+                $chart_stats->product_id = $pid;
+                $chart_stats->created_at = strtotime($date);
+                $chart_stats->favorite = (int)$adProSaved['total'];
+                $chart_stats->save();
+            }
+        }
+    }
+
+    public function syncFavorite($pid){
         $pid = (int) $pid;
         $query = new Query();
         $query->select(['count(*) total', new \yii\db\Expression("DATE_FORMAT(FROM_UNIXTIME(`saved_at`), '%d-%m-%Y')")." today"])
@@ -309,10 +333,6 @@ class Tracking extends Component
                         $chart_stats->save();
                     }
                 }
-            }else{
-                $chart_stats = ChartStats::find()->where(['product_id' => $pid])->one();
-                $chart_stats->favorite = 0;
-                $chart_stats->save();
             }
             $transaction->commit();
             return 'synchronized';
