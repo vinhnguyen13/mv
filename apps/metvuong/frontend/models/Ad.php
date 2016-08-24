@@ -120,7 +120,7 @@ class Ad extends Component
                             'buddy' => $adSaved->product->user_id,
                             'saved_at' => $adSaved->saved_at,
                         ], $adSaved->product_id);
-                        Tracking::find()->statsFavorite($adSaved->product_id, date("d-m-Y", $adSaved->saved_at));
+                        Tracking::find()->saveChartStats($adSaved->product_id, date("d-m-Y", $adSaved->saved_at), 'favorite');
                     }
                 }
                 return ['statusCode'=>200, 'parameters'=>['msg'=>Yii::$app->session->getFlash('notify_other')]];
