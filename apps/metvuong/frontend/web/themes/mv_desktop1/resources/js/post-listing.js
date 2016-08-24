@@ -769,10 +769,29 @@ $(document).ready(function(){
 		var size = Number(form.fields.area.val().replace(',', '.'));
 		
 		if(price && size && price > size) {
-			priceSize.html(formatPrice(Math.round(price/size) + '') + ' ' + lajax.t('VNĐ') + '/m<sup>2</sup>');
+			priceSize.html(reFormat(formatPrice(Math.round(price/size) + '')) + ' ' + lajax.t('VNĐ') + '/m<sup>2</sup>');
 		} else {
 			priceSize.html('');
 		}
+	}
+	
+	function reFormat(priceFormat) {
+		var firstSplit = priceFormat.split(' ');
+
+		if(firstSplit.length > 1) {
+			if(firstSplit[0].indexOf(',') !== -1) {
+				var price = firstSplit[0].split(',');
+				var nguyen = price[0];
+				var float = price[1];
+				
+				if(float.length > 2) {
+					var priceRe = Number(Number(nguyen + '.' + float).toFixed(2));
+					return priceRe.toString().replace('.', ',') + ' ' + firstSplit[1];
+				}
+			}
+		}
+
+		return priceFormat;
 	}
 
 	function removeProject() {
