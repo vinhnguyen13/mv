@@ -38,13 +38,13 @@ $parentCatalog = ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID']
                 'format' => 'html',
                 'contentOptions' => ['class' => 'text-center'],
                 'value' => function ($model) {
-                    $imgPath = Url::to( '/themes/metvuong1/resources/images/default-ads.jpg');
+                    $imgPath = Url::to( '/images/default-ads.jpg');
                     if($model->banner) {
                         $checkFile = file_exists(Yii::getAlias('@store')."/news/show/".$model->banner);
                         if($checkFile)
                             $imgPath = Url::to('/store/news/show/' . $model->banner);
                     } else {
-                        $imgPath = Url::to( '/themes/metvuong1/resources/images/default-ads.jpg');// /frontend/web/themes/metvuong1/resources/images/default-ads.jpg
+                        $imgPath = Url::to( '/images/default-ads.jpg');
                     }
                     return Html::img($imgPath, ['width'=>100, 'height'=>100, 'alt'=>$model->banner, 'title'=>$model->brief]);
                 }

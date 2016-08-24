@@ -381,7 +381,7 @@ class Project extends Component
 
             $checkImage = getimagesize($link);
             if(!isset($checkImage['mime'])){
-                $link = 'https://metvuong.com/themes/metvuong2/resources/images/default-ads.jpg';
+                $link = 'https://metvuong.com/images/default-ads.jpg';
                 $checkImage = getimagesize($link);
             }
 
