@@ -225,63 +225,30 @@ class Tracking extends Component
     public function saveChartStats($pid, $date, $view, $no=1)
     {
         $chart_stats = ChartStats::find()->where(['product_id' => (int)$pid, 'date' => $date])->one();
-        if(count($chart_stats) > 0){
-            $chart_stats->created_at = strtotime($date);
-            switch($view){
-                case 'search':
-                    $chart_stats->search = $chart_stats->search + $no;
-                    $chart_stats->save();
-                    break;
-                case 'visit':
-                    $chart_stats->visit = $chart_stats->visit + $no;
-                    $chart_stats->save();
-                    break;
-                case 'favorite':
-                    $chart_stats->favorite = $chart_stats->favorite + $no;
-                    $chart_stats->save();
-                    break;
-                case 'share':
-                    $chart_stats->share = $chart_stats->share + $no;
-                    $chart_stats->save();
-                    break;
-                default:
-                    break;
-            }
-        } else {
+        if(empty($chart_stats)){
             $chart_stats = new ChartStats();
             $chart_stats->date = $date;
             $chart_stats->product_id = (int)$pid;
-            $chart_stats->created_at = strtotime($date);
-            switch($view){
-                case 'search':
-                    $chart_stats->search = $no;
-                    $chart_stats->visit = 0;
-                    $chart_stats->share = 0;
-                    $chart_stats->save();
-                    break;
-                case 'visit':
-                    $chart_stats->search = 0;
-                    $chart_stats->visit = $no;
-                    $chart_stats->share = 0;
-                    $chart_stats->save();
-                    break;
-                case 'favorite':
-                    $chart_stats->search = 0;
-                    $chart_stats->visit = 0;
-                    $chart_stats->share = 0;
-                    $chart_stats->favorite = $no;
-                    $chart_stats->save();
-                    break;
-                case 'share':
-                    $chart_stats->search = 0;
-                    $chart_stats->visit = 0;
-                    $chart_stats->share = $no;
-                    $chart_stats->save();
-                    break;
-                default:
-                    break;
-            }
-
+        }
+        $chart_stats->created_at = strtotime($date);
+        switch($view){
+            case 'search':
+                $chart_stats->search += $no;
+                $chart_stats->save();
+                break;
+            case 'visit':
+                $chart_stats->visit += $no;
+                $chart_stats->save();
+                break;
+            case 'favorite':
+                Tracking::find()->statsFavorite($pid, $date);
+                break;
+            case 'share':
+                $chart_stats->share += $no;
+                $chart_stats->save();
+                break;
+            default:
+                break;
         }
     }
 
