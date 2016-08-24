@@ -14136,18 +14136,24 @@ ul.cardList li {
 .icon-num-get {
     float: left;
 }
+#listing-list .icon-num-get {
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    z-index: 10;
+}
 .icon-num-get li {
-    display: inline-block;
-    margin-right: 5px;
+    margin-right: 10px;
     color: #fff;
     text-shadow: 0px 0px 2px #000;
-    font-size: 15px;
+    font-size: 16px;
+    float: left;
 }
 .icon-num-get li:last-child {
     margin-right: 0;
 }
 .icon-num-get li .icon-mv {
-    margin-right: 3px;
+    margin-right: 5px;
 }
 #listing-list .icon-num-get a {
     height: auto;
@@ -14166,14 +14172,14 @@ ul.cardList li {
 }
 #listing-list .date-post {
     color: #fff;
-    float: right;
+    /* float: right; */
     line-height: 22px;
     text-transform: capitalize;
 }
 #listing-list .date-post span {
-    margin-left: 5px;
-    border-left: 1px solid #fff;
-    padding-left: 5px;
+    /* margin-left: 5px; */
+    /* border-left: 1px solid #fff; */
+    /* padding-left: 5px; */
     line-height: 15px;
     margin-top: 5px;
 }
@@ -14598,8 +14604,6 @@ ul.cardList li {
         color: #000;
     }
     .icon-num-get li {
-        color: #000;
-        text-shadow: inherit;
     }
     #listing-list > ul > li a {
         height: auto;
@@ -14777,11 +14781,12 @@ ul.cardList li {
     }
 }
 @media (max-width: 1580px) {
-    .icon-num-get {
-        width: 100%;
+    #listing-list .icon-num-get {
+        top: 10px;
+        left: 15px;
     }
     #listing-list .date-post {
-        float: left;
-        text-align: left;
+        /* float: left; */
+        /* text-align: left; */
     }
 }
