@@ -14139,8 +14139,11 @@ ul.cardList li {
 #listing-list .icon-num-get {
     position: absolute;
     top: 5px;
-    left: 10px;
+    left: 5px;
     z-index: 10;
+    background: rgba(0, 0, 0, 0.38);
+    padding: 2px 7px;
+    border-radius: 3px;
 }
 .icon-num-get li {
     margin-right: 10px;
@@ -14392,8 +14395,8 @@ ul.cardList li {
 }
 #listing-list .compare-button {
     position: absolute;
-    top: 8px;
-    right: 10px;
+    top: 7px;
+    right: 8px;
     z-index: -1;
     font-size: 13px;
     background: rgba(0, 0, 0, 0.36);
@@ -14405,9 +14408,9 @@ ul.cardList li {
     cursor: pointer;
 }
 #listing-list .compare-button .inner-box {
-    padding: 5px 10px;
+    padding: 4px 10px;
     display: block;
-    border: 1px solid #ccc;
+    /* border: 1px solid #ccc; */
     border-radius: 4px;
 }
 #listing-list .compare-button:hover {
@@ -14781,10 +14784,6 @@ ul.cardList li {
     }
 }
 @media (max-width: 1580px) {
-    #listing-list .icon-num-get {
-        top: 10px;
-        left: 15px;
-    }
     #listing-list .date-post {
         /* float: left; */
         /* text-align: left; */
