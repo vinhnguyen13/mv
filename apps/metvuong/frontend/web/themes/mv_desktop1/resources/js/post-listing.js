@@ -784,7 +784,7 @@ $(document).ready(function(){
 				var nguyen = price[0];
 				var float = price[1];
 				
-				if(float.length > 2) {
+				if(float.length > 3) {
 					var priceRe = Number(Number(nguyen + '.' + float).toFixed(2));
 					return priceRe.toString().replace('.', ',') + ' ' + firstSplit[1];
 				}
