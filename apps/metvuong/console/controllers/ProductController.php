@@ -5,6 +5,7 @@ use common\components\Slug;
 use console\models\batdongsan\Listing;
 use console\models\Helpers;
 use console\models\Metvuong;
+use console\models\Product;
 use vsoft\ad\models\AdImages;
 use vsoft\craw\models\AdProductFile;
 use Yii;
@@ -658,5 +659,10 @@ class ProductController extends Controller {
         $limit = $this->limit == null ? 1000 : ((intval($this->limit) <= 1000 && intval($this->limit) > 0) ? intval($this->limit) : 0);
         Metvuong::mapContactProduct($limit);
     }
+
+	public function actionUpdateFavorite($step)
+	{
+		Product::me()->updateStats($step);
+	}
 
 }

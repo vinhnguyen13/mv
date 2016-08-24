@@ -43,12 +43,6 @@ $count_product = count($products);
                     }
                 }
             }
-
-            if($fav_count == 0){
-                $fav_count = (int)\vsoft\ad\models\AdProductSaved::find()->where(['product_id' => $product->id])->count();
-                Tracking::syncFavorite($product->id);
-            }
-
             $thumb = $product->representImage;
             if(strpos($thumb, "default")){
                 if($product->projectBuilding){
