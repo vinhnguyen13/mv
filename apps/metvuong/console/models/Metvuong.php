@@ -27,6 +27,7 @@ class Metvuong extends Component
 {
     public static function sendMailContact($code=null, $limit=100)
     {
+        print_r("----------Start-----------".PHP_EOL);
         Yii::$app->getDb()->createCommand('SET group_concat_max_len = 5000000')->execute();
         $contacts = AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
                 ->where('email is not null')
@@ -59,11 +60,9 @@ class Metvuong extends Component
                     $token->created_at = time();
                     $res = $token->save();
                     if ($res == false) {
-                        print_r("{$email} cannot create new token");
+                        print_r("{$email} cannot create new token".PHP_EOL);
                         continue;
                     }
-
-
                     $array_product_id = explode(",", $contact["list_id"]);
                     $products = AdProduct::getDb()->cache(function () use ($array_product_id) {
                         return AdProduct::find()->where(['IN', 'id', $array_product_id])->limit(3)->all();
@@ -99,18 +98,22 @@ class Metvuong extends Component
                             ->setTo([$email])
                             ->setSubject($subjectEmail)
                             ->send();
-                        $status > 0 ? print_r("\n {$mailer->transport['username']} sent to {$email}") : "Send mail error.";
+                        $status > 0 ? print_r("[{$mailer->transport['username']}] sent to [{$email}] success !".PHP_EOL) : print_r("Send mail error.".PHP_EOL);
                         // Count email marketing has sent
                         Metvuong::markEmail($email, $status);
                         usleep(300000);
                     } catch (Exception $ex) {
-                        print_r("\n Error .");
+                        print_r("Error .".PHP_EOL);
                     }
-                    print_r("\n--------------------\nSend email finish.");
+                }else{
+                    Metvuong::markEmail($email, -1);
+                    print_r("Not create account $email.".PHP_EOL);
                 }
             }
-        } else
-            print_r("No contact info.");
+        } else{
+            print_r("No contact info.".PHP_EOL);
+        }
+        print_r("----------End-----------".PHP_EOL);
     }
 
     public static function transport(){
