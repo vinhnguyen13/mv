@@ -302,7 +302,7 @@ class MapSearch extends AdProduct {
 			$page = $this->page ? $this->page : 1;
 			$offset = ($page - 1) * $limit;
 			
-			$sourceRl = ["include" => ["id", "boost_start_time", "user_id", "category_id", "type", "address", "price", "area", "room_no", "toilet_no", "start_date", "score", "img"]];
+			$sourceRl = ["include" => ["id", "boost_start_time", "user_id", "category_id", "type", "address", "price", "area", "room_no", "toilet_no", "start_date", "score", "img", "favorite", "search", "share", "view"]];
 			
 			$aggs["rl"] = [
 				"top_hits" => [

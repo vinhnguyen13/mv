@@ -660,7 +660,7 @@ class ProductController extends Controller {
         Metvuong::mapContactProduct($limit);
     }
 
-	public function actionUpdateFavorite($step)
+	public function actionUpdateStats($step)
 	{
 		Product::me()->updateStats($step);
 	}

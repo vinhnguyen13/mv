@@ -8,6 +8,7 @@
 
 namespace frontend\models;
 use kartik\helpers\Enum;
+use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductSaved;
 use vsoft\express\models\SysEmail;
 use vsoft\tracking\models\base\AdProductFinder;
@@ -250,6 +251,38 @@ class Tracking extends Component
             default:
                 break;
         }
+        $this->updateStatsToElastic($pid);
+    }
+
+    public function updateStatsToElastic($pid)
+    {
+        $result = $this->getStats($pid);
+        if(!empty($result)){
+            $changes['favorite'] = !empty($result[0]['favorite']) ? $result[0]['favorite'] : 0;
+            $changes['share'] = !empty($result[0]['share']) ? $result[0]['share'] : 0;
+            $changes['search'] = !empty($result[0]['search']) ? $result[0]['search'] : 0;
+            $changes['view'] = !empty($result[0]['visit']) ? $result[0]['visit'] : 0;
+            return AdProduct::_updateEs($pid, $changes);
+        }
+    }
+
+    public function getStats($pid)
+    {
+        $collection = Yii::$app->mongodb->getCollection('chart_stats');
+        $result = $collection->aggregate(
+            array( '$match' => array( 'product_id' => $pid ) ),
+            array( '$group' => array(
+                '_id' => '$product_id',
+                'favorite' => array( '$sum' => '$favorite' ),
+                'share' => array( '$sum' => '$share' ),
+                'search' => array( '$sum' => '$search' ),
+                'visit' => array( '$sum' => '$visit' ),
+            ))
+        );
+        if(!empty($result)){
+            return $result;
+        }
+        return false;
     }
 
     public function statsFavorite($pid, $date){
