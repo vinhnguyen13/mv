@@ -366,16 +366,44 @@ class Report extends Component
     public function statistic(){
         $query = new Query();
         $query->select(['id', 'username'])->from('user');
-        $data['Total User'] = $query->count();
+        $data['User (Normal + MailChimp)'] = $query->count();
 
-        $queryTotalUserActive = $query;
-        $queryTotalUserActive->where('updated_at > created_at')->orderBy('created_at DESC');
-        $data['Total User Active'] = $query->count();
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where("email NOT IN (select email from mark_email)");
+        $data['User Normal'] = $query->count();
 
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where("email IN (select email from mark_email)");
+        $data['User MailChimp'] = $query->count();
 
-        $queryTotalUserActiveInMonth = $query;
-        $queryTotalUserActiveInMonth->where('updated_at > created_at')->andWhere(['BETWEEN', 'updated_at', strtotime('-30 days'), time()])->orderBy('created_at DESC');
-        $data['Total User Active In Month'] = $query->count();
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where('updated_at > created_at')
+            ->andWhere("email NOT IN (select email from mark_email)");
+        $data['User Normal Active'] = $query->count();
+
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where('updated_at > created_at')
+            ->andWhere("email IN (select email from mark_email)");
+        $data['User MailChimp Active'] = $query->count();
+
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where('updated_at > created_at')
+            ->andWhere("email NOT IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'updated_at', strtotime('-30 days'), time()]);
+        $data['User Normal Active In Month'] = $query->count();
+
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where('updated_at > created_at')
+            ->andWhere("email IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'updated_at', strtotime('-30 days'), time()]);
+        $data['User MailChimp Active In Month'] = $query->count();
+
 
 
         return $data;

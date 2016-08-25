@@ -8,7 +8,7 @@ use yii\helpers\Url;
             <div class="title-top">
                 <?=Yii::t('report','Report')?>
             </div>
-        	<section class="clearfix mgB-40">
+            <section class="clearfix mgB-40">
                 <div class="pull-right fs-13 mgB-15">
                     <div class="clearfix d-ib ver-c">
                         <a href="<?= Url::to(['report/index', 'filter'=>'week'], true) ?>" class="show-view-chart<?=($filter=='week' ? ' active' : '')?>"><?=Yii::t('statistic','Week')?></a>
@@ -17,14 +17,14 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div class="clearfix"></div>
-        		<div class="summary clearfix report-boss mgB-30">
+                <div class="summary clearfix report-boss mgB-30">
                     <div class="wrap-chart clearfix">
-        				<div class="wrap-img">
+                        <div class="wrap-img">
                             <div class="wrapChart">
                                 <?=$this->render('/report/default/_partials/chart', ['categories'=>$categories, 'dataChart'=>$dataChart]);?>
                             </div>
                         </div>
-        			</div>
+                    </div>
                     <ul class="option-view-stats clearfix">
                         <li class="chk_register">
                             <label for="register"><input type="checkbox" name="toggle-chart" value="" id="register" checked><?=Yii::t('report','Register')?></label>
@@ -51,11 +51,11 @@ use yii\helpers\Url;
                             <label for="dashboard"><input type="checkbox" name="toggle-chart" value="" id="dashboard" checked><?=Yii::t('report','Dashboard')?></label>
                         </li>
                     </ul>
-        		</div>
-                <div class="summary clearfix report-boss tbl">
-                    <?=$this->render('/report/default/_partials/statistic', []);?>
-        		</div>
-        	</section>
+                </div>
+                <div class="summary clearfix report-boss tbl-total-tk">
+                    <?=$this->render('/report/default/_partials/statistic', ['statistic'=>$statistic]);?>
+                </div>
+            </section>
         </div>
     </div>
 </div>
