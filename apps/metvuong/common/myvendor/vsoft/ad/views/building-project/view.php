@@ -51,8 +51,8 @@ $this->registerJs('buildingProject.initView()', View::POS_READY, 'initform');
                 <td>
                     <?php
                     if($model->facilities) {
-                        $facility = \vsoft\ad\models\AdFacility::find()->select('group_concat(name) as facility')->where("id in ({$model->facilities})")->asArray()->one();
-                        echo $facility["facility"];
+                        $facility = \vsoft\ad\models\AdFacility::find()->select("group_concat(' ', `name`) as facility")->where("id in ({$model->facilities})")->asArray()->one();
+                        echo $facility['facility'];
                     }
                     ?>
                 </td></tr>

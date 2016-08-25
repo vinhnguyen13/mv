@@ -198,7 +198,23 @@ if(!$model->isNewRecord) {
 
                     <div class="row">
                         <div class="col-md-12">
-                            <?= $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
+                            <?php
+                            if($model->isNewRecord)
+                                echo $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']);
+                            else { ?>
+                                <div class="form-group field-buildingproject-name required">
+                                <label class="control-label">Chủ đầu tư</label>
+                            <?php
+                                $sql = "select name from metvuong_dev.ad_investor where id in (select investor_id from metvuong_dev.ad_investor_building_project where building_project_id={$model->id})";
+                                $investors= Yii::$app->getDb()->createCommand($sql)->queryAll();
+                                if(count($investors) > 0){
+                                    foreach ($investors as $investor) { ?>
+                                            <span class="form-control"><?=isset($investor['name']) ? $investor['name'] : ''?></span>
+                                    <?php }
+
+                                }?>
+                                </div>
+                            <?php } ?>
                         </div>
                     </div>
                     <div class="row">

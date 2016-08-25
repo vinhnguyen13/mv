@@ -181,7 +181,8 @@ class BuildingProjectController extends Controller
 
     			if($model->validate()) {
     				$model->save(false);
-    				$model->saveMultiple($post['BuildingProject'], $investors, 'investors');
+                    if(isset($post['BuildingProject']['investors']))
+    				    $model->saveMultiple($post['BuildingProject'], $investors, 'investors');
 //    				$model->saveMultiple($post['BuildingProject'], $categories, 'categories');
     				$model->saveMultiple($post['BuildingProject'], $architects, 'architects');
     				$model->saveMultiple($post['BuildingProject'], $contractors, 'contractors');
