@@ -324,11 +324,19 @@ $count_review = $reviews->count();
 					</div>
 					<div class="right-attr-detail">
 						<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-						<ul class="icon-num-get">
-					    	<li><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>3</li>
-					    	<li><span class="icon-mv"><span class="icon-share-social"></span></span>5</li>
-					    	<li><span class="icon-mv"><span class="icon-icons-search"></span></span>12</li>
-					    </ul>
+						<?php
+						$result = Tracking::find()->getStats($product->id);
+						if(!empty($result)) {
+							?>
+							<ul class="icon-num-get">
+								<?=!empty($result[0]['favorite']) ? '<li><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>'.$result[0]['favorite'].'</li>' : 0;?>
+								<?=!empty($result[0]['share']) ? '<li><span class="icon-mv"><span class="icon-share-social"></span></span>'.$result[0]['share'].'</li>' : 0;?>
+								<?=!empty($result[0]['search']) ? '<li><span class="icon-mv"><span class="icon-icons-search"></span></span>'.$result[0]['search'].'</li>' : 0;?>
+								<?=!empty($result[0]['visit']) ? '<li><span class="icon-mv"><span class="icon-eye-copy"></span></span>'.$result[0]['visit'].'</li>' : 0;?>
+							</ul>
+							<?php
+						}
+						?>
 					</div>
 				</div>
 
