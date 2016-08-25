@@ -108,16 +108,16 @@
 					    </div>
 					</a>
 					<ul class="icon-num-get">
-						<?php if($product['favorite']): ?>
+						<?php if(empty($product['favorite'])): ?>
 				    	<li><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span><?= $product['favorite'] ?></li>
 				    	<?php endif; ?>
-				    	<?php if($product['share']): ?>
+				    	<?php if(empty($product['share'])): ?>
 				    	<li><span class="icon-mv fs-13"><span class="icon-share-social"></span></span><?= $product['share'] ?></li>
 				    	<?php endif; ?>
-				    	<?php if($product['search']): ?>
+				    	<?php if(empty($product['search'])): ?>
 				    	<li><span class="icon-mv fs-13"><span class="icon-icons-search"></span></span><?= $product['search'] ?></li>
 				    	<?php endif; ?>
-				    	<?php if($product['view']): ?>
+				    	<?php if(empty($product['view'])): ?>
 				    	<li><span class="icon-mv fs-13"><span class="icon-eye-copy"></span></span><?= $product['view'] ?></li>
 				    	<?php endif; ?>
 				    </ul>
