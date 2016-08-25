@@ -1,3 +1,5 @@
+<?php
+?>
 <table class="table table-hover">
     <thead>
     <tr>
@@ -6,21 +8,17 @@
     </tr>
     </thead>
     <tbody>
-    <tr>
-        <td>Total User</td>
-        <td>465456</td>
-    </tr>
-    <tr>
-        <td>User active in month</td>
-        <td>45646</td>
-    </tr>
-    <tr>
-        <td>Total User (From MailChimp)</td>
-        <td>Moe</td>
-    </tr>
-    <tr>
-        <td>User (From MailChimp) active in month</td>
-        <td>Moe</td>
-    </tr>
+    <?php
+    if(!empty($statistic)) {
+        foreach($statistic as $key=>$stt) {
+            ?>
+            <tr>
+                <td><?= $key ?></td>
+                <td><?= $stt ?></td>
+            </tr>
+            <?php
+        }
+    }
+    ?>
     </tbody>
 </table>

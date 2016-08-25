@@ -53,7 +53,7 @@ use yii\helpers\Url;
                     </ul>
         		</div>
                 <div class="summary clearfix report-boss tbl-total-tk">
-                    <?=$this->render('/report/default/_partials/statistic', []);?>
+                    <?=$this->render('/report/default/_partials/statistic', ['statistic'=>$statistic]);?>
         		</div>
         	</section>
         </div>
