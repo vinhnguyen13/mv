@@ -23,6 +23,16 @@ use vsoft\express\components\StringHelper;
 use vsoft\ad\models\AdWard;
 
 class ProductController extends Controller {
+	public $code;
+	public $limit;
+	public function options()
+	{
+		return ['code', 'limit'];
+	}
+	public function optionAliases()
+	{
+		return ['code' => 'code', 'limit' => 'limit'];
+	}
 	
 	public function actionUpdateScore($id) {
 		$product = AdProduct::findOne($id);
@@ -351,26 +361,7 @@ class ProductController extends Controller {
             print_r(" Products have checked score!");
         }
     }
-
-    public $code;
-    public $limit;
-    public function options()
-    {
-        return ['code', 'limit'];
-    }
-    public function optionAliases()
-    {
-        return ['code' => 'code', 'limit' => 'limit'];
-    }
-
-    /*
-        Marketing contact send mail: php yii product/send-mail-contact -code=123456
-    */
-    public function actionSendMailContact(){
-        $limit = $this->limit == null ? 100 : ((intval($this->limit) <= 100 && intval($this->limit) > 0) ? intval($this->limit) : 0);
-        Metvuong::sendMailContact($this->code, $limit);
-    }
-
+	
     public function actionDownloadImage($limit = 100)
     {
         $images = AdImages::find()->where('folder = :f', [':f' => ''])->orWhere(['folder' => null])->limit($limit)->all();
