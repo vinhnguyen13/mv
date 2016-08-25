@@ -121,8 +121,7 @@ class Mail extends Component
         $markEmail = MarkEmail::find()->where('email = :e',[':e' => $email])->one();
         if(count($markEmail) > 0){
             if($status) {
-                $c = $markEmail->count;
-                $markEmail->count = $c + 1;
+                $markEmail->count += 1;
             }
             $markEmail->send_time = time();
             $markEmail->status = $status;

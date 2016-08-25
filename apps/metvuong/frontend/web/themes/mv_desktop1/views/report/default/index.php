@@ -52,6 +52,9 @@ use yii\helpers\Url;
                         </li>
                     </ul>
         		</div>
+                <div class="summary clearfix report-boss">
+                    <?=$this->render('/report/default/_partials/statistic', []);?>
+        		</div>
         	</section>
         </div>
     </div>
