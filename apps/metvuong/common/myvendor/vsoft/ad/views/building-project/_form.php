@@ -205,7 +205,7 @@ if(!$model->isNewRecord) {
                                 <div class="form-group field-buildingproject-name required">
                                 <label class="control-label">Chủ đầu tư</label>
                             <?php
-                                $sql = "select name from metvuong_dev.ad_investor where id in (select investor_id from metvuong_dev.ad_investor_building_project where building_project_id={$model->id})";
+                                $sql = "select name from ad_investor where id in (select investor_id from ad_investor_building_project where building_project_id={$model->id})";
                                 $investors= Yii::$app->getDb()->createCommand($sql)->queryAll();
                                 if(count($investors) > 0){
                                     foreach ($investors as $investor) { ?>
