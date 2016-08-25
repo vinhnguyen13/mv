@@ -780,6 +780,19 @@ class AdProduct extends AP
 				
 			$changes = array_diff_assoc($newAttrs, $ollAttrs);
 			
+			if(isset($changes['favorite'])) {
+				unset($changes['favorite']);
+			}
+			if(isset($changes['share'])) {
+				unset($changes['share']);
+			}
+			if(isset($changes['search'])) {
+				unset($changes['search']);
+			}
+			if(isset($changes['view'])) {
+				unset($changes['view']);
+			}
+			
 			if(isset($changes['boost_sort'])) {
 				unset($changes['boost_sort']);
 			}

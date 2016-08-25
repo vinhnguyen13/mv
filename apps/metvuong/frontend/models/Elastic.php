@@ -26,6 +26,22 @@ class Elastic
 			'type' => 'integer',
 			'index' => 'no'
 		],
+		'favorite' => [
+			'type' => 'integer',
+			'index' => 'no'
+		],
+		'share' => [
+			'type' => 'integer',
+			'index' => 'no'
+		],
+		'search' => [
+			'type' => 'integer',
+			'index' => 'no'
+		],
+		'view' => [
+			'type' => 'integer',
+			'index' => 'no'
+		],
 		'category_id' => [
 			'type' => 'byte'
 		],
