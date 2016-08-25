@@ -8,6 +8,7 @@
 
 namespace frontend\models;
 use kartik\helpers\Enum;
+use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductSaved;
 use vsoft\express\models\SysEmail;
 use vsoft\tracking\models\base\AdProductFinder;
@@ -249,6 +250,18 @@ class Tracking extends Component
                 break;
             default:
                 break;
+        }
+        $this->updateStatsToElastic($chart_stats);
+    }
+
+    public function updateStatsToElastic($chart_stat)
+    {
+        if(!empty($chart_stat->product_id)){
+            $changes['favorite'] = !empty($chart_stat->favorite) ? $chart_stat->favorite : 0;
+            $changes['share'] = !empty($chart_stat->share) ? $chart_stat->share : 0;
+            $changes['search'] = !empty($chart_stat->search) ? $chart_stat->search : 0;
+            $changes['view'] = !empty($chart_stat->visit) ? $chart_stat->visit : 0;
+            return AdProduct::_updateEs($chart_stat->product_id, $changes);
         }
     }
 

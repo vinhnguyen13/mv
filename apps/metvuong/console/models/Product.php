@@ -59,13 +59,7 @@ class Product extends Component
                 $chart_stats = ChartStats::find()->all();
                 if(!empty($chart_stats)){
                     foreach($chart_stats as $chart_stat){
-                        $changes['favorite'] = !empty($chart_stat->favorite) ? $chart_stat->favorite : 0;
-                        $changes['share'] = !empty($chart_stat->share) ? $chart_stat->share : 0;
-                        $changes['search'] = !empty($chart_stat->search) ? $chart_stat->search : 0;
-                        $changes['view'] = !empty($chart_stat->visit) ? $chart_stat->visit : 0;
-                        if(!empty($chart_stat->product_id)){
-                            $chk = AdProduct::_updateEs($chart_stat->product_id, $changes);
-                        }
+                        Tracking::find()->updateStatsToElastic($chart_stat);
                         print_r("Product: ".$chart_stat->product_id.PHP_EOL);
                     }
                 }
