@@ -17,7 +17,7 @@ use yii\helpers\Url;
                     </div>
                 </div>
                 <div class="clearfix"></div>
-        		<div class="summary clearfix report-boss">
+        		<div class="summary clearfix report-boss mgB-30">
                     <div class="wrap-chart clearfix">
         				<div class="wrap-img">
                             <div class="wrapChart">
@@ -52,7 +52,7 @@ use yii\helpers\Url;
                         </li>
                     </ul>
         		</div>
-                <div class="summary clearfix report-boss">
+                <div class="summary clearfix report-boss tbl">
                     <?=$this->render('/report/default/_partials/statistic', []);?>
         		</div>
         	</section>
