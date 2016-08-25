@@ -14564,6 +14564,10 @@ ul.cardList li {
     }
 }
 @media (max-width: 1365px) {
+    #listing-list .icon-num-get {
+        top: 20px;
+        left: 20px;
+    }
     .wrap-listing-item {
         width: 500px;
     }
@@ -14672,6 +14676,10 @@ ul.cardList li {
 
 }
 @media (max-width: 985px) {
+    #listing-list .icon-num-get {
+        top: 7px;
+        left: 7px;
+    }
     .img-compare .pic-intro {
         display: none;
     }
