@@ -251,18 +251,34 @@ class Tracking extends Component
             default:
                 break;
         }
-        $this->updateStatsToElastic($chart_stats);
+        $this->updateStatsToElastic($pid);
     }
 
-    public function updateStatsToElastic($chart_stat)
+    public function updateStatsToElastic($pid)
     {
-        if(!empty($chart_stat->product_id)){
-            $changes['favorite'] = !empty($chart_stat->favorite) ? $chart_stat->favorite : 0;
-            $changes['share'] = !empty($chart_stat->share) ? $chart_stat->share : 0;
-            $changes['search'] = !empty($chart_stat->search) ? $chart_stat->search : 0;
-            $changes['view'] = !empty($chart_stat->visit) ? $chart_stat->visit : 0;
-            return AdProduct::_updateEs($chart_stat->product_id, $changes);
+        $collection = Yii::$app->mongodb->getCollection('chart_stats');
+        $result = $collection->aggregate(
+            array( '$match' => array( 'product_id' => $pid ) ),
+            array( '$group' => array(
+                '_id' => '$product_id',
+                'favorite' => array( '$sum' => '$favorite' ),
+                'share' => array( '$sum' => '$share' ),
+                'search' => array( '$sum' => '$search' ),
+                'visit' => array( '$sum' => '$visit' ),
+            ))
+        );
+        if(!empty($result)){
+            $changes['favorite'] = !empty($result[0]['favorite']) ? $result[0]['favorite'] : 0;
+            $changes['share'] = !empty($result[0]['share']) ? $result[0]['share'] : 0;
+            $changes['search'] = !empty($result[0]['search']) ? $result[0]['search'] : 0;
+            $changes['view'] = !empty($result[0]['visit']) ? $result[0]['visit'] : 0;
+            return AdProduct::_updateEs($pid, $changes);
         }
+    }
+
+    public function getStats($pid)
+    {
+        $chart_stats = ChartStats::find()->where(['product_id' => $pid])->one();
     }
 
     public function statsFavorite($pid, $date){

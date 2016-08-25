@@ -56,11 +56,16 @@ class Product extends Component
                 }
                 break;
             case 'elastic-update-stats':
-                $chart_stats = ChartStats::find()->all();
+                $collection = Yii::$app->mongodb->getCollection('chart_stats');
+                $chart_stats = $collection->aggregate(
+                    array('$group' => array(
+                        '_id' => '$product_id'
+                    ))
+                );
                 if(!empty($chart_stats)){
                     foreach($chart_stats as $chart_stat){
-                        Tracking::find()->updateStatsToElastic($chart_stat);
-                        print_r("Product: ".$chart_stat->product_id.PHP_EOL);
+                        Tracking::find()->updateStatsToElastic($chart_stat['_id']);
+                        print_r("Product: ".$chart_stat['_id'].PHP_EOL);
                     }
                 }
                 break;
