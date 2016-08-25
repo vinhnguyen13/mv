@@ -363,4 +363,22 @@ class Report extends Component
         }
     }
 
+    public function statistic(){
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user');
+        $data['Total User'] = $query->count();
+
+        $queryTotalUserActive = $query;
+        $queryTotalUserActive->where('updated_at > created_at')->orderBy('created_at DESC');
+        $data['Total User Active'] = $query->count();
+
+
+        $queryTotalUserActiveInMonth = $query;
+        $queryTotalUserActiveInMonth->where('updated_at > created_at')->andWhere(['BETWEEN', 'updated_at', strtotime('-30 days'), time()])->orderBy('created_at DESC');
+        $data['Total User Active In Month'] = $query->count();
+
+
+        return $data;
+    }
+
 }

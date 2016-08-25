@@ -34,7 +34,8 @@ class ReportController extends Controller
         $filter = Yii::$app->request->get("filter", 'week');
 
         $chart = Report::me()->chart($filter);
-        $data = ArrayHelper::merge($chart, ['filter'=>$filter]);
+        $statistic = Report::me()->statistic();
+        $data = ArrayHelper::merge($chart, ['filter'=>$filter, 'statistic'=>$statistic]);
         if(Yii::$app->request->isAjax) {
             return $this->renderAjax('default/index', $data);
         } else {

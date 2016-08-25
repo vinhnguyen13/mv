@@ -2771,6 +2771,12 @@ footer {
     font-size: 1.2em;
     color: #009745;
 }
+.tbl-total-tk {
+    font-weight: 400;
+    color: #3c3c3c;
+    text-transform: capitalize;
+    font-size: 14px;;
+}
 .summary .box-statis-num {
     font-size: .85em;
 }
