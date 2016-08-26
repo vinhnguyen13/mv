@@ -364,46 +364,105 @@ class Report extends Component
     }
 
     public function statistic(){
+        $from_month = date("d-m-Y 00:00:00", strtotime('-30 days'));
+        $from_yesterday = date("d-m-Y 00:00:00", strtotime('-1 days'));
+        $to_yesterday = date("d-m-Y 23:59:59", strtotime('-1 days'));
+        $from_today = date("d-m-Y 00:00:00", time());
+        $to_today = date("d-m-Y 23:59:59", time());
+
         $query = new Query();
         $query->select(['id', 'username'])->from('user');
-        $data['All User'] = $query->count();
+        $data['All User'][0] = '';
+        $data['All User'][1] = '';
+        $data['All User'][2] = $query->count();
+        /**
+         * Register User (Normal)
+         */
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where("email NOT IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'created_at', strtotime($from_month), strtotime($from_today)]);
+        $data['Register User (Normal)'][0] = $query->count();
 
         $query = new Query();
         $query->select(['id', 'username'])->from('user')
-            ->where("email NOT IN (select email from mark_email)");
-        $data['Register User (Normal)'] = $query->count();
+            ->where("email NOT IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'created_at', strtotime($from_yesterday), strtotime($to_yesterday)]);
+        $data['Register User (Normal)'][1] = $query->count();
 
         $query = new Query();
         $query->select(['id', 'username'])->from('user')
-            ->where("email IN (select email from mark_email)");
-        $data['Register User (MailChimp)'] = $query->count();
+            ->where("email NOT IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'created_at', strtotime($from_today), strtotime($to_today)]);
+        $data['Register User (Normal)'][2] = $query->count();
 
+        /**
+         * Register User (MailChimp)
+         */
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where("email IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'created_at', strtotime($from_month), strtotime($from_today)]);
+        $data['Register User (MailChimp)'][0] = $query->count();
+
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where("email IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'created_at', strtotime($from_yesterday), strtotime($to_yesterday)]);
+        $data['Register User (MailChimp)'][1] = $query->count();
+
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where("email IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'created_at', strtotime($from_today), strtotime($to_today)]);
+        $data['Register User (MailChimp)'][2] = $query->count();
+
+        /**
+         * Active User (Normal)
+         */
         $query = new Query();
         $query->select(['id', 'username'])->from('user')
             ->where('updated_at > created_at')
-            ->andWhere("email NOT IN (select email from mark_email)");
-        $data['Total Active User (Normal)'] = $query->count();
-
-        $query = new Query();
-        $query->select(['id', 'username'])->from('user')
-            ->where('updated_at > created_at')
-            ->andWhere("email IN (select email from mark_email)");
-        $data['Total Active User (MailChimp)'] = $query->count();
+            ->andWhere("email NOT IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'updated_at', strtotime($from_month), strtotime($from_today)]);
+        $data['Active User (Normal)'][0] = $query->count();
 
         $query = new Query();
         $query->select(['id', 'username'])->from('user')
             ->where('updated_at > created_at')
             ->andWhere("email NOT IN (select email from mark_email)")
-            ->andWhere(['BETWEEN', 'updated_at', strtotime('-30 days'), time()]);
-        $data['Monthly Active User (Normal)'] = $query->count();
+            ->andWhere(['BETWEEN', 'updated_at', strtotime($from_yesterday), strtotime($to_yesterday)]);
+        $data['Active User (Normal)'][1] = $query->count();
+
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where('updated_at > created_at')
+            ->andWhere("email NOT IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'updated_at', strtotime($from_today), strtotime($to_today)]);
+        $data['Active User (Normal)'][2] = $query->count();
+        /**
+         * Active User (MailChimp)
+         */
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where('updated_at > created_at')
+            ->andWhere("email IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'updated_at', strtotime($from_month), strtotime($from_today)]);
+        $data['Active User (MailChimp)'][0] = $query->count();
 
         $query = new Query();
         $query->select(['id', 'username'])->from('user')
             ->where('updated_at > created_at')
             ->andWhere("email IN (select email from mark_email)")
-            ->andWhere(['BETWEEN', 'updated_at', strtotime('-30 days'), time()]);
-        $data['Monthly Active User (MailChimp)'] = $query->count();
+            ->andWhere(['BETWEEN', 'updated_at', strtotime($from_yesterday), strtotime($to_yesterday)]);
+        $data['Active User (MailChimp)'][1] = $query->count();
 
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where('updated_at > created_at')
+            ->andWhere("email IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'updated_at', strtotime($from_today), strtotime($to_today)]);
+        $data['Active User (MailChimp)'][2] = $query->count();
 
 
         return $data;
