@@ -5277,6 +5277,17 @@ html.mm-opening .mm-slideout {
 .detail-duan-moi .swiper-slide {
     text-align: center;
 }
+.detail-duan-moi .swiper-slide a {
+    display: block;
+    height: 100%;
+}
+.detail-duan-moi .swiper-slide a:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 100%;
+    margin: 0 0 0 -5px;
+}
 .detail-duan-moi .swiper-wrapper {
     height: 400px;
 }
