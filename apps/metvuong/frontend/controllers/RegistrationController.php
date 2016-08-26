@@ -150,6 +150,7 @@ class RegistrationController extends Controller
             $account->connect($user);
             $account->update();
             Yii::$app->user->login($user, $this->module->rememberFor);
+            $user->confirm();
         }
         return $this->goBack();
 
