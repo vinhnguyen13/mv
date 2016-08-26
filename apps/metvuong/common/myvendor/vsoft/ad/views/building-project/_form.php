@@ -57,8 +57,8 @@ if(!$model->isNewRecord) {
 	    <div style="min-height: 400px;">
 	    	<ul class="bp-fields">
 	    		<li class="active">
+                    <?= $form->field($model, 'name')->textInput() ?>
                     <?php if($model->isNewRecord){ ?>
-	    			<?= $form->field($model, 'name')->textInput() ?>
 	    			<?= $form->field($model, 'city_id')->dropDownList(ArrayHelper::map(AdCity::find()->all(), 'id', 'name'), ['prompt' => '---', 'class' => 'select-2 form-control']) ?>
 	    			<input type="hidden" name="BuildingProject[district_id]" value="" />
 	    			<?= $form->field($model, 'district_id')->dropDownList($districtData, ['options' => $districtOptions, 'prompt' => '---', 'class' => 'select-2 form-control', 'disabled' => ($model->city_id) ? false : true]) ?>
@@ -90,27 +90,23 @@ if(!$model->isNewRecord) {
                             $city_name = $_city['name'];
 
                         $district_name = null;
-                        $_district = AdDistrict::find()->select(['name'])->where(['id' => $model->district_id, 'city_id' => $model->city_id])->asArray()->one();
+                        $_district = AdDistrict::find()->select(['name', 'pre'])->where(['id' => $model->district_id, 'city_id' => $model->city_id])->asArray()->one();
                         if(count($_district) > 0)
-                            $district_name = $_district['name'];
+                            $district_name = $_district['pre'] . " " .$_district['name'];
 
                         $ward_name = null;
                         if(!empty($model->ward_id)){
-                            $_ward = \vsoft\ad\models\AdWard::find()->select(['name'])->where(['id' => $model->ward_id, 'district_id' => $model->district_id])->asArray()->one();
+                            $_ward = \vsoft\ad\models\AdWard::find()->select(['name', 'pre'])->where(['id' => $model->ward_id, 'district_id' => $model->district_id])->asArray()->one();
                             if(count($_ward) > 0)
-                                $ward_name = $_ward['name'];
+                                $ward_name = $_ward['pre'] . " " . $_ward['name'];
                         }
                         $street_name = null;
                         if(!empty($model->street_id)){
-                            $_street = \vsoft\ad\models\AdStreet::find()->select(['name'])->where(['id' => $model->street_id, 'district_id' => $model->district_id])->asArray()->one();
+                            $_street = \vsoft\ad\models\AdStreet::find()->select(['name', 'pre'])->where(['id' => $model->street_id, 'district_id' => $model->district_id])->asArray()->one();
                             if(count($_street) > 0)
-                                $street_name = $_street['name'];
+                                $street_name = $_street['pre'] . " " . $_street['name'];
                         }
                         ?>
-                        <div class="form-group field-buildingproject-name required">
-                            <label class="control-label">Tên dự án</label>
-                            <span class="form-control"><?=$model->name?></span>
-                        </div>
                         <div class="form-group field-buildingproject-name required">
                             <label class="control-label">Thành Phố / Tỉnh</label>
                             <span class="form-control"><?=$city_name?></span>
@@ -118,7 +114,7 @@ if(!$model->isNewRecord) {
 
                         <div class="form-group field-buildingproject-name required">
                             <label class="control-label">Quận / Huyện</label>
-                            <span class="form-control"><?=$city_name?></span>
+                            <span class="form-control"><?=$district_name?></span>
                         </div>
 
                         <div class="row">

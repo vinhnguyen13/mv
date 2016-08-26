@@ -47,9 +47,10 @@ class AdBuildingProject extends ABP
                 'apartment_no', 'floor_no', 'units_no', 'no_1_bed', 'no_2_bed', 'no_3_bed'], 'integer'],
 	        [['name', 'district_id', 'city_id'], 'required'],
 	        [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress',
-                'name', 'description', 'file_name', 'data_html'], 'string'],
+                'description', 'file_name', 'data_html'], 'string'],
             [['facade_width'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/', 'max' => 10000],
             [['lift'], 'integer', 'max' => 100],
+            [['name', 'bds_name'], 'string', 'max' => 100],
 	        [['lng', 'lat', 'land_area', 'gfa', 'sqm_1_bed', 'sqm_2_bed', 'sqm_3_bed', 'building_density'], 'number'],
 	        [['start_time', 'estimate_finished', 'hotline', 'home_no'], 'string', 'max' => 32],
 	        [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'website', 'logo', 'slug'], 'string', 'max' => 255]

@@ -224,7 +224,7 @@ class Project extends Component
                         continue;
                     }
 
-                    $search_url = Listing::DOMAIN . "/phan-muc-cac-du-an-bds?k=" . rawurlencode($project->name);
+                    $search_url = Listing::DOMAIN . "/phan-muc-cac-du-an-bds?k=" . rawurlencode($project->bds_name);
                     $arr_file_name = explode("/", $project->file_name);
                     $file_name = $arr_file_name[1];
                     print_r("\n" . ($k + 1) . " " . $file_name);

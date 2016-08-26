@@ -34,7 +34,7 @@ use yii\helpers\Url;
             'clientOptions' => ['maxNumberOfFiles' => 1]]);
     ?>
 
-    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+    <?= $model->isNewRecord ? $form->field($model, 'name')->textInput(['maxlength' => true]) : $form->field($model, 'name')->textInput(['maxlength' => true, 'disabled' => true]) ?>
     
     <?= $form->field($model, 'address')->textarea(['maxlength' => true]) ?>
     

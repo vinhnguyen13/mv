@@ -92,6 +92,7 @@ class CopyProject extends Component
                     $adBuildingProject->city_id = $model->city_id;
                     $adBuildingProject->district_id = $model->district_id;
                     $adBuildingProject->name = $model->name;
+                    $adBuildingProject->bds_name = $model->name;
                     $adBuildingProject->logo = $model->logo;
                     $adBuildingProject->location = $model->location;
                     $adBuildingProject->description = $model->description;
