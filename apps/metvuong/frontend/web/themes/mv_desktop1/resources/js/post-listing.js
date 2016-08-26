@@ -11,11 +11,13 @@ $(document).ready(function(){
 	var searchList = $('#search-list');
 	var projectWrap = $('#project-wrap');
 	var priceShow = $('#price-show');
-	var priceMask = $('#priceMask');
 	var errorHint = $('.error-hint');
 	var previewButton = $('#preview');
 	var checkboxShowHome = $('#checkbox-show-home');
 	var tienichs = $('.tienich-frm').find('input');
+	var priceText = $('.price-type .small-text');
+	var priceTextStored = priceText.text();
+	var priceSize = $('#price-size');
 	
 	$('.alert-success .icon-close-icon').on('click', hideHint);
 	
@@ -83,7 +85,7 @@ $(document).ready(function(){
 			var infoP = 0;
 			
 			infoP += form.fields.area.val() ? form.getPoint(form.fields.area) : 0;
-			infoP += priceMask.val() ? form.getPoint(priceMask) : 0;
+			infoP += form.fields.price.val() ? form.getPoint(form.fields.price) : 0;
 			infoP += form.fields.roomNo.val() ? form.getPoint(form.fields.roomNo) : 0;
 			infoP += form.fields.toiletNo.val() ? form.getPoint(form.fields.toiletNo) : 0;
 			
@@ -675,7 +677,6 @@ $(document).ready(function(){
 	setTimeout(function(){point.calc();}, 500);
 	attachWindowScrollEvent();
 	attachProjectSuggest();
-	attachRadioUi();
 	attachPriceFormat();
 	
 	if(isNewRecord) {
@@ -714,49 +715,38 @@ $(document).ready(function(){
 
 	function attachPriceFormat() {
 		if(!isNewRecord) {
-			var priceUnitMil = $('#price-unit-mil');
-			var priceUnitBil = $('#price-unit-bil');
-			var maskValue = Number(form.fields.price.val()) / Number(priceUnitMil.val());
-			
-			if(maskValue > 999) {
-				priceMask.val((Number(form.fields.price.val()) / Number(priceUnitBil.val()) + '').replace('.', ','));
-				priceUnitBil.parent().trigger('click');
-			} else {
-				priceMask.val(maskValue);
-				priceUnitMil.parent().trigger('click');
-			}
+			calPrice();
 		}
 		
-		priceMask.on('keyup', function(e){
+		form.fields.price.on('keyup', function(e){
 			calPrice();
+		});
+		
+		form.fields.area.on('keyup', function(e){
+			calPriceSize();
 		}).on('keydown', function(e){
 			var self = $(this);
-			
-			if(e.keyCode === 190) {
-				self.val(self.val() + ',');
-			}
-		});
-	}
 
-	function attachRadioUi() {
-		$('.radio-ui').radio({
-			done: function (item) {
-				if(item.attr('name') == 'price-unit') {
-					calPrice();
+			if(e.keyCode === 190 || e.keyCode == 188) {
+				var val = self.val();
+				
+				if(val.indexOf(',') !== -1) {
+					e.preventDefault();
+					return;
+				}
+				
+				if(e.keyCode === 190) {
+					e.preventDefault();
+					self.val(val + ',');
 				}
 			}
 		});
 	}
 
 	function calPrice() {
-		var unit = Number(form.el.find('input[name=price-unit]').filter(':checked').val());
-		var price = Number(priceMask.val().replace(',', '.'));
+		var price = form.fields.price.val();
 		
 		if(price) {
-			price = Math.round(price * unit);
-			
-			form.fields.price.val(price);
-			
 			var priceFormat = formatNumber(price + '');
 			
 			if(priceFormat) {
@@ -764,9 +754,24 @@ $(document).ready(function(){
 			} else {
 				priceShow.parent().hide();
 			}
+			
+			priceText.addClass('text-show-price').removeClass('small-text').text(formatPrice(price) + ' ' + lajax.t('VNĐ'));
 		} else {
-			form.fields.price.val('');
 			priceShow.parent().hide();
+			priceText.removeClass('text-show-price').addClass('small-text').text(priceTextStored);
+		}
+		
+		calPriceSize();
+	}
+	
+	function calPriceSize() {
+		var price = form.fields.price.val();
+		var size = Number(form.fields.area.val().replace(',', '.'));
+		
+		if(price && size && price > size) {
+			priceSize.html(formatPrice(Math.round(price/size) + '') + ' ' + lajax.t('VNĐ') + '/m<sup>2</sup>');
+		} else {
+			priceSize.html('');
 		}
 	}
 
@@ -1113,9 +1118,9 @@ $(document).ready(function(){
 	}
 });
 
-var allow = [46, 8, 9, 27, 13, 110, 116];
-
 function numnberOnly(e) {
+	var allow = [46, 8, 9, 27, 13, 110, 116];
+	
 	if($(this).hasClass('number-float')) {
 		if($(this).val().indexOf(',') === -1 && $(this).val() !== '') {
 			allow.push(188);
@@ -1125,7 +1130,7 @@ function numnberOnly(e) {
 			e.preventDefault();
 		}
 	}
-	
+
     if ($.inArray(e.keyCode, allow) !== -1 ||
         (e.ctrlKey === true) ||
         (e.keyCode >= 35 && e.keyCode <= 39)) {

@@ -182,22 +182,14 @@
 							<div class="form-group col-xs-12 col-sm-6">
 								<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('area') ?></span> (m2)<span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
 								<?= Html::activeTextInput($product, 'area', ['class' => 'form-control number-only number-float', 'placeholder' => '...', 'value' => str_replace('.', ',', $product->area)]) ?>
+								<span id="price-size"></span>
 								<div class="help-block"></div>
 							</div>
 							<div class="form-group col-xs-12 col-sm-6 price-type">
 								<label for="<?= Html::getInputId($product, 'price') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('price') ?></span> (<?= Yii::t('ad', 'VND') ?>)<span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label><span class="price-show-wrap"><span id="price-show"></span></span>
-								<?= Html::activeHiddenInput($product, 'price', ['class' => 'form-control text-right', 'placeholder' => '...']) ?>
 								<div style="position: relative;">
-									<input type="text" id="priceMask" class="form-control text-right number-only number-float" placeholder="...">
+									<?= Html::activeTextInput($product, 'price', ['class' => 'form-control text-right number-only', 'placeholder' => '...']) ?>
 									<span class="small-text"><?= Yii::t("ad", "VD: 1,5 triệu hoặc 1,5 tỷ") ?></span>
-									<div class="price-unit">
-										<label class="radio-inline radio-ui">
-											<input type="radio" name="price-unit" id="price-unit-mil" value="1000000" checked="checked"> <?= Yii::t('ad', 'million') ?>
-										</label>
-										<label class="radio-inline radio-ui">
-											<input type="radio" name="price-unit" id="price-unit-bil" value="1000000000"> <?= Yii::t('ad', 'billion') ?>
-										</label>
-									</div>
 								</div>
 								<div class="help-block"></div>
 							</div>

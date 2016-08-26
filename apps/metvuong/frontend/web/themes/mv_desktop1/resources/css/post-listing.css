@@ -95,7 +95,21 @@ header.mm-slideout {
 	color: #00a769;
 	margin-left: 12px;
 	display: none;
-	font-size: 14px;
+	font-size: 17px;
+	float: right;
+	font-weight: 600;
+}
+
+.small-text,
+.text-show-price {
+	display: block;
+	margin-top: 5px;
+	height: 22px;
+}
+
+#price-size {
+	display: block;
+	margin-top: 5px;
 }
 
 .require-hint {
