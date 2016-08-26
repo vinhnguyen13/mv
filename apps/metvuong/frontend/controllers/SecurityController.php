@@ -159,6 +159,7 @@ class SecurityController extends Controller
                             }
                         }
                     }
+                    \Yii::$app->getSession()->setFlash('after_login', true);
                 }
                 $this->action->successUrl = Yii::$app->getUser()->getReturnUrl();
             }
