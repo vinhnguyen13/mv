@@ -125,23 +125,6 @@ class Elastic
 		]
 	];
 	
-	public static $acronyms = [
-		'hcm,hồ chí minh',
-		'hn,hà nội',
-		'cmt8,cách mạng tháng tám',
-		'xvnt,xô viết nghệ tĩnh',
-		'ntmk,nguyễn thị minh khai',
-		'hagl,hoàng anh gia lai',
-		'1,một',
-		'2,hai',
-		'quận 1,quận nhất',
-	];
-	
-	public static $synonyms = [
-		'1' => 'một',
-		'2' => 'hai',
-	];
-	
     protected $client = null;
     
     public static function buildProductDocument($product) {
@@ -233,55 +216,96 @@ class Elastic
     		[
     			"filter" => [
     				"match" => [
-    					"search_name" => $v
-    				]
-    			],
-    			"weight" => 1.5
-    		],
-    		[
-    			"filter" => [
-    				"match" => [
-    					"search_name_with_prefix" => $v
-    				]
-    			],
-    			"weight" => 1.5
-    		],
-    		[
-    			"filter" => [
-    				"match" => [
-    					"search_name_full_text" => [
+    					"s1" => [
     						"query" => $v,
     						"operator" => "and"
     					]
     				]
     			],
-    			"weight" => 1.5
+    			"weight" => 1
     		],
     		[
     			"filter" => [
     				"match" => [
-    					"search_name_full_text_no_ngram" => [
+    					"s2" => $v
+    				]
+    			],
+    			"weight" => 1
+    		],
+    		[
+    			"filter" => [
+    				"match" => [
+    					"s3" => $v
+    				]
+    			],
+    			"weight" => 1
+    		],
+    		[
+    			"filter" => [
+    				"match" => [
+    					"s4" => $v
+    				]
+    			],
+    			"weight" => 1
+    		],
+    		[
+    			"filter" => [
+    				"match" => [
+    					"s5" => [
     						"query" => $v,
     						"operator" => "and"
     					]
     				]
     			],
-    			"weight" => 1.5
+    			"weight" => 1
     		],
     		[
     			"filter" => [
     				"match" => [
-    					"search_full_name_no_ngram" => [
+    					"s6" => [
     						"query" => $v,
     						"operator" => "and"
     					]
     				]
     			],
-    			"weight" => 1.5
+    			"weight" => 1
     		],
     		[
     			"filter" => [
     				"match" => [
+    					"s7" => [
+    						"query" => $v,
+    						"operator" => "and"
+    					]
+    				]
+    			],
+    			"weight" => 1
+    		],
+    		[
+    			"filter" => [
+    				"match" => [
+    					"s8" => [
+    						"query" => $v,
+    						"operator" => "and"
+    					]
+    				]
+    			],
+    			"weight" => 1
+    		],
+    		[
+    			"filter" => [
+    				"match" => [
+    					"s9" => [
+    						"query" => $v,
+    						"operator" => "and"
+    					]
+    				]
+    			],
+    			"weight" => 1
+    		],
+    		[
+    			"filter" => [
+    				"term" => [
     					"_type" => "city"
     				]
     			],
@@ -289,8 +313,16 @@ class Elastic
     		],
     		[
     			"filter" => [
-    				"match" => [
+    				"term" => [
     					"_type" => "district"
+    				]
+    			],
+    			"weight" => 0.01
+    		],
+    		[
+    			"filter" => [
+    				"term" => [
+    					"city_id" => 1
     				]
     			],
     			"weight" => 0.01
@@ -304,7 +336,7 @@ class Elastic
     			"function_score" => [
     				"query" => [
     					"query_string" => [
-    						"default_field" => "search_full_name",
+    						"default_field" => "s10",
     						"query" => $query
     					]
     				],
@@ -314,7 +346,7 @@ class Elastic
     			]
     		]
     	];
-    	  	
+  	
     	return $params;
     }
     
@@ -325,7 +357,7 @@ class Elastic
     		"field_value_factor" => [
     			"field" => "total_sell",
     			"modifier" => "log1p",
-    			"factor" => 0.000001
+    			"factor" => 0.00001
     		]
     	];
     	
@@ -333,7 +365,7 @@ class Elastic
     		"field_value_factor" => [
     			"field" => "total_rent",
     			"modifier" => "log1p",
-    			"factor" => 0.000001
+    			"factor" => 0.00001
     		]
     	];
     	
@@ -349,7 +381,7 @@ class Elastic
     		"field_value_factor" => [
     			"field" => $field,
     			"modifier" => "log1p",
-    			"factor" => 0.000001
+    			"factor" => 0.00001
     		]
     	];
 		
@@ -505,5 +537,30 @@ class Elastic
 	
 	public static function standardSearchWard($ward) {
 		return self::standardSearchlv1(preg_replace("/(Phường)\s(\d+)/", "$1 $2 p$2", $ward));
+	}
+	
+	public static function acronym($s) {
+		$numberArray = [
+			"Một" => 1,
+			"Hai" => 2,
+			"Ba" => 3,
+			"Bốn" => 4,
+			"Năm" => 5,
+			"Sáu" => 6,
+			"Bảy" => 7,
+			"Tám" => 8,
+			"Chín" => 9,
+			"Mười" => 10
+		];
+		$s = str_replace(array_keys($numberArray), $numberArray, $s);
+		$lower = mb_strtolower($s, 'UTF-8');
+		$words = explode(" ", $lower);
+		$acronym = "";
+		
+		foreach ($words as $word) {
+			$acronym .= mb_substr($word, 0, 1, 'UTF-8');
+		}
+		
+		return $acronym;
 	}
 }

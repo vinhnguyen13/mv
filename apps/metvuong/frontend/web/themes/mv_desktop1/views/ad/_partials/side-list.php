@@ -104,9 +104,23 @@
 			                    	</ul>
 			                    <?php endif; ?>
 							</div>
-					    	<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['start_date']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?php $score = round($product['score'] - 0.00001157407 * ($now - $product['start_date'])); if($score > 0) echo $score; else echo 0; ?></span></p>
+							<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['start_date']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?php $score = round($product['score'] - 0.00001157407 * ($now - $product['start_date'])); if($score > 0) echo $score; else echo 0; ?></span></p>
 					    </div>
 					</a>
+					<ul class="icon-num-get hide">
+						<?php if(!empty($product['favorite'])): ?>
+				    	<li><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span><?= $product['favorite'] ?></li>
+				    	<?php endif; ?>
+				    	<?php if(!empty($product['share'])): ?>
+				    	<li><span class="icon-mv fs-13"><span class="icon-share-social"></span></span><?= $product['share'] ?></li>
+				    	<?php endif; ?>
+				    	<?php if(!empty($product['search'])): ?>
+				    	<li><span class="icon-mv fs-13"><span class="icon-icons-search"></span></span><?= $product['search'] ?></li>
+				    	<?php endif; ?>
+				    	<?php if(!empty($product['view'])): ?>
+				    	<li><span class="icon-mv fs-13"><span class="icon-eye-copy"></span></span><?= $product['view'] ?></li>
+				    	<?php endif; ?>
+				    </ul>
 					<?php if(in_array($product['id'], $compares)) : ?>
 					<div class="compare-button flag-compare-remove" data-value="<?= $product['id'] ?>"><span class="inner-box"><span class="icon-mv mgR-5"><span class="icon-close-icon"></span></span><span class="txt-change"><?= Yii::t('ad', 'Đã thêm so sánh') ?></span></span></div>
 					<?php else: ?>

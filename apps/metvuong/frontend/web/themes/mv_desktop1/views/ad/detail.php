@@ -174,7 +174,7 @@ $count_review = $reviews->count();
 				<div class="no-gallery pull-left">
 					<div class="img-show">
 						<div>
-							<img alt="" src="/themes/metvuong2/resources/images/default-ads.jpg" />
+							<img alt="" src="/images/default-ads.jpg" />
 						</div>
 					</div>
 				</div>
@@ -303,7 +303,6 @@ $count_review = $reviews->count();
 						<p><?= $address ?></p>
 					</div>
 					<div class="left-attr-detail">
-						<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
 						<?php
                         $adProductAdditionInfo = $product->adProductAdditionInfo;
                         $room_no = !empty($adProductAdditionInfo) ? $adProductAdditionInfo->room_no : null;
@@ -321,9 +320,23 @@ $count_review = $reviews->count();
                             </ul>
                             <?php
                         } ?>
+                        <p class="price-item"><span class="icon-mv"><span class="icon-pricing"></span></span> <?= StringHelper::formatCurrency($product->price) . ' <span class="txt-unit">' . Yii::t('ad', 'VND').'</span>' ?></p>
 					</div>
 					<div class="right-attr-detail">
-						<p class="price-item"><span class="icon-mv"><span class="icon-pricing"></span></span> <?= StringHelper::formatCurrency($product->price) . ' <span class="txt-unit">' . Yii::t('ad', 'VND').'</span>' ?></p>
+						<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
+						<?php
+						$result = Tracking::find()->getStats($product->id);
+						if(!empty($result)) {
+							?>
+							<ul class="icon-num-get hide">
+								<?=!empty($result[0]['favorite']) ? '<li><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>'.$result[0]['favorite'].'</li>' : '';?>
+								<?=!empty($result[0]['share']) ? '<li><span class="icon-mv"><span class="icon-share-social"></span></span>'.$result[0]['share'].'</li>' : '';?>
+								<?=!empty($result[0]['search']) ? '<li><span class="icon-mv"><span class="icon-icons-search"></span></span>'.$result[0]['search'].'</li>' : '';?>
+								<?=!empty($result[0]['visit']) ? '<li><span class="icon-mv"><span class="icon-eye-copy"></span></span>'.$result[0]['visit'].'</li>' : '';?>
+							</ul>
+							<?php
+						}
+						?>
 					</div>
 				</div>
 

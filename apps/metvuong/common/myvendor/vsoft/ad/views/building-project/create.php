@@ -16,10 +16,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
     	'areaTypeMapLabels' => $areaTypeMapLabels,
     	'areaTypes' => $areaTypes,
-    	'investors' => $investors,
 //    	'categories' => $categories,
-//        'architects' => $architects,
-//        'contractors' => $contractors,
+        'investors' => $investors,
+        'architects' => $architects,
+        'contractors' => $contractors,
         'facility' => $facility
     ]) ?>
 

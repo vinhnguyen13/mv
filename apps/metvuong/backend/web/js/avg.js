@@ -24,7 +24,15 @@ $(document).ready(function(){
     			hideSearchList();
     		}
 		}));
-	});
+	}).keydown(function(e){
+		if(e.keyCode === 13) {
+			var children = resultSearch.children();
+
+			if(children.length) {
+				children.eq(0).find('a').trigger('click');
+			}
+		}
+	}).focus();
 	
 	$('#export').click(function(){
 		setCookie('avgComplete', '', 0)
@@ -97,9 +105,18 @@ $(document).ready(function(){
 		viewWrap.addClass('hide').removeClass('loaded');
 	});
 	
+	avgSearchPlaceholder.click(function(){
+		filterWrap.removeClass('active');
+		avgSearch.focus();
+
+		viewWrap.addClass('hide').removeClass('loaded');
+	});
+	
 	function addSheets(sheets) {
 		for(var i in sheets) {
-			addSheet(sheets[i]);
+			if(sheets[i]['sheetName']) {
+				addSheet(sheets[i]);
+			}
 		}
 	}
 	
@@ -113,7 +130,9 @@ $(document).ready(function(){
 		var table = $('<table class="avg-table"><tr class="area-title"><td></td></tr><tr class="data-point"><td>Data Point</td></tr><tr class="avg-price"><td>AVG Price</td></tr><tr class="avg-size"><td>AVG SQM</td></tr><tr class="avg-price-size"><td>AVG $/SQM</td></tr><tr class="avg-bed"><td>AVG Bed</td></tr><tr class="avg-bath"><td>AVG Bath</td></tr></table>');
 		
 		for(var i in childs) {
-			append(table, childs[i]);
+			if(childs[i]['name']) {
+				append(table, childs[i]);
+			}
 		}
 		
 		if(parent) {
@@ -127,12 +146,26 @@ $(document).ready(function(){
 		var c = isMain ? 'main' : '';
 		
 		table.find('.area-title').append('<td class="' + c + '">' + data.name + '</td>');
-		table.find('.data-point').append('<td class="' + c + '">' + data.value['Data Point'] + '</td>');
-		table.find('.avg-price').append('<td class="' + c + '">' + data.value['AVG Price'] + '</td>');
-		table.find('.avg-size').append('<td class="' + c + '">' + data.value['AVG SQM'] + '</td>');
-		table.find('.avg-price-size').append('<td class="' + c + '">' + data.value['AVG $/SQM'] + '</td>');
-		table.find('.avg-bed').append('<td class="' + c + '">' + data.value['AVG Bed'] + '</td>');
-		table.find('.avg-bath').append('<td class="' + c + '">' + data.value['AVG Bath'] + '</td>');
+		table.find('.data-point').append('<td class="' + c + '">' + formatNumber(data.value['Data Point']) + '</td>');
+		table.find('.avg-price').append('<td class="' + c + '">' + formatNumber(data.value['AVG Price']) + '</td>');
+		table.find('.avg-size').append('<td class="' + c + '">' + formatNumber(data.value['AVG SQM']) + '</td>');
+		table.find('.avg-price-size').append('<td class="' + c + '">' + formatNumber(data.value['AVG $/SQM']) + '</td>');
+		table.find('.avg-bed').append('<td class="' + c + '">' + percentCell(data.value['AVG Bed'], 'bed') + '</td>');
+		table.find('.avg-bath').append('<td class="' + c + '">' + percentCell(data.value['AVG Bath'], 'bath') + '</td>');
+	}
+	
+	function percentCell(counts, label) {
+		var html = '<div>';
+		
+		for(var i in counts) {
+			slabel = counts[i][0] > 1 ? label + 's' : label;
+			
+			html += '<div>' + counts[i][0] + ' ' + slabel + ': ' + formatNumber(counts[i][1]) + '%</div>';
+		}
+		
+		html += '</div>';
+		
+		return html;
 	}
 	
 	var firstTab = true;
@@ -177,7 +210,7 @@ $(document).ready(function(){
 		var hasWard = hasWardWrap.find('input').is(':checked') ? 1 : 0;
 		var hasProject = hasProjectWrap.find('input').is(':checked') ? 1 : 0;
 		
-		$.get('calculate', {hasProject: hasProject, hasWard: hasWard, type: avgSearch.data('type'), id: avgSearch.data('id'), t: type.val(), location: avgSearchPlaceholder.find('.text').text()}, function(r){
+		$.get('calculate', {category_id: $('#category_id').val(), round: $('#round').val(), hasProject: hasProject, hasWard: hasWard, type: avgSearch.data('type'), id: avgSearch.data('id'), t: type.val(), location: avgSearchPlaceholder.find('.text').text()}, function(r){
 			viewWrap.addClass('loaded');
 			
 			$('#view-listing').attr('href', r.url);
@@ -230,4 +263,23 @@ function getCookie(cname) {
         if (c.indexOf(name) == 0) return c.substring(name.length,c.length);
     }
     return "";
+}
+
+function formatNumber(number) {
+	number = number + '';
+	
+	if(/^0*$/.test(number)) {
+		return '';
+	}
+	
+	number = number.split('.');
+	
+	var numberFormated = number[0];
+	numberFormated = numberFormated.split( /(?=(?:\d{3})+(?:\.|$))/g ).join(".");
+	
+	if(number.length > 1) {
+		numberFormated = numberFormated + ',' + number[1];
+	}
+	
+	return numberFormated;
 }

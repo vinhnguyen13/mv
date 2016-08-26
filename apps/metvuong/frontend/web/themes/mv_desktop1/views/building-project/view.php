@@ -146,7 +146,65 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                 </div>
                             </div>
                         </div>
+                    <?php } ?>
+                    <div class="row">
+                    <?php
+                    $architects = $model->architects;
+                    if(count($architects) > 0){ ?>
+                        <div class="item chudautu-infor col-lg-6">
+                            <div class="title-section"><?=Yii::t('project', 'Architect')?></div>
+                            <?php foreach($architects as $architect){ ?>
+                                <div class="info-detail-architect">
+                                    <?=empty($architect->name) ? $lbl_updating : $architect->name ?></li>
+                                </div>
+                            <?php } ?>
+                        </div>
                     <?php }
+                    $contractors = $model->contractors;
+                    if(count($contractors) > 0){ ?>
+                        <div class="item chudautu-infor col-lg-6">
+                            <div class="title-section"><?=Yii::t('project', 'Contractor')?></div>
+                            <?php foreach($contractors as $contractor){ ?>
+                                <div class="info-detail">
+                                    <?=empty($contractor->name) ? $lbl_updating : $contractor->name ?></li>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    <?php } ?>
+                    </div>
+                    <?php if(!empty($model->start_time) || !empty($model->estimate_finished) || !empty($model->building_density) ||
+                        !empty($model->land_area) || !empty($model->apartment_no) || !empty($model->units_no) || !empty($model->gfa) ||
+                        !empty($model->no_1_bed) || !empty($model->sqm_1_bed) || !empty($model->no_2_bed) || !empty($model->sqm_2_bed) ||
+                        !empty($model->no_3_bed) || !empty($model->sqm_3_bed) ){ ?>
+                    <div class="item chudautu-infor thong-tin-khac">
+                        <div class="title-section"><?=Yii::t('project', 'Others Information')?></div>
+                        <div class="info-detail">
+                            <?= !empty($model->start_time) ? "<div><span>". Yii::t('project', 'Construction Start'). ":</span><p>". $model->start_time. "</p></div>" : null?>
+                            <?= !empty($model->estimate_finished) ? "<div><span>". Yii::t('project', 'Completion'). ":</span><p>". $model->estimate_finished. "</p></div>" : null?>
+                            <?= !empty($model->building_density) ? "<div><span>". Yii::t('project', 'Building Density'). ":</span><p>". $model->building_density. "</p></div>" : null?>
+                            <?= !empty($model->land_area) ? "<div><span>". Yii::t('project', 'Land Area'). ":</span> ". $model->land_area. "</p></div>" : null?>
+                            <?= !empty($model->apartment_no) ? "<div><span>". Yii::t('project', '# of Building'). ":</span><p>". $model->apartment_no. "</p></div>" : null?>
+                            <?= !empty($model->units_no) ? "<div><span>". Yii::t('project', 'Units No'). ":</span><p>". $model->units_no. "</p></div>" : null?>
+                            <?= !empty($model->gfa) ? "<div><span>". Yii::t('project','GFA'). ":</span><p>". $model->gfa. "</div>" : null?>
+                            <?= !empty($model->lift) ? "<div><span>". Yii::t('project', 'Lift'). ":</span><p>". $model->lift. "</p></div>" : null?>
+                            <?= !empty($model->no_1_bed) ? "<div><span>". Yii::t('project','# 1 Bed'). ":</span><p>". $model->no_1_bed. "</p></div>" : null?>
+                            <?= !empty($model->sqm_1_bed) ? "<div><span>". Yii::t('project', 'SQM 1 Bed'). ":</span><p>". $model->sqm_1_bed. "</p></div>" : null?>
+                            <?= !empty($model->no_2_bed) ? "<div><span>". Yii::t('project','# 2 Bed'). ":</span><p>". $model->no_2_bed. "</p></div>" : null?>
+                            <?= !empty($model->sqm_2_bed) ? "<div><span>". Yii::t('project', 'SQM 2 Bed'). ":</span><p>". $model->sqm_2_bed. "</p></div>" : null?>
+                            <?= !empty($model->no_3_bed) ? "<div><span>". Yii::t('project','# 3 Bed'). ":</span><p>". $model->no_3_bed. "</p></div>" : null?>
+                            <?= !empty($model->sqm_3_bed) ? "<div><span>". Yii::t('project', 'SQM 3 Bed'). ":</span><p>". $model->sqm_3_bed. "</p></div>" : null?>
+                            <?php
+                            if($model->facilities) {
+                                $facility = \vsoft\ad\models\AdFacility::find()->select("group_concat(' ', `name`) as facility")->where("id in ({$model->facilities})")->asArray()->one();
+                                echo "<div><span>". Yii::t('ad', 'Facilities'). ":</span><p>". $facility['facility']. "</p></div>";
+                            }
+                            ?><br>
+                        </div>
+                    </div>
+                    <?php } ?>
+
+                    <?php
+
                     if(count($tabProject) > 0){
                         ?>
                         <div class="infor-bds">
@@ -178,11 +236,6 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
 
                     <div class="listing-post-by-project">
                         <?php
-//                        $categoriesDb = \vsoft\ad\models\AdCategory::getDb();
-//                        $categories = $categoriesDb->cache(function(){
-//                            return \vsoft\ad\models\AdCategory::find()->indexBy('id')->asArray(true)->all();
-//                        });
-//                        $types = \vsoft\ad\models\AdProduct::getAdTypes();
                         $sell_products = \frontend\models\Ad::find()->listingOfBuilding($model->id, \vsoft\ad\models\AdProduct::TYPE_FOR_SELL);
                         $rent_products = \frontend\models\Ad::find()->listingOfBuilding($model->id, \vsoft\ad\models\AdProduct::TYPE_FOR_RENT);
                         ?>
@@ -253,11 +306,12 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
         <div class="modal-content">
             <div class="modal-body">
                 <a href="#" class="btn-close-map close" data-dismiss="modal" aria-label="Close"><?=Yii::t('listing','Close')?></a>
-                <div id="map" data-lat="<?= $model->lat ?>" data-lng="<?= $model->lng ?>"></div>
+                <div id="map_project" data-lat="<?= $model->lat ?>" data-lng="<?= $model->lng ?>"></div>
             </div>
         </div>
     </div>
 </div>
+
 
 <?php
 $content = $tongquan;
@@ -313,20 +367,20 @@ echo $this->render('/ad/_partials/shareSocial',[
 
         $('#popup-map').on('show.bs.modal', function (e) {
             setTimeout(function(){
-                var mapEl = $('#map');
-                var latLng = {lat: Number(mapEl.data('lat')), lng:  Number(mapEl.data('lng'))};
+                var map_project = $('#map_project');
+                var latLng_project = {lat: Number(map_project.data('lat')), lng:  Number(map_project.data('lng'))};
 
-                var map = new google.maps.Map(mapEl.get(0), {
-                    center: latLng,
-                    zoom: 16,
+                var pmap = new google.maps.Map(map_project.get(0), {
+                    center: latLng_project,
+                    zoom: 10,
                     mapTypeControl: false,
                     zoomControl: false,
                     streetViewControl: false
                 });
 
                 var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map
+                    position: latLng_project,
+                    map: pmap
                 });
             }, 400);
         });

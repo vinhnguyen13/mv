@@ -47,7 +47,7 @@ class AdImages extends AI
     }
     
     public static function defaultImage() {
-    	return '/themes/metvuong2/resources/images/default-ads.jpg';
+    	return '/images/default-ads.jpg';
     }
     
     public function afterDelete() {

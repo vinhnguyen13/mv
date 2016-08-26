@@ -13,7 +13,7 @@
 <div id="avg-page">
 	<div id="filter-wrap">
 		<div id="avg-search-wrap">
-			<input data-url="<?= Url::to(['search']) ?>" class="big-field" id="avg-search" type="text" placeholder="Nhập tên Quận, Phường Hoặc Dự án" />
+			<input data-url="<?= Url::to('/api/v1/craw-search/get') ?>" class="big-field" id="avg-search" type="text" placeholder="Nhập tên Quận, Phường Hoặc Dự án" />
 			<div class="big-field avg-search-placeholder"><span class="text"></span><a href="#" class="close">x</a></div>
 			<div id="result-search-wrap" class="hide"><ul class="result-search"></ul></div>
 		</div>
@@ -23,12 +23,35 @@
 			<?php endforeach; ?>
 		</select>
 		<div id="input-wrap">
-			<div style="display: none;">
-				<label id="has-ward-wrap"><input class="cb" checked="checked" type="checkbox" name="has-ward" value="1" /><span>Có Phường</span></label>
-				<label id="has-project-wrap" style="margin-right: 6px;"><input class="cb" checked="checked" type="checkbox" name="has-project" value="1" /><span>Có Dự án</span></label>
-			</div>
 			<a id="export" class="btn btn-primary" type="button" href="#">Export Excel</a>
 			<a id="view-listing" target="_blank" href="#" class="btn btn-primary">View Listings</a>
+			<div id="addition-setting">
+				<div class="field-set">
+					<div class="field-set-legend">Thiết lập thêm</div>
+					<div class="field-set-body">
+						<label id="has-ward-wrap"><input class="cb" type="checkbox" name="has-ward" value="1" /><span>Chỉ tính trên những tin có thông tin <span style="color: #337ab7;">Phường</span></span></label><br />
+						<label id="has-project-wrap" style="margin-right: 6px;"><input class="cb" type="checkbox" name="has-project" value="1" /><span>Chỉ tính trên những tin có thông tin <span style="color: #337ab7;">Dự án</span></span></label>
+						<div class="field-wrap">
+							<label>Loại BĐS</label>
+							<select name="category_id" id="category_id">
+								<?php foreach ($categories as $category): ?>
+								<option value="<?= $category->id ?>"<?= $category->id == 6 ? ' selected="selected"' : '' ?>><?= Yii::t('ad', $category->name) ?></option>
+								<?php endforeach; ?>
+							</select>
+						</div>
+						<div class="field-wrap">
+							<label>Round number</label>
+							<select name="round" id="round">
+								<option value="-1">Giữ nguyên</option>
+								<option value="0" selected="selected">0</option>
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+							</select>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div id="view-wrap" class="hide">

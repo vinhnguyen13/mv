@@ -24,7 +24,7 @@ class AdBuildingProject extends ABP
 	const STATUS_ENABLED = 1;
 	const STATUS_DISABLED = 0;
 
-    public $projects=[
+    public $inv_type = [
         'Khu căn hộ' => 'Khu căn hộ',
         'Cao ốc văn phòng' => 'Cao ốc văn phòng',
         'Khu đô thị mới' => 'Khu đô thị mới',
@@ -41,15 +41,17 @@ class AdBuildingProject extends ABP
      */
     public function rules()
     {
+        // GFA, Building Density, Construction Start, Complettion, Developer, Architect, Contractor, # of Buildings, # of Units, # of 1bed, SQM of 1bed, #2bed, SQM of 2bed, # of 3bed, SQM of 3bed)
         return [
-	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status', 'is_crawl', 'hot_project', 'click'], 'integer'],
+	        [['city_id', 'district_id', 'created_at', 'updated_at', 'status', 'is_crawl', 'hot_project', 'click', 'ward_id', 'street_id',
+                'apartment_no', 'floor_no', 'units_no', 'no_1_bed', 'no_2_bed', 'no_3_bed'], 'integer'],
 	        [['name', 'district_id', 'city_id'], 'required'],
 	        [['location_detail', 'facilities_detail', 'seo_title', 'seo_keywords', 'seo_description', 'gallery', 'video', 'progress',
                 'name', 'description', 'file_name', 'data_html'], 'string'],
             [['facade_width'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/', 'max' => 10000],
             [['lift'], 'integer', 'max' => 100],
-	        [['lng', 'lat'], 'number'],
-	        [['land_area', 'apartment_no', 'floor_no', 'start_time', 'estimate_finished', 'hotline'], 'string', 'max' => 32],
+	        [['lng', 'lat', 'land_area', 'gfa', 'sqm_1_bed', 'sqm_2_bed', 'sqm_3_bed', 'building_density'], 'number'],
+	        [['start_time', 'estimate_finished', 'hotline', 'home_no'], 'string', 'max' => 32],
 	        [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'website', 'logo', 'slug'], 'string', 'max' => 255]
         ];
     }
@@ -68,47 +70,61 @@ class AdBuildingProject extends ABP
     
     public function attributeLabels()
     {
-    	return [
-    	'id' => 'ID',
-    	'city_id' => 'Tỉnh / Thành Phố',
-    	'district_id' => 'Quận / Huyện',
-    	'name' => 'Tên dự án',
-    	'logo' => 'Ảnh đại diện',
-    	'location' => 'Địa chỉ',
-    	'description' => 'Thông tin mô tả',
-    	'investment_type' => 'Loại hình đầu tư',
-    	'land_area' => 'Diện tích khu đất',
-    	'commercial_leasing_area' => 'Diện tích trung tâm văn phòng dịch vụ',
-    	'apartment_no' => 'Số lượng sản phẩm',
-    	'floor_no' => 'Số tầng',
-    	'location_detail' => 'Bản đồ vị trí',
-    	'facilities_detail' => 'Tiện ích',
-    	'seo_title' => 'Tiêu đề sử dụng cho SEO',
-    	'seo_keywords' => 'Keywords sử dụng cho SEO',
-    	'seo_description' => 'Description sử dụng cho SEO',
-    	'start_time' => 'Thời gian xây dựng',
-    	'estimate_finished' => 'Dự kiến hoàn thành',
-    	'owner_type' => 'Hình thức sở hữu',
-    	'facilities' => 'Tiện ích',
-    	'hotline' => 'Hotline',
-    	'website' => 'Website',
-    	'lng' => 'Lng',
-    	'lat' => 'Lat',
-    	'gallery' => 'Thư viện ảnh',
-    	'video' => 'Phim 3D dự án',
-    	'progress' => 'Tiến độ xây dựng',
-    	'slug' => 'Slug',
-    	'created_at' => 'Ngày tạo',
-    	'updated_at' => 'Updated At',
-    	'status' => 'Status',
-    	'investors' => 'Chủ đầu tư',
-    	'categories' => 'Phân loại',
-    	'facade_width' => 'Mặt tiền(m)',
-    	'lift' => 'Thang máy(cái)',
-    	'start_date' => 'Ngày khởi công',
-        'hot_project' => 'Dự án nổi bật',
-        'click' => 'Lượt xem'
-    	];
+        return [
+            'id' => 'ID',
+            'city_id' => 'Tỉnh / Thành Phố',
+            'district_id' => 'Quận / Huyện',
+            'name' => 'Tên dự án',
+            'logo' => 'Ảnh đại diện',
+            'location' => 'Địa chỉ',
+            'description' => 'Thông tin mô tả',
+            'investment_type' => 'Loại hình đầu tư',
+            'land_area' => Yii::t('project', 'Land Area'),
+            'commercial_leasing_area' => 'Diện tích trung tâm văn phòng dịch vụ',
+            'apartment_no' => Yii::t('project', '# of Building'),
+            'floor_no' => 'Số tầng',
+            'location_detail' => 'Bản đồ vị trí',
+            'facilities_detail' => 'Tiện ích',
+            'seo_title' => 'Tiêu đề sử dụng cho SEO',
+            'seo_keywords' => 'Keywords sử dụng cho SEO',
+            'seo_description' => 'Description sử dụng cho SEO',
+            'start_time' => Yii::t('project', 'Construction Start'),
+            'estimate_finished' => Yii::t('project', 'Completion'),
+            'owner_type' => 'Hình thức sở hữu',
+            'facilities' => 'Tiện ích',
+            'hotline' => 'Hotline',
+            'website' => 'Website',
+            'lng' => 'Lng',
+            'lat' => 'Lat',
+            'gallery' => 'Thư viện ảnh',
+            'video' => 'Phim 3D dự án',
+            'progress' => 'Tiến độ xây dựng',
+            'slug' => 'Slug',
+            'created_at' => 'Ngày tạo',
+            'updated_at' => 'Updated At',
+            'status' => 'Status',
+            'investors' => 'Chủ đầu tư',
+            'architects' => Yii::t('project', 'Architects'),
+            'contractors' => Yii::t('project', 'Contractors'),
+            'categories' => 'Phân loại',
+            'facade_width' => 'Mặt tiền(m)',
+            'lift' => Yii::t('project', 'Lift'),
+            'start_date' => 'Ngày khởi công',
+            'hot_project' => 'Dự án nổi bật',
+            'click' => 'Lượt xem',
+            'home_no' => 'Số nhà',
+            'ward_id' => 'Phường / xã',
+            'street_id' => 'Đường',
+            'units_no' => Yii::t('project','Units No'),
+            'building_density' => Yii::t('project','Building Density'),
+            'gfa' => Yii::t('project','GFA'),
+            'no_1_bed' => Yii::t('project','# 1 Bed'),
+            'no_2_bed' => Yii::t('project','# 2 Bed'),
+            'no_3_bed' => Yii::t('project','# 3 Bed'),
+            'sqm_1_bed' => Yii::t('project','SQM 1 Bed'),
+            'sqm_2_bed' => Yii::t('project','SQM 2 Bed'),
+            'sqm_3_bed' => Yii::t('project','SQM 3 Bed'),
+        ];
     }
     
     public function behaviors()
@@ -325,7 +341,7 @@ class AdBuildingProject extends ABP
     }
 
     public function getLogoUrl(){
-        $image = '/themes/metvuong2/resources/images/default-ads.jpg';
+        $image = '/images/default-ads.jpg';
         $logo = $this->logo;
         if($logo) {
             $checkLogo = Yii::getAlias('@store'). "/building-project-images/" . $logo;

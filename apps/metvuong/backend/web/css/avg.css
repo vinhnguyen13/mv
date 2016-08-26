@@ -79,28 +79,41 @@
 .loaded #view {
 	display: block;
 }
-#filter-wrap select {
+
+select {
 	font-size: 15px;
     padding: 0 8px;
     height: 34px;
     line-height: 34px;
     border-radius: 4px;
     border: 1px solid rgb(169, 169, 169);
+}
+
+#filter-wrap > select {
     float: left;
     margin-right: 4px;
 }
 #input-wrap {
 	display: none;
-	float: left;
 }
 
 .active #input-wrap {
-	display: inline-block;
+	display: block;
 }
 
 #view-wrap {
 	clear: both;
 	padding-top: 22px;
+}
+
+#input-wrap > a {
+	float: left;
+	margin-right: 4px;
+}
+
+#addition-setting {
+	clear: left;
+	padding-top: 12px;
 }
 
 label {
@@ -166,4 +179,32 @@ label span {
 }
 .avg-table .main {
 	background-color: #F4F4F4;	
+}
+.field-set {
+	border: 1px solid #afafaf;
+    border-radius: 4px;
+    padding: 16px 8px 8px 8px;
+    position: relative;
+    margin-top: 12px;
+}
+.field-set-legend {
+	font-size: 15px;
+    font-weight: bold;
+    position: absolute;
+    top: -11px;
+    background: #FFF;
+    padding: 0 4px;
+}
+
+.avg-bed, .avg-bath {
+	vertical-align: top;
+}
+.field-wrap {
+	margin-top: 8px;
+}
+.field-wrap label {
+	width: 120px;
+}
+#category_id {
+	text-transform: capitalize;
 }

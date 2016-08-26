@@ -22,50 +22,22 @@ class AvgController extends Controller {
 		return $this->render('index');
 	}
 	
-	public function actionSearch() {
-		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-	
-		$v = \Yii::$app->request->get('v');
-	
-		$params = Elastic::buildParams($v);
-		
-		$params['query']['function_score']['functions'][] = [
-			"field_value_factor" => [
-				"field" => "total_sell",
-				"modifier" => "log1p",
-				"factor" => 0.1
-			]
-		];
-			
-		$params['query']['function_score']['functions'][] = [
-			"field_value_factor" => [
-				"field" => "total_rent",
-				"modifier" => "log1p",
-				"factor" => 0.1
-			]
-		];
-	
-		$result = Elastic::requestResult($params, Elastic::elasticUrl('/district,ward,project_building'));
-	
-		$response = [];
-	
-		foreach ($result['hits']['hits'] as $hit) {
-			$response[] = [
-				'id' => $hit['_id'],
-				'type' => $hit['_type'],
-				'full_name' => $hit['_source']['full_name']
-			];
-		}
-	
-		return $response;
-	}
-	
 	public function actionCalculate() {
 		\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 		
 		$get = \Yii::$app->request->get();
 		
 		return ['exportUrl' => Url::to(['export'] + $get), 'url' => $this->buildUrl($get), 'sheets' => $this->buildSheets($get)];
+	}
+	
+	public function round(&$sheets, $round) {
+		if($round > -1) {
+			array_walk_recursive($sheets, function(&$item, $key) use ($round) {
+				if(is_float($item)) {
+					$item = round($item, $round);
+				}
+			});
+		}
 	}
 	
 	public function actionExport() {
@@ -77,6 +49,8 @@ class AvgController extends Controller {
 		
 		$sheets = $this->buildSheets($get);
 		
+		$this->round($sheets, $get['round']);
+		
 		$names = explode(', ', $get['location']);
 		$name = $get['type'] == 'ward' ? $names[0] . ', ' . $names[1] : $names[0];
 		$fileName = 'MV - ' . $name . ' - CH ' . ($get['t'] == 1 ? 'Bán' : 'Cho thuê') . ".xlsx";
@@ -85,49 +59,65 @@ class AvgController extends Controller {
 		$writer->openToBrowser($fileName);
 		
 		foreach ($sheets as $k => $sheet) {
-			$excelSheet = ($k == 0) ? $writer->getCurrentSheet() : $writer->addNewSheetAndMakeItCurrent();
-			$excelSheet->setName($sheet['sheetName']);
-
-			if($k == 0) {
-				$writer->addRow(['']);
-			}
-			
-			$rows = [[''], ['Data Point'], ['AVG Price'], ['AVG SQM'], ['AVG $/SQM'], ['AVG Bed'], ['AVG Bath']];
-			
-			$childs = $sheet['data']['childs'];
-			
-			foreach ($childs as $child) {
-				$rows[0][] = $child['name'];
-				$rows[1][] = $child['value']['Data Point'];
-				$rows[2][] = $child['value']['AVG Price'];
-				$rows[3][] = $child['value']['AVG SQM'];
-				$rows[4][] = $child['value']['AVG $/SQM'];
-				$rows[5][] = $child['value']['AVG Bed'];
-				$rows[6][] = $child['value']['AVG Bath'];
-			}
-			
-			if(isset($sheet['data']['parent'])) {
-				$parent = $sheet['data']['parent'];
+			if($sheet['sheetName']) {
+				$excelSheet = ($k == 0) ? $writer->getCurrentSheet() : $writer->addNewSheetAndMakeItCurrent();
+				$excelSheet->setName($sheet['sheetName']);
 				
-				$rows[0][] = mb_strtoupper($parent['name'], 'UTF-8');
-				$rows[1][] = $parent['value']['Data Point'];
-				$rows[2][] = $parent['value']['AVG Price'];
-				$rows[3][] = $parent['value']['AVG SQM'];
-				$rows[4][] = $parent['value']['AVG $/SQM'];
-				$rows[5][] = $parent['value']['AVG Bed'];
-				$rows[6][] = $parent['value']['AVG Bath'];
+				if($k == 0) {
+					$writer->addRow(['']);
+				}
+					
+				$rows = [[''], ['Data Point'], ['AVG Price'], ['AVG SQM'], ['AVG $/SQM'], ['AVG Bed'], ['AVG Bath']];
+					
+				$childs = $sheet['data']['childs'];
+					
+				foreach ($childs as $child) {
+					if($child['name']) {
+						$rows[0][] = $child['name'];
+						$rows[1][] = $child['value']['Data Point'];
+						$rows[2][] = $child['value']['AVG Price'];
+						$rows[3][] = $child['value']['AVG SQM'];
+						$rows[4][] = $child['value']['AVG $/SQM'];
+						$rows[5][] = $this->percentCell($child['value']['AVG Bed'], 'bed');
+						$rows[6][] = $this->percentCell($child['value']['AVG Bath'], 'bath');
+					}
+				}
+					
+				if(isset($sheet['data']['parent'])) {
+					$parent = $sheet['data']['parent'];
+				
+					$rows[0][] = mb_strtoupper($parent['name'], 'UTF-8');
+					$rows[1][] = $parent['value']['Data Point'];
+					$rows[2][] = $parent['value']['AVG Price'];
+					$rows[3][] = $parent['value']['AVG SQM'];
+					$rows[4][] = $parent['value']['AVG $/SQM'];
+					$rows[5][] = $this->percentCell($parent['value']['AVG Bed'], 'bed');
+					$rows[6][] = $this->percentCell($parent['value']['AVG Bath'], 'bath');
+				}
+					
+				$style = (new StyleBuilder())->setFontSize(11)->build();
+				$titleStyle = clone $style;
+				$titleStyle->setFontColor(Color::BLUE)->setFontBold();
+					
+				$writer->addRowWithStyle(array_shift($rows), $titleStyle);
+				$writer->addRows($rows, $style);
 			}
-			
-			$style = (new StyleBuilder())->setFontSize(11)->build();
-			$titleStyle = clone $style;
-			$titleStyle->setFontColor(Color::BLUE)->setFontBold();
-			
-			$writer->addRowWithStyle(array_shift($rows), $titleStyle);
-			$writer->addRows($rows, $style);
 		}
 		
 		setcookie("avgComplete", 1);
 		$writer->close();
+	}
+	
+	public function percentCell($counts, $label) {
+		$html = [];
+		
+		foreach($counts as $count) {
+			$slabel = $count[0] > 1 ? $label . 's' : $label;
+			
+			$html[] = $count[0] . " $slabel: " . $count[1] . '%';
+		}
+		
+		return implode("\n", $html);
 	}
 	
 	public function buildUrl($get) {
@@ -153,6 +143,8 @@ class AvgController extends Controller {
 		
 		$fn = 'buildSheets' . ucfirst($get['type']);
 		$sheets = $this->$fn($get, $products);
+		
+		$this->round($sheets, $get['round']);
 		
 		return $sheets;
 	}
@@ -247,15 +239,16 @@ class AvgController extends Controller {
 	}
 	
 	public function avg($products) {
-		$totalPrice = $totalSize = $totalBed = $totalBath = 0;
+		$totalPrice = $totalSize = 0;
 		
 		$totalPriceSize = 0;
 		$totalHasPriceSize = 0;
 	
 		$totalHasPrice = 0;
 		$totalHasSize = 0;
-		$totalHasBed = 0;
-		$totalHasBath = 0;
+		
+		$groupBed = [];
+		$groupBath = [];
 		
 		foreach ($products as $product) {
 			if($product['price']) {
@@ -273,24 +266,47 @@ class AvgController extends Controller {
 				$totalHasPriceSize++;
 			}
 			
-			if($product['room_no']) {
-				$totalBed += $product['room_no'];
-				$totalHasBed++;
+			if(isset($groupBed[$product['room_no']])) {
+				$groupBed[$product['room_no']] += 1;
+			} else {
+				$groupBed[$product['room_no']] = 1;
 			}
 			
-			if($product['toilet_no']) {
-				$totalBath += $product['toilet_no'];
-				$totalHasBath++;
+			if(isset($groupBath[$product['toilet_no']])) {
+				$groupBath[$product['toilet_no']] += 1;
+			} else {
+				$groupBath[$product['toilet_no']] = 1;
 			}
 		}
 		
 		$avgPrice = $totalHasPrice ? $totalPrice/$totalHasPrice : 0;
 		$avgSize = $totalHasSize ? $totalSize/$totalHasSize : 0;
 		$avgPriceSize = $totalHasPriceSize ? $totalPriceSize/$totalHasPriceSize : 0;
-		$avgBed = $totalHasBed ? $totalBed/$totalHasBed : 0;
-		$avgBath = $totalHasBath ? $totalBath/$totalHasBath : 0;
+		$avgBed = $this->groupCount($groupBed);
+		$avgBath = $this->groupCount($groupBath);
 
 		return ['Data Point' => count($products), 'AVG Price' => $avgPrice, 'AVG SQM' => $avgSize, 'AVG $/SQM' => $avgPriceSize, 'AVG Bed' => $avgBed, 'AVG Bath' => $avgBath];
+	}
+	
+	public function groupCount($items) {
+		$total = array_sum($items);
+
+		foreach ($items as $k => $item) {
+			if(!$k) {
+				unset($items[$k]);
+			}
+		}
+	
+		arsort($items);
+		$group = array_slice($items, 0, 3, true);
+		
+		$avg = [];
+		
+		foreach ($group as $num => $count) {
+			$avg[] = [$num, ($count/$total * 100)];
+		}
+		
+		return $avg;
 	}
 	
 	public function groupByProject($products) {
@@ -321,7 +337,7 @@ class AvgController extends Controller {
 		$urlMapping = ['district' => ['district_name_mask', 'district_id'],	'ward' => ['ward_name_mask', 'ward_id'], 'project_building' => ['project_name_mask', 'project_building_id']];
 		$urlMapping = $urlMapping[$get['type']];
 		
-		$params = ['category_id' => 6, 'type' => $get['t'], $urlMapping[0] => $get['location'], $urlMapping[1] => $get['id']];
+		$params = ['category_id' => $get['category_id'], 'type' => $get['t'], $urlMapping[0] => $get['location'], $urlMapping[1] => $get['id']];
 		
 		if($get['type'] == 'ward') {
 			$params['ward_name_filter'] = 3;

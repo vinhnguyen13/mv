@@ -49,30 +49,6 @@ if(!$model->isNewRecord) {
 	    	'enableAjaxValidation' => false,
 		]);
 	?>
-	<div class="side-bar">
-    	<ul class="bp-contents">
-		    <li class="show-content active"><a href="#">Tổng quan dự án</a></li>
-		    <li class="show-content"><a href="#">Bản đồ vị trí</a></li>
-		    <li class="show-content"><a href="#">Tiện ích</a></li>
-		    <li class="show-content"><a href="#">Phim 3D dự án</a></li>
-		    <li class="show-content"><a href="#">Tiến độ xây dựng</a></li>
-		    <li class="show-content"><a href="#">SEO</a></li>
-		</ul>
-		<div class="seperator"></div>
-		<ul class="bp-contents">
-		    <?php foreach($areaTypeMapLabels as $areaTypeLabel): ?>
-		    <li class="bp-subcontents">
-		    	<a href="#"><?= $areaTypeLabel ?></a>
-		    	<ul>
-		    		<li class="show-content"><a href="#">Mặt bằng</a></li>
-			    	<li class="show-content"><a href="#">Giá bán & thanh toán</a></li>
-			    	<li class="show-content"><a href="#">Chương trình bán hàng</a></li>
-			    	<li class="show-content"><a href="#">Tài liệu bán hàng</a></li>
-		    	</ul>
-		    </li>
-		    <?php endforeach; ?>
-		</ul>
-    </div>
     <div class="main-content">
     	<div class="form-group">
 			<?= $model->isNewRecord ? '' : Html::hiddenInput('deleteLater', '', ['id' => 'delete-later']) ?>
@@ -81,36 +57,94 @@ if(!$model->isNewRecord) {
 	    <div style="min-height: 400px;">
 	    	<ul class="bp-fields">
 	    		<li class="active">
-	    			<?= $form->field($model, 'name') ?>
+                    <?php if($model->isNewRecord){ ?>
+	    			<?= $form->field($model, 'name')->textInput() ?>
 	    			<?= $form->field($model, 'city_id')->dropDownList(ArrayHelper::map(AdCity::find()->all(), 'id', 'name'), ['prompt' => '---', 'class' => 'select-2 form-control']) ?>
 	    			<input type="hidden" name="BuildingProject[district_id]" value="" />
 	    			<?= $form->field($model, 'district_id')->dropDownList($districtData, ['options' => $districtOptions, 'prompt' => '---', 'class' => 'select-2 form-control', 'disabled' => ($model->city_id) ? false : true]) ?>
-                    <div class="form-group">
-                    <label>Phường / xã</label>
-                    <?php echo \kartik\select2\Select2::widget([
-                        'model' => $model,
-                        'attribute' => 'ward_id',
-                        'data' => ArrayHelper::map(\vsoft\ad\models\AdWard::find()->all(), 'id', 'name'),
-                        'options' => ['placeholder' => 'Select a ward ...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ])?>
+                    <input type="hidden" id="urlWardStreet" data-ward="<?=$model->ward_id?>" data-street="<?=$model->street_id?>" value="<?=Url::to(['building-project/get-ward-street'])?>" />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Phường / xã</label>
+                                <select id="buildingproject-ward_id" class="select-2 form-control p_ward_id" name="BuildingProject[ward_id]">
+                                    <option>---</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Đường</label>
+                                <select id="buildingproject-street_id" class="select-2 form-control p_street_id" name="BuildingProject[street_id]">
+                                    <option>---</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                    <label>Đường</label>
-                    <?php echo \kartik\select2\Select2::widget([
-                        'model' => $model,
-                        'attribute' => 'street_id',
-                        'data' => ArrayHelper::map(\vsoft\ad\models\AdStreet::find()->all(), 'id', 'name'),
-                        'options' => ['placeholder' => 'Select a street ...'],
-                        'pluginOptions' => [
-                            'allowClear' => true
-                        ],
-                    ])?>
-                    </div>
-                    <?= $form->field($model, 'investment_type')->dropDownList($model->projects) ?>
+                    <?= $form->field($model, 'home_no') ?>
+                    <?= $form->field($model, 'investment_type')->dropDownList($model->inv_type) ?>
+                    <?php } else {
+                        $city_name = null;
+                        $_city = AdCity::find()->select(['name'])->where(['id' => $model->city_id])->asArray()->one();
+                        if(count($_city) > 0)
+                            $city_name = $_city['name'];
+
+                        $district_name = null;
+                        $_district = AdDistrict::find()->select(['name'])->where(['id' => $model->district_id, 'city_id' => $model->city_id])->asArray()->one();
+                        if(count($_district) > 0)
+                            $district_name = $_district['name'];
+
+                        $ward_name = null;
+                        if(!empty($model->ward_id)){
+                            $_ward = \vsoft\ad\models\AdWard::find()->select(['name'])->where(['id' => $model->ward_id, 'district_id' => $model->district_id])->asArray()->one();
+                            if(count($_ward) > 0)
+                                $ward_name = $_ward['name'];
+                        }
+                        $street_name = null;
+                        if(!empty($model->street_id)){
+                            $_street = \vsoft\ad\models\AdStreet::find()->select(['name'])->where(['id' => $model->street_id, 'district_id' => $model->district_id])->asArray()->one();
+                            if(count($_street) > 0)
+                                $street_name = $_street['name'];
+                        }
+                        ?>
+                        <div class="form-group field-buildingproject-name required">
+                            <label class="control-label">Tên dự án</label>
+                            <span class="form-control"><?=$model->name?></span>
+                        </div>
+                        <div class="form-group field-buildingproject-name required">
+                            <label class="control-label">Thành Phố / Tỉnh</label>
+                            <span class="form-control"><?=$city_name?></span>
+                        </div>
+
+                        <div class="form-group field-buildingproject-name required">
+                            <label class="control-label">Quận / Huyện</label>
+                            <span class="form-control"><?=$city_name?></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group field-buildingproject-name required">
+                                    <label class="control-label">Phường / Xã</label>
+                                    <span class="form-control"><?=$ward_name?></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group field-buildingproject-name required">
+                                    <label class="control-label">Đường</label>
+                                    <span class="form-control"><?=$street_name?></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group field-buildingproject-name required">
+                            <label class="control-label">Số nhà</label>
+                            <span class="form-control"><?=$model->home_no?></span>
+                        </div>
+                        <div class="form-group field-buildingproject-name required">
+                            <label class="control-label">Loại hình đầu tư</label>
+                            <span class="form-control"><?=$model->investment_type?></span>
+                        </div>
                     <?php
+                    }
                     $tabKeys = [
                         'tong-quan' => Yii::t('project', 'General'),
                         'vi-tri' => Yii::t('project', 'Position'),
@@ -162,19 +196,100 @@ if(!$model->isNewRecord) {
                         </div>
                     </div>
 
-                    <?= $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?php
+                            if($model->isNewRecord)
+                                echo $form->field($model, 'investors')->dropDownList(ArrayHelper::map($investors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']);
+                            else { ?>
+                                <div class="form-group field-buildingproject-name required">
+                                <label class="control-label">Chủ đầu tư</label>
+                            <?php
+                                $sql = "select name from ad_investor where id in (select investor_id from ad_investor_building_project where building_project_id={$model->id})";
+                                $investors= Yii::$app->getDb()->createCommand($sql)->queryAll();
+                                if(count($investors) > 0){
+                                    foreach ($investors as $investor) { ?>
+                                            <span class="form-control"><?=isset($investor['name']) ? $investor['name'] : ''?></span>
+                                    <?php }
+
+                                }?>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?= $form->field($model, 'architects')->dropDownList(ArrayHelper::map($architects, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <?= $form->field($model, 'contractors')->dropDownList(ArrayHelper::map($contractors, 'id', 'name'), ['multiple' => true, 'class' => 'select-2 form-control']) ?>
+                        </div>
+                    </div>
+
 			    	<?= $form->field($model, 'logo')->widget(FileUploadUI::className(), [
 						'url' => Url::to('/express/upload/image'),
 						'clientOptions' => ['maxNumberOfFiles' => 1] ]) ?>
 					<?= $form->field($model, 'gallery')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/image')]) ?>
-					<?= $form->field($model, 'location') ?>
+					<?= $form->field($model, 'location')?>
 					<div id="map" style="height: 320px; width: 100%; margin-bottom: 15px; margin-top: -10px; border-radius: 4px;"></div>
 					<?= Html::activeHiddenInput($model, 'lat') ?>
 					<?= Html::activeHiddenInput($model, 'lng') ?>
 
+                    <?= $form->field($model, 'start_time')->textarea()?>
+                    <?= $form->field($model, 'estimate_finished')->textarea()?>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'building_density')?>
+                        </div>
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'lift')?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'apartment_no')?>
+                        </div>
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'units_no')?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'land_area')?>
+                        </div>
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'gfa')?>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'no_1_bed')?>
+                        </div>
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'sqm_1_bed')?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'no_2_bed')?>
+                        </div>
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'sqm_2_bed')?>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'no_3_bed')?>
+                        </div>
+                        <div class="col-md-6">
+                            <?= $form->field($model, 'sqm_3_bed')?>
+                        </div>
+                    </div>
 			    	<?= $form->field($model, 'facilities')->checkboxList(ArrayHelper::map($facility, 'id', 'name'),['class']) ?>
-			    	<?= $form->field($model, 'hotline')->textArea()->hint('Mổi số điện thoại trên 1 dòng') ?>
-			    	<?= $form->field($model, 'website') ?>
 			    	<?= $form->field($model, 'hot_project')->checkbox() ?>
 	    		</li>
 	    		<li>
@@ -188,53 +303,6 @@ if(!$model->isNewRecord) {
 			    		]
 			    	]) ?>
 	    		</li>
-	    		<li>
-	    			<?= $form->field($model, 'facilities_detail')->widget(FileUploadUI::className(), ['url' => Url::to('/express/upload/image')]) ?>
-	    		</li>
-			    <li>
-			    	<?= $form->field($model, 'video')->textArea(['style' => 'height: 120px;'])->hint('Nhập đường dẫn youtube, mổi video trên 1 dòng.<br />Ví dụ:<br />https://www.youtube.com/watch?v=BNJIcJyN3o4<br />https://www.youtube.com/watch?v=G1Xi8zDD37I') ?>
-			    </li>
-			    <li>
-			    	<div id="progress-list" class="dynamic-list">
-			    		<?php
-			    			$countBpp = 0;
-			    			if($model->progress):
-			    				$progress = json_decode($model->progress);
-			    				$countBpp = count($progress);
-			    				foreach ($progress as $k => $bpp):
-			    		?>
-			    		<div class="panel panel-default">
-				    		<div class="panel-body">
-				    			<i class="glyphicon glyphicon-remove"></i>
-				    			<div class="form-group">
-									<label class="control-label" for="buildingproject-bpvideo">Tháng / Năm</label>
-									<div>
-										<?= Html::dropDownList('BuildingProject[progress][' . $k . '][month]', $bpp->month,  $month, ['class' => 'form-control', 'style' => 'width: auto; display: inline-block;']) ?>
-										<?= Html::dropDownList('BuildingProject[progress][' . $k . '][year]', $bpp->year,  $year, ['class' => 'form-control', 'style' => 'width: auto; display: inline-block;']) ?>
-									</div>
-									<div class="help-block"></div>
-								</div>
-								<div class="form-group">
-									<label class="control-label" for="buildingproject-bpvideo">Ảnh</label>
-									<?= FileUploadUI::widget([
-											'name' => 'BuildingProject[progress][' . $k . '][images]',
-											'url' => Url::to('/express/upload/image'),
-											'fieldOptions' => ['values' => $bpp->images]
-										]) ?>
-									<div class="help-block"></div>
-								</div>
-				    		</div>
-				    	</div>
-			    		<?php endforeach; ?>
-			    		<?php endif; ?>
-			    	</div>
-			    	<?= Html::button('<i class="glyphicon glyphicon-plus"></i><span style="margin-left: 4px;">Thêm</span>', ['class' => 'btn', 'id' => 'btn-add-progress', 'data-count' => $countBpp]) ?>
-			    </li>
-			    <li>
-			    	<?= $form->field($model, 'seo_title') ?>
-			    	<?= $form->field($model, 'seo_keywords') ?>
-			    	<?= $form->field($model, 'seo_description') ?>
-			    </li>
 			    <?php
 			    	foreach($areaTypes as $type => $areaType):
 			    ?>

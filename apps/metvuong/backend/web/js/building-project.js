@@ -197,6 +197,7 @@ var buildingProject = {
 			}
 			
 			var form = $('#bp-form');
+            console.log(form);
 			var url = form.attr('action');
 			var data = form.serialize();
 			
@@ -204,7 +205,7 @@ var buildingProject = {
 				loading.remove();
 				
 				if(response.success) {
-					location.href = response.redirect;
+					 location.href = response.redirect;
 				} else {
 					for(error in response.errors) {
 						var parent = $('#buildingproject-' + error.toLowerCase()).closest('.form-group');
@@ -489,6 +490,118 @@ var buildingProject = {
 		}
 	}
 };
+
+var dist_id = $('#buildingproject-district_id').val();
+if(dist_id) {
+    var txt_ward_id = $('#urlWardStreet').data('ward');
+    var txt_street_id = $('#urlWardStreet').data('street');
+    var urlWS = $('#urlWardStreet').val() + '?district_id='+dist_id;
+    if(txt_ward_id){
+        urlWS = urlWS + '&ward=' + txt_ward_id;
+    }
+    if(txt_street_id){
+        urlWS = urlWS + '&street=' + txt_street_id;
+    }
+    $.ajax({
+        type: "get",
+        dataType: 'json',
+        url: urlWS,
+        success: function (data) {
+            if (data) {
+                $.each(data.ward, function (w, val) {
+                    $('.p_ward_id').append(val);
+                });
+                $('.p_ward_id').select2().children().clone();
+
+                $.each(data.street, function (s, val) {
+                    $('.p_street_id').append(val);
+                });
+                $('.p_street_id').select2().children().clone();
+            }
+
+        }
+    });
+}
+
+//function getLocation(){
+//    var address = '';
+//    var txt_home_no = $('#buildingproject-home_no').val();
+//    if(txt_home_no){
+//        address += txt_home_no.trim() + ', ';
+//    }
+//    var txt_street = $('#buildingproject-street_id').find(":selected").html();
+//    if(txt_street && txt_street != '---'){
+//        address += txt_street.trim() + ', ';
+//    }
+//
+//    var txt_ward = $('#buildingproject-ward_id').find(":selected").html();
+//    if(txt_ward && txt_ward != '---'){
+//        address += txt_ward.trim() + ', ';
+//    }
+//
+//    var txt_district = $('#buildingproject-district_id').find(":selected").html();
+//    if(txt_district){
+//        address += txt_district.trim() + ', ';
+//    }
+//
+//    var txt_city = $('#buildingproject-city_id').find(":selected").html();
+//    if(txt_city){
+//        address += txt_city.trim();
+//    }
+//    return address;
+//}
+//$('#buildingproject-city_id').change(function(e){
+//    e.preventDefault();
+//    $('#buildingproject-location').val(getLocation());
+//});
+//$('#buildingproject-ward_id').change(function(e){
+//    e.preventDefault();
+//    $('#buildingproject-location').val(getLocation());
+//});
+//$('#buildingproject-street_id').change(function(e){
+//    e.preventDefault();
+//    $('#buildingproject-location').val(getLocation());
+//});
+//$('#buildingproject-home_no').change(function(e){
+//    e.preventDefault();
+//    $('#buildingproject-location').val(getLocation());
+//});
+
+$('#buildingproject-district_id').change(function(e){
+    e.preventDefault();
+    $('.p_ward_id').select2('val', '');
+    $('.p_street_id').select2('val', '');
+    var district_id = $('#buildingproject-district_id').val();
+    var ward_id = $('#urlWardStreet').data('ward');
+    var street_id = $('#urlWardStreet').data('street');
+    var urlWardStreet = $('#urlWardStreet').val() + '?district_id='+district_id;
+    if(ward_id){
+        urlWardStreet = urlWardStreet + '&ward=' + ward_id;
+    }
+    if(street_id){
+        urlWardStreet = urlWardStreet + '&street=' + street_id;
+    }
+    $.ajax({
+        type: "get",
+        dataType: 'json',
+        url: urlWardStreet,
+        success: function (data) {
+            if(data) {
+                $('.p_ward_id').html('');
+                $.each(data.ward, function (w, val) {
+                    $('.p_ward_id').append(val);
+                });
+
+                $('.p_street_id').html('');
+                $.each(data.street, function (s, val) {
+                    $('.p_street_id').append(val);
+                });
+            }
+
+        }
+    });
+    //$('#buildingproject-location').val(getLocation());
+});
 
 function removeArrCoordinates(index) {
 	$('.area#'+objMap[index].id_area).remove();

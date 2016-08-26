@@ -343,7 +343,7 @@
 										<div class="no-gallery pull-left">
 											<div class="img-show">
 												<div>
-													<img alt="" src="/themes/metvuong2/resources/images/default-ads.jpg">
+													<img alt="" src="/images/default-ads.jpg">
 												</div>
 											</div>
 										</div>

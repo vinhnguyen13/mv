@@ -234,6 +234,10 @@ $(document).ready(function(){
 			} else {
 				compare.numGet.text('('+compareItems.length+')');	
 			}
+			$('.tool-compare').addClass('get-show-num');
+			setTimeout(function () {
+				$('.tool-compare').removeClass('get-show-num');
+			},200);
 		},
 		isAdded: function(id) {
 			var compareItems = this.getCookieCompares();

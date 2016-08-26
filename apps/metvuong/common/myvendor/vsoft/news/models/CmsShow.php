@@ -176,7 +176,7 @@ class CmsShow extends \funson86\cms\models\CmsShow
     }
 
     public static function getBanner($banner){
-        $imgPath = Url::to("/frontend/web/themes/mv_desktop1/resources/images/default-ads.jpg", true);
+        $imgPath = Url::to("/images/default-ads.jpg", true);
         if($banner) {
             $checkThumbFile = file_exists(Yii::getAlias('@store')."/news/show/".CmsShow::THUMB400x0.$banner);
             if($checkThumbFile)
