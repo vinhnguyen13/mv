@@ -222,7 +222,7 @@ class ElasticController extends Controller {
 		$name = $district['name'];
 		$nameWithPrefix = $district['pre'] . ' ' . $name;
 		$fullName = $nameWithPrefix . $this->tSplit . $city['full_name'];
-		$acronym = ctype_digit($name) ? Elastic::acronym($nameWithPrefix) . $this->tSpace . Elastic::acronym($name) : Elastic::acronym($name);
+		$acronym = ctype_digit($name) ? Elastic::acronym($district['pre']) . $name . $this->tSpace . $name : Elastic::acronym($name);
 		$acronymFullName1 = $acronym . $this->tSpace . $city['s4'];
 		$nameFullText = Elastic::standardSearchDistrict($nameWithPrefix);
 		$fullNameSearch = $nameFullText . $this->tSpace . $city['full_name'];
@@ -253,7 +253,7 @@ class ElasticController extends Controller {
 		$fullName = $nameWithPrefix . $this->tSplit . $district['full_name'];
 		
 		if($isWard) {
-			$acronym = ctype_digit($name) ? Elastic::acronym($nameWithPrefix) . $this->tSpace . Elastic::acronym($name) : Elastic::acronym($name);
+			$acronym = ctype_digit($name) ? Elastic::acronym($item['pre']) . $name . $this->tSpace . $name : Elastic::acronym($name);
 			$nameFullText = Elastic::standardSearchWard($nameWithPrefix);
 		} else {
 			$acronym = Elastic::acronym($name);
