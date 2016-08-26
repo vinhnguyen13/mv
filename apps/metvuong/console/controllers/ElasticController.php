@@ -597,7 +597,7 @@ class ElasticController extends Controller {
 		return $term;
 	}
 	
-	private function getAreas($table, $addSelect = []) {
+	public function getAreas($table, $addSelect = []) {
 		$select = ["`$table`.`id`", "`$table`.`name`", "`$table`.`pre`", "`slug_search`.`slug`"];
 		
 		if($table == $this->tProjectTable) {
