@@ -14630,6 +14630,7 @@ ul.cardList li {
         width: auto;
     }
 }
+
 @media (max-width: 360px) {
     .id-duan {
         float: none;
