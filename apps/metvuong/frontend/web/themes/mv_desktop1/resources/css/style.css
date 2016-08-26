@@ -3885,6 +3885,14 @@ html.mm-opening .mm-slideout {
 .left-attr-detail .list-attr-td li .icon-mv {
     font-size: 30px;
 }
+.favori .left-attr-detail .list-attr-td li .icon-mv {
+    font-size: 25px;
+    margin-right: 5px;
+}
+.favori .left-attr-detail .list-attr-td li {
+    padding-right: 5px;
+    margin-right: 5px;
+}
 .item-sidebar .left-attr-detail .list-attr-td li .icon-mv {
     font-size: 20px;
 }
