@@ -194,7 +194,7 @@ class ElasticController extends Controller {
 		curl_close($ch);
 	}
 	
-	private function buildCityDocument($city) {
+	public function buildCityDocument($city) {
 		$name = $city['name'];
 		$nameWithPrefix = $city['pre'] . ' ' . $name;
 		$acronym = Elastic::acronym($name);
@@ -218,7 +218,7 @@ class ElasticController extends Controller {
 		];
 	}
 	
-	private function buildDistrictDocument($district, $city) {
+	public function buildDistrictDocument($district, $city) {
 		$name = $district['name'];
 		$nameWithPrefix = $district['pre'] . ' ' . $name;
 		$fullName = $nameWithPrefix . $this->tSplit . $city['full_name'];
@@ -247,7 +247,7 @@ class ElasticController extends Controller {
 		];
 	}
 	
-	private function buildDocument($item, $district, $city, $isWard = false) {
+	public function buildDocument($item, $district, $city, $isWard = false) {
 		$name = $item['name'];
 		$nameWithPrefix = $item['pre'] . ' ' . $name;
 		$fullName = $nameWithPrefix . $this->tSplit . $district['full_name'];
@@ -286,7 +286,7 @@ class ElasticController extends Controller {
 		];
 	}
 	
-	private function buildProjectDocument($project, $district, $city) {
+	public function buildProjectDocument($project, $district, $city) {
 		$document = $this->buildDocument($project, $district, $city);
 		
 		$document['full_name'] = mb_substr($document['full_name'], 6, NULL, 'UTF-8');
