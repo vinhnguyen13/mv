@@ -31,4 +31,9 @@ class TrackingController extends Controller
         return $response->send();
     }
 
+    public function actionMail()
+    {
+
+    }
+
 }
