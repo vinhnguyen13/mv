@@ -35,18 +35,16 @@ class Mail extends Component
                 ->andWhere("email NOT IN (select email from user where updated_at > created_at )")
                 ->groupBy('email')->orderBy('count(product_id) desc')->limit($limit)->all();
 
-        if(count($contacts) > 0) {
+        if(!empty($contacts)) {
             $coupon = CouponCode::getDb()->cache(function() use($code){
                 return CouponCode::find()->where('code = :c',[':c' => $code])->one();
             });
-
-            if(!$coupon->check()) {
+            if(!empty($coupon) && !$coupon->check()) {
                 print_r("{$code} was used. Please, select other coupon code.");
                 return;
-            }
-            if(count($coupon) == 0)
+            }else{
                 $code = null;
-
+            }
             foreach ($contacts as $contact) {
                 $email = trim($contact["email"]);
                 $email = mb_strtolower($email);
@@ -70,16 +68,13 @@ class Mail extends Component
                     $product_list = array();
                     if (count($products) > 0) {
                         foreach ($products as $product) {
-                            $url = $product->urlDetail(true); // loi ko the su dung Url::to()
+                            $url = $product->urlDetail(true);
                             $id = $product->id;
-//                        $slug = \common\components\Slug::me()->slugify($product->getAddress($product->show_home_no));
-//                        $url = "http://local.metvuong.com/real-estate/detail/{$id}-{$slug}";
                             $product_list[Yii::$app->params['listing_prefix_id'] . $id] = $url;
                         }
                     }
 
                     $rest_total = intval($contact["total"]) - 3;
-
                     $params = [
                         'email' => $email,
                         'link_user' => Url::to(['member/profile', 'username' => $user->username], true),
