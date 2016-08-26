@@ -63,7 +63,6 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
 <div class="title-fixed-wrap">
     <div class="container">
         <div class="detail-duan-moi">
-            <!-- <div class="title-top"><?=empty($model->name) ? Yii::t('project', 'Project') : $model->name?></div> -->
             <div class="wrap-duan-moi row">
                 <div class="col-xs-12 col-md-9 col-left">
                     <div class="gallery-detail swiper-container">
@@ -75,22 +74,18 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                     foreach ($gallery as $image) {
                                         ?>
                                         <div class="swiper-slide">
-                                            <div class="img-show">
-                                                <div>
-                                                    <img src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>" alt="<?= $model->name ?>">
-                                                </div>
-                                            </div>
+                                            <a href="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>" class="fancybox" rel="gallery1">
+                                                <img src="<?= \yii\helpers\Url::to('/store/building-project-images/' . $image) ?>" alt="<?= $model->name ?>">
+                                            </a>
                                         </div>
                                     <?php }
                                 }
                             } else {
                                 ?>
                                 <div class="swiper-slide">
-                                    <div class="img-show">
-                                        <div>
-                                            <img src="<?=$logoUrl?>" alt="<?=$model->name?>">
-                                        </div>
-                                    </div>
+                                    <a href="<?=$logoUrl?>" class="fancybox" rel="gallery1">
+                                        <img src="<?=$logoUrl?>" alt="<?=$model->name?>">
+                                    </a>
                                 </div>
                             <?php }  ?>
                         </div>
@@ -334,6 +329,11 @@ echo $this->render('/ad/_partials/shareSocial',[
 
 <script type="text/javascript">
     $(document).ready(function () {
+        $(".fancybox").fancybox({
+            openEffect  : 'none',
+            closeEffect : 'none',
+            padding: 3
+        });
         $('.tabProject li').eq(0).addClass('tabActiveProject');
         $('.wrap-duan-moi .editor').eq(0).show();
         $('.tabProject li a').on('click', function (e) {
