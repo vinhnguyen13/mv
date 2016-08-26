@@ -109,7 +109,7 @@ class ElasticController extends Controller {
 		$cities = $this->getAreas($this->tCityTable);
 		$countCities = $this->countProducts($this->tcityId, $this->tCityTable);
 		$termsCity = "";
-		
+
 		foreach ($cities as $city) {
 			if(isset($countCities[$city['id']])) {
 				$cityTotalSell = intval($countCities[$city['id']][AdProduct::TYPE_FOR_SELL_TOTAL]);
@@ -140,6 +140,7 @@ class ElasticController extends Controller {
 			$countDistricts = $this->countProducts($this->tDistrictId, $this->tDistrictTable);
 			
 			$termsDistrict = "";
+			print_r("City: ".$cityNamePrefix.PHP_EOL);
 			
 			foreach ($districts as $district) {
 				$nameWithPrefix = trim($district['pre'] . $this->tSpace . $district['name']);
@@ -176,6 +177,7 @@ class ElasticController extends Controller {
 				$this->buildTermsBelongDistrict($this->tWardTable, $this->tWardId, $this->tWard, $city['id'], $district['id'], $districtFullName, $searchFullName, $indexName, 'standardSearchWard');
 				$this->buildTermsBelongDistrict($this->tStreetTable, $this->tStreetId, $this->tStreet, $city['id'], $district['id'], $districtFullName, $searchFullName, $indexName);
 				$this->buildTermsBelongDistrict($this->tProjectTable, $this->tProjectId, $this->tProject, $city['id'], $district['id'], $districtFullName, $searchFullName, $indexName, 'standardSearch', 'buildFullNameProject');
+				print_r("District: ".$districtFullName.PHP_EOL);
 			}
 			
 			$this->batchInsert($indexName, $this->tDistrict, $termsDistrict);
