@@ -194,7 +194,7 @@ class ElasticController extends Controller {
 		curl_close($ch);
 	}
 	
-	public function buildCityDocument($city) {
+	private function buildCityDocument($city) {
 		$name = $city['name'];
 		$nameWithPrefix = $city['pre'] . ' ' . $name;
 		$acronym = Elastic::acronym($name);
@@ -218,7 +218,7 @@ class ElasticController extends Controller {
 		];
 	}
 	
-	public function buildDistrictDocument($district, $city) {
+	private function buildDistrictDocument($district, $city) {
 		$name = $district['name'];
 		$nameWithPrefix = $district['pre'] . ' ' . $name;
 		$fullName = $nameWithPrefix . $this->tSplit . $city['full_name'];
@@ -247,7 +247,7 @@ class ElasticController extends Controller {
 		];
 	}
 	
-	public function buildDocument($item, $district, $city, $isWard = false) {
+	private function buildDocument($item, $district, $city, $isWard = false) {
 		$name = $item['name'];
 		$nameWithPrefix = $item['pre'] . ' ' . $name;
 		$fullName = $nameWithPrefix . $this->tSplit . $district['full_name'];
@@ -286,7 +286,7 @@ class ElasticController extends Controller {
 		];
 	}
 	
-	public function buildProjectDocument($project, $district, $city) {
+	private function buildProjectDocument($project, $district, $city) {
 		$document = $this->buildDocument($project, $district, $city);
 		
 		$document['full_name'] = mb_substr($document['full_name'], 6, NULL, 'UTF-8');
@@ -597,7 +597,7 @@ class ElasticController extends Controller {
 		return $term;
 	}
 	
-	public function getAreas($table, $addSelect = []) {
+	private function getAreas($table, $addSelect = []) {
 		$select = ["`$table`.`id`", "`$table`.`name`", "`$table`.`pre`", "`slug_search`.`slug`"];
 		
 		if($table == $this->tProjectTable) {

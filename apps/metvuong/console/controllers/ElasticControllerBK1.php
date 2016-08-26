@@ -96,7 +96,7 @@ class ElasticController extends Controller {
 		
 		if(!$indexName) {
 			echo 'missing param indexName';
-				
+			
 			return;
 		}
 		
@@ -106,196 +106,147 @@ class ElasticController extends Controller {
 		
 		$this->createIndex($indexName);
 		
-		$cities = $this->getAreas($this->tCityTable);
-		$districts = $this->getAreas($this->tDistrictTable, [$this->tCityId]);
-		$wards = $this->getAreas($this->tWardTable, [$this->tCityId, $this->tDistrictId]);
-		$streets = $this->getAreas($this->tStreetTable, [$this->tCityId, $this->tDistrictId]);
-		$projects = $this->getAreas($this->tProjectTable, [$this->tCityId, $this->tDistrictId]);
+		$cities = $this->buildQuery($this->tCityTable)->all();
 		
-		$cityTerm = "";
-		foreach ($cities as &$city) {
-			$city = $this->buildCityDocument($city);
-			$cityTerm .= $this->buildTerm($city[$this->tCityId], $city);
+		foreach ($cities as $city) {
+			$districts =
 		}
-		$this->batchInsert($indexName, $this->tCity, $cityTerm);
-		
-		$districtTerm = "";
-		foreach ($districts as &$district) {
-			$district = $this->buildDistrictDocument($district, $cities[$district[$this->tCityId]]);
-			$districtTerm .= $this->buildTerm($district[$this->tDistrictId], $district);
-		}
-		$this->batchInsert($indexName, $this->tDistrict, $districtTerm);
-		
-		$wardTerm = "";
-		foreach ($wards as $ward) {
-			$wardTerm .= $this->buildTerm($ward['id'], $this->buildDocument($ward, $districts[$ward[$this->tDistrictId]], $cities[$ward[$this->tCityId]], true));		
-		}
-		$this->batchInsert($indexName, $this->tWard, $wardTerm);
-		
-		$streetTerm = "";
-		foreach ($streets as $street) {
-			$streetTerm .= $this->buildTerm($street['id'], $this->buildDocument($street, $districts[$street[$this->tDistrictId]], $cities[$street[$this->tCityId]]));
-		}
-		$this->batchInsert($indexName, $this->tStreet, $streetTerm);
-		
-		$projectTerm = "";
-		foreach ($projects as $project) {
-			$projectTerm .= $this->buildTerm($project['id'], $this->buildProjectDocument($project, $districts[$project[$this->tDistrictId]], $cities[$project[$this->tCityId]]));
-		}
-		$this->batchInsert($indexName, $this->tProject, $projectTerm);
-		
 		/*
-		 * Update Counter
-		 */
-		$this->updateCounter('tCity', $indexName);
-		$this->updateCounter('tDistrict', $indexName);
-		$this->updateCounter('tWard', $indexName);
-		$this->updateCounter('tStreet', $indexName);
-		$this->updateCounter('tProject', $indexName);
+		$cities = $this->buildQuery($this->tCityTable)->all();
+		$countCities = $this->countProducts($this->tCityId, $this->tCityTable);
+		
+		$termsCity = "";
+		
+		foreach ($cities as $city) {
+			$termsCity .= $this->buildTerm($city['id'], $this->buildCityDocument($city));
+			
+			$districtWhere = [$this->tCityId => $city['id']];
+			$districts = $this->buildQuery($this->tDistrictTable, $districtWhere)->all();
+			$countDistricts = $this->countProducts($this->tDistrictId, $this->tDistrictTable, $districtWhere);
+			
+			$termsDistrict = "";
+			
+			foreach ($districts as $district) {
+				$this->buildTermsBelongDistrict('tWard', $district, $city);
+				$this->buildTermsBelongDistrict('tStreet', $district, $city);
+				$this->buildTermsBelongDistrict('tProject', $district, $city);
+				
+				$termsDistrict .= $this->buildTerm($district['id'], $this->buildDistrictDocument($district, $city));
+			}
+		}
+		
+		return;
+		
+		$cities = $this->getAreas($this->tCityTable);
+		$countCities = $this->countProducts($this->tCityId, $this->tCityTable);
+		$termsCity = "";
+		
+		foreach ($cities as $city) {
+			if(isset($countCities[$city['id']])) {
+				$cityTotalSell = intval($countCities[$city['id']][AdProduct::TYPE_FOR_SELL_TOTAL]);
+				$cityTotalRent = intval($countCities[$city['id']][AdProduct::TYPE_FOR_RENT_TOTAL]);
+			} else {
+				$cityTotalSell = 0;
+				$cityTotalRent = 0;
+			}
+			
+			$cityNamePrefix = $city['pre'] . ' ' . $city['name'];
+			
+			$cityDocument = [
+				'full_name' => $city['name'],
+				'slug' => $city['slug'],
+				'total_sell' => $cityTotalSell,
+				'total_rent' => $cityTotalRent,
+				'city_id' => $city['id'],
+				'search_name' => $city['name'],
+				'search_name_with_prefix' => $city['name'], // not $cityNamePrefix thành phố mà thêm prefix sẽ giảm tính cạnh tranh khi search,
+				'search_name_full_text' => $cityNamePrefix,
+				'search_name_full_text_no_ngram' => $cityNamePrefix,
+				'search_full_name' => $cityNamePrefix,
+				'search_full_name_no_ngram' => $cityNamePrefix
+			];
+			$termsCity .= $this->buildTerm($city['id'], $cityDocument);
+			
+			$districts = $this->getAreas($this->tDistrictTable, [$this->tCityId => $city['id']]);
+			$countDistricts = $this->countProducts($this->tDistrictId, $this->tDistrictTable);
+			
+			$termsDistrict = "";
+			
+			foreach ($districts as $district) {
+				$nameWithPrefix = trim($district['pre'] . $this->tSpace . $district['name']);
+				$districtFullName = $nameWithPrefix . $this->tSplit . $city['name'];
+				
+				if(isset($countDistricts[$district['id']])) {
+					$districtTotalSell = intval($countDistricts[$district['id']][AdProduct::TYPE_FOR_SELL_TOTAL]);
+					$districtTotalRent = intval($countDistricts[$district['id']][AdProduct::TYPE_FOR_RENT_TOTAL]);
+				} else {
+					$districtTotalSell = 0;
+					$districtTotalRent = 0;
+				}
+				
+				$nameWithPrefixStandardSearch = Elastic::standardSearchDistrict($nameWithPrefix);
+				$searchFullName = $nameWithPrefixStandardSearch . $this->tSpace . $cityNamePrefix;
+				
+				$districtDocument = [
+					'full_name' => $districtFullName,
+					'slug' => $district['slug'],
+					'total_sell' => $districtTotalSell,
+					'total_rent' => $districtTotalRent,
+					'city_id' => $city['id'],
+					'district_id' => $district['id'],
+					'search_name' => $district['name'],
+					'search_name_with_prefix' => $nameWithPrefix,
+					'search_name_full_text' => $nameWithPrefixStandardSearch,
+					'search_name_full_text_no_ngram' => $nameWithPrefixStandardSearch,
+					'search_full_name' => $searchFullName,
+					'search_full_name_no_ngram' => $searchFullName
+				];
+				
+				$termsDistrict .= $this->buildTerm($district['id'], $districtDocument);
+
+				$this->buildTermsBelongDistrict($this->tWardTable, $this->tWardId, $this->tWard, $city['id'], $district['id'], $districtFullName, $searchFullName, $indexName, 'standardSearchWard');
+				$this->buildTermsBelongDistrict($this->tStreetTable, $this->tStreetId, $this->tStreet, $city['id'], $district['id'], $districtFullName, $searchFullName, $indexName);
+				$this->buildTermsBelongDistrict($this->tProjectTable, $this->tProjectId, $this->tProject, $city['id'], $district['id'], $districtFullName, $searchFullName, $indexName, 'standardSearch', 'buildFullNameProject');
+			}
+			
+			$this->batchInsert($indexName, $this->tDistrict, $termsDistrict);
+		}
+		
+		$this->batchInsert($indexName, $this->tCity, $termsCity);
+		*/
+		
 		
 		/*
 		 * Update setting
 		 */
-		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/_settings");
-		$params = [
-			'index' => [
-				'refresh_interval' => '1s',
-				'number_of_replicas' => 1
-			]
-		];
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
-		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_exec($ch);
-		curl_close($ch);
+// 		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/_settings");
+// 		$params = [
+// 			'index' => [
+// 				'refresh_interval' => '1s',
+// 				'number_of_replicas' => 1
+// 			]
+// 		];
+// 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+// 		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($params));
+// 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+// 		curl_exec($ch);
+// 		curl_close($ch);
 	}
 	
-	private function updateCounter($t, $indexName) {
-		$id = $t . 'Id';
-		$table = $t . 'Table';
-		$type = $this->$t;
+	private function buildCityDocument(&$city) {
 		
-		$counts = $this->countProducts($this->$id, $this->$table);
-		
-		$bulk = "";
-		
-		foreach ($counts as $i => $count) {
-			$bulk .= '{ "update" : {"_id" : "' . $i . '"} }';
-			$bulk .= "\n";
-			$bulk .= '{ "doc" : {"total_sell" : ' . $count['total_sell'] . ', "total_rent": ' . $count['total_rent'] . '} }';
-			$bulk .= "\n";
-		}
-		
-		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/$type/_bulk");
-		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $bulk);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_exec($ch);
-		curl_close($ch);
 	}
 	
-	public function buildCityDocument($city) {
-		$name = $city['name'];
-		$nameWithPrefix = $city['pre'] . ' ' . $name;
-		$acronym = Elastic::acronym($name);
+	private function buildDistrictDocument(&$district, $city) {
 		
-		return [
-			'full_name' => $name,
-			'slug' => $city['slug'],
-			'total_sell' => 0,
-			'total_rent' => 0,
-			'city_id' => $city['id'],
-			's1' => $name,
-			's2' => $name,
-			's3' => $nameWithPrefix,
-			's4' => $acronym,
-			's5' => $acronym,
-			's6' => $acronym,
-			's7' => $nameWithPrefix,
-			's8' => $nameWithPrefix,
-			's9' => $nameWithPrefix,
-			's10' => $nameWithPrefix
-		];
 	}
 	
-	public function buildDistrictDocument($district, $city) {
-		$name = $district['name'];
-		$nameWithPrefix = $district['pre'] . ' ' . $name;
-		$fullName = $nameWithPrefix . $this->tSplit . $city['full_name'];
-		$acronym = ctype_digit($name) ? Elastic::acronym($nameWithPrefix) . $this->tSpace . Elastic::acronym($name) : Elastic::acronym($name);
-		$acronymFullName1 = $acronym . $this->tSpace . $city['s4'];
-		$nameFullText = Elastic::standardSearchDistrict($nameWithPrefix);
-		$fullNameSearch = $nameFullText . $this->tSpace . $city['full_name'];
+	private function buildDocumentBelongDistrict($area, $district, $city) {
 		
-		return [
-			'full_name' => $fullName,
-			'slug' => $district['slug'],
-			'total_sell' => 0,
-			'total_rent' => 0,
-			'city_id' => $city['city_id'],
-			'district_id' => $district['id'],
-			's1' => $name,
-			's2' => $name,
-			's3' => $nameWithPrefix,
-			's4' => $acronym,
-			's5' => $acronymFullName1,
-			's6' => $acronymFullName1,
-			's7' => $nameFullText,
-			's8' => $fullNameSearch,
-			's9' => $fullNameSearch,
-			's10' => $fullNameSearch
-		];
 	}
 	
-	public function buildDocument($item, $district, $city, $isWard = false) {
-		$name = $item['name'];
-		$nameWithPrefix = $item['pre'] . ' ' . $name;
-		$fullName = $nameWithPrefix . $this->tSplit . $district['full_name'];
-		
-		if($isWard) {
-			$acronym = ctype_digit($name) ? Elastic::acronym($nameWithPrefix) . $this->tSpace . Elastic::acronym($name) : Elastic::acronym($name);
-			$nameFullText = Elastic::standardSearchWard($nameWithPrefix);
-		} else {
-			$acronym = Elastic::acronym($name);
-			$nameFullText = Elastic::standardSearch($nameWithPrefix);
-		}
-		
-		$acronymFullName1 = $acronym . $this->tSpace . $city['s4'];
-		$acronymFullName = $acronym . $this->tSpace . $district['s5'];
-		
-		$fullName1 = $nameFullText . $this->tSpace . $city['full_name'];
-		$fullNameSearch = $nameFullText . $this->tSpace . $district['s9'];
-		
-		return [
-			'full_name' => $fullName,
-			'slug' => $item['slug'],
-			'total_sell' => 0,
-			'total_rent' => 0,
-			'city_id' => $district['city_id'],
-			'district_id' => $district['district_id'],
-			's1' => $name,
-			's2' => $name,
-			's3' => $nameWithPrefix,
-			's4' => $acronym,
-			's5' => $acronymFullName1,
-			's6' => $acronymFullName,
-			's7' => $nameFullText,
-			's8' => $fullName1,
-			's9' => $fullNameSearch,
-			's10' => $fullNameSearch
-		];
-	}
-	
-	public function buildProjectDocument($project, $district, $city) {
-		$document = $this->buildDocument($project, $district, $city);
-		
-		$document['full_name'] = mb_substr($document['full_name'], 6, NULL, 'UTF-8');
-
-		return $document;
-	}
-	
-	private function countProducts($countBy, $table) {
-		$where = self::$where;
+	private function countProducts($countBy, $table, $where = []) {
+		$where = array_merge(self::$where, $where);
 		
 		$query = new Query();
 		
@@ -312,7 +263,14 @@ class ElasticController extends Controller {
 		return $query->all();
 	}
 	
-	public function buildTermsBelongDistrict($table, $columnId, $type, $cityId, $districtId, $districtFullName, $searchFullName, $indexName, $ss = 'standardSearch', $fn = 'buildFullName') {
+	public function buildTermsBelongDistrict($t, $district, $city) {
+		$tId = $t . 'Id';
+		$tTable = $t . 'Table';
+		
+		$where = [$this->tDistrictId => $district['id']];
+		$areas = $this->buildQuery($this->$tTable, $where)->all();
+		$countAreas = $this->countProducts($this->$tId, $this->$tTable, $where);
+		/*
 		$areas = $this->getAreas($table, ['district_id' => $districtId]);
 		$countAreas = $this->countProducts($columnId, $table);
 		$terms = "";
@@ -347,6 +305,7 @@ class ElasticController extends Controller {
 			$terms .= $this->buildTerm($area['id'], $document);
 		}
 		$this->batchInsert($indexName, $type, $terms);
+		*/
 	}
 	
 	public function buildFullName($pre, $name, $districtFullName) {
@@ -426,7 +385,7 @@ class ElasticController extends Controller {
 					's2' => [
 						'type' => 'string',
 						'analyzer' => 'keyword_search',
-						'search_analyzer' => 'simple_search'
+						'search_analyzer' => 'search'
 					],
 					/*
 					 * Prefix + Tên - shingle + ngram
@@ -435,7 +394,7 @@ class ElasticController extends Controller {
 					's3' => [
 						'type' => 'string',
 						'analyzer' => 'keyword_shingle_search',
-						'search_analyzer' => 'simple_search'
+						'search_analyzer' => 'search'
 					],
 					/*
 					 * Tên viết tắt không có prefix - Xử lý thêm bằng php có ngram
@@ -444,7 +403,7 @@ class ElasticController extends Controller {
 					 */
 					's4' => [
 						'type' => 'string',
-						'analyzer' => 'full_text_search',
+						'analyzer' => 'standard_ngram_search',
 						'search_analyzer' => 'search'
 					],
 					/*
@@ -455,7 +414,7 @@ class ElasticController extends Controller {
 					 */
 					's5' => [
 						'type' => 'string',
-						'analyzer' => 'full_text_search',
+						'analyzer' => 'standard_ngram_search',
 						'search_analyzer' => 'search'
 					],
 					/*
@@ -466,7 +425,7 @@ class ElasticController extends Controller {
 					 */
 					's6' => [
 						'type' => 'string',
-						'analyzer' => 'full_text_search',
+						'analyzer' => 'standard_ngram_search',
 						'search_analyzer' => 'search'
 					],
 					/*
@@ -505,15 +464,10 @@ class ElasticController extends Controller {
 			]
 		];
 		
-		$synonyms = ["hồ chí minh,hcm", "hà nội,hn"];
 		$synonymsNumber = ["1,một,nhất", "1=>mot,nhat", "2,hai", "3,ba", "4,bốn,tư", "4=>bon,tu", "5,năm", "5=>nam", "6,sáu", "6=>sau", "7,bảy", "7=>bay", "8,tám", "8=>tam", "9,chín", "9=>chin", "10,mười", "10=>muoi"];
 		$settings = [
 			'analysis' => [
 				'filter' => [
-					'synonym' => [
-						'type' => 'synonym',
-						'synonyms' => $synonyms
-					],
 					'my_ascii_folding' => [
 						'type' => 'asciifolding',
 						'preserve_original' => true
@@ -535,7 +489,7 @@ class ElasticController extends Controller {
 				'analyzer' => [
 					'standard_search' => [
 						'tokenizer' => 'whitespace',
-						'filter' => ['lowercase', 'synonym', 'my_ascii_folding', 'unique', 'synonym_number']
+						'filter' => ['lowercase', 'my_ascii_folding', 'unique', 'synonym_number']
 					],
 					'keyword_search' => [
 						'tokenizer' => 'keyword',
@@ -547,16 +501,16 @@ class ElasticController extends Controller {
 					],
 					'full_text_search' => [
 						'tokenizer' => 'whitespace',
-						'filter' => ['lowercase', 'synonym', 'my_ascii_folding', 'my_edge_ngram', 'unique', 'synonym_number']
+						'filter' => ['lowercase', 'my_ascii_folding', 'my_edge_ngram', 'unique', 'synonym_number']
+					],
+					'standard_ngram_search' => [
+						'tokenizer' => 'whitespace',
+						'filter' => ['lowercase', 'my_ascii_folding', 'my_edge_ngram', 'unique', 'synonym_number']
 					],
 					'search' => [
-						'tokenizer' => 'whitespace',
-						'filter' => ['lowercase']
-					],
-					'simple_search' => [
 						'tokenizer' => 'keyword',
 						'filter' => ['lowercase']
-					]
+					],
 				]
 			],
 			'index' => [
@@ -588,7 +542,7 @@ class ElasticController extends Controller {
 	private function buildTerm($id, $document) {
 		$term = json_encode([
 			'index' => [
-				'_id' => $id
+				'_id' => intval($id)
 			]
 		]);
 		
@@ -597,7 +551,7 @@ class ElasticController extends Controller {
 		return $term;
 	}
 	
-	public function getAreas($table, $addSelect = []) {
+	private function buildQuery($table, $where = []) {
 		$select = ["`$table`.`id`", "`$table`.`name`", "`$table`.`pre`", "`slug_search`.`slug`"];
 		
 		if($table == $this->tProjectTable) {
@@ -606,15 +560,12 @@ class ElasticController extends Controller {
 			$select = ["`$table`.`id`", "`$table`.`name`", "`$table`.`pre`", "`slug_search`.`slug`"];
 		}
 		
-		$select = array_merge($select, $addSelect);
-		
 		$query = new Query();
 		$query->select($select);
 		$query->from($table);
 		$query->leftJoin("(SELECT * FROM `slug_search` WHERE `slug_search`.`table` = '$table') AS `slug_search`", "`slug_search`.`value` = `$table`.`id`");
 		$query->where($where);
-		$query->indexBy('id');
 		
-		return $query->all();
+		return $query;
 	}
 }

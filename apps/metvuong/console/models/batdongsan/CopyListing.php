@@ -89,7 +89,7 @@ class CopyListing extends Component
                         $project = \vsoft\ad\models\AdBuildingProject::find()->where([
                             'city_id' => $city_id,
                             'district_id' => $district_id,
-                            'name' => $project_name
+                            'bds_name' => $project_name
                         ])->one();
 
                         if (count($project) > 0) { // lay address theo address project

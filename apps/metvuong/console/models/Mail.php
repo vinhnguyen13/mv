@@ -89,7 +89,7 @@ class Mail extends Component
                         'code' => $code
                     ];
 
-                    $subjectEmail = "Thông báo tin đăng từ metvuong.com";
+                    $subjectEmail = "Thông báo tin đăng Bất Động Sản của bạn từ MetVuong.com";
                     try {
                         $mailer = new \common\components\Mailer();
                         $mailer->viewPath = '@common/mail';

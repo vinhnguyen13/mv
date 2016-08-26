@@ -97,13 +97,15 @@ class ImportListing extends Component
             $price = null;
             if (strpos($gia, ' triệu')) {
                 $gia = str_replace('Giá:', '', $gia);
-                if (strpos($gia, ' triệu/m²')) {
-                    $gia = str_replace(' triệu/m²&nbsp;', '', $gia);
+                if (strpos($gia, ' triệu/m²') || strpos($gia, ' triệu/m2')) {
+                    $gia = trim(str_replace(' triệu/m²&nbsp;', '', $gia));
+                    $gia = trim(str_replace(' triệu/m2&nbsp;', '', $gia));
                     $dt_temp = empty($dt) ? 0 : $dt;
                     $gia = $gia * $dt_temp;
-                } else
+                } else {
+                    $gia = str_replace(' triệu/tháng&nbsp;', '', $gia);
                     $gia = str_replace(' triệu&nbsp;', '', $gia);
-
+                }
                 $gia = trim($gia);
                 $price = $gia * 1000000;
             } else if (strpos($gia, ' tỷ')) {
@@ -111,6 +113,28 @@ class ImportListing extends Component
                 $gia = str_replace(' tỷ&nbsp;', '', $gia);
                 $gia = trim($gia);
                 $price = $gia * 1000000000;
+            } else if (strpos($gia, ' trăm nghìn')) {
+                $gia = str_replace('Giá:', '', $gia);
+                if (strpos($gia, ' trăm nghìn/m²')) {
+                    $gia = str_replace(' trăm nghìn/m²&nbsp;', '', $gia);
+                    $gia = trim($gia);
+                    $dt_temp = empty($dt) ? 0 : $dt;
+                    $gia = $gia * $dt_temp;
+                } else
+                    $gia = str_replace(' trăm nghìn&nbsp;', '', $gia);
+                $gia = trim($gia);
+                $price = $gia * 100000;
+            } else if (strpos($gia, ' nghìn')) {
+                $gia = str_replace('Giá:', '', $gia);
+                if (strpos($gia, ' nghìn/m2/tháng')) {
+                    $gia = str_replace(' nghìn/m2/tháng&nbsp;', '', $gia);
+                    $gia = trim($gia);
+                    $dt_temp = empty($dt) ? 0 : $dt;
+                    $gia = $gia * $dt_temp;
+                } else
+                    $gia = str_replace(' nghìn&nbsp;', '', $gia);
+                $gia = trim($gia);
+                $price = $gia * 1000;
             }
 
             $imgs = $detail->find('.pm-middle-content .img-map #thumbs li img');
