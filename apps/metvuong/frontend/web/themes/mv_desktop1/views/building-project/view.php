@@ -372,7 +372,7 @@ echo $this->render('/ad/_partials/shareSocial',[
 
                 var pmap = new google.maps.Map(map_project.get(0), {
                     center: latLng_project,
-                    zoom: 10,
+                    zoom: 16,
                     mapTypeControl: false,
                     zoomControl: false,
                     streetViewControl: false

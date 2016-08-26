@@ -22,23 +22,23 @@ use yii\web\Response;
 
 class BuildingProjectController extends Controller
 {
-    public function behaviors()
-    {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'allow' => true,
-                        'roles' => ['@'],
-                        'matchCallback' => function () {
-                            return Yii::$app->user->identity->getIsAdmin();
-                        },
-                    ],
-                ],
-            ],
-        ];
-    }
+//    public function behaviors()
+//    {
+//        return [
+//            'access' => [
+//                'class' => AccessControl::className(),
+//                'rules' => [
+//                    [
+//                        'allow' => true,
+//                        'roles' => ['@'],
+//                        'matchCallback' => function () {
+//                            return Yii::$app->user->identity->getIsAdmin();
+//                        },
+//                    ],
+//                ],
+//            ],
+//        ];
+//    }
 	public function actionIndex()
 	{
 		$searchModel = new AdBuildingProjectSearch();
