@@ -1742,6 +1742,10 @@ margin-bottom: 0;
     -ms-border-radius: 5px;
     /* height: 100%; */
 }
+#map_project,
+#popup-map .modal-content {
+    height: 100%;
+}
 #select-area .modal-body {
     padding: 15px 40px;
 }
@@ -7864,7 +7868,7 @@ padding: 5px 0;
     font-size: 13px;
     /* position: absolute; */
     top: 50px;
-    padding: 0 15px 0;
+    padding: 0 15px 20px;
     left: 0;
 }
 .editor img {
@@ -7873,6 +7877,7 @@ padding: 5px 0;
 }
 .infor-bds {
     /* min-height: 500px; */
+    background: #f7f7f7;
 }
 .editor h1,
 .editor h2,
@@ -7934,8 +7939,10 @@ padding: 5px 0;
 }
 .chudautu-infor .title-section {
     font-weight: 600;
-    font-size: 15px;
+    font-size: 18px;
     margin-bottom: 15px;
+    color: #00a769;
+    text-decoration: underline;
 }
 .chudautu-infor .wrap-img {
     width: 200px;
@@ -14556,6 +14563,23 @@ ul.cardList li {
 }
 .list-compare .tbl-wrap .bg-2 {
     background: #f9f9f9;
+}
+.thong-tin-khac .info-detail {
+    overflow: hidden;
+}
+.thong-tin-khac .info-detail div {
+    float: left;
+    width: 33.3333%;
+    margin-bottom: 10px;
+}
+.thong-tin-khac .info-detail span {
+    font-weight: 600;
+    width: 140px;
+    float: left;
+    text-decoration: underline;
+}
+.thong-tin-khac .info-detail p {
+    overflow: hidden;
 }
 @media (max-width: 1600px) {
     .wrap-listing-item {
