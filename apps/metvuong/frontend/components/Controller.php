@@ -64,6 +64,7 @@ class Controller extends \yii\web\Controller
                         Yii::$app->session->set("notifyChat",count($alert[UserData::ALERT_CHAT]));
                     }
                 }
+                Yii::$app->user->identity->updateAttributes(['updated_at' => time()]);
             }
 
             $parseUrl = Yii::$app->urlManager->parseRequest(Yii::$app->request);
