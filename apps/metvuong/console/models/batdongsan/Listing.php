@@ -438,5 +438,130 @@ class Listing extends Component
         }
     }
 
+    // tracking listing updated from batdongsan
+    public function trackingProductUpdate($track_date, $limit=1000)
+    {
+        $start = time();
+        if($track_date) {
+            $str_timestamp = strtotime($track_date);
+            $path = Yii::getAlias('@console'). "/data/bds_html/tracking_product/";
+            if(!is_dir($path))
+            {
+                mkdir($path, 0777, true);
+            }
+
+            $log = Helpers::loadLog($path, trim($track_date) . ".json");
+            if(isset($log['track_date'])){
+                $str_timestamp = strtotime($log['track_date']);
+            }
+            $count_error = 0;
+            $count_updated = 0;
+            $connection = AdProductFile::getDb();
+            $where = "product_tool_id is not null and DATE_FORMAT(FROM_UNIXTIME(f.created_at), '%Y-%m-%d') = DATE_FORMAT(FROM_UNIXTIME(".$str_timestamp."), '%Y-%m-%d')";
+            if(isset($log['last_id']) && !empty($log['last_id'])){
+                $where .= " and product_tool_id < ". $log['last_id'];
+            }
+            $sql = "SELECT `file`, vendor_link, product_tool_id, price, area, room_no, toilet_no FROM ad_product_file f
+                        inner join ad_product p on f.product_tool_id = p.id
+                        inner join ad_product_addition_info i on i.product_id = p.id
+                    where {$where} order by product_tool_id desc";
+            if($limit > 0){
+                $sql .= " limit {$limit}";
+            }
+            $product_files = $connection->createCommand($sql)->queryAll();
+            if(count($product_files) > 0){
+                foreach ($product_files as $key => $product_file) {
+                    $vendor_link = $product_file['vendor_link'];
+                    $file = $product_file['file'];
+                    if(empty($vendor_link)){
+                        $vendor_link = Listing::DOMAIN. "/view-pr". $file;
+                    }
+                    print_r("\n".($key + 1). " File: ". $file);
+                    $page = Helpers::getUrlContent($vendor_link);
+                    if (empty($page)) {
+
+                        $track = [
+                            'file' => $file,
+                            'product_tool_id' => $product_file['product_tool_id'],
+                            'description' => 'Cannot crawl page',
+                            'status' => 0,
+                            'created_at' => time()
+                        ];
+                        $connection->createCommand()->insert('tracking_product_update', $track)->execute();
+                        $count_error++;
+                        print_r(" - Error: cannot crawl page");
+                        continue;
+                    } else {
+                        $value = ImportListing::find()->parseDetail(null, $page);
+                        if (empty($value)) {
+                            $track = [
+                                'file' => $file,
+                                'product_tool_id' => $product_file['product_tool_id'],
+                                'description' => 'Error: no content',
+                                'status' => 0,
+                                'created_at' => time()
+                            ];
+                            $connection->createCommand()->insert('tracking_product_update', $track)->execute();
+                            $count_error++;
+                            print_r(" - Error: no content");
+                            continue;
+                        }
+
+                        $new_price = $value[$file]['price'];
+                        $new_area = $value[$file]['dientich'];
+                        $infoArray = $value[$file]['info'];
+
+                        $new_room_no = '0';
+                        $new_toilet_no = '0';
+                        if(isset($infoArray["Số phòng ngủ"])) {
+                            $new_room_no = empty($infoArray["Số phòng ngủ"]) == false ? trim(str_replace('(phòng)', '', $infoArray["Số phòng ngủ"])) : '0';
+                        }
+                        if(isset($infoArray["Số toilet"])) {
+                            $new_toilet_no = empty($infoArray["Số toilet"]) == false ? trim($infoArray["Số toilet"]) : '0';
+                        }
+
+                        $checkPrice = $new_price != $product_file['price'] ? true : false;
+                        $checkArea = $new_area != $product_file['area'] ? true : false;
+                        $checkRoomNo = $new_room_no != $product_file['room_no'] ? true : false;
+                        $checkToiletNo = $new_toilet_no != $product_file['toilet_no'] ? true : false;
+
+                        if($checkPrice || $checkArea || $checkRoomNo || $checkToiletNo) {
+                            $track = [
+                                'file' => $file,
+                                'product_tool_id' => $product_file['product_tool_id'],
+                                'new_price' => $checkPrice ? $new_price : null,
+                                'new_area' => $checkArea ? $new_area : null,
+                                'new_room_no' => $checkRoomNo ? $new_room_no : null,
+                                'new_toilet_no' => $checkToiletNo ? $new_toilet_no : null,
+                                'status' => 1,
+                                'created_at' => time()
+                            ];
+                            $res = $connection->createCommand()->insert('tracking_product_update', $track)->execute();
+                            if($res)
+                                $count_updated++;
+                            print_r(" - updated on web");
+                        } else {
+                            print_r(" - no update");
+                        }
+                    }
+
+                    $log['last_id'] = $product_file['product_tool_id'];
+                    $log['track_date'] = $track_date;
+                    $log['file'] = $file;
+                    Helpers::writeLog($log, $path, $track_date. ".json");
+                    sleep(3);
+                } // end foreach
+
+            }
+            else {
+                $log = [];
+                Helpers::writeLog($log, $path, $track_date. ".json");
+            }
+            $stop = time();
+            $time = $stop - $start;
+            print_r("\n\nListing updated: {$count_updated} - Error: {$count_error} ");
+            print_r("\nTime: {$time}");
+        }
+    }
 
 }
