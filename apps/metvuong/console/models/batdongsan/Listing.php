@@ -553,10 +553,11 @@ class Listing extends Component
                 } // end foreach
 
             }
-//            else {
-//                $log = [];
-//                Helpers::writeLog($log, $path, $track_date. ".json");
-//            }
+            else {
+                print_r("\nTracking done.");
+                $log['finish'] = 1;
+                Helpers::writeLog($log, $path, $track_date. ".json");
+            }
             $stop = time();
             $time = $stop - $start;
             print_r("\n\nListing updated: {$count_updated} - Error: {$count_error} ");
