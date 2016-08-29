@@ -179,9 +179,9 @@ class Ad extends Component
         $ids = AdProductSearch::getDb()->createCommand($sql)->queryColumn();
         $ids = !empty($ids) ? implode(',', $ids) : [];
         $query = AdProductSearch::find();
-        $query->select('ad_product.id, ad_product.updated_at, ad_product.show_home_no, ad_product.home_no, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.street_id, ad_product.lat, ad_product.lng,
+        $query->select('ad_product.id, ad_product.start_date, ad_product.updated_at, ad_product.show_home_no, ad_product.home_no, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.street_id, ad_product.lat, ad_product.lng,
 			ad_product.price, ad_product.area, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no, ad_product.created_at, ad_product.category_id, ad_product.type, ad_images.file_name,
-			 ad_images.folder, ad_product.start_date');
+			 ad_images.folder');
         $query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
 //        $query->where(['status' => 1, 'verified' => 1, 'is_expired' => 0]);
         if(!empty($ids)){
@@ -213,7 +213,7 @@ class Ad extends Component
 
     public function listingOfBuilding($building_id, $type){
         $query = AdProductSearch::find();
-        $query->select('ad_product.id, ad_product.updated_at, ad_product.show_home_no, ad_product.home_no, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.street_id, ad_product.lat, ad_product.lng,
+        $query->select('ad_product.id, ad_product.start_date, ad_product.updated_at, ad_product.show_home_no, ad_product.home_no, ad_product.city_id, ad_product.district_id, ad_product.ward_id, ad_product.street_id, ad_product.lat, ad_product.lng,
 			ad_product.price, ad_product.area, ad_product_addition_info.room_no, ad_product_addition_info.toilet_no, ad_product.created_at, ad_product.category_id, ad_product.type, ad_images.file_name,
 			 ad_images.folder');
         $query->innerJoin('ad_product_addition_info', 'ad_product_addition_info.product_id = ad_product.id');
