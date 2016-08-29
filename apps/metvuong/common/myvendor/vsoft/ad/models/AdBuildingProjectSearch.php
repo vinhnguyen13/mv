@@ -15,7 +15,7 @@ class AdBuildingProjectSearch extends AdBuildingProject {
     public function rules()
     {
         return [
-            [['name', 'click'], 'safe'],
+            [['name', 'click', 'hot_project'], 'safe'],
         ];
     }
 	
@@ -33,6 +33,7 @@ class AdBuildingProjectSearch extends AdBuildingProject {
 
 		$query->andFilterWhere([
 			'click' => $this->click,
+			'hot_project' => $this->hot_project,
 		]);
 
 		$query->andFilterWhere(['like', 'name', $this->name]);
