@@ -180,7 +180,6 @@ class MemberController extends Controller
             if (count($user) > 0) {
                 $loginStatus = Yii::$app->getUser()->login($user, 0);
                 if ($loginStatus) {
-                    $user->confirm();
 //                    $token->updateAttributes([
 //                        'code' => Yii::$app->security->generateRandomString(),
 //                    ]);

@@ -12,6 +12,7 @@
 namespace frontend\controllers;
 
 use dektrium\user\Finder;
+use frontend\components\Login;
 use frontend\models\Account;
 use dektrium\user\models\LoginForm;
 use frontend\models\Profile;
@@ -159,7 +160,7 @@ class SecurityController extends Controller
                             }
                         }
                     }
-                    \Yii::$app->getSession()->setFlash('after_login', true);
+                    Login::me()->afterLogin($account->user->id);
                 }
                 $this->action->successUrl = Yii::$app->getUser()->getReturnUrl();
             }

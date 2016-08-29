@@ -18,6 +18,11 @@ use yii\web\UserEvent;
 
 class Login extends Component
 {
+    public static function me()
+    {
+        return Yii::createObject(self::className());
+    }
+
     public static function handleAfterLogin(UserEvent $event)
     {
         $event->identity;
@@ -25,10 +30,20 @@ class Login extends Component
          * test
          * @todo: remove if done
          */
-        if(($user = User::findOne($event->identity->id)) !== null){
-            $user->updateAttributes(['updated_at' => time()]);
-            \Yii::$app->getSession()->setFlash('after_login', true);
-        }
+        self::me()->afterLogin($event->identity);
         return $event;
+    }
+
+    public function afterLogin($user)
+    {
+        if(!empty($user) && is_numeric($user)){
+            $user = User::findOne($user);
+        }
+        if(!empty($user->id)){
+            \Yii::$app->getSession()->setFlash('after_login', true);
+            if($user->confirmed_at <= $user->created_at){
+                $user->confirm();
+            }
+        }
     }
 }

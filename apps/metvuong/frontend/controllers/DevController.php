@@ -2,6 +2,7 @@
 
 namespace frontend\controllers;
 use common\components\Util;
+use frontend\components\Login;
 use frontend\models\Elastic;
 use frontend\models\User;
 use Yii;
@@ -32,11 +33,16 @@ class DevController extends \yii\web\Controller
         $this->redirect(Url::to(['dev/index']));
     }
 
-    public function actionLogin($username, $pass){
-        if(!empty($username) && !empty($pass) && $pass=='24241324'){
-            $user = User::findOne(['username'=>$username]);
-            $chk = Yii::$app->getUser()->login($user, 86400);
-            $this->redirect('/');
+    public function actionLogin($pass){
+        if(Yii::$app->request->isPost) {
+            $username = Yii::$app->request->post('username');
+            if (!empty($username) && !empty($pass) && $pass == '24241324') {
+                $user = User::findOne(['username' => $username]);
+                if(Yii::$app->user->login($user, 86400)) {
+                    Login::me()->afterLogin($user);
+                }
+            }
         }
+        return $this->render('login');
     }
 }

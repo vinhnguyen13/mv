@@ -330,7 +330,8 @@ class User extends \dektrium\user\models\User
 
         if ($token instanceof Token && !$token->isExpired) {
             $token->delete();
-            if (($success = $this->confirm())) {
+            if (($success = $this
+            )) {
                 Yii::$app->user->login($this, $this->module->rememberFor);
                 $message = Yii::t('user', 'Thank you, registration is now complete.');
             } else {
