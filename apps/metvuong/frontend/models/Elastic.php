@@ -542,25 +542,34 @@ class Elastic
 	}
 	
 	public static function acronym($s) {
-		$s = mb_strtolower($s, 'UTF-8');
-		$v = str_replace(["một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín", "mười"], ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], $s);
-	
-		if($v != $s) {
-			return self::_acronym($v) . ' ' . self::_acronym($s);
-		} else {
-			return self::_acronym($v);
+		$replacements = ["một" => 1, "hai" => 2, "ba" => 3, "bốn" => 4, "năm" => 5, "sáu" => 6, "bảy" => 7, "tám" => 8, "chín" => 9, "mười" => 10];
+		
+		$v = preg_replace_callback('/\b' . implode('|', array_keys($replacements)) . '\b/', function($match) use ($replacements) {
+			return $replacements[$match[0]];
+		}, mb_strtolower($s, 'UTF-8'), -1, $count);
+		
+		$acronym = mb_strtolower(self::_acronym($s), 'UTF-8');
+		
+		if($count) {
+			$acronym .= ' ' . self::_acronym($v);
 		}
+		
+		return str_replace(['-', '_'], '', $acronym);
 	}
 	
 	public static function _acronym($s) {
 		$words = explode(" ", $s);
-	
+		
 		$acronym = "";
-	
+		
 		foreach ($words as $word) {
-			$acronym .= mb_substr($word, 0, 1, 'UTF-8');
+			if(preg_match("/^[A-Z]+[0-9]+$/", $word) || preg_match("/(\d+)\/(\d+)/", $word)) {
+				$acronym .= $word;
+			} else {
+				$acronym .= mb_substr($word, 0, 1, 'UTF-8');
+			}
 		}
-	
+		
 		return $acronym;
 	}
 	

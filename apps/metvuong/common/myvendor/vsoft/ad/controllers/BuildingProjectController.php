@@ -80,6 +80,8 @@ class BuildingProjectController extends Controller
             }
             if(!empty($post["BuildingProject"]["facilities"])){
                 $model->facilities = implode(",", $post["BuildingProject"]["facilities"]);
+            } else {
+                $model->facilities = null;
             }
 
             if(isset($post['data_html'])) {
@@ -164,8 +166,11 @@ class BuildingProjectController extends Controller
                     $start_date = strtotime($post["BuildingProject"]["start_date"]);
                     $model->start_date = $start_date;
                 }
+
                 if(!empty($post["BuildingProject"]["facilities"])){
                     $model->facilities = implode(",", $post["BuildingProject"]["facilities"]);
+                } else {
+                    $model->facilities = null;
                 }
 
                 $data_html = $post['data_html'];
