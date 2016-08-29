@@ -542,21 +542,23 @@ class Elastic
 	}
 	
 	public static function acronym($s) {
-		$s = mb_strtolower($s, 'UTF-8');
-		$v = str_replace(["một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín", "mười"], ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], $s);
-	
-		if($v != $s) {
-			return self::_acronym($v) . ' ' . self::_acronym($s);
-		} else {
-			return self::_acronym($v);
+		$acronym = mb_strtolower(self::_acronym($s));
+		
+		$lower = mb_strtolower($s, 'UTF-8');
+		$v = str_replace(["một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín", "mười"], ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], $lower);
+		
+		if($v != $lower) {
+			$acronym .= ' ' . self::_acronym($v);
 		}
+		
+		return $acronym;
 	}
 	
 	public static function _acronym($s) {
 		$words = explode(" ", $s);
 	
 		$acronym = "";
-	
+
 		foreach ($words as $word) {
 			if(preg_match("/^[A-Z]+[0-9]+$/", $word)) {
 				$acronym .= $word;
