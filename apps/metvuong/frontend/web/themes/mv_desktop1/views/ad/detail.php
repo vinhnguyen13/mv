@@ -328,7 +328,7 @@ $count_review = $reviews->count();
 						$result = Tracking::find()->getStats($product->id);
 						if(!empty($result)) {
 							?>
-							<ul class="icon-num-get hide">
+							<ul class="icon-num-get">
 								<?=!empty($result[0]['favorite']) ? '<li><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>'.$result[0]['favorite'].'</li>' : '';?>
 								<?=!empty($result[0]['share']) ? '<li><span class="icon-mv"><span class="icon-share-social"></span></span>'.$result[0]['share'].'</li>' : '';?>
 								<?=!empty($result[0]['search']) ? '<li><span class="icon-mv"><span class="icon-icons-search"></span></span>'.$result[0]['search'].'</li>' : '';?>
