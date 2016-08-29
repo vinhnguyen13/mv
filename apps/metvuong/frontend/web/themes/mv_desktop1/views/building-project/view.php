@@ -1,4 +1,5 @@
 <?php
+use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\Request;
 use yii\web\View;
@@ -188,18 +189,33 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                             <?= !empty($model->sqm_2_bed) ? "<div><span>". Yii::t('project', 'SQM 2 Bed'). ":</span><p>". $model->sqm_2_bed. "</p></div>" : null?>
                             <?= !empty($model->no_3_bed) ? "<div><span>". Yii::t('project','# 3 Bed'). ":</span><p>". $model->no_3_bed. "</p></div>" : null?>
                             <?= !empty($model->sqm_3_bed) ? "<div><span>". Yii::t('project', 'SQM 3 Bed'). ":</span><p>". $model->sqm_3_bed. "</p></div>" : null?>
-                            <?php
-                            if($model->facilities) {
-                                $facility = \vsoft\ad\models\AdFacility::find()->select("group_concat(' ', `name`) as facility")->where("id in ({$model->facilities})")->asArray()->one();
-                                echo "<div><span>". Yii::t('ad', 'Facilities'). ":</span><p>". $facility['facility']. "</p></div>";
-                            }
-                            ?><br>
+                            <br>
                         </div>
+                        <?php
+                        $model_facilities = $model->facilities;
+                        if(!empty($model_facilities)){?>
+                        <div class="info-detail">
+                            <ul class="clearfix list-tienich">
+                                <?php
+                                $_facility = \vsoft\ad\models\AdFacility::getDb()->cache(function() use($model_facilities){
+                                    return \vsoft\ad\models\AdFacility::find()->where("id in ({$model_facilities})")->asArray()->all();
+                                });
+                                $facilities = ArrayHelper::getColumn($_facility, 'name');
+                                if(count($facilities) > 0) {
+                                    foreach ($facilities as $k => $facility) {
+                                        $class = \common\components\Slug::me()->slugify($facility); ?>
+                                        <li>
+                                            <span class="icon-mv"><span class="icon-<?=$class?>"></span></span>
+                                            <?=Yii::t('ad', $facility)?>
+                                        </li>
+                                    <?php }
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                        <?php  } ?>
                     </div>
-                    <?php } ?>
-
-                    <?php
-
+                    <?php }                     
                     if(count($tabProject) > 0){
                         ?>
                         <div class="infor-bds">

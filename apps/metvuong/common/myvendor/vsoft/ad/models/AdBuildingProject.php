@@ -51,9 +51,9 @@ class AdBuildingProject extends ABP
             [['facade_width'], 'number', 'numberPattern' => '/^\s*[-+]?[0-9]*[.,]?[0-9]+([eE][-+]?[0-9]+)?\s*$/', 'max' => 10000],
             [['lift'], 'integer', 'max' => 100],
             [['name', 'bds_name'], 'string', 'max' => 100],
-	        [['lng', 'lat', 'land_area', 'gfa', 'sqm_1_bed', 'sqm_2_bed', 'sqm_3_bed', 'building_density'], 'number'],
+	        [['lng', 'lat', 'land_area', 'gfa', 'building_density'], 'number'],
 	        [['start_time', 'estimate_finished', 'hotline', 'home_no'], 'string', 'max' => 32],
-	        [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'website', 'logo', 'slug'], 'string', 'max' => 255]
+	        [['location', 'investment_type', 'commercial_leasing_area', 'owner_type', 'website', 'logo', 'slug', 'sqm_1_bed', 'sqm_2_bed', 'sqm_3_bed'], 'string', 'max' => 255]
         ];
     }
     
