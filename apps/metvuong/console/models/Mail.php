@@ -25,6 +25,9 @@ use yii\helpers\Url;
 
 class Mail extends Component
 {
+    const TYPE_WELCOME_AGENT = 1;
+    const TYPE_DASHBOARD = 2;
+
     public static function sendMailContact($code=null, $limit=100)
     {
         print_r("----------Start-----------".PHP_EOL);
@@ -95,13 +98,13 @@ class Mail extends Component
                             ->send();
                         $status > 0 ? print_r("[{$mailer->transport['username']}] sent to [{$email}] success !".PHP_EOL) : print_r("Send mail error.".PHP_EOL);
                         // Count email marketing has sent
-                        Mail::markEmail($email, $status);
+                        Mail::markEmail(self::TYPE_WELCOME_AGENT, $email, $status);
                         usleep(300000);
                     } catch (Exception $ex) {
                         print_r("Error .".PHP_EOL);
                     }
                 }else{
-                    Mail::markEmail($email, -1);
+                    Mail::markEmail(self::TYPE_WELCOME_AGENT, $email, -1);
                     print_r("Not create account $email.".PHP_EOL);
                 }
             }
@@ -111,23 +114,26 @@ class Mail extends Component
         print_r("----------End-----------".PHP_EOL);
     }
 
-    public static function markEmail($email, $status)
+    public static function markEmail($type, $email, $status)
     {
-        $markEmail = MarkEmail::find()->where('email = :e',[':e' => $email])->one();
+        $markEmail = MarkEmail::find()->where('email = :e AND type = :type',[':e' => $email, ':type'=>$type])->one();
         if(count($markEmail) > 0){
             if($status) {
                 $markEmail->count += 1;
             }
-            $markEmail->send_time = time();
-            $markEmail->status = $status;
-            $markEmail->update(false);
         } else {
             $markEmail = new MarkEmail();
             $markEmail->email = $email;
             $markEmail->count = 1;
-            $markEmail->send_time = time();
-            $markEmail->status = $status;
-            $markEmail->save(false);
         }
+        $markEmail->type = $type;
+        $markEmail->send_time = time();
+        $markEmail->status = $status;
+        $markEmail->save(false);
+    }
+
+    public static function sendMailUserUseDashboard()
+    {
+
     }
 }
