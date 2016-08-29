@@ -558,7 +558,7 @@ class Elastic
 		$acronym = "";
 	
 		foreach ($words as $word) {
-			if(preg_match("/[0-9]/", $word)) {
+			if(preg_match("/^[A-Z]+[0-9]+$/", $word)) {
 				$acronym .= $word;
 			} else {
 				$acronym .= mb_substr($word, 0, 1, 'UTF-8');
