@@ -11,6 +11,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\helpers\Url;
+use yii\web\NotFoundHttpException;
 use yii\web\Response;
 
 class NewsController extends Controller
@@ -60,10 +61,6 @@ class NewsController extends Controller
 
     public function actionView($id)
     {
-//        $cmsShow = CmsShow::findOne($id);
-//        $user_id = $detail->created_by;
-//        $author = Profile::findOne($user_id);
-//        $catalog = CmsCatalog::findOne($detail->catalog_id);
         $detail = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.content', 'cms_show.seo_title','cms_show.seo_keywords','cms_show.seo_description', 'cms_show.created_at','cms_show.catalog_id', 'cms_show.click', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
             ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_show.id = :id', [':id' => $id])
@@ -75,8 +72,11 @@ class NewsController extends Controller
                 ->update(CmsShow::tableName(), ['click' => $click], ['id' => $detail["id"]])
                 ->execute();
             $this->view->title = $detail["title"];
+            return $this->render('detail', ['news' => $detail]);
         }
-        return $this->render('detail', ['news' => $detail]);
+        else {
+            return $this->redirect(Url::to(['news/index']));
+        }
     }
 
     public function actionList($cat_id)
