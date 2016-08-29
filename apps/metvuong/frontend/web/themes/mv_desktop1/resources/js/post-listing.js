@@ -678,6 +678,7 @@ $(document).ready(function(){
 	attachWindowScrollEvent();
 	attachProjectSuggest();
 	attachPriceFormat();
+	attachRadioUi();
 	
 	if(isNewRecord) {
 		form.data = form.el.serialize();
@@ -741,6 +742,10 @@ $(document).ready(function(){
 				}
 			}
 		});
+	}
+	
+	function attachRadioUi() {
+		$('.radio-ui').radio();
 	}
 
 	function calPrice() {
