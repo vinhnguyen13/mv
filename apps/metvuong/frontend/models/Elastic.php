@@ -211,6 +211,8 @@ class Elastic
     	$v = str_replace('/', '\/', $v);
     	$v = str_replace([',', '.'], ' ', $v);
     	$v = trim(preg_replace('/\s+/', ' ', $v));
+    	$v = mb_strtolower($v, 'UTF-8');
+    	$v = self::standardUnicode($v);
     	
     	$functions = [
     		[
@@ -540,27 +542,39 @@ class Elastic
 	}
 	
 	public static function acronym($s) {
-		$numberArray = [
-			"Một" => 1,
-			"Hai" => 2,
-			"Ba" => 3,
-			"Bốn" => 4,
-			"Năm" => 5,
-			"Sáu" => 6,
-			"Bảy" => 7,
-			"Tám" => 8,
-			"Chín" => 9,
-			"Mười" => 10
-		];
-		$s = str_replace(array_keys($numberArray), $numberArray, $s);
-		$lower = mb_strtolower($s, 'UTF-8');
-		$words = explode(" ", $lower);
+		$s = mb_strtolower($s, 'UTF-8');
+		$v = str_replace(["một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín", "mười"], ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'], $s);
+	
+		if($v != $s) {
+			return self::_acronym($v) . ' ' . self::_acronym($s);
+		} else {
+			return self::_acronym($v);
+		}
+	}
+	
+	public static function _acronym($s) {
+		$words = explode(" ", $s);
+	
 		$acronym = "";
-		
+	
 		foreach ($words as $word) {
 			$acronym .= mb_substr($word, 0, 1, 'UTF-8');
 		}
-		
+	
 		return $acronym;
+	}
+	
+	public static function standardUnicode($v) {
+		$unicodeToHop = ["á", "à", "ả", "ã", "ạ", "ấ", "ầ", "ẩ", "ẫ", "ậ", "ắ", "ằ", "ẳ", "ẵ", "ặ", "ó", "ò", "ỏ", "õ", "ọ", "ố", "ồ", "ổ", "ỗ", "ộ", "ớ", "ờ", "ở", "ỡ", "ợ", "í", "ì", "ỉ", "ĩ", "ị", "é", "è", "ẻ", "ẽ", "ẹ", "ế", "ề", "ể", "ễ", "ệ", "ú", "ù", "ủ", "ũ", "ụ", "ứ", "ừ", "ử", "ữ", "ự", "ý", "ỳ", "ỷ", "ỹ", "ỵ"];
+		$unicodeDungSan = ["á", "à", "ả", "ã", "ạ", "ấ", "ầ", "ẩ", "ẫ", "ậ", "ắ", "ằ", "ẳ", "ẵ", "ặ", "ó", "ò", "ỏ", "õ", "ọ", "ố", "ồ", "ổ", "ỗ", "ộ", "ớ", "ờ", "ở", "ỡ", "ợ", "í", "ì", "ỉ", "ĩ", "ị", "é", "è", "ẻ", "ẽ", "ẹ", "ế", "ề", "ể", "ễ", "ệ", "ú", "ù", "ủ", "ũ", "ụ", "ứ", "ừ", "ử", "ữ", "ự", "ý", "ỳ", "ỷ", "ỹ", "ỵ"];
+		
+		return str_replace($unicodeToHop, $unicodeDungSan, $v);
+	}
+	
+	public static function standardUnicodeCase($v) {
+		$unicodeToHop = ["Á", "À", "Ả", "Ã", "Ạ", "Ấ", "Ầ", "Ẩ", "Ẫ", "Ậ", "Ắ", "Ằ", "Ẳ", "Ẵ", "Ặ", "Ó", "Ò", "Ỏ", "Õ", "Ọ", "Ố", "Ồ", "Ổ", "Ỗ", "Ộ", "Ớ", "Ờ", "Ở", "Ỡ", "Ợ", "Í", "Ì", "Ỉ", "Ĩ", "Ị", "É", "È", "Ẻ", "Ẽ", "Ẹ", "Ế", "Ề", "Ể", "Ễ", "Ệ", "Ú", "Ù", "Ủ", "Ũ", "Ụ", "Ứ", "Ừ", "Ử", "Ữ", "Ự", "Ý", "Ỳ", "Ỷ", "Ỹ", "Ỵ"];
+		$unicodeDungSan = ["Á", "À", "Ả", "Ã", "Ạ", "Ấ", "Ầ", "Ẩ", "Ẫ", "Ậ", "Ắ", "Ằ", "Ẳ", "Ẵ", "Ặ", "Ó", "Ò", "Ỏ", "Õ", "Ọ", "Ố", "Ồ", "Ổ", "Ỗ", "Ộ", "Ớ", "Ờ", "Ở", "Ỡ", "Ợ", "Í", "Ì", "Ỉ", "Ĩ", "Ị", "É", "È", "Ẻ", "Ẽ", "Ẹ", "Ế", "Ề", "Ể", "Ễ", "Ệ", "Ú", "Ù", "Ủ", "Ũ", "Ụ", "Ứ", "Ừ", "Ử", "Ữ", "Ự", "Ý", "Ỳ", "Ỷ", "Ỹ", "Ỵ"];
+		
+		return self::standardUnicode(str_replace($unicodeToHop, $unicodeDungSan, $v));
 	}
 }

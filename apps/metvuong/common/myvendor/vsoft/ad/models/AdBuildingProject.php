@@ -196,8 +196,14 @@ class AdBuildingProject extends ABP
 			}
 			
 			if($insert) {
+				$this->name = Elastic::standardUnicodeCase($this->name);
+				
 				$this->uniqueSlug();
 			} else {
+				if(isset($this->oldAttrs['name']) && $this->oldAttrs['name'] != $this->name) {
+					$this->name = Elastic::standardUnicodeCase($this->name);
+				}
+				
 				if($this->oldAttrs['slug'] != $this->attributes['slug']) {
 					$this->uniqueSlug();
 					

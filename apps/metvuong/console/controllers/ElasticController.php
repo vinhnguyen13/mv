@@ -444,7 +444,7 @@ class ElasticController extends Controller {
 					 */
 					's4' => [
 						'type' => 'string',
-						'analyzer' => 'full_text_search',
+						'analyzer' => 'acronym_search',
 						'search_analyzer' => 'search'
 					],
 					/*
@@ -455,7 +455,7 @@ class ElasticController extends Controller {
 					 */
 					's5' => [
 						'type' => 'string',
-						'analyzer' => 'full_text_search',
+						'analyzer' => 'acronym_search',
 						'search_analyzer' => 'search'
 					],
 					/*
@@ -466,7 +466,7 @@ class ElasticController extends Controller {
 					 */
 					's6' => [
 						'type' => 'string',
-						'analyzer' => 'full_text_search',
+						'analyzer' => 'acronym_search',
 						'search_analyzer' => 'search'
 					],
 					/*
@@ -549,13 +549,15 @@ class ElasticController extends Controller {
 						'tokenizer' => 'whitespace',
 						'filter' => ['lowercase', 'synonym', 'my_ascii_folding', 'my_edge_ngram', 'unique', 'synonym_number']
 					],
-					'search' => [
+					'acronym_search' => [
 						'tokenizer' => 'whitespace',
-						'filter' => ['lowercase']
+						'filter' => ['lowercase', 'synonym', 'my_ascii_folding', 'my_edge_ngram', 'unique']
+					],
+					'search' => [
+						'tokenizer' => 'whitespace'
 					],
 					'simple_search' => [
-						'tokenizer' => 'keyword',
-						'filter' => ['lowercase']
+						'tokenizer' => 'keyword'
 					]
 				]
 			],
@@ -616,5 +618,29 @@ class ElasticController extends Controller {
 		$query->indexBy('id');
 		
 		return $query->all();
+	}
+	
+	public function actionStandardUnicode() {
+		$this->getToReplace($this->tCityTable);
+		$this->getToReplace($this->tDistrictTable);
+		$this->getToReplace($this->tWardTable);
+		$this->getToReplace($this->tStreetTable);
+		$this->getToReplace($this->tProjectTable);
+	}
+	
+	public function getToReplace($table) {
+		$connection = \Yii::$app->db;
+		$command = $connection->createCommand("SELECT * FROM `$table`");
+		$records = $command->queryAll();
+			
+		foreach ($records as $record) {
+			$name = Elastic::standardUnicodeCase($record['name']);
+		
+			if($name != $record['name']) {
+				echo $name . "\n";
+				
+				$connection->createCommand("UPDATE `$table` SET `name` = '$name' WHERE `id` = {$record['id']};")->execute();
+			}
+		}
 	}
 }
