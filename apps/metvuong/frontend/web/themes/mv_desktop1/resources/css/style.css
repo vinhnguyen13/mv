@@ -1173,6 +1173,9 @@ label {
     font-size: 35px;
     margin-bottom: 5px;
 }
+.thong-tin-khac .info-detail .list-tienich span {
+    width: 100%;
+}
 .list-tienich li .icon-ben-xe-tram-xe {
     font-size: 50px;
     height: 35px;
@@ -9598,6 +9601,10 @@ margin-right: 5px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.icon-truong-hoc:before, .icon-school:before,
+.icon-480119:before {
+    content: "\e932";
+}
 .icon-bar-chart:before {
     content: "\f080";
 }
@@ -9678,7 +9685,7 @@ margin-right: 5px;
 }
 .icon-truong-hoc:before,
 .icon-school:before {
-    content: "\e938";
+    /* content: "\e938"; */
 }
 .icon-television:before {
     content: "\e931";
@@ -13717,7 +13724,7 @@ ul.cardList li {
     height: 30px;
 }
 .listing-post-by-project {
-    margin-top: 50px;
+    margin-top: 0px;
 }
 .listing-post-by-project .nav-tabs {
     border-bottom: 2px solid #00a769;
@@ -14602,14 +14609,14 @@ ul.cardList li {
 }
 .thong-tin-khac .info-detail div {
     float: left;
-    width: 33.3333%;
+    width: 50%;
     margin-bottom: 10px;
 }
 .thong-tin-khac .info-detail span {
     font-weight: 600;
     width: 140px;
     float: left;
-    text-decoration: underline;
+    /* text-decoration: underline; */
 }
 .thong-tin-khac .info-detail p {
     overflow: hidden;

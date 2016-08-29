@@ -168,54 +168,8 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                         </div>
                     <?php } ?>
                     </div>
-                    <?php if(!empty($model->start_time) || !empty($model->estimate_finished) || !empty($model->building_density) ||
-                        !empty($model->land_area) || !empty($model->apartment_no) || !empty($model->units_no) || !empty($model->gfa) ||
-                        !empty($model->no_1_bed) || !empty($model->sqm_1_bed) || !empty($model->no_2_bed) || !empty($model->sqm_2_bed) ||
-                        !empty($model->no_3_bed) || !empty($model->sqm_3_bed) ){ ?>
-                    <div class="item chudautu-infor thong-tin-khac">
-                        <div class="title-section"><?=Yii::t('project', 'Others Information')?></div>
-                        <div class="info-detail">
-                            <?= !empty($model->start_time) ? "<div><span>". Yii::t('project', 'Construction Start'). ":</span><p>". $model->start_time. "</p></div>" : null?>
-                            <?= !empty($model->estimate_finished) ? "<div><span>". Yii::t('project', 'Completion'). ":</span><p>". $model->estimate_finished. "</p></div>" : null?>
-                            <?= !empty($model->building_density) ? "<div><span>". Yii::t('project', 'Building Density'). ":</span><p>". $model->building_density. "</p></div>" : null?>
-                            <?= !empty($model->land_area) ? "<div><span>". Yii::t('project', 'Land Area'). ":</span> ". $model->land_area. "</p></div>" : null?>
-                            <?= !empty($model->apartment_no) ? "<div><span>". Yii::t('project', '# of Building'). ":</span><p>". $model->apartment_no. "</p></div>" : null?>
-                            <?= !empty($model->units_no) ? "<div><span>". Yii::t('project', 'Units No'). ":</span><p>". $model->units_no. "</p></div>" : null?>
-                            <?= !empty($model->gfa) ? "<div><span>". Yii::t('project','GFA'). ":</span><p>". $model->gfa. "</div>" : null?>
-                            <?= !empty($model->lift) ? "<div><span>". Yii::t('project', 'Lift'). ":</span><p>". $model->lift. "</p></div>" : null?>
-                            <?= !empty($model->no_1_bed) ? "<div><span>". Yii::t('project','# 1 Bed'). ":</span><p>". $model->no_1_bed. "</p></div>" : null?>
-                            <?= !empty($model->sqm_1_bed) ? "<div><span>". Yii::t('project', 'SQM 1 Bed'). ":</span><p>". $model->sqm_1_bed. "</p></div>" : null?>
-                            <?= !empty($model->no_2_bed) ? "<div><span>". Yii::t('project','# 2 Bed'). ":</span><p>". $model->no_2_bed. "</p></div>" : null?>
-                            <?= !empty($model->sqm_2_bed) ? "<div><span>". Yii::t('project', 'SQM 2 Bed'). ":</span><p>". $model->sqm_2_bed. "</p></div>" : null?>
-                            <?= !empty($model->no_3_bed) ? "<div><span>". Yii::t('project','# 3 Bed'). ":</span><p>". $model->no_3_bed. "</p></div>" : null?>
-                            <?= !empty($model->sqm_3_bed) ? "<div><span>". Yii::t('project', 'SQM 3 Bed'). ":</span><p>". $model->sqm_3_bed. "</p></div>" : null?>
-                            <br>
-                        </div>
-                        <?php
-                        $model_facilities = $model->facilities;
-                        if(!empty($model_facilities)){?>
-                        <div class="info-detail">
-                            <ul class="clearfix list-tienich">
-                                <?php
-                                $_facility = \vsoft\ad\models\AdFacility::getDb()->cache(function() use($model_facilities){
-                                    return \vsoft\ad\models\AdFacility::find()->where("id in ({$model_facilities})")->asArray()->all();
-                                });
-                                $facilities = ArrayHelper::getColumn($_facility, 'name');
-                                if(count($facilities) > 0) {
-                                    foreach ($facilities as $k => $facility) {
-                                        $class = \common\components\Slug::me()->slugify($facility); ?>
-                                        <li>
-                                            <span class="icon-mv"><span class="icon-<?=$class?>"></span></span>
-                                            <?=Yii::t('ad', $facility)?>
-                                        </li>
-                                    <?php }
-                                }
-                                ?>
-                            </ul>
-                        </div>
-                        <?php  } ?>
-                    </div>
-                    <?php }                     
+                    
+                    <?php                  
                     if(count($tabProject) > 0){
                         ?>
                         <div class="infor-bds">
@@ -243,6 +197,56 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                 <?php }
                             } ?>
                         </div>
+                    <?php } ?>
+
+                    <?php if(!empty($model->start_time) || !empty($model->estimate_finished) || !empty($model->building_density) ||
+                        !empty($model->land_area) || !empty($model->apartment_no) || !empty($model->units_no) || !empty($model->gfa) ||
+                        !empty($model->no_1_bed) || !empty($model->sqm_1_bed) || !empty($model->no_2_bed) || !empty($model->sqm_2_bed) ||
+                        !empty($model->no_3_bed) || !empty($model->sqm_3_bed) ){ ?>
+                    <div class="item chudautu-infor thong-tin-khac mgT-30">
+                        <div class="title-section"><?=Yii::t('project', 'Others Information')?></div>
+                        <div class="info-detail">
+                            <?= !empty($model->start_time) ? "<div><span>". Yii::t('project', 'Construction Start'). ":</span><p>". $model->start_time. "</p></div>" : null?>
+                            <?= !empty($model->estimate_finished) ? "<div><span>". Yii::t('project', 'Completion'). ":</span><p>". $model->estimate_finished. "</p></div>" : null?>
+                            <?= !empty($model->building_density) ? "<div><span>". Yii::t('project', 'Building Density'). ":</span><p>". $model->building_density. "</p></div>" : null?>
+                            <?= !empty($model->land_area) ? "<div><span>". Yii::t('project', 'Land Area'). ":</span> ". $model->land_area. "</p></div>" : null?>
+                            <?= !empty($model->apartment_no) ? "<div><span>". Yii::t('project', '# of Building'). ":</span><p>". $model->apartment_no. "</p></div>" : null?>
+                            <?= !empty($model->units_no) ? "<div><span>". Yii::t('project', 'Units No'). ":</span><p>". $model->units_no. "</p></div>" : null?>
+                            <?= !empty($model->gfa) ? "<div><span>". Yii::t('project','GFA'). ":</span><p>". $model->gfa. "</div>" : null?>
+                            <?= !empty($model->lift) ? "<div><span>". Yii::t('project', 'Lift'). ":</span><p>". $model->lift. "</p></div>" : null?>
+                            <?= !empty($model->no_1_bed) ? "<div><span>". Yii::t('project','# 1 Bed'). ":</span><p>". $model->no_1_bed. "</p></div>" : null?>
+                            <?= !empty($model->sqm_1_bed) ? "<div><span>". Yii::t('project', 'SQM 1 Bed'). ":</span><p>". $model->sqm_1_bed. "</p></div>" : null?>
+                            <?= !empty($model->no_2_bed) ? "<div><span>". Yii::t('project','# 2 Bed'). ":</span><p>". $model->no_2_bed. "</p></div>" : null?>
+                            <?= !empty($model->sqm_2_bed) ? "<div><span>". Yii::t('project', 'SQM 2 Bed'). ":</span><p>". $model->sqm_2_bed. "</p></div>" : null?>
+                            <?= !empty($model->no_3_bed) ? "<div><span>". Yii::t('project','# 3 Bed'). ":</span><p>". $model->no_3_bed. "</p></div>" : null?>
+                            <?= !empty($model->sqm_3_bed) ? "<div><span>". Yii::t('project', 'SQM 3 Bed'). ":</span><p>". $model->sqm_3_bed. "</p></div>" : null?>
+                            <br>
+                        </div>
+                        <?php
+                        $model_facilities = $model->facilities;
+                        if(!empty($model_facilities)){?>
+                        <div class="info-detail">
+                            <p class="font-600 text-decor">Tiện ích</p>
+                            <ul class="clearfix list-tienich">
+                                <?php
+                                $_facility = \vsoft\ad\models\AdFacility::getDb()->cache(function() use($model_facilities){
+                                    return \vsoft\ad\models\AdFacility::find()->where("id in ({$model_facilities})")->asArray()->all();
+                                });
+                                $facilities = ArrayHelper::getColumn($_facility, 'name');
+                                if(count($facilities) > 0) {
+                                    foreach ($facilities as $k => $facility) {
+                                        $class = \common\components\Slug::me()->slugify($facility); ?>
+                                        <li>
+                                            <span class="icon-mv"><span class="icon-<?=$class?>"></span></span>
+                                            <?=Yii::t('ad', $facility)?>
+                                        </li>
+                                    <?php }
+                                }
+                                ?>
+                            </ul>
+                        </div>
+                        <?php  } ?>
+                    </div>
                     <?php } ?>
 
                     <div class="listing-post-by-project">
