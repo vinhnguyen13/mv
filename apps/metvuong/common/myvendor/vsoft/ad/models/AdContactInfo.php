@@ -91,6 +91,7 @@ class AdContactInfo extends ACI
 			$user->validate();
 			if (!$user->hasErrors()) {
 				$user->register();
+				$user->confirm();
 				if(!empty($user->id)){
 					$this->product->user_id = $user->id;
 					$this->product->save();
@@ -117,6 +118,7 @@ class AdContactInfo extends ACI
             $user->validate();
             if (!$user->hasErrors()) {
                 $user->register(false);
+				$user->confirm();
                 return $user;
             }else{
                 return ['errors' => $user->errors]; // Su dung errors trong lien he send mail
