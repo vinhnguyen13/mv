@@ -271,4 +271,17 @@ class BuildingProjectController extends Controller
 
 //    	return $this->redirect(['index']);
     }
+
+    public function actionUpdateHotProject($_id, $stage)
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $project = AdBuildingProject::findOne($_id);
+        if(count($project)> 0)
+        {
+            $project->hot_project = $stage;
+            $project->update();
+            return ['title' => $project->title];
+        }
+        return false;
+    }
 }

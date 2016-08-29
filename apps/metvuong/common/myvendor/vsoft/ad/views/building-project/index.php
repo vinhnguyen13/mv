@@ -3,6 +3,7 @@
 use funson86\cms\Module;
 use yii\grid\GridView;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
 
 $this->title = Yii::t('cms', 'Building Project');
@@ -49,8 +50,16 @@ $districtData = \vsoft\ad\models\AdDistrict::getDb()->cache(function(){
                 'attribute' => 'click',
                 'value' => function($model){
                     return $model->click;
+                }
+            ],
+            [
+                'attribute' => 'hot_project',
+                'format' => 'raw',
+                'contentOptions'=>['style'=>'text-align:center'],
+                'value' => function ($model, $index, $widget) {
+                    return Html::checkbox('hot_news', $model->hot_project, ['value' => $index, 'disabled' => false]);
                 },
-                'filter' => false
+                'filter' => Html::activeDropDownList($searchModel, 'hot_project', \vsoft\news\models\CmsShow::getHotNews(),['class'=>'form-control','prompt' => 'All']),
             ],
             [
                 'attribute' => 'created_at',
@@ -65,3 +74,37 @@ $districtData = \vsoft\ad\models\AdDistrict::getDb()->cache(function(){
     ]); ?>
 
 </div>
+<script src="/frontend/web/js/lib/jquery-2.0.3.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('input[type=checkbox]').each(function() {
+            $(this).change(function(){
+                var _id = $(this).val();
+                var question = "Do you want to remove hot project?";
+                var ch = 0;
+                if($(this).is(":checked")) {
+                    ch = 1;
+                    question = "Do you want to set hot project?";
+                }
+                var retVal = confirm(question);
+                if( retVal == true ){
+                    $.ajax({
+                        type: "get",
+                        dataType: 'json',
+                        url: '<?=Url::to(['building-project/update-hot-project'])?>'+'?_id='+ _id +'&stage='+ch,
+                        success: function (data) {
+                        }
+                    });
+                    return true;
+                }
+                else{
+                    if(ch == 1)
+                        $(this).prop('checked', false);
+                    else
+                        $(this).prop('checked', true);
+                    return false;
+                }
+            });
+        });
+    });
+</script>

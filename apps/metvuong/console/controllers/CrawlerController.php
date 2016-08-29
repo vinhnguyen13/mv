@@ -114,13 +114,14 @@ class CrawlerController extends Controller
     public $district;
     public $limit;
     public $check_expired;
+    public $track_date; // use to track product tool price, area, bed, bath with batdongsan
     public function options()
     {
-        return ['valid','type','city','district','limit','check_expired'];
+        return ['valid','type','city','district','limit','check_expired','track_date'];
     }
     public function optionAliases()
     {
-        return ['valid' => 'valid', 'type' => 'type', 'city' => 'city', 'district' => 'district', 'limit' => 'limit', 'check_expired' => 'check_expired'];
+        return ['valid' => 'valid', 'type' => 'type', 'city' => 'city', 'district' => 'district', 'limit' => 'limit', 'check_expired' => 'check_expired', 'track_date' => 'track_date'];
     }
 
     public function actionImportListing()
@@ -205,7 +206,6 @@ class CrawlerController extends Controller
 //        BatdongsanV2::find()->importProjects();
     }
 
-
     // Homefinder
     public function actionHomefinder()
     {
@@ -220,6 +220,11 @@ class CrawlerController extends Controller
     public function actionMuaban()
     {
         Muaban_net::find()->parse();
+    }
+
+    // Tracking product update from batdongsan.com.vn
+    public function actionTrackingProductUpdate(){
+        Listing::find()->trackingProductUpdate($this->track_date, $this->limit);
     }
 
 }
