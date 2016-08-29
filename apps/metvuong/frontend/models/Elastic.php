@@ -562,7 +562,6 @@ class Elastic
 				$acronym .= $word;
 			} else {
 				$acronym .= mb_substr($word, 0, 1, 'UTF-8');
-				$acronym .= mb_substr($word, 0, 1, 'UTF-8');
 			}
 		}
 	
