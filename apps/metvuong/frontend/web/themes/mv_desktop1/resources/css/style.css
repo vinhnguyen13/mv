@@ -1176,6 +1176,13 @@ label {
 .thong-tin-khac .info-detail .list-tienich span {
     width: 100%;
 }
+.thong-tin-khac .info-detail .list-tienich li span,
+.thong-tin-khac .info-detail .list-tienich li {
+    text-align: left;
+}
+.thong-tin-khac .info-detail .list-tienich li span {
+    margin-left: 2px;
+}
 .list-tienich li .icon-ben-xe-tram-xe {
     font-size: 50px;
     height: 35px;
