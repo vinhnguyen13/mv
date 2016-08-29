@@ -20,8 +20,19 @@ class MailController extends Controller {
 		return ['code' => 'code', 'limit' => 'limit'];
 	}
 
+	/**
+	 * Send mail welcome to agent, auto register account
+	 */
 	public function actionSendMailContact(){
 		$limit = $this->limit == null ? 100 : ((intval($this->limit) <= 100 && intval($this->limit) > 0) ? intval($this->limit) : 0);
-		Mail::sendMailContact($this->code, $limit);
+		Mail::me()->welcomeAgent($this->code, $limit);
+	}
+
+	/**
+	 * How use dashboard
+	 */
+	public function actionHowUseDashboard(){
+		$limit = $this->limit == null ? 100 : ((intval($this->limit) <= 100 && intval($this->limit) > 0) ? intval($this->limit) : 0);
+		Mail::me()->howUseDashboard($limit);
 	}
 }

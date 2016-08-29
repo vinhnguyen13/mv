@@ -28,7 +28,12 @@ class Mail extends Component
     const TYPE_WELCOME_AGENT = 1;
     const TYPE_DASHBOARD = 2;
 
-    public static function sendMailContact($code=null, $limit=100)
+    public static function me()
+    {
+        return Yii::createObject(self::className());
+    }
+
+    public function welcomeAgent($code=null, $limit=100)
     {
         print_r("----------Start-----------".PHP_EOL);
         Yii::$app->getDb()->createCommand('SET group_concat_max_len = 5000000')->execute();
@@ -132,8 +137,54 @@ class Mail extends Component
         $markEmail->save(false);
     }
 
-    public static function sendMailUserUseDashboard()
+    public function howUseDashboard($limit)
     {
+        print_r("----------Start-----------".PHP_EOL);
+        Yii::$app->getDb()->createCommand('SET group_concat_max_len = 5000000')->execute();
+        $contacts = AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
+            ->where('email is not null')
+            ->andWhere("email NOT IN (select email from mark_email)")
+            ->andWhere("email NOT IN (select email from user where updated_at > created_at )")
+            ->groupBy('email')->orderBy('count(product_id) desc')->limit($limit)->all();
 
+        if(!empty($contacts)) {
+            foreach ($contacts as $contact) {
+                $email = trim($contact["email"]);
+                $email = mb_strtolower($email);
+                // check user exists or create new user
+                $user = $contact->createUserInfo();
+                if (!empty($user->id)) {
+                    $params = [
+                        'email' => $email,
+                    ];
+                    $subjectEmail = "Thông báo tin đăng Bất Động Sản của bạn từ MetVuong.com";
+                    try {
+                        $mailer = new \common\components\Mailer();
+                        $mailer->viewPath = '@common/mail';
+                        $status = $mailer->compose(['html' => 'howUseDashboard'], ['params' => $params])
+                            ->setFrom(Yii::$app->params['noreplyEmail'])
+                            ->setTo(['quangvinh.nguyen@trungthuygroup.vn'])
+                            ->setSubject($subjectEmail)
+                            ->send();
+                        $status > 0 ? print_r("[{$mailer->transport['username']}] sent to [{$email}] success !".PHP_EOL) : print_r("Send mail error.".PHP_EOL);
+                        echo "<pre>";
+                        print_r($status);
+                        echo "</pre>";
+                        exit;
+                        // Count email marketing has sent
+                        Mail::markEmail(self::TYPE_WELCOME_AGENT, $email, $status);
+                        usleep(300000);
+                    } catch (Exception $ex) {
+                        print_r("Error .".PHP_EOL);
+                    }
+                }else{
+                    Mail::markEmail(self::TYPE_WELCOME_AGENT, $email, -1);
+                    print_r("Not create account $email.".PHP_EOL);
+                }
+            }
+        } else{
+            print_r("No contact info.".PHP_EOL);
+        }
+        print_r("----------End-----------".PHP_EOL);
     }
 }
