@@ -28,3 +28,8 @@ composer.phar
 phpunit.phar
 # local phpunit config
 /phpunit.xml
+
+
+apps/metvuong/frontend/web/nganluong_*
+apps/metvuong/frontend/web/notify/
+apps/metvuong/store/
