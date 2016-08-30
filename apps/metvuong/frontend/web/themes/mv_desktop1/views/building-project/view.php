@@ -102,73 +102,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                             <li><a href="#" data-toggle="modal" data-target="#popup-map" class="icon icon-map-loca"></a></li>
                         </ul>
                     </div>
-                    <?php
-                    if(count($model->investors) > 0){
-                        $investor = $model->investors[0];
-                        $src_img = $investor->logo;
-                        if(empty($investor->logo))
-                            $src_img = \vsoft\ad\models\AdImages::defaultImage();
-                        if(file_exists(Yii::getAlias('@store') . "/investor/" . $investor->logo))
-                            $src_img = "/store/investor/" . $investor->logo;
-                        ?>
-                        <div class="item chudautu-infor">
-                            <div class="title-section"><?=Yii::t('project', 'Investor')?></div>
-                            <div class="clearfix">
-                                <div class="wrap-img pull-left">
-                                    <img src="<?=(filter_var($src_img, FILTER_VALIDATE_URL) === FALSE) ? $src_img : $investor->logo ?>" alt="<?=$investor->name?>">
-                                </div>
-                                <div class="infor-detail-chudautu">
-                                    <ul>
-                                        <li><strong class="fs-20 font-600"><?=empty($investor->name) ? $lbl_updating : $investor->name ?></strong></li>
-                                        <li>
-                                            <strong><?=Yii::t('project','Address')?></strong>:
-                                            <?=empty($investor->address) ? $lbl_updating : $investor->address ?></li>
-                                        <li>
-                                            <strong><?=Yii::t('project','Phone')?></strong>:
-                                            <?=empty($investor->phone) ? $lbl_updating : $investor->phone ?>
-                                            |
-                                            <strong><?=Yii::t('project','Fax')?></strong>:
-                                            <span><?=empty($investor->fax) ? $lbl_updating : $investor->fax ?></span>
-                                        </li>
-                                        <li>
-                                            <strong><?=Yii::t('project','Website')?></strong>:
-                                            <span><?=empty($investor->website) ? $lbl_updating : "<a href='#' class='investor_website' data-url='". $investor->website. "'>".$investor->website."</a>" ?></span>
-                                        </li>
-                                        <li>
-                                            <strong><?=Yii::t('project','Email')?></strong>:
-                                            <span><?=empty($investor->email) ? $lbl_updating : $investor->email ?></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    <?php } ?>
-                    <div class="row">
-                    <?php
-                    $architects = $model->architects;
-                    if(count($architects) > 0){ ?>
-                        <div class="item chudautu-infor col-lg-6">
-                            <div class="title-section"><?=Yii::t('project', 'Architect')?></div>
-                            <?php foreach($architects as $architect){ ?>
-                                <div class="info-detail-architect">
-                                    <?=empty($architect->name) ? $lbl_updating : $architect->name ?></li>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    <?php }
-                    $contractors = $model->contractors;
-                    if(count($contractors) > 0){ ?>
-                        <div class="item chudautu-infor col-lg-6">
-                            <div class="title-section"><?=Yii::t('project', 'Contractor')?></div>
-                            <?php foreach($contractors as $contractor){ ?>
-                                <div class="info-detail">
-                                    <?=empty($contractor->name) ? $lbl_updating : $contractor->name ?></li>
-                                </div>
-                            <?php } ?>
-                        </div>
-                    <?php } ?>
-                    </div>
-                    
+
                     <?php                  
                     if(count($tabProject) > 0){
                         ?>
@@ -178,12 +112,22 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                 foreach($tabProject as $key => $tabValue) {
                                     if (!empty($tabValue)) {
                                         ?>
-                                        <li class="">
+                                        <li>
                                             <a href="javascript:void(0)" rel="nofollow"
                                                style="white-space:nowrap;"><?= $tabKeys[$key] ?></a>
                                         </li>
                                     <?php }
-                                } ?>
+                                }
+                                $model_facilities = $model->facilities;
+                                if(!empty($model->start_time) || !empty($model->estimate_finished) || !empty($model->building_density) ||
+                                    !empty($model->land_area) || !empty($model->apartment_no) || !empty($model->units_no) || !empty($model->gfa) ||
+                                    !empty($model->no_1_bed) || !empty($model->sqm_1_bed) || !empty($model->no_2_bed) || !empty($model->sqm_2_bed) ||
+                                    !empty($model->no_3_bed) || !empty($model->sqm_3_bed) || !empty($model_facilities)) { ?>
+                                    <li>
+                                        <a href="javascript:void(0)" rel="nofollow"
+                                           style="white-space:nowrap;"><?=Yii::t('project', 'Others Information')?></a>
+                                    </li>
+                                <?php } ?>
                             </ul>
                             <?php
                             foreach($tabProject as $key => $tabValue) {
@@ -195,58 +139,121 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                         </div>
                                     </div>
                                 <?php }
-                            } ?>
+                            }
+                            $investors = $model->investors;
+                            $architects = $model->architects;
+                            $contractors = $model->contractors;
+                            if(count($investors) > 0 || count($architects) > 0 || count($contractors) > 0 || !empty($model->start_time) || !empty($model->estimate_finished) || !empty($model->building_density) ||
+                            !empty($model->land_area) || !empty($model->apartment_no) || !empty($model->units_no) || !empty($model->gfa) ||
+                            !empty($model->no_1_bed) || !empty($model->sqm_1_bed) || !empty($model->no_2_bed) || !empty($model->sqm_2_bed) ||
+                            !empty($model->no_3_bed) || !empty($model->sqm_3_bed) || !empty($model_facilities)) { ?>
+                                <div class="editor" style="display:none;clear: both">
+                                    <div class="a1">
+                                        <?php foreach ($investors as $investor) {
+                                            $src_img = $investor->logo;
+                                            if(empty($investor->logo))
+                                                $src_img = \vsoft\ad\models\AdImages::defaultImage();
+                                            if(file_exists(Yii::getAlias('@store') . "/investor/" . $investor->logo))
+                                                $src_img = "/store/investor/" . $investor->logo; ?>
+                                            <div class="item chudautu-infor">
+                                                <div class="title-section"><?=Yii::t('project', 'Investor')?></div>
+                                                <div class="clearfix">
+                                                    <div class="wrap-img pull-left">
+                                                        <img src="<?=(filter_var($src_img, FILTER_VALIDATE_URL) === FALSE) ? $src_img : $investor->logo ?>" alt="<?=$investor->name?>">
+                                                    </div>
+                                                    <div class="infor-detail-chudautu">
+                                                        <ul>
+                                                            <li><strong class="fs-20 font-600"><?=empty($investor->name) ? $lbl_updating : $investor->name ?></strong></li>
+                                                            <li>
+                                                                <strong><?=Yii::t('project','Address')?></strong>:
+                                                                <?=empty($investor->address) ? $lbl_updating : $investor->address ?></li>
+                                                            <li>
+                                                                <strong><?=Yii::t('project','Phone')?></strong>:
+                                                                <?=empty($investor->phone) ? $lbl_updating : $investor->phone ?>
+                                                                |
+                                                                <strong><?=Yii::t('project','Fax')?></strong>:
+                                                                <span><?=empty($investor->fax) ? $lbl_updating : $investor->fax ?></span>
+                                                            </li>
+                                                            <li>
+                                                                <strong><?=Yii::t('project','Website')?></strong>:
+                                                                <span><?=empty($investor->website) ? $lbl_updating : "<a href='#' class='investor_website' data-url='". $investor->website. "'>".$investor->website."</a>" ?></span>
+                                                            </li>
+                                                            <li>
+                                                                <strong><?=Yii::t('project','Email')?></strong>:
+                                                                <span><?=empty($investor->email) ? $lbl_updating : $investor->email ?></span>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php }
+                                        if(count($architects) > 0){ ?>
+                                            <div class="item chudautu-infor">
+                                                <div class="title-section"><?=Yii::t('project', 'Architect')?></div>
+                                                <?php foreach($architects as $architect){ ?>
+                                                    <div class="info-detail-architect">
+                                                        <?= empty($architect->name) ? $lbl_updating : $architect->name ?></li>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        <?php }
+                                        if(count($contractors) > 0){ ?>
+                                            <div class="item chudautu-infor">
+                                                <div class="title-section"><?=Yii::t('project', 'Contractor')?></div>
+                                                <?php foreach($contractors as $contractor){ ?>
+                                                    <div class="info-detail">
+                                                        <?= empty($contractor->name) ? $lbl_updating : $contractor->name ?></li>
+                                                    </div>
+                                                <?php } ?>
+                                            </div>
+                                        <?php } ?>
+                                        <div class="item chudautu-infor thong-tin-khac mgT-30">
+                                            <div class="title-section"><?=Yii::t('project', 'Others Information')?></div>
+                                            <div class="info-detail">
+                                                <?= !empty($model->start_time) ? "<div><span>". Yii::t('project', 'Construction Start'). ":</span><p>". $model->start_time. "</p></div>" : null?>
+                                                <?= !empty($model->estimate_finished) ? "<div><span>". Yii::t('project', 'Completion'). ":</span><p>". $model->estimate_finished. "</p></div>" : null?>
+                                                <?= !empty($model->building_density) ? "<div><span>". Yii::t('project', 'Building Density'). ":</span><p>". $model->building_density. "</p></div>" : null?>
+                                                <?= !empty($model->land_area) ? "<div><span>". Yii::t('project', 'Land Area'). ":</span> ". $model->land_area. "</p></div>" : null?>
+                                                <?= !empty($model->apartment_no) ? "<div><span>". Yii::t('project', '# of Building'). ":</span><p>". $model->apartment_no. "</p></div>" : null?>
+                                                <?= !empty($model->units_no) ? "<div><span>". Yii::t('project', 'Units No'). ":</span><p>". $model->units_no. "</p></div>" : null?>
+                                                <?= !empty($model->gfa) ? "<div><span>". Yii::t('project','GFA'). ":</span><p>". $model->gfa. "</div>" : null?>
+                                                <?= !empty($model->lift) ? "<div><span>". Yii::t('project', 'Lift'). ":</span><p>". $model->lift. "</p></div>" : null?>
+                                                <?= !empty($model->no_1_bed) ? "<div><span>". Yii::t('project','# 1 Bed'). ":</span><p>". $model->no_1_bed. "</p></div>" : null?>
+                                                <?= !empty($model->sqm_1_bed) ? "<div><span>". Yii::t('project', 'SQM 1 Bed'). ":</span><p>". $model->sqm_1_bed. "</p></div>" : null?>
+                                                <?= !empty($model->no_2_bed) ? "<div><span>". Yii::t('project','# 2 Bed'). ":</span><p>". $model->no_2_bed. "</p></div>" : null?>
+                                                <?= !empty($model->sqm_2_bed) ? "<div><span>". Yii::t('project', 'SQM 2 Bed'). ":</span><p>". $model->sqm_2_bed. "</p></div>" : null?>
+                                                <?= !empty($model->no_3_bed) ? "<div><span>". Yii::t('project','# 3 Bed'). ":</span><p>". $model->no_3_bed. "</p></div>" : null?>
+                                                <?= !empty($model->sqm_3_bed) ? "<div><span>". Yii::t('project', 'SQM 3 Bed'). ":</span><p>". $model->sqm_3_bed. "</p></div>" : null?>
+                                                <br>
+                                            </div>
+                                            <?php
+                                            if(!empty($model_facilities)){?>
+                                                <div class="info-detail">
+                                                    <p class="font-600 text-decor">Tiện ích</p>
+                                                    <ul class="clearfix list-tienich">
+                                                        <?php
+                                                        $_facility = \vsoft\ad\models\AdFacility::getDb()->cache(function() use($model_facilities){
+                                                            return \vsoft\ad\models\AdFacility::find()->where("id in ({$model_facilities})")->asArray()->all();
+                                                        });
+                                                        $facilities = ArrayHelper::getColumn($_facility, 'name');
+                                                        if(count($facilities) > 0) {
+                                                            foreach ($facilities as $k => $facility) {
+                                                                $class = \common\components\Slug::me()->slugify($facility); ?>
+                                                                <li>
+                                                                    <span class="icon-mv"><span class="icon-<?=$class?>"></span></span>
+                                                                    <?=Yii::t('ad', $facility)?>
+                                                                </li>
+                                                            <?php }
+                                                        }
+                                                        ?>
+                                                    </ul>
+                                                </div>
+                                            <?php  } ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php }?>
                         </div>
-                    <?php } ?>
-
-                    <?php if(!empty($model->start_time) || !empty($model->estimate_finished) || !empty($model->building_density) ||
-                        !empty($model->land_area) || !empty($model->apartment_no) || !empty($model->units_no) || !empty($model->gfa) ||
-                        !empty($model->no_1_bed) || !empty($model->sqm_1_bed) || !empty($model->no_2_bed) || !empty($model->sqm_2_bed) ||
-                        !empty($model->no_3_bed) || !empty($model->sqm_3_bed) ){ ?>
-                    <div class="item chudautu-infor thong-tin-khac mgT-30">
-                        <div class="title-section"><?=Yii::t('project', 'Others Information')?></div>
-                        <div class="info-detail">
-                            <?= !empty($model->start_time) ? "<div><span>". Yii::t('project', 'Construction Start'). ":</span><p>". $model->start_time. "</p></div>" : null?>
-                            <?= !empty($model->estimate_finished) ? "<div><span>". Yii::t('project', 'Completion'). ":</span><p>". $model->estimate_finished. "</p></div>" : null?>
-                            <?= !empty($model->building_density) ? "<div><span>". Yii::t('project', 'Building Density'). ":</span><p>". $model->building_density. "</p></div>" : null?>
-                            <?= !empty($model->land_area) ? "<div><span>". Yii::t('project', 'Land Area'). ":</span> ". $model->land_area. "</p></div>" : null?>
-                            <?= !empty($model->apartment_no) ? "<div><span>". Yii::t('project', '# of Building'). ":</span><p>". $model->apartment_no. "</p></div>" : null?>
-                            <?= !empty($model->units_no) ? "<div><span>". Yii::t('project', 'Units No'). ":</span><p>". $model->units_no. "</p></div>" : null?>
-                            <?= !empty($model->gfa) ? "<div><span>". Yii::t('project','GFA'). ":</span><p>". $model->gfa. "</div>" : null?>
-                            <?= !empty($model->lift) ? "<div><span>". Yii::t('project', 'Lift'). ":</span><p>". $model->lift. "</p></div>" : null?>
-                            <?= !empty($model->no_1_bed) ? "<div><span>". Yii::t('project','# 1 Bed'). ":</span><p>". $model->no_1_bed. "</p></div>" : null?>
-                            <?= !empty($model->sqm_1_bed) ? "<div><span>". Yii::t('project', 'SQM 1 Bed'). ":</span><p>". $model->sqm_1_bed. "</p></div>" : null?>
-                            <?= !empty($model->no_2_bed) ? "<div><span>". Yii::t('project','# 2 Bed'). ":</span><p>". $model->no_2_bed. "</p></div>" : null?>
-                            <?= !empty($model->sqm_2_bed) ? "<div><span>". Yii::t('project', 'SQM 2 Bed'). ":</span><p>". $model->sqm_2_bed. "</p></div>" : null?>
-                            <?= !empty($model->no_3_bed) ? "<div><span>". Yii::t('project','# 3 Bed'). ":</span><p>". $model->no_3_bed. "</p></div>" : null?>
-                            <?= !empty($model->sqm_3_bed) ? "<div><span>". Yii::t('project', 'SQM 3 Bed'). ":</span><p>". $model->sqm_3_bed. "</p></div>" : null?>
-                            <br>
-                        </div>
-                        <?php
-                        $model_facilities = $model->facilities;
-                        if(!empty($model_facilities)){?>
-                        <div class="info-detail">
-                            <p class="font-600 text-decor">Tiện ích</p>
-                            <ul class="clearfix list-tienich">
-                                <?php
-                                $_facility = \vsoft\ad\models\AdFacility::getDb()->cache(function() use($model_facilities){
-                                    return \vsoft\ad\models\AdFacility::find()->where("id in ({$model_facilities})")->asArray()->all();
-                                });
-                                $facilities = ArrayHelper::getColumn($_facility, 'name');
-                                if(count($facilities) > 0) {
-                                    foreach ($facilities as $k => $facility) {
-                                        $class = \common\components\Slug::me()->slugify($facility); ?>
-                                        <li>
-                                            <span class="icon-mv"><span class="icon-<?=$class?>"></span></span>
-                                            <?=Yii::t('ad', $facility)?>
-                                        </li>
-                                    <?php }
-                                }
-                                ?>
-                            </ul>
-                        </div>
-                        <?php  } ?>
-                    </div>
                     <?php } ?>
 
                     <div class="listing-post-by-project">
