@@ -1173,6 +1173,10 @@ label {
     font-size: 35px;
     margin-bottom: 5px;
 }
+.list-tienich li span.icon-school {
+    font-size: 45px;
+    margin-bottom: 0;
+}
 .thong-tin-khac .info-detail .list-tienich span {
     width: 100%;
 }
@@ -7917,6 +7921,7 @@ padding: 5px 0;
 .infor-bds {
     /* min-height: 500px; */
     background: #f7f7f7;
+    margin-bottom: 30px;
 }
 .editor h1,
 .editor h2,
@@ -9697,8 +9702,9 @@ margin-right: 5px;
 .icon-television:before {
     content: "\e931";
 }
+.icon-refrigerator:before,
 .icon-tu-lanh:before {
-    content: "\e932";
+    content: "\e95b";
 }
 .icon-may-giat:before {
     content: "\e933";
@@ -12218,7 +12224,7 @@ label:hover {
     content: "\e933"
 }
 .icon-refrigerator:before {
-    content: "\e932"
+    /* content: "\e932"; */
 }
 .icon-ti-vi:before,
 .icon-television:before {
@@ -12226,8 +12232,8 @@ label:hover {
 }
 .list-tienich li span.icon-tu-lanh,
 .list-tienich li span.icon-refrigerator {
-    font-size: 65px;
-    margin-top: -15px;
+    font-size: 40px;
+    margin-top: 0;
 }
 @media (max-width: 985px) {
     .left-attr-detail .id-duan {
