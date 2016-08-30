@@ -1124,7 +1124,6 @@ $(document).ready(function(){
 });
 
 function numnberOnly(e) {
-	console.log(e.keyCode);
 	var allow = [46, 8, 9, 27, 13, 110, 116];
 	
 	if($(this).hasClass('number-float')) {
