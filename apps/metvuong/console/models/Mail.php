@@ -94,7 +94,9 @@ class Mail extends Component
                         'rest_total' => $rest_total,
                         'code' => $code
                     ];
-
+                    $tr = md5($email.self::TYPE_WELCOME_AGENT);
+                    Yii::$app->view->params['tr'] = !empty($tr) ? (string) $tr : '';
+                    Yii::$app->view->params['tp'] = Tracking::LOGO_MAIL_WELCOME;
                     $subjectEmail = "Thông báo tin đăng Bất Động Sản của bạn từ MetVuong.com";
                     try {
                         $mailer = new \common\components\Mailer();
@@ -164,7 +166,7 @@ class Mail extends Component
                         'linkHref' => $linkHref,
                     ];
                     Yii::$app->view->params['tr'] = !empty($code) ? (string) $code : '';
-                    Yii::$app->view->params['tp'] = Tracking::MAIL_HOW_USE_DASHBOARD;
+                    Yii::$app->view->params['tp'] = Tracking::LOGO_MAIL_HOW_USE_DASHBOARD;
                     $subjectEmail = "Bảng thống kê (Dashboard) của Bất Động Sản MetVuong.com";
                     try {
                         $mailer = new \common\components\Mailer();
