@@ -45,35 +45,38 @@ function move(array, old_index, new_index) {
     return array;
 };
 
-function formatPrice(price) {
-	var priceFormated = price.split( /(?=(?:\d{3})+(?:\.|$))/g ).join(".");
-	var priceNum = Number(price);
+function formatPrice(num, round) {
+	var parseNum = parseFloat(num);
 	
-	if(price.length > 9) {
-		priceFormated = (priceNum / 1000000000) + '';
-		priceFormated = formatNumber(priceFormated.replace('.', ',')) + ' ' + lajax.t('billion');
-	} else if(price.length > 6) {
-		priceFormated = (priceNum / 1000000) + '';
-		priceFormated = priceFormated.replace('.', ',') + ' ' + lajax.t('million');
+	if(isNaN(num) || isNaN(parseNum)) {
+		return null;
 	}
 	
-	return priceFormated;
+	round = round || 2;
+	
+	var f = parseFloat((parseNum / 1000000).toFixed(round));
+	var unit = 'million';
+	
+	if(f >= 1000) {
+		f = (f / 1000).toFixed(round);
+		unit = 'billion';
+	}
+	
+	return formatNumber(f) + ' ' + unit;
 }
 
-function formatNumber(number) {
-	if(/^0*$/.test(number)) {
-		return '';
+function formatNumber(num) {
+	var parseNum = parseFloat(num);
+	
+	if(isNaN(num) || isNaN(parseNum)) {
+		return null;
 	}
 	
-	number = number.split(',');
-	var numberFormated = number[0];
-	numberFormated = numberFormated.split( /(?=(?:\d{3})+(?:\.|$))/g ).join(".");
+	var parts = parseNum.toString().split(".");
 	
-	if(number.length > 1) {
-		numberFormated = numberFormated + ',' + number[1];
-	}
-	
-	return numberFormated;
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    
+    return parts.join(".");
 }
 
 var balance = {
