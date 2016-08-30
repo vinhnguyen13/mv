@@ -52,11 +52,11 @@ function formatPrice(num, round) {
 		return null;
 	}
 	
-	if(parseNum < 1000000) {
-		return formatNumber(parseNum);
-	}
-	
 	round = round || 2;
+	
+	if(parseNum < 1000000) {
+		return formatNumber(Math.round(parseNum));
+	}
 	
 	var f = parseFloat((parseNum / 1000000).toFixed(round));
 	var unit = lajax.t('million');
