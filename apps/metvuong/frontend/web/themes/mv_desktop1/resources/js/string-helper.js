@@ -55,7 +55,7 @@ function formatPrice(num, round, roundBelowMillion) {
 	round = (typeof round !== 'undefined') ? round : 2;
 	
 	if(parseNum < 1000000) {
-		roundBelowMillion = (typeof roundBelowMillion !== 'undefined') ? roundBelowMillion :0;
+		roundBelowMillion = (typeof roundBelowMillion !== 'undefined') ? roundBelowMillion : 0;
 		
 		return formatNumber(parseNum, roundBelowMillion);
 	}
