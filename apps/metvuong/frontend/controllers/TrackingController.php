@@ -41,9 +41,10 @@ class TrackingController extends Controller
      * @param $e
      */
     public function actionMailClick($rd, $c, $e){
-        Tracking::find()->mailClick($c, $e);
-        if(!empty($rd)){
-            $this->redirect($rd);
+        $redirect = Tracking::find()->mailClick($rd, $c, $e);
+        if(!empty($redirect)){
+            $this->redirect($redirect);
+            Yii::$app->end();
         }
         $this->redirect('/');
     }

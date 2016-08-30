@@ -249,7 +249,11 @@ class Tracking extends Component
         }
     }
 
-    public function mailClick($code, $event){
+    /**
+     * @param $code
+     * @param $event
+     */
+    public function mailClick($redirect, $code, $event){
         $mail = MarkEmail::find()->where('MD5(CONCAT(email,`type`)) = "'.$code.'"')->one();
         if(!empty($event) && !empty($mail)){
             $time = time();
@@ -261,6 +265,11 @@ class Tracking extends Component
                     $mail->click_time = $time;
                     $mail->ip = Yii::$app->getRequest()->getUserIP();
                     $mail->save();
+                    if(!Yii::$app->user->isGuest){
+                        return Url::to(['/dashboard/ad', 'username' => Yii::$app->user->identity->getUsername()], true);
+                    }else{
+                        return $redirect;
+                    }
                     break;
 
             }
