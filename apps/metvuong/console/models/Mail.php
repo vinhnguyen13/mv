@@ -169,7 +169,7 @@ class Mail extends Component
                         $mailer->viewPath = '@common/mail';
                         $status = $mailer->compose(['html' => 'howUseDashboard'], $params)
                             ->setFrom(Yii::$app->params['noreplyEmail'])
-                            ->setTo(['quangvinh.nguyen@trungthuygroup.vn'])
+                            ->setTo([$email])
                             ->setSubject($subjectEmail)
                             ->send();
                         $status > 0 ? print_r("[{$mailer->transport['username']}] sent to [{$email}] success !".PHP_EOL) : print_r("Send mail error.".PHP_EOL);
