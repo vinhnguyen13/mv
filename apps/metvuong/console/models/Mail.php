@@ -159,7 +159,7 @@ class Mail extends Component
                     $code = md5($email.self::TYPE_HOW_USE_DASHBOARD);
                     $params = [
                         'email' => $email,
-                        'link' => Html::a($link, Url::to(['/tracking/mail-click', 'rd'=>$link, 'c'=>$code, 'e'=>Tracking::MAIL_HOW_USE_DASHBOARD], true)),
+                        'link' => Html::a($link, Url::to(['/tracking/mail-click', 'rd'=>$link, 'c'=>$code, 'e'=>Tracking::MAIL_HOW_USE_DASHBOARD], true), ['style'=>'color:#00a769;']),
                     ];
                     Yii::$app->view->params['tr'] = !empty($code) ? (string) $code : '';
                     Yii::$app->view->params['tp'] = Tracking::MAIL_HOW_USE_DASHBOARD;
