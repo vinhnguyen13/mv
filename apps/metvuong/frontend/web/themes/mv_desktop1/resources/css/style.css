@@ -7833,6 +7833,19 @@ padding: 5px 0;
 .right-attr-detail {
     float: right;
 }
+.favori .right-attr-detail {
+    float: left;
+    margin-bottom: 5px;
+}
+.favori .right-attr-detail .id-duan {
+    text-align: left;
+}
+.favori .right-attr-detail .icon-num-get li {
+    font-size: 14px;
+}
+.favori .info-item {
+    height: 180px;
+}
 .item-sidebar .left-attr-detail,
 .item-sidebar .right-attr-detail {
     float: none;
