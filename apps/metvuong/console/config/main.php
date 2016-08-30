@@ -61,9 +61,9 @@ return [
         ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
-            'baseUrl' => 'http://metvuong.com/',
-            'scriptUrl' => 'http://metvuong.com/',
-            'hostInfo' => 'http://metvuong.com/',
+            'baseUrl' => 'https://metvuong.com/',
+            'scriptUrl' => 'https://metvuong.com/',
+            'hostInfo' => 'https://metvuong.com/',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
