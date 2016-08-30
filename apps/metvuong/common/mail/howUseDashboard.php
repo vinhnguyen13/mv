@@ -18,7 +18,7 @@ use yii\helpers\Html;
     Đặc biệt hơn, chúng tôi xin gởi đến bạn ưu đãi sử dụng thử MIỄN PHÍ các tiện ích của Bảng thống kê này trong 30 ngày.
 </p>
 <p style="font-size:13px;margin-bottom: 15px;line-height:20px;">
-    Hãy thử ngay bây giờ bằng cách click vào đường dẫn bên dưới:<br/> <b><?=$link;?></b>
+    Hãy thử ngay bây giờ bằng cách click vào đường dẫn bên dưới:<br/> <b><a href="<?=$linkHref;?>" style="color:#00a769;text-decoration:none;"><?=$link;?></a></b>
 </p>
 
 <p style="font-size:13px;line-height:20px;margin-bottom:15px;">
