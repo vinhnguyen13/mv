@@ -6,7 +6,7 @@
         <th>Name</th>
         <th>
             Last Month (30 days before)<br/>
-            <i style="font-size: 11px;"><?=date("d-m 00:00:00", strtotime('-30 days'))?> -> <?=date("d-m 00:00:00", time())?></i>
+            <i style="font-size: 11px;">< <?=date("d-m 00:00:00", strtotime('-30 days'))?></i>
         </th>
         <th>
             Yesterday (1 day before)<br/>

@@ -74,7 +74,7 @@ class Report extends Component
             $query->select(['count(*) total', $month_year." today"])->from('user')
                 ->where(['>', 'created_at', $from])
                 ->andWhere(['<', 'created_at', $to])
-                ->andWhere('updated_at > created_at')
+                ->andWhere('confirmed_at != created_at')
                 ->groupBy('today')->orderBy('created_at DESC');
             $stats_register = $query->all();
             foreach($stats_register as $item){
@@ -279,7 +279,7 @@ class Report extends Component
                 $query->select(['id', 'username'])->from('user')
                     ->where(['>', 'created_at', $from])
                     ->andWhere(['<', 'created_at', $to])
-                    ->andWhere('updated_at > created_at')
+                    ->andWhere('confirmed_at != created_at')
                     ->orderBy('created_at DESC');
                 return $query->all();
                 break;
@@ -302,7 +302,7 @@ class Report extends Component
                     $query->select(['id', 'username'])->from('user')
                         ->where(['>', 'updated_at', $from])
                         ->andWhere(['<', 'updated_at', $to])
-                        ->andWhere('updated_at > created_at')
+                        ->andWhere('confirmed_at != created_at')
                         ->orderBy('updated_at DESC');
                     return $query->all();
                 }
@@ -365,6 +365,7 @@ class Report extends Component
 
     public function statistic(){
         $from_month = date("d-m-Y 00:00:00", strtotime('-30 days'));
+        $to_month = date("d-m-Y 23:59:59", strtotime('-30 days'));
         $from_yesterday = date("d-m-Y 00:00:00", strtotime('-1 days'));
         $to_yesterday = date("d-m-Y 23:59:59", strtotime('-1 days'));
         $from_today = date("d-m-Y 00:00:00", time());
@@ -381,7 +382,7 @@ class Report extends Component
         $query = new Query();
         $query->select(['id', 'username'])->from('user')
             ->where("email NOT IN (select email from mark_email)")
-            ->andWhere(['BETWEEN', 'created_at', strtotime($from_month), strtotime($from_today)]);
+            ->andWhere(['<', 'created_at', strtotime($from_month)]);
         $data['Register User (Normal)'][0] = $query->count();
 
         $query = new Query();
@@ -402,7 +403,7 @@ class Report extends Component
         $query = new Query();
         $query->select(['id', 'username'])->from('user')
             ->where("email IN (select email from mark_email)")
-            ->andWhere(['BETWEEN', 'created_at', strtotime($from_month), strtotime($from_today)]);
+            ->andWhere(['<', 'created_at', strtotime($from_month)]);
         $data['Register User (MailChimp)'][0] = $query->count();
 
         $query = new Query();
@@ -422,47 +423,96 @@ class Report extends Component
          */
         $query = new Query();
         $query->select(['id', 'username'])->from('user')
-            ->where('updated_at > created_at')
+            ->where('confirmed_at != created_at')
             ->andWhere("email NOT IN (select email from mark_email)")
-            ->andWhere(['BETWEEN', 'updated_at', strtotime($from_month), strtotime($from_today)]);
+            ->andWhere(['<', 'confirmed_at', strtotime($from_month)]);
         $data['Active User (Normal)'][0] = $query->count();
 
         $query = new Query();
         $query->select(['id', 'username'])->from('user')
-            ->where('updated_at > created_at')
+            ->where('confirmed_at != created_at')
             ->andWhere("email NOT IN (select email from mark_email)")
-            ->andWhere(['BETWEEN', 'updated_at', strtotime($from_yesterday), strtotime($to_yesterday)]);
+            ->andWhere(['BETWEEN', 'confirmed_at', strtotime($from_yesterday), strtotime($to_yesterday)]);
         $data['Active User (Normal)'][1] = $query->count();
 
         $query = new Query();
         $query->select(['id', 'username'])->from('user')
-            ->where('updated_at > created_at')
+            ->where('confirmed_at != created_at')
             ->andWhere("email NOT IN (select email from mark_email)")
-            ->andWhere(['BETWEEN', 'updated_at', strtotime($from_today), strtotime($to_today)]);
+            ->andWhere(['BETWEEN', 'confirmed_at', strtotime($from_today), strtotime($to_today)]);
         $data['Active User (Normal)'][2] = $query->count();
+
         /**
          * Active User (MailChimp)
          */
         $query = new Query();
         $query->select(['id', 'username'])->from('user')
-            ->where('updated_at > created_at')
+            ->where('confirmed_at != created_at')
             ->andWhere("email IN (select email from mark_email)")
-            ->andWhere(['BETWEEN', 'updated_at', strtotime($from_month), strtotime($from_today)]);
+            ->andWhere(['<', 'confirmed_at', strtotime($from_month)]);
         $data['Active User (MailChimp)'][0] = $query->count();
 
         $query = new Query();
         $query->select(['id', 'username'])->from('user')
-            ->where('updated_at > created_at')
+            ->where('confirmed_at != created_at')
             ->andWhere("email IN (select email from mark_email)")
-            ->andWhere(['BETWEEN', 'updated_at', strtotime($from_yesterday), strtotime($to_yesterday)]);
+            ->andWhere(['BETWEEN', 'confirmed_at', strtotime($from_yesterday), strtotime($to_yesterday)]);
         $data['Active User (MailChimp)'][1] = $query->count();
 
         $query = new Query();
         $query->select(['id', 'username'])->from('user')
-            ->where('updated_at > created_at')
+            ->where('confirmed_at != created_at')
             ->andWhere("email IN (select email from mark_email)")
-            ->andWhere(['BETWEEN', 'updated_at', strtotime($from_today), strtotime($to_today)]);
+            ->andWhere(['BETWEEN', 'confirmed_at', strtotime($from_today), strtotime($to_today)]);
         $data['Active User (MailChimp)'][2] = $query->count();
+
+        /**
+         * Monthly Active User (Normal)
+         */
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where('confirmed_at != created_at')
+            ->andWhere("email NOT IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'confirmed_at', strtotime('-30 days', strtotime($to_month)), strtotime($to_month)]);
+        $data['Monthly Active User (Normal)'][0] = $query->count();
+
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where('confirmed_at != created_at')
+            ->andWhere("email NOT IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'confirmed_at', strtotime('-30 days', strtotime($to_yesterday)), strtotime($to_yesterday)]);
+        $data['Monthly Active User (Normal)'][1] = $query->count();
+
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where('confirmed_at != created_at')
+            ->andWhere("email NOT IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'confirmed_at', strtotime('-30 days', strtotime($to_today)), strtotime($to_today)]);
+        $data['Monthly Active User (Normal)'][2] = $query->count();
+
+        /**
+         * Monthly Active User (MailChimp)
+         */
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where('confirmed_at != created_at')
+            ->andWhere("email IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'confirmed_at', strtotime('-30 days', strtotime($to_month)), strtotime($to_month)]);
+        $data['Monthly Active User (MailChimp)'][0] = $query->count();
+
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where('confirmed_at != created_at')
+            ->andWhere("email IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'confirmed_at', strtotime('-30 days', strtotime($to_yesterday)), strtotime($to_yesterday)]);
+        $data['Monthly Active User (MailChimp)'][1] = $query->count();
+
+        $query = new Query();
+        $query->select(['id', 'username'])->from('user')
+            ->where('confirmed_at != created_at')
+            ->andWhere("email IN (select email from mark_email)")
+            ->andWhere(['BETWEEN', 'confirmed_at', strtotime('-30 days', strtotime($to_today)), strtotime($to_today)]);
+        $data['Monthly Active User (MailChimp)'][2] = $query->count();
 
 
         return $data;
