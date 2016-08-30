@@ -42,31 +42,39 @@ class StringHelper extends SH {
 		return $String;
 	}
 	
-	public static function formatNumber($number) {
-		$split = explode('.', $number);
-		
-		$integer = $split[0];
-		
-		$integer = number_format($integer, 0, ',', '.');
-		
-		if(isset($split[1])) {
-			$integer = $integer . ',' . $split[1];
+	public static function formatNumber($num, $round = false) {
+		if(!is_numeric($num)) {
+			return null;
 		}
-		
-		return $integer;
+	
+		if($round !== false) {
+			$num = round($num, $round);
+		}
+	
+		$parts = explode('.', $num);
+	
+		$parts[0] = number_format($parts[0]);
+	
+		return implode('.', $parts);
 	}
 	
-	public static function formatCurrency($number) {
-		if($number > 999999999) {
-			$currency = $number / 1000000000;
-			$currency = self::formatNumber($currency) . ' <span class="txt-unit">' . \Yii::t('ad', 'billion').'</span>';
-		} else if($number > 999999) {
-			$currency = $number / 1000000;
-			$currency = self::formatNumber($currency) . ' <span class="txt-unit">' . \Yii::t('ad', 'million').'</span>';
-		} else {
-			$currency = self::formatNumber($number);
+	public static function formatCurrency($num, $round = 2, $roundBelowMillion = 0) {
+		if(!is_numeric($num)) {
+			return null;
 		}
-		
-		return $currency;
+	
+		if($num < 1000000) {
+			return formatNumber($num, $roundBelowMillion);
+		}
+	
+		$f = round(($num / 1000000), $round);
+		$unit = \Yii::t('ad', 'million');
+	
+		if($f >= 1000) {
+			$f = round(($f / 1000), $round);
+			$unit = \Yii::t('ad', 'billion');
+		}
+	
+		return self::formatNumber($f) . ' <span class="txt-unit">' . $unit . '</span>';
 	}
 }
