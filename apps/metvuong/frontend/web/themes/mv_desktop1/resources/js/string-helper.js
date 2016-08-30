@@ -52,14 +52,18 @@ function formatPrice(num, round) {
 		return null;
 	}
 	
+	if(parseNum < 1000000) {
+		return formatNumber(parseNum);
+	}
+	
 	round = round || 2;
 	
 	var f = parseFloat((parseNum / 1000000).toFixed(round));
-	var unit = 'million';
+	var unit = lajax.t('million');
 	
 	if(f >= 1000) {
 		f = (f / 1000).toFixed(round);
-		unit = 'billion';
+		unit = lajax.t('billion');
 	}
 	
 	return formatNumber(f) + ' ' + unit;
