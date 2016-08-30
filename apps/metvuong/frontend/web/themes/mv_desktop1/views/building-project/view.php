@@ -207,7 +207,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                                 <?php } ?>
                                             </div>
                                         <?php } ?>
-                                        <div class="item chudautu-infor thong-tin-khac mgT-30">
+                                        <div class="item chudautu-infor thong-tin-khac">
                                             <div class="title-section"><?=Yii::t('project', 'Others Information')?></div>
                                             <div class="info-detail">
                                                 <?= !empty($model->start_time) ? "<div><span>". Yii::t('project', 'Construction Start'). ":</span><p>". $model->start_time. "</p></div>" : null?>
