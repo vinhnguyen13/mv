@@ -128,15 +128,15 @@ $(document).ready(function(){
 		var tabContainer = addTab(tabName);
 		
 		var table = $('<table class="avg-table"><tr class="area-title"><td></td></tr><tr class="data-point"><td>Data Point</td></tr><tr class="avg-price"><td>AVG Price</td></tr><tr class="avg-size"><td>AVG SQM</td></tr><tr class="avg-price-size"><td>AVG $/SQM</td></tr><tr class="avg-bed"><td>AVG Bed</td></tr><tr class="avg-bath"><td>AVG Bath</td></tr></table>');
+
+		if(parent) {
+			append(table, parent, true);
+		}
 		
 		for(var i in childs) {
 			if(childs[i]['name']) {
 				append(table, childs[i]);
 			}
-		}
-		
-		if(parent) {
-			append(table, parent, true);
 		}
 		
 		tabContainer.append(table);

@@ -71,18 +71,6 @@ class AvgController extends Controller {
 					
 				$childs = $sheet['data']['childs'];
 					
-				foreach ($childs as $child) {
-					if($child['name']) {
-						$rows[0][] = $child['name'];
-						$rows[1][] = $child['value']['Data Point'];
-						$rows[2][] = $child['value']['AVG Price'];
-						$rows[3][] = $child['value']['AVG SQM'];
-						$rows[4][] = $child['value']['AVG $/SQM'];
-						$rows[5][] = $this->percentCell($child['value']['AVG Bed'], 'bed');
-						$rows[6][] = $this->percentCell($child['value']['AVG Bath'], 'bath');
-					}
-				}
-					
 				if(isset($sheet['data']['parent'])) {
 					$parent = $sheet['data']['parent'];
 				
@@ -93,6 +81,18 @@ class AvgController extends Controller {
 					$rows[4][] = $parent['value']['AVG $/SQM'];
 					$rows[5][] = $this->percentCell($parent['value']['AVG Bed'], 'bed');
 					$rows[6][] = $this->percentCell($parent['value']['AVG Bath'], 'bath');
+				}
+					
+				foreach ($childs as $child) {
+					if($child['name']) {
+						$rows[0][] = $child['name'];
+						$rows[1][] = $child['value']['Data Point'];
+						$rows[2][] = $child['value']['AVG Price'];
+						$rows[3][] = $child['value']['AVG SQM'];
+						$rows[4][] = $child['value']['AVG $/SQM'];
+						$rows[5][] = $this->percentCell($child['value']['AVG Bed'], 'bed');
+						$rows[6][] = $this->percentCell($child['value']['AVG Bath'], 'bath');
+					}
 				}
 					
 				$style = (new StyleBuilder())->setFontSize(11)->build();
