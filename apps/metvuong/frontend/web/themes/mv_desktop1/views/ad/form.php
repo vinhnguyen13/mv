@@ -181,7 +181,7 @@
 						<div class="row">
 							<div class="form-group col-xs-12 col-sm-6">
 								<label for="<?= Html::getInputId($product, 'area') ?>" class="fs-13 mgB-5"><span class="label-attr"><?= $product->getAttributeLabel('area') ?></span> (m2)<span class="require-hint">*</span><span class="hint"><?= sprintf(Yii::t('ad', '%s điểm'), '+<span class="point">5</span>') ?></span></label>
-								<?= Html::activeTextInput($product, 'area', ['class' => 'form-control number-only number-float', 'placeholder' => '...', 'value' => str_replace('.', ',', $product->area)]) ?>
+								<?= Html::activeTextInput($product, 'area', ['class' => 'form-control number-only number-float', 'placeholder' => '...', 'value' => $product->area]) ?>
 								<span id="price-size"></span>
 								<div class="help-block"></div>
 							</div>

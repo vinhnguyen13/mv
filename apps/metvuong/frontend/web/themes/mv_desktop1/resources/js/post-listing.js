@@ -299,13 +299,7 @@ $(document).ready(function(){
 		};
 		
 		self.isNumber = function(number) {
-			var format = form.formatNumber(number);
-
-			return !isNaN(format);
-		};
-
-		self.formatNumber = function(number) {
-			return number.replace('.', 'A').replace(',', '.');
+			return !isNaN(number);
 		};
 		
 		self.isDigit = function(digit) {
@@ -771,7 +765,7 @@ $(document).ready(function(){
 	
 	function calPriceSize() {
 		var price = form.fields.price.val();
-		var size = Number(form.fields.area.val().replace(',', '.'));
+		var size = form.fields.area.val();
 		
 		if(price && size && price > size) {
 			priceSize.html(formatPrice(price/size) + ' ' + lajax.t('VNĐ') + '/m<sup>2</sup>');
