@@ -10,6 +10,8 @@ namespace console\models;
 use dektrium\user\helpers\Password;
 use frontend\components\Mailer;
 use frontend\models\Token;
+use frontend\models\Tracking;
+use frontend\models\Transaction;
 use frontend\models\User;
 use vsoft\ad\models\AdContactInfo;
 use vsoft\ad\models\AdProduct;
@@ -19,6 +21,7 @@ use vsoft\express\components\AdImageHelper;
 use Yii;
 use yii\base\Component;
 use yii\base\Exception;
+use yii\db\Query;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\helpers\Url;
@@ -26,16 +29,21 @@ use yii\helpers\Url;
 class Mail extends Component
 {
     const TYPE_WELCOME_AGENT = 1;
-    const TYPE_DASHBOARD = 2;
+    const TYPE_HOW_USE_DASHBOARD = 2;
 
-    public static function sendMailContact($code=null, $limit=100)
+    public static function me()
+    {
+        return Yii::createObject(self::className());
+    }
+
+    public function welcomeAgent($code=null, $limit=100)
     {
         print_r("----------Start-----------".PHP_EOL);
         Yii::$app->getDb()->createCommand('SET group_concat_max_len = 5000000')->execute();
         $contacts = AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
                 ->where('email is not null')
-                ->andWhere("email NOT IN (select email from mark_email)")
-                ->andWhere("email NOT IN (select email from user where updated_at > created_at )")
+                ->andWhere("email NOT IN (SELECT email FROM mark_email WHERE type = ".self::TYPE_HOW_USE_DASHBOARD.")")
+                ->andWhere("email NOT IN (SELECT email FROM user WHERE updated_at > created_at )")
                 ->groupBy('email')->orderBy('count(product_id) desc')->limit($limit)->all();
 
         if(count($contacts) > 0) {
@@ -138,8 +146,53 @@ class Mail extends Component
         $markEmail->save(false);
     }
 
-    public static function sendMailUserUseDashboard()
+    public function howUseDashboard($limit)
     {
-
+        print_r("----------Start-----------".PHP_EOL);
+        $query = new Query();
+        $query->select(['a.email', 'a.username'])->from('user a')
+            ->innerJoin('ec_transaction_history b', 'a.id = b.user_id')
+            ->where(['=', 'b.status', Transaction::STATUS_SUCCESS])
+            ->andWhere("email NOT IN (SELECT email FROM mark_email WHERE type = ".self::TYPE_HOW_USE_DASHBOARD.")")
+            ->groupBy('a.id');
+        $contacts = $query->limit($limit)->all();
+        if(!empty($contacts)) {
+            foreach ($contacts as $contact) {
+                $email = trim($contact["email"]);
+                $email = mb_strtolower($email);
+                if (!empty($email)) {
+                    $link = Url::to(['/dashboard/ad', 'username' => $contact["username"]], true);
+                    $code = md5($email.self::TYPE_HOW_USE_DASHBOARD);
+                    $params = [
+                        'email' => $email,
+                        'link' => Html::a($link, Url::to(['/tracking/mail-click', 'rd'=>$link, 'c'=>$code, 'e'=>Tracking::MAIL_HOW_USE_DASHBOARD], true), ['style'=>'color:#00a769;']),
+                    ];
+                    Yii::$app->view->params['tr'] = !empty($code) ? (string) $code : '';
+                    Yii::$app->view->params['tp'] = Tracking::MAIL_HOW_USE_DASHBOARD;
+                    $subjectEmail = "Bảng thống kê (Dashboard) của Bất Động Sản MetVuong.com";
+                    try {
+                        $mailer = new \common\components\Mailer();
+                        $mailer->viewPath = '@common/mail';
+                        $status = $mailer->compose(['html' => 'howUseDashboard'], $params)
+                            ->setFrom(Yii::$app->params['noreplyEmail'])
+                            ->setTo([$email])
+                            ->setSubject($subjectEmail)
+                            ->send();
+                        $status > 0 ? print_r("[{$mailer->transport['username']}] sent to [{$email}] success !".PHP_EOL) : print_r("Send mail error.".PHP_EOL);
+                        Mail::markEmail(self::TYPE_HOW_USE_DASHBOARD, $email, $status);
+                        // Count email marketing has sent
+                        usleep(300000);
+                    } catch (Exception $ex) {
+                        print_r("Error .".PHP_EOL);
+                    }
+                }else{
+                    Mail::markEmail(self::TYPE_HOW_USE_DASHBOARD, $email, -1);
+                    print_r("Not create account $email.".PHP_EOL);
+                }
+            }
+        } else{
+            print_r("No contact info.".PHP_EOL);
+        }
+        print_r("----------End-----------".PHP_EOL);
     }
 }

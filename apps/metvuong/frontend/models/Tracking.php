@@ -10,6 +10,7 @@ namespace frontend\models;
 use kartik\helpers\Enum;
 use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductSaved;
+use vsoft\ad\models\MarkEmail;
 use vsoft\express\models\SysEmail;
 use vsoft\tracking\models\base\AdProductFinder;
 use vsoft\tracking\models\base\AdProductShare;
@@ -33,6 +34,11 @@ class Tracking extends Component
     const DESKTOP = 0;
     const MOBILE = 1;
     const TABLET = 2;
+    const MAIL_WELCOME              = 1;
+    const MAIL_HOW_USE_DASHBOARD    = 2;
+    const LOGO_MAIL_SHARE           = 1;
+    const LOGO_MAIL_WELCOME         = 2;
+    const LOGO_MAIL_HOW_USE_DASHBOARD = 3;
 
     protected $dataChart = [];
 
@@ -211,14 +217,52 @@ class Tracking extends Component
         return $sysEmail;
     }
 
-    public function fromLogo($tr, $tp){
-        if(!empty($tr)){
-            $sysEmail = SysEmail::findOne($tr);
-            if(!empty($sysEmail)){
-                $sysEmail->read_time = time();
-                $sysEmail->read_ip = Yii::$app->request->userIP;
-                $sysEmail->save(false);
-                return true;
+    /**
+     * @param $code
+     * @param $type
+     * @return bool
+     */
+    public function fromLogo($code, $type){
+        if(!empty($type)){
+            switch($type) {
+                case self::LOGO_MAIL_SHARE:
+                    if(!empty($code)){
+                        $sysEmail = SysEmail::findOne($code);
+                        if(!empty($sysEmail)){
+                            $sysEmail->read_time = time();
+                            $sysEmail->read_ip = Yii::$app->request->userIP;
+                            $sysEmail->save(false);
+                            return true;
+                        }
+                    }
+                    break;
+                case self::LOGO_MAIL_WELCOME:
+                case self::LOGO_MAIL_HOW_USE_DASHBOARD:
+                    $mail = MarkEmail::find()->where('MD5(CONCAT(email,`type`)) = "'.$code.'"')->one();
+                    if(!empty($mail)){
+                        $mail->read_time = time();
+                        $mail->ip = Yii::$app->getRequest()->getUserIP();
+                        $mail->save();
+                    }
+                    break;
+            }
+        }
+    }
+
+    public function mailClick($code, $event){
+        $mail = MarkEmail::find()->where('MD5(CONCAT(email,`type`)) = "'.$code.'"')->one();
+        if(!empty($event) && !empty($mail)){
+            $time = time();
+            switch($event){
+                case self::MAIL_HOW_USE_DASHBOARD:
+                    if(empty($mail->read_time)){
+                        $mail->read_time = $time - 1;
+                    }
+                    $mail->click_time = $time;
+                    $mail->ip = Yii::$app->getRequest()->getUserIP();
+                    $mail->save();
+                    break;
+
             }
         }
     }
