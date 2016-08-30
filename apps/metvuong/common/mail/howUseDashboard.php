@@ -7,18 +7,18 @@
 use yii\helpers\Html;
 ?>
 
-<p style="margin-bottom: 10px;font-size: 13px;">Kính chào <strong><?=$params["email"]?></strong>,</p>
+<p style="margin-bottom: 10px;font-size: 13px;">Xin chào các Khách hàng thân thiết,</p>
 <p style="font-size: 13px;margin-bottom: 15px;line-height:20px">
-    Metvuong is designed to be a platform to connect buyers and sellers of real estate, part of this initative is to provide the sellers away to find RELEVANT and INTERESTED buyers/renters.
+    Metvuong là trang web bất động sản được xây dựng nhằm kết nối giữa người mua/thuê và người bán/cho thuê, trong đó một tiện ích quan trọng của chúng tôi là cung cấp cho bạn những thông tin HỮU ÍCH và danh sách những NGƯỜI CẦN MUA/CẦN THUÊ TIỀM NĂNG NHẤT.
 </p>
 <p style="font-size:13px;line-height:20px;margin-bottom:15px;">
-    This can be done through our Dashboard tool. Our Dashboard tool allows you to see as well as contact who has searched, liked, and shared your listings, allowing you to easily find buyers who are guaranteed to be interseted.
+    Và tiện ích trên được thể hiện qua công cụ Bảng thống kê (Dashboard) của chúng tôi. Bảng thống kê sẽ cho phép người dùng xem được tất cả liên hệ (như họ tên, email, số điện thoại…) của khách hàng đã tìm kiếm, yêu thích hoặc chia sẻ tin đăng của bạn, tất cả bạn chỉ cần làm là click vào danh sách để đảm bảo bạn đã liên hệ đúng khách hàng tiềm năng của mình.
 </p>
 <p style="font-size:13px;margin-bottom: 15px;line-height:20px;">
-    You will get to use this dashboard feature for FREE, for ONE MONTH, to see how this could help you in your search to find the right customer.
+    Đặc biệt hơn, chúng tôi xin gởi đến bạn ưu đãi sử dụng thử MIỄN PHÍ các tiện ích của Bảng thống kê này trong 30 ngày.
 </p>
 <p style="font-size:13px;margin-bottom: 15px;line-height:20px;">
-    Click below try out the dashboard feature with your existing listings.: <b><?= Html::a('LINK', '/') ?></b>
+    Hãy thử ngay bây giờ bằng cách click vào đường dẫn bên dưới:<br/> <b><?=$link;?></b>
 </p>
 
 <p style="font-size:13px;line-height:20px;margin-bottom:15px;">

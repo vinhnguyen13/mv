@@ -16,7 +16,11 @@ use frontend\models\Tracking;
 
 class TrackingController extends Controller
 {
-
+    /**
+     * @param $tr
+     * @param int $tp
+     * @throws \yii\web\ServerErrorHttpException
+     */
     public function actionLogo($tr, $tp=1)
     {
         Tracking::find()->fromLogo($tr, $tp);
@@ -31,9 +35,18 @@ class TrackingController extends Controller
         return $response->send();
     }
 
-    public function actionMail()
-    {
-
+    /**
+     * @param $rd
+     * @param $c
+     * @param $e
+     */
+    public function actionMailClick($rd, $c, $e){
+        Tracking::find()->mailClick($c, $e);
+        if(!empty($rd)){
+            $this->redirect($rd);
+        }
+        $this->redirect('/');
     }
+
 
 }
