@@ -728,17 +728,17 @@ $(document).ready(function(){
 		}).on('keydown', function(e){
 			var self = $(this);
 
-			if(e.keyCode === 190 || e.keyCode == 188) {
+			if(e.keyCode === 190 || e.keyCode === 188) {
 				var val = self.val();
 				
-				if(val.indexOf(',') !== -1) {
+				if(val.indexOf('.') !== -1) {
 					e.preventDefault();
 					return;
 				}
 				
-				if(e.keyCode === 190) {
+				if(e.keyCode === 188) {
 					e.preventDefault();
-					self.val(val + ',');
+					self.val(val + '.');
 				}
 			}
 		});
@@ -1124,11 +1124,12 @@ $(document).ready(function(){
 });
 
 function numnberOnly(e) {
+	console.log(e.keyCode);
 	var allow = [46, 8, 9, 27, 13, 110, 116];
 	
 	if($(this).hasClass('number-float')) {
 		if($(this).val().indexOf(',') === -1 && $(this).val() !== '') {
-			allow.push(188);
+			allow.push(190);
 		}
 	} else {
 		if(e.keyCode == 48 && $(this).val() == '' && !$(this).data('zero-first')) {
