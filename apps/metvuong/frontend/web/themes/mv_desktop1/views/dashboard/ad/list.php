@@ -103,7 +103,7 @@ $count_product = count($products);
                                         <strong><?= Yii::t('statistic', 'Chưa được đăng') ?></strong>
                                     </div>
                                 </div>
-                                <a href="#"  data-toggle="modal" data-target="#update-status" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-active"><?= Yii::t('statistic', 'Đăng tin') ?></a>
+                                <a href="#"  data-toggle="modal" data-target="#update-status" data-product="<?=$product->id;?>" class="btn-nang-cap mgL-10 btn-active btn-common btn-bd-radius"><?= Yii::t('statistic', 'Đăng tin') ?></a>
                             	<?php else: ?>
                             		<?php if ($product->is_expired): ?>
                             		<div class="status-duan" style="opacity: 0.7">
