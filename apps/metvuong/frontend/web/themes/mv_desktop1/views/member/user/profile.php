@@ -28,7 +28,7 @@ $report_list = \vsoft\ad\models\ReportType::find()->where(['is_user' => \vsoft\a
     <div class="container">
         <div class="profile-user row">
             <div class="title-top">
-                Profile
+                <?= Yii::t('user', 'PROFILE')?>
             </div>
             <div class="col-xs-12 col-md-9 col-left">
                 <div class="user-avatar">
