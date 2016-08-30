@@ -45,17 +45,19 @@ function move(array, old_index, new_index) {
     return array;
 };
 
-function formatPrice(num, round) {
+function formatPrice(num, round, roundBelowMillion) {
 	var parseNum = parseFloat(num);
 	
 	if(isNaN(num) || isNaN(parseNum)) {
 		return null;
 	}
 	
-	round = round || 2;
+	round = (typeof round !== 'undefined') ? round : 2;
 	
 	if(parseNum < 1000000) {
-		return formatNumber(Math.round(parseNum));
+		roundBelowMillion = (typeof roundBelowMillion !== 'undefined') ? roundBelowMillion :0;
+		
+		return formatNumber(parseNum, roundBelowMillion);
 	}
 	
 	var f = parseFloat((parseNum / 1000000).toFixed(round));
@@ -69,11 +71,15 @@ function formatPrice(num, round) {
 	return formatNumber(f) + ' ' + unit;
 }
 
-function formatNumber(num) {
+function formatNumber(num, round) {
 	var parseNum = parseFloat(num);
 	
 	if(isNaN(num) || isNaN(parseNum)) {
 		return null;
+	}
+	
+	if(typeof round !== 'undefined') {
+		parseNum = parseFloat(parseNum.toFixed(round));
 	}
 	
 	var parts = parseNum.toString().split(".");
