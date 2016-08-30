@@ -12,6 +12,11 @@ $(document).ready(function(){
 		setCookie('export-setting', $(this).val());
 	});
 	
+	$('.range-date').datepicker({
+		dateFormat: "dd-mm-yy",
+		constrainInput: true
+	});
+	
 	function loading(el, start) {
 		var text = el.find('.text');
 		
@@ -219,6 +224,10 @@ $(document).ready(function(){
 		var parent = $(this).closest('.range');
 		
 		parent.prev().prev().val(parent.find('.range-min').val() + ' - ' + parent.find('.range-max').val());
+	});
+	
+	$('.range-date').change(function(){
+		$('#created_mask').val($('.range-date.range-min').val() + ' -> ' + $('.range-date.range-max').val());
 	});
 
 	$('.price-wrap .range-value').keyup(function(){

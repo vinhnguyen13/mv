@@ -13,6 +13,12 @@ $(document).ready(function(){
 	var hasProjectWrap = $('#has-project-wrap');
 	var tabsTitle = $('#tabs-title');
 	var tabsContent = $('#tabs-content');
+	var dateEl = $('.datepicker');
+	
+	dateEl.datepicker({
+		dateFormat: "dd-mm-yy",
+		constrainInput: true
+	});
 	
 	avgSearch.keyup(function(e){
 		$.data(this, 'ajax') && $.data(this, 'ajax').abort();
@@ -82,6 +88,10 @@ $(document).ready(function(){
 			hasProjectWrap.hide();
 		}
 		
+		calculate();
+	});
+	
+	dateEl.on('change', function(){
 		calculate();
 	});
 	
@@ -210,7 +220,20 @@ $(document).ready(function(){
 		var hasWard = hasWardWrap.find('input').is(':checked') ? 1 : 0;
 		var hasProject = hasProjectWrap.find('input').is(':checked') ? 1 : 0;
 		
-		$.get('calculate', {category_id: $('#category_id').val(), round: $('#round').val(), hasProject: hasProject, hasWard: hasWard, type: avgSearch.data('type'), id: avgSearch.data('id'), t: type.val(), location: avgSearchPlaceholder.find('.text').text()}, function(r){
+		var params = {
+			category_id: $('#category_id').val(),
+			round: $('#round').val(),
+			hasProject: hasProject,
+			hasWard: hasWard,
+			type: avgSearch.data('type'),
+			id: avgSearch.data('id'),
+			t: type.val(),
+			location: avgSearchPlaceholder.find('.text').text(),
+			date_from: $('#date-from').val(),
+			date_to: $('#date-to').val()
+		};
+		
+		$.get('calculate', params, function(r){
 			viewWrap.addClass('loaded');
 			
 			$('#view-listing').attr('href', r.url);

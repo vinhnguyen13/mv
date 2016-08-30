@@ -49,6 +49,9 @@ class AdProductSearch2 extends AdProduct
 	public $room_no_mask;
 	public $toilet_no_mask;
 	public $floor_no_mask;
+	public $date_from;
+	public $date_to;
+	public $created_mask;
 	
 	public $columns;
 	
@@ -120,7 +123,8 @@ class AdProductSearch2 extends AdProduct
             		'home_direction_filter', 'facade_direction_filter', 'interior_filter', 'content_filter', 'contact_name_filter', 'contact_address_filter',
             		'phone_filter', 'mobile_filter', 'email_filter', 'created_filter', 'project_name_filter', 'project_name_mask', 'project_building_id', 'ward_id', 'ward_name_filter', 'ward_name_mask',
             		'street_name_filter', 'street_name_mask', 'street_id', 'city_name_mask', 'city_id', 'district_name_mask', 'district_id',
-            		'price_min', 'price_max', 'price_mask', 'price_unit', 'area_mask', 'area_min', 'area_max', 'room_no_mask', 'toilet_no_mask', 'floor_no_mask'
+            		'price_min', 'price_max', 'price_mask', 'price_unit', 'area_mask', 'area_min', 'area_max', 'room_no_mask', 'toilet_no_mask', 'floor_no_mask',
+            		'date_from', 'date_to', 'created_mask'
             ], 'safe'],
         ];
     }
@@ -222,10 +226,6 @@ class AdProductSearch2 extends AdProduct
     			$query->andFilterWhere(['<=', 'area', $this->area_max]);
     		}
     	}
-
-		if($this->created_filter) {
-			$query->andFilterWhere(['>=', 'ad_product.start_date', time()- AdProduct::EXPIRED]);
-		}
     	
     	$filterYesNoNull = [
     		'home_no_filter' => 'ad_product.home_no',
@@ -238,7 +238,6 @@ class AdProductSearch2 extends AdProduct
     		'contact_address_filter' => 'ad_contact_info.address',
     		'phone_filter' => 'ad_contact_info.phone',
     		'mobile_filter' => 'ad_contact_info.mobile',
-    		'created_filter' => 'ad_product.start_date',
     		'project_name_filter' => 'ad_product.project_building_id',
     		'ward_name_filter' => 'ad_product.ward_id',
     		'street_name_filter' => 'ad_product.street_id'
@@ -289,6 +288,22 @@ class AdProductSearch2 extends AdProduct
     	$query->andFilterWhere(['=', 'ad_product.street_id', $this->street_id]);
     	$query->andFilterWhere(['=', 'ad_product.city_id', $this->city_id]);
     	$query->andFilterWhere(['=', 'ad_product.district_id', $this->district_id]);
+
+    	if($this->created_filter == 1) {
+    		$query->andFilterWhere(['>', 'ad_product.start_date', time() - AdProduct::EXPIRED]);
+    	} else if($this->created_filter == 2) {
+    		$query->andFilterWhere(['<=', 'ad_product.start_date', time() - AdProduct::EXPIRED]);
+    	} else if($this->created_filter == 3) {
+	    	if($this->date_from) {
+	    		$date = explode('-', $this->date_from);
+	    		$query->andFilterWhere(['>=', 'ad_product.created_at', mktime(0, 0, 0, $date[1], $date[0], $date[2])]);
+	    	}
+	    	
+	    	if($this->date_to) {
+	    		$date = explode('-', $this->date_to);
+	    		$query->andFilterWhere(['<=', 'ad_product.created_at', mktime(23, 59, 59, $date[1], $date[0], $date[2])]);
+	    	}
+    	}
     	
     	return $dataProvider;
     	/*

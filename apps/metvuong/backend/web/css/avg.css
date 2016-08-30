@@ -208,3 +208,6 @@ label span {
 #category_id {
 	text-transform: capitalize;
 }
+.datepicker {
+	width: 120px;
+}

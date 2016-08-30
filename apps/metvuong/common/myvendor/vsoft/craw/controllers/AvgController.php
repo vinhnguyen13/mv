@@ -337,7 +337,19 @@ class AvgController extends Controller {
 		$urlMapping = ['district' => ['district_name_mask', 'district_id'],	'ward' => ['ward_name_mask', 'ward_id'], 'project_building' => ['project_name_mask', 'project_building_id']];
 		$urlMapping = $urlMapping[$get['type']];
 		
-		$params = ['category_id' => $get['category_id'], 'type' => $get['t'], $urlMapping[0] => $get['location'], $urlMapping[1] => $get['id']];
+		$params = [
+			'category_id' => $get['category_id'],
+			'type' => $get['t'],
+			$urlMapping[0] => $get['location'],
+			$urlMapping[1] => $get['id'],
+			'date_from' => $get['date_from'],
+			'date_to' => $get['date_to']
+		];
+		
+		if($get['date_from'] || $get['date_to']) {
+			$params['created_filter'] = 3;
+			$params['created_mask'] = $get['date_from'] . ' -> ' . $get['date_to'];
+		}
 		
 		if($get['type'] == 'ward') {
 			$params['ward_name_filter'] = 3;
