@@ -5315,8 +5315,8 @@ html.mm-opening .mm-slideout {
 }
 .wrap-duan-moi .item {
     border-bottom: solid 0.5px #ededed;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+    /* padding-bottom: 15px; */
+    /* margin-bottom: 15px; */
     font-size: 13px;
     position: relative;
     line-height: 23px;
@@ -5326,6 +5326,7 @@ html.mm-opening .mm-slideout {
 }
 .wrap-duan-moi .infor-address-duan {
     font-weight: 600;
+    margin-bottom: 20px;
 }
 .wrap-duan-moi .infor-address-duan p {
     font-weight: 600;
@@ -7894,31 +7895,28 @@ padding: 5px 0;
     line-height: 100%;
 }
 .tabProject {
-    /* float: left; */
-    margin-bottom: 25px;
-    /* border: 1px solid #d8d8d8; */
-    position: relative;
-    /* padding-top: 50px; */
-    background: #f1f1f1;
+    float: left;
+    width: 25%;
+    padding-right: 15px;
 }
 .tabProject li {
     float: left;
-    border-right: 1px solid #fff;
+    width: 100%;
 }
 .tabProject li:last-child {
     margin-right: 0;
 }
 .tabActiveProject {
-    /* background-color: #fff !important; */
+    
 }
 .tabProject li a {
     text-decoration: none;
     font-weight: bold;
     color: #2F2F2F;
     display: block;
-    padding: 15px 25px;
+    padding: 10px 0;
     text-transform: uppercase;
-    border-right: 1px solid #d8d8d8;
+    border-bottom: 1px solid #ccc;
 }
 .tabProject li.tabActiveProject a {
     color: #00a769;
@@ -7926,19 +7924,18 @@ padding: 5px 0;
 }
 .editor {
     font-size: 13px;
-    /* position: absolute; */
-    top: 50px;
-    padding: 0 15px 20px;
-    left: 0;
+    padding: 15px;
+    float: left;
+    width: 75%;
+    display: none;
 }
 .editor img {
     max-width: 100%;
     height: auto !important;
 }
 .infor-bds {
-    /* min-height: 500px; */
-    /* background: #f7f7f7; */
     margin-bottom: 30px;
+    overflow: hidden;
 }
 .editor h1,
 .editor h2,
@@ -7948,7 +7945,7 @@ padding: 5px 0;
     font-size: 14px;
 }
 .tabProject li a:hover {
-    background: #EAEAEA;
+    color: #00a769;
 }
 .list-duan .address-feat > a {
     margin-bottom: 5px;
@@ -7999,23 +7996,26 @@ padding: 5px 0;
     border-top: none;
 }
 .chudautu-infor .title-section {
-    font-weight: 600;
-    font-size: 15px;
-    margin-bottom: 15px;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 0;
 }
 .chudautu-infor .wrap-img {
     width: 200px;
-    margin-right: 20px;
-    text-align: center;
+    /* margin-right: 20px; */
+    /* text-align: center; */
 }
 .chudautu-infor .wrap-img img {
-    margin: 0 auto 0;
+    /* margin: 0 auto 0; */
 }
 .chudautu-infor .infor-detail-chudautu {
     overflow: hidden;
 }
 .wrap-duan-moi .chudautu-infor {
     border: none;
+}
+.wrap-duan-moi .thong-tin-khac {
+    margin-bottom: 20px;
 }
 .infor-detail-chudautu li {
     margin-bottom: 5px;
@@ -14642,6 +14642,7 @@ ul.cardList li {
 .thong-tin-khac .info-detail span {
     width: 140px;
     float: left;
+    font-weight: 600;
 }
 .thong-tin-khac .info-detail p {
     overflow: hidden;

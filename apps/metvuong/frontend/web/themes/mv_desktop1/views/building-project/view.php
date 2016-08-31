@@ -139,7 +139,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                             foreach($tabProject as $key => $tabValue) {
                                 if (!empty($tabValue)) {
                                     ?>
-                                    <div class="editor" style="display:none;clear: both">
+                                    <div class="editor">
                                         <div class="a1">
                                             <?= $tabValue ?>
                                         </div>
@@ -150,7 +150,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                             $contractors = $model->contractors;
                             if(count($investors) > 0 || count($architects) > 0 || count($contractors) > 0) {
                             ?>
-                            <div class="editor" style="display:none;clear: both">
+                            <div class="editor">
                                 <div class="a1">
                                     <?php foreach ($investors as $investor) {
                                     $src_img = $investor->logo;
@@ -220,7 +220,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                             !empty($model->land_area) || !empty($model->apartment_no) || !empty($model->units_no) || !empty($model->gfa) ||
                             !empty($model->no_1_bed) || !empty($model->sqm_1_bed) || !empty($model->no_2_bed) || !empty($model->sqm_2_bed) ||
                             !empty($model->no_3_bed) || !empty($model->sqm_3_bed) || !empty($model_facilities)) { ?>
-                                <div class="editor" style="display:none;clear: both">
+                                <div class="editor">
                                     <div class="a1">
                                         <div class="item chudautu-infor thong-tin-khac">
                                             <div class="info-detail">
