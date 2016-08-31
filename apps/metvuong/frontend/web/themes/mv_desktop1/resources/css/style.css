@@ -5339,9 +5339,10 @@ html.mm-opening .mm-slideout {
     letter-spacing: .5px;
     color: #00a769;
     text-transform: uppercase;
-    font-size: 17px;
+    font-size: 25px;
     display: block;
     margin-bottom: 2px;
+    font-weight: 600;
 }
 .wrap-duan-moi .icons-detail {
     position: absolute;
