@@ -7862,6 +7862,7 @@ padding: 5px 0;
 .favori .right-attr-detail {
     float: left;
     margin-bottom: 5px;
+    width: 100%;
 }
 .favori .right-attr-detail .id-duan {
     text-align: left;
@@ -7870,7 +7871,7 @@ padding: 5px 0;
     font-size: 14px;
 }
 .favori .info-item {
-    height: 180px;
+    height: 150px;
 }
 .item-sidebar .left-attr-detail,
 .item-sidebar .right-attr-detail {
