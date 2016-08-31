@@ -444,8 +444,17 @@ header {
 #search-duan-form .suggest-search li {
     padding: 0;
 }
+#search-duan-form .content-suggest li:nth-child(2n) {
+    background: none;
+}
+#search-duan-form .suggest-search li:nth-child(2n):hover {
+    background-color: antiquewhite;
+}
 #search-duan-form .suggest-search li a {
     display: block;
+    margin: 0;
+    padding: 8px 15px;
+    color: #3c3c3c;
 }
 .suggest-search .content-suggest {
     max-height: 310px;
@@ -2291,6 +2300,7 @@ label {
 }
 .content-suggest li a:hover {
     /* font-weight: 700; */
+    text-decoration: none;
 }
 .icon-share-td {
     display: inline-block;
