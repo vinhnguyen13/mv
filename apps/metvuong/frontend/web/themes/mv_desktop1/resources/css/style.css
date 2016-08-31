@@ -13792,7 +13792,6 @@ ul.cardList li {
 }
 .listing-post-by-project .right-attr-detail .id-duan {
     text-align: left;
-    margin: 0;
 }
 .listing-post-by-project .item .info-item {
     overflow: hidden;
@@ -14272,6 +14271,7 @@ ul.cardList li {
 }
 .icon-num-get {
     float: left;
+    display: none;
 }
 #listing-list .icon-num-get {
     position: absolute;
