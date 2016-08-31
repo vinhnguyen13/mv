@@ -362,29 +362,45 @@ class ProductController extends Controller {
         }
     }
 	
-    public function actionDownloadImage($limit = 100)
+    public function actionDownloadImage()
     {
-        $images = AdImages::find()->where('folder = :f', [':f' => ''])->orWhere(['folder' => null])->limit($limit)->all();
+        $limit = $this->limit;
+        $sql = "select i.* from ad_images i inner join ad_product p on i.product_id = p.id
+                where is_expired = 0 and i.order != 4040 and file_name LIKE '%batdongsan.com.vn%'";
+        if($limit > 0){
+            $sql .= " limit {$limit}";
+        }
+
+        $images = Yii::$app->db->createCommand($sql)->queryAll();
         if(count($images) > 0){
-            $no = 0;
-            foreach ($images as $image) {
-                $result = Metvuong::DownloadImage($image->file_name, $image->uploaded_at);
+            $updated = 0;
+            $error = 0;
+            foreach ($images as $key => $image) {
+                print_r("\n". ($key + 1). " ". $image['file_name']);
+                $result = Metvuong::DownloadImage($image['file_name'], $image['uploaded_at']);
                 if(!empty($result)){
-                    $image->file_name = $result[0];
-                    $image->folder = $result[1];
-                    $image->update(false);
+                    $record = [
+                        'file_name' => $result[0],
+                        'folder' => $result[1]
+                    ];
+                    $up = AdImages::getDb()->createCommand()->update(AdImages::tableName(), $record, "id = ".$image['id'])->execute();
+                    if($up >0) $updated++;
+                } else {
+                    $record = [
+                        'order' => 4040
+                    ];
+                    $er = AdImages::getDb()->createCommand()->update(AdImages::tableName(), $record, "id = ".$image['id'])->execute();
+                    if($er > 0) $error++;
                 }
-                if($no > 0 && $no % 100 == 0) {
-                    print_r(PHP_EOL);
-                    print_r("Updated {$no} images...");
-                    print_r(PHP_EOL);
-                }
-                $no++;
                 usleep(50000);
             }
             print_r(PHP_EOL);
-            print_r("Updated {$no} images...");
+            print_r("Updated: {$updated} ");
             print_r(PHP_EOL);
+            if($error > 0)
+                print_r("Error: {$error} ");
+        } else {
+            print_r("\nNot found product image.\n");
         }
     }
 
