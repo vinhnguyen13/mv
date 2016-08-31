@@ -42,9 +42,9 @@
 								<div class="select-mask-real">
 									<input class="real-value" type="hidden" name="category_id" id="category_id" value="6" />
 									<?php foreach ($categories as $category): ?>
-									<label for="cat-<?= $category->id ?>"><input<?= $category->id == 6 ? ' checked="checked"' : '' ?> id="cat-<?= $category->id ?>" class="cb" type="checkbox" value="<?= $category->id ?>" /><span><?= Yii::t('ad', $category->name) ?></span></label>
+									<label for="cat-<?= $category->id ?>"><input<?= $category->id == 6 ? ' checked="checked"' : '' ?> id="cat-<?= $category->id ?>" class="cb not-submit" type="checkbox" value="<?= $category->id ?>" /><span><?= Yii::t('ad', $category->name) ?></span></label>
 									<?php endforeach; ?>
-									<input type="button" class="btn btn-primary" style="width: 100%; border-radius: 0; display: none;" value="SUBMIT" />
+									<input type="button" class="btn btn-primary" style="width: 100%; border-radius: 0;" value="SUBMIT" />
 								</div>
 							</div>
 						</div>
