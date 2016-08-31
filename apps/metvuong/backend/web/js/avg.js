@@ -21,6 +21,43 @@ $(document).ready(function(){
 	});
 	
 	avgSearch.keyup(function(e){
+		if(e.keyCode == 38 || e.keyCode == 40) {
+			var storeText = resultSearch.data('text');
+			
+			if(typeof storeText != 'string') {
+				resultSearch.data('text', avgSearch.val());
+			}
+			
+			var items = resultSearch.children();
+			var direction = (e.keyCode == 40) ? 1 : -1;
+			var currentActive = resultSearch.find('.active');
+			var currentActiveIndex = items.index(currentActive);
+			var nextIndex = currentActiveIndex + direction;
+			var totalItems = items.length;
+			
+			if(nextIndex == totalItems) {
+				nextIndex = -1;
+			} else if(nextIndex == -2) {
+				nextIndex = totalItems - 1;
+			}
+		
+			if(nextIndex == -1) {
+				if(typeof storeText == 'string') {
+					avgSearch.val(storeText);
+				}
+			} else {
+				var nextActiveItem = items.eq(nextIndex).addClass('active');
+				
+				avgSearch.val(nextActiveItem.text());
+			}
+			
+			currentActive.removeClass('active');
+			
+			return;
+		}
+		
+		resultSearch.data('text', false);
+		
 		$.data(this, 'ajax') && $.data(this, 'ajax').abort();
 		
 		$.data(this, 'ajax', $.get(avgSearch.data('url'), {v: avgSearch.val()}, function(r){
@@ -35,7 +72,13 @@ $(document).ready(function(){
 			var children = resultSearch.children();
 
 			if(children.length) {
-				children.eq(0).find('a').trigger('click');
+				var active = resultSearch.find('.active');
+				
+				if(active.length) {
+					active.eq(0).find('a').trigger('click');
+				} else {
+					children.eq(0).find('a').trigger('click');
+				}
 			}
 		}
 	}).focus();
@@ -89,6 +132,13 @@ $(document).ready(function(){
 		}
 		
 		calculate();
+	}).on('mouseenter', '.hit', function(){
+		var currentActive = resultSearch.find('.active');
+		
+		currentActive.removeClass('active');
+		$(this).parent().addClass('active');
+	}).on('mouseleave', '.hit', function(){
+		$(this).parent().removeClass('active');
 	});
 	
 	dateEl.on('change', function(){

@@ -47,7 +47,7 @@
     text-decoration: none !important;
 }
 
-.result-search a:hover {
+.result-search .active a {
 	background-color: #23527c;
     color: #FFF;
 }
