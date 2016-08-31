@@ -8031,12 +8031,12 @@ padding: 5px 0;
 .chudautu-infor .wrap-img {
     width: 200px;
     /* margin-right: 20px; */
-    /* text-align: center; */
+    text-align: center;
     border: 1px solid #dedede;
     margin-bottom: 15px;
 }
 .chudautu-infor .wrap-img img {
-    /* margin: 0 auto 0; */
+    margin: 0 auto 0;
 }
 .chudautu-infor .infor-detail-chudautu {
     overflow: hidden;
@@ -13794,7 +13794,7 @@ ul.cardList li {
     float: left;
     width: 100%
 }
-.listing-post-by-project .left-attr-detail .list-attr-td{
+.listing-post-by-project .left-attr-detail .list-attr-td li{
     margin-bottom: 10px;
 }
 .listing-post-by-project .left-attr-detail .list-attr-td li .icon-mv {
@@ -14938,6 +14938,15 @@ ul.cardList li {
     }
     #popup-campain .modal-dialog {
         width: auto;
+    }
+    .thong-tin-khac .info-detail span {
+        width: 100%;
+    }
+    .thong-tin-khac .info-detail p {
+        overflow: inherit;
+    }
+    .listing-post-by-project .nav-tabs>li>a {
+        padding: 7px 15px;
     }
 }
 
