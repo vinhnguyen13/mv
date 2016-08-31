@@ -13,8 +13,98 @@ $(document).ready(function(){
 	var hasProjectWrap = $('#has-project-wrap');
 	var tabsTitle = $('#tabs-title');
 	var tabsContent = $('#tabs-content');
+	var dateEl = $('.datepicker');
+	
+	$('.select-mask-show').click(function(){
+		var selectMask = $(this).closest('.select-mask');
+		var btn = selectMask.find('.btn');
+		
+		if(!selectMask.hasClass('.show-real')) {
+			selectMask.addClass('show-real');
+			var dclick, bclick;
+			
+			dclick = function(e){
+				if($(e.target).closest('.select-mask').length == 0) {
+					selectMask.removeClass('show-real');
+					$(document).off('click', dclick);
+					btn.off('click', bclick);
+				}
+			};
+			
+			bclick = function(){
+				calculate();
+
+				selectMask.removeClass('show-real');
+				$(document).off('click', dclick);
+				btn.off('click', bclick);
+			};
+			
+			$(document).on('click', dclick);
+			btn.on('click', bclick);
+		}
+	});
+	
+	$('.cb').click(function(){
+		var ids = [];
+		var texts = [];
+		var parent = $(this).closest('.select-mask-real');
+		
+		parent.find('.cb').each(function(){
+			var self = $(this);
+			
+			if(this.checked) {
+				ids.push(self.val());
+				texts.push(self.parent().text());
+			}
+		});
+		
+		parent.find('.real-value').val(ids.join(','));
+		parent.prev().text(texts.join(', '));
+	});
+	
+	dateEl.datepicker({
+		dateFormat: "dd-mm-yy",
+		constrainInput: true
+	});
 	
 	avgSearch.keyup(function(e){
+		if(e.keyCode == 38 || e.keyCode == 40) {
+			var storeText = resultSearch.data('text');
+			
+			if(typeof storeText != 'string') {
+				resultSearch.data('text', avgSearch.val());
+			}
+			
+			var items = resultSearch.children();
+			var direction = (e.keyCode == 40) ? 1 : -1;
+			var currentActive = resultSearch.find('.active');
+			var currentActiveIndex = items.index(currentActive);
+			var nextIndex = currentActiveIndex + direction;
+			var totalItems = items.length;
+			
+			if(nextIndex == totalItems) {
+				nextIndex = -1;
+			} else if(nextIndex == -2) {
+				nextIndex = totalItems - 1;
+			}
+		
+			if(nextIndex == -1) {
+				if(typeof storeText == 'string') {
+					avgSearch.val(storeText);
+				}
+			} else {
+				var nextActiveItem = items.eq(nextIndex).addClass('active');
+				
+				avgSearch.val(nextActiveItem.text());
+			}
+			
+			currentActive.removeClass('active');
+			
+			return;
+		}
+		
+		resultSearch.data('text', false);
+		
 		$.data(this, 'ajax') && $.data(this, 'ajax').abort();
 		
 		$.data(this, 'ajax', $.get(avgSearch.data('url'), {v: avgSearch.val()}, function(r){
@@ -29,7 +119,13 @@ $(document).ready(function(){
 			var children = resultSearch.children();
 
 			if(children.length) {
-				children.eq(0).find('a').trigger('click');
+				var active = resultSearch.find('.active');
+				
+				if(active.length) {
+					active.eq(0).find('a').trigger('click');
+				} else {
+					children.eq(0).find('a').trigger('click');
+				}
 			}
 		}
 	}).focus();
@@ -83,15 +179,26 @@ $(document).ready(function(){
 		}
 		
 		calculate();
+	}).on('mouseenter', '.hit', function(){
+		var currentActive = resultSearch.find('.active');
+		
+		currentActive.removeClass('active');
+		$(this).parent().addClass('active');
+	}).on('mouseleave', '.hit', function(){
+		$(this).parent().removeClass('active');
+	});
+	
+	dateEl.on('change', function(){
+		calculate();
 	});
 	
 	filterWrap.find('select').change(function(){
-		if(!viewWrap.hasClass('hide')) {
+		if(!viewWrap.hasClass('hide') && !$(this).hasClass('not-submit')) {
 			calculate();
 		}
 	});
 	filterWrap.find('.cb').change(function(){
-		if(!viewWrap.hasClass('hide')) {
+		if(!viewWrap.hasClass('hide') && !$(this).hasClass('not-submit')) {
 			calculate();
 		}
 	});
@@ -128,15 +235,15 @@ $(document).ready(function(){
 		var tabContainer = addTab(tabName);
 		
 		var table = $('<table class="avg-table"><tr class="area-title"><td></td></tr><tr class="data-point"><td>Data Point</td></tr><tr class="avg-price"><td>AVG Price</td></tr><tr class="avg-size"><td>AVG SQM</td></tr><tr class="avg-price-size"><td>AVG $/SQM</td></tr><tr class="avg-bed"><td>AVG Bed</td></tr><tr class="avg-bath"><td>AVG Bath</td></tr></table>');
+
+		if(parent) {
+			append(table, parent, true);
+		}
 		
 		for(var i in childs) {
 			if(childs[i]['name']) {
 				append(table, childs[i]);
 			}
-		}
-		
-		if(parent) {
-			append(table, parent, true);
 		}
 		
 		tabContainer.append(table);
@@ -145,7 +252,21 @@ $(document).ready(function(){
 	function append(table, data, isMain) {
 		var c = isMain ? 'main' : '';
 		
-		table.find('.area-title').append('<td class="' + c + '">' + data.name + '</td>');
+		var url = $('#view-listing').attr('href');
+		
+		if(data.type != avgSearch.data('type')) {
+			if(data.type == 'ward') {
+				url += '&ward_id=' + data.id + '&ward_name_filter=3' + '&ward_name_mask=' + encodeURIComponent(data.name + ', ' + avgSearchPlaceholder.text());
+			} else if(data.type == 'project') {
+				if(avgSearch.data('type') == 'district') {
+					url += '&project_building_id=' + data.id + '&project_name_filter=3' + '&project_name_mask=' + encodeURIComponent(data.name + ', ' + avgSearchPlaceholder.text());
+				} else {
+					url += '&project_building_id=' + data.id + '&project_name_filter=3' + '&project_name_mask=' + encodeURIComponent(data.name);
+				}
+			}
+		}
+		
+		table.find('.area-title').append('<td class="' + c + '"><a href="' + url + '" target="_blank">' + data.name + '</a></td>');
 		table.find('.data-point').append('<td class="' + c + '">' + formatNumber(data.value['Data Point']) + '</td>');
 		table.find('.avg-price').append('<td class="' + c + '">' + formatNumber(data.value['AVG Price']) + '</td>');
 		table.find('.avg-size').append('<td class="' + c + '">' + formatNumber(data.value['AVG SQM']) + '</td>');
@@ -210,7 +331,20 @@ $(document).ready(function(){
 		var hasWard = hasWardWrap.find('input').is(':checked') ? 1 : 0;
 		var hasProject = hasProjectWrap.find('input').is(':checked') ? 1 : 0;
 		
-		$.get('calculate', {category_id: $('#category_id').val(), round: $('#round').val(), hasProject: hasProject, hasWard: hasWard, type: avgSearch.data('type'), id: avgSearch.data('id'), t: type.val(), location: avgSearchPlaceholder.find('.text').text()}, function(r){
+		var params = {
+			category_id: $('#category_id').val(),
+			round: $('#round').val(),
+			hasProject: hasProject,
+			hasWard: hasWard,
+			type: avgSearch.data('type'),
+			id: avgSearch.data('id'),
+			t: type.val(),
+			location: avgSearchPlaceholder.find('.text').text(),
+			date_from: $('#date-from').val(),
+			date_to: $('#date-to').val()
+		};
+		
+		$.get('calculate', params, function(r){
 			viewWrap.addClass('loaded');
 			
 			$('#view-listing').attr('href', r.url);

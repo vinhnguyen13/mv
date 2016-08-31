@@ -12,6 +12,7 @@ use Box\Spout\Writer\Style\Border;
 use Box\Spout\Writer\Style\BorderBuilder;
 use Box\Spout\Writer\Style\Color;
 use Box\Spout\Writer\Style\StyleBuilder;
+use yii\helpers\ArrayHelper;
 
 class AvgController extends Controller {
 	public function init() {
@@ -71,18 +72,6 @@ class AvgController extends Controller {
 					
 				$childs = $sheet['data']['childs'];
 					
-				foreach ($childs as $child) {
-					if($child['name']) {
-						$rows[0][] = $child['name'];
-						$rows[1][] = $child['value']['Data Point'];
-						$rows[2][] = $child['value']['AVG Price'];
-						$rows[3][] = $child['value']['AVG SQM'];
-						$rows[4][] = $child['value']['AVG $/SQM'];
-						$rows[5][] = $this->percentCell($child['value']['AVG Bed'], 'bed');
-						$rows[6][] = $this->percentCell($child['value']['AVG Bath'], 'bath');
-					}
-				}
-					
 				if(isset($sheet['data']['parent'])) {
 					$parent = $sheet['data']['parent'];
 				
@@ -93,6 +82,18 @@ class AvgController extends Controller {
 					$rows[4][] = $parent['value']['AVG $/SQM'];
 					$rows[5][] = $this->percentCell($parent['value']['AVG Bed'], 'bed');
 					$rows[6][] = $this->percentCell($parent['value']['AVG Bath'], 'bath');
+				}
+					
+				foreach ($childs as $child) {
+					if($child['name']) {
+						$rows[0][] = $child['name'];
+						$rows[1][] = $child['value']['Data Point'];
+						$rows[2][] = $child['value']['AVG Price'];
+						$rows[3][] = $child['value']['AVG SQM'];
+						$rows[4][] = $child['value']['AVG $/SQM'];
+						$rows[5][] = $this->percentCell($child['value']['AVG Bed'], 'bed');
+						$rows[6][] = $this->percentCell($child['value']['AVG Bath'], 'bath');
+					}
 				}
 					
 				$style = (new StyleBuilder())->setFontSize(11)->build();
@@ -158,26 +159,30 @@ class AvgController extends Controller {
 			'data' => [
 				'parent' => [
 					'name' => $parentName,
+					'id' => $get['id'],
+					'type' => 'district',
 					'value' => $this->avg($products)
 				],
-				'childs' => $this->buildChildsFromGroupData($groupByWard)
+				'childs' => $this->buildChildsFromGroupData($groupByWard, 'ward')
 			]
 		];
 		
-		foreach ($groupByWard as $wardName => $wardProducts) {
-			$sheets[] = $this->_buildSheetsWard($wardName, $wardName, $wardProducts);
+		foreach ($groupByWard as $gbw) {
+			$sheets[] = $this->_buildSheetsWard($gbw['name'], $gbw['name'], $gbw['products'], $gbw['id']);
 		}
 		
 		return $sheets;
 	}
 	
-	public function buildChildsFromGroupData($groupData) {
+	public function buildChildsFromGroupData($groupData, $type) {
 		$childs = [];
 			
-		foreach ($groupData as $name => $products) {
+		foreach ($groupData as $gd) {
 			$childs[] = [
-				'name' => $name,
-				'value' => $this->avg($products)
+				'name' => $gd['name'],
+				'type' => $type,
+				'id' => $gd['id'],
+				'value' => $this->avg($gd['products'])
 			];
 		}
 		
@@ -187,7 +192,7 @@ class AvgController extends Controller {
 	public function buildSheetsWard($get, $products) {
 		$parentName = current(explode(', ', $get['location']));
 		
-		return [$this->_buildSheetsWard($parentName . ' - Overview', $parentName, $products)];
+		return [$this->_buildSheetsWard($parentName . ' - Overview', $parentName, $products, $get['id'])];
 	}
 	
 	public function buildSheetsProject_building($get, $products) {
@@ -195,6 +200,8 @@ class AvgController extends Controller {
 		
 		$childs[] = [
 			'name' => $name,
+			'type' => 'project',
+			'id' => $get['id'],
 			'value' => $this->avg($products)
 		];
 		
@@ -204,7 +211,7 @@ class AvgController extends Controller {
 		]];
 	}
 	
-	public function _buildSheetsWard($sheetName, $name, $products) {
+	public function _buildSheetsWard($sheetName, $name, $products, $id) {
 		$groupByProject = $this->groupByProject($products);
 		
 // 		$additionProjectData = [];
@@ -220,9 +227,11 @@ class AvgController extends Controller {
 			'data' => [
 				'parent' => [
 					'name' => $name,
+					'type' => 'ward',
+					'id' => $id,
 					'value' => $this->avg($products)
 				],
-				'childs' => $this->buildChildsFromGroupData($groupByProject)
+				'childs' => $this->buildChildsFromGroupData($groupByProject, 'project')
 			]
 		];
 		
@@ -313,10 +322,18 @@ class AvgController extends Controller {
 		$groupByProject = [];
 
 		foreach ($products as $product) {
-			$groupByProject[$product['project_name']][] = $product;
-		}
+			if(!isset($groupByProject[$product['project_building_id']])) {
+				$groupByProject[$product['project_building_id']] = [
+					'id' => $product['project_building_id'],
+					'name' => $product['project_name'],
+					'products' => []
+				];
+			}
 			
-		uksort($groupByProject, "strnatcmp");
+			$groupByProject[$product['project_building_id']]['products'][] = $product;
+		}
+		
+		ArrayHelper::multisort($groupByProject, 'name', SORT_ASC, SORT_NATURAL);
 		
 		return $groupByProject;
 	}
@@ -325,10 +342,17 @@ class AvgController extends Controller {
 		$groupByWard = [];
 		
 		foreach ($products as $product) {
-			$groupByWard[$product['ward_name']][] = $product;
+			if(!isset($groupByWard[$product['ward_id']])) {
+				$groupByWard[$product['ward_id']] = [
+					'id' => $product['ward_id'],
+					'name' => $product['ward_name'],
+					'products' => []
+				];
+			}
+			$groupByWard[$product['ward_id']]['products'][] = $product;
 		}
-		
-		uksort($groupByWard, "strnatcmp");
+
+		ArrayHelper::multisort($groupByWard, 'name', SORT_ASC, SORT_NATURAL);
 		
 		return $groupByWard;
 	}
@@ -337,7 +361,19 @@ class AvgController extends Controller {
 		$urlMapping = ['district' => ['district_name_mask', 'district_id'],	'ward' => ['ward_name_mask', 'ward_id'], 'project_building' => ['project_name_mask', 'project_building_id']];
 		$urlMapping = $urlMapping[$get['type']];
 		
-		$params = ['category_id' => $get['category_id'], 'type' => $get['t'], $urlMapping[0] => $get['location'], $urlMapping[1] => $get['id']];
+		$params = [
+			'category_id' => $get['category_id'],
+			'type' => $get['t'],
+			$urlMapping[0] => $get['location'],
+			$urlMapping[1] => $get['id'],
+			'date_from' => $get['date_from'],
+			'date_to' => $get['date_to']
+		];
+		
+		if($get['date_from'] || $get['date_to']) {
+			$params['created_filter'] = 3;
+			$params['created_mask'] = $get['date_from'] . ' -> ' . $get['date_to'];
+		}
 		
 		if($get['type'] == 'ward') {
 			$params['ward_name_filter'] = 3;

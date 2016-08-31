@@ -5,6 +5,8 @@
 
 	$this->registerCss('.summary {position: absolute; right: 0px; top: -20px;} .cms-show-index {padding-top: 40px; position: relative;} .filter-col {margin-right: 12px;} .container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 28px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;}');
 	$this->registerCssFile(Yii::getAlias('@web') . '/css/avg.css');
+	$this->registerCssFile(Yii::getAlias('@web') . '/css/jquery-ui.css');
+	$this->registerJsFile(Yii::getAlias('@web') . '/js/jquery-ui.min.js', ['depends' => ['yii\web\YiiAsset']]);
 	$this->registerJsFile(Yii::getAlias('@web') . '/js/avg.js', ['depends' => ['yii\web\YiiAsset']]);
 	
 	$types = AdProduct::getAdTypes();
@@ -29,17 +31,24 @@
 				<div class="field-set">
 					<div class="field-set-legend">Thiết lập thêm</div>
 					<div class="field-set-body">
-						<label id="has-ward-wrap"><input class="cb" type="checkbox" name="has-ward" value="1" /><span>Chỉ tính trên những tin có thông tin <span style="color: #337ab7;">Phường</span></span></label><br />
-						<label id="has-project-wrap" style="margin-right: 6px;"><input class="cb" type="checkbox" name="has-project" value="1" /><span>Chỉ tính trên những tin có thông tin <span style="color: #337ab7;">Dự án</span></span></label>
-						<div class="field-wrap">
-							<label>Loại BĐS</label>
-							<select name="category_id" id="category_id">
-								<?php foreach ($categories as $category): ?>
-								<option value="<?= $category->id ?>"<?= $category->id == 6 ? ' selected="selected"' : '' ?>><?= Yii::t('ad', $category->name) ?></option>
-								<?php endforeach; ?>
-							</select>
+						<div style="display: none;">
+							<label id="has-ward-wrap"><input class="cb" type="checkbox" name="has-ward" value="1" /><span>Chỉ tính trên những tin có thông tin <span style="color: #337ab7;">Phường</span></span></label><br />
+							<label id="has-project-wrap" style="margin-right: 6px;"><input class="cb" type="checkbox" name="has-project" value="1" /><span>Chỉ tính trên những tin có thông tin <span style="color: #337ab7;">Dự án</span></span></label>
 						</div>
 						<div class="field-wrap">
+							<label>Loại BĐS</label>
+							<div class="select-mask">
+								<div class="select-mask-show">Căn Hộ Chung Cư</div>
+								<div class="select-mask-real">
+									<input class="real-value" type="hidden" name="category_id" id="category_id" value="6" />
+									<?php foreach ($categories as $category): ?>
+									<label for="cat-<?= $category->id ?>"><input<?= $category->id == 6 ? ' checked="checked"' : '' ?> id="cat-<?= $category->id ?>" class="cb not-submit" type="checkbox" value="<?= $category->id ?>" /><span><?= Yii::t('ad', $category->name) ?></span></label>
+									<?php endforeach; ?>
+									<input type="button" class="btn btn-primary" style="width: 100%; border-radius: 0;" value="SUBMIT" />
+								</div>
+							</div>
+						</div>
+						<div class="field-wrap" style="display: none;">
 							<label>Round number</label>
 							<select name="round" id="round">
 								<option value="-1">Giữ nguyên</option>
@@ -48,6 +57,11 @@
 								<option value="2">2</option>
 								<option value="3">3</option>
 							</select>
+						</div>
+						<div class="field-wrap">
+							<label>Ngày đăng</label>
+							<input class="datepicker big-field" type="text" placeholder="From" name="date-from" id="date-from" />
+							<input class="datepicker big-field" type="text" placeholder="To" name="date-to" id="date-to" />
 						</div>
 					</div>
 				</div>

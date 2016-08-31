@@ -107,7 +107,7 @@
 							<p class="date-post"><?= Yii::t('ad', 'đăng') ?> <?= StringHelper::previousTime($product['start_date']) ?><span class="pull-right"><?= Yii::t('ad', 'Điểm') ?>: <?php $score = round($product['score'] - 0.00001157407 * ($now - $product['start_date'])); if($score > 0) echo $score; else echo 0; ?></span></p>
 					    </div>
 					</a>
-					<ul class="icon-num-get hide">
+					<ul class="icon-num-get">
 						<?php if(!empty($product['favorite'])): ?>
 				    	<li><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span><?= $product['favorite'] ?></li>
 				    	<?php endif; ?>

@@ -438,6 +438,15 @@ header {
     padding: 0;
     z-index: 5;
 }
+#search-duan-form .suggest-search {
+    top: 40px;
+}
+#search-duan-form .suggest-search li {
+    padding: 0;
+}
+#search-duan-form .suggest-search li a {
+    display: block;
+}
 .suggest-search .content-suggest {
     max-height: 310px;
     overflow-x: hidden;
@@ -1172,6 +1181,10 @@ label {
     text-align: center;
     font-size: 35px;
     margin-bottom: 5px;
+}
+.list-tienich li span.icon-school {
+    font-size: 45px;
+    margin-bottom: 0;
 }
 .thong-tin-khac .info-detail .list-tienich span {
     width: 100%;
@@ -2277,7 +2290,7 @@ label {
     margin-right: 10px;
 }
 .content-suggest li a:hover {
-    font-weight: 700;
+    /* font-weight: 700; */
 }
 .icon-share-td {
     display: inline-block;
@@ -5310,9 +5323,6 @@ html.mm-opening .mm-slideout {
     height: 400px;
 }
 .wrap-duan-moi .item {
-    border-bottom: solid 0.5px #ededed;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
     font-size: 13px;
     position: relative;
     line-height: 23px;
@@ -5322,10 +5332,11 @@ html.mm-opening .mm-slideout {
 }
 .wrap-duan-moi .infor-address-duan {
     font-weight: 600;
+    margin-bottom: 20px;
 }
 .wrap-duan-moi .infor-address-duan p {
     font-weight: 600;
-    margin-bottom: 1px;
+    margin-bottom: 5px;
 }
 .wrap-duan-moi .gallery-detail {
     margin-bottom: 5px;
@@ -5334,9 +5345,10 @@ html.mm-opening .mm-slideout {
     letter-spacing: .5px;
     color: #00a769;
     text-transform: uppercase;
-    font-size: 17px;
+    font-size: 25px;
     display: block;
-    margin-bottom: 2px;
+    margin-bottom: 7px;
+    font-weight: 600;
 }
 .wrap-duan-moi .icons-detail {
     position: absolute;
@@ -7396,7 +7408,14 @@ footer li a {
     }
 }
 @media ( max-width: 640px ) {
-    #listing-list .list-attr-td {
+    .detail-duan-moi .swiper-wrapper {
+        height: 250px;
+    }
+    .wrap-duan-moi .infor-address-duan strong {
+        font-size: 20px;
+    }
+    .tabProject li a {
+        font-size: 11px;
     }
 }
 #listing-list > ul {
@@ -7592,6 +7611,7 @@ footer li a {
 }
 .wrap-duan-moi .gallery-detail {
     margin-bottom: 5px;
+    background: #eaeaea;
 }
 .detail-listing-extra.detail-listing .gallery-detail {
     height: 381px;
@@ -7829,6 +7849,19 @@ footer li a {
 .right-attr-detail {
     float: right;
 }
+.favori .right-attr-detail {
+    float: left;
+    margin-bottom: 5px;
+}
+.favori .right-attr-detail .id-duan {
+    text-align: left;
+}
+.favori .right-attr-detail .icon-num-get li {
+    font-size: 14px;
+}
+.favori .info-item {
+    height: 180px;
+}
 .item-sidebar .left-attr-detail,
 .item-sidebar .right-attr-detail {
     float: none;
@@ -7877,46 +7910,50 @@ footer li a {
     line-height: 100%;
 }
 .tabProject {
-    /* float: left; */
-    margin-bottom: 25px;
-    border-bottom: 1px solid #CACACA;
-    position: relative;
-    /* padding-top: 50px; */
+    float: left;
+    width: 25%;
+    padding-right: 15px;
 }
 .tabProject li {
     float: left;
+    width: 100%;
 }
 .tabProject li:last-child {
     margin-right: 0;
 }
 .tabActiveProject {
-    background-color: #fff !important;
+    
 }
 .tabProject li a {
     text-decoration: none;
     font-weight: bold;
     color: #2F2F2F;
     display: block;
-    padding: 10px 15px;
+    padding: 10px 0;
+    text-transform: uppercase;
+    border-bottom: 1px solid #ccc;
 }
 .tabProject li.tabActiveProject a {
     color: #00a769;
-    background: #EAEAEA;
+    /* background: #f1f1f1; */
 }
 .editor {
     font-size: 13px;
-    /* position: absolute; */
-    top: 50px;
-    padding: 0 15px 20px;
-    left: 0;
+    padding: 0 15px 15px;
+    float: left;
+    width: 75%;
+    display: none;
+}
+.editor iframe {
+    max-width: 100%;
 }
 .editor img {
     max-width: 100%;
     height: auto !important;
 }
 .infor-bds {
-    /* min-height: 500px; */
-    background: #f7f7f7;
+    margin-bottom: 30px;
+    overflow: hidden;
 }
 .editor h1,
 .editor h2,
@@ -7926,7 +7963,7 @@ footer li a {
     font-size: 14px;
 }
 .tabProject li a:hover {
-    background: #EAEAEA;
+    color: #00a769;
 }
 .list-duan .address-feat > a {
     margin-bottom: 5px;
@@ -7977,25 +8014,28 @@ footer li a {
     border-top: none;
 }
 .chudautu-infor .title-section {
-    font-weight: 600;
-    font-size: 18px;
-    margin-bottom: 15px;
-    color: #00a769;
-    text-decoration: underline;
+    font-weight: 700;
+    font-size: 13px;
+    margin-bottom: 0;
 }
 .chudautu-infor .wrap-img {
     width: 200px;
-    margin-right: 20px;
-    text-align: center;
+    /* margin-right: 20px; */
+    /* text-align: center; */
+    border: 1px solid #dedede;
+    margin-bottom: 15px;
 }
 .chudautu-infor .wrap-img img {
-    margin: 0 auto 0;
+    /* margin: 0 auto 0; */
 }
 .chudautu-infor .infor-detail-chudautu {
     overflow: hidden;
 }
 .wrap-duan-moi .chudautu-infor {
     border: none;
+}
+.wrap-duan-moi .thong-tin-khac {
+    margin-bottom: 20px;
 }
 .infor-detail-chudautu li {
     margin-bottom: 5px;
@@ -8020,6 +8060,9 @@ footer li a {
     }
     .search-homepage > ul {
         margin-bottom: 15px;
+    }
+    .editor iframe {
+        height: 200px;
     }
 }
 .select2-container {
@@ -9697,8 +9740,9 @@ footer li a {
 .icon-television:before {
     content: "\e931";
 }
+.icon-refrigerator:before,
 .icon-tu-lanh:before {
-    content: "\e932";
+    content: "\e95b";
 }
 .icon-may-giat:before {
     content: "\e933";
@@ -12218,7 +12262,7 @@ label:hover {
     content: "\e933"
 }
 .icon-refrigerator:before {
-    content: "\e932"
+    /* content: "\e932"; */
 }
 .icon-ti-vi:before,
 .icon-television:before {
@@ -12226,8 +12270,8 @@ label:hover {
 }
 .list-tienich li span.icon-tu-lanh,
 .list-tienich li span.icon-refrigerator {
-    font-size: 65px;
-    margin-top: -15px;
+    font-size: 40px;
+    margin-top: 0;
 }
 @media (max-width: 985px) {
     .left-attr-detail .id-duan {
@@ -13733,6 +13777,38 @@ ul.cardList li {
 .listing-post-by-project {
     margin-top: 0px;
 }
+.listing-post-by-project .pic-intro img {
+    height: 100% !important;
+}
+.listing-post-by-project .right-attr-detail {
+    float: left;
+    width: 100%
+}
+.listing-post-by-project .left-attr-detail .list-attr-td{
+    margin-bottom: 10px;
+}
+.listing-post-by-project .left-attr-detail .list-attr-td li .icon-mv {
+    font-size: 25px;
+}
+.listing-post-by-project .right-attr-detail .id-duan {
+    text-align: left;
+}
+.listing-post-by-project .item .info-item {
+    overflow: hidden;
+    padding-bottom: 0;
+    height: 170px;
+}
+.listing-post-by-project .icon-num-get li {
+    padding: 0;
+    font-size: 14px;
+}
+.listing-post-by-project .icon-num-get {
+    margin-bottom: 5px;
+    float: left;
+}
+.listing-post-by-project .address-listing {
+    margin-bottom: 0;
+}
 .listing-post-by-project .nav-tabs {
     border-bottom: 2px solid #00a769;
     margin-bottom: 30px;
@@ -14195,6 +14271,7 @@ ul.cardList li {
 }
 .icon-num-get {
     float: left;
+    display: none;
 }
 #listing-list .icon-num-get {
     position: absolute;
@@ -14617,13 +14694,11 @@ ul.cardList li {
 .thong-tin-khac .info-detail div {
     float: left;
     width: 50%;
-    margin-bottom: 10px;
 }
 .thong-tin-khac .info-detail span {
-    font-weight: 600;
     width: 140px;
     float: left;
-    /* text-decoration: underline; */
+    font-weight: 600;
 }
 .thong-tin-khac .info-detail p {
     overflow: hidden;

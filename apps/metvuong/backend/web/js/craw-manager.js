@@ -1,4 +1,72 @@
 $(document).ready(function(){
+	var texts = [];
+	
+	$('.select-mask-real').find('.cb').each(function(){
+		var self = $(this);
+		
+		if(this.checked) {
+			texts.push(self.parent().text());
+		}
+	});
+	
+	if(texts.length) {
+		$('.select-mask-show').text(texts.join(', '));
+	}
+	
+	$('.select-mask-show').click(function(){
+		var selectMask = $(this).closest('.select-mask');
+		var btn = selectMask.find('.btn');
+		
+		if(!selectMask.hasClass('.show-real')) {
+			selectMask.addClass('show-real');
+			var dclick, bclick;
+			
+			dclick = function(e){
+				if($(e.target).closest('.select-mask').length == 0) {
+					selectMask.removeClass('show-real');
+					$(document).off('click', dclick);
+					btn.off('click', bclick);
+				}
+			};
+			
+			bclick = function(){
+				$('#category_id').trigger('change.yiiGridView');
+
+				selectMask.removeClass('show-real');
+				$(document).off('click', dclick);
+				btn.off('click', bclick);
+			};
+			
+			$(document).on('click', dclick);
+			btn.on('click', bclick);
+		}
+	});
+	
+	$('.cb').click(function(e){
+		var ids = [];
+		var texts = [];
+		var parent = $(this).closest('.select-mask-real');
+		
+		parent.find('.cb').each(function(){
+			var self = $(this);
+			
+			if(this.checked) {
+				ids.push(self.val());
+				texts.push(self.parent().text());
+			}
+		});
+		
+		if(ids.length) {
+			parent.find('.real-value').val(ids.join(','));
+			parent.prev().text(texts.join(', '));
+		} else {
+			parent.find('.real-value').val('');
+			parent.prev().text('Loại BĐS');
+		}
+	}).change(function(e){
+		e.stopPropagation();
+	});
+	
 	$('#export-link').click(function(){
 		setCookie('downloadComplete', '', 0)
 		
@@ -10,6 +78,11 @@ $(document).ready(function(){
 	
 	$('#content-setting-wrap').find('input').change(function(){
 		setCookie('export-setting', $(this).val());
+	});
+	
+	$('.range-date').datepicker({
+		dateFormat: "dd-mm-yy",
+		constrainInput: true
 	});
 	
 	function loading(el, start) {
@@ -219,6 +292,10 @@ $(document).ready(function(){
 		var parent = $(this).closest('.range');
 		
 		parent.prev().prev().val(parent.find('.range-min').val() + ' - ' + parent.find('.range-max').val());
+	});
+	
+	$('.range-date').change(function(){
+		$('#created_mask').val($('.range-date.range-min').val() + ' -> ' + $('.range-date.range-max').val());
 	});
 
 	$('.price-wrap .range-value').keyup(function(){

@@ -115,22 +115,8 @@ class AdProduct extends AP
 	public function beforeSave($insert) {
 		if (parent::beforeSave($insert)) {
 			
-			if($insert) {
-				if($this->area) {
-					$this->area = str_replace(',', '.', $this->area);
-				}
-			} else {
+			if(! $insert) {
 				$this->updated_at = time();
-				
-				if(empty($this->oldAttributes['area'])) {
-					if($this->area) {
-						$this->area = str_replace(',', '.', $this->area);
-					}
-				} else {
-					if($this->area != $this->oldAttributes['area']) {
-						$this->area = str_replace(',', '.', $this->area);
-					}
-				}
 			}
 			
 			$this->oldAttr = $this->oldAttributes;

@@ -299,13 +299,7 @@ $(document).ready(function(){
 		};
 		
 		self.isNumber = function(number) {
-			var format = form.formatNumber(number);
-
-			return !isNaN(format);
-		};
-
-		self.formatNumber = function(number) {
-			return number.replace('.', 'A').replace(',', '.');
+			return !isNaN(number);
 		};
 		
 		self.isDigit = function(digit) {
@@ -728,17 +722,17 @@ $(document).ready(function(){
 		}).on('keydown', function(e){
 			var self = $(this);
 
-			if(e.keyCode === 190 || e.keyCode == 188) {
+			if(e.keyCode === 190 || e.keyCode === 188) {
 				var val = self.val();
 				
-				if(val.indexOf(',') !== -1) {
+				if(val.indexOf('.') !== -1) {
 					e.preventDefault();
 					return;
 				}
 				
-				if(e.keyCode === 190) {
+				if(e.keyCode === 188) {
 					e.preventDefault();
-					self.val(val + ',');
+					self.val(val + '.');
 				}
 			}
 		});
@@ -771,10 +765,10 @@ $(document).ready(function(){
 	
 	function calPriceSize() {
 		var price = form.fields.price.val();
-		var size = Number(form.fields.area.val().replace(',', '.'));
+		var size = form.fields.area.val();
 		
 		if(price && size && price > size) {
-			priceSize.html(formatPrice(Math.round(price/size) + '') + ' ' + lajax.t('VNĐ') + '/m<sup>2</sup>');
+			priceSize.html(formatPrice(price/size) + ' ' + lajax.t('VNĐ') + '/m<sup>2</sup>');
 		} else {
 			priceSize.html('');
 		}
@@ -1128,7 +1122,7 @@ function numnberOnly(e) {
 	
 	if($(this).hasClass('number-float')) {
 		if($(this).val().indexOf(',') === -1 && $(this).val() !== '') {
-			allow.push(188);
+			allow.push(190);
 		}
 	} else {
 		if(e.keyCode == 48 && $(this).val() == '' && !$(this).data('zero-first')) {

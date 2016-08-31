@@ -29,7 +29,7 @@ $alt = $catType . ' - ' . $product->getAddress($product->show_home_no);
 				<div class="clearfix">
 					<div class="right-attr-detail clearfix">
 						<p class="id-duan"><?= Yii::t('ad', 'ID') ?>:<span><?= Yii::$app->params['listing_prefix_id'] . $product->id;?></span></p>
-			    		<ul class="icon-num-get hide">
+			    		<ul class="icon-num-get">
 					    	<li><span class="icon-mv"><span class="icon-heart-icon-listing"></span></span>3</li>
 					    	<li><span class="icon-mv"><span class="icon-share-social"></span></span>5</li>
 					    	<li><span class="icon-mv"><span class="icon-icons-search"></span></span>12</li>
