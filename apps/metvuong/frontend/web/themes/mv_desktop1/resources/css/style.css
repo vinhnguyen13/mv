@@ -5312,7 +5312,6 @@ html.mm-opening .mm-slideout {
 }
 .detail-duan-moi .swiper-wrapper {
     height: 400px;
-    background: #eaeaea;
 }
 .wrap-duan-moi .item {
     font-size: 13px;
@@ -7603,6 +7602,7 @@ padding: 5px 0;
 }
 .wrap-duan-moi .gallery-detail {
     margin-bottom: 5px;
+    background: #eaeaea;
 }
 .detail-listing-extra.detail-listing .gallery-detail {
     height: 381px;
