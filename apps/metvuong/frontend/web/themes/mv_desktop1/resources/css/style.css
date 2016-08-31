@@ -2300,6 +2300,7 @@ margin-bottom: 0;
 }
 .content-suggest li a:hover {
     /* font-weight: 700; */
+    text-decoration: none;
 }
 .icon-share-td {
     display: inline-block;
