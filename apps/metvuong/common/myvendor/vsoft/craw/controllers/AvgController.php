@@ -12,6 +12,7 @@ use Box\Spout\Writer\Style\Border;
 use Box\Spout\Writer\Style\BorderBuilder;
 use Box\Spout\Writer\Style\Color;
 use Box\Spout\Writer\Style\StyleBuilder;
+use yii\helpers\ArrayHelper;
 
 class AvgController extends Controller {
 	public function init() {
@@ -158,26 +159,30 @@ class AvgController extends Controller {
 			'data' => [
 				'parent' => [
 					'name' => $parentName,
+					'id' => $get['id'],
+					'type' => 'district',
 					'value' => $this->avg($products)
 				],
-				'childs' => $this->buildChildsFromGroupData($groupByWard)
+				'childs' => $this->buildChildsFromGroupData($groupByWard, 'ward')
 			]
 		];
 		
-		foreach ($groupByWard as $wardName => $wardProducts) {
-			$sheets[] = $this->_buildSheetsWard($wardName, $wardName, $wardProducts);
+		foreach ($groupByWard as $gbw) {
+			$sheets[] = $this->_buildSheetsWard($gbw['name'], $gbw['name'], $gbw['products'], $gbw['id']);
 		}
 		
 		return $sheets;
 	}
 	
-	public function buildChildsFromGroupData($groupData) {
+	public function buildChildsFromGroupData($groupData, $type) {
 		$childs = [];
 			
-		foreach ($groupData as $name => $products) {
+		foreach ($groupData as $gd) {
 			$childs[] = [
-				'name' => $name,
-				'value' => $this->avg($products)
+				'name' => $gd['name'],
+				'type' => $type,
+				'id' => $gd['id'],
+				'value' => $this->avg($gd['products'])
 			];
 		}
 		
@@ -187,7 +192,7 @@ class AvgController extends Controller {
 	public function buildSheetsWard($get, $products) {
 		$parentName = current(explode(', ', $get['location']));
 		
-		return [$this->_buildSheetsWard($parentName . ' - Overview', $parentName, $products)];
+		return [$this->_buildSheetsWard($parentName . ' - Overview', $parentName, $products, $get['id'])];
 	}
 	
 	public function buildSheetsProject_building($get, $products) {
@@ -195,6 +200,8 @@ class AvgController extends Controller {
 		
 		$childs[] = [
 			'name' => $name,
+			'type' => 'project',
+			'id' => $get['id'],
 			'value' => $this->avg($products)
 		];
 		
@@ -204,7 +211,7 @@ class AvgController extends Controller {
 		]];
 	}
 	
-	public function _buildSheetsWard($sheetName, $name, $products) {
+	public function _buildSheetsWard($sheetName, $name, $products, $id) {
 		$groupByProject = $this->groupByProject($products);
 		
 // 		$additionProjectData = [];
@@ -220,9 +227,11 @@ class AvgController extends Controller {
 			'data' => [
 				'parent' => [
 					'name' => $name,
+					'type' => 'ward',
+					'id' => $id,
 					'value' => $this->avg($products)
 				],
-				'childs' => $this->buildChildsFromGroupData($groupByProject)
+				'childs' => $this->buildChildsFromGroupData($groupByProject, 'project')
 			]
 		];
 		
@@ -313,10 +322,18 @@ class AvgController extends Controller {
 		$groupByProject = [];
 
 		foreach ($products as $product) {
-			$groupByProject[$product['project_name']][] = $product;
-		}
+			if(!isset($groupByProject[$product['project_building_id']])) {
+				$groupByProject[$product['project_building_id']] = [
+					'id' => $product['project_building_id'],
+					'name' => $product['project_name'],
+					'products' => []
+				];
+			}
 			
-		uksort($groupByProject, "strnatcmp");
+			$groupByProject[$product['project_building_id']]['products'][] = $product;
+		}
+		
+		ArrayHelper::multisort($groupByProject, 'name', SORT_ASC, SORT_NATURAL);
 		
 		return $groupByProject;
 	}
@@ -325,10 +342,17 @@ class AvgController extends Controller {
 		$groupByWard = [];
 		
 		foreach ($products as $product) {
-			$groupByWard[$product['ward_name']][] = $product;
+			if(!isset($groupByWard[$product['ward_id']])) {
+				$groupByWard[$product['ward_id']] = [
+					'id' => $product['ward_id'],
+					'name' => $product['ward_name'],
+					'products' => []
+				];
+			}
+			$groupByWard[$product['ward_id']]['products'][] = $product;
 		}
-		
-		uksort($groupByWard, "strnatcmp");
+
+		ArrayHelper::multisort($groupByWard, 'name', SORT_ASC, SORT_NATURAL);
 		
 		return $groupByWard;
 	}

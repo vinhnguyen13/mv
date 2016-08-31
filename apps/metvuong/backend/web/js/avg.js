@@ -252,7 +252,21 @@ $(document).ready(function(){
 	function append(table, data, isMain) {
 		var c = isMain ? 'main' : '';
 		
-		table.find('.area-title').append('<td class="' + c + '">' + data.name + '</td>');
+		var url = $('#view-listing').attr('href');
+		
+		if(data.type != avgSearch.data('type')) {
+			if(data.type == 'ward') {
+				url += '&ward_id=' + data.id + '&ward_name_filter=3' + '&ward_name_mask=' + encodeURIComponent(data.name + ', ' + avgSearchPlaceholder.text());
+			} else if(data.type == 'project') {
+				if(avgSearch.data('type') == 'district') {
+					url += '&project_building_id=' + data.id + '&project_name_filter=3' + '&project_name_mask=' + encodeURIComponent(data.name + ', ' + avgSearchPlaceholder.text());
+				} else {
+					url += '&project_building_id=' + data.id + '&project_name_filter=3' + '&project_name_mask=' + encodeURIComponent(data.name);
+				}
+			}
+		}
+		
+		table.find('.area-title').append('<td class="' + c + '"><a href="' + url + '" target="_blank">' + data.name + '</a></td>');
 		table.find('.data-point').append('<td class="' + c + '">' + formatNumber(data.value['Data Point']) + '</td>');
 		table.find('.avg-price').append('<td class="' + c + '">' + formatNumber(data.value['AVG Price']) + '</td>');
 		table.find('.avg-size').append('<td class="' + c + '">' + formatNumber(data.value['AVG SQM']) + '</td>');
