@@ -131,6 +131,9 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                         <a href="javascript:void(0)" rel="nofollow"><?=Yii::t('project', 'Others Information')?></a>
                                     </li>
                                 <?php } ?>
+                                <li>
+                                    <a href="javascript:void(0)" rel="nofollow"><?=Yii::t('ad', 'For Sell')?> - <?=Yii::t('ad', 'For Rent')?></a>
+                                </li>
                             </ul>
                             <?php
                             foreach($tabProject as $key => $tabValue) {
@@ -264,6 +267,11 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                     </div>
                                 </div>
                             <?php }?>
+                            <div class="editor">
+                                <div class="a1">
+
+                                </div>
+                            </div>
                         </div>
                     <?php } ?>
 
