@@ -438,6 +438,15 @@ header {
     padding: 0;
     z-index: 5;
 }
+#search-duan-form .suggest-search {
+    top: 40px;
+}
+#search-duan-form .suggest-search li {
+    padding: 0;
+}
+#search-duan-form .suggest-search li a {
+    display: block;
+}
 .suggest-search .content-suggest {
     max-height: 310px;
     overflow-x: hidden;
@@ -2281,7 +2290,7 @@ margin-bottom: 0;
     margin-right: 10px;
 }
 .content-suggest li a:hover {
-    font-weight: 700;
+    /* font-weight: 700; */
 }
 .icon-share-td {
     display: inline-block;
@@ -7930,7 +7939,7 @@ padding: 5px 0;
 }
 .editor {
     font-size: 13px;
-    padding: 15px;
+    padding: 0 15px 15px;
     float: left;
     width: 75%;
     display: none;
@@ -13767,6 +13776,39 @@ ul.cardList li {
 }
 .listing-post-by-project {
     margin-top: 0px;
+}
+.listing-post-by-project .pic-intro img {
+    height: 100% !important;
+}
+.listing-post-by-project .right-attr-detail {
+    float: left;
+    width: 100%
+}
+.listing-post-by-project .left-attr-detail .list-attr-td{
+    margin-bottom: 10px;
+}
+.listing-post-by-project .left-attr-detail .list-attr-td li .icon-mv {
+    font-size: 25px;
+}
+.listing-post-by-project .right-attr-detail .id-duan {
+    text-align: left;
+    margin: 0;
+}
+.listing-post-by-project .item .info-item {
+    overflow: hidden;
+    padding-bottom: 0;
+    height: 170px;
+}
+.listing-post-by-project .icon-num-get li {
+    padding: 0;
+    font-size: 14px;
+}
+.listing-post-by-project .icon-num-get {
+    margin-bottom: 5px;
+    float: left;
+}
+.listing-post-by-project .address-listing {
+    margin-bottom: 0;
 }
 .listing-post-by-project .nav-tabs {
     border-bottom: 2px solid #00a769;

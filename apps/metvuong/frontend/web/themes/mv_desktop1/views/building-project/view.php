@@ -268,71 +268,67 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                 </div>
                             <?php }?>
                             <div class="editor">
-                                <div class="a1">
-
+                                <div class="listing-post-by-project">
+                                    <?php
+                                    $sell_products = \frontend\models\Ad::find()->listingOfBuilding($model->id, \vsoft\ad\models\AdProduct::TYPE_FOR_SELL);
+                                    $rent_products = \frontend\models\Ad::find()->listingOfBuilding($model->id, \vsoft\ad\models\AdProduct::TYPE_FOR_RENT);
+                                    ?>
+                                    <!-- Nav tabs -->
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li role="presentation" class="active"><a href="#tab-can-mua" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('ad', 'For Sell')?></a></li>
+                                        <li role="presentation"><a href="#tab-can-thue" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('ad', 'For Rent')?></a></li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div role="tabpanel" class="tab-pane fade in active" id="tab-can-mua">
+                                            <?php
+                                            $slug = SlugSearch::find()->where(['table' => 'ad_building_project', 'value' => $model->id])->one()->slug;
+                                            if(!empty($sell_products)) {
+                                                ?>
+                                                <ul class="clearfix listing-item">
+                                                    <?=$this->render('/ad/_partials/list', ['products' => $sell_products]);?>
+                                                </ul>
+                                                <div class="text-center">
+                                                    <a href="<?= Url::to(['/ad/index1', 'params'=>$slug]) ?>" class="btn-common btn-view-more"><?=Yii::t('general', 'View more')?></a>
+                                                </div>
+                                                <?php
+                                            }else {
+                                                ?>
+                                                <ul class="clearfix listing-item">
+                                                    <li class="col-xs-12 col-sm-6 col-lg-4">
+                                                        <?=Yii::t('common', '{object} no data', ['object'=>Yii::t('ad', 'For Sell')])?>
+                                                    </li>
+                                                </ul>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+                                        <div role="tabpanel" class="tab-pane fade in" id="tab-can-thue">
+                                            <?php
+                                            if(!empty($rent_products)) {
+                                                ?>
+                                                <ul class="clearfix listing-item">
+                                                    <?=$this->render('/ad/_partials/list', ['products' => $rent_products]);?>
+                                                </ul>
+                                                <div class="text-center">
+                                                    <a href="<?= Url::to(['/ad/index2', 'params'=>$slug]) ?>" class="btn-common btn-view-more"><?=Yii::t('general', 'View more')?></a>
+                                                </div>
+                                                <?php
+                                            }else {
+                                                ?>
+                                                <ul class="clearfix listing-item">
+                                                    <li class="col-xs-12 col-sm-6 col-lg-4">
+                                                        <?=Yii::t('common', '{object} no data', ['object'=>Yii::t('ad', 'For Rent')])?>
+                                                    </li>
+                                                </ul>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     <?php } ?>
-
-                    <div class="listing-post-by-project">
-                        <?php
-                        $sell_products = \frontend\models\Ad::find()->listingOfBuilding($model->id, \vsoft\ad\models\AdProduct::TYPE_FOR_SELL);
-                        $rent_products = \frontend\models\Ad::find()->listingOfBuilding($model->id, \vsoft\ad\models\AdProduct::TYPE_FOR_RENT);
-                        ?>
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#tab-can-mua" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('ad', 'For Sell')?></a></li>
-                            <li role="presentation"><a href="#tab-can-thue" aria-controls="home" role="tab" data-toggle="tab"><?=Yii::t('ad', 'For Rent')?></a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane fade in active" id="tab-can-mua">
-                                <?php
-                                $slug = SlugSearch::find()->where(['table' => 'ad_building_project', 'value' => $model->id])->one()->slug;
-                                if(!empty($sell_products)) {
-                                    ?>
-                                    <ul class="clearfix listing-item">
-                                        <?=$this->render('/ad/_partials/list', ['products' => $sell_products]);?>
-                                    </ul>
-                                    <div class="text-center">
-                                        <a href="<?= Url::to(['/ad/index1', 'params'=>$slug]) ?>" class="btn-common btn-view-more"><?=Yii::t('general', 'View more')?></a>
-                                    </div>
-                                    <?php
-                                }else {
-                                    ?>
-                                    <ul class="clearfix listing-item">
-                                        <li class="col-xs-12 col-sm-6 col-lg-4">
-                                            <?=Yii::t('common', '{object} no data', ['object'=>Yii::t('ad', 'For Sell')])?>
-                                        </li>
-                                    </ul>
-                                    <?php
-                                }
-                                ?>
-                            </div>
-                            <div role="tabpanel" class="tab-pane fade in" id="tab-can-thue">
-                                <?php
-                                if(!empty($rent_products)) {
-                                    ?>
-                                    <ul class="clearfix listing-item">
-                                        <?=$this->render('/ad/_partials/list', ['products' => $rent_products]);?>
-                                    </ul>
-                                    <div class="text-center">
-                                        <a href="<?= Url::to(['/ad/index2', 'params'=>$slug]) ?>" class="btn-common btn-view-more"><?=Yii::t('general', 'View more')?></a>
-                                    </div>
-                                    <?php
-                                }else {
-                                    ?>
-                                    <ul class="clearfix listing-item">
-                                        <li class="col-xs-12 col-sm-6 col-lg-4">
-                                            <?=Yii::t('common', '{object} no data', ['object'=>Yii::t('ad', 'For Rent')])?>
-                                        </li>
-                                    </ul>
-                                    <?php
-                                }
-                                ?>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div class="col-xs-12 col-md-3 col-right sidebar-col">
 
