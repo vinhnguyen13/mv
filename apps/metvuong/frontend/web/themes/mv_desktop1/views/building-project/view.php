@@ -103,46 +103,6 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                         </ul>
                     </div>
                     <?php
-                    $investors = $model->investors;
-                    foreach ($investors as $investor) {
-                        $src_img = $investor->logo;
-                        if(empty($investor->logo))
-                            $src_img = \vsoft\ad\models\AdImages::defaultImage();
-                        if(file_exists(Yii::getAlias('@store') . "/investor/" . $investor->logo))
-                            $src_img = "/store/investor/" . $investor->logo; ?>
-                        <div class="item chudautu-infor">
-                            <div class="title-section"><?=Yii::t('project', 'Investor')?></div>
-                            <div class="clearfix">
-                                <div class="wrap-img pull-left">
-                                    <img src="<?=(filter_var($src_img, FILTER_VALIDATE_URL) === FALSE) ? $src_img : $investor->logo ?>" alt="<?=$investor->name?>">
-                                </div>
-                                <div class="infor-detail-chudautu">
-                                    <ul>
-                                        <li><strong class="fs-20 font-600"><?=empty($investor->name) ? $lbl_updating : $investor->name ?></strong></li>
-                                        <li>
-                                            <strong><?=Yii::t('project','Address')?></strong>:
-                                            <?=empty($investor->address) ? $lbl_updating : $investor->address ?></li>
-                                        <li>
-                                            <strong><?=Yii::t('project','Phone')?></strong>:
-                                            <?=empty($investor->phone) ? $lbl_updating : $investor->phone ?>
-                                            |
-                                            <strong><?=Yii::t('project','Fax')?></strong>:
-                                            <span><?=empty($investor->fax) ? $lbl_updating : $investor->fax ?></span>
-                                        </li>
-                                        <li>
-                                            <strong><?=Yii::t('project','Website')?></strong>:
-                                            <span><?=empty($investor->website) ? $lbl_updating : "<a href='#' class='investor_website' data-url='". $investor->website. "'>".$investor->website."</a>" ?></span>
-                                        </li>
-                                        <li>
-                                            <strong><?=Yii::t('project','Email')?></strong>:
-                                            <span><?=empty($investor->email) ? $lbl_updating : $investor->email ?></span>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    <?php }
-
                     if(count($tabProject) > 0){
                         ?>
                         <div class="infor-bds">
@@ -157,6 +117,13 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                         </li>
                                     <?php }
                                 }
+                                $investors = $model->investors;
+                                if(count($investors) > 0){ ?>
+                                    <li>
+                                        <a href="javascript:void(0)" rel="nofollow"
+                                           style="white-space:nowrap;"><?=Yii::t('project', 'Investor')?></a>
+                                    </li>
+                                <?php }
                                 $model_facilities = $model->facilities;
                                 if(!empty($model->start_time) || !empty($model->estimate_finished) || !empty($model->building_density) ||
                                     !empty($model->land_area) || !empty($model->apartment_no) || !empty($model->units_no) || !empty($model->gfa) ||
@@ -179,38 +146,83 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                     </div>
                                 <?php }
                             }
-
                             $architects = $model->architects;
                             $contractors = $model->contractors;
-                            if(count($investors) > 0 || count($architects) > 0 || count($contractors) > 0 || !empty($model->start_time) || !empty($model->estimate_finished) || !empty($model->building_density) ||
+                            if(count($investors) > 0 || count($architects) > 0 || count($contractors) > 0) {
+                            ?>
+                            <div class="editor" style="display:none;clear: both">
+                                <div class="a1">
+                                    <?php foreach ($investors as $investor) {
+                                    $src_img = $investor->logo;
+                                    if (empty($investor->logo))
+                                        $src_img = \vsoft\ad\models\AdImages::defaultImage();
+                                    if (file_exists(Yii::getAlias('@store') . "/investor/" . $investor->logo))
+                                        $src_img = "/store/investor/" . $investor->logo;?>
+                                    <div class="item chudautu-infor">
+                                        <div class="clearfix">
+                                            <div class="wrap-img pull-left">
+                                                <img src="<?= (filter_var($src_img, FILTER_VALIDATE_URL) === FALSE) ? $src_img : $investor->logo ?>"
+                                                    alt="<?= $investor->name ?>">
+                                            </div>
+                                            <div class="infor-detail-chudautu">
+                                                <ul>
+                                                    <li><strong
+                                                            class="fs-18 font-600"><?= empty($investor->name) ? $lbl_updating : $investor->name ?></strong>
+                                                    </li>
+                                                    <li>
+                                                        <strong><?= Yii::t('project', 'Address') ?></strong>:
+                                                        <?= empty($investor->address) ? $lbl_updating : $investor->address ?>
+                                                    </li>
+                                                    <li>
+                                                        <strong><?= Yii::t('project', 'Phone') ?></strong>:
+                                                        <?= empty($investor->phone) ? $lbl_updating : $investor->phone ?>
+                                                        |
+                                                        <strong><?= Yii::t('project', 'Fax') ?></strong>:
+                                                        <span><?= empty($investor->fax) ? $lbl_updating : $investor->fax ?></span>
+                                                    </li>
+                                                    <li>
+                                                        <strong><?= Yii::t('project', 'Website') ?></strong>:
+                                                        <span><?= empty($investor->website) ? $lbl_updating : "<a href='#' class='investor_website' data-url='" . $investor->website . "'>" . $investor->website . "</a>" ?></span>
+                                                    </li>
+                                                    <li>
+                                                        <strong><?= Yii::t('project', 'Email') ?></strong>:
+                                                        <span><?= empty($investor->email) ? $lbl_updating : $investor->email ?></span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <?php }
+                                    if(count($architects) > 0){ ?>
+                                    <div class="item chudautu-infor">
+                                        <div class="title-section"><?=Yii::t('project', 'Architect')?></div>
+                                        <?php foreach($architects as $architect){ ?>
+                                            <div class="info-detail-architect">
+                                                <?= empty($architect->name) ? $lbl_updating : $architect->name ?></li>
+                                            </div>
+                                        <?php } ?>
+                                    </div>
+                                    <?php }
+                                    if(count($contractors) > 0){ ?>
+                                        <div class="item chudautu-infor">
+                                            <div class="title-section"><?=Yii::t('project', 'Contractor')?></div>
+                                            <?php foreach($contractors as $contractor){ ?>
+                                                <div class="info-detail">
+                                                    <?= empty($contractor->name) ? $lbl_updating : $contractor->name ?></li>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
+                                    <?php } ?>
+                                </div>
+                            </div>
+                            <?php }
+                            if(!empty($model->start_time) || !empty($model->estimate_finished) || !empty($model->building_density) ||
                             !empty($model->land_area) || !empty($model->apartment_no) || !empty($model->units_no) || !empty($model->gfa) ||
                             !empty($model->no_1_bed) || !empty($model->sqm_1_bed) || !empty($model->no_2_bed) || !empty($model->sqm_2_bed) ||
                             !empty($model->no_3_bed) || !empty($model->sqm_3_bed) || !empty($model_facilities)) { ?>
                                 <div class="editor" style="display:none;clear: both">
                                     <div class="a1">
-                                        <?php
-                                        if(count($architects) > 0){ ?>
-                                            <div class="item chudautu-infor">
-                                                <div class="title-section"><?=Yii::t('project', 'Architect')?></div>
-                                                <?php foreach($architects as $architect){ ?>
-                                                    <div class="info-detail-architect">
-                                                        <?= empty($architect->name) ? $lbl_updating : $architect->name ?></li>
-                                                    </div>
-                                                <?php } ?>
-                                            </div>
-                                        <?php }
-                                        if(count($contractors) > 0){ ?>
-                                            <div class="item chudautu-infor">
-                                                <div class="title-section"><?=Yii::t('project', 'Contractor')?></div>
-                                                <?php foreach($contractors as $contractor){ ?>
-                                                    <div class="info-detail">
-                                                        <?= empty($contractor->name) ? $lbl_updating : $contractor->name ?></li>
-                                                    </div>
-                                                <?php } ?>
-                                            </div>
-                                        <?php } ?>
                                         <div class="item chudautu-infor thong-tin-khac">
-                                            <div class="title-section"><?=Yii::t('project', 'Others Information')?></div>
                                             <div class="info-detail">
                                                 <?= !empty($model->start_time) ? "<div><span>". Yii::t('project', 'Construction Start'). ":</span><p>". $model->start_time. "</p></div>" : null?>
                                                 <?= !empty($model->estimate_finished) ? "<div><span>". Yii::t('project', 'Completion'). ":</span><p>". $model->estimate_finished. "</p></div>" : null?>
@@ -228,9 +240,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                                 <?= !empty($model->sqm_3_bed) ? "<div><span>". Yii::t('project', 'SQM 3 Bed'). ":</span><p>". $model->sqm_3_bed. "</p></div>" : null?>
                                                 <br>
                                             </div>
-                                            
                                         </div>
-
                                         <?php
                                         if(!empty($model_facilities)){?>
                                             <div class="chudautu-infor">
