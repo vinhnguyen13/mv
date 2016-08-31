@@ -295,20 +295,25 @@ class AvgController extends Controller {
 		$avgBed = $this->groupCount($groupBed);
 		$avgBath = $this->groupCount($groupBath);
 		
-		$avgPriceAdvance = $this->avgAdvance($products, 'price');
+		/*
+		 * For testing
+		 */
+		//$avgPriceAdvance = $this->avgAdvance($products, 'price');
+		//$avgSizeAdvance = $this->avgAdvance($products, 'size');
 
-		return ['avgPriceAdvance' => $avgPriceAdvance, 'Data Point' => count($products), 'AVG Price' => $avgPrice, 'AVG SQM' => $avgSize, 'AVG $/SQM' => $avgPriceSize, 'AVG Bed' => $avgBed, 'AVG Bath' => $avgBath];
+		return ['Data Point' => count($products), 'AVG Price' => $avgPrice, 'AVG SQM' => $avgSize, 'AVG $/SQM' => $avgPriceSize, 'AVG Bed' => $avgBed, 'AVG Bath' => $avgBath];
 	}
 	
 	public function avgAdvance($arr, $column) {
+		var_dump(Avg::me()->calculation_boxplot([8000000000, 8200000000]));exit();
 		$values = array_filter(ArrayHelper::getColumn($arr, $column, true));
 		$iqr = Avg::me()->calculation_boxplot($values);
 		$outliersBelow = [];
 		$outliersAbove = [];
-		$inliers = [];
+		$retention = [];
 		
-		$below = $iqr['q1'] - (1.5 * $iqr['IQR']);
-		$above = $iqr['q3'] + (1.5 * $iqr['IQR']);
+		$below = $iqr['q1'] - (3 * $iqr['IQR']);
+		$above = $iqr['q3'] + (3 * $iqr['IQR']);
 		
 		foreach ($values as $id => $value) {
 			if($value < $below) {
@@ -316,11 +321,11 @@ class AvgController extends Controller {
 			} else if($value > $above) {
 				$outliersAbove[$id] = $value;
 			} else {
-				$inliers[$id] = $value;
+				$retention[$id] = $value;
 			}
 		}
 		
-		return ['below' => $below, 'above' => $above, 'outliersAbove' => $outliersAbove, 'outliersBelow' => $outliersBelow, 'inliers' => $inliers];
+		return ['below' => $below, 'above' => $above, 'outliersAbove' => $outliersAbove, 'outliersBelow' => $outliersBelow, 'retention' => $retention];
 	}
 	
 	public function groupCount($items) {
