@@ -160,7 +160,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                         $src_img = "/store/investor/" . $investor->logo;?>
                                     <div class="item chudautu-infor">
                                         <div class="clearfix">
-                                            <div class="wrap-img pull-left">
+                                            <div class="wrap-img">
                                                 <img src="<?= (filter_var($src_img, FILTER_VALIDATE_URL) === FALSE) ? $src_img : $investor->logo ?>"
                                                     alt="<?= $investor->name ?>">
                                             </div>

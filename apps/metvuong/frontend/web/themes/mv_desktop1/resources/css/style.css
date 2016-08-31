@@ -8004,6 +8004,8 @@ padding: 5px 0;
     width: 200px;
     /* margin-right: 20px; */
     /* text-align: center; */
+    border: 1px solid #dedede;
+    margin-bottom: 15px;
 }
 .chudautu-infor .wrap-img img {
     /* margin: 0 auto 0; */
