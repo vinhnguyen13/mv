@@ -112,16 +112,14 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                     if (!empty($tabValue)) {
                                         ?>
                                         <li>
-                                            <a href="javascript:void(0)" rel="nofollow"
-                                               style="white-space:nowrap;"><?= $tabKeys[$key] ?></a>
+                                            <a href="javascript:void(0)" rel="nofollow"><?= $tabKeys[$key] ?></a>
                                         </li>
                                     <?php }
                                 }
                                 $investors = $model->investors;
                                 if(count($investors) > 0){ ?>
                                     <li>
-                                        <a href="javascript:void(0)" rel="nofollow"
-                                           style="white-space:nowrap;"><?=Yii::t('project', 'Investor')?></a>
+                                        <a href="javascript:void(0)" rel="nofollow"><?=Yii::t('project', 'Investor')?></a>
                                     </li>
                                 <?php }
                                 $model_facilities = $model->facilities;
@@ -130,8 +128,7 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                     !empty($model->no_1_bed) || !empty($model->sqm_1_bed) || !empty($model->no_2_bed) || !empty($model->sqm_2_bed) ||
                                     !empty($model->no_3_bed) || !empty($model->sqm_3_bed) || !empty($model_facilities)) { ?>
                                     <li>
-                                        <a href="javascript:void(0)" rel="nofollow"
-                                           style="white-space:nowrap;"><?=Yii::t('project', 'Others Information')?></a>
+                                        <a href="javascript:void(0)" rel="nofollow"><?=Yii::t('project', 'Others Information')?></a>
                                     </li>
                                 <?php } ?>
                             </ul>

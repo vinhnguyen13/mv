@@ -5312,11 +5312,9 @@ html.mm-opening .mm-slideout {
 }
 .detail-duan-moi .swiper-wrapper {
     height: 400px;
+    background: #eaeaea;
 }
 .wrap-duan-moi .item {
-    border-bottom: solid 0.5px #ededed;
-    /* padding-bottom: 15px; */
-    /* margin-bottom: 15px; */
     font-size: 13px;
     position: relative;
     line-height: 23px;
@@ -5330,7 +5328,7 @@ html.mm-opening .mm-slideout {
 }
 .wrap-duan-moi .infor-address-duan p {
     font-weight: 600;
-    margin-bottom: 1px;
+    margin-bottom: 5px;
 }
 .wrap-duan-moi .gallery-detail {
     margin-bottom: 5px;
@@ -5341,7 +5339,7 @@ html.mm-opening .mm-slideout {
     text-transform: uppercase;
     font-size: 25px;
     display: block;
-    margin-bottom: 2px;
+    margin-bottom: 7px;
     font-weight: 600;
 }
 .wrap-duan-moi .icons-detail {
@@ -7402,7 +7400,14 @@ padding: 5px 0;
     }
 }
 @media ( max-width: 640px ) {
-    #listing-list .list-attr-td {
+    .detail-duan-moi .swiper-wrapper {
+        height: 250px;
+    }
+    .wrap-duan-moi .infor-address-duan strong {
+        font-size: 20px;
+    }
+    .tabProject li a {
+        font-size: 11px;
     }
 }
 #listing-list > ul {
@@ -7930,6 +7935,9 @@ padding: 5px 0;
     width: 75%;
     display: none;
 }
+.editor iframe {
+    max-width: 100%;
+}
 .editor img {
     max-width: 100%;
     height: auto !important;
@@ -8043,6 +8051,9 @@ padding: 5px 0;
     }
     .search-homepage > ul {
         margin-bottom: 15px;
+    }
+    .editor iframe {
+        height: 200px;
     }
 }
 .select2-container {
