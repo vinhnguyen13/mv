@@ -11,6 +11,8 @@ use vsoft\ad\models\AdProduct;
 use vsoft\ad\models\AdProductAdditionInfo;
 use vsoft\craw\models\AdProductToolMap;
 use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Url;
 use yii\web\Controller;
@@ -28,7 +30,33 @@ use Box\Spout\Writer\Style\Color;
 use Box\Spout\Writer\Style\StyleBuilder;
 
 class ManagerController extends Controller {
-	
+
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function () {
+                            return (Yii::$app->user->can('/'.$this->module->id.'/*') ||
+                                Yii::$app->user->can('/'.$this->id.'/*') ||
+                                Yii::$app->user->can('/'.$this->id.'/'.$this->action->id));
+                        },
+                    ]
+                ]
+            ],
+        ];
+    }
+
 	public function actionExport() {
 		include str_replace('controllers', 'components', dirname(__FILE__)) . '/Spout/Autoloader/autoload.php';
 		

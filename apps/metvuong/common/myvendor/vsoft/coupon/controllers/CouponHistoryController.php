@@ -5,6 +5,7 @@ namespace vsoft\coupon\controllers;
 use Yii;
 use vsoft\coupon\models\CouponHistory;
 use vsoft\coupon\models\CouponHistorySearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -25,6 +26,20 @@ class CouponHistoryController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'allow' => true,
+                        'roles' => ['@'],
+                        'matchCallback' => function () {
+                            return (Yii::$app->user->can('/'.$this->module->id.'/*') ||
+                                Yii::$app->user->can('/'.$this->id.'/*') ||
+                                Yii::$app->user->can('/'.$this->id.'/'.$this->action->id));
+                        },
+                    ]
+                ]
             ],
         ];
     }
