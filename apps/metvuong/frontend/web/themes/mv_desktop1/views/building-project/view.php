@@ -228,30 +228,32 @@ $email = Yii::$app->user->isGuest ? null : (empty($user) ? "" : (empty($user->pr
                                                 <?= !empty($model->sqm_3_bed) ? "<div><span>". Yii::t('project', 'SQM 3 Bed'). ":</span><p>". $model->sqm_3_bed. "</p></div>" : null?>
                                                 <br>
                                             </div>
-                                            <?php
-                                            if(!empty($model_facilities)){?>
-                                                <div class="info-detail">
-                                                    <p class="font-600 text-decor">Tiện ích</p>
-                                                    <ul class="clearfix list-tienich">
-                                                        <?php
-                                                        $_facility = \vsoft\ad\models\AdFacility::getDb()->cache(function() use($model_facilities){
-                                                            return \vsoft\ad\models\AdFacility::find()->where("id in ({$model_facilities})")->asArray()->all();
-                                                        });
-                                                        $facilities = ArrayHelper::getColumn($_facility, 'name');
-                                                        if(count($facilities) > 0) {
-                                                            foreach ($facilities as $k => $facility) {
-                                                                $class = \common\components\Slug::me()->slugify($facility); ?>
-                                                                <li>
-                                                                    <span class="icon-mv"><span class="icon-<?=$class?>"></span></span>
-                                                                    <?=Yii::t('ad', $facility)?>
-                                                                </li>
-                                                            <?php }
-                                                        }
-                                                        ?>
-                                                    </ul>
-                                                </div>
-                                            <?php  } ?>
+                                            
                                         </div>
+
+                                        <?php
+                                        if(!empty($model_facilities)){?>
+                                            <div class="chudautu-infor">
+                                                <div class="title-section">Tiện ích</div>
+                                                <ul class="clearfix list-tienich">
+                                                    <?php
+                                                    $_facility = \vsoft\ad\models\AdFacility::getDb()->cache(function() use($model_facilities){
+                                                        return \vsoft\ad\models\AdFacility::find()->where("id in ({$model_facilities})")->asArray()->all();
+                                                    });
+                                                    $facilities = ArrayHelper::getColumn($_facility, 'name');
+                                                    if(count($facilities) > 0) {
+                                                        foreach ($facilities as $k => $facility) {
+                                                            $class = \common\components\Slug::me()->slugify($facility); ?>
+                                                            <li>
+                                                                <span class="icon-mv"><span class="icon-<?=$class?>"></span></span>
+                                                                <?=Yii::t('ad', $facility)?>
+                                                            </li>
+                                                        <?php }
+                                                    }
+                                                    ?>
+                                                </ul>
+                                            </div>
+                                        <?php  } ?>
                                     </div>
                                 </div>
                             <?php }?>

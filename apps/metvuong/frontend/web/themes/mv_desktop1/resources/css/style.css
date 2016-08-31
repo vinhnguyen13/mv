@@ -7896,29 +7896,33 @@ padding: 5px 0;
 .tabProject {
     /* float: left; */
     margin-bottom: 25px;
-    border-bottom: 1px solid #CACACA;
+    /* border: 1px solid #d8d8d8; */
     position: relative;
     /* padding-top: 50px; */
+    background: #f1f1f1;
 }
 .tabProject li {
     float: left;
+    border-right: 1px solid #fff;
 }
 .tabProject li:last-child {
     margin-right: 0;
 }
 .tabActiveProject {
-    background-color: #fff !important;
+    /* background-color: #fff !important; */
 }
 .tabProject li a {
     text-decoration: none;
     font-weight: bold;
     color: #2F2F2F;
     display: block;
-    padding: 10px 15px;
+    padding: 15px 25px;
+    text-transform: uppercase;
+    border-right: 1px solid #d8d8d8;
 }
 .tabProject li.tabActiveProject a {
     color: #00a769;
-    background: #EAEAEA;
+    /* background: #f1f1f1; */
 }
 .editor {
     font-size: 13px;
@@ -7933,7 +7937,7 @@ padding: 5px 0;
 }
 .infor-bds {
     /* min-height: 500px; */
-    background: #f7f7f7;
+    /* background: #f7f7f7; */
     margin-bottom: 30px;
 }
 .editor h1,
@@ -7996,10 +8000,8 @@ padding: 5px 0;
 }
 .chudautu-infor .title-section {
     font-weight: 600;
-    font-size: 18px;
+    font-size: 15px;
     margin-bottom: 15px;
-    color: #00a769;
-    text-decoration: underline;
 }
 .chudautu-infor .wrap-img {
     width: 200px;
@@ -14636,13 +14638,10 @@ ul.cardList li {
 .thong-tin-khac .info-detail div {
     float: left;
     width: 50%;
-    margin-bottom: 10px;
 }
 .thong-tin-khac .info-detail span {
-    font-weight: 600;
     width: 140px;
     float: left;
-    /* text-decoration: underline; */
 }
 .thong-tin-khac .info-detail p {
     overflow: hidden;
