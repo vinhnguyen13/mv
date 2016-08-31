@@ -200,7 +200,11 @@ class AdProductSearch2 extends AdProduct
     	}
     	
     	$query->andFilterWhere(['=', 'ad_product.type', $this->type]);
-    	$query->andFilterWhere(['=', 'ad_product.category_id', $this->category_id]);
+    	
+    	if($this->category_id) {
+    		$category_id = explode(",", $this->category_id);
+    		$query->andWhere(['ad_product.category_id' => $category_id]);
+    	}
     	
     	if($this->price_type == 2) {
     		$unit = $this->price_unit == 1 ? 1000000000 : 1000000;

@@ -16,6 +16,7 @@ use vsoft\craw\models\AdProductSearch2;
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->registerCss('.range-date-wrap {right: 0px;} #content-setting-wrap table label {font-size: 13px; padding-left: 6px; font-weight: normal; margin: 0;} #content-setting-wrap {position: absolute; white-space: nowrap; text-align: left; background: #FFF; padding: 12px; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5); z-index: 1; display: none;} #content-setting-wrap.show {display: block;} .mask-wrap .range-value {padding-right: 22px; display: inline-block; width: 80px;} .show-range .range {display: block;} .range {position: absolute; background: #FFF; padding: 8px; display: none; box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5); width: auto;} .result-search a {display: block; padding: 5px 10px;} .result-search {display: none; position: absolute; background: #FFF; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5); list-style-type: none; margin: 0; padding: 0;} .show-search .result-search {display: block;} .mask-wrap .form-control {padding-right: 22px;} .mask-wrap {position: relative;} .mask-close {cursor: pointer; position: absolute; right: 6px; top: -2px; font-size: 25px; font-family: monospace; font-weight: bold;} #filter_columns #columns-wrap {display: none;} #filter_columns.show #columns-wrap {z-index: 2; display: block;} #columns-wrap label {padding-left: 4px; vertical-align: middle; display: inline-block; margin-right: 22px;} #columns-wrap {position: absolute; background: #FFF; padding: 12px; text-align: left; box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);} #filter_columns {position: absolute; left: 0px;} .summary {position: absolute; right: 0px; top: -20px;} .cms-show-index {padding-top: 40px; position: relative;} .filter-col {margin-right: 12px;} .container {max-width: none; width: auto;} .summary {float: right;font-size: 20px;margin-top: 28px;} .title {float: left;} .min {width: 100px; display: inline-block;} table {white-space: nowrap;} .mask-wrap .range-date {width: 120px;}');
+$this->registerCssFile(Yii::getAlias('@web') . '/css/craw-manager.css');
 $this->registerCssFile(Yii::getAlias('@web') . '/css/jquery-ui.css');
 $this->registerJsFile(Yii::getAlias('@web') . '/js/jquery-ui.min.js', ['depends' => ['yii\web\YiiAsset']]);
 $this->registerJsFile(Yii::getAlias('@web') . '/js/craw-manager.js', ['depends' => ['yii\web\YiiAsset']]);
@@ -30,6 +31,12 @@ $categories = ArrayHelper::map(AdCategory::find()->asArray(true)->all(), 'id', f
 	return Yii::t('ad', $item['name']);
 });
 $directions = AdProductAdditionInfo::directionList();
+
+$category_id = $searchModel->category_id ? explode(',', $searchModel->category_id) : [];
+$categoryHtml = '';
+foreach ($categories as $cid => $cname) {
+	$categoryHtml .= '<label for="cat-' . $cid . '"><input' . (in_array($cid, $category_id) ? ' checked="checked"' : '') . ' id="cat-' . $cid . '" class="cb not-submit" type="checkbox" value="' . $cid . '" /><span>' . Yii::t('ad', $cname) . '</span></label>';
+}
 
 $columns = [
     'apid' => [
@@ -58,7 +65,14 @@ $columns = [
     	'value' => function($model) use ($categories) {
     		return $categories[$model['category_id']];
     	},
-    	'filter' => Html::activeDropDownList($searchModel, 'category_id', $categories, ['class' => 'form-control', 'prompt' => 'Loại BĐS'])
+    	'filter' => '<div class="select-mask">
+						<div class="select-mask-show">Loại BĐS</div>
+						<div class="select-mask-real">
+							<input class="real-value" type="hidden" name="category_id" id="category_id" value="' . $searchModel->category_id . '" />' .
+							$categoryHtml .
+							'<input type="button" class="btn btn-primary" style="width: 100%; border-radius: 0;" value="SUBMIT" />
+						</div>
+					</div>'
    	],
     'abpn' => [
     	'attribute' => 'project_name',

@@ -37,11 +37,16 @@
 						</div>
 						<div class="field-wrap">
 							<label>Loại BĐS</label>
-							<select name="category_id" id="category_id">
-								<?php foreach ($categories as $category): ?>
-								<option value="<?= $category->id ?>"<?= $category->id == 6 ? ' selected="selected"' : '' ?>><?= Yii::t('ad', $category->name) ?></option>
-								<?php endforeach; ?>
-							</select>
+							<div class="select-mask">
+								<div class="select-mask-show">Căn Hộ Chung Cư</div>
+								<div class="select-mask-real">
+									<input class="real-value" type="hidden" name="category_id" id="category_id" value="6" />
+									<?php foreach ($categories as $category): ?>
+									<label for="cat-<?= $category->id ?>"><input<?= $category->id == 6 ? ' checked="checked"' : '' ?> id="cat-<?= $category->id ?>" class="cb" type="checkbox" value="<?= $category->id ?>" /><span><?= Yii::t('ad', $category->name) ?></span></label>
+									<?php endforeach; ?>
+									<input type="button" class="btn btn-primary" style="width: 100%; border-radius: 0; display: none;" value="SUBMIT" />
+								</div>
+							</div>
 						</div>
 						<div class="field-wrap" style="display: none;">
 							<label>Round number</label>

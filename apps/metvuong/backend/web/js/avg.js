@@ -15,6 +15,53 @@ $(document).ready(function(){
 	var tabsContent = $('#tabs-content');
 	var dateEl = $('.datepicker');
 	
+	$('.select-mask-show').click(function(){
+		var selectMask = $(this).closest('.select-mask');
+		var btn = selectMask.find('.btn');
+		
+		if(!selectMask.hasClass('.show-real')) {
+			selectMask.addClass('show-real');
+			var dclick, bclick;
+			
+			dclick = function(e){
+				if($(e.target).closest('.select-mask').length == 0) {
+					selectMask.removeClass('show-real');
+					$(document).off('click', dclick);
+					btn.off('click', bclick);
+				}
+			};
+			
+			bclick = function(){
+				calculate();
+
+				selectMask.removeClass('show-real');
+				$(document).off('click', dclick);
+				btn.off('click', bclick);
+			};
+			
+			$(document).on('click', dclick);
+			btn.on('click', bclick);
+		}
+	});
+	
+	$('.cb').click(function(){
+		var ids = [];
+		var texts = [];
+		var parent = $(this).closest('.select-mask-real');
+		
+		parent.find('.cb').each(function(){
+			var self = $(this);
+			
+			if(this.checked) {
+				ids.push(self.val());
+				texts.push(self.parent().text());
+			}
+		});
+		
+		parent.find('.real-value').val(ids.join(','));
+		parent.prev().text(texts.join(', '));
+	});
+	
 	dateEl.datepicker({
 		dateFormat: "dd-mm-yy",
 		constrainInput: true
@@ -146,12 +193,12 @@ $(document).ready(function(){
 	});
 	
 	filterWrap.find('select').change(function(){
-		if(!viewWrap.hasClass('hide')) {
+		if(!viewWrap.hasClass('hide') && !$(this).hasClass('not-submit')) {
 			calculate();
 		}
 	});
 	filterWrap.find('.cb').change(function(){
-		if(!viewWrap.hasClass('hide')) {
+		if(!viewWrap.hasClass('hide') && !$(this).hasClass('not-submit')) {
 			calculate();
 		}
 	});
