@@ -47,6 +47,25 @@ class DashboardController extends Controller
         $this->redirect(Url::to(['dashboard/ad']));
     }
     
+    public function actionAcceptFreeStatisticsView() {
+    	$statisticView = Yii::$app->user->identity->statisticView;
+    	$now = time();
+    	
+    	if(!($redirect = \Yii::$app->request->get('redirect'))) {
+    		$redirect = Url::to(['/dashboard/ad', 'username'=> Yii::$app->user->identity->getUsername()]);
+    	}
+    	
+    	if(!$statisticView) {
+    		$statisticView = new EcStatisticView();
+    		$statisticView->start_at = $now;
+    		$statisticView->end_at = $now + (EcStatisticView::LIMIT_DAY * 86400);
+    		$statisticView->user_id = Yii::$app->user->identity->id;
+    		$statisticView->save();
+    	}
+    	
+    	return $this->redirect($redirect);
+    }
+    
     public function actionAcceptViewStatistics() {
     	$statisticView = Yii::$app->user->identity->statisticView;
     	$now = time();
