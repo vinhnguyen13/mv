@@ -87,39 +87,7 @@ input[type=text]:focus {
 .font-700 {
     font-weight: 700 !important;
 }
-.fs-10 {
-	font-size: 10px !important;
-}
-.fs-11 {
-	font-size: 11px !important;
-}
-.fs-12 {
-	font-size: 12px !important;
-}
-.fs-13 {
-	font-size: 13px !important;
-}
-.fs-14 {
-	font-size: 14px !important;
-}
-.fs-15 {
-	font-size: 15px !important;
-}
-.fs-16 {
-	/* font-size: 16px !important; */
-}
-.fs-17 {
-	font-size: 17px !important;
-}
-.fs-18 {
-	font-size: 18px !important;
-}
-.fs-19 {
-	font-size: 19px !important;
-}
-.fs-20 {
-	font-size: 20px !important;
-}
+.fs-10{font-size:10px !important;}.fs-11{font-size:11px !important;}.fs-12{font-size:12px !important;}.fs-13{font-size:13px !important;}.fs-14{font-size:14px !important;}.fs-15{font-size:15px !important;}.fs-16{font-size:16px !important;}.fs-17{font-size:17px !important;}.fs-18{font-size:18px !important;}.fs-19{font-size:19px !important;}.fs-20{font-size:20px !important;}.fs-21{font-size:21px !important;}.fs-22{font-size:22px !important;}.fs-23{font-size:23px !important;}.fs-24{font-size:24px !important;}.fs-25{font-size:25px !important;}.fs-26{font-size:26px !important;}.fs-27{font-size:27px !important;}.fs-28{font-size:28px !important;}.fs-29{font-size:29px !important;}.fs-30{font-size:30px !important;}
 .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
     padding-left: 20px;
     padding-right: 20px;
@@ -14713,6 +14681,16 @@ ul.cardList li {
 }
 .thong-tin-khac .info-detail p {
     overflow: hidden;
+}
+.img-demo table td {
+    vertical-align: middle;
+    padding: 0 10px;
+}
+.img-demo table img {
+    border: 1px solid #4CAF50;
+}
+.img-demo {
+    margin: 20px -10px 20px;
 }
 @media (max-width: 1600px) {
     .wrap-listing-item {
