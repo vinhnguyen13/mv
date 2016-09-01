@@ -23,17 +23,31 @@
                         </tbody>
                     </table>
                 </div>
+                <?php if($balance->amount >= EcStatisticView::CHARGE): ?>
                 <div class="text-center">
 	        		<div class="fs-14 mgB-15 alert-buy-key">
-	        			<p class="mgB-5">Thời gian xem thống kê đã hết hạn, bạn cần phải nạp phí để tiếp tục.</p>
-	        			<p>Phí để xem thống kê là <span class="font-600 fs-15">15 keys</span>. Thời hạn xem thống kê là <span class="font-600 fs-15">30 ngày</span> tính từ lúc trả phí.</p>
+	        			<p class="mgB-5"><?= Yii::t('dashboard', 'Thời gian xem thống kê đã hết hạn.')  ?></p>
+	        			<p><?= sprintf("Phí gia hạn thống kê là %s keys. Thời hạn xem thống kê là %s ngày tính từ lúc trả phí.", '<span class="font-600 fs-15">' . EcStatisticView::CHARGE . '</span>', '<span class="font-600 fs-15">' . EcStatisticView::LIMIT_DAY . '</span>') ?></p>
 	        		</div>
         		</div>
 				<div class="text-center">
-					<a href="" class="btn-common btn-bd-radius btn-small">
-						<span class="icon-mv mgR-10 fs-18"><span class="icon-coin-dollar"></span></span>Mua Keys
+					<a href="<?= Url::to(['accept-view-statistics', 'redirect' => Url::current()]) ?>" class="btn-common btn-bd-radius btn-small">
+						<span class="icon-mv mgR-10 fs-18"><span class="icon-coin-dollar"></span></span><?= Yii::t('payment', 'Gia hạn xem thống kê') ?>
 					</a>
 				</div>
+				<?php else: ?>
+                <div class="text-center">
+	        		<div class="fs-14 mgB-15 alert-buy-key">
+	        			<p class="mgB-5"><?= Yii::t('dashboard', 'Thời gian xem thống kê đã hết hạn, bạn cần phải nạp phí để tiếp tục.')  ?></p>
+	        			<p><?= sprintf("Phí để xem thống kê là %s keys. Thời hạn xem thống kê là %s ngày tính từ lúc trả phí.", '<span class="font-600 fs-15">' . EcStatisticView::CHARGE . '</span>', '<span class="font-600 fs-15">' . EcStatisticView::LIMIT_DAY . '</span>') ?></p>
+	        		</div>
+        		</div>
+				<div class="text-center">
+					<a href="<?= Url::to(['/payment/index', 'redirect' => Url::current()]) ?>" class="btn-common btn-bd-radius btn-small">
+						<span class="icon-mv mgR-10 fs-18"><span class="icon-coin-dollar"></span></span><?= Yii::t('payment', 'Buy Keys') ?>
+					</a>
+				</div>
+				<?php endif; ?>
 			</section>
         </div>
     </div>

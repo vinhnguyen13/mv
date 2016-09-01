@@ -14,7 +14,8 @@ use Yii;
  * @property integer $send_time
  * @property integer $read_time
  * @property integer $click_time
- * @property integer $ip
+ * @property integer $read_ip
+ * @property integer $click_ip
  */
 class MarkEmailBase extends \yii\db\ActiveRecord
 {
@@ -34,7 +35,7 @@ class MarkEmailBase extends \yii\db\ActiveRecord
         return [
             [['email'], 'required'],
             [['type', 'count', 'status', 'send_time', 'read_time', 'click_time'], 'integer'],
-            [['email', 'ip'], 'string', 'max' => 255],
+            [['email', 'read_ip', 'click_ip'], 'string', 'max' => 255],
         ];
     }
 
@@ -51,7 +52,8 @@ class MarkEmailBase extends \yii\db\ActiveRecord
             'send_time' => Yii::t('mark', 'Send Time'),
             'read_time' => Yii::t('mark', 'Read Time'),
             'click_time' => Yii::t('mark', 'Click Time'),
-            'ip' => Yii::t('mark', 'Ip'),
+            'read_ip' => Yii::t('mark', 'Read Ip'),
+            'click_ip' => Yii::t('mark', 'Click Ip'),
         ];
     }
 }

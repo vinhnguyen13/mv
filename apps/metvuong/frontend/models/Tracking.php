@@ -241,7 +241,7 @@ class Tracking extends Component
                     $mail = MarkEmail::find()->where('MD5(CONCAT(email,`type`)) = "'.$code.'"')->one();
                     if(!empty($mail)){
                         $mail->read_time = time();
-                        $mail->ip = Yii::$app->getRequest()->getUserIP();
+                        $mail->read_ip = Yii::$app->getRequest()->getUserIP();
                         $mail->save();
                     }
                     break;
@@ -259,11 +259,13 @@ class Tracking extends Component
             $time = time();
             switch($event){
                 case self::MAIL_HOW_USE_DASHBOARD:
+                    $ip = Yii::$app->getRequest()->getUserIP();
                     if(empty($mail->read_time)){
                         $mail->read_time = $time - 1;
+                        $mail->read_ip = $ip;
                     }
                     $mail->click_time = $time;
-                    $mail->ip = Yii::$app->getRequest()->getUserIP();
+                    $mail->click_ip = $ip;
                     $mail->save();
                     if(!Yii::$app->user->isGuest){
                         return Url::to(['/dashboard/ad', 'username' => Yii::$app->user->identity->getUsername()], true);
