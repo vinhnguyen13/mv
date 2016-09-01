@@ -15,25 +15,31 @@ if($count_data > 0) {
         $user = Yii::$app->db->cache(function() use($user_id){
             return User::findIdentity($user_id);
         });
-        $username = $user->username;
-        $email = empty($user->profile->public_email) ? $user->email : $user->profile->public_email;
-        $avatar = $user->profile->getAvatarUrl();
-        $_id = $view=='saved' ? $val['saved_at'] : $val['_id']->{'$id'};
-        ?>
-        <li class="<?=$_id?>">
-            <a href="<?=\yii\helpers\Url::to(['member/profile','username' => $username], true)?>" title="<?=$username?>">
-                <img src="<?=$avatar ?>" alt="<?=$username?>"><?=$username?>
-            </a>
+        if(!empty($user)) {
+            $username = $user->username;
+            $email = empty($user->profile->public_email) ? $user->email : $user->profile->public_email;
+            $avatar = $user->profile->getAvatarUrl();
+            $_id = $view == 'saved' ? $val['saved_at'] : $val['_id']->{'$id'};
+            ?>
+            <li class="<?= $_id ?>">
+                <a href="<?= \yii\helpers\Url::to(['member/profile', 'username' => $username], true) ?>"
+                   title="<?= $username ?>">
+                    <img src="<?= $avatar ?>" alt="<?= $username ?>"><?= $username ?>
+                </a>
 
-            <div class="crt-item">
-                <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title="" data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?=$email?>" data-original-title="Send email">
-                    <span class="icon-mv fs-16"><span class="icon-mail-profile"></span></span>
-                </a>
-                <a href="#" class="chat-now tooltip-show" data-chat-user="<?=$username?>" data-placement="bottom" title="" data-original-title="Send message">
-                    <span class="icon-mv fs-18"><span class="icon-bubbles-icon"></span></span>
-                </a>
-            </div>
-        </li>
-        <?php
+                <div class="crt-item">
+                    <a href="#" class="btn-email-item mgR-15 tooltip-show" data-placement="bottom" title=""
+                       data-target="#popup_email" data-type="contact" data-toggle="modal" data-email="<?= $email ?>"
+                       data-original-title="Send email">
+                        <span class="icon-mv fs-16"><span class="icon-mail-profile"></span></span>
+                    </a>
+                    <a href="#" class="chat-now tooltip-show" data-chat-user="<?= $username ?>" data-placement="bottom"
+                       title="" data-original-title="Send message">
+                        <span class="icon-mv fs-18"><span class="icon-bubbles-icon"></span></span>
+                    </a>
+                </div>
+            </li>
+            <?php
+        }
     }
 } ?>
