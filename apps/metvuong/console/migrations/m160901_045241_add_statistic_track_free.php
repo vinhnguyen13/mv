@@ -11,7 +11,7 @@ class m160901_045241_add_statistic_track_free extends Migration
 		  `statistic_id` INT NOT NULL,
 		  `start_at` INT NOT NULL,
 		  PRIMARY KEY (`id`),
-		  CONSTRAINT `statistic_id&statistic:id` FOREIGN KEY (`statistic_id`) REFERENCES `metvuong`.`ec_statistic_view`(`id`)
+		  CONSTRAINT `statistic_id&statistic:id` FOREIGN KEY (`statistic_id`) REFERENCES `ec_statistic_view`(`id`)
 		);");
     }
 
