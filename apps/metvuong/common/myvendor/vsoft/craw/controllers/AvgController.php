@@ -306,7 +306,7 @@ class AvgController extends Controller {
 		$avgSize = $avgSizeAdvance['retention'] ? array_sum($avgSizeAdvance['retention']) / count($avgSizeAdvance['retention']) : 0;
 		$avgPriceSize = $avgPriceSizeAdvance['retention'] ? array_sum($avgPriceSizeAdvance['retention']) / count($avgPriceSizeAdvance['retention']) : 0;
 
-		return ['IQR' => $avgPriceSizeAdvance, 'IQR Size' => $avgSizeAdvance, 'IQR Price' => $avgPriceAdvance, 'Data Point' => count($products), 'AVG Price' => $avgPrice, 'AVG SQM' => $avgSize, 'AVG $/SQM' => $avgPriceSize, 'AVG Bed' => $avgBed, 'AVG Bath' => $avgBath];
+		return ['IQR Price/Size' => $avgPriceSizeAdvance, 'IQR Size' => $avgSizeAdvance, 'IQR Price' => $avgPriceAdvance, 'Data Point' => count($products), 'AVG Price' => $avgPrice, 'AVG SQM' => $avgSize, 'AVG $/SQM' => $avgPriceSize, 'AVG Bed' => $avgBed, 'AVG Bath' => $avgBath];
 	}
 	
 	public function avgAdvance($values) {
