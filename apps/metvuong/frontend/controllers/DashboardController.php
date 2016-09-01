@@ -147,12 +147,14 @@ class DashboardController extends Controller
         
         if(!$statisticView) {
         	$message = 'Sử dụng trình thống kê thông minh của MetVuong sẽ giúp bạn biết được những khách hàng tiềm năng và có thể liên hệ trực tiếp với họ. Giúp bạn theo dõi được tính hiệu quả của tin đăng từ đó có thể cải thiện tin đăng và nhanh chóng bán được sản phẩm.';
+        	$notifyView = 'statistics/notify-free';
         } else if($statisticView->end_at < time()) {
         	$message = 'Thời gian xem thống kê đã hết hạn, bạn cần phải nạp phí để tiếp tục.';
+        	$notifyView = 'statistics/notify';
         }
         
         if($message) {
-        	return $this->render('statistics/notify', [
+        	return $this->render($notifyView, [
         		'balance' => $balance,
         		'statisticView' => $statisticView,
         		'message' => $message

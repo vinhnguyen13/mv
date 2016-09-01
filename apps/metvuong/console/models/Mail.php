@@ -165,11 +165,10 @@ class Mail extends Component
                 if (!empty($email)) {
                     $link = Url::to(['/dashboard/ad', 'username' => $contact["username"]], true);
                     $code = md5($email.self::TYPE_HOW_USE_DASHBOARD);
-                    $linkHref = Url::to(['/tracking/mail-click', 'rd'=>$link, 'c'=>$code, 'e'=>Tracking::MAIL_HOW_USE_DASHBOARD], true);
                     $params = [
                         'email' => $email,
                         'link' => $link,
-                        'linkHref' => $linkHref,
+                        'code' => $code,
                     ];
                     Yii::$app->view->params['tr'] = !empty($code) ? (string) $code : '';
                     Yii::$app->view->params['tp'] = Tracking::LOGO_MAIL_HOW_USE_DASHBOARD;
@@ -180,6 +179,7 @@ class Mail extends Component
                         $status = $mailer->compose(['html' => 'howUseDashboard'], $params)
                             ->setFrom(Yii::$app->params['noreplyEmail'])
                             ->setTo([$email])
+//                            ->setTo(['dien.truong@trungthuygroup.vn', 'quangvinh.nguyen@trungthuygroup.vn'])
                             ->setSubject($subjectEmail)
                             ->send();
                         $status > 0 ? print_r("[{$mailer->transport['username']}] sent to [{$email}] success !".PHP_EOL) : print_r("Send mail error.".PHP_EOL);

@@ -53,8 +53,8 @@ use yii\helpers\Html;
                                         <p>(08) 789 456    |	support@metvuong.com</p>
                                     </td>
                                     <td style="text-align: right;">
-                                        <a href="https://www.facebook.com/metvuongbatdongsan" style="display:inline-block;margin-right:20px;"><img width="40" alt="" src="images/icon-face.png"></a>
-                                        <a href="https://plus.google.com/109274474274313872943"><img width="40" alt="" src="images/icon-go.png"></a>
+                                        <a href="https://www.facebook.com/metvuongbatdongsan" style="display:inline-block;margin-right:20px;"><img width="40" alt="" src="<?=\yii\helpers\Url::to(['images/icon-face.png'], true)?>"></a>
+                                        <a href="https://plus.google.com/109274474274313872943"><img width="40" alt="" src="<?=\yii\helpers\Url::to(['images/icon-go.png'], true)?>"></a>
                                     </td>
                                 </tr>
                                 </tbody></table>

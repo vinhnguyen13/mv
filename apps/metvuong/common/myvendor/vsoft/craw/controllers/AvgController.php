@@ -13,6 +13,7 @@ use Box\Spout\Writer\Style\BorderBuilder;
 use Box\Spout\Writer\Style\Color;
 use Box\Spout\Writer\Style\StyleBuilder;
 use yii\helpers\ArrayHelper;
+use frontend\models\Avg;
 
 class AvgController extends Controller {
 	public function init() {
@@ -293,8 +294,38 @@ class AvgController extends Controller {
 		$avgPriceSize = $totalHasPriceSize ? $totalPriceSize/$totalHasPriceSize : 0;
 		$avgBed = $this->groupCount($groupBed);
 		$avgBath = $this->groupCount($groupBath);
+		
+		/*
+		 * For testing
+		 */
+		//$avgPriceAdvance = $this->avgAdvance($products, 'price');
+		//$avgSizeAdvance = $this->avgAdvance($products, 'size');
 
 		return ['Data Point' => count($products), 'AVG Price' => $avgPrice, 'AVG SQM' => $avgSize, 'AVG $/SQM' => $avgPriceSize, 'AVG Bed' => $avgBed, 'AVG Bath' => $avgBath];
+	}
+	
+	public function avgAdvance($arr, $column) {
+		var_dump(Avg::me()->calculation_boxplot([8000000000, 8200000000]));exit();
+		$values = array_filter(ArrayHelper::getColumn($arr, $column, true));
+		$iqr = Avg::me()->calculation_boxplot($values);
+		$outliersBelow = [];
+		$outliersAbove = [];
+		$retention = [];
+		
+		$below = $iqr['q1'] - (3 * $iqr['IQR']);
+		$above = $iqr['q3'] + (3 * $iqr['IQR']);
+		
+		foreach ($values as $id => $value) {
+			if($value < $below) {
+				$outliersBelow[$id] = $value;
+			} else if($value > $above) {
+				$outliersAbove[$id] = $value;
+			} else {
+				$retention[$id] = $value;
+			}
+		}
+		
+		return ['below' => $below, 'above' => $above, 'outliersAbove' => $outliersAbove, 'outliersBelow' => $outliersBelow, 'retention' => $retention];
 	}
 	
 	public function groupCount($items) {
