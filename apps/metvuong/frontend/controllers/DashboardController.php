@@ -61,6 +61,11 @@ class DashboardController extends Controller
     		$statisticView->end_at = $now + (EcStatisticView::LIMIT_DAY * 86400);
     		$statisticView->user_id = Yii::$app->user->identity->id;
     		$statisticView->save();
+    		
+    		\Yii::$app->db->createCommand()->insert('ec_statistic_view_track', [
+    			'statistic_id' => $statisticView->id,
+    			'start_at' => $statisticView->start_at
+    		])->execute();
     	}
     	
     	return $this->redirect($redirect);
