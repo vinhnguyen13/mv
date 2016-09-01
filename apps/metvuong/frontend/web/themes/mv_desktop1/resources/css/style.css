@@ -9081,23 +9081,20 @@ margin-right: 5px;
 .menuUser .listing-compare label {
     display: block;
     border-bottom: 1px solid #DADADA;
-    padding: 15px 30px 15px 0;
-    text-transform: uppercase;
+    padding: 8px 0 8px 27px;
     position: relative;
     color: #3c3c3c;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 400;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    line-height: 19px;
 }
-.menuUser .listing-compare label:hover,
-.menuUser .listing-compare label.active {
+.menuUser .listing-compare label:hover {
     color: #00a769;
 }
 .menuUser .listing-compare .checkbox-ui .icon-mv {
-    position: relative;
-    top: 1px;
+    position: absolute;
+    top: 10px;
+    left: 0;
 }
 .menuUser li:first-child .hemi-intro-popover {
     top: 10px !important;
@@ -14467,26 +14464,36 @@ ul.cardList li {
 }
 .option-choose-compare .title,
 .listing-compare .title {
-    text-align: center;
-    background: #ccc;
-    padding: 15px 0;
-    color: #fff;
+    font-size: 16px;
     text-transform: uppercase;
     font-weight: 600;
+    color: #00a769;
+}
+.option-choose-compare .title {
+    margin-bottom: 10px;
+}
+.listing-compare .txt-small {
+    font-size: 11px;
+    color: #a7a7a7;
+    font-style: italic;
+    text-transform: initial;
 }
 .listing-compare li {
     position: relative;
 }
 .listing-compare .remove-compare {
+    display: inline;
     padding: 0;
-    width: auto;
-    position: absolute;
-    top: 15px;
-    right: 10px;
     border: none;
+    text-transform: initial;
+    font-size: 13px;
+    color: red;
+    text-decoration: underline;
 }
 .listing-compare .remove-compare:hover {
     background: none;
+    color: red;
+    text-decoration: none;
 }
 .listing-compare {
     margin-bottom: 30px;
@@ -14502,17 +14509,23 @@ ul.cardList li {
     font-size: 14px;
     font-weight: 400;
     display: block;
-    padding: 12px 7px 12px 10px;
-    text-transform: uppercase;
+    padding: 10px 0 10px 27px;
+    line-height: 100%;
+    position: relative;
+}
+.option-choose-compare ul label.active {
+    color: #3c3c3c;
 }
 .option-choose-compare ul label:hover {
-    background: #F7F7F7;
     color: #00a769;
 }
+.option-choose-compare ul .icon-mv span {
+    margin: 0;
+}
 .option-choose-compare ul .icon-mv {
-    margin: 2px 0 0 0;
-    float: right;
-    line-height: 100%;
+    position: absolute;
+    top: 9px;
+    left: 0;
 }
 .compare-block {
     padding: 25px 0 50px 30px;
