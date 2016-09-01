@@ -41,23 +41,21 @@ class Mail extends Component
         print_r("----------Start-----------".PHP_EOL);
         Yii::$app->getDb()->createCommand('SET group_concat_max_len = 5000000')->execute();
         $contacts = AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
-                ->where('email is not null')
-                ->andWhere("email NOT IN (SELECT email FROM mark_email WHERE type = ".self::TYPE_WELCOME_AGENT.")")
-                ->andWhere("email NOT IN (SELECT email FROM user WHERE updated_at > created_at )")
-                ->groupBy('email')->orderBy('count(product_id) desc')->limit($limit)->all();
+            ->where('email is not null')
+            ->andWhere("email NOT IN (SELECT email FROM mark_email WHERE type = ".self::TYPE_WELCOME_AGENT.")")
+            ->andWhere("email NOT IN (SELECT email FROM user WHERE updated_at > created_at )")
+            ->groupBy('email')->orderBy('count(product_id) desc')->limit($limit)->all();
 
-        if(count($contacts) > 0) {
+        if(!empty($contacts)) {
             $coupon = CouponCode::getDb()->cache(function() use($code){
                 return CouponCode::find()->where('code = :c',[':c' => $code])->one();
             });
-
-            if(!$coupon->check()) {
+            if(!empty($coupon) && !$coupon->check()) {
                 print_r("{$code} was used. Please, select other coupon code.");
                 return;
-            }
-            if(count($coupon) == 0)
+            }else{
                 $code = null;
-
+            }
             foreach ($contacts as $contact) {
                 $email = trim($contact["email"]);
                 $email = mb_strtolower($email);
@@ -81,16 +79,13 @@ class Mail extends Component
                     $product_list = array();
                     if (count($products) > 0) {
                         foreach ($products as $product) {
-                            $url = $product->urlDetail(true); // loi ko the su dung Url::to()
+                            $url = $product->urlDetail(true);
                             $id = $product->id;
-//                        $slug = \common\components\Slug::me()->slugify($product->getAddress($product->show_home_no));
-//                        $url = "http://local.metvuong.com/real-estate/detail/{$id}-{$slug}";
                             $product_list[Yii::$app->params['listing_prefix_id'] . $id] = $url;
                         }
                     }
 
                     $rest_total = intval($contact["total"]) - 3;
-
                     $params = [
                         'email' => $email,
                         'link_user' => Url::to(['member/profile', 'username' => $user->username], true),
@@ -134,8 +129,7 @@ class Mail extends Component
         $markEmail = MarkEmail::find()->where('email = :e AND type = :type',[':e' => $email, ':type'=>$type])->one();
         if(count($markEmail) > 0){
             if($status) {
-                $c = $markEmail->count;
-                $markEmail->count = $c + 1;
+                $markEmail->count += 1;
             }
         } else {
             $markEmail = new MarkEmail();
