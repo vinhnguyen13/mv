@@ -277,7 +277,7 @@ $(document).ready(function(){
 	
 	var body = $('body');
 	
-	$(document).on('mouseenter', '.has-iqr', function(){
+	$(document).on('click', '.has-iqr', function(){
 		body.find('> .iqr').remove();
 		
 		var self = $(this);
@@ -345,18 +345,13 @@ $(document).ready(function(){
 			top: (self.position().top - popup.outerHeight()) + 'px'
 		});
 		
-		var timer;
-		
-		self.one('mouseleave', function(){
-			timer = setTimeout(function(){
+		$(document).on('click', function(e){
+			var t = $(e.target);
+			
+			if(t.closest('.iqr').length == 0) {
 				popup.remove();
-			}, 0);
-		});
-		
-		popup.on('mouseenter', function(){
-			clearTimeout(timer);
-		}).on('mouseleave', function(){
-			popup.remove();
+				$(document).off('click', arguments.callee);
+			}
 		});
 	});
 	

@@ -265,7 +265,11 @@ label span {
 }
 .has-iqr {
 	cursor: default;
+	cursor: pointer;
 }
 .has-iqr:hover {
 	background: #e7e9fb;
+}
+.iqr a {
+	text-decoration: none;
 }
