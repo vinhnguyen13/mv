@@ -268,12 +268,92 @@ $(document).ready(function(){
 		
 		table.find('.area-title').append('<td class="' + c + '"><a href="' + url + '" target="_blank">' + data.name + '</a></td>');
 		table.find('.data-point').append('<td class="' + c + '">' + formatNumber(data.value['Data Point']) + '</td>');
-		table.find('.avg-price').append('<td class="' + c + '">' + formatNumber(data.value['AVG Price']) + '</td>');
-		table.find('.avg-size').append('<td class="' + c + '">' + formatNumber(data.value['AVG SQM']) + '</td>');
-		table.find('.avg-price-size').append('<td class="' + c + '">' + formatNumber(data.value['AVG $/SQM']) + '</td>');
+		table.find('.avg-price').append($('<td class="has-iqr ' + c + '">' + formatNumber(data.value['AVG Price']) + '</td>').data(data.value['IQR Price']).data('type', 'price').data('url', url));
+		table.find('.avg-size').append($('<td class="has-iqr ' + c + '">' + formatNumber(data.value['AVG SQM']) + '</td>').data(data.value['IQR Size']).data('type', 'area').data('url', url));
+		table.find('.avg-price-size').append($('<td class="has-iqr ' + c + '">' + formatNumber(data.value['AVG $/SQM']) + '</td>').data(data.value['IQR Price/Size']));
 		table.find('.avg-bed').append('<td class="' + c + '">' + percentCell(data.value['AVG Bed'], 'bed') + '</td>');
 		table.find('.avg-bath').append('<td class="' + c + '">' + percentCell(data.value['AVG Bath'], 'bath') + '</td>');
 	}
+	
+	var body = $('body');
+	
+	$(document).on('click', '.has-iqr', function(){
+		body.find('> .iqr').remove();
+		
+		var self = $(this);
+		var data = self.data();
+		var popup = $('<div class="iqr"></div');
+		
+		var url = $('#view-listing').attr('href');
+		
+		popup.append('<div>Method: ' + data.method + '</div>');
+		
+		if(data.type) {
+			var url = data.url;
+			var unit = 1;
+			
+			if(data.type == 'price') {
+				url += '&price_type=2';
+				url += '&price_unit=' + type.val();
+				
+				unit = (type.val() == 1) ? 1000000000 : 1000000;
+			} else {
+				url += '&area_filter=3';
+			}
+			
+			var max = (data.below - 1) / unit;
+			var min = (data.above + 1) / unit;
+			
+			var equalMin = data.below / unit;
+			var equalMax = data.above / unit;
+			
+			if(data.type == 'price') {
+				
+				var unitt = (type.val() == 1) ? 'tỷ' : 'triệu';
+				var maxMask = '< ' + equalMin + unitt;
+				var minMask = '> ' + equalMax + unitt;
+			} else {
+				
+				var unitt = '';
+				var maxMask = max;
+				var minMask = min;
+			}
+			
+			var urlBelow = url + '&' + data.type + '_max=' + max + '&' + data.type + '_mask=' + maxMask;
+			var urlAbove = url + '&' + data.type + '_min=' + min + '&' + data.type + '_mask=' + minMask;
+			var urlRetention = url + '&' + data.type + '_min=' + equalMin + '&' + data.type + '_max=' + equalMax + '&' + data.type + '_mask=' + equalMin+unitt + ' - ' + equalMax+unitt;
+
+			popup.append('<div>Lower limit: ' + formatNumber(data.below) + ' - <a target="_blank" href="' + urlBelow + '">View Outliers Below</a></div>');
+			popup.append('<div>Upper limit: ' + formatNumber(data.above) + ' - <a target="_blank" href="' + urlAbove + '">View Outliers Above</a></div>');
+			popup.append('<div><a target="_blank" href="' + urlRetention + '">View Retention Listing</a></div>');
+		} else {
+			popup.append('<div>Upper limit: ' + formatNumber(data.above) + '</div>');
+			popup.append('<div>Lower limit: ' + formatNumber(data.below) + '</div>');
+		}
+		
+		body.append(popup);
+		
+		var left = self.position().left;
+		var w = $(window).width();
+		
+		if(left + popup.outerWidth() > w) {
+			left = w - popup.outerWidth();
+		}
+		
+		popup.css({
+			left: left + 'px',
+			top: (self.position().top - popup.outerHeight()) + 'px'
+		});
+		
+		$(document).on('click', function(e){
+			var t = $(e.target);
+			
+			if(t.closest('.iqr').length == 0) {
+				popup.remove();
+				$(document).off('click', arguments.callee);
+			}
+		});
+	});
 	
 	function percentCell(counts, label) {
 		var html = '<div>';
@@ -399,21 +479,20 @@ function getCookie(cname) {
     return "";
 }
 
-function formatNumber(number) {
-	number = number + '';
+function formatNumber(num, round) {
+	var parseNum = parseFloat(num);
 	
-	if(/^0*$/.test(number)) {
-		return '';
+	if(isNaN(num) || isNaN(parseNum)) {
+		return null;
 	}
 	
-	number = number.split('.');
-	
-	var numberFormated = number[0];
-	numberFormated = numberFormated.split( /(?=(?:\d{3})+(?:\.|$))/g ).join(".");
-	
-	if(number.length > 1) {
-		numberFormated = numberFormated + ',' + number[1];
+	if(typeof round !== 'undefined') {
+		parseNum = parseFloat(parseNum.toFixed(round));
 	}
 	
-	return numberFormated;
+	var parts = parseNum.toString().split(".");
+	
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    
+    return parts.join(".");
 }

@@ -64,7 +64,7 @@ class StringHelper extends SH {
 		}
 	
 		if($num < 1000000) {
-			return formatNumber($num, $roundBelowMillion);
+			return self::formatNumber($num, $roundBelowMillion);
 		}
 	
 		$f = round(($num / 1000000), $round);
