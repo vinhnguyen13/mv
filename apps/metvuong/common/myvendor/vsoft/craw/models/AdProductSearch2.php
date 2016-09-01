@@ -214,6 +214,7 @@ class AdProductSearch2 extends AdProduct
     		}
     		if($this->price_max) {
     			$query->andFilterWhere(['<=', 'price', $this->price_max * $unit]);
+    			$query->andFilterWhere(['!=', 'price', 0]);
     		}
     	} else {
     		$query->andFilterWhere(['=', 'ad_product.price_type', $this->price_type]);
@@ -228,6 +229,7 @@ class AdProductSearch2 extends AdProduct
     		} else {
     			$query->andFilterWhere(['>=', 'area', $this->area_min]);
     			$query->andFilterWhere(['<=', 'area', $this->area_max]);
+    			$query->andFilterWhere(['!=', 'area', 0]);
     		}
     	}
     	

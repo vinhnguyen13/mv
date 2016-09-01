@@ -254,3 +254,18 @@ label span {
 .avg-table a:hover, .avg-table a:focus {
 	text-decoration: none;
 }
+.iqr {
+	position: absolute;
+	background: #FAFAFA;
+    box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+    padding: 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+.has-iqr {
+	cursor: default;
+}
+.has-iqr:hover {
+	background: #e7e9fb;
+}
