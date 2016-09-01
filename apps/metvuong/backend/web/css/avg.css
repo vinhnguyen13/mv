@@ -270,6 +270,6 @@ label span {
 .has-iqr:hover {
 	background: #e7e9fb;
 }
-.iqr a {
+.iqr a:hover, .iqr a:focus {
 	text-decoration: none;
 }
