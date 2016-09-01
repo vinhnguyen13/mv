@@ -6,19 +6,6 @@ use vsoft\ad\models\base\MarkEmailBase;
 use vsoft\ad\Module;
 use Yii;
 
-/**
- * This is the model class for table "mark_email".
- *
- * @property string $email
- * @property integer $type
- * @property integer $count
- * @property integer $status
- * @property integer $send_time
- * @property integer $read_time
- * @property integer $click_time
- * @property string $read_ip
- * @property string $click_ip
- */
 class MarkEmail extends MarkEmailBase
 {
     const STATUS_SEND_SUCCESS = 1;
