@@ -42,7 +42,7 @@ class Mail extends Component
         Yii::$app->getDb()->createCommand('SET group_concat_max_len = 5000000')->execute();
         $contacts = AdContactInfo::find()->select('email, count(product_id) as total, group_concat(product_id) as list_id')
                 ->where('email is not null')
-                ->andWhere("email NOT IN (SELECT email FROM mark_email WHERE type = ".self::TYPE_HOW_USE_DASHBOARD.")")
+                ->andWhere("email NOT IN (SELECT email FROM mark_email WHERE type = ".self::TYPE_WELCOME_AGENT.")")
                 ->andWhere("email NOT IN (SELECT email FROM user WHERE updated_at > created_at )")
                 ->groupBy('email')->orderBy('count(product_id) desc')->limit($limit)->all();
 
