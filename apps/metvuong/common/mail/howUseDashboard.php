@@ -22,13 +22,13 @@ $linkHref = Url::to(['/tracking/mail-click', 'rd'=>$link, 'c'=>$code, 'e'=>Track
         <td style="padding-left:10px;"><a href="<?=$linkHref;?>" style="color:#00a769;text-decoration:none;"><img src="<?=\yii\helpers\Url::to(['images/mail/dashboard/img-popup-dash.jpg'], true)?>" alt="" style="width:100%"></a></td>
     </tr>
     <tr>
-        <td style="text-align:center;font-size:13px;font-style:italic;">Bảng thống kê (Dashboard)</td>
-        <td style="text-align:center;font-size:13px;font-style:italic;">Thống kê người dùng</td>
+        <td style="text-align:center;font-size:13px;font-style:italic;">Bảng thống kê số lượng người Yêu Thích, Xem, Chia sẻ tin của bạn</td>
+        <td style="text-align:center;font-size:13px;font-style:italic;">Danh sách khách hàng với Tên, Email, Điện thoại và Chat</td>
     </tr>
     </tbody>
 </table>
 <p style="font-size:13px;line-height:20px;margin-bottom:15px;margin-top:15px;">
-    Và tiện ích trên được thể hiện qua công cụ Bảng thống kê (Dashboard) của chúng tôi. Bảng thống kê sẽ cho phép người dùng xem được tất cả liên hệ (như họ tên, email, số điện thoại…) của khách hàng đã tìm kiếm, yêu thích hoặc chia sẻ tin đăng của bạn, tất cả bạn chỉ cần làm là click vào danh sách để đảm bảo bạn đã liên hệ đúng khách hàng tiềm năng của mình.
+    Và tiện ích trên được thể hiện qua công cụ Bảng thống kê (Dashboard) của chúng tôi. Bảng thống kê sẽ cho phép người dùng xem được tất cả liên hệ (như họ tên, email, số điện thoại và trò chuyện trực tiếp) của khách hàng đã tìm kiếm, yêu thích hoặc chia sẻ tin đăng của bạn, tất cả bạn chỉ cần làm là click vào danh sách để đảm bảo bạn đã liên hệ đúng khách hàng tiềm năng của mình.
 </p>
 <p style="font-size:13px;margin-bottom: 15px;line-height:20px;">
     Đặc biệt hơn, chúng tôi xin gởi đến bạn ưu đãi sử dụng thử MIỄN PHÍ các tiện ích của Bảng thống kê này trong 30 ngày.
