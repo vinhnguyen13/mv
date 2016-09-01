@@ -14466,6 +14466,8 @@ ul.cardList li {
 .listing-compare .title {
     font-size: 16px;
     text-transform: uppercase;
+    font-weight: 600;
+    color: #00a769;
 }
 .option-choose-compare .title {
     margin-bottom: 10px;
