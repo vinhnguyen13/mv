@@ -16,6 +16,7 @@ use Yii;
  * @property integer $click_time
  * @property string $read_ip
  * @property string $click_ip
+ * @property integer $id
  */
 class MarkEmailBase extends \yii\db\ActiveRecord
 {
@@ -55,6 +56,7 @@ class MarkEmailBase extends \yii\db\ActiveRecord
             'click_time' => 'Click Time',
             'read_ip' => 'Read Ip',
             'click_ip' => 'Click Ip',
+            'id' => 'ID',
         ];
     }
 }
