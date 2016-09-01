@@ -61,11 +61,24 @@ class DashboardController extends Controller
     		$statisticView->end_at = $now + (EcStatisticView::LIMIT_DAY * 86400);
     		$statisticView->user_id = Yii::$app->user->identity->id;
     		$statisticView->save();
-    		
+    	
     		\Yii::$app->db->createCommand()->insert('ec_statistic_view_track', [
-    			'statistic_id' => $statisticView->id,
-    			'start_at' => $statisticView->start_at
+    				'statistic_id' => $statisticView->id,
+    				'start_at' => $statisticView->start_at
     		])->execute();
+    	} else if($statisticView->end_at < time()) {
+    		$freeView = \Yii::$app->db->createCommand("SELECT * FROM `ec_statistic_view_track` WHERE `statistic_id` = {$statisticView->id}")->queryOne();
+    		
+    		$statisticView->start_at = $now;
+    		$statisticView->end_at = $now + (EcStatisticView::LIMIT_DAY * 86400);
+    		$statisticView->save();
+    		
+    		if(!$freeView) {
+    			\Yii::$app->db->createCommand()->insert('ec_statistic_view_track', [
+    					'statistic_id' => $statisticView->id,
+    					'start_at' => $statisticView->start_at
+    			])->execute();
+    		}
     	}
     	
     	return $this->redirect($redirect);
@@ -167,21 +180,26 @@ class DashboardController extends Controller
         
         $statisticView = Yii::$app->user->identity->statisticView;
         $balance = Yii::$app->user->identity->balance;
-        $message = '';
+        $flag = false;
         
         if(!$statisticView) {
-        	$message = 'Sử dụng trình thống kê thông minh của MetVuong sẽ giúp bạn biết được những khách hàng tiềm năng và có thể liên hệ trực tiếp với họ. Giúp bạn theo dõi được tính hiệu quả của tin đăng từ đó có thể cải thiện tin đăng và nhanh chóng bán được sản phẩm.';
+        	$flag = true;
         	$notifyView = 'statistics/notify-free';
         } else if($statisticView->end_at < time()) {
-        	$message = 'Thời gian xem thống kê đã hết hạn, bạn cần phải nạp phí để tiếp tục.';
-        	$notifyView = 'statistics/notify';
+        	$flag = true;
+        	$freeView = \Yii::$app->db->createCommand("SELECT * FROM `ec_statistic_view_track` WHERE `statistic_id` = {$statisticView->id}")->queryOne();
+        	
+        	if($freeView) {
+        		$notifyView = 'statistics/notify-expired';
+        	} else {
+        		$notifyView = 'statistics/notify-free';
+        	}
         }
         
-        if($message) {
+        if($flag) {
         	return $this->render($notifyView, [
         		'balance' => $balance,
-        		'statisticView' => $statisticView,
-        		'message' => $message
+        		'statisticView' => $statisticView
         	]);
         }
 
