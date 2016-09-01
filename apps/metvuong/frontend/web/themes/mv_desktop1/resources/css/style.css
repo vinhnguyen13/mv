@@ -13764,18 +13764,22 @@ ul.cardList li {
     width: 100%
 }
 .listing-post-by-project .left-attr-detail .list-attr-td li{
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
 }
 .listing-post-by-project .left-attr-detail .list-attr-td li .icon-mv {
     font-size: 25px;
 }
 .listing-post-by-project .right-attr-detail .id-duan {
     text-align: left;
+    margin-bottom: 2px;
 }
 .listing-post-by-project .item .info-item {
     overflow: hidden;
     padding-bottom: 0;
-    height: 170px;
+    /* height: 170px; */
+}
+.listing-post-by-project .pic-intro {
+    height: 180px;
 }
 .listing-post-by-project .icon-num-get li {
     padding: 0;
