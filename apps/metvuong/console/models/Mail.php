@@ -113,7 +113,7 @@ class Mail extends Component
                             ->send();
                         $status > 0 ? print_r("[{$mailer->transport['username']}] sent to [{$email}] success !".PHP_EOL) : print_r("Send mail error.".PHP_EOL);
                         // Count email marketing has sent
-                        Mail::markEmail(self::TYPE_WELCOME_AGENT, $email, $status);
+                        $return = Mail::markEmail(self::TYPE_WELCOME_AGENT, $email, $status);
                         usleep(300000);
                     } catch (Exception $ex) {
                         print_r("Error .".PHP_EOL);
@@ -146,6 +146,7 @@ class Mail extends Component
         $markEmail->send_time = time();
         $markEmail->status = $status;
         $markEmail->save(false);
+        return $markEmail;
     }
 
     public function howUseDashboard($limit)
@@ -183,7 +184,7 @@ class Mail extends Component
                             ->setSubject($subjectEmail)
                             ->send();
                         $status > 0 ? print_r("[{$mailer->transport['username']}] sent to [{$email}] success !".PHP_EOL) : print_r("Send mail error.".PHP_EOL);
-                        Mail::markEmail(self::TYPE_HOW_USE_DASHBOARD, $email, $status);
+                        $return = Mail::markEmail(self::TYPE_HOW_USE_DASHBOARD, $email, $status);
                         // Count email marketing has sent
                         usleep(300000);
                     } catch (Exception $ex) {
