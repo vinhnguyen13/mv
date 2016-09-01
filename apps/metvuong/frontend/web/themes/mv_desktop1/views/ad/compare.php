@@ -26,7 +26,7 @@
         <div class="menuUser compare-box">
             <div class="inner-box">
                 <div class="listing-compare">
-                    <div class="title"><?= Yii::t('ad', 'Chọn Listing') ?></div>
+                    <div class="title"><?= Yii::t('ad', 'DANH SÁCH SO SÁNH') ?><p class="txt-small mgB-10"><strong>Lưu ý:</strong> so sánh được 3 tin đăng trở xuống.</p></div>
                     <?php
                     	if(isset($products)) :
                     		$selectProducts = []
@@ -40,8 +40,12 @@
                         			}
                         	?>
                             <li data-id="<?= $product->id ?>">
-                                <label class="checkbox-ui"><input class="active-compare" type="checkbox" <?= $compares[$product->id] ? 'checked="checked"' : '' ?>><span class="icon-mv"><span class="icon-checkbox"></span></span><?= $product->address ?></label>
-                                <a class="remove-compare" href=""><span class="icon-mv"><span class="icon-close-icon"></span></span></a>
+                                <label class="checkbox-ui">
+                                    <input class="active-compare" type="checkbox" <?= $compares[$product->id] ? 'checked="checked"' : '' ?>>
+                                    <span class="icon-mv"><span class="icon-checkbox"></span></span>
+                                    <?= $product->address ?>
+                                    <a class="remove-compare" href="">Xóa</a>
+                                </label>
                             </li>
                         	<?php endforeach; ?>
                         </ul>
@@ -77,10 +81,7 @@
         $(document).ready(function () {
             $('.option-choose-compare ul label').checkbox_ui();
             $('.listing-compare ul label').checkbox_ui();
-            $('.listing-compare .inner-box').slimScroll({
-                height: '250px',
-                alwaysVisible: true
-            });
+            
 
             var products = [];
             $('.listing-compare ul li').each(function () {
