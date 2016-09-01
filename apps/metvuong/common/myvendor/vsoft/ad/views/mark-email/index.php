@@ -26,6 +26,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'count',
             'status',
             'send_time:datetime',
+            'read_time:datetime',
+            'click_time:datetime',
             [
                 'class' => 'yii\grid\ActionColumn',
                 'header'=>'Actions',
