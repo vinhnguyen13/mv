@@ -33,7 +33,7 @@
                 </div>
 
                 <div>
-                    <button class="btn-common btn-bd-radius btn-small"><span class="icon-mv fs-17 mgR-10"><span class="icon-coin-dollar"></span></span>Nhận Keys</button>
+                    <a href="<?= Url::to(['accept-free-statistics-view', 'redirect' => Url::current()]) ?>" class="btn-common btn-bd-radius btn-small"><span class="icon-mv fs-17 mgR-10"><span class="icon-bar-chart"></span></span>Bắt đầu sử dụng</a>
                 </div>
             </section>
         </div>
