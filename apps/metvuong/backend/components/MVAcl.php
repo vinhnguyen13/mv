@@ -41,7 +41,7 @@ class MVAcl implements BootstrapInterface
 
         if(!Yii::$app->user->isGuest && !in_array($urlBase, ['site/logout'])) {
             $permissionName = !empty(Yii::$app->setting->get('aclAdmin')) ? Yii::$app->setting->get('aclAdmin') : Acl::ACL_ADMIN;
-            if (Yii::$app->user->can($permissionName)) {
+            if (Yii::$app->user->can($permissionName) || Yii::$app->user->can('/'.$urlBase)) {
                 return true;
             }
             throw new ForbiddenHttpException(Yii::t('yii', 'You are not allowed to perform this action.'));
