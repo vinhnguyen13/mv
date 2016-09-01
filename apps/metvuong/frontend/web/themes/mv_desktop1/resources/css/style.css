@@ -13845,6 +13845,12 @@ ul.cardList li {
     text-align: center;
     margin-bottom: 20px;
 }
+.alert-buy-key {
+    display: inline-block;
+    background: #eaeaea;
+    padding: 10px 15px;
+    box-shadow: 1px 1px 1px #bbbbbb;
+}
 @media (max-width: 1200px) {
     .type-payment {
         width: 90%;
@@ -14694,7 +14700,7 @@ ul.cardList li {
     border: 1px solid #4CAF50;
 }
 .img-demo {
-    margin: 20px -10px 20px;
+    margin: 20px -10px 30px;
 }
 @media (max-width: 1600px) {
     .wrap-listing-item {

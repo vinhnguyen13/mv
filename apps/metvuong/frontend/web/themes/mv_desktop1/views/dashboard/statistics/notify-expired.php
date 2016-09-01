@@ -9,10 +9,30 @@
                 <?=Yii::t('statistic','Statistic')?>
             </div>
         	<section class="clearfix mgB-40">
-				<div>Thời gian xem thống kê đã hết hạn, bạn cần phải nạp phí để tiếp tục.</div>
-				<div style="margin-top: 12px;">Phí để xem thống kê là 15 keys. Thời hạn xem thống kê là 30 ngày tính từ lúc trả phí.</div>
-				<div style="margin-top: 12px;">
-				<a href="/payment/index?redirect=%2Fdashboard%2Fstatistics%3Fid%3D79132" class="btn">Mua Keys</a>
+        		<div class="wrap-img img-demo">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-dash.jpg' ?>" alt=""></td>
+                                <td><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-popup-dash.jpg' ?>" alt=""></td>
+                            </tr>
+                            <tr>
+                                <td class="text-center fs-13 font-italic pdT-5">Bảng thống kê (Dashboard)</td>
+                                <td class="text-center fs-13 font-italic pdT-5">Thống kê người dùng</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center">
+	        		<div class="fs-14 mgB-15 alert-buy-key">
+	        			<p class="mgB-5">Thời gian xem thống kê đã hết hạn, bạn cần phải nạp phí để tiếp tục.</p>
+	        			<p>Phí để xem thống kê là <span class="font-600 fs-15">15 keys</span>. Thời hạn xem thống kê là <span class="font-600 fs-15">30 ngày</span> tính từ lúc trả phí.</p>
+	        		</div>
+        		</div>
+				<div class="text-center">
+					<a href="" class="btn-common btn-bd-radius btn-small">
+						<span class="icon-mv mgR-10 fs-18"><span class="icon-coin-dollar"></span></span>Mua Keys
+					</a>
 				</div>
 			</section>
         </div>

@@ -82,4 +82,34 @@ class Avg extends Component
         ];
     }
 
+	function calQuartile($arr) {
+		if(empty($arr)) {
+			return null;
+		}
+		
+		sort($arr);
+		
+		$q1 = $this->_calQuartile($arr, .25);
+		$q2 = $this->_calQuartile($arr, .5);
+		$q3 = $this->_calQuartile($arr, .75);
+		
+		return ['low' => $arr[0], 'q1'=> $q1, 'median' => $q2, 'q3' => $q3, 'high' => $arr[count($arr) - 1], 'IQR' => ($q3 - $q1)];
+	}
+	
+	function _calQuartile($arr, $per) {
+		$index = $per * (count($arr) - 1);
+		$n = $index - floor($index);
+		
+		$mid = ($arr[ceil($index)] + $arr[floor($index)]) / 2;
+		
+		if($n == .25) {
+			$q = ($mid + $arr[floor($index)]) / 2;
+		} else if($n == .5) {
+			$q = $mid;
+		} else {
+			$q = ($mid + $arr[ceil($index)]) / 2;
+		}
+		
+		return $q;
+	}
 }
