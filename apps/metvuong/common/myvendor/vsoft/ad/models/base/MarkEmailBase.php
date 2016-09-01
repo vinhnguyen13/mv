@@ -14,8 +14,8 @@ use Yii;
  * @property integer $send_time
  * @property integer $read_time
  * @property integer $click_time
- * @property integer $read_ip
- * @property integer $click_ip
+ * @property string $read_ip
+ * @property string $click_ip
  */
 class MarkEmailBase extends \yii\db\ActiveRecord
 {
@@ -35,7 +35,8 @@ class MarkEmailBase extends \yii\db\ActiveRecord
         return [
             [['email'], 'required'],
             [['type', 'count', 'status', 'send_time', 'read_time', 'click_time'], 'integer'],
-            [['email', 'read_ip', 'click_ip'], 'string', 'max' => 255],
+            [['email'], 'string', 'max' => 255],
+            [['read_ip', 'click_ip'], 'string', 'max' => 40],
         ];
     }
 
@@ -45,15 +46,15 @@ class MarkEmailBase extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'email' => Yii::t('mark', 'Email'),
-            'type' => Yii::t('mark', 'Type'),
-            'count' => Yii::t('mark', 'Count'),
-            'status' => Yii::t('mark', 'Status'),
-            'send_time' => Yii::t('mark', 'Send Time'),
-            'read_time' => Yii::t('mark', 'Read Time'),
-            'click_time' => Yii::t('mark', 'Click Time'),
-            'read_ip' => Yii::t('mark', 'Read Ip'),
-            'click_ip' => Yii::t('mark', 'Click Ip'),
+            'email' => 'Email',
+            'type' => 'Type',
+            'count' => 'Count',
+            'status' => 'Status',
+            'send_time' => 'Send Time',
+            'read_time' => 'Read Time',
+            'click_time' => 'Click Time',
+            'read_ip' => 'Read Ip',
+            'click_ip' => 'Click Ip',
         ];
     }
 }

@@ -16,7 +16,8 @@ use Yii;
  * @property integer $send_time
  * @property integer $read_time
  * @property integer $click_time
- * @property integer $read_ip
+ * @property string $read_ip
+ * @property string $click_ip
  */
 class MarkEmail extends MarkEmailBase
 {
