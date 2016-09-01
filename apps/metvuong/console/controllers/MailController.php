@@ -24,15 +24,15 @@ class MailController extends Controller {
 	 * Send mail welcome to agent, auto register account
 	 */
 	public function actionSendMailContact(){
-		$limit = $this->limit == null ? 100 : ((intval($this->limit) <= 100 && intval($this->limit) > 0) ? intval($this->limit) : 0);
-		Mail::me()->welcomeAgent($this->code, $limit);
+		$this->limit = !empty($this->limit) ? $this->limit : 100;
+		Mail::me()->welcomeAgent($this->code, $this->limit);
 	}
 
 	/**
 	 * How use dashboard
 	 */
 	public function actionHowUseDashboard(){
-		$limit = $this->limit == null ? 100 : ((intval($this->limit) <= 100 && intval($this->limit) > 0) ? intval($this->limit) : 0);
-		Mail::me()->howUseDashboard($limit);
+		$this->limit = !empty($this->limit) ? $this->limit : 100;
+		Mail::me()->howUseDashboard($this->limit);
 	}
 }
