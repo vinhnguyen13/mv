@@ -13,8 +13,8 @@
                     <table>
                         <tbody>
                             <tr>
-                                <td><img src="/frontend/web/themes/mv_desktop1/resources/images/img-dash.jpg" alt=""></td>
-                                <td><img src="/frontend/web/themes/mv_desktop1/resources/images/img-popup-dash.jpg" alt=""></td>
+                                <td><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-dash.jpg' ?>" alt=""></td>
+                                <td><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/img-popup-dash.jpg' ?>" alt=""></td>
                             </tr>
                             <tr>
                                 <td class="text-center fs-13 font-italic pdT-5">Bảng thống kê (Dashboard)</td>
