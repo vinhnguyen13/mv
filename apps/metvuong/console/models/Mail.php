@@ -187,7 +187,7 @@ class Mail extends Component
                         // Count email marketing has sent
                         usleep(300000);
                     } catch (Exception $ex) {
-                        print_r("Error .".PHP_EOL);
+                        print_r("Error: {$email}".PHP_EOL);
                     }
                 }else{
                     Mail::markEmail(self::TYPE_HOW_USE_DASHBOARD, $email, -1);
