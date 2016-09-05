@@ -44,23 +44,23 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'send_time',
                 'value' => function ($model) {
-                    return !empty($model->send_time) ? date('M d, Y, H:i:s') : 0;
+                    return !empty($model->send_time) ? date('M d, Y, H:i:s', $model->send_time) : 0;
                 },
                 'filter' => false,
             ],
             [
                 'attribute' => 'read_time',
                 'value' => function ($model) {
-                    return !empty($model->read_time) ? date('M d, Y, H:i:s') : 0;
+                    return !empty($model->read_time) ? date('M d, Y, H:i:s', $model->read_time) : 0;
                 },
-                'filter' => false,
+                'filter' => Html::activeDropDownList($searchModel, 'filter_read_time', [1=>'Yes'],['class'=>'form-control','prompt' => 'All']),
             ],
             [
                 'attribute' => 'click_time',
                 'value' => function ($model) {
-                    return !empty($model->click_time) ? date('M d, Y, H:i:s') : 0;
+                    return !empty($model->click_time) ? date('M d, Y, H:i:s', $model->click_time) : 0;
                 },
-                'filter' => false,
+                'filter' => Html::activeDropDownList($searchModel, 'filter_click_time', [1=>'Yes'],['class'=>'form-control','prompt' => 'All']),
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
