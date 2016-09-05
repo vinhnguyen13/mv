@@ -62,7 +62,8 @@
                                 <td>
                                     <p style="margin-bottom: 5px;"><strong>Metvuong Team</strong></p>
                                     <p style="margin-bottom: 5px;">21 Nguyễn Trung Ngạn, Bến Nghé, Quận 1, Hồ Chí Minh, Việt Nam</p>
-                                    <p>(08) 789 456    |	support@metvuong.com</p>
+                                    <p style="margin-bottom: 5px;"><b>Điện thoại:</b> (+84) (8) 7309 9966, ­ (+84) (8) 3824 6810</p>
+                                    <p style="margin-bottom: 5px;"><b>Email:</b> info@metvuong.com</p>
                                 </td>
                                 <td style="text-align: right;">
                                     <a href="https://www.facebook.com/metvuongbatdongsan" style="display:inline-block;margin-right:20px;"><img width="40" alt="Facebook" src="<?=\yii\helpers\Url::home(true)?>images/icon-face.png"></a>

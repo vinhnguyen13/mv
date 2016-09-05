@@ -310,7 +310,7 @@ class AvgController extends Controller {
 	}
 	
 	public function avgAdvance($values) {
-		if(count($values) > 6) {
+		if(count($values) > 3) {
 			$method = 'QUARTILE.EXC';
 			$iqr = Avg::me()->calculation_boxplot($values);
 		} else {
