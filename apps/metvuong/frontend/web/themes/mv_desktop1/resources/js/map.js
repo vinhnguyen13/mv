@@ -114,7 +114,7 @@ Area.prototype.getPaths = function() {
 	var attrs = this.attrs;
 	var paths;
 	
-	if(attrs.geometry) {
+	if(attrs.geometry && attrs.geometry.indexOf('[[[') !== 0) {
 		paths = decodeGeometry(attrs.geometry);
 	}
 
@@ -300,7 +300,7 @@ Product.prototype.getImage = function() {
 	if(this.attrs.f) {
 		return this.attrs.f;
 	} else {
-		return '/themes/metvuong2/resources/images/default-ads.jpg';
+		return '/themes/mv_desktop1/resources/images/default-ads.jpg';
 	}
 };
 
