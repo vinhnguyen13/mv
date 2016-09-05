@@ -42,14 +42,21 @@ $this->params['breadcrumbs'][] = $this->title;
                 'filter' => Html::activeDropDownList($searchModel, 'status', \vsoft\coupon\models\CouponEvent::getTypes(),['class'=>'form-control','prompt' => 'All']),
             ],
             [
-                'attribute' => 'created_at',
+                'attribute' => 'start_date',
                 'value' => function ($model) {
-                    return $model->created_at;
+                    return $model->start_date;
                 },
                 'format' => ['datetime', 'php: d/m/Y H:i a'],
                 'filter' => false
             ],
-
+            [
+                'attribute' => 'end_date',
+                'value' => function ($model) {
+                    return $model->end_date;
+                },
+                'format' => ['datetime', 'php: d/m/Y H:i a'],
+                'filter' => false
+            ],
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
