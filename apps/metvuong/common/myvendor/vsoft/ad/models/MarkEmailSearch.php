@@ -12,6 +12,8 @@ use vsoft\ad\models\MarkEmail;
  */
 class MarkEmailSearch extends MarkEmail
 {
+    public $filter_read_time;
+    public $filter_click_time;
     /**
      * @inheritdoc
      */
@@ -57,6 +59,14 @@ class MarkEmailSearch extends MarkEmail
             return $dataProvider;
         }
 
+        if(!empty($params['MarkEmailSearch']['filter_read_time'])){
+            $this->filter_read_time = $params['MarkEmailSearch']['filter_read_time'];
+            $query->andFilterWhere(['>', 'read_time', 0]);
+        }
+        if(!empty($params['MarkEmailSearch']['filter_click_time'])){
+            $this->filter_click_time = $params['MarkEmailSearch']['filter_click_time'];
+            $query->andFilterWhere(['>', 'click_time', 0]);
+        }
         // grid filtering conditions
         $query->andFilterWhere([
             'type' => $this->type,
