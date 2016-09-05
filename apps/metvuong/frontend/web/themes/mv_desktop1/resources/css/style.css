@@ -4440,6 +4440,7 @@ html.mm-opening .mm-slideout {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
+    text-transform: capitalize;
 }
 #listing-list .vip .address-listing {
     color: #006D45;
