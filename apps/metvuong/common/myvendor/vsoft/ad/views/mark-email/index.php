@@ -14,6 +14,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <div style="text-align: center; width: 100%; top: -20px;">
+        <a style="font-size: 20px; display: inline-block; margin-top: 22px;" href="/admin/ad/mark-email">Reset filter</a>
+    </div>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
