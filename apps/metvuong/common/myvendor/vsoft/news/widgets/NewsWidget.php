@@ -41,7 +41,7 @@ class NewsWidget extends Widget
         if($view == "hotnews")
             $news->andWhere('hot_news = :h',[':h' => 1]);
 
-        $news->andWhere('status = :status', [':status' => 1]); // an tin inactive trong widget
+        $news->andWhere('status = :status', [':status' => 1])->andWhere("publish_time <= UNIX_TIMESTAMP()"); // an tin inactive trong widget
 
         $result = $news->limit($limit)->offset($offset)->orderBy($order_by)->all();
 

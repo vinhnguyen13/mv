@@ -76,10 +76,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' =>  $model->getUserName($model->updated_by)
             ],
             [
+                'attribute' => 'publish_time',
+                'value' => $model->publish_time,
+                'format' => ['date', 'php: d/m/Y']
+            ],
+            [
                 'attribute' => 'updated_at',
                 'value' => $model->updated_at,
                 'format' => ['datetime', 'php: d/m/Y H:i a']
-            ],
+            ]
 
         ],
     ]) ?>

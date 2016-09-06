@@ -91,6 +91,16 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'hot_news')->checkbox([], null)->label(Yii::t('cms', 'Hot News')) ?>
 
+    <?= $form->field($model, 'publish_time')->widget(\kartik\date\DatePicker::className(),[
+        'name' => 'publish_time',
+        'type' => \kartik\date\DatePicker::TYPE_COMPONENT_APPEND,
+        'value' => date('d-M-y', time()),
+        'pluginOptions' => [
+            'autoclose'=>true,
+            'format' => 'dd-mm-yyyy'
+        ]
+    ])->label(Yii::t('cms', 'Publish Date')) ?>
+
     <div class="form-group">
         <label class="col-lg-1 control-label"></label>
         <div class="col-lg-11">

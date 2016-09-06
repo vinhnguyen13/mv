@@ -84,6 +84,7 @@ class CmsController extends CmsShowController
 
         $model = new CmsShow();
         $model->loadDefaultValues();
+        $model->publish_time = date('d-m-Y', time());
 
         if (Yii::$app->request->get('catalog_id')) {
             $model->catalog_id = Yii::$app->request->get('catalog_id');
@@ -100,6 +101,7 @@ class CmsController extends CmsShowController
             }
 //            $model->created_by = Yii::$app->user->id;
 //            $model->updated_by = Yii::$app->user->id;
+            $model->publish_time = !empty($model->publish_time) ? strtotime($model->publish_time) : date('d-m-Y', time());
             $model->save();
             return $this->redirect('index');
         } else {
@@ -115,6 +117,13 @@ class CmsController extends CmsShowController
 
         $model = $this->findModel1($id);
         $oldBanner = $model->banner;
+        if(!empty($model->publish_time)){
+            $model->publish_time = date('d-m-Y', $model->publish_time);
+        }
+
+        if(count($model) <= 0){
+            throw new NotFoundHttpException("Not found");
+        }
 
         if ($model->load(Yii::$app->request->post())) {
             $upload_image = UploadedFile::getInstance($model, 'banner');
@@ -132,7 +141,7 @@ class CmsController extends CmsShowController
 //            if($model->created_by === 0)
 //                $model->created_by = Yii::$app->user->id;
 //            $model->updated_by = Yii::$app->user->id;
-
+            $model->publish_time = strtotime($model->publish_time);
             $model->save();
             return $this->redirect(['view', 'id' => $model->id]);
         } else {
