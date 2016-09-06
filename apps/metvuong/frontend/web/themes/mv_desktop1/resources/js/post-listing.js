@@ -722,7 +722,7 @@ $(document).ready(function(){
 		}).on('keydown', function(e){
 			var self = $(this);
 
-			if(e.keyCode === 190 || e.keyCode === 188) {
+			if(e.keyCode === 190 || e.keyCode === 188 || e.keyCode === 110) {
 				var val = self.val();
 				
 				if(val.indexOf('.') !== -1) {
@@ -1118,11 +1118,12 @@ $(document).ready(function(){
 });
 
 function numnberOnly(e) {
-	var allow = [46, 8, 9, 27, 13, 110, 116];
+	var allow = [46, 8, 9, 27, 13, 116];
 	
 	if($(this).hasClass('number-float')) {
-		if($(this).val().indexOf(',') === -1 && $(this).val() !== '') {
+		if($(this).val().indexOf('.') === -1 && $(this).val() !== '') {
 			allow.push(190);
+			allow.push(110);
 		}
 	} else {
 		if(e.keyCode == 48 && $(this).val() == '' && !$(this).data('zero-first')) {

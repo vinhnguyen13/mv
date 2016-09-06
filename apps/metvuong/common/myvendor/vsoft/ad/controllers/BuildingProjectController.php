@@ -94,6 +94,8 @@ class BuildingProjectController extends Controller
                     $model->data_html = json_encode($_data);
                 }
             }
+
+            $model->bds_name = $model->name;
 			
 			$response = ['success' => true];
 			
@@ -181,6 +183,9 @@ class BuildingProjectController extends Controller
                     }
                     $model->data_html = json_encode($_data);
                 }
+
+                if(empty($model->bds_name) || $model->is_crawl == 0)
+                    $model->bds_name = $model->name;
 
     			$response = ['success' => true];
 

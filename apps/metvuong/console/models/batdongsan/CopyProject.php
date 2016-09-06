@@ -44,7 +44,7 @@ class CopyProject extends Component
                     ->where([
                         'city_id' => $model->city_id,
                         'district_id' => $model->district_id,
-                        'name' => $model->name
+                        'bds_name' => $model->name
                     ])
                     ->andWhere($sql_where)
                     ->asArray()->one();
