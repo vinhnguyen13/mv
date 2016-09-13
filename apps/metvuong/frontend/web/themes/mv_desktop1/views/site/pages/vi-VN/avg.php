@@ -48,7 +48,7 @@ $groupCategories = Yii::$app->db->cache(function(){
                             <label>Loại BDS</label>
                             <?=Html::dropDownList('category', null, $categoriesDropDown, ['class' => 'form-control search region_category', 'prompt' => "..."])?>
                         </div>
-                        <div class="form-group col-xs-12 col-sm-6 wrap_project" style="display: none;">
+                        <div class="form-group col-xs-12 col-sm-6 wrap_project">
                             <label>Dự Án</label>
                             <?=Html::dropDownList('project_building_id', null, [], ['class' => 'form-control search region_project', 'prompt' => "..."])?>
                         </div>
@@ -202,13 +202,13 @@ $groupCategories = Yii::$app->db->cache(function(){
         });
         $(document).on('change', '.region_category', function (e) {
             if($('.region_category').val() == 6){
-                $('.wrap_project').show();
+//                $('.wrap_project').show();
                 /*$('.wrap_city').hide();
                 $('.wrap_district').hide();
                 $('.wrap_wards').hide();
                 $('.wrap_streets').hide();*/
             }else{
-                $('.wrap_project').hide();
+//                $('.wrap_project').hide();
                 $('.wrap_city').show();
             }
             $('.region_city').select2("val", "");
