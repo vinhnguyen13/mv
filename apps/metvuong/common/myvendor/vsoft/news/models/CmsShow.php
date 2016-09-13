@@ -97,7 +97,8 @@ class CmsShow extends \funson86\cms\models\CmsShow
     {
         return array_merge(parent::rules(), [
             [['created_at', 'updated_at', 'created_by', 'updated_by', 'hot_news'], 'integer'],
-            [['language_id'], 'string']
+            [['language_id'], 'string'],
+            [['publish_time'], 'safe']
         ]);
     }
 
@@ -148,16 +149,6 @@ class CmsShow extends \funson86\cms\models\CmsShow
         return $query;
     }
 
-    public static function getShowForMetvuong(){
-        $query = CmsShow::find()->select(['cms_show.id','cms_show.banner','cms_show.title','cms_show.slug','cms_show.brief', 'cms_show.created_at','cms_show.catalog_id', 'cms_catalog.title as cat_title', 'cms_catalog.slug as cat_slug'])
-            ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
-            ->where('cms_catalog.title = :title', [':title' => 'Metvuong'])
-            ->andWhere('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
-            ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
-            ->asArray()->limit(3)->all();
-        return $query;
-    }
-
     public static function getLatestNews($limit = 100){
 //        $newsCatID = isset(Yii::$app->params["newsCatID"]) ? Yii::$app->params["newsCatID"] : 0;
 //        $homepageCatID = isset(Yii::$app->params["homepageCatID"]) ? Yii::$app->params["homepageCatID"] : 0;
@@ -170,6 +161,7 @@ class CmsShow extends \funson86\cms\models\CmsShow
                 ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
                 ->andWhere(['IN', 'cms_show.language_id', [Yii::$app->language]])
                 ->andWhere(['NOT IN', 'cms_show.catalog_id', [1]])
+                ->andWhere("publish_time <= UNIX_TIMESTAMP()")
                 ->asArray()->orderBy('cms_show.created_at DESC')->limit($limit)->all();
         });
         return $news;

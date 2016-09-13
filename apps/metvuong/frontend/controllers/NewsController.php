@@ -43,6 +43,7 @@ class NewsController extends Controller
             ->andWhere('cms_catalog.status = :status', [':status' => Status::STATUS_ACTIVE])
             ->andWhere(['NOT IN', 'cms_show.catalog_id', [1]])
             ->andWhere(['IN', 'cms_show.language_id', [Yii::$app->language]])
+            ->andWhere("publish_time <= UNIX_TIMESTAMP()")
             ->orderBy('cms_show.created_at DESC');
 
         // get the total number of News (but do not fetch the News data yet)
@@ -65,7 +66,7 @@ class NewsController extends Controller
             ->join('inner join', CmsCatalog::tableName(), 'cms_show.catalog_id = cms_catalog.id')
             ->where('cms_show.id = :id', [':id' => $id])
             ->andWhere('cms_show.status = :status', [':status' => Status::STATUS_ACTIVE])
-            ->asArray()->orderBy('cms_show.created_at DESC')->one();
+            ->asArray()->one();
         $click = (int)$detail["click"] + 1;
         if(count($detail) > 0) {
             CmsShow::getDb()->createCommand()

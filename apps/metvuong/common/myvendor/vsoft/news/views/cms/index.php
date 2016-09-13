@@ -95,6 +95,14 @@ $parentCatalog = ArrayHelper::map(CmsCatalog::get(Yii::$app->params['newsCatID']
                 'filter' => Html::activeDropDownList($searchModel, 'hot_news', \vsoft\news\models\CmsShow::getHotNews(),['class'=>'form-control','prompt' => 'All']),
             ],
             [
+                'attribute' => 'publish_time',
+                'value' => function ($model) {
+                    return $model->publish_time;
+                },
+                'format' => ['date', 'php: d/m/Y'],
+                'filter' => false
+            ],
+            [
                 'attribute' => 'updated_at',
                 'value' => function ($model) {
                     return $model->updated_at;
