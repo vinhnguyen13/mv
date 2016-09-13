@@ -7828,6 +7828,13 @@ padding: 5px 0;
 .right-attr-detail {
     float: right;
 }
+#review-listing .left-attr-detail,
+#review-listing .right-attr-detail {
+    float: none;
+}
+#review-listing .right-attr-detail .price-item {
+    font-size: 25px;
+}
 .favori .right-attr-detail {
     float: left;
     margin-bottom: 5px;
