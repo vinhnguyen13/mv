@@ -116,6 +116,39 @@ class ProductController extends Controller {
 		echo "Update Products: " . $updateTotal . "\n";
 	}
 	
+	public function actionSoftDelete($id) {
+		$product = AdProduct::findOne($id);
+		
+		if($product) {
+			$name = $product->street->pre . ' ' . $product->street->name;
+
+			$address = array_filter([
+				$product->home_no,
+				$name
+			]);
+			
+			$message = [];
+			$message[] = "ID: MV" . $id;
+			$message[] = "Address: " . implode(", ", $address);
+			$message[] = "Price: " . $product->price;
+			$message[] = "Area: " . $product->area;
+			$message[] = "Post Date: " . StringHelper::previousTime($product->start_date);
+			$message[] = "Are you sure Delete this product ?";
+			
+			if($this->confirm(implode("\n", $message) . "\n")) {
+				echo "Delete From Elastic And Decrease counter\n";
+				$product->removeEs();
+				
+				echo "Change status Product\n";
+				$product->status = AdProduct::STATUS_DELETE;
+				$product->save();
+				echo "OK";
+			}
+		} else {
+			echo "MV$id is not exist.";
+		}
+	}
+	
 	public function actionDelete($id) {
 		$product = AdProduct::findOne($id);
 		
