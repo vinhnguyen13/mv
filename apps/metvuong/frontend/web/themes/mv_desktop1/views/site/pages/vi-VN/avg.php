@@ -202,13 +202,13 @@ $groupCategories = Yii::$app->db->cache(function(){
         });
         $(document).on('change', '.region_category', function (e) {
             if($('.region_category').val() == 6){
-                $('.wrap_project').show();
+//                $('.wrap_project').show();
                 /*$('.wrap_city').hide();
                 $('.wrap_district').hide();
                 $('.wrap_wards').hide();
                 $('.wrap_streets').hide();*/
             }else{
-                $('.wrap_project').hide();
+//                $('.wrap_project').hide();
                 $('.wrap_city').show();
             }
             $('.region_city').select2("val", "");
