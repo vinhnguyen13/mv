@@ -9629,6 +9629,39 @@ margin-right: 5px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+.icon-trung-tam-thuong-mai:before {
+    content: "\e95d";
+}
+.icon-sieu-thi:before {
+    content: "\e966";
+}
+.icon-benh-vien-co-so-y-te:before {
+
+}
+.icon-golf:before {
+    content: "\e965";
+}
+.icon-trung-tam-nha-hang-hoi-nghi:before {
+    content: "\e964";
+}
+.icon-ngan-hang:before {
+    content: "\e963";
+}
+.icon-san-choi-nguoi-lon-tre-em:before {
+    content: "\e962";
+}
+.icon-ho-boi:before {
+
+}
+.icon-phong-xong-hoi-spa:before {
+    content: "\e960";
+}
+.icon-san-thi-dau-the-thao:before {
+    content: "\e95f";
+}
+.icon-ben-thuyen:before {
+    content: "\e95e";
+}
 .icon-truong-hoc:before, .icon-school:before,
 .icon-480119:before {
     content: "\e932";
