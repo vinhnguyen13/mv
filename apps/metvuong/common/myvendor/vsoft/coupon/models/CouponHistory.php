@@ -29,7 +29,7 @@ class CouponHistory extends CouponHistoryBase
             if($coupon_event->start_date <= $time && $coupon_event->end_date >= $time) {
                 $coupon_id = $coupon->id;
                 $history = CouponHistory::find()->where(['cp_code_id' => $coupon_id, 'user_id' => $user_id])->asArray()->one();
-                if(!empty($history)){
+                if($coupon->use_repeat == 0 && !empty($history)){
                     return ['error_code'=>1, 'error_message'=>Yii::t('coupon', 'You used this code')];
                 }
                 if (!$coupon->check()) {
