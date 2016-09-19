@@ -233,4 +233,7 @@ $this->registerJsFile(Yii::$app->view->theme->baseUrl.'/resources/js/string-help
             </div>
         </div>
     </section>
+    <div class="text-center bg-f5f5f5 pd-50">
+        <a href="http://www.hochiminhcity.gov.vn/Pages/bien-dao-Viet-Nam.aspx" target="_blank"><img src="<?= Yii::$app->view->theme->baseUrl . '/resources/images/image_gallery.jpg' ?>" alt=""></a>
+    </div>
 </div>
