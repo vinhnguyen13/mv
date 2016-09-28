@@ -1,6 +1,7 @@
 <?php
 use yii\web\View;
 use yii\helpers\Url;
+use yii\widgets\ActiveForm;
 ?>
 <div class="title-fixed-wrap">
     <div class="container">
@@ -11,9 +12,44 @@ use yii\helpers\Url;
             <section class="clearfix mgB-40">
                 <div class="pull-right fs-13 mgB-15">
                     <div class="clearfix d-ib ver-c">
-                        <a href="<?= Url::to(['report/index', 'filter'=>'week'], true) ?>" class="show-view-chart<?=($filter=='week' ? ' active' : '')?>"><?=Yii::t('statistic','Week')?></a>
-                        <a href="<?= Url::to(['report/index', 'filter'=>'2week'], true) ?>" class="show-view-chart<?=($filter=='2week' ? ' active' : '')?>"><?=Yii::t('statistic','Two weeks')?></a>
-                        <a href="<?= Url::to(['report/index', 'filter'=>'month'], true) ?>" class="show-view-chart<?=($filter=='month' ? ' active' : '')?>"><?=Yii::t('statistic','Month')?></a>
+                        <?php $form = ActiveForm::begin([
+                            'options' => ['class' => 'form-horizontal', 'method' => 'get'],
+                            'fieldConfig' => [
+                                'template' => "{label}\n<div class=\"col-lg-11\">{input}</div><div class=\"col-lg-1\"></div>\n<div class=\"col-lg-11\">{hint}{error}</div>",
+                                'labelOptions' => ['class' => 'col-lg-1 control-label'],
+                            ],
+                            'method' => 'get',
+                        ]); ?>
+                        <div style="width: 40%; float: left;">
+                            <label>From</label>
+                            <?= \kartik\date\DatePicker::widget([
+                                'name' => 'from',
+                                'type' => \kartik\date\DatePicker::TYPE_COMPONENT_APPEND,
+    //                            'value' => date('d-M-Y', strtotime('+2 days')),
+                                'options' => ['placeholder' => 'Select issue date ...'],
+                                'pluginOptions' => [
+                                    'format' => 'dd-mm-yyyy',
+                                    'todayHighlight' => true
+                                ]
+                            ]);?>
+                        </div>
+                        <div style="width: 40%; float: left;">
+                            <label>To</label>
+                            <?= \kartik\date\DatePicker::widget([
+                                'name' => 'to',
+                                'type' => \kartik\date\DatePicker::TYPE_COMPONENT_APPEND,
+    //                            'value' => date('d-M-Y', strtotime('+2 days')),
+                                'options' => ['placeholder' => 'Select issue date ...'],
+                                'pluginOptions' => [
+                                    'format' => 'dd-mm-yyyy',
+                                    'todayHighlight' => true
+                                ]
+                            ]);?>
+                        </div>
+                        <div style="width: 10%; float: left;padding-top: 17px;">
+                            <?= \yii\helpers\Html::submitButton(Yii::t('app', 'Filter'), ['class' => 'btn btn-primary']) ?>
+                        </div>
+                        <?php ActiveForm::end(); ?>
                     </div>
                 </div>
                 <div class="clearfix"></div>
