@@ -37,8 +37,12 @@ class Report extends Component
             'month' => -30,
             'quarter' => -90,
         ];
-        $from = strtotime($arrFilter[$filter].' days');
-        $to = time();
+        $fromRequest = Yii::$app->request->get('from', date('d-m-Y', strtotime('-6 days')));
+        $toRequest = Yii::$app->request->get('to', date('d-m-Y'));
+        $from = strtotime($fromRequest);
+        $to = strtotime($toRequest);
+//        $from = strtotime($arrFilter[$filter].' days');
+//        $to = time();
 
         $dateRange = Util::me()->dateRange( $from, $to,'+1 day', 'd/m/Y');
         if(!empty($dateRange)){
@@ -104,9 +108,11 @@ class Report extends Component
                 }, ARRAY_FILTER_USE_BOTH);
                 ksort($stats_login3);
             }
-            foreach($stats_login3 as $item){
-                $kDate = array_search($item['today'], $dateRange);
-                $dataLogin[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_LOGIN];
+            if(!empty($stats_login3)){
+                foreach($stats_login3 as $item){
+                    $kDate = array_search($item['today'], $dateRange);
+                    $dataLogin[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_LOGIN];
+                }
             }
 
             /**
@@ -120,11 +126,12 @@ class Report extends Component
                 ->andWhere('ip IS NOT NULL')
                 ->groupBy('today')->orderBy('created_at DESC');
             $stats_listing = $query->all();
-            foreach($stats_listing as $item){
-                $kDate = array_search($item['today'], $dateRange);
-                $dataListing[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_LISTING];
+            if(!empty($stats_listing)) {
+                foreach ($stats_listing as $item) {
+                    $kDate = array_search($item['today'], $dateRange);
+                    $dataListing[$kDate] = ['y' => intval($item['total']), 'date' => $item['today'], 'type' => self::TYPE_LISTING];
+                }
             }
-
             /**
              * Transaction
              */
@@ -135,11 +142,12 @@ class Report extends Component
                 ->andWhere(['<', 'created_at', $to])
                 ->groupBy('today')->orderBy('created_at DESC');
             $stats_transaction = $query->all();
-            foreach($stats_transaction as $item){
-                $kDate = array_search($item['today'], $dateRange);
-                $dataTransaction[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_TRANSACTION];
+            if(!empty($stats_transaction)) {
+                foreach ($stats_transaction as $item) {
+                    $kDate = array_search($item['today'], $dateRange);
+                    $dataTransaction[$kDate] = ['y' => intval($item['total']), 'date' => $item['today'], 'type' => self::TYPE_TRANSACTION];
+                }
             }
-
             /**
              * Favorite
              */
@@ -150,9 +158,11 @@ class Report extends Component
                 ->andWhere(['<', 'saved_at', $to])
                 ->groupBy('today')->orderBy('saved_at DESC');
             $stats_favorite = $query->all();
-            foreach($stats_favorite as $item){
-                $kDate = array_search($item['today'], $dateRange);
-                $dataFavorite[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_FAVORITE];
+            if(!empty($stats_favorite)) {
+                foreach ($stats_favorite as $item) {
+                    $kDate = array_search($item['today'], $dateRange);
+                    $dataFavorite[$kDate] = ['y' => intval($item['total']), 'date' => $item['today'], 'type' => self::TYPE_FAVORITE];
+                }
             }
             /**
              * Share
@@ -174,11 +184,12 @@ class Report extends Component
                     return $element;
                 }, ARRAY_FILTER_USE_BOTH);
                 ksort($stats_share);
-                foreach($stats_share as $item){
-                    $kDate = array_search($item['today'], $dateRange);
-                    $dataShare[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_SHARE];
+                if(!empty($stats_share)) {
+                    foreach ($stats_share as $item) {
+                        $kDate = array_search($item['today'], $dateRange);
+                        $dataShare[$kDate] = ['y' => intval($item['total']), 'date' => $item['today'], 'type' => self::TYPE_SHARE];
+                    }
                 }
-
             }
             /**
              * Share
@@ -200,11 +211,12 @@ class Report extends Component
                     return $element;
                 }, ARRAY_FILTER_USE_BOTH);
                 ksort($stats_compare);
-                foreach($stats_compare as $item){
-                    $kDate = array_search($item['today'], $dateRange);
-                    $dataCompare[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_COMPARE];
+                if(!empty($stats_compare)) {
+                    foreach ($stats_compare as $item) {
+                        $kDate = array_search($item['today'], $dateRange);
+                        $dataCompare[$kDate] = ['y' => intval($item['total']), 'date' => $item['today'], 'type' => self::TYPE_COMPARE];
+                    }
                 }
-
             }
             /**
              * Dashboard
@@ -216,9 +228,11 @@ class Report extends Component
                 ->andWhere(['<', 'start_at', $to])
                 ->groupBy('today')->orderBy('start_at DESC');
             $stats_dashboard = $query->all();
-            foreach($stats_dashboard as $item){
-                $kDate = array_search($item['today'], $dateRange);
-                $dataDashboard[$kDate] = ['y'=>intval($item['total']), 'date' => $item['today'], 'type'=>self::TYPE_DASHBOARD];
+            if(!empty($stats_dashboard)) {
+                foreach ($stats_dashboard as $item) {
+                    $kDate = array_search($item['today'], $dateRange);
+                    $dataDashboard[$kDate] = ['y' => intval($item['total']), 'date' => $item['today'], 'type' => self::TYPE_DASHBOARD];
+                }
             }
             /**
              * load data to chart
