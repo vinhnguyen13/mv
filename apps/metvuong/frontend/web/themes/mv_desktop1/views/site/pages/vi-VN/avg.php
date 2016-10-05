@@ -177,7 +177,7 @@ $groupCategories = Yii::$app->db->cache(function(){
         $('.region_project').select2({
             width: '100%',
             ajax: {
-                url: '/map/search-project',
+                url: '/map/search-project2',
                 dataType: 'json',
                 delay: 250,
                 data: function (params) {
@@ -190,8 +190,8 @@ $groupCategories = Yii::$app->db->cache(function(){
                     return {
                         results: $.map(data, function (item) {
                             return {
-                                text: item.full_name,
-                                slug: item.full_name,
+                                text: item.name,
+                                slug: item.name,
                                 id: item.id
                             }
                         })

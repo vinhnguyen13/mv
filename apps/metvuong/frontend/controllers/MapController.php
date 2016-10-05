@@ -35,7 +35,20 @@ class MapController extends ActiveController {
 		
 		return $response;
 	}
-	
+
+	public function actionSearchProject2() {
+		$v = \Yii::$app->request->get('v');
+//		$result = \Yii::$app->dbCraw->createCommand("SELECT * FROM `ad_building_project` WHERE `name` LIKE '%MASTERI MILLENNIUM%'")->execute();
+//		echo "<pre>";
+//		print_r($result);
+//		echo "</pre>";
+//		exit;
+		$query = new Query();
+		$query->select(['id', 'name']);
+		$query->from('ad_building_project')->where(['LIKE', 'name', $v])->limit(3);
+		return $query->all(\Yii::$app->dbCraw);
+	}
+
 	public function actionGet() {
 		$mapSearch = new MapSearch();
 		$mapSearch->load(\Yii::$app->request->get());
