@@ -190,8 +190,8 @@ $groupCategories = Yii::$app->db->cache(function(){
                     return {
                         results: $.map(data, function (item) {
                             return {
-                                text: item.name,
-                                slug: item.name,
+                                text: item.full_name,
+                                slug: item.full_name,
                                 id: item.id
                             }
                         })
