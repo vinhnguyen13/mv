@@ -5,7 +5,7 @@ use yii\rest\Controller;
 use frontend\models\MapSearch;
 use yii\db\Query;
 use frontend\models\frontend\models;
-use frontend\models\Elastic;
+use frontend\models\ElasticCraw;
 use vsoft\ad\models\AdProduct;
 
 class CrawSearchController extends Controller {
@@ -14,7 +14,7 @@ class CrawSearchController extends Controller {
 		
 		$v = \Yii::$app->request->get('v');
 		
-		$params = Elastic::buildParams($v);
+		$params = ElasticCraw::buildParams($v);
 		
 		$params['query']['function_score']['functions'][] = [
 				"field_value_factor" => [
@@ -32,7 +32,7 @@ class CrawSearchController extends Controller {
 				]
 		];
 		
-		$result = Elastic::requestResult($params, Elastic::elasticUrl('/district,ward,project_building'));
+		$result = ElasticCraw::requestResult($params, ElasticCraw::elasticUrl('/district,ward,project_building'));
 		
 		$response = [];
 		
@@ -53,7 +53,7 @@ class CrawSearchController extends Controller {
 		$v = \Yii::$app->request->get('value');
 		$type = \Yii::$app->request->get('type');
 		
-		$params = Elastic::buildParams($v);
+		$params = ElasticCraw::buildParams($v);
 		
 		$params['query']['function_score']['functions'][] = [
 				"field_value_factor" => [
@@ -71,7 +71,7 @@ class CrawSearchController extends Controller {
 				]
 		];
 		
-		$result = Elastic::requestResult($params, Elastic::elasticUrl('/' . $type));
+		$result = ElasticCraw::requestResult($params, ElasticCraw::elasticUrl('/' . $type));
 		
 		$response = [];
 		

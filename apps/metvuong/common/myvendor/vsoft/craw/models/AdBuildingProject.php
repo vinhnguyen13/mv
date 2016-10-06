@@ -3,6 +3,7 @@
 namespace vsoft\craw\models;
 
 use Yii;
+use frontend\models\ElasticCraw;
 
 /**
  * This is the model class for table "ad_building_project".
@@ -158,5 +159,90 @@ class AdBuildingProject extends \yii\db\ActiveRecord
     public function getAdInvestorBuildingProjects()
     {
         return $this->hasMany(AdInvestorBuildingProject::className(), ['building_project_id' => 'id']);
+    }
+    
+    public function afterSave($insert, $changedAttributes) {
+    	$indexName = \Yii::$app->params['indexName']['craw'];
+    	$type = 'project_building';
+    
+    	if($insert) {
+    		$cityAcronym = ElasticCraw::acronym($this->city->name);
+    		$districtAcronym = ctype_digit($this->district->name) ? ElasticCraw::acronym($this->district->pre) . $this->district->name . ' ' . $this->district->name : ElasticCraw::acronym($this->district->name);
+    			
+    		$fullName = $this->name . ', ' . $this->district->pre . ' ' . $this->district->name . ', ' . $this->city->name;
+    		$nameWithPrefix = 'Dự án ' . $this->name;
+    		$acronym = ElasticCraw::acronym($this->name);
+    		$acronymFullName1 = $acronym . ' ' . $cityAcronym;
+    		$acronymFullName = $acronym . ' ' . $districtAcronym . ' ' . $cityAcronym;
+    		$nameFulltext = ElasticCraw::standardSearch($nameWithPrefix);
+    		$fullName1 = $nameFulltext . ' ' . $this->city->name;
+    		$fullNameSearch = $nameFulltext . ' ' . ElasticCraw::standardSearchDistrict($this->district->pre . ' ' . $this->district->name) . ' ' . $this->city->name;
+    			
+    		$document = [
+    				'full_name' => $fullName,
+    				'slug' => '',
+    				'total_sell' => 0,
+    				'total_rent' => 0,
+    				'city_id' => $this->city->id,
+    				'district_id' => $this->district->id,
+    				's1' => $this->name,
+    				's2' => $this->name,
+    				's3' => $nameWithPrefix,
+    				's4' => $acronym,
+    				's5' => $acronymFullName1,
+    				's6' => $acronymFullName,
+    				's7' => $nameFulltext,
+    				's8' => $fullName1,
+    				's9' => $fullNameSearch,
+    				's10' => $fullNameSearch
+    		];
+    			
+    		$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/$type/" . $this->id);
+    		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+    		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($document));
+    		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    		curl_exec($ch);
+    		curl_close($ch);
+    	} else {
+    		$dif = array_diff_assoc($this->attributes, $this->oldAttrs);
+    			
+    		if(isset($dif['city_id']) || isset($dif['district_id']) || isset($dif['name'])) {
+    			$cityAcronym = ElasticCraw::acronym($this->city->name);
+    			$districtAcronym = ctype_digit($this->district->name) ? ElasticCraw::acronym($this->district->pre) . $this->district->name . ' ' . $this->district->name : ElasticCraw::acronym($this->district->name);
+    
+    			$fullName = $this->name . ', ' . $this->district->pre . ' ' . $this->district->name . ', ' . $this->city->name;
+    			$nameWithPrefix = 'Dự án ' . $this->name;
+    			$acronym = ElasticCraw::acronym($this->name);
+    			$acronymFullName1 = $acronym . ' ' . $cityAcronym;
+    			$acronymFullName = $acronym . ' ' . $districtAcronym . ' ' . $cityAcronym;
+    			$nameFulltext = ElasticCraw::standardSearch($nameWithPrefix);
+    			$fullName1 = $nameFulltext . ' ' . $this->city->name;
+    			$fullNameSearch = $nameFulltext . ' ' . ElasticCraw::standardSearchDistrict($this->district->pre . ' ' . $this->district->name) . ' ' . $this->city->name;
+    				
+    			$update = ["doc" => [
+    					'full_name' => $fullName,
+    					'slug' => $this->slug,
+    					'city_id' => $this->city->id,
+    					'district_id' => $this->district->id,
+    					's1' => $this->name,
+    					's2' => $this->name,
+    					's3' => $nameWithPrefix,
+    					's4' => $acronym,
+    					's5' => $acronymFullName1,
+    					's6' => $acronymFullName,
+    					's7' => $nameFulltext,
+    					's8' => $fullName1,
+    					's9' => $fullNameSearch,
+    					's10' => $fullNameSearch
+    			]];
+    				
+    			$ch = curl_init(\Yii::$app->params['elastic']['config']['hosts'][0] . "/$indexName/$type/" . $this->id . "/_update");
+    			curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($update));
+    			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    			curl_exec($ch);
+    			curl_close($ch);
+    		}
+    	}
     }
 }
