@@ -67,6 +67,10 @@ class MetaExt extends Component
     }
 
     public function add($url){
+        Yii::$app->view->registerMetaTag([
+            'name' => 'robots',
+            'content' => 'index,follow'
+        ]);
         $meta = $this->getMeta($url);
         if (!empty($meta)) {
             $json_data = Json::decode($meta->metadata, true);
