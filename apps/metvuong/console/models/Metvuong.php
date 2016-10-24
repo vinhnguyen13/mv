@@ -57,6 +57,16 @@ class Metvuong extends Component
         return null;
     }
 
+    public static function saveCurrentIdImageReDownload($id)
+    {
+        Helpers::writeLog($id, Yii::getAlias('@store'). "/files/download-image/", 'index');
+    }
+
+    public static function getCurrentIdImageReDownload()
+    {
+        return file_get_contents(Yii::getAlias('@store'). "/files/download-image/index");
+    }
+
     public static function mapContactProduct($limit=1000)
     {
         $start_time = time();
