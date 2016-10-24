@@ -8,6 +8,7 @@ use console\models\Metvuong;
 use console\models\Product;
 use vsoft\ad\models\AdImages;
 use vsoft\craw\models\AdProductFile;
+use vsoft\express\components\AdImageHelper;
 use Yii;
 use yii\console\Controller;
 use vsoft\ad\models\AdProduct;
@@ -397,20 +398,53 @@ class ProductController extends Controller {
 	
     public function actionDownloadImage()
     {
+		$currentID = Metvuong::getCurrentIdImageReDownload();
         $limit = $this->limit;
-        $sql = "select i.* from ad_images i inner join ad_product p on i.product_id = p.id
-                where is_expired = 0 and i.order != 4040 and file_name LIKE '%batdongsan.com.vn%'";
+		$query = new Query();
+        $query->from('ad_images AS a');
+		if (!empty($currentID)) {
+			$query->where(['<', 'a.id', $currentID]);
+		}
         if($limit > 0){
-            $sql .= " limit {$limit}";
+			$query->limit($limit);
         }
-
-        $images = Yii::$app->db->createCommand($sql)->queryAll();
-        if(count($images) > 0){
+		$query->orderBy('product_id DESC');
+        $images = $query->all();
+        if(!empty($images)){
             $updated = 0;
             $error = 0;
             foreach ($images as $key => $image) {
-                print_r("\n". ($key + 1). " ". $image['file_name']);
-                $result = Metvuong::DownloadImage($image['file_name'], $image['uploaded_at']);
+				print_r("Index " . ($key + 1) . " || Product {$image['product_id']}" . PHP_EOL);
+				$file = Yii::getAlias('@store').'/'.$image['folder'].'/'.$image['file_name'];
+				if (file_exists($file)) {
+					print_r("Image: {$image['id']}" . PHP_EOL);
+					print_r("File exist: {$file}" . PHP_EOL);
+				} else {
+					$sql = "SELECT a.* FROM ad_images a INNER JOIN ad_product_file b ON a.product_id = b.product_tool_id WHERE b.product_main_id = ".$image['product_id'];
+					$imageCrawl = Yii::$app->dbCraw->createCommand($sql)->queryOne();
+					$path = $image['folder'];
+					if (!empty($imageCrawl['file_name'])) {
+						$name = $image['file_name'];
+						$content = file_get_contents($imageCrawl['file_name']);
+						if(!empty($content)) {
+							$folder = Yii::getAlias('@store').'/'.$path;
+							if (!is_dir($folder)) {
+								mkdir($folder, 0777, true);
+							}
+							file_put_contents($folder.'/'.$name, $content);
+							$helper = new AdImageHelper();
+							$helper->makeFolderSizes($folder);
+							$helper->resize($folder.'/'.$name);
+						}
+						print_r("Image: {$image['id']} || Path: $path || File: {$name}" . PHP_EOL);
+						print_r("Image Crawl: {$imageCrawl['id']} || File {$imageCrawl['file_name']} || Product {$imageCrawl['product_id']}" . PHP_EOL);
+
+					}
+				}
+
+
+
+                /*$result = Metvuong::DownloadImage($image['file_name'], $image['uploaded_at']);
                 if(!empty($result)){
                     $record = [
                         'file_name' => $result[0],
@@ -424,8 +458,9 @@ class ProductController extends Controller {
                     ];
                     $er = AdImages::getDb()->createCommand()->update(AdImages::tableName(), $record, "id = ".$image['id'])->execute();
                     if($er > 0) $error++;
-                }
+                }*/
                 usleep(50000);
+				Metvuong::saveCurrentIdImageReDownload(intval($image['id']));
             }
             print_r(PHP_EOL);
             print_r("Updated: {$updated} ");
