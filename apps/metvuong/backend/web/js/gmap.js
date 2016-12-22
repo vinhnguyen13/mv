@@ -15,8 +15,8 @@ function initMap() {
 		    zoom: 16
 		});
 		
-		buildMaker(true);
-		buildGeoCodeButton();
+		buildMaker(false);
+		//buildGeoCodeButton();
 	});
 }
 
