@@ -166,34 +166,35 @@ class ProfileForm extends Model
             $profile->bio = $this->bio;
             $profile->user->updateAttributes(['aliasname'=>$this->aliasname]);
             if($profile->save(false)){
-                if($firstEmail != $this->public_email) {
-
-                    // gui den email cu~ xac thuc thay doi email moi
-                    $mailer = new \common\components\Mailer();
-                    $subject = "Metvuong.com - Xác nhận thay đổi email đăng nhập";
-                    $view = ['html' => "@frontend/mail/vi-VN/change_email_user"];
-                    $params['name'] = $profile->name;
-                    $params['old_email'] = $firstEmail;
-                    $params['new_email'] = $this->public_email;
-
-                    // token
-                    $new_token = new Token();
-                    $new_token->user_id = Yii::$app->user->id;
-                    $new_token->code = Yii::$app->security->generateRandomString();
-                    $new_token->type = Token::TYPE_CHANGE_USER_EMAIL;
-                    $new_token->created_at = time();
-                    $new_token->save();
-                    $params['link'] =  Url::to(['/member/change-email', 'id' => md5($new_token->user_id.$new_token->code), 'email' => $params['new_email'], 'code' => $new_token->code], true);
-
-                    $result = $mailer->compose($view, $params)
-                        ->setFrom(Yii::$app->params['noreplyEmail'])
-                        ->setTo([$firstEmail])
-                        ->setSubject($subject)
-                        ->send();
-                    if($result){
-                        return 4444;
-                    }
-                }
+                /* 17-01-2017: comment code change email vi lien quan den crawl listing va user_id */
+//                if($firstEmail != $this->public_email) {
+//
+//                    // gui den email cu~ xac thuc thay doi email moi
+//                    $mailer = new \common\components\Mailer();
+//                    $subject = "Metvuong.com - Xác nhận thay đổi email đăng nhập";
+//                    $view = ['html' => "@frontend/mail/vi-VN/change_email_user"];
+//                    $params['name'] = $profile->name;
+//                    $params['old_email'] = $firstEmail;
+//                    $params['new_email'] = $this->public_email;
+//
+//                    // token
+//                    $new_token = new Token();
+//                    $new_token->user_id = Yii::$app->user->id;
+//                    $new_token->code = Yii::$app->security->generateRandomString();
+//                    $new_token->type = Token::TYPE_CHANGE_USER_EMAIL;
+//                    $new_token->created_at = time();
+//                    $new_token->save();
+//                    $params['link'] =  Url::to(['/member/change-email', 'id' => md5($new_token->user_id.$new_token->code), 'email' => $params['new_email'], 'code' => $new_token->code], true);
+//
+//                    $result = $mailer->compose($view, $params)
+//                        ->setFrom(Yii::$app->params['noreplyEmail'])
+//                        ->setTo([$firstEmail])
+//                        ->setSubject($subject)
+//                        ->send();
+//                    if($result){
+//                        return 4444;
+//                    }
+//                }
                 return 200;
             }
         }

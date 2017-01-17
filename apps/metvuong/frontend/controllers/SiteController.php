@@ -440,7 +440,7 @@ class SiteController extends Controller
 				'GROUP_CONCAT(CAST(price/1000000 AS UNSIGNED) ORDER BY price ASC) as listprice',
 				'GROUP_CONCAT(CAST(price/area AS UNSIGNED) ORDER BY price ASC) as listpricem2',
 				])
-				->andWhere('price != 0')->one(Yii::$app->dbCraw);
+				->one(Yii::$app->dbCraw);
 
 			if(!empty($result['listprice']) && $result['total'] >= 3) {
 				$arrPrice = explode(',', $result['listprice']);

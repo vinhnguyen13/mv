@@ -109,7 +109,7 @@ Yii::t('time','week');
                         </div>
                         <div class="email-user">
                             <span class="icon-mv"><span class="icon-mail-profile"></span></span>
-                            <?= $f->field($profile_form, 'public_email')->textInput(['value' => $user->email ])->label(false)?>
+                            <?= $f->field($profile_form, 'public_email')->textInput(['value' => $user->email, 'disabled' => 'disabled' ])->label(false)?>
                             <input type="hidden" name="scenario" value="updateprofile">
                             <input type="hidden" name="profile-form[avatar]" class="avatar-user" value="">
                         </div>
