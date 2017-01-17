@@ -715,22 +715,24 @@ class MemberController extends Controller
                 if(!empty($new_email)){
                     try {
                         $user = Yii::$app->user->identity;
-                        $count_user = User::find()->where('email=:email',[':email'=>$new_email])->andWhere('email != :em',[':em' => $user->email])->count('email');
-                        if($count_user > 0)
-                        {
-                            return ["statusCode" => 222];
-                        }
-                        if ($user->email != $new_email) {
-                            $user->email = $new_email;
-                            $u = $user->update(false);
+                        return $this->redirect(Url::to(['member/update-profile', 'username' => $user->getUsername()]));
+//                        $count_user = User::find()->where('email=:email',[':email'=>$new_email])->andWhere('email != :em',[':em' => $user->email])->count('email');
+//                        if($count_user > 0)
+//                        {
+//                            return ["statusCode" => 222];
+//                        }
+//                        if ($user->email != $new_email) {
+//                            $user->email = $new_email;
+//                            $u = $user->update(false);
+//
+//                            $profile = $user->profile;
+//                            $profile->public_email = $new_email;
+//                            $p = $profile->update(false);
+//
+//                            if($u > 0 && $p > 0)
+//                                return $this->redirect(Url::to(['member/update-profile', 'username' => $user->getUsername()]));
+//                        }
 
-                            $profile = $user->profile;
-                            $profile->public_email = $new_email;
-                            $p = $profile->update(false);
-
-                            if($u > 0 && $p > 0)
-                                return $this->redirect(Url::to(['member/update-profile', 'username' => $user->getUsername()]));
-                        }
                     } catch(Exception $e){
                         throw new NotFoundHttpException($e->getMessage());
                     }
